@@ -1044,6 +1044,9 @@ test.describe("API keys flow", () => {
     const denyAllPatch = state.patchPayloads[state.patchPayloads.length - 1]!;
     expect(denyAllPatch.modelAccessMode).toBe("restricted");
     expect(denyAllPatch.allowedModels).toEqual([]);
+    // Let the save close the dialog before reopening it; a forced click while the modal is
+    // still unmounting reopens nothing (the close that follows the PATCH wins the race).
+    await expect(reopened).not.toBeVisible({ timeout: UI_STABILITY_TIMEOUT_MS });
 
     await keyRow.locator('button[title="Edit permissions"]').click({ force: true });
     const denyAllReopened = page.getByRole("dialog", {

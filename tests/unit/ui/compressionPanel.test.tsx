@@ -194,7 +194,7 @@ describe("CompressionPanel", () => {
     expect(lastEngines!.rtk.enabled).toBe(true);
   });
 
-  it("derived-pipeline preview reflects the enabled engines", async () => {
+  it("derived-pipeline preview shows the safe default when the enabled engines are lossy", async () => {
     setupFetchMock();
     const { default: CompressionPanel } =
       await import("../../../src/app/(dashboard)/dashboard/context/settings/CompressionPanel");
@@ -207,8 +207,12 @@ describe("CompressionPanel", () => {
 
     const preview = container.querySelector(`[data-testid="derived-pipeline-preview"]`);
     expect(preview).toBeTruthy();
-    // Only rtk is enabled in the initial config → preview mentions rtk, not caveman.
-    expect(preview?.textContent).toContain("rtk");
+    // Only rtk is enabled in the initial config, but rtk is a lossy engine: a request that
+    // did not opt into lossy compression gets the safe default pipeline instead
+    // (downgradeUnrequestedLossy → session-dedup + lite), and the preview shows that.
+    expect(preview?.textContent).toContain("session-dedup");
+    expect(preview?.textContent).toContain("lite");
+    expect(preview?.textContent).not.toContain("rtk");
     expect(preview?.textContent).not.toContain("caveman");
   });
 });

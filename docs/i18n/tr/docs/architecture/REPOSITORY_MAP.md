@@ -119,7 +119,7 @@ src/
 ├── domain/              # Saf alan mantığı (politika motoru, geri dönüş, maliyet, kilitleme, comboResolver, değerlendirme)
 ├── server/              # Yalnızca sunucu modülleri (yetkilendirme işlem hattı, cors, kimlik doğrulama ara yazılımı) — istemciden içe aktarılamaz
 ├── shared/              # Güvenli olduğu durumlarda sunucu ve istemci arasında paylaşılır (sabitler, türler, doğrulama, sözleşmeler, yardımcı araçlar)
-├── i18n/                # next-intl yapılandırması + yerel ayar başına mesaj JSON'u (42 yerel ayar)
+├── i18n/                # next-intl yapılandırması + yerel ayar başına mesaj JSON'u (4 yerel ayar)
 ├── middleware/          # Next.js ara yazılımı (istek zenginleştirme, yerel ayar algılama)
 ├── mitm/                # MITM proxy çekirdeği: sertifika oluşturma/yükleme, işleyiciler, hedefler, denetleyici, maskeler, doğrudan geçiş
 │   ├── handlers/        # MitmHandlerBase'i genişleten 9 IDE aracısı işleyici sınıfı (antigravity, kiro, copilot, codex, cursor, zed, claudeCode, openCode, trae)
@@ -299,7 +299,7 @@ open-sse/
 | Dosya            | Amaç                                                                                              |
 | ---------------- | ------------------------------------------------------------------------------------------------- |
 | `main.js`        | Electron ana süreci (BrowserWindow, gömülü Next.js sunucusu, sistem tepsisi, otomatik güncelleme) |
-| `preload.js`     | IPC köprüsü (contextBridge → `window.pusula`)                                                  |
+| `preload.js`     | IPC köprüsü (contextBridge → `window.pusula`)                                                     |
 | `package.json`   | electron-builder yapılandırması + Electron 41 + electron-builder 26.10 bağımlılıkları             |
 | `assets/`        | Uygulama simgeleri (Windows .ico, macOS .icns, Linux .png)                                        |
 | `dist-electron/` | Derleme çıktısı (git tarafından yok sayılır)                                                      |
@@ -310,28 +310,28 @@ open-sse/
 
 ## `bin/` — CLI
 
-| Dosya                                                                                                       | Amaç                                                                                                                            |
-| ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `pusula.mjs`                                                                                             | Ana CLI giriş noktası — `pusula serve`, `pusula setup`, `pusula doctor`, `pusula providers`, `pusula combos` vb. |
-| `reset-password.mjs`                                                                                        | Bağımsız parola sıfırlama CLI'si                                                                                                |
-| `cli/commands/setup.mjs`                                                                                    | Etkileşimli + etkileşimsiz kurulum sihirbazı                                                                                    |
-| `cli/commands/doctor.mjs`                                                                                   | Sistem sağlığı tanılamaları (8+ kontrol)                                                                                        |
-| `cli/commands/providers.mjs`                                                                                | Sağlayıcıları listeleme/test etme/doğrulama                                                                                     |
-| `cli/{args,data-dir,encryption,io,provider-catalog,provider-store,provider-test,settings-store,sqlite}.mjs` | CLI yardımcı modülleri                                                                                                          |
-| `cli/tray/tray.ts`                                                                                          | Sistem tepsisi entegrasyonu (platformlar arası: Windows'da NotifyIcon, macOS/Linux'ta systray2)                                 |
-| `cli/tray/tray.ps1`                                                                                         | PowerShell NotifyIcon arka ucu (Windows, sıfır yeni ikili dosya)                                                                |
-| `cli/tray/autostart.ts`                                                                                     | Platformlar arası otomatik başlatma (LaunchAgent / .desktop / kayıt defteri)                                                    |
-| `cli/runtime/sqliteRuntime.mjs`                                                                             | 5 adımlı SQLite sürücüsü çözümleme zinciri (paketle birlikte → çalışma zamanı → gecikmeli kurulum → node:sqlite → sql.js)       |
-| `cli/runtime/magicBytes.mjs`                                                                                | İkili dosya sihirli bayt doğrulaması (ELF / Mach-O / Mach-O fat / PE)                                                           |
-| `cli/runtime/index.mjs`                                                                                     | `warmUpRuntimes()` — postinstall / ilk başlatma sırasında sürücüleri önceden çözümler                                           |
-| `nodeRuntimeSupport.mjs`                                                                                    | Kurulum sırasında desteklenen Node.js sürümünü doğrular                                                                         |
+| Dosya                                                                                                       | Amaç                                                                                                                      |
+| ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `pusula.mjs`                                                                                                | Ana CLI giriş noktası — `pusula serve`, `pusula setup`, `pusula doctor`, `pusula providers`, `pusula combos` vb.          |
+| `reset-password.mjs`                                                                                        | Bağımsız parola sıfırlama CLI'si                                                                                          |
+| `cli/commands/setup.mjs`                                                                                    | Etkileşimli + etkileşimsiz kurulum sihirbazı                                                                              |
+| `cli/commands/doctor.mjs`                                                                                   | Sistem sağlığı tanılamaları (8+ kontrol)                                                                                  |
+| `cli/commands/providers.mjs`                                                                                | Sağlayıcıları listeleme/test etme/doğrulama                                                                               |
+| `cli/{args,data-dir,encryption,io,provider-catalog,provider-store,provider-test,settings-store,sqlite}.mjs` | CLI yardımcı modülleri                                                                                                    |
+| `cli/tray/tray.ts`                                                                                          | Sistem tepsisi entegrasyonu (platformlar arası: Windows'da NotifyIcon, macOS/Linux'ta systray2)                           |
+| `cli/tray/tray.ps1`                                                                                         | PowerShell NotifyIcon arka ucu (Windows, sıfır yeni ikili dosya)                                                          |
+| `cli/tray/autostart.ts`                                                                                     | Platformlar arası otomatik başlatma (LaunchAgent / .desktop / kayıt defteri)                                              |
+| `cli/runtime/sqliteRuntime.mjs`                                                                             | 5 adımlı SQLite sürücüsü çözümleme zinciri (paketle birlikte → çalışma zamanı → gecikmeli kurulum → node:sqlite → sql.js) |
+| `cli/runtime/magicBytes.mjs`                                                                                | İkili dosya sihirli bayt doğrulaması (ELF / Mach-O / Mach-O fat / PE)                                                     |
+| `cli/runtime/index.mjs`                                                                                     | `warmUpRuntimes()` — postinstall / ilk başlatma sırasında sürücüleri önceden çözümler                                     |
+| `nodeRuntimeSupport.mjs`                                                                                    | Kurulum sırasında desteklenen Node.js sürümünü doğrular                                                                   |
 
 ---
 
 ## `skills/` — Genel Kullanıma Açık Agent Becerileri
 
-| Dosya                        | Amaç                                                                                    |
-| ---------------------------- | --------------------------------------------------------------------------------------- |
+| Dosya                     | Amaç                                                                                    |
+| ------------------------- | --------------------------------------------------------------------------------------- |
 | `skills/pusula*/SKILL.md` | Harici AI agentları (Claude Desktop, ChatGPT, Cursor, Cline) için 10 beceri manifestosu |
 
 ---
@@ -393,8 +393,8 @@ open-sse/
 | `RELEASE_CHECKLIST.md`      | Eksiksiz sürüm süreci (beceriler, husky, conventional commits, dağıtım)                                         |
 | `COVERAGE_PLAN.md`          | Kapsama hedefleri ve mevcut durum                                                                               |
 | `FREE_TIERS.md`             | Özenle seçilmiş ücretsiz katman sağlayıcıları (48+ ücretsiz + 11 OAuth)                                         |
-| `CLI-TOOLS.md`              | Harici CLI entegrasyonları + dahili Pusula CLI                                                               |
-| `I18N.md`                   | i18n mimarisi, dil ekleme, 42 yerel ayar                                                                        |
+| `CLI-TOOLS.md`              | Harici CLI entegrasyonları + dahili Pusula CLI                                                                  |
+| `I18N.md`                   | i18n mimarisi, dil ekleme, 4 yerel ayar                                                                         |
 | `UNINSTALL.md`              | Temiz kaldırma adımları                                                                                         |
 | `PROVIDER_REFERENCE.md`     | 355 sağlayıcıdan oluşan **otomatik oluşturulmuş** katalog (yeniden oluşturma: `npm run gen:provider-reference`) |
 
@@ -446,7 +446,7 @@ open-sse/
 
 | Alt dizin             | Amaç                                                                                                                                                                                                                                            |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `docs/i18n/`          | Yerelleştirilmiş belge çevirileri (41 yerel ayar)                                                                                                                                                                                               |
+| `docs/i18n/`          | Yerelleştirilmiş belge çevirileri (3 yerel ayar)                                                                                                                                                                                                |
 | `docs/screenshots/`   | Kılavuzlar için görsel varlıkları                                                                                                                                                                                                               |
 | `_tasks/superpowers/` | superpowers (`writing-plans`/`brainstorming`) tarafından oluşturulan planlar/özellikler + araştırma — yalıtılmış, ayrı sürümlenen depo; ana ağaç tarafından gitignore kapsamına alınmıştır. Bkz. CLAUDE.md → "Planlama ve Araştırma Çıktıları". |
 
@@ -480,7 +480,7 @@ Dağıtılan yapılandırma şablonları ve commit edilmiş kalite geçidi refer
 
 | Yol                                           | Amaç                                                                                                      |
 | --------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `config/i18n.json`                            | Yerel ayar listesi + meta veriler (42 yerel ayar sayısının standart kaynağı)                              |
+| `config/i18n.json`                            | Yerel ayar listesi + meta veriler (4 yerel ayar sayısının standart kaynağı)                               |
 | `config/i18n-schema.json`                     | `i18n.json` dosyasını doğrulayan JSON şeması                                                              |
 | `config/payloadRules.json`                    | Üst kaynak yükü temizleme kuralları                                                                       |
 | `config/quality/quality-baseline.json`        | Çok metrikli mandal referans değeri (`scripts/quality/check-quality-ratchet.mjs`)                         |

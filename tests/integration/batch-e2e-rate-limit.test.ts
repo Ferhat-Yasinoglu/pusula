@@ -13,6 +13,18 @@ const REPO_ROOT = fileURLToPath(new URL("../..", import.meta.url));
 const RELAY_PORT = await getFreePort();
 const SERVER_PORT = await getFreePort();
 
+// Management routes (`/api/provider-nodes`, `/api/keys`) require a dashboard session or a
+// manage-scoped credential even on a fresh install, so the open bootstrap mode cannot mint
+// the fixtures over HTTP. Seed them straight into the SQLite file the server opens (same
+// DATA_DIR / API_KEY_SECRET), exactly like resilience-http-e2e and fingerprint-expansion do.
+process.env.DATA_DIR = TEST_DATA_DIR;
+process.env.DISABLE_SQLITE_AUTO_BACKUP = "true";
+process.env.API_KEY_SECRET = "batch-e2e-rl-secret";
+process.env.REQUIRE_API_KEY = "false";
+const core = await import("../../src/lib/db/core.ts");
+const providersDb = await import("../../src/lib/db/providers.ts");
+const apiKeysDb = await import("../../src/lib/db/apiKeys.ts");
+
 type FileUploadResponse = {
   id?: string;
 };
@@ -294,41 +306,35 @@ test.before(async () => {
   app = createServerProcess();
   await waitForServer(app.baseUrl, app);
 
-  // Seed a provider_node via the API (don't open DB in this process)
-  const nodeResp = await fetch(`${app.baseUrl}/api/provider-nodes`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      type: "openai-compatible",
-      name: "Batch E2E Test Provider",
-      prefix: "testbatch",
-      apiType: "embeddings",
-      baseUrl: RELAY_BASE,
-    }),
+  // Seed the provider node (+ its connection) and the client API key in the shared DB.
+  const providerId = "openai-compatible-batch-e2e";
+  await providersDb.createProviderNode({
+    id: providerId,
+    type: "openai-compatible",
+    name: "Batch E2E Test Provider",
+    prefix: "testbatch",
+    apiType: "embeddings",
+    baseUrl: RELAY_BASE,
   });
-  const nodeBody = nodeResp.ok ? await nodeResp.json() : null;
-  if (!nodeResp.ok) {
-    // If /api/provider-nodes fails, try the direct DB import approach
-    throw new Error(
-      `Failed to create provider node: ${nodeResp.status} ${JSON.stringify(nodeBody)}`
-    );
-  }
-
-  const keyResp = await fetch(`${app.baseUrl}/api/keys`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name: "Batch E2E Test Key" }),
+  await providersDb.createProviderConnection({
+    provider: providerId,
+    authType: "apikey",
+    name: "conn-testbatch",
+    apiKey: "relay-key",
+    isActive: true,
+    testStatus: "active",
+    providerSpecificData: { baseUrl: RELAY_BASE, apiType: "embeddings" },
   });
-  const keyBody = (await keyResp.json().catch(() => null)) as { key?: string } | null;
-  if (!keyResp.ok || !keyBody?.key) {
-    throw new Error(`Failed to create API key: ${keyResp.status} ${JSON.stringify(keyBody)}`);
-  }
-  clientAuthHeaders = { Authorization: `Bearer ${keyBody.key}` };
+  const apiKey = await apiKeysDb.createApiKey("Batch E2E Test Key", "batch-e2e-machine");
+  clientAuthHeaders = { Authorization: `Bearer ${apiKey.key}` };
 });
 
 test.after(async () => {
   try {
     await stopProcess(app.child);
+  } catch {}
+  try {
+    core.closeDbInstance();
   } catch {}
   try {
     await relay.stop();

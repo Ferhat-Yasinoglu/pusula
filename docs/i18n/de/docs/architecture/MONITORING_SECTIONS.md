@@ -141,5 +141,5 @@ Von Gruppe B hinzugefügte Namespaces:
 | `sidebar.costsOverview` | Element der Kostenübersicht                                                 |
 | `activity.*`            | Alle Zeichenfolgen der Aktivitätsseite (Titel, Verben, Filter, Leerzustand) |
 
-Die maßgeblichen Quell-Locales sind `pt-BR` und `en`. Alle anderen 40 Locales greifen über
+Die maßgebliche Quell-Locale ist `en`. Die drei anderen Locales (`de`, `fa`, `tr`) greifen über
 den `next-intl`-Fallback-Mechanismus auf Englisch zurück (konfiguriert in `src/i18n/config.ts`).

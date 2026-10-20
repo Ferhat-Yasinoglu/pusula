@@ -20,12 +20,19 @@ vi.mock("@/shared/utils/formatting", () => ({
 }));
 
 const cleanupCallbacks: Array<() => void> = [];
+const roots: Array<ReturnType<typeof createRoot>> = [];
 
 function makeContainer(): HTMLElement {
   const container = document.createElement("div");
   document.body.appendChild(container);
   cleanupCallbacks.push(() => container.remove());
   return container;
+}
+
+function mountRoot(container: HTMLElement): ReturnType<typeof createRoot> {
+  const root = createRoot(container);
+  roots.push(root);
+  return root;
 }
 
 const PANEL_PATH = "@/app/(dashboard)/dashboard/providers/[id]/components/CoolingConnectionsPanel";
@@ -41,6 +48,14 @@ describe("CoolingConnectionsPanel", { timeout: 30_000 }, () => {
   });
 
   afterEach(() => {
+    // Unmount before jsdom is torn down: a root left mounted keeps React scheduler work
+    // (the countdown interval) queued, and it fires after teardown as "window is not defined".
+    while (roots.length > 0) {
+      const root = roots.pop();
+      act(() => {
+        root?.unmount();
+      });
+    }
     while (cleanupCallbacks.length > 0) cleanupCallbacks.pop()?.();
     document.body.innerHTML = "";
   });
@@ -53,7 +68,7 @@ describe("CoolingConnectionsPanel", { timeout: 30_000 }, () => {
   it("renders the panel with a countdown for a cooling connection", async () => {
     const { default: CoolingConnectionsPanel } = await import(PANEL_PATH);
     const container = makeContainer();
-    const root = createRoot(container);
+    const root = mountRoot(container);
     const future = new Date(Date.now() + 5 * 60_000).toISOString();
     await act(async () => {
       root.render(
@@ -73,7 +88,7 @@ describe("CoolingConnectionsPanel", { timeout: 30_000 }, () => {
   it("renders nothing when no connection is cooling", async () => {
     const { default: CoolingConnectionsPanel } = await import(PANEL_PATH);
     const container = makeContainer();
-    const root = createRoot(container);
+    const root = mountRoot(container);
     const past = new Date(Date.now() - 60_000).toISOString();
     await act(async () => {
       root.render(

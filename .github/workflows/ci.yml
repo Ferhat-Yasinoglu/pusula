@@ -554,19 +554,17 @@ jobs:
       # in eight. Fix is `sync-ui-keys --locale=<codes> --translate-markers`.
       - name: i18n key completeness (every locale carries every en.json key)
         run: node scripts/i18n/check-key-completeness.mjs
-      # Same gate for the CLI catalogs (bin/cli/locales). check:cli-i18n only compares
-      # pt-BR / zh-CN / zh-TW; 38 locales shipped with 1–24 of 830 keys for months
-      # (audit 2026-09-16) and the CLI silently fell back to English for them.
+      # Same gate for the CLI catalogs (bin/cli/locales). check:cli-i18n only compares the
+      # reference locale against its parity locales; a catalog that ships a fraction of the
+      # keys makes the CLI silently fall back to English for that language.
       - name: i18n key completeness (CLI catalogs)
         run: node scripts/i18n/check-key-completeness.mjs --catalog=cli
 
-  # #8038: cheap glossary/protected-terms consistency gate —
-  # complements i18n-ui-coverage (key parity) and the ICU `i18n` job below
-  # without needing app-boot/Playwright infra. Same gating as i18n-ui-coverage.
-  # ko added after the #8224 ko.json mistranslation cleanup so the fixed
-  # terminology cannot silently regress on the next machine-translation run.
-  i18n-glossary-zhcn:
-    name: i18n Glossary (zh-CN, ko)
+  # Cheap glossary/protected-terms consistency gate — complements i18n-ui-coverage
+  # (key parity) and the ICU `i18n` job below without needing app-boot/Playwright
+  # infra. Same gating as i18n-ui-coverage.
+  i18n-glossary:
+    name: i18n Glossary (protected terms)
     runs-on: ubuntu-latest
     needs: changes
     if: ${{ github.event_name != 'pull_request' || (github.event.pull_request.draft == false && (needs.changes.outputs.i18n == 'true' || needs.changes.outputs.code == 'true')) }}
@@ -579,8 +577,10 @@ jobs:
           node-version: ${{ env.CI_NODE_VERSION }}
           cache: npm
       - uses: ./.github/actions/npm-ci-retry
-      - run: node scripts/i18n/check-glossary-consistency.mjs --locale=zh-CN
-      - run: node scripts/i18n/check-glossary-consistency.mjs --locale=zh-TW
+      # Every locale in config/i18n.json except the source. No supported locale ships a
+      # per-locale glossary yet, so the gate reduces to "protected product/config terms
+      # stay verbatim in every translation" (scripts/i18n/glossary/protected-terms.json).
+      - run: node scripts/i18n/check-glossary-consistency.mjs
 
   # D4 (plano mestre testes+CI): a matrix de ~40 jobs de <1min por idioma saturava sozinha
   # a concorrência de jobs da conta (Free = 20 slots, compartilhados entre TODOS os repos)
@@ -1324,7 +1324,9 @@ jobs:
       JWT_SECRET: ci-test-secret-with-sufficient-length-for-validation
       API_KEY_SECRET: ci-test-api-key-secret-long
       INITIAL_PASSWORD: ci-test-password-for-integration
-      DATA_DIR: /tmp/pusula-ci-${{ matrix.shard }}
+      # No shared DATA_DIR: tests/_setup/isolateDataDir.ts gives every test file its own temp
+      # directory. A per-shard directory leaked settings between files (a skill-pipeline file
+      # saw the auth state another file had written and failed with 401).
       DISABLE_SQLITE_AUTO_BACKUP: "true"
     steps:
       - uses: actions/checkout@v7
@@ -1429,7 +1431,7 @@ jobs:
       - lint
       - docs-sync-strict
       - i18n-ui-coverage
-      - i18n-glossary-zhcn
+      - i18n-glossary
       - i18n
       - pr-test-policy
       - build
@@ -1501,7 +1503,7 @@ jobs:
           echo "| Lint | $(status '${{ needs.lint.result }}') |" >> "$GITHUB_STEP_SUMMARY"
           echo "| Docs Sync (Strict) | $(status '${{ needs.docs-sync-strict.result }}') |" >> "$GITHUB_STEP_SUMMARY"
           echo "| i18n UI Coverage | $(status '${{ needs.i18n-ui-coverage.result }}') |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| i18n Glossary (zh-CN, ko) | $(status '${{ needs.i18n-glossary-zhcn.result }}') |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| i18n Glossary (protected terms) | $(status '${{ needs.i18n-glossary.result }}') |" >> "$GITHUB_STEP_SUMMARY"
           echo "| PR Test Policy | $(status '${{ needs.pr-test-policy.result }}') |" >> "$GITHUB_STEP_SUMMARY"
 
           echo "" >> "$GITHUB_STEP_SUMMARY"

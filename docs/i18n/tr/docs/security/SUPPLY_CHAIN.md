@@ -68,6 +68,7 @@ Yukarıdaki CVE Varyans çözümünün "üst akım düzeltmesi yok" dalına gör
 - **Temel:** ölçülen osv `vulnCount` (3) zaten dondurulmuş
   `config/quality/quality-baseline.json` temelinin (27) oldukça altındadır — mandal değişikliğine gerek yoktur.
 - **Regresyon koruması:** `tests/unit/extract-zip-14482-exposure.test.ts` zinciri ve yukarıdaki üretim dışı içe aktarma değişmezini doğrular; eğer bunlardan herhangi biri bozulursa (örneğin, gelecekteki bir PR `extract-zip`'i üretimden erişilebilir hale getirirse) CI'yi başarısız kılar.
+- **Durum (promptfoo ≥ 0.124.1):** zincir artık yok — promptfoo artık `@openai/codex-security`'ye bağımlı değil, dolayısıyla `extract-zip` `package-lock.json` içinde hiç yer almıyor. Regresyon koruması paket yokken doğrudan geçer; zinciri yalnızca paket bir gün yeniden ortaya çıkarsa tekrar denetler.
 - **Takip:** sorun #14482.
 
 ## Bekleyenler: Scorecard danışmanlığı → engelleme

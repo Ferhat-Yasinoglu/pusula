@@ -11,7 +11,7 @@ Objective feature comparison vs popular open-source AI routers.
 > **Methodology**: Public repos audited 2026-Q2. Versions as listed.
 > Submit corrections via PR — we want this to be accurate.
 
-| Feature                                            |                Pusula 3.8                |  LiteLLM 1.x   | OpenRouter (SaaS) |   Portkey   |
+| Feature                                            |                 Pusula 3.8                  |  LiteLLM 1.x   | OpenRouter (SaaS) |   Portkey   |
 | -------------------------------------------------- | :-----------------------------------------: | :------------: | :---------------: | :---------: |
 | **Providers**                                      |                   **329**                   |      ~100      |        ~50        |     ~30     |
 | **Free/no-auth catalog entries**                   |                   **155**                   |      n/a       |    passthrough    |     n/a     |
@@ -34,7 +34,7 @@ Objective feature comparison vs popular open-source AI routers.
 | **CLI with system tray (no Electron)**             |                     ✅                      |       ❌       |        n/a        |     n/a     |
 | **CLI machine-ID auto-auth**                       |                     ✅                      |       ❌       |        n/a        |     n/a     |
 | **Dashboard**                                      |                 Next.js 16                  |     basic      |    proprietary    | proprietary |
-| **i18n**                                           |               **42 locales**                |       ❌       |        ❌         |      ⚠      |
+| **i18n**                                           |                **4 locales**                |       ❌       |        ❌         |      ⚠      |
 | **Public agent skills (SKILL.md)**                 |                    ✅ 45                    |       ❌       |        ❌         |     ❌      |
 | **Tunnel support (Cloudflared, Tailscale, Ngrok)** |                     ✅                      |       ❌       |        n/a        |     n/a     |
 | **License**                                        |                     MIT                     |      MIT       |    proprietary    | proprietary |

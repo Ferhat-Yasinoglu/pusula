@@ -140,12 +140,12 @@ export function DarioAccountPanel() {
       setLoading(false);
     };
     void run();
-    const runOmni = async () => {
+    const runPusula = async () => {
       const list = await fetchPusulaConnectionsList();
       if (list) setPusulaConnections(list);
       setPusulaLoading(false);
     };
-    void runOmni();
+    void runPusula();
   }, []);
 
   const handleRefreshAccountsClick = () => {

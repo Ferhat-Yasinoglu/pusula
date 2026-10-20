@@ -41,7 +41,13 @@ beforeEach(() => {
           mode: "stacked",
           durationMs: 1,
           engineBreakdown: [
-            { engine, originalTokens: 10, compressedTokens: 6, savingsPercent: 40, techniquesUsed: [] },
+            {
+              engine,
+              originalTokens: 10,
+              compressedTokens: 6,
+              savingsPercent: 40,
+              techniquesUsed: [],
+            },
           ],
           diff: [],
           preservedBlocks: [],
@@ -61,10 +67,10 @@ afterEach(() => {
 });
 
 describe("PlayView combined-pipeline run failure (#12061)", () => {
+  // The dynamic PlayView import pulls the whole Compression Studio graph; on a loaded
+  // runner the cold transform alone can exceed vitest's default 5s budget.
   it("shows a visible error for the combined result instead of nothing", async () => {
-    const { PlayView } = await import(
-      "@/app/(dashboard)/dashboard/compression/studio/PlayView"
-    );
+    const { PlayView } = await import("@/app/(dashboard)/dashboard/compression/studio/PlayView");
     await act(async () => {
       root.render(
         <PlayView text="TEST INPUT" onText={() => {}} laneEngines={["rtk", "caveman"]} />
@@ -100,5 +106,5 @@ describe("PlayView combined-pipeline run failure (#12061)", () => {
     const hasHumanReadableError = /error|failed|falhou|erro/i.test(text);
 
     expect(hasErrorTestId || hasHumanReadableError).toBe(true);
-  });
+  }, 30_000);
 });
