@@ -12313,20 +12313,20 @@
       "open": "Aç →",
       "code": {
         "title": "Kod aracı",
-        "desc": "Omni'ye yönlendirir",
-        "flow": "siz → CLI → Omni → sağlayıcı",
+        "desc": "Pusula'ya yönlendirir",
+        "flow": "siz → CLI → Pusula → sağlayıcı",
         "examples": "örn.: claude, codex"
       },
       "agent": {
         "title": "Geniş kapsamlı otonom ajan",
-        "desc": "Omni'ye yönlendirir",
-        "flow": "siz → ajan → Omni",
+        "desc": "Pusula'ya yönlendirir",
+        "flow": "siz → ajan → Pusula",
         "examples": "örn.: hermes, goose"
       },
       "acp": {
-        "title": "Omni tarafından arka uç olarak kullanılan CLI",
+        "title": "Pusula tarafından arka uç olarak kullanılan CLI",
         "desc": "Tersine çalıştırma",
-        "flow": "Omni → CLI başlat → yanıt",
+        "flow": "Pusula → CLI başlat → yanıt",
         "examples": "örn.: claude, codex (ACP)"
       }
     },
@@ -12586,7 +12586,7 @@
       },
       "cli-plugins-skills": {
         "name": "CLI: Eklentiler, Beceriler ve Bellek",
-        "description": "CLI üzerinden Omni Becerilerini (listele, yükle, test et, kaldır), eklentileri (oluştur, yapılandır) ve kalıcı belleği (ara, ekle, temizle) yönetin."
+        "description": "CLI üzerinden Pusula Becerilerini (listele, yükle, test et, kaldır), eklentileri (oluştur, yapılandır) ve kalıcı belleği (ara, ekle, temizle) yönetin."
       },
       "cli-setup": {
         "name": "CLI: Kurulum ve Yapılandırma",
@@ -12614,13 +12614,13 @@
         "crossLinkLabel": "Farkı anlayın →"
       },
       "omni": {
-        "title": "Omni Becerileri — Gelen",
-        "description": "Omni Becerileri, Pusula'un her istekte modelin bağlamına enjekte ettiği korumalı alan araçlarıdır. Pusula tarafından yürütülürler, ajan tarafından okunmazlar.",
+        "title": "Pusula Becerileri — Gelen",
+        "description": "Pusula Becerileri, Pusula'un her istekte modelin bağlamına enjekte ettiği korumalı alan araçlarıdır. Pusula tarafından yürütülürler, ajan tarafından okunmazlar.",
         "crossLinkLabel": "Farkı anlayın →"
       },
       "comparison": {
         "colAgent": "Ajan Becerileri",
-        "colOmni": "Omni Becerileri",
+        "colOmni": "Pusula Becerileri",
         "whatIs": {
           "label": "Nedir",
           "agent": "Harici bir ajana Pusula'u çalıştırmayı öğreten makine tarafından okunabilir SKILL.md",

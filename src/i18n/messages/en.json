@@ -12313,20 +12313,20 @@
       "open": "Open →",
       "code": {
         "title": "Code tool",
-        "desc": "Points to Omni",
-        "flow": "you → CLI → Omni → provider",
+        "desc": "Points to Pusula",
+        "flow": "you → CLI → Pusula → provider",
         "examples": "e.g.: claude, codex"
       },
       "agent": {
         "title": "Broad autonomous agent",
-        "desc": "Points to Omni",
-        "flow": "you → agent → Omni",
+        "desc": "Points to Pusula",
+        "flow": "you → agent → Pusula",
         "examples": "e.g.: hermes, goose"
       },
       "acp": {
-        "title": "CLI used as backend by Omni",
+        "title": "CLI used as backend by Pusula",
         "desc": "Reverse execution",
-        "flow": "Omni → spawn CLI → resp",
+        "flow": "Pusula → spawn CLI → resp",
         "examples": "e.g.: claude, codex (ACP)"
       }
     },
@@ -12586,7 +12586,7 @@
       },
       "cli-plugins-skills": {
         "name": "CLI: Plugins, Skills & Memory",
-        "description": "Manage Omni Skills (list, install, test, remove), plugins (create, configure), and persistent memory (search, add, clear) from the CLI."
+        "description": "Manage Pusula Skills (list, install, test, remove), plugins (create, configure), and persistent memory (search, add, clear) from the CLI."
       },
       "cli-setup": {
         "name": "CLI: Setup & Config",
@@ -12614,13 +12614,13 @@
         "crossLinkLabel": "Understand the difference →"
       },
       "omni": {
-        "title": "Omni Skills — Inbound",
-        "description": "Omni Skills are sandbox tools that Pusula injects into the model's context on every request. They are executed by Pusula, not read by the agent.",
+        "title": "Pusula Skills — Inbound",
+        "description": "Pusula Skills are sandbox tools that Pusula injects into the model's context on every request. They are executed by Pusula, not read by the agent.",
         "crossLinkLabel": "Understand the difference →"
       },
       "comparison": {
         "colAgent": "Agent Skills",
-        "colOmni": "Omni Skills",
+        "colOmni": "Pusula Skills",
         "whatIs": {
           "label": "What it is",
           "agent": "Machine-readable SKILL.md that teaches an external agent to operate Pusula",

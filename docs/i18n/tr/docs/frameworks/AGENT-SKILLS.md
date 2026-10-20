@@ -7,7 +7,7 @@
 > **Doğruluk kaynağı:** `src/lib/agentSkills/` (katalog, oluşturucu, ayrıştırıcılar) + `skills/` dizini (SKILL.md dosyaları)
 > **Son güncelleme:** 2026-08-02 — v3.8.50
 
-Agent Skills; harici agent'lara, MCP istemcilerine ve A2A orkestratörlerine Pusula'un REST API'sini ve CLI'ını nasıl kullanacaklarını öğreten, yapılandırılmış SKILL.md dosyalarıdır. [Omni Skills](./SKILLS.md)'den (Pusula içinde yürütülen LLM araç tanımlarıdır) farklı olarak Agent Skills, doğrudan agent bağlamına aktarılabilen statik markdown içeriğinden oluşan bir _dokümantasyon kataloğudur_.
+Agent Skills; harici agent'lara, MCP istemcilerine ve A2A orkestratörlerine Pusula'un REST API'sini ve CLI'ını nasıl kullanacaklarını öğreten, yapılandırılmış SKILL.md dosyalarıdır. [Pusula Skills](./SKILLS.md)'den (Pusula içinde yürütülen LLM araç tanımlarıdır) farklı olarak Agent Skills, doğrudan agent bağlamına aktarılabilen statik markdown içeriğinden oluşan bir _dokümantasyon kataloğudur_.
 
 ---
 
@@ -310,7 +310,7 @@ curl "http://localhost:20128/api/agent-skills/coverage"
 
 ## İlgili Kaynaklar
 
-- [SKILLS.md](./SKILLS.md) — Omni Skills çerçevesi (LLM araç enjeksiyonu + pazar yeri)
+- [SKILLS.md](./SKILLS.md) — Pusula Skills çerçevesi (LLM araç enjeksiyonu + pazar yeri)
 - [MCP-SERVER.md](./MCP-SERVER.md) — MCP araç kataloğu (`pusula_agent_skills_*` araçları)
 - [A2A-SERVER.md](./A2A-SERVER.md) — A2A protokolü (`list-capabilities` skill'i)
 - `src/lib/agentSkills/` — katalog, oluşturucu, ayrıştırıcılar

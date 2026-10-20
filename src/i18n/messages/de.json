@@ -12313,20 +12313,20 @@
       "open": "Öffnen →",
       "code": {
         "title": "Code-Tool",
-        "desc": "Zeigt auf Omni",
-        "flow": "Sie → CLI → Omni → Provider",
+        "desc": "Zeigt auf Pusula",
+        "flow": "Sie → CLI → Pusula → Provider",
         "examples": "z. B.: claude, codex"
       },
       "agent": {
         "title": "Vielseitiger autonomer Agent",
-        "desc": "Zeigt auf Omni",
-        "flow": "Sie → Agent → Omni",
+        "desc": "Zeigt auf Pusula",
+        "flow": "Sie → Agent → Pusula",
         "examples": "z. B.: hermes, goose"
       },
       "acp": {
-        "title": "Von Omni als Backend verwendete CLI",
+        "title": "Von Pusula als Backend verwendete CLI",
         "desc": "Umgekehrte Ausführung",
-        "flow": "Omni → CLI starten → Antwort",
+        "flow": "Pusula → CLI starten → Antwort",
         "examples": "z. B.: claude, codex (ACP)"
       }
     },
@@ -12586,7 +12586,7 @@
       },
       "cli-plugins-skills": {
         "name": "CLI: Plugins, Skills & Speicher",
-        "description": "Verwalten Sie Omni Skills (auflisten, installieren, testen, entfernen), Plugins (erstellen, konfigurieren) und persistenten Speicher (suchen, hinzufügen, leeren) über die CLI."
+        "description": "Verwalten Sie Pusula Skills (auflisten, installieren, testen, entfernen), Plugins (erstellen, konfigurieren) und persistenten Speicher (suchen, hinzufügen, leeren) über die CLI."
       },
       "cli-setup": {
         "name": "CLI: Setup & Konfiguration",
@@ -12614,8 +12614,8 @@
         "crossLinkLabel": "Den Unterschied verstehen →"
       },
       "omni": {
-        "title": "Omni Skills – eingehend",
-        "description": "Omni Skills sind Sandbox-Tools, die Pusula bei jeder Anfrage in den Kontext des Modells einfügt. Sie werden von Pusula ausgeführt, nicht vom Agenten gelesen.",
+        "title": "Pusula Skills – eingehend",
+        "description": "Pusula Skills sind Sandbox-Tools, die Pusula bei jeder Anfrage in den Kontext des Modells einfügt. Sie werden von Pusula ausgeführt, nicht vom Agenten gelesen.",
         "crossLinkLabel": "Den Unterschied verstehen →"
       },
       "comparison": {

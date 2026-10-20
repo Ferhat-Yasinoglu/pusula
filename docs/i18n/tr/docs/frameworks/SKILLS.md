@@ -13,11 +13,11 @@ Bir beceri; sürümlendirilmiş, şemayla tanımlanmış bir iş birimidir. Pusu
 
 ---
 
-## Agent Skills ve Omni Skills
+## Agent Skills ve Pusula Skills
 
 Pusula, birbirinden farklı ancak birbirini tamamlayan iki beceri sistemine sahiptir:
 
-| Boyut               | **Omni Skills** (bu belge)                                         | **Agent Skills**                                                                               |
+| Boyut               | **Pusula Skills** (bu belge)                                         | **Agent Skills**                                                                               |
 | :------------------ | :----------------------------------------------------------------- | :--------------------------------------------------------------------------------------------- |
 | Amaç                | LLM aracı enjeksiyonu + korumalı alanda yürütme                    | Harici aracıların keşfedip kullanabileceği SKILL.md kataloğu                                   |
 | Doğruluk kaynağı    | `src/lib/skills/` + pazaryeri                                      | `src/lib/agentSkills/` + `skills/` dizini                                                      |
@@ -27,7 +27,7 @@ Pusula, birbirinden farklı ancak birbirini tamamlayan iki beceri sistemine sahi
 | Biçim               | Araç şeması + işleyici içeren `SkillDefinition`                    | `SKILL.md` ön bilgisi + markdown gövdesi                                                       |
 | Keşif               | `/api/skills/*` REST + `pusula_skills_*` MCP araçları           | `/api/agent-skills/*` REST + `pusula_agent_skills_*` MCP araçları + A2A `list-capabilities` |
 
-**Omni Skills**, yürütme motorudur — bir LLM bir aracı çağırdığında Pusula'un _neler yapabileceğini_ tanımlar.
+**Pusula Skills**, yürütme motorudur — bir LLM bir aracı çağırdığında Pusula'un _neler yapabileceğini_ tanımlar.
 
 **Agent Skills**, dokümantasyon kataloğudur — doğrudan aracı istemlerine aktarılabilen yapılandırılmış SKILL.md dosyalarıyla harici aracılara Pusula'un REST API'sinin ve CLI'ının _nasıl kullanılacağını_ açıklar.
 

@@ -13,11 +13,11 @@ Ein Skill ist eine versionierte, schemadefinierte Arbeitseinheit. Pusula kann Sk
 
 ---
 
-## Agent Skills im Vergleich zu Omni Skills
+## Agent Skills im Vergleich zu Pusula Skills
 
 Pusula verfügt über zwei eigenständige, aber einander ergänzende Skill-Systeme:
 
-| Dimension          | **Omni Skills** (dieses Dokument)                                       | **Agent Skills**                                                                            |
+| Dimension          | **Pusula Skills** (dieses Dokument)                                       | **Agent Skills**                                                                            |
 | :----------------- | :---------------------------------------------------------------------- | :------------------------------------------------------------------------------------------ |
 | Zweck              | LLM-Tool-Injektion + Sandbox-Ausführung                                 | SKILL.md-Katalog zur Ermittlung und Nutzung durch externe Agenten                           |
 | Maßgebliche Quelle | `src/lib/skills/` + Marketplace                                         | `src/lib/agentSkills/` + Verzeichnis `skills/`                                              |
@@ -27,7 +27,7 @@ Pusula verfügt über zwei eigenständige, aber einander ergänzende Skill-Syste
 | Format             | `SkillDefinition` mit Tool-Schema + Handler                             | `SKILL.md`-Frontmatter + Markdown-Inhalt                                                    |
 | Ermittlung         | `/api/skills/*` REST + `pusula_skills_*` MCP-Tools                   | `/api/agent-skills/*` REST + `pusula_agent_skills_*` MCP-Tools + A2A `list-capabilities` |
 
-**Omni Skills** sind die Ausführungs-Engine — sie definieren, was Pusula _tun kann_, wenn ein LLM ein Tool aufruft.
+**Pusula Skills** sind die Ausführungs-Engine — sie definieren, was Pusula _tun kann_, wenn ein LLM ein Tool aufruft.
 
 **Agent Skills** sind der Dokumentationskatalog — sie erklären externen Agenten _wie_ die REST-API und CLI von Pusula verwendet werden, und zwar mithilfe strukturierter SKILL.md-Dateien, die direkt in Agent-Prompts eingespeist werden können.
 

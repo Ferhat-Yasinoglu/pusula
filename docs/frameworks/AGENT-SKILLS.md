@@ -9,7 +9,7 @@ lastUpdated: 2026-08-02
 > **Source of truth:** `src/lib/agentSkills/` (catalog, generator, parsers) + `skills/` directory (SKILL.md files)
 > **Last updated:** 2026-08-02 — v3.8.50
 
-Agent Skills are structured SKILL.md files that teach external agents, MCP clients, and A2A orchestrators how to use Pusula's REST API and CLI. Unlike [Omni Skills](./SKILLS.md) (which are LLM tool definitions executed inside Pusula), Agent Skills are a _documentation catalog_ — static markdown that can be fed directly into agent context.
+Agent Skills are structured SKILL.md files that teach external agents, MCP clients, and A2A orchestrators how to use Pusula's REST API and CLI. Unlike [Pusula Skills](./SKILLS.md) (which are LLM tool definitions executed inside Pusula), Agent Skills are a _documentation catalog_ — static markdown that can be fed directly into agent context.
 
 ---
 
@@ -310,7 +310,7 @@ curl "http://localhost:20128/api/agent-skills/coverage"
 
 ## Related
 
-- [SKILLS.md](./SKILLS.md) — Omni Skills framework (LLM tool injection + marketplace)
+- [SKILLS.md](./SKILLS.md) — Pusula Skills framework (LLM tool injection + marketplace)
 - [MCP-SERVER.md](./MCP-SERVER.md) — MCP tool catalog (`pusula_agent_skills_*` tools)
 - [A2A-SERVER.md](./A2A-SERVER.md) — A2A protocol (`list-capabilities` skill)
 - `src/lib/agentSkills/` — catalog, generator, parsers

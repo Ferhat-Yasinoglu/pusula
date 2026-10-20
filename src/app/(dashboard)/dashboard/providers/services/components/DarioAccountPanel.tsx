@@ -84,7 +84,7 @@ async function fetchDarioAccounts(): Promise<{ accounts: DarioAccount[] } | { er
   }
 }
 
-async function fetchOmniConnectionsList(): Promise<PusulaConnection[] | null> {
+async function fetchPusulaConnectionsList(): Promise<PusulaConnection[] | null> {
   try {
     const res = await fetch("/api/services/dario/admin/import-from-pusula");
     const json = (await res.json().catch(() => null)) as {
@@ -110,8 +110,8 @@ export function DarioAccountPanel() {
   const [busy, setBusy] = useState<null | "start" | "complete">(null);
   const [notice, setNotice] = useState<string | null>(null);
 
-  const [pusulaConnections, setOmniConnections] = useState<PusulaConnection[]>([]);
-  const [pusulaLoading, setOmniLoading] = useState(true);
+  const [pusulaConnections, setPusulaConnections] = useState<PusulaConnection[]>([]);
+  const [pusulaLoading, setPusulaLoading] = useState(true);
   const [importBusyId, setImportBusyId] = useState<string | null>(null);
 
   const refreshAccounts = useCallback(async () => {
@@ -141,9 +141,9 @@ export function DarioAccountPanel() {
     };
     void run();
     const runOmni = async () => {
-      const list = await fetchOmniConnectionsList();
-      if (list) setOmniConnections(list);
-      setOmniLoading(false);
+      const list = await fetchPusulaConnectionsList();
+      if (list) setPusulaConnections(list);
+      setPusulaLoading(false);
     };
     void runOmni();
   }, []);

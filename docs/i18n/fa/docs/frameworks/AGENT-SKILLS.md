@@ -7,7 +7,7 @@
 > **منبع حقیقت:** `src/lib/agentSkills/` (کاتالوگ، مولد، تجزیهگرها) + دایرکتوری `skills/` (فایلهای SKILL.md)
 > **آخرین بهروزرسانی:** 2026-08-02 — v3.8.50
 
-Agent Skills فایلهای ساختاریافتهٔ SKILL.md هستند که به عاملهای خارجی، کلاینتهای MCP و هماهنگکنندههای A2A آموزش میدهند چگونه از REST API و CLI در Pusula استفاده کنند. برخلاف [Omni Skills](./SKILLS.md) (که تعاریف ابزارهای LLM هستند و درون Pusula اجرا میشوند)، Agent Skills یک _کاتالوگ مستندات_ هستند — Markdown ایستا که میتوان آن را مستقیماً در زمینهٔ عامل قرار داد.
+Agent Skills فایلهای ساختاریافتهٔ SKILL.md هستند که به عاملهای خارجی، کلاینتهای MCP و هماهنگکنندههای A2A آموزش میدهند چگونه از REST API و CLI در Pusula استفاده کنند. برخلاف [Pusula Skills](./SKILLS.md) (که تعاریف ابزارهای LLM هستند و درون Pusula اجرا میشوند)، Agent Skills یک _کاتالوگ مستندات_ هستند — Markdown ایستا که میتوان آن را مستقیماً در زمینهٔ عامل قرار داد.
 
 ---
 
@@ -310,7 +310,7 @@ curl "http://localhost:20128/api/agent-skills/coverage"
 
 ## موارد مرتبط
 
-- [SKILLS.md](./SKILLS.md) — چارچوب Omni Skills (تزریق ابزار LLM + بازارچه)
+- [SKILLS.md](./SKILLS.md) — چارچوب Pusula Skills (تزریق ابزار LLM + بازارچه)
 - [MCP-SERVER.md](./MCP-SERVER.md) — کاتالوگ ابزار MCP (ابزارهای `pusula_agent_skills_*`)
 - [A2A-SERVER.md](./A2A-SERVER.md) — پروتکل A2A (مهارت `list-capabilities`)
 - `src/lib/agentSkills/` — کاتالوگ، مولد و تجزیهگرها

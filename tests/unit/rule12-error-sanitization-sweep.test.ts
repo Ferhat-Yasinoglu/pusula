@@ -35,7 +35,7 @@ const { sanitizeErrorMessage } = await import("../../open-sse/utils/error.ts");
 
 // An error message carrying BOTH a first-line absolute source path (must be
 // replaced with <path>) and a multi-line stack tail (must be truncated away).
-const LEAK_PATH_POSIX = "/home/omni/secret/config.ts";
+const LEAK_PATH_POSIX = "/home/pusula/secret/config.ts";
 const LEAK_PATH_WIN = "C:\\Users\\secret\\app.ts";
 function makeLeakyError(): Error {
   const err = new Error(
@@ -54,7 +54,7 @@ function makeRequest(url: string, options?: RequestInit): NextRequest {
 // if sanitizeErrorMessage regressed, this fails first).
 test("sanitizeErrorMessage strips absolute paths + stack tail (self-check)", () => {
   const out = sanitizeErrorMessage(String(makeLeakyError()));
-  assert.ok(!out.includes("/home/omni/secret"), "posix path leaked");
+  assert.ok(!out.includes("/home/pusula/secret"), "posix path leaked");
   assert.ok(!out.includes("C:\\Users\\secret"), "windows path leaked");
   assert.ok(!/\bat\s+\//.test(out), "stack frame leaked");
   assert.ok(out.includes("<path>"), "path token should be replaced");
@@ -92,7 +92,7 @@ function forceOwningConnectionPath(): () => void {
 
 // A leak assertion applied to any string field of an error body.
 function assertSanitized(raw: string, context: string): void {
-  assert.ok(!raw.includes("/home/omni/secret"), `${context}: posix path leaked → ${raw}`);
+  assert.ok(!raw.includes("/home/pusula/secret"), `${context}: posix path leaked → ${raw}`);
   assert.ok(!raw.includes("C:\\Users\\secret"), `${context}: windows path leaked → ${raw}`);
   assert.ok(!raw.includes("/opt/pusula"), `${context}: stack path leaked → ${raw}`);
   // The task's contract: body must not contain a leading absolute-path frame.

@@ -51,7 +51,7 @@ test("isValidApiKey", async (t) => {
 
 test("POST /v1/embeddings authentication", async (t) => {
   const originalRequireApiKey = process.env.REQUIRE_API_KEY;
-  const originalOmniKey = process.env.PUSULA_API_KEY;
+  const originalPusulaKey = process.env.PUSULA_API_KEY;
 
   await t.test(
     "should return 401 when an invalid API key is provided and REQUIRE_API_KEY is true",
@@ -132,5 +132,5 @@ test("POST /v1/embeddings authentication", async (t) => {
 
   // Restore original env in case of failure
   process.env.REQUIRE_API_KEY = originalRequireApiKey;
-  process.env.PUSULA_API_KEY = originalOmniKey;
+  process.env.PUSULA_API_KEY = originalPusulaKey;
 });

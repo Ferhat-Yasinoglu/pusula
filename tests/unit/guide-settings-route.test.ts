@@ -68,7 +68,7 @@ test.afterEach(async () => {
 
 test("guide-settings POST creates new hermes config.yaml if it doesn't exist", async () => {
   const req = await buildRequest("hermes", {
-    baseUrl: "http://my-omni",
+    baseUrl: "http://my-pusula",
     apiKey: "sk-hermes",
     model: "gpt-5.4-mini",
   });
@@ -83,8 +83,8 @@ test("guide-settings POST creates new hermes config.yaml if it doesn't exist", a
   const content = yaml.load(await fs.readFile(HERMES_CONFIG_PATH, "utf-8")) as HermesConfig;
   assert.equal(content.model?.default, "gpt-5.4-mini");
   assert.equal(content.model?.provider, "pusula");
-  assert.equal(content.model?.base_url, "http://my-omni/v1");
-  assert.equal(content.providers?.pusula?.base_url, "http://my-omni/v1");
+  assert.equal(content.model?.base_url, "http://my-pusula/v1");
+  assert.equal(content.providers?.pusula?.base_url, "http://my-pusula/v1");
   assert.ok(String(content.providers?.pusula?.api_key || "").startsWith("sk-"));
 });
 
@@ -108,7 +108,7 @@ test("guide-settings POST writes OpenCode config with current schema and multi-m
     method: "POST",
     headers: { "Content-Type": "application/json", cookie },
     body: JSON.stringify({
-      baseUrl: "http://my-omni/v1",
+      baseUrl: "http://my-pusula/v1",
       apiKey: "sk-123",
       models: ["cc/claude-sonnet-4-20250514", "gg/gemini-2.5-pro"],
     }),
@@ -123,7 +123,7 @@ test("guide-settings POST writes OpenCode config with current schema and multi-m
   assert.equal(content.$schema, "https://opencode.ai/config.json");
   assert.ok(content.provider.custom);
   assert.equal(content.provider.pusula.npm, "@ai-sdk/openai-compatible");
-  assert.equal(content.provider.pusula.options.baseURL, "http://my-omni/v1");
+  assert.equal(content.provider.pusula.options.baseURL, "http://my-pusula/v1");
   assert.ok(content.provider.pusula.options.apiKey.startsWith("sk-"));
   assert.deepEqual(Object.keys(content.provider.pusula.models), [
     "cc/claude-sonnet-4-20250514",
@@ -132,7 +132,7 @@ test("guide-settings POST writes OpenCode config with current schema and multi-m
   // The v2 provider schema is dual-written alongside the v1 block: the v2
   // entry lives under `providers.pusula` with `package`/`settings`.
   assert.equal(content.providers.pusula.package, "@opencode-ai/ai/providers/openai-compatible");
-  assert.equal(content.providers.pusula.settings.baseURL, "http://my-omni/v1");
+  assert.equal(content.providers.pusula.settings.baseURL, "http://my-pusula/v1");
   assert.ok(content.providers.pusula.settings.apiKey.startsWith("sk-"));
 });
 
@@ -174,7 +174,7 @@ test("guide-settings POST preserves existing OpenCode config fields while only u
     method: "POST",
     headers: { "Content-Type": "application/json", cookie },
     body: JSON.stringify({
-      baseUrl: "http://my-omni/v1",
+      baseUrl: "http://my-pusula/v1",
       apiKey: "sk-123",
       models: ["cx/gpt-5.6-sol", "opencode-go/kimi-k2.6"],
       modelLabels: {
@@ -201,7 +201,7 @@ test("guide-settings POST preserves existing OpenCode config fields while only u
     name: "Custom Provider",
   });
   assert.equal(content.provider.pusula.npm, "@ai-sdk/openai-compatible");
-  assert.equal(content.provider.pusula.options.baseURL, "http://my-omni/v1");
+  assert.equal(content.provider.pusula.options.baseURL, "http://my-pusula/v1");
   assert.ok(content.provider.pusula.options.apiKey.startsWith("sk-"));
   assert.deepEqual(content.provider.pusula.models, {
     "cx/gpt-5.6-sol": {
@@ -221,7 +221,7 @@ test("guide-settings POST refuses to overwrite an invalid opencode.jsonc (#10227
   await fs.writeFile(OPENCODE_JSONC_CONFIG_PATH, invalidJsonc, "utf-8");
 
   const req = await buildRequest("opencode", {
-    baseUrl: "http://my-omni/v1",
+    baseUrl: "http://my-pusula/v1",
     apiKey: "sk-123",
     models: ["cx/gpt-5.6-sol"],
   });

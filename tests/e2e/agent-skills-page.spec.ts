@@ -157,7 +157,7 @@ test.describe("Agent Skills page", () => {
     });
 
     // Wait for cards to render and click first card
-    const firstCard = page.locator("[data-testid='skill-card-omni-skill-0']");
+    const firstCard = page.locator("[data-testid='skill-card-pusula-skill-0']");
     await expect(firstCard).toBeVisible({ timeout: 15_000 });
     await firstCard.click();
 

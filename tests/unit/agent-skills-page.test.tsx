@@ -272,7 +272,7 @@ describe("AgentSkillsPageClient", () => {
     });
 
     const firstCard = container.querySelector(
-      "[data-testid='skill-card-omni-skill-0']"
+      "[data-testid='skill-card-pusula-skill-0']"
     ) as HTMLElement | null;
     expect(firstCard).not.toBeNull();
 

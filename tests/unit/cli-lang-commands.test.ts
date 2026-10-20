@@ -6,12 +6,12 @@ import { tmpdir } from "node:os";
 
 let tmpDir: string;
 let origDataDir: string | undefined;
-let origOmniLang: string | undefined;
+let origPusulaLang: string | undefined;
 
 test.before(() => {
   tmpDir = mkdtempSync(join(tmpdir(), "pusula-lang-test-"));
   origDataDir = process.env.DATA_DIR;
-  origOmniLang = process.env.PUSULA_LANG;
+  origPusulaLang = process.env.PUSULA_LANG;
   process.env.DATA_DIR = tmpDir;
   delete process.env.PUSULA_LANG;
 });
@@ -19,8 +19,8 @@ test.before(() => {
 test.after(() => {
   if (origDataDir === undefined) delete process.env.DATA_DIR;
   else process.env.DATA_DIR = origDataDir;
-  if (origOmniLang === undefined) delete process.env.PUSULA_LANG;
-  else process.env.PUSULA_LANG = origOmniLang;
+  if (origPusulaLang === undefined) delete process.env.PUSULA_LANG;
+  else process.env.PUSULA_LANG = origPusulaLang;
   try {
     rmSync(tmpDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
   } catch {}

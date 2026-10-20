@@ -16,7 +16,7 @@ test("normalizeBasePath strips trailing slashes and rejects unsafe paths", () =>
   assert.equal(normalizeBasePath("/pusula/"), "/pusula");
   assert.equal(normalizeBasePath("pusula"), "");
   assert.equal(normalizeBasePath("/../etc"), "");
-  assert.equal(normalizeBasePath("/omni?x=1"), "");
+  assert.equal(normalizeBasePath("/pusula?x=1"), "");
 });
 
 test("joinBasePath prefixes application routes", () => {

@@ -170,7 +170,7 @@ function seedCache(tier: "community" | "live", opts: { generatedAt?: string | nu
 
 async function getBody(authenticated = false): Promise<Record<string, unknown>> {
   const res = await GET(
-    new Request("https://omni.test/api/free-tier/summary", {
+    new Request("https://pusula.test/api/free-tier/summary", {
       headers: authenticated ? { Cookie: await authCookieHeader() } : {},
     })
   );
@@ -193,7 +193,7 @@ test("flag off => the baseline answers, unchanged contract, honest source tag", 
 
 test("excludeTosAvoid still filters on the baseline path", async () => {
   resetState();
-  const res = await GET(new Request("https://omni.test/api/free-tier/summary?excludeTosAvoid=1"));
+  const res = await GET(new Request("https://pusula.test/api/free-tier/summary?excludeTosAvoid=1"));
   assert.equal(res.status, 200);
   const body = (await res.json()) as Record<string, unknown>;
 

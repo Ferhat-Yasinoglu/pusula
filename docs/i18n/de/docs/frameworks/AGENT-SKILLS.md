@@ -7,7 +7,7 @@
 > **Maßgebliche Quelle:** `src/lib/agentSkills/` (Katalog, Generator, Parser) + Verzeichnis `skills/` (SKILL.md-Dateien)
 > **Zuletzt aktualisiert:** 2026-08-02 — v3.8.50
 
-Agent Skills sind strukturierte SKILL.md-Dateien, die externen Agenten, MCP-Clients und A2A-Orchestratoren vermitteln, wie die REST-API und CLI von Pusula verwendet werden. Im Gegensatz zu [Omni Skills](./SKILLS.md) (LLM-Tooldefinitionen, die innerhalb von Pusula ausgeführt werden) sind Agent Skills ein _Dokumentationskatalog_ — statisches Markdown, das direkt in den Kontext eines Agenten eingebunden werden kann.
+Agent Skills sind strukturierte SKILL.md-Dateien, die externen Agenten, MCP-Clients und A2A-Orchestratoren vermitteln, wie die REST-API und CLI von Pusula verwendet werden. Im Gegensatz zu [Pusula Skills](./SKILLS.md) (LLM-Tooldefinitionen, die innerhalb von Pusula ausgeführt werden) sind Agent Skills ein _Dokumentationskatalog_ — statisches Markdown, das direkt in den Kontext eines Agenten eingebunden werden kann.
 
 ---
 

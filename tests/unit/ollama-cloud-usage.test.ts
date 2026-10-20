@@ -35,7 +35,7 @@ test("registerGenericQuotaFetchers wires a preflight quota fetcher for ollama-cl
 
 test("getUsageForProvider returns helpful message when Ollama Cloud has no usage cookie", async () => {
   const originalCookie = process.env.OLLAMA_USAGE_COOKIE;
-  const originalOmniCookie = process.env.PUSULA_OLLAMA_USAGE_COOKIE;
+  const originalPusulaCookie = process.env.PUSULA_OLLAMA_USAGE_COOKIE;
   delete process.env.OLLAMA_USAGE_COOKIE;
   delete process.env.PUSULA_OLLAMA_USAGE_COOKIE;
 
@@ -60,15 +60,15 @@ test("getUsageForProvider returns helpful message when Ollama Cloud has no usage
     globalThis.fetch = originalFetch;
     if (originalCookie === undefined) delete process.env.OLLAMA_USAGE_COOKIE;
     else process.env.OLLAMA_USAGE_COOKIE = originalCookie;
-    if (originalOmniCookie === undefined) delete process.env.PUSULA_OLLAMA_USAGE_COOKIE;
-    else process.env.PUSULA_OLLAMA_USAGE_COOKIE = originalOmniCookie;
+    if (originalPusulaCookie === undefined) delete process.env.PUSULA_OLLAMA_USAGE_COOKIE;
+    else process.env.PUSULA_OLLAMA_USAGE_COOKIE = originalPusulaCookie;
   }
 });
 
 test("getUsageForProvider scrapes Ollama Cloud settings quota", async () => {
   const originalFetch = globalThis.fetch;
   const originalCookie = process.env.OLLAMA_USAGE_COOKIE;
-  const originalOmniCookie = process.env.PUSULA_OLLAMA_USAGE_COOKIE;
+  const originalPusulaCookie = process.env.PUSULA_OLLAMA_USAGE_COOKIE;
   delete process.env.OLLAMA_USAGE_COOKIE;
   process.env.PUSULA_OLLAMA_USAGE_COOKIE = "__Secure-session=test-cookie";
 
@@ -115,15 +115,15 @@ test("getUsageForProvider scrapes Ollama Cloud settings quota", async () => {
     globalThis.fetch = originalFetch;
     if (originalCookie === undefined) delete process.env.OLLAMA_USAGE_COOKIE;
     else process.env.OLLAMA_USAGE_COOKIE = originalCookie;
-    if (originalOmniCookie === undefined) delete process.env.PUSULA_OLLAMA_USAGE_COOKIE;
-    else process.env.PUSULA_OLLAMA_USAGE_COOKIE = originalOmniCookie;
+    if (originalPusulaCookie === undefined) delete process.env.PUSULA_OLLAMA_USAGE_COOKIE;
+    else process.env.PUSULA_OLLAMA_USAGE_COOKIE = originalPusulaCookie;
   }
 });
 
 test("getUsageForProvider keeps Ollama Cloud reset times aligned to usage tracks", async () => {
   const originalFetch = globalThis.fetch;
   const originalCookie = process.env.OLLAMA_USAGE_COOKIE;
-  const originalOmniCookie = process.env.PUSULA_OLLAMA_USAGE_COOKIE;
+  const originalPusulaCookie = process.env.PUSULA_OLLAMA_USAGE_COOKIE;
   delete process.env.OLLAMA_USAGE_COOKIE;
   process.env.PUSULA_OLLAMA_USAGE_COOKIE = "test-cookie";
 
@@ -159,8 +159,8 @@ test("getUsageForProvider keeps Ollama Cloud reset times aligned to usage tracks
     globalThis.fetch = originalFetch;
     if (originalCookie === undefined) delete process.env.OLLAMA_USAGE_COOKIE;
     else process.env.OLLAMA_USAGE_COOKIE = originalCookie;
-    if (originalOmniCookie === undefined) delete process.env.PUSULA_OLLAMA_USAGE_COOKIE;
-    else process.env.PUSULA_OLLAMA_USAGE_COOKIE = originalOmniCookie;
+    if (originalPusulaCookie === undefined) delete process.env.PUSULA_OLLAMA_USAGE_COOKIE;
+    else process.env.PUSULA_OLLAMA_USAGE_COOKIE = originalPusulaCookie;
   }
 });
 
@@ -193,7 +193,7 @@ test("getUsageForProvider reports expired Ollama Cloud cookies on redirect", asy
 test("getUsageForProvider parses the current $X-of-$Y aria-label with nested width style (#12749)", async () => {
   const originalFetch = globalThis.fetch;
   const originalCookie = process.env.OLLAMA_USAGE_COOKIE;
-  const originalOmniCookie = process.env.PUSULA_OLLAMA_USAGE_COOKIE;
+  const originalPusulaCookie = process.env.PUSULA_OLLAMA_USAGE_COOKIE;
   delete process.env.OLLAMA_USAGE_COOKIE;
   process.env.PUSULA_OLLAMA_USAGE_COOKIE = "__Secure-session=test-cookie";
 
@@ -225,15 +225,15 @@ test("getUsageForProvider parses the current $X-of-$Y aria-label with nested wid
     globalThis.fetch = originalFetch;
     if (originalCookie === undefined) delete process.env.OLLAMA_USAGE_COOKIE;
     else process.env.OLLAMA_USAGE_COOKIE = originalCookie;
-    if (originalOmniCookie === undefined) delete process.env.PUSULA_OLLAMA_USAGE_COOKIE;
-    else process.env.PUSULA_OLLAMA_USAGE_COOKIE = originalOmniCookie;
+    if (originalPusulaCookie === undefined) delete process.env.PUSULA_OLLAMA_USAGE_COOKIE;
+    else process.env.PUSULA_OLLAMA_USAGE_COOKIE = originalPusulaCookie;
   }
 });
 
 test("getUsageForProvider still finds width style on a nested child when no aria-label percent exists (#12749)", async () => {
   const originalFetch = globalThis.fetch;
   const originalCookie = process.env.OLLAMA_USAGE_COOKIE;
-  const originalOmniCookie = process.env.PUSULA_OLLAMA_USAGE_COOKIE;
+  const originalPusulaCookie = process.env.PUSULA_OLLAMA_USAGE_COOKIE;
   delete process.env.OLLAMA_USAGE_COOKIE;
   process.env.PUSULA_OLLAMA_USAGE_COOKIE = "__Secure-session=test-cookie";
 
@@ -261,7 +261,7 @@ test("getUsageForProvider still finds width style on a nested child when no aria
     globalThis.fetch = originalFetch;
     if (originalCookie === undefined) delete process.env.OLLAMA_USAGE_COOKIE;
     else process.env.OLLAMA_USAGE_COOKIE = originalCookie;
-    if (originalOmniCookie === undefined) delete process.env.PUSULA_OLLAMA_USAGE_COOKIE;
-    else process.env.PUSULA_OLLAMA_USAGE_COOKIE = originalOmniCookie;
+    if (originalPusulaCookie === undefined) delete process.env.PUSULA_OLLAMA_USAGE_COOKIE;
+    else process.env.PUSULA_OLLAMA_USAGE_COOKIE = originalPusulaCookie;
   }
 });

@@ -15,11 +15,11 @@ A skill is a versioned, schema-defined unit of work. Pusula can inject skills as
 
 ---
 
-## Agent Skills vs Omni Skills
+## Agent Skills vs Pusula Skills
 
 Pusula has two distinct but complementary skill systems:
 
-| Dimension       | **Omni Skills** (this doc)                                    | **Agent Skills**                                                                            |
+| Dimension       | **Pusula Skills** (this doc)                                    | **Agent Skills**                                                                            |
 | :-------------- | :------------------------------------------------------------ | :------------------------------------------------------------------------------------------ |
 | Purpose         | LLM tool injection + sandboxed execution                      | SKILL.md catalog for external agents to discover and consume                                |
 | Source of truth | `src/lib/skills/` + marketplace                               | `src/lib/agentSkills/` + `skills/` directory                                                |
@@ -29,7 +29,7 @@ Pusula has two distinct but complementary skill systems:
 | Format          | `SkillDefinition` with tool schema + handler                  | `SKILL.md` frontmatter + markdown body                                                      |
 | Discovery       | `/api/skills/*` REST + `pusula_skills_*` MCP tools         | `/api/agent-skills/*` REST + `pusula_agent_skills_*` MCP tools + A2A `list-capabilities` |
 
-**Omni Skills** are the execution engine — they define what Pusula _can do_ when an LLM invokes a tool.
+**Pusula Skills** are the execution engine — they define what Pusula _can do_ when an LLM invokes a tool.
 
 **Agent Skills** are the documentation catalog — they explain to external agents _how to use_ Pusula's REST API and CLI, with structured SKILL.md files that can be fed directly into agent prompts.
 
