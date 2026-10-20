@@ -1,6 +1,6 @@
 # Security Policy (Deutsch)
 
-🌐 **Languages:** 🇺🇸 [English](../../../SECURITY.md) · 🇹🇷 [Türkçe](../tr/SECURITY.md) · 🇩🇪 [Deutsch](SECURITY.md) · 🇮🇷 [فارسی](../fa/SECURITY.md)
+🌐 **Languages:** 🇺🇸 [English](../../../SECURITY.md) · 🇮🇷 [fa](../fa/SECURITY.md) · 🇹🇷 [tr](../tr/SECURITY.md)
 
 ---
 

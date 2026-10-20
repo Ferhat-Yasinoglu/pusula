@@ -494,7 +494,7 @@ function maskBalancedCurlyBraces(input, stash) {
 function protectText(input, options = {}) {
   const tokens = [];
   const stash = (value) => {
-    const token = `__OMNI_TOKEN_${tokens.length}__`;
+    const token = `__PUSULA_TOKEN_${tokens.length}__`;
     tokens.push(value);
     return token;
   };
@@ -526,7 +526,7 @@ function postProcessLocaleText(text, targetLanguage) {
 function restoreText(input, tokens, targetLanguage = null) {
   let output = input;
   for (let i = 0; i < tokens.length; i += 1) {
-    output = output.replaceAll(`__OMNI_TOKEN_${i}__`, tokens[i]);
+    output = output.replaceAll(`__PUSULA_TOKEN_${i}__`, tokens[i]);
   }
   if (targetLanguage) {
     output = postProcessLocaleText(output, targetLanguage);

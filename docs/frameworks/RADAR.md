@@ -736,7 +736,7 @@ variation on data the page already fetches. Once opted in, the tab bar offers
 `ProviderPageHeader` (`src/app/(dashboard)/dashboard/providers/[id]/components/`)
 already linked the provider name to `providerInfo.website` when present, with one
 precedent for a monetized link: the Kimi (Moonshot AI) partner-link note
-(`providers.kimiPartnerLinkNote` i18n key). D28 reuses that exact same discreet-note
+(`providers.referralLinkNote` i18n key). D28 reuses that exact same discreet-note
 pattern for Radar default referrals instead of introducing a new key.
 
 Loose coupling, by design:
@@ -756,7 +756,7 @@ Loose coupling, by design:
   there is no cache yet or no default referral for that specific provider.
 - When a default referral does apply, `ProviderPageHeader` receives `isReferralLink`
   and shows the same discreet note/tooltip as the Kimi partner link (reusing the
-  `providers.kimiPartnerLinkNote` key) — never a new, separate visual treatment.
+  `providers.referralLinkNote` key) — never a new, separate visual treatment.
 
 ---
 

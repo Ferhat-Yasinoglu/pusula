@@ -1,6 +1,6 @@
 # CLAUDE.md (Deutsch)
 
-🌐 **Languages:** 🇺🇸 [English](../../../CLAUDE.md) · 🇹🇷 [Türkçe](../tr/CLAUDE.md) · 🇩🇪 [Deutsch](CLAUDE.md) · 🇮🇷 [فارسی](../fa/CLAUDE.md)
+🌐 **Languages:** 🇺🇸 [English](../../../CLAUDE.md) · 🇮🇷 [fa](../fa/CLAUDE.md) · 🇹🇷 [tr](../tr/CLAUDE.md)
 
 ---
 

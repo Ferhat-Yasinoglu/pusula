@@ -62,7 +62,7 @@ describe("config-generator", () => {
     it("allows a public Pusula Cloud target", async () => {
       const { assertSafeCatalogUrl } =
         await import("../../../src/lib/cli-helper/config-generator/opencode.ts");
-      assert.doesNotThrow(() => assertSafeCatalogUrl("https://api.pusula.online/v1/models"));
+      assert.doesNotThrow(() => assertSafeCatalogUrl("https://api.example.com/v1/models"));
     });
 
     it("blocks the cloud-metadata SSRF→IAM pivot (169.254.169.254)", async () => {

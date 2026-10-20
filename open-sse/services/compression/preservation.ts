@@ -13,7 +13,7 @@ interface CompiledPattern {
   kind: string;
 }
 
-const SENTINEL_PREFIX = "\u0000OMNI_CAVEMAN";
+const SENTINEL_PREFIX = "\u0000PUSULA_CAVEMAN";
 
 function randomSentinelSeed(): string {
   const bytes = new Uint8Array(8);

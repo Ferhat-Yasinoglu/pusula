@@ -18,7 +18,7 @@ import { getRelayLogs } from "../../../../src/lib/db/relayProxies.ts";
 
 const ORIGINAL_BIFROST_BASE_URL = process.env.BIFROST_BASE_URL;
 const ORIGINAL_BIFROST_API_KEY = process.env.BIFROST_API_KEY;
-const ORIGINAL_BIFROST_OMNI_KEY = process.env.PUSULA_BIFROST_KEY;
+const ORIGINAL_BIFROST_PUSULA_KEY = process.env.PUSULA_BIFROST_KEY;
 const ORIGINAL_BIFROST_TIMEOUT = process.env.BIFROST_TIMEOUT_MS;
 const ORIGINAL_BIFROST_STREAMING = process.env.BIFROST_STREAMING_ENABLED;
 const ORIGINAL_FETCH = globalThis.fetch;
@@ -60,8 +60,8 @@ function restoreEnv() {
   else process.env.BIFROST_BASE_URL = ORIGINAL_BIFROST_BASE_URL;
   if (ORIGINAL_BIFROST_API_KEY === undefined) delete process.env.BIFROST_API_KEY;
   else process.env.BIFROST_API_KEY = ORIGINAL_BIFROST_API_KEY;
-  if (ORIGINAL_BIFROST_OMNI_KEY === undefined) delete process.env.PUSULA_BIFROST_KEY;
-  else process.env.PUSULA_BIFROST_KEY = ORIGINAL_BIFROST_OMNI_KEY;
+  if (ORIGINAL_BIFROST_PUSULA_KEY === undefined) delete process.env.PUSULA_BIFROST_KEY;
+  else process.env.PUSULA_BIFROST_KEY = ORIGINAL_BIFROST_PUSULA_KEY;
   if (ORIGINAL_BIFROST_TIMEOUT === undefined) delete process.env.BIFROST_TIMEOUT_MS;
   else process.env.BIFROST_TIMEOUT_MS = ORIGINAL_BIFROST_TIMEOUT;
   if (ORIGINAL_BIFROST_STREAMING === undefined) delete process.env.BIFROST_STREAMING_ENABLED;

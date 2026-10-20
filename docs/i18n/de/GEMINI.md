@@ -1,6 +1,6 @@
 # Security and Cleanliness Rules for AI Assistants (Deutsch)
 
-🌐 **Languages:** 🇺🇸 [English](../../../GEMINI.md) · 🇹🇷 [Türkçe](../tr/GEMINI.md) · 🇩🇪 [Deutsch](GEMINI.md) · 🇮🇷 [فارسی](../fa/GEMINI.md)
+🌐 **Languages:** 🇺🇸 [English](../../../GEMINI.md) · 🇮🇷 [fa](../fa/GEMINI.md) · 🇹🇷 [tr](../tr/GEMINI.md)
 
 ---
 

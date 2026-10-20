@@ -1,6 +1,6 @@
 # README (Deutsch)
 
-🌐 **Languages:** 🇺🇸 [English](../../../README.md) · 🇹🇷 [Türkçe](../tr/README.md) · 🇩🇪 [Deutsch](README.md) · 🇮🇷 [فارسی](../fa/README.md)
+🌐 **Languages:** 🇺🇸 [English](../../../README.md) · 🇮🇷 [fa](../fa/README.md) · 🇹🇷 [tr](../tr/README.md)
 
 ---
 

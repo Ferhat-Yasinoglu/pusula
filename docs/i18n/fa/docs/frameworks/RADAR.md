@@ -1,6 +1,6 @@
 # Radar Free-Model Catalog (فارسی)
 
-🌐 **Languages:** 🇺🇸 [English](../../../../frameworks/RADAR.md) · 🇪🇹 [am](../../../am/docs/frameworks/RADAR.md) · 🇸🇦 [ar](../../../ar/docs/frameworks/RADAR.md) · 🇦🇿 [az](../../../az/docs/frameworks/RADAR.md) · 🇧🇬 [bg](../../../bg/docs/frameworks/RADAR.md) · 🇧🇩 [bn](../../../bn/docs/frameworks/RADAR.md) · 🇧🇦 [bs](../../../bs/docs/frameworks/RADAR.md) · 🇨🇿 [cs](../../../cs/docs/frameworks/RADAR.md) · 🇩🇰 [da](../../../da/docs/frameworks/RADAR.md) · 🇩🇪 [de](../../../de/docs/frameworks/RADAR.md) · 🇬🇷 [el](../../../el/docs/frameworks/RADAR.md) · 🇪🇸 [es](../../../es/docs/frameworks/RADAR.md) · 🇪🇪 [et](../../../et/docs/frameworks/RADAR.md) · 🇫🇮 [fi](../../../fi/docs/frameworks/RADAR.md) · 🇫🇷 [fr](../../../fr/docs/frameworks/RADAR.md) · 🇮🇪 [ga](../../../ga/docs/frameworks/RADAR.md) · 🇮🇳 [gu](../../../gu/docs/frameworks/RADAR.md) · 🇳🇬 [ha](../../../ha/docs/frameworks/RADAR.md) · 🇮🇱 [he](../../../he/docs/frameworks/RADAR.md) · 🇮🇳 [hi](../../../hi/docs/frameworks/RADAR.md) · 🇭🇷 [hr](../../../hr/docs/frameworks/RADAR.md) · 🇭🇺 [hu](../../../hu/docs/frameworks/RADAR.md) · 🇦🇲 [hy](../../../hy/docs/frameworks/RADAR.md) · 🇮🇩 [id](../../../id/docs/frameworks/RADAR.md) · 🇳🇬 [ig](../../../ig/docs/frameworks/RADAR.md) · 🇮🇹 [it](../../../it/docs/frameworks/RADAR.md) · 🇯🇵 [ja](../../../ja/docs/frameworks/RADAR.md) · 🇬🇪 [ka](../../../ka/docs/frameworks/RADAR.md) · 🇰🇭 [km](../../../km/docs/frameworks/RADAR.md) · 🇮🇳 [kn](../../../kn/docs/frameworks/RADAR.md) · 🇰🇷 [ko](../../../ko/docs/frameworks/RADAR.md) · 🇱🇹 [lt](../../../lt/docs/frameworks/RADAR.md) · 🇱🇻 [lv](../../../lv/docs/frameworks/RADAR.md) · 🇮🇳 [ml](../../../ml/docs/frameworks/RADAR.md) · 🇮🇳 [mr](../../../mr/docs/frameworks/RADAR.md) · 🇲🇾 [ms](../../../ms/docs/frameworks/RADAR.md) · 🇲🇹 [mt](../../../mt/docs/frameworks/RADAR.md) · 🇲🇲 [my](../../../my/docs/frameworks/RADAR.md) · 🇳🇵 [ne](../../../ne/docs/frameworks/RADAR.md) · 🇳🇱 [nl](../../../nl/docs/frameworks/RADAR.md) · 🇳🇴 [no](../../../no/docs/frameworks/RADAR.md) · 🇮🇳 [or](../../../or/docs/frameworks/RADAR.md) · 🇮🇳 [pa](../../../pa/docs/frameworks/RADAR.md) · 🇵🇭 [phi](../../../phi/docs/frameworks/RADAR.md) · 🇵🇱 [pl](../../../pl/docs/frameworks/RADAR.md) · 🇵🇹 [pt](../../../pt/docs/frameworks/RADAR.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/frameworks/RADAR.md) · 🇷🇴 [ro](../../../ro/docs/frameworks/RADAR.md) · 🇷🇺 [ru](../../../ru/docs/frameworks/RADAR.md) · 🇱🇰 [si](../../../si/docs/frameworks/RADAR.md) · 🇸🇰 [sk](../../../sk/docs/frameworks/RADAR.md) · 🇸🇮 [sl](../../../sl/docs/frameworks/RADAR.md) · 🇷🇸 [sr](../../../sr/docs/frameworks/RADAR.md) · 🇸🇪 [sv](../../../sv/docs/frameworks/RADAR.md) · 🇰🇪 [sw](../../../sw/docs/frameworks/RADAR.md) · 🇮🇳 [ta](../../../ta/docs/frameworks/RADAR.md) · 🇮🇳 [te](../../../te/docs/frameworks/RADAR.md) · 🇹🇭 [th](../../../th/docs/frameworks/RADAR.md) · 🇹🇷 [tr](../../../tr/docs/frameworks/RADAR.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/frameworks/RADAR.md) · 🇵🇰 [ur](../../../ur/docs/frameworks/RADAR.md) · 🇺🇿 [uz](../../../uz/docs/frameworks/RADAR.md) · 🇻🇳 [vi](../../../vi/docs/frameworks/RADAR.md) · 🇳🇬 [yo](../../../yo/docs/frameworks/RADAR.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/frameworks/RADAR.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/frameworks/RADAR.md)
+🌐 **Languages:** 🇺🇸 [English](../../../../frameworks/RADAR.md) · 🇩🇪 [de](../../../de/docs/frameworks/RADAR.md) · 🇹🇷 [tr](../../../tr/docs/frameworks/RADAR.md)
 
 ---
 
@@ -709,7 +709,7 @@ dashboard مربوط به providerها، بهجای `index.ts` مستقیماً 
 `ProviderPageHeader` (`src/app/(dashboard)/dashboard/providers/[id]/components/`)
 از قبل، در صورت وجود، نام ارائهدهنده را به `providerInfo.website` لینک میکرد و یک
 نمونهٔ قبلی برای لینک درآمدزا داشت: یادداشت لینک شراکت Kimi (Moonshot AI)
-(کلید i18n با نام `providers.kimiPartnerLinkNote`). D28 دقیقاً همان الگوی یادداشت نامحسوس را
+(کلید i18n با نام `providers.referralLinkNote`). D28 دقیقاً همان الگوی یادداشت نامحسوس را
 برای ارجاعهای پیشفرض Radar بازاستفاده میکند، بهجای اینکه کلید جدیدی معرفی کند.
 
 اتصال سست، بهصورت آگاهانه:
@@ -729,13 +729,13 @@ dashboard مربوط به providerها، بهجای `index.ts` مستقیماً 
   هنوز هیچ کشی وجود نداشته باشد یا برای آن ارائهدهندهٔ مشخص هیچ ارجاع پیشفرضی موجود نباشد.
 - هنگامی که یک ارجاع پیشفرض اعمال شود، `ProviderPageHeader` مقدار `isReferralLink` را دریافت میکند
   و همان یادداشت/راهنمای نامحسوس لینک شراکت Kimi را نمایش میدهد (با بازاستفاده از کلید
-  `providers.kimiPartnerLinkNote`) — هرگز از طراحی بصری جدید و جداگانهای استفاده نمیشود.
+  `providers.referralLinkNote`) — هرگز از طراحی بصری جدید و جداگانهای استفاده نمیشود.
 
 ---
 
 ## نحوه میزبانی شخصی یک خوراک
 
-یک فورک یا میزبان شخصی که خواهان کنترل کامل بر کاتالوگ است، میتواند بدون تغییر کد کلاینت، سرویس خوراک خود را اجرا کند:
+Radar فقط با سرور خوراکی که خودتان اجرا می‌کنید گفت‌وگو می‌کند — هیچ سرویس میزبانی‌شده و هیچ میزبان پیش‌فرضی برای بازگشت وجود ندارد. راه‌اندازی چنین سروری نیازی به تغییر کد کلاینت ندارد:
 
 1. یک نقطه پایانی `GET /v1/catalog/latest` ارائه دهید که بدنهای از نوع JSON بازگرداند و با
    `RadarFeedSchema` (`src/lib/radar/feedSchema.ts`) مطابقت داشته باشد — شامل `feed:

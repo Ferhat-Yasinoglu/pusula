@@ -36,10 +36,10 @@ const liveSettings = { optIn: true, supporterKey };
 
 test("canonical Intel fixture is byte-identical to the private contract", async () => {
   const bytes = await fixtureBytes();
-  assert.equal(bytes.byteLength, 1024);
+  assert.equal(bytes.byteLength, 1021);
   assert.equal(
     crypto.createHash("sha256").update(bytes).digest("hex"),
-    "c36aaa6ad53942afa0325d6b0fad0aa048ef66f24c805b743b9815446b0e6176"
+    "e02824546a1472d1393cf25e1714e8503031521ff86b191a37cf41cab568ffe9"
   );
   assert.equal(RadarIntelFeedSchema.parse(JSON.parse(bytes.toString("utf8"))).tier, "live");
 });

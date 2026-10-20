@@ -1,6 +1,6 @@
 # Contributing to Pusula (Deutsch)
 
-🌐 **Languages:** 🇺🇸 [English](../../../CONTRIBUTING.md) · 🇹🇷 [Türkçe](../tr/CONTRIBUTING.md) · 🇩🇪 [Deutsch](CONTRIBUTING.md) · 🇮🇷 [فارسی](../fa/CONTRIBUTING.md)
+🌐 **Languages:** 🇺🇸 [English](../../../CONTRIBUTING.md) · 🇮🇷 [fa](../fa/CONTRIBUTING.md) · 🇹🇷 [tr](../tr/CONTRIBUTING.md)
 
 ---
 

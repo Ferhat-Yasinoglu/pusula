@@ -1,6 +1,6 @@
 # Changelog (Türkçe)
 
-🌐 **Languages:** 🇺🇸 [English](../../../CHANGELOG.md) · 🇩🇪 [de](../de/CHANGELOG.md) · 🇮🇷 [fa](../fa/CHANGELOG.md) · 🇹🇷 [tr](../tr/CHANGELOG.md)
+🌐 **Languages:** 🇺🇸 [English](../../../CHANGELOG.md) · 🇩🇪 [de](../de/CHANGELOG.md) · 🇮🇷 [fa](../fa/CHANGELOG.md)
 
 ---
 

@@ -1,6 +1,6 @@
 # Pusula (Türkçe)
 
-🌐 **Languages:** 🇺🇸 [English](../../../llm.txt) · 🇩🇪 [de](../de/llm.txt) · 🇮🇷 [fa](../fa/llm.txt) · 🇹🇷 [tr](../tr/llm.txt)
+🌐 **Languages:** 🇺🇸 [English](../../../llm.txt) · 🇩🇪 [de](../de/llm.txt) · 🇮🇷 [fa](../fa/llm.txt)
 
 ---
 

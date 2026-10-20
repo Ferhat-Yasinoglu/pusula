@@ -1,6 +1,6 @@
 # Contributor Covenant Code of Conduct (Deutsch)
 
-🌐 **Languages:** 🇺🇸 [English](../../../CODE_OF_CONDUCT.md) · 🇹🇷 [Türkçe](../tr/CODE_OF_CONDUCT.md) · 🇩🇪 [Deutsch](CODE_OF_CONDUCT.md) · 🇮🇷 [فارسی](../fa/CODE_OF_CONDUCT.md)
+🌐 **Languages:** 🇺🇸 [English](../../../CODE_OF_CONDUCT.md) · 🇮🇷 [fa](../fa/CODE_OF_CONDUCT.md) · 🇹🇷 [tr](../tr/CODE_OF_CONDUCT.md)
 
 ---
 
