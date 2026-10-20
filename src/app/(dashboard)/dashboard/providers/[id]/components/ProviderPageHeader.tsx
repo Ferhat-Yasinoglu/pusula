@@ -6,7 +6,6 @@ import ProviderIcon from "@/shared/components/ProviderIcon";
 import { getHeaderIconProviderId, providerText } from "../providerPageHelpers";
 import type { ProviderMessageTranslator } from "../providerPageHelpers";
 import type { ProviderNotice } from "@/lib/providers/catalog";
-import { isKimiPartnerProviderId } from "../../featuredProviders";
 
 interface ProviderInfo {
   id: string;
@@ -33,9 +32,9 @@ interface ProviderPageHeaderProps {
   /**
    * True when `providerInfo.website` was overridden with a Radar default
    * referral link (D28 — referral links / free credits), rather than the
-   * static catalog `website`. Reuses the same discreet "Partner link" note
-   * as the pre-existing Kimi partnership link — both are the same kind of
-   * "this link supports Pusula" disclosure.
+   * static catalog `website`. Renders a discreet "Referral link" disclosure
+   * next to the header link so it reads as a monetized link, not just
+   * "visit provider website" like every other card.
    */
   isReferralLink?: boolean;
 }
@@ -50,20 +49,14 @@ export default function ProviderPageHeader({
   t,
   isReferralLink = false,
 }: ProviderPageHeaderProps) {
-  // Kimi (Moonshot AI) official-partnership aff links (2026-07): the header
-  // website link doubles as the CTA for kimi-coding/kimi-web/moonshot's
-  // tracking links (see website field in oauth.ts / web-cookie.ts /
-  // apikey/regional.ts) — flag it with a discreet "Partner link" note so it
-  // reads as a monetized link, not just "visit provider website" like every
-  // other card. UI-only — never affects routing/fallback (featuredProviders.ts).
-  const isKimiPartnerLink = isKimiPartnerProviderId(providerInfo.id);
-  // D28: any Radar-driven default referral gets the exact same discreet
-  // disclosure treatment as the Kimi partner link.
-  const showPartnerNote = isKimiPartnerLink || isReferralLink;
-  const kimiPartnerLinkNote = providerText(
+  // D28 (Radar referral links): when `providerInfo.website` was swapped for a
+  // Radar default referral, flag the header link with a discreet disclosure.
+  // UI-only — never affects routing/fallback. No provider id earns the note on
+  // its own; only the resolved referral does.
+  const referralLinkNote = providerText(
     t,
-    "kimiPartnerLinkNote",
-    "Partner link — supports Pusula at no extra cost to you"
+    "referralLinkNote",
+    "Referral link — supports Pusula at no extra cost to you"
   );
 
   // Resolve the API-key registration link: prefer apiKeyUrl, fall back to
@@ -119,9 +112,9 @@ export default function ProviderPageHeader({
               rel="noopener noreferrer"
               className="text-3xl font-semibold tracking-tight hover:underline inline-flex items-center gap-2"
               style={{ color: providerInfo.color }}
-              title={showPartnerNote ? kimiPartnerLinkNote : undefined}
+              title={isReferralLink ? referralLinkNote : undefined}
               aria-label={
-                showPartnerNote ? `${providerInfo.name} — ${kimiPartnerLinkNote}` : undefined
+                isReferralLink ? `${providerInfo.name} — ${referralLinkNote}` : undefined
               }
             >
               {providerInfo.name}
@@ -134,9 +127,9 @@ export default function ProviderPageHeader({
             <p className="text-text-muted">
               {t("connectionCountLabel", { count: connectionsCount })}
             </p>
-            {showPartnerNote && providerInfo.website && (
+            {isReferralLink && providerInfo.website && (
               <span className="text-[10px] font-medium uppercase tracking-wide text-text-muted/70">
-                {kimiPartnerLinkNote}
+                {referralLinkNote}
               </span>
             )}
             {apiKeyLink}

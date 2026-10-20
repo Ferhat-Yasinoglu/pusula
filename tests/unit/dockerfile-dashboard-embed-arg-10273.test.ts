@@ -1,6 +1,6 @@
 /**
  * #10273 — `DASHBOARD_ALLOW_EMBED=vscode` relaxes the dashboard's CSP
- * `frame-ancestors` so the VS Code Simple Browser (the OmniCopilot extension's
+ * `frame-ancestors` so the VS Code Simple Browser (a companion VS Code extension's
  * `dashboardOpen: "editor"` mode) can render it. next.config.mjs reads the
  * variable while the bundle is built and Next.js compiles the result into the
  * route manifest, so the policy is frozen at build time.

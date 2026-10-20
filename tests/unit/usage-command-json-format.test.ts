@@ -1,5 +1,5 @@
 /**
- * #8 (OmniCopilot) — the usage command answered `text/plain`, which a UI cannot
+ * #8 (VS Code companion extension) — the usage command answered `text/plain`, which a UI cannot
  * parse safely. The structured form (`?format=json`) returns the same
  * `ApiKeyUsageLimitStatus` + `UsageSnapshot` the text is rendered from.
  *

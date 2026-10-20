@@ -7,7 +7,7 @@
  */
 
 export const KIMI_CODE_ADDITIONAL_CREDITS_URL =
-  "https://www.kimi.com/membership/subscription?tab=quota&aff=pusula";
+  "https://www.kimi.com/membership/subscription?tab=quota";
 
 type KimiExtraUsageStatus = "enabled" | "disabled" | "frozen" | "unavailable";
 

@@ -2,7 +2,7 @@
  * Opt-in iframe embedding for Pusula's HTML pages (#10273).
  *
  * Pusula ships `frame-ancestors 'none'` + `X-Frame-Options: DENY` on every route, which
- * is the right default for a proxy that holds provider credentials. The OmniCopilot VS Code
+ * is the right default for a proxy that holds provider credentials. A companion VS Code
  * extension, however, renders the dashboard inside the built-in Simple Browser — an iframe
  * whose ancestor is a `vscode-webview:` document — so the strict default paints a blank tab.
  *

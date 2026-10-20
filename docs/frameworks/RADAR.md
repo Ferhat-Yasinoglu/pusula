@@ -8,10 +8,11 @@ lastUpdated: 2026-09-01
 
 > **Source of truth:** `src/lib/radar/`, `src/lib/db/radar.ts`, `src/app/api/radar/`
 > **Last updated:** 2026-09-01 — v3.8.51
-> **Hosted-service evidence boundary:** server-side rules described here were verified on
-> 2026-09-01 against the intentionally private Radar server at exact revision
-> `main@dce70f004364912f3f144cdb69f4cbcde16093ed`. That implementation is not distributed in
-> this OSS repository; hosted availability remains a separate operational state.
+> **Self-hosted only:** this project operates no Radar feed service and bakes in no default
+> upstream host. Radar stays network-inert until the operator runs their own feed server and
+> sets `RADAR_FEED_URL` (see [How to self-host a feed](#how-to-self-host-a-feed)). The
+> server-side rules described below are the contract such a server must implement — not a
+> description of a hosted service offered by this repository.
 
 Radar is an **optional add-on** that overlays a signed, freshly-curated free-model
 catalog on top of the release baseline (`FREE_MODEL_BUDGETS` in
@@ -30,19 +31,19 @@ is never mutated on disk — see
 
 ## Delivery status in v3.8.51
 
-The following status distinguishes what this OSS release implements from later Radar
-workstreams. It is a code-level status, not a promise that a particular hosted deployment
-or external integration is currently available.
+The following status distinguishes what this OSS release implements from what belongs to the
+operator's self-hosted feed server. It is a code-level status; no hosted deployment or external
+integration is provided by this project.
 
 | Area                             | Status in this release                                                                                                                                                                                                   |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Signed catalog client            | Implemented behind `RADAR_ENABLED`, with separate opt-in, Ed25519 verification, local encrypted settings/cache, persistent display/enabled overrides, reversible tombstones, scheduler, and dashboard.                   |
-| Contributor activation           | The dashboard links to the server-hosted GitHub claim flow and accepts an existing `omr_…` key. Contributor eligibility is resolved by the private service; the OSS client contains no GitHub token or issuance logic.   |
+| Contributor activation           | The dashboard shows an optional claim link only when the operator sets `RADAR_CONTRIBUTOR_CLAIM_URL` to a flow on their own feed server, and accepts an existing `omr_…` key. Eligibility is resolved by that server; the OSS client contains no GitHub token or issuance logic. |
 | Supporter-key activation         | Implemented. The raw key is validated, encrypted at rest, masked on reads, and sent only by server-side sync. Changing or clearing the key invalidates all four entitlement-sensitive feed caches.                       |
 | Referral links                   | Implemented as a separately signed, hourly-refreshed feed. Fixed links are available to the community tier immediately; limited campaigns remain live-tier data.                                                         |
 | Supporter offers                 | Implemented as a separate signed, live-only feed and dashboard page. The client revalidates the closed benefit schema, preserves the last good cache, filters expired entries, and labels partner offers explicitly.     |
 | Intel and supporter recognition  | Implemented as a strict signed live-only feed with Radar-owned ELO, factual catalog freshness/trend, a verified local supporter badge, dashboard page, and local-only CLI status/sync commands.                          |
-| Payments and transactional email | Not implemented in the OSS client. Purchase, donation, receipt review, recovery, and mail delivery belong to the private service; hosted availability still depends on its supervised deploy and provider configuration. |
+| Key issuance, payments, e-mail   | Not implemented in the OSS client. Issuing, granting, recovering, or e-mailing supporter keys is entirely the self-hosted feed server's concern; this repository contains no payment code and links to no hosted service.      |
 | Research-agent workstream        | Not part of this client release. Curated feed contents remain server-side data; no autonomous research agent runs in an Pusula installation.                                                                          |
 
 ---
@@ -64,9 +65,10 @@ configuration, usage record, or local dismissal state.
 - newest-active-first selection, locale fallback to English, and per-ID local dismissal.
 
 The parser temporarily accepts the former singular `{ active, title, message, ... }` shape so
-older forks can migrate without a broken Changelog view. Invalid feeds are inert. The Radar launch
-entry ships with `active: false`; changing it to `true` is a separate post-merge, post-deploy
-release action and does not change `RADAR_ENABLED` or the independent feed-sync opt-in.
+older forks can migrate without a broken Changelog view. Invalid feeds are inert. The shipped
+`news.json` is an empty v2 feed (`{ "schemaVersion": 2, "items": [] }`); an operator who wants
+announcements publishes their own items there. Toggling an item's `active` flag never changes
+`RADAR_ENABLED` or the independent feed-sync opt-in.
 
 ---
 
@@ -103,24 +105,25 @@ migration `136_radar_cache_settings.sql`). `syncRadar()` checks the flag _and_ t
 opt-in before making any network call:
 
 ```
-Flag off      → { status: "disabled" }   — no network call
-Opt-in false  → { status: "opt_out" }    — no network call
+Flag off             → { status: "disabled" }        — no network call
+Opt-in false         → { status: "opt_out" }         — no network call
+RADAR_FEED_URL unset → { status: "not_configured" }  — one "Radar feed URL not configured; skipping" log line, no network call
 ```
 
-When both are on, the sync path is:
+When all three are satisfied, the sync path is:
 
-1. `GET <feed base URL>/v1/catalog/latest` with `x-pusula-radar-schema: 2` and an optional
+1. `GET ${RADAR_FEED_URL}/v1/catalog/latest` (e.g. `https://radar.example.com/v1/catalog/latest`)
+   with `x-pusula-radar-schema: 2` and an optional
    `Authorization: Bearer <supporter key>` header (see below). Servers default to the separately
    signed v1 transition artifact when the schema header is absent, so older installed clients keep
    receiving updates.
-2. This is a download-only application flow, but it is still an HTTPS request. The hosted
-   infrastructure receives ordinary connection metadata such as the source IP. When a supporter
-   key is configured, sync also sends that key in the Bearer header so the service can resolve the
-   entitlement. At the exact private-server revision identified in the evidence boundary above,
-   feed-request accounting uses key hashes, aggregate usage, and a daily rotating truncated HMAC
-   of the IP for manual abuse review; those tables persist neither the key nor the IP in raw form.
-   Infrastructure access logs and the encrypted delivery outbox are separate operational
-   boundaries.
+2. This is a download-only application flow, but it is still an HTTPS request. The feed server
+   you operate receives ordinary connection metadata such as the source IP. When a supporter
+   key is configured, sync also sends that key in the Bearer header so your server can resolve the
+   entitlement. What the server retains about requests is the operator's own policy; the
+   reference contract keeps key hashes, aggregate usage, and a daily rotating truncated HMAC of
+   the IP for manual abuse review rather than raw keys or IPs. Infrastructure access logs are a
+   separate operational boundary.
 3. Pusula never sends prompts, responses, conversations, provider credentials, model traffic,
    uptime, latency, or the local provider configuration to the Radar service.
 4. The response is verified, validated, and cached locally (see
@@ -148,7 +151,9 @@ that lets the feed service decide which tier to serve (see
 
 The inactive dashboard renders these rules from
 `src/app/(dashboard)/dashboard/radar/RadarAccessExplainer.tsx` **before** either activation action.
-The canonical access scale is:
+The explainer describes the reference access scale below. Which levels actually exist, and who
+qualifies for them, is decided entirely by the self-hosted feed server (via the served
+`x-pusula-feed-tier`); the OSS client only ever distinguishes `community` from `live`:
 
 | Level                 | Eligibility                                                                       | Access                                       | Repeat/expiration rule                                                    |
 | --------------------- | --------------------------------------------------------------------------------- | -------------------------------------------- | ------------------------------------------------------------------------- |
@@ -164,17 +169,16 @@ no contributor grant regardless of PR count. Finite purchases, donations, contri
 manual grants accumulate from the current expiration; lifetime dominates. A rank change never
 retroactively revokes or shortens time already awarded.
 
-The hosted license is personal and the user-facing rule is one active installation at a time. This
-release does **not** claim a hardware lock: the OSS sync does not fingerprint hardware or maintain a
-cryptographic device lease. At the verified private-server revision above, implemented enforcement
-is entitlement validation plus a manual-review signal when the same live key is seen from a fourth
-distinct IP within 24 hours. That signal never blocks or revokes a key automatically. Recovery
-revokes and replaces the lost key while preserving the existing expiration; it does not restart the
-purchased or granted period.
+Any licensing or anti-sharing policy belongs to the operator of the feed server. This release does
+**not** claim a hardware lock: the OSS sync does not fingerprint hardware or maintain a
+cryptographic device lease. The reference server contract enforces entitlement validation plus a
+manual-review signal when the same live key is seen from a fourth distinct IP within 24 hours; that
+signal never blocks or revokes a key automatically. Recovery, where a server offers it, revokes and
+replaces the lost key while preserving the existing expiration.
 
 Live offers are manually curated and can change or expire. The opt-in screen also names the exact
 privacy boundary: signed catalog/referral metadata is downloaded; a valid key additionally unlocks
-signed offers and Intel; the Bearer key and normal connection metadata reach the hosted service;
+signed offers and Intel; the Bearer key and normal connection metadata reach the operator's feed server;
 prompts, responses, conversations, provider credentials, model traffic, uptime, latency, and local
 provider configuration do not.
 
@@ -182,51 +186,52 @@ provider configuration do not.
 
 ## Getting a supporter key
 
-The activation screen (`/dashboard/radar`) links out to two flows for **obtaining** a
-supporter key. The OSS repo itself never issues one, never runs payment code, and
-**never states a price** — pricing is decided and displayed entirely on the
-destination pages, not in this repo (spec decision D14).
+Supporter keys (`omr_` + 40 hex chars) are issued by the operator's own self-hosted Radar feed
+server — this repository never issues one, never runs payment code, and **never states a
+price** (spec decision D14). The activation screen (`/dashboard/radar`) can link out to two
+optional flows on that server. Each button renders only when its URL is configured, and the whole
+section disappears when neither is set:
 
-- **"I'm a contributor"** — opens `RADAR_CONTRIBUTOR_CLAIM_URL` (default
-  `https://radar.pusula.online/auth/github`), a GitHub OAuth claim flow hosted on
-  the private Radar server. It checks the latest complete weekly ranking: Top 10 receives 365 days
-  and positions 11–100 receive 90 days. Outside the Top 100, PR count never grants access; the flow
-  instead checks the separate star + follow single-use level.
-- **"Support the project"** — opens `RADAR_SUPPORTER_PLANS_URL` (default
-  `https://radar.pusula.online/planos`), the hosted page for the one-time 6-month, 1-year, and
-  lifetime options. The OSS page still displays no monetary value.
+- **"I'm a contributor"** — opens `RADAR_CONTRIBUTOR_CLAIM_URL` (e.g.
+  `https://radar.example.com/auth/github`), a claim flow on your feed server — typically GitHub
+  OAuth — that checks contributor eligibility against your own ranking rules (in the reference
+  scale above: Top 10 receives 365 days, positions 11–100 receive 90 days, PR count alone never
+  grants access, and the star + follow level is single-use).
+- **"Support the project"** — opens `RADAR_SUPPORTER_PLANS_URL` (e.g.
+  `https://radar.example.com/plans`), whatever page your server uses to hand out supporter keys.
+  The OSS page displays no monetary value.
 
-Both URLs are resolved server-side (`src/lib/radar/links.ts`, same env-override
-pattern as `RADAR_FEED_URL`) and relayed to the dashboard through the existing
-`GET /api/radar/settings` response (`contributorClaimUrl`, `supporterPlansUrl`) — the
-client component never reads `process.env` itself.
+Both URLs are resolved server-side (`src/lib/radar/links.ts`, same env-only pattern as
+`RADAR_FEED_URL`), accepted only as absolute http(s) URLs, and relayed to the dashboard through the
+existing `GET /api/radar/settings` response (`contributorClaimUrl`, `supporterPlansUrl`, each
+`null` when unset) — the client component never reads `process.env` itself.
 
-| Var                           | Purpose                                                                                     |
-| ----------------------------- | ------------------------------------------------------------------------------------------- |
-| `RADAR_CONTRIBUTOR_CLAIM_URL` | Overrides the contributor-claim URL (default `https://radar.pusula.online/auth/github`). |
-| `RADAR_SUPPORTER_PLANS_URL`   | Overrides the supporter-plans URL (default `https://radar.pusula.online/planos`).        |
+| Var                           | Purpose                                                                                  |
+| ----------------------------- | ---------------------------------------------------------------------------------------- |
+| `RADAR_CONTRIBUTOR_CLAIM_URL` | Optional contributor-claim URL on your feed server. No default — unset hides the button. |
+| `RADAR_SUPPORTER_PLANS_URL`   | Optional supporter-plans URL on your feed server. No default — unset hides the button.   |
 
 ### Recovering a lost supporter key
 
-The hosted service's recovery entry point is `https://radar.pusula.online/recover`; it is also
-linked from the plans page. Recovery remains entirely outside the OSS client because the local
-installation never receives the purchaser/contributor e-mail and cannot reconstruct a raw key from
-its encrypted settings.
+Key recovery, where offered, lives on the self-hosted feed server (for example
+`https://radar.example.com/recover`, linked from its plans page). It stays entirely outside the
+OSS client because the local installation never receives the purchaser/contributor e-mail and
+cannot reconstruct a raw key from its encrypted settings. The reference flow a server can implement:
 
-1. Submit the e-mail associated with the key. The service returns the same accepted page whether a
+1. Submit the e-mail associated with the key. The server returns the same accepted page whether a
    recoverable license exists or not, so the form does not enumerate accounts.
 2. If eligible, the delivery worker sends a short-lived, one-use link. Opening it immediately moves
    the token into a transient encrypted `HttpOnly`/`Secure` cookie and redirects to the clean
    `/recover` URL; the page contains no token, e-mail, old key, or replacement key.
-3. Confirm the revocation. The private service revokes the prior key, creates the replacement with
-   the same plan/expiration, and queues it for e-mail in one transaction. The replacement is never
-   returned to the browser.
+3. Confirm the revocation. The server revokes the prior key, creates the replacement with the same
+   plan/expiration, and queues it for e-mail in one transaction. The replacement is never returned
+   to the browser.
 4. Paste the replacement into `/dashboard/radar`. The old key must now degrade to `community`; the
    replacement must produce a verified `live` sync. Reopening the same recovery link must fail with
    a generic invalid/expired response.
 
-The hosted recovery route and mail worker can be present in code while still unavailable in a given
-deployment. Do not call the flow production-ready until the server has been deployed, the delivery
+A recovery route and mail worker can be present in server code while still unavailable in a given
+deployment. Do not call the flow production-ready until your server has been deployed, the delivery
 provider has been configured with a controlled recipient, and the full one-use link has been tested.
 
 Once a visitor has a key (`omr_` + 40 hex chars), the activation screen
@@ -238,21 +243,22 @@ with the shared `isValidSupporterKeyFormat()` helper (`src/lib/radar/supporterKe
 as a UX nicety; the server's Zod schema is the authoritative check either way. Once a
 key is set, the activation screen shows the masked form (`supporterKeyMasked` from
 `GET /api/radar/settings`) instead of an empty input, with a "change key" control to
-paste a new one — the raw key is never redisplayed. The two claim/plans buttons above
-remain the way to _obtain_ a key in the first place; this input is where an operator
-who already has one activates it.
+paste a new one — the raw key is never redisplayed. The optional claim/plans links above,
+when the operator configured them, point at the server that issues keys; this input is where
+an operator who already has one activates it.
 
 ### End-to-end activation and guided setup
 
-The private feed service and this OSS client have a deliberately narrow boundary: the service
+Your self-hosted feed server and this OSS client have a deliberately narrow boundary: the server
 issues and validates the supporter key, while the local Pusula installation encrypts the key,
 syncs signed artifacts server-side, and guides provider setup. The assisted validation order is:
 
-1. Obtain a newly issued or recovered key from the contributor claim, plans/checkout, recovery
-   journey, or an authorized private server operator. Do not paste the raw key into logs,
-   screenshots, issue comments, or command-line arguments.
-2. Enable the `RADAR_ENABLED` feature flag on the local Pusula installation. This exposes the UI
-   but remains network-inert until the separate opt-in is saved.
+1. Obtain a key from your feed server (its claim flow, plans page, recovery journey, or a manual
+   grant by its operator). Do not paste the raw key into logs, screenshots, issue comments, or
+   command-line arguments.
+2. Set `RADAR_FEED_URL` (and the matching `RADAR_FEED_PUBKEY`) for that server, then enable the
+   `RADAR_ENABLED` feature flag on the local Pusula installation. This exposes the UI but remains
+   network-inert until the separate opt-in is saved.
 3. Open `/dashboard/radar`, paste the key, and activate. The browser sends one local
    `POST /api/radar/settings` with `{ optIn: true, supporterKey }`; the key is encrypted locally and
    the response contains only `omr_****<last4>`.
@@ -271,9 +277,9 @@ syncs signed artifacts server-side, and guides provider setup. The assisted vali
    provider connection, and test action must survive the reload. Capture evidence only after the
    raw key and provider credential are no longer visible.
 
-Saving a key is not itself proof of live entitlement. The proof is the combination of the private
-service's `GET /v1/license/check` result, the OSS catalog's served `live` tier, a verified signed
-cache, and the real provider connection/test flow. An invalid, expired, or revoked key safely
+Saving a key is not itself proof of live entitlement. The proof is the combination of your feed
+server's license check (`GET /v1/license/check` in the reference contract), the OSS catalog's served
+`live` tier, a verified signed cache, and the real provider connection/test flow. An invalid, expired, or revoked key safely
 degrades the catalog to `community`; it must not be reported as a successful live-key validation.
 
 ### Private admin-panel link
@@ -313,16 +319,15 @@ The verifying public key is pinned in `src/lib/radar/pinnedKeys.ts`
 rotation while old cached feeds signed with a previous key remain valid until
 re-synced.
 
-### Fork-friendly env overrides
+### Feed server env vars (no built-in host)
 
-Two env vars let forks and self-hosters point the client at their own feed instead of
-the default Pusula service — see
-[How to self-host a feed](#how-to-self-host-a-feed) below:
+Radar ships without any feed host. Two env vars point the client at the feed server you operate —
+see [How to self-host a feed](#how-to-self-host-a-feed) below:
 
-| Var                 | Purpose                                                                                                      |
-| ------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `RADAR_FEED_URL`    | Overrides the feed base URL (default `https://radar.pusula.online`).                                      |
-| `RADAR_FEED_PUBKEY` | Overrides the pinned public key (base64-DER SPKI or PEM), replacing the built-in array with this single key. |
+| Var                 | Purpose                                                                                                                                                                                                                                                                       |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `RADAR_FEED_URL`    | Absolute http(s) base URL of your feed server, e.g. `https://radar.example.com`. **Required:** while unset every sync logs one `Radar feed URL not configured; skipping` line and returns `{ status: "not_configured" }` without touching the network (`src/lib/radar/feedUrl.ts`). |
+| `RADAR_FEED_PUBKEY` | Public half of the Ed25519 key pair your server signs with (base64-DER SPKI or PEM); replaces the pinned key array with this single key.                                                                                                                                       |
 
 ### Version floor
 
@@ -757,8 +762,8 @@ Loose coupling, by design:
 
 ## How to self-host a feed
 
-A fork or self-hoster that wants full control over the catalog can run their own feed
-service without touching client code:
+Radar only ever talks to a feed server you run — there is no hosted service and no default host to
+fall back to. Bringing one up requires no client code changes:
 
 1. Serve a `GET /v1/catalog/latest` endpoint returning a JSON body that satisfies
    `RadarFeedSchema` (`src/lib/radar/feedSchema.ts`) — top-level `feed:
@@ -767,16 +772,17 @@ service without touching client code:
    should default requests without it to a separately signed v1 artifact.
 2. Sign the exact response bytes with an Ed25519 key pair and return the base64
    signature in the `x-pusula-feed-signature` response header.
-3. Set `RADAR_FEED_URL` to the new base URL and `RADAR_FEED_PUBKEY` to the matching
-   public key (base64-DER SPKI or PEM) — see the
-   [env var reference](../reference/ENVIRONMENT.md#27-radar-feed-self-hosting).
+3. Set `RADAR_FEED_URL` to the server's base URL (e.g. `https://radar.example.com`) and
+   `RADAR_FEED_PUBKEY` to the matching public key (base64-DER SPKI or PEM) — see the
+   [env var reference](../reference/ENVIRONMENT.md#27-radar-feed-self-hosting). Optionally set
+   `RADAR_CONTRIBUTOR_CLAIM_URL` / `RADAR_SUPPORTER_PLANS_URL` to pages on the same server if it
+   issues supporter keys; the dashboard hides those buttons while they are unset.
 4. Enable `RADAR_ENABLED` and opt in via `POST /api/radar/settings`
    (`{ optIn: true }`).
 
-No other code changes are required — `verifyFeedBytes()` picks up the override
-automatically (`getFeedPublicKeys()` in `src/lib/radar/pinnedKeys.ts`), and version
-comparison, schema validation, and the merge rules apply identically to a self-hosted
-feed.
+No other code changes are required — `verifyFeedBytes()` picks up the key automatically
+(`getFeedPublicKeys()` in `src/lib/radar/pinnedKeys.ts`), and version comparison, schema
+validation, and the merge rules apply identically to any self-hosted feed.
 
 Referral links (see [Referral links (free credits)](#referral-links-free-credits)
 above) are a separate, optional artifact: a fork that only serves `/v1/catalog/latest`

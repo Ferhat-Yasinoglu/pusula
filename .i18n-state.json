@@ -5463,44 +5463,6 @@
         }
       }
     },
-    "docs/ops/RUNNER_BOX.md": {
-      "source_hash": "ffdb7f8695298a78f16bfc22cdb81311329d987d3f6ed657e1992a7ccb280b18",
-      "locales": {
-        "de": {
-          "source_hash": "ffdb7f8695298a78f16bfc22cdb81311329d987d3f6ed657e1992a7ccb280b18",
-          "target_hash": "e7492839477a63418538be93b33182f6104172b9bce61b1baec838549d0c939a",
-          "section_hashes": [
-            "36cf94a9caea",
-            "bdf253043a44",
-            "13f84529f9da",
-            "72df22656954"
-          ],
-          "updated_at": "2026-09-24T05:21:22.131Z"
-        },
-        "fa": {
-          "source_hash": "ffdb7f8695298a78f16bfc22cdb81311329d987d3f6ed657e1992a7ccb280b18",
-          "target_hash": "20a5f7d4545268b2674bd41824d73b056e69a9c18aaf98c9b8009440e489eece",
-          "section_hashes": [
-            "36cf94a9caea",
-            "bdf253043a44",
-            "13f84529f9da",
-            "72df22656954"
-          ],
-          "updated_at": "2026-09-24T05:21:22.131Z"
-        },
-        "tr": {
-          "source_hash": "ffdb7f8695298a78f16bfc22cdb81311329d987d3f6ed657e1992a7ccb280b18",
-          "target_hash": "5fd85607af4d2d1a9491ea07bb6652f94247b25ebc5aec18370e6c042de601cb",
-          "section_hashes": [
-            "36cf94a9caea",
-            "bdf253043a44",
-            "13f84529f9da",
-            "72df22656954"
-          ],
-          "updated_at": "2026-09-24T05:21:22.131Z"
-        }
-      }
-    },
     "docs/ops/SQLITE_RUNTIME.md": {
       "source_hash": "059bcbb3e8bda92378de7cf56ad50f469e9ef6ddf78e014658298a844cf4be78",
       "locales": {

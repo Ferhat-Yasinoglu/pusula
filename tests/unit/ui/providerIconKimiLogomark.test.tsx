@@ -1,8 +1,7 @@
 // @vitest-environment jsdom
 /**
- * ProviderIcon — Kimi (Moonshot AI) official-partnership theme-aware logomark
- * (2026-07) for the 3 visible Kimi provider cards (kimi-coding, kimi-web,
- * moonshot). Mirrors the "ProviderIcon — Qwen Cloud local asset" pattern in
+ * ProviderIcon — Kimi (Moonshot AI) theme-aware logomark for the 3 visible
+ * Kimi provider cards (kimi-coding, kimi-web, moonshot). Mirrors the "ProviderIcon — Qwen Cloud local asset" pattern in
  * ProviderIcon-icon-url.test.tsx; the lmarena/lma THEMED_SVGS pair is the
  * existing precedent this follows.
  */
@@ -54,7 +53,7 @@ afterEach(() => {
   useThemeStore.getState().setTheme("light");
 });
 
-describe("ProviderIcon — Kimi official-partnership logomark", () => {
+describe("ProviderIcon — Kimi theme-aware logomark", () => {
   it.each(["kimi-coding", "kimi-web", "moonshot"])(
     "uses the light-background logomark for %s in light theme",
     (providerId) => {
@@ -79,7 +78,7 @@ describe("ProviderIcon — Kimi official-partnership logomark", () => {
   it("does not apply the Kimi logomark to the legacy hidden 'kimi' alias id", () => {
     // "kimi" (legacy, hiddenFromDashboard) intentionally stays on its own
     // KNOWN_SVGS entry (/providers/kimi.svg) — only the 3 visible cards were
-    // repointed to the official partnership asset.
+    // repointed to the official Kimi logomark asset.
     const container = renderIcon("kimi");
     const img = container.querySelector("img");
     expect(img).not.toBeNull();

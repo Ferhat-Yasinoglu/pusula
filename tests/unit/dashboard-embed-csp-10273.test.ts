@@ -1,5 +1,5 @@
 // Regression guard for #10273: opt-in CSP relaxation so Pusula's HTML pages can be
-// embedded in the VS Code Simple Browser (the OmniCopilot extension's `dashboardOpen:
+// embedded in the VS Code Simple Browser (a companion VS Code extension's `dashboardOpen:
 // "editor"` mode renders them inside a `vscode-webview:` iframe).
 //
 // The default posture is UNCHANGED and must stay that way: `frame-ancestors 'none'` +

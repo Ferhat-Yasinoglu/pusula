@@ -219,9 +219,8 @@ export const OAUTH_PROVIDERS = {
     icon: "psychology",
     color: "#1E40AF",
     textIcon: "KC",
-    // Kimi official-partnership aff link (2026-07) — the "Kimi Coding Plan"
-    // tracking link. Was previously unset (no header link rendered at all).
-    website: "https://www.kimi.ai/code?aff=pusula",
+    // Kimi Coding Plan landing page (rendered as the provider page header link).
+    website: "https://www.kimi.ai/code",
     subscriptionRisk: true,
     riskNoticeVariant: "oauth",
     authHint:

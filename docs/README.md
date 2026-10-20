@@ -187,7 +187,6 @@ Release, deployment, proxies, tunnels, coverage, database, monitoring.
 - [MERGE_TRAIN.md](ops/MERGE_TRAIN.md) — merge queue & manual merge-train runbook.
 - [HOMOLOGATION.md](ops/HOMOLOGATION.md) — homologation suite (`npm run homolog`).
 - [QUALITY_GATE_PLAYBOOK.md](ops/QUALITY_GATE_PLAYBOOK.md) — quality-gate playbook.
-- [RUNNER_BOX.md](ops/RUNNER_BOX.md) — self-hosted runner box operations.
 - [BRANCH_PROTECTION_MAIN.md](ops/BRANCH_PROTECTION_MAIN.md) — `main` branch protection.
 - [CONTRIBUTION_GOLDEN_PATH.md](ops/CONTRIBUTION_GOLDEN_PATH.md) — contribution golden path (focused checks per change type).
 - [COVERAGE_PLAN.md](ops/COVERAGE_PLAN.md) — test coverage plan.

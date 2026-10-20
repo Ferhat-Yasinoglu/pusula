@@ -1559,8 +1559,10 @@ that should be able to run the docs translator.
 Optional add-on gated by the RADAR_ENABLED feature flag (default off — a feature
 flag toggled via Settings/DB, not an env var; see
 [docs/frameworks/RADAR.md](../frameworks/RADAR.md#flag-radar_enabled-default-off)).
-The first four variables below are optional overrides for a self-hosted or forked feed and
-supporter-key flows. The fifth, `RADAR_ADMIN_URL`, is a separate default-free link to the owner's
+Radar is self-hosted only: this project operates no feed service and ships no default host.
+`RADAR_FEED_URL` (with the matching `RADAR_FEED_PUBKEY`) points the client at the feed server you
+run; the two link variables are optional and default-free — their dashboard buttons stay hidden
+while unset. The fifth, `RADAR_ADMIN_URL`, is a separate default-free link to the owner's
 private operations panel. See [docs/frameworks/RADAR.md](../frameworks/RADAR.md) for the full
 module doc and its
 [end-to-end activation and guided-setup sequence](../frameworks/RADAR.md#end-to-end-activation-and-guided-setup).
@@ -1572,10 +1574,10 @@ GET only; dismissal IDs remain in browser local storage.
 
 | Variable                       | Default                                          | Source File                   | Description                                                                                     |
 | -------------------------------- | --------------------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------ |
-| `RADAR_FEED_URL`               | `https://radar.pusula.online`                 | `src/lib/radar/{sync,referralsSync,offersSync,intelSync}.ts` | Base URL shared by the separately signed catalog, referrals, supporter-offers, and Intel feeds. Override to point at a self-hosted or forked service. |
-| `RADAR_FEED_PUBKEY`            | _(pinned default key)_                           | `src/lib/radar/pinnedKeys.ts` | Ed25519 public key (base64-DER SPKI or PEM) used to verify feed signatures from a custom feed.   |
-| `RADAR_CONTRIBUTOR_CLAIM_URL`  | `https://radar.pusula.online/auth/github`     | `src/lib/radar/links.ts`      | URL the "I'm a contributor" dashboard button opens (GitHub OAuth supporter-key claim flow).      |
-| `RADAR_SUPPORTER_PLANS_URL`    | `https://radar.pusula.online/planos`          | `src/lib/radar/links.ts`      | URL the "Support the project" dashboard button opens (payment/plans page).                       |
+| `RADAR_FEED_URL`               | _(unset — required)_                             | `src/lib/radar/{sync,referralsSync,offersSync,intelSync}.ts` | Absolute http(s) base URL of your self-hosted feed server (e.g. `https://radar.example.com`), shared by the separately signed catalog, referrals, supporter-offers, and Intel feeds. No default: while unset every Radar sync logs `Radar feed URL not configured; skipping` and returns `not_configured` without touching the network (`src/lib/radar/feedUrl.ts`). |
+| `RADAR_FEED_PUBKEY`            | _(pinned default key)_                           | `src/lib/radar/pinnedKeys.ts` | Ed25519 public key (base64-DER SPKI or PEM) of the key pair your feed server signs with; replaces the pinned key array.                                                        |
+| `RADAR_CONTRIBUTOR_CLAIM_URL`  | _(unset)_                                        | `src/lib/radar/links.ts`      | Optional URL of a contributor-claim flow on your feed server (e.g. `https://radar.example.com/auth/github`) opened by the "I'm a contributor" dashboard button; the button is hidden while unset. |
+| `RADAR_SUPPORTER_PLANS_URL`    | _(unset)_                                        | `src/lib/radar/links.ts`      | Optional URL of the supporter-plans page on your feed server (e.g. `https://radar.example.com/plans`) opened by the "Support the project" dashboard button; the button is hidden while unset.      |
 | `RADAR_ADMIN_URL`              | _(unset)_                                         | `src/lib/radar/links.ts`      | Owner-only private operations-panel link. HTTPS is required except for an HTTP loopback SSH forward; unset or invalid values create no navigation item. |
 
 ---

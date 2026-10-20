@@ -495,7 +495,7 @@ const nextConfig = {
   },
 
   async headers() {
-    // #10273: opt-in embedding for the VS Code Simple Browser (OmniCopilot). Off by default —
+    // #10273: opt-in embedding for the VS Code Simple Browser (a companion VS Code extension). Off by default —
     // `securityHeaders` then applies to `/:path*` exactly as it always has. When the operator
     // sets DASHBOARD_ALLOW_EMBED=vscode, buildSecurityHeaderRules() splits that catch-all into
     // two complementary rules: the API surface keeps `frame-ancestors 'none'` + X-Frame-Options,

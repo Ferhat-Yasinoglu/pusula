@@ -17,7 +17,7 @@
  *      cannot silently reintroduce a DB-touching import into a module a
  *      "use client" component depends on.
  *  (d) When a referral applies, isReferralLink=true (the header uses this to
- *      show a discreet note, reusing the existing `kimiPartnerLinkNote` key).
+ *      show a discreet note — the `providers.referralLinkNote` key).
  */
 
 import test from "node:test";
