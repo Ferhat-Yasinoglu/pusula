@@ -121,7 +121,7 @@ test("search-only key blocks /api/v1/chat/completions too — the App Router pat
   // A client may call the App Router path directly (no `/v1/:path*` rewrite
   // fires), and the handler then sees `/api/v1/…` in `request.url`. The
   // category prefixes are `/v1/…`, so without normalization the allowlist
-  // silently failed open for that shape (omni-code-sec LEDGER-9/16).
+  // silently failed open for that shape (pusula-code-sec LEDGER-9/16).
   const policy = await loadPolicy("search-blocks-api-chat");
   const key = await createKeyWithEndpoints(["search"]);
 

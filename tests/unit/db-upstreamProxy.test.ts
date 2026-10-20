@@ -15,8 +15,8 @@ import fs from "node:fs";
 import os from "node:os";
 import Database from "better-sqlite3";
 
-const fileTmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-dbupc-test-"));
-const moduleDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-dbupc-module-"));
+const fileTmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-dbupc-test-"));
+const moduleDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-dbupc-module-"));
 process.env.DATA_DIR = moduleDataDir;
 
 const coreDb = await import("../../src/lib/db/core.ts");

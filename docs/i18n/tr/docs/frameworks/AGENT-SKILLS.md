@@ -15,7 +15,7 @@ Agent Skills; harici agent'lara, MCP istemcilerine ve A2A orkestratörlerine Pus
 
 Katalogda **45 Agent Skill** bulunur (23 REST API + 21 CLI + 1 yapılandırma iş akışı). Her skill şunlara sahiptir:
 
-- Bir **standart ID** (`omni-auth`, `cli-serve` vb.)
+- Bir **standart ID** (`pusula-auth`, `cli-serve` vb.)
 - YAML frontmatter (`name`, `description`) ve zengin bir markdown gövdesi içeren `skills/{id}/SKILL.md` konumundaki bir **SKILL.md** dosyası
 - OpenAPI spesifikasyonundan ve CLI kayıt defterinden türetilen **REST endpoint'leri** (API skill'leri) veya **CLI alt komutları** (CLI skill'leri)
 - Canlı erişim için bir **GitHub ham içerik URL'si**: `https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/refs/heads/main/skills/{id}/SKILL.md`
@@ -53,7 +53,7 @@ src/lib/a2a/skills/listCapabilities.ts        — A2A skill'i: list-capabilities
 
 ```markdown
 ---
-name: omni-providers
+name: pusula-providers
 description: "Sağlayıcı bağlantılarını yönetin: kimlik bilgilerini ekleyin, test edin, döndürün ve kaldırın."
 ---
 
@@ -82,7 +82,7 @@ description: "Sağlayıcı bağlantılarını yönetin: kimlik bilgilerini ekley
 
 Oluşturucu, yeniden oluşturma sırasında `<!-- skill:custom-start -->` ile `<!-- skill:custom-end -->` arasındaki içeriği korur. On skill, özenle hazırlanmış özel bloklara sahiptir:
 
-`omni-mcp`, `omni-compression`, `cli-providers`, `cli-eval`, `omni-agents-a2a`, `omni-combos-routing`, `omni-auth`, `omni-resilience`, `omni-inference`, `cli-serve`.
+`pusula-mcp`, `pusula-compression`, `cli-providers`, `cli-eval`, `pusula-agents-a2a`, `pusula-combos-routing`, `pusula-auth`, `pusula-resilience`, `pusula-inference`, `cli-serve`.
 
 ---
 
@@ -105,7 +105,7 @@ curl "http://localhost:20128/api/agent-skills?category=api"
 Örnek — tek bir SKILL.md dosyasını getirme:
 
 ```bash
-curl -H "Accept: text/markdown" "http://localhost:20128/api/agent-skills/omni-providers/raw"
+curl -H "Accept: text/markdown" "http://localhost:20128/api/agent-skills/pusula-providers/raw"
 ```
 
 ---
@@ -150,28 +150,28 @@ Protokol ayrıntıları için [A2A-SERVER.md](./A2A-SERVER.md) belgesine bakın.
 
 | Kimlik                 | Alan            | Giriş Noktası                        |
 | :--------------------- | :-------------- | :----------------------------------- |
-| `omni-auth`            | auth            | Kimlik doğrulama + oturum yönetimi   |
-| `omni-providers`       | providers       | Sağlayıcı bağlantısı yönetimi        |
-| `omni-models`          | models          | Model kataloğu ve yetenekleri        |
-| `omni-combos-routing`  | combos-routing  | Kombinasyon yönlendirme stratejileri |
-| `omni-api-keys`        | api-keys        | API anahtarı yönetimi                |
-| `omni-usage-logs`      | usage-logs      | Kullanım ve maliyet günlükleri       |
-| `omni-budget`          | budget          | Bütçe korumaları                     |
-| `omni-settings`        | settings        | Genel ayarlar                        |
-| `omni-proxies`         | proxies         | Proxy havuzu yönetimi                |
-| `omni-cache`           | cache           | Anlamsal + istem önbelleği           |
-| `omni-compression`     | compression     | Bağlam sıkıştırma motorları          |
-| `omni-context-rtk`     | context-rtk     | RTK sıkıştırması                     |
-| `omni-resilience`      | resilience      | Devre kesiciler + bekleme süreleri   |
-| `omni-cli-tools`       | cli-tools       | CLI araçları REST proxy'si           |
-| `omni-tunnels`         | tunnels         | Tünel yönetimi                       |
-| `omni-sync-cloud`      | sync-cloud      | Bulut senkronizasyonu                |
-| `omni-db-backups`      | db-backups      | Veritabanı yedekleri                 |
-| `omni-webhooks`        | webhooks        | Webhook olay dağıtıcısı              |
-| `omni-mcp`             | mcp             | MCP sunucusu (110 araç, 3 aktarım)   |
-| `omni-agents-a2a`      | agents-a2a      | A2A aracı protokolü                  |
-| `omni-version-manager` | version-manager | Sürüm ve güncelleme yönetimi         |
-| `omni-inference`       | inference       | Doğrudan çıkarım / tamamlamalar      |
+| `pusula-auth`            | auth            | Kimlik doğrulama + oturum yönetimi   |
+| `pusula-providers`       | providers       | Sağlayıcı bağlantısı yönetimi        |
+| `pusula-models`          | models          | Model kataloğu ve yetenekleri        |
+| `pusula-combos-routing`  | combos-routing  | Kombinasyon yönlendirme stratejileri |
+| `pusula-api-keys`        | api-keys        | API anahtarı yönetimi                |
+| `pusula-usage-logs`      | usage-logs      | Kullanım ve maliyet günlükleri       |
+| `pusula-budget`          | budget          | Bütçe korumaları                     |
+| `pusula-settings`        | settings        | Genel ayarlar                        |
+| `pusula-proxies`         | proxies         | Proxy havuzu yönetimi                |
+| `pusula-cache`           | cache           | Anlamsal + istem önbelleği           |
+| `pusula-compression`     | compression     | Bağlam sıkıştırma motorları          |
+| `pusula-context-rtk`     | context-rtk     | RTK sıkıştırması                     |
+| `pusula-resilience`      | resilience      | Devre kesiciler + bekleme süreleri   |
+| `pusula-cli-tools`       | cli-tools       | CLI araçları REST proxy'si           |
+| `pusula-tunnels`         | tunnels         | Tünel yönetimi                       |
+| `pusula-sync-cloud`      | sync-cloud      | Bulut senkronizasyonu                |
+| `pusula-db-backups`      | db-backups      | Veritabanı yedekleri                 |
+| `pusula-webhooks`        | webhooks        | Webhook olay dağıtıcısı              |
+| `pusula-mcp`             | mcp             | MCP sunucusu (110 araç, 3 aktarım)   |
+| `pusula-agents-a2a`      | agents-a2a      | A2A aracı protokolü                  |
+| `pusula-version-manager` | version-manager | Sürüm ve güncelleme yönetimi         |
+| `pusula-inference`       | inference       | Doğrudan çıkarım / tamamlamalar      |
 
 ### CLI Yetenekleri (21)
 
@@ -216,7 +216,7 @@ Protokol ayrıntıları için [A2A-SERVER.md](./A2A-SERVER.md) belgesine bakın.
 curl "http://your-pusula/api/agent-skills" | jq '.skills[] | {id, name, category}'
 
 # Bağlam enjeksiyonu için SKILL.md dosyasını alın
-curl "http://your-pusula/api/agent-skills/omni-providers/raw" > omni-providers.md
+curl "http://your-pusula/api/agent-skills/pusula-providers/raw" > pusula-providers.md
 ```
 
 ### 2. MCP ile Keşif
@@ -247,7 +247,7 @@ table = resp.json()["result"]["artifacts"][0]["content"]
 
 ```bash
 BASE="https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/refs/heads/main/skills"
-curl "${BASE}/omni-providers/SKILL.md"
+curl "${BASE}/pusula-providers/SKILL.md"
 ```
 
 ---
@@ -273,14 +273,14 @@ curl -X POST http://localhost:20128/api/agent-skills/generate \
 curl -X POST http://localhost:20128/api/agent-skills/generate \
   -H "Authorization: Bearer <admin-key>" \
   -H "Content-Type: application/json" \
-  -d '{"dryRun":false,"onlyIds":["omni-providers","cli-serve"]}'
+  -d '{"dryRun":false,"onlyIds":["pusula-providers","cli-serve"]}'
 ```
 
 Oluşturucu yanıtı bir `GeneratorReport` nesnesidir:
 
 ```json
 {
-  "generated": ["omni-providers", "cli-serve"],
+  "generated": ["pusula-providers", "cli-serve"],
   "unchanged": [],
   "pruned": [],
   "orphansDetected": [],

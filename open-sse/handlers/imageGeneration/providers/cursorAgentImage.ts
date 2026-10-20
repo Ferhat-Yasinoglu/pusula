@@ -310,7 +310,7 @@ async function generateOneImage(params: {
   timeoutMs: number;
   spawnImpl?: typeof spawn;
 }): Promise<Buffer> {
-  const workspace = await mkdtemp(join(tmpdir(), "omni-cursor-img-"));
+  const workspace = await mkdtemp(join(tmpdir(), "pusula-cursor-img-"));
   const outPath = join(workspace, "out.png");
   const prompt = buildCursorAgentImagePrompt(params.userPrompt, outPath, params.size);
 

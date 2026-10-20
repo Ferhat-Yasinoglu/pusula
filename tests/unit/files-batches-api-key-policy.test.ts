@@ -1,5 +1,5 @@
 /**
- * omni-code-sec 2026-09-21 run, LEDGER-2 (#14481) — every `/v1/files` and
+ * pusula-code-sec 2026-09-21 run, LEDGER-2 (#14481) — every `/v1/files` and
  * `/v1/batches` handler must apply the caller's per-key operator policy
  * (endpoint allowlist, access schedule, usage cap, rate limit), the same way
  * `DELETE /v1/batches/delete-completed` already does
@@ -669,7 +669,7 @@ describe("LEDGER-2 (#14481) — /v1/files and /v1/batches apply the caller's API
   });
 });
 
-describe("LEDGER-27 (omni-code-sec round 3) — x-api-key uploads are attributed to the key the policy resolved", () => {
+describe("LEDGER-27 (pusula-code-sec round 3) — x-api-key uploads are attributed to the key the policy resolved", () => {
   it("POST /v1/files: an ALLOWED key presented via x-api-key persists apiKeyId === key.id, not null", async () => {
     const keyA = await createApiKey("ledger27-files-post-a", "machine-ledger27-fp", []);
 
@@ -726,7 +726,7 @@ describe("LEDGER-27 (omni-code-sec round 3) — x-api-key uploads are attributed
   });
 });
 
-describe("LEDGER-28 (omni-code-sec round 3) — direct coverage of the 401 fold on the files/batches handlers", () => {
+describe("LEDGER-28 (pusula-code-sec round 3) — direct coverage of the 401 fold on the files/batches handlers", () => {
   it("POST /v1/files: a revoked key via Authorization Bearer returns 401 authentication_error and creates nothing", async () => {
     const keyA = await createApiKey("ledger28-files-post-revoked", "machine-ledger28-fpr", []);
     await revokeApiKey(keyA.id);

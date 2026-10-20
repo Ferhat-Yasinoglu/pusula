@@ -16,7 +16,7 @@ async function withTempEnv(
 ) {
   const originalEnv = { ...process.env };
   const originalCwd = process.cwd();
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), "omni-cli-env-"));
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-cli-env-"));
   const home = path.join(root, "home");
   const cwd = path.join(root, "cwd");
   fs.mkdirSync(home, { recursive: true });

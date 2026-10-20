@@ -234,7 +234,7 @@ export async function fetchRemoteImage(
  * `provider_options.*`, message parts) or a result URL echoed back by an upstream provider.
  *
  * GHSA-34rg-3pqj-35g9 / #13883: the SSRF-hardened policy is hard-coded here so it is no longer
- * an opt-in every call site has to remember (omni-code-review LEDGER-32 / LEDGER-50):
+ * an opt-in every call site has to remember (pusula-code-review LEDGER-32 / LEDGER-50):
  *
  * - `guard: "public-only"` — never the operator outbound policy (`block-metadata` on a
  *   local-first default install), which would let a request body make the server fetch

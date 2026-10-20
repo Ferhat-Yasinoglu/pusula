@@ -1375,12 +1375,12 @@ test("Gemini RPD (quota_exhausted) still triggers midnight lockout in recordMode
   }
 });
 
-// ─── G-02: X-Omni-Fallback-Hint: connection_cooldown ─────────────────────────
+// ─── G-02: X-Pusula-Fallback-Hint: connection_cooldown ─────────────────────────
 // When 9router executor signals a supervisor-not-running 503, checkFallbackError
 // must return 5s cooldown with skipProviderBreaker:true — not trip the circuit breaker.
 
-test("G-02: X-Omni-Fallback-Hint connection_cooldown on 503 returns 5s cooldown + skipProviderBreaker", () => {
-  const headers = new Headers({ "X-Omni-Fallback-Hint": "connection_cooldown" });
+test("G-02: X-Pusula-Fallback-Hint connection_cooldown on 503 returns 5s cooldown + skipProviderBreaker", () => {
+  const headers = new Headers({ "X-Pusula-Fallback-Hint": "connection_cooldown" });
   const result = checkFallbackError(
     503,
     "9router is not running (state: stopped)",
@@ -1396,9 +1396,9 @@ test("G-02: X-Omni-Fallback-Hint connection_cooldown on 503 returns 5s cooldown 
   assert.equal(result.reason, "service_not_running");
 });
 
-test("G-02: X-Omni-Fallback-Hint connection_cooldown header lookup is case-insensitive (lowercase header key)", () => {
+test("G-02: X-Pusula-Fallback-Hint connection_cooldown header lookup is case-insensitive (lowercase header key)", () => {
   // Headers object normalises keys to lowercase — test the plain-object path
-  const headers: Record<string, string> = { "x-omni-fallback-hint": "connection_cooldown" };
+  const headers: Record<string, string> = { "x-pusula-fallback-hint": "connection_cooldown" };
   const result = checkFallbackError(
     503,
     "9router is not running (state: stopped)",
@@ -1412,7 +1412,7 @@ test("G-02: X-Omni-Fallback-Hint connection_cooldown header lookup is case-insen
 });
 
 test("G-02: hint header is ignored for non-503 status codes", () => {
-  const headers = new Headers({ "X-Omni-Fallback-Hint": "connection_cooldown" });
+  const headers = new Headers({ "X-Pusula-Fallback-Hint": "connection_cooldown" });
   // 502 should NOT trigger the hint path even if the header is present
   const result = checkFallbackError(502, "bad gateway", 0, null, "9router", headers);
   assert.equal(result.skipProviderBreaker, undefined); // normal path, no skip flag
@@ -1427,7 +1427,7 @@ test("G-02: 503 without hint header follows normal circuit-breaker path", () => 
 
 test("G-02: five consecutive 503 service_not_running do NOT trip provider circuit breaker (flag)", () => {
   // Verify that every call returns skipProviderBreaker:true so callers can skip recordProviderFailure
-  const headers = new Headers({ "X-Omni-Fallback-Hint": "connection_cooldown" });
+  const headers = new Headers({ "X-Pusula-Fallback-Hint": "connection_cooldown" });
   for (let i = 0; i < 5; i++) {
     const result = checkFallbackError(
       503,

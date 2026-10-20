@@ -636,7 +636,7 @@ export async function registerNodejs(): Promise<void> {
           console.warn("[STARTUP] Auto-refresh daemon failed to start (non-fatal):", msg);
         }),
 
-      // Conductor bridge (PRD Conductor RF1): mirrors OmniConductor hub tasks into the
+      // Conductor bridge (PRD Conductor RF1): mirrors PusulaConductor hub tasks into the
       // A2A TaskManager via the hub SSE. Opt-in — self-gated on CONDUCTOR_HUB_URL.
       import("@/lib/conductor/boot")
         .then((m) => {

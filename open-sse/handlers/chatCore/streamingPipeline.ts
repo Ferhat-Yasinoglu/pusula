@@ -29,11 +29,11 @@ import { SSE_HEARTBEAT_INTERVAL_MS } from "../../config/constants.ts";
  * panel when NODE_OPTIONS=--enable-node-performance-clinician or similar.
  *
  * Each call to assembleStreamingPipeline creates one measure record:
- *   "omni-pipeline" — wall-clock duration of the full transform chain assembly.
+ *   "pusula-pipeline" — wall-clock duration of the full transform chain assembly.
  */
-const PIPELINE_START = "omni-pipeline-start";
-const PIPELINE_END = "omni-pipeline-end";
-const PIPELINE_MEASURE = "omni-pipeline";
+const PIPELINE_START = "pusula-pipeline-start";
+const PIPELINE_END = "pusula-pipeline-end";
+const PIPELINE_MEASURE = "pusula-pipeline";
 
 type HeadersLike = Headers | Record<string, unknown> | null | undefined;
 

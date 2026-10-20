@@ -76,9 +76,9 @@ test("resolveSelfLoopBearer's generated fallback has enough entropy to resist gu
 });
 
 test("resolveSelfLoopBearer still prefers PUSULA_API_KEY over the generated fallback", () => {
-  const restore = withSelfLoopEnv({ PUSULA_API_KEY: "omni-key" });
+  const restore = withSelfLoopEnv({ PUSULA_API_KEY: "pusula-key" });
   try {
-    assert.equal(resolveSelfLoopBearer(), "omni-key");
+    assert.equal(resolveSelfLoopBearer(), "pusula-key");
   } finally {
     restore();
   }

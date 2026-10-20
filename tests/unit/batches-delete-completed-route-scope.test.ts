@@ -24,14 +24,14 @@
  *     limit) like every other `/v1` route — a key whose `allowedEndpoints`
  *     excludes `batches` is rejected by the enforcer and sweeps nothing, for
  *     BOTH path shapes the handler can see (`/v1/…` via the rewrite and the
- *     App Router's own `/api/v1/…`) (omni-code-sec LEDGER-9/13/16);
+ *     App Router's own `/api/v1/…`) (pusula-code-sec LEDGER-9/13/16);
  *   - no credentials at all → 401;
  *   - a sweep that throws → sanitized 500 (no stack trace, no raw SQLite message)
  *     and nothing deleted (the sweep is atomic);
  *   - the rejection audit line carries an HONEST `reason`: `getApiKeyRequestScope`
  *     is the single lifecycle gate and surfaces `keyState`, so a revoked key logs
  *     `invalid` and an unknown key logs `unresolved` — the route never re-runs
- *     `validateApiKey` to re-derive it (omni-code-review LEDGER-3/9).
+ *     `validateApiKey` to re-derive it (pusula-code-review LEDGER-3/9).
  *
  * Self-isolating: DATA_DIR points at a fresh temp dir BEFORE any `@/lib/db/*`
  * module loads (dynamic imports below), so this file never touches ~/.pusula.
@@ -340,7 +340,7 @@ describe("DELETE /api/v1/batches/delete-completed — caller scope (GHSA-wvxc-jp
     }
   });
 
-  it("getApiKeyRequestScope surfaces `keyState` (valid / invalid / unresolved / none) so the route derives its audit reason instead of re-validating (omni-code-review LEDGER-3/9)", async () => {
+  it("getApiKeyRequestScope surfaces `keyState` (valid / invalid / unresolved / none) so the route derives its audit reason instead of re-validating (pusula-code-review LEDGER-3/9)", async () => {
     const live = await createApiKey("wvxc-route-state-live", "machine-wvxc-sl", []);
     const revoked = await createApiKey("wvxc-route-state-revoked", "machine-wvxc-sr", []);
     assert.strictEqual(await revokeApiKey(revoked.id), true);
@@ -370,7 +370,7 @@ describe("DELETE /api/v1/batches/delete-completed — caller scope (GHSA-wvxc-jp
     assert.strictEqual(anonymousScope.rejection, null, "the helper still never sets rejection");
   });
 
-  it("the rejection audit line is honest: a REVOKED key logs reason 'invalid', an unknown key logs 'unresolved' (omni-code-review LEDGER-3/9)", async () => {
+  it("the rejection audit line is honest: a REVOKED key logs reason 'invalid', an unknown key logs 'unresolved' (pusula-code-review LEDGER-3/9)", async () => {
     const keyA = await createApiKey("wvxc-route-reason-a", "machine-wvxc-rsn", []);
     assert.strictEqual(await revokeApiKey(keyA.id), true);
 
@@ -443,7 +443,7 @@ describe("DELETE /api/v1/batches/delete-completed — caller scope (GHSA-wvxc-jp
     );
   });
 
-  it("a key presented ONLY via x-api-key (no anthropic-version, plain UA) sweeps its own batches, not the instance or nothing (LEDGER-27, omni-code-sec round 3)", async () => {
+  it("a key presented ONLY via x-api-key (no anthropic-version, plain UA) sweeps its own batches, not the instance or nothing (LEDGER-27, pusula-code-sec round 3)", async () => {
     const keyA = await createApiKey("wvxc-route-xkey-a", "machine-wvxc-xa", []);
     const keyB = await createApiKey("wvxc-route-xkey-b", "machine-wvxc-xb", []);
     const own = seedCompletedBatch(keyA.id, "wvxc-route-xkey-own");

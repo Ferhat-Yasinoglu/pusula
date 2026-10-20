@@ -8,7 +8,7 @@ import { buildErrorBody } from "@pusula/open-sse/utils/error";
 /**
  * Why `apiKeyId` is null — the lifecycle outcome `getApiKeyRequestScope` already
  * computed, surfaced so a route can name it in an audit line WITHOUT re-running
- * the gate (omni-code-review LEDGER-3/9):
+ * the gate (pusula-code-review LEDGER-3/9):
  *
  *   - `none`       — no key presented (anonymous or session-only caller);
  *   - `unresolved` — a key was presented but no row matches (deleted, rotated, mistyped);
@@ -110,7 +110,7 @@ export function canAccessOwnedRecord(
 
 /**
  * The id of the key that should own a record created (or looked up) in this
- * request — LEDGER-27, omni-code-sec round 3. A valid key resolved ONLY via
+ * request — LEDGER-27, pusula-code-sec round 3. A valid key resolved ONLY via
  * the ungated `x-api-key`/`x-goog-api-key` transport (no anthropic-version,
  * non-Claude UA) is invisible to `extractApiKey()`/`getApiKeyRequestScope()`
  * (`scope.apiKeyId` stays null for it, #13881/round-2), but

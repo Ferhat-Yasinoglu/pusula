@@ -540,7 +540,7 @@ test("handleComboChat universal handoff detects model switch before recording cu
 // ── Rule #18 gate — PR #3399: server-side context cache pinning ─────────────
 // Proves that when context_cache_protection=true and session_model_history has
 // a prior model, handleComboChat overrides body.model with the pinned model
-// (no client-side <omniModel> tag injection required).
+// (no client-side <pusulaModel> tag injection required).
 
 test("context_cache_protection: pins body.model to last session model when history exists", async () => {
   const sessionId = "sess-cache-pin-active";

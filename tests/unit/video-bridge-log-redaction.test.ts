@@ -28,7 +28,7 @@ import path from "node:path";
 
 import { logClientRawRequestRedacted } from "../../src/lib/guardrails/videoBridgeSnapshotRedaction.ts";
 
-const testDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-video-log-redaction-test-"));
+const testDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-video-log-redaction-test-"));
 process.env.DATA_DIR = testDataDir;
 
 const coreDb = await import("../../src/lib/db/core.ts");

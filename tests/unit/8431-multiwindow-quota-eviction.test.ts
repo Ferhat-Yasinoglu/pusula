@@ -26,7 +26,7 @@ import path from "node:path";
  * `true`. With the fix, all 9 windows survive and the request stays
  * eligible because 6 of the 9 windows still have balance.
  */
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omni-quota-8431-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-quota-8431-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const coreDb = await import("../../src/lib/db/core.ts");

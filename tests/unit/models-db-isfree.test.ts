@@ -17,7 +17,7 @@ describe("custom isFree tri-state (DB)", () => {
   let dir: string;
   let prevDataDir: string | undefined;
   beforeEach(() => {
-    dir = mkdtempSync(join(tmpdir(), "omni-isfree-"));
+    dir = mkdtempSync(join(tmpdir(), "pusula-isfree-"));
     prevDataDir = process.env.DATA_DIR;
     process.env.DATA_DIR = dir;
     // force DB to re-create in this DATA_DIR

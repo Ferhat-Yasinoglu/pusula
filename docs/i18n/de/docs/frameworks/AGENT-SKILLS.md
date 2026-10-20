@@ -15,7 +15,7 @@ Agent Skills sind strukturierte SKILL.md-Dateien, die externen Agenten, MCP-Clie
 
 Der Katalog enthält **45 Agent Skills** (23 für die REST-API + 21 für die CLI + 1 Konfigurations-Workflow). Jeder Skill verfügt über:
 
-- Eine **kanonische ID** (`omni-auth`, `cli-serve` usw.)
+- Eine **kanonische ID** (`pusula-auth`, `cli-serve` usw.)
 - Eine **SKILL.md-Datei** unter `skills/{id}/SKILL.md` mit YAML-Frontmatter (`name`, `description`) und einem ausführlichen Markdown-Inhalt
 - **REST-Endpunkte** (API-Skills) oder **CLI-Unterbefehle** (CLI-Skills), die aus der OpenAPI-Spezifikation und der CLI-Registry abgeleitet werden
 - Eine **GitHub-Raw-URL** zum direkten Abruf: `https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/refs/heads/main/skills/{id}/SKILL.md`
@@ -53,7 +53,7 @@ src/lib/a2a/skills/listCapabilities.ts        — A2A-Skill: list-capabilities
 
 ```markdown
 ---
-name: omni-providers
+name: pusula-providers
 description: "Anbieterverbindungen verwalten: Anmeldedaten hinzufügen, testen, rotieren und entfernen."
 ---
 
@@ -82,7 +82,7 @@ description: "Anbieterverbindungen verwalten: Anmeldedaten hinzufügen, testen, 
 
 Der Generator behält bei der Neugenerierung den Inhalt zwischen `<!-- skill:custom-start -->` und `<!-- skill:custom-end -->` bei. Zehn Skills verfügen über kuratierte benutzerdefinierte Blöcke:
 
-`omni-mcp`, `omni-compression`, `cli-providers`, `cli-eval`, `omni-agents-a2a`, `omni-combos-routing`, `omni-auth`, `omni-resilience`, `omni-inference`, `cli-serve`.
+`pusula-mcp`, `pusula-compression`, `cli-providers`, `cli-eval`, `pusula-agents-a2a`, `pusula-combos-routing`, `pusula-auth`, `pusula-resilience`, `pusula-inference`, `cli-serve`.
 
 ---
 
@@ -105,7 +105,7 @@ curl "http://localhost:20128/api/agent-skills?category=api"
 Beispiel — eine einzelne SKILL.md abrufen:
 
 ```bash
-curl -H "Accept: text/markdown" "http://localhost:20128/api/agent-skills/omni-providers/raw"
+curl -H "Accept: text/markdown" "http://localhost:20128/api/agent-skills/pusula-providers/raw"
 ```
 
 ---
@@ -150,28 +150,28 @@ Protokolldetails finden Sie unter [A2A-SERVER.md](./A2A-SERVER.md).
 
 | ID                     | Bereich         | Einstiegspunkt                             |
 | :--------------------- | :-------------- | :----------------------------------------- |
-| `omni-auth`            | auth            | Authentifizierungs- und Sitzungsverwaltung |
-| `omni-providers`       | providers       | Verwaltung von Anbieter-Verbindungen       |
-| `omni-models`          | models          | Modellkatalog und Funktionen               |
-| `omni-combos-routing`  | combos-routing  | Combo-Routing-Strategien                   |
-| `omni-api-keys`        | api-keys        | API-Schlüsselverwaltung                    |
-| `omni-usage-logs`      | usage-logs      | Nutzungs- und Kostenprotokolle             |
-| `omni-budget`          | budget          | Budgetbegrenzungen                         |
-| `omni-settings`        | settings        | Globale Einstellungen                      |
-| `omni-proxies`         | proxies         | Proxy-Pool-Verwaltung                      |
-| `omni-cache`           | cache           | Semantischer Cache + Prompt-Cache          |
-| `omni-compression`     | compression     | Engines zur Kontextkomprimierung           |
-| `omni-context-rtk`     | context-rtk     | RTK-Komprimierung                          |
-| `omni-resilience`      | resilience      | Leistungsschalter + Abkühlzeiten           |
-| `omni-cli-tools`       | cli-tools       | REST-Proxy für CLI-Werkzeuge               |
-| `omni-tunnels`         | tunnels         | Tunnelverwaltung                           |
-| `omni-sync-cloud`      | sync-cloud      | Cloud-Synchronisierung                     |
-| `omni-db-backups`      | db-backups      | Datenbanksicherungen                       |
-| `omni-webhooks`        | webhooks        | Dispatcher für Webhook-Ereignisse          |
-| `omni-mcp`             | mcp             | MCP-Server (110 Werkzeuge, 3 Transporte)   |
-| `omni-agents-a2a`      | agents-a2a      | A2A-Agentenprotokoll                       |
-| `omni-version-manager` | version-manager | Versions- und Aktualisierungsverwaltung    |
-| `omni-inference`       | inference       | Direkte Inferenz / Vervollständigungen     |
+| `pusula-auth`            | auth            | Authentifizierungs- und Sitzungsverwaltung |
+| `pusula-providers`       | providers       | Verwaltung von Anbieter-Verbindungen       |
+| `pusula-models`          | models          | Modellkatalog und Funktionen               |
+| `pusula-combos-routing`  | combos-routing  | Combo-Routing-Strategien                   |
+| `pusula-api-keys`        | api-keys        | API-Schlüsselverwaltung                    |
+| `pusula-usage-logs`      | usage-logs      | Nutzungs- und Kostenprotokolle             |
+| `pusula-budget`          | budget          | Budgetbegrenzungen                         |
+| `pusula-settings`        | settings        | Globale Einstellungen                      |
+| `pusula-proxies`         | proxies         | Proxy-Pool-Verwaltung                      |
+| `pusula-cache`           | cache           | Semantischer Cache + Prompt-Cache          |
+| `pusula-compression`     | compression     | Engines zur Kontextkomprimierung           |
+| `pusula-context-rtk`     | context-rtk     | RTK-Komprimierung                          |
+| `pusula-resilience`      | resilience      | Leistungsschalter + Abkühlzeiten           |
+| `pusula-cli-tools`       | cli-tools       | REST-Proxy für CLI-Werkzeuge               |
+| `pusula-tunnels`         | tunnels         | Tunnelverwaltung                           |
+| `pusula-sync-cloud`      | sync-cloud      | Cloud-Synchronisierung                     |
+| `pusula-db-backups`      | db-backups      | Datenbanksicherungen                       |
+| `pusula-webhooks`        | webhooks        | Dispatcher für Webhook-Ereignisse          |
+| `pusula-mcp`             | mcp             | MCP-Server (110 Werkzeuge, 3 Transporte)   |
+| `pusula-agents-a2a`      | agents-a2a      | A2A-Agentenprotokoll                       |
+| `pusula-version-manager` | version-manager | Versions- und Aktualisierungsverwaltung    |
+| `pusula-inference`       | inference       | Direkte Inferenz / Vervollständigungen     |
 
 ### CLI-Fähigkeiten (21)
 
@@ -216,7 +216,7 @@ Protokolldetails finden Sie unter [A2A-SERVER.md](./A2A-SERVER.md).
 curl "http://your-pusula/api/agent-skills" | jq '.skills[] | {id, name, category}'
 
 # SKILL.md zur Kontexteinspeisung abrufen
-curl "http://your-pusula/api/agent-skills/omni-providers/raw" > omni-providers.md
+curl "http://your-pusula/api/agent-skills/pusula-providers/raw" > pusula-providers.md
 ```
 
 ### 2. Ermittlung über MCP
@@ -247,7 +247,7 @@ table = resp.json()["result"]["artifacts"][0]["content"]
 
 ```bash
 BASE="https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/refs/heads/main/skills"
-curl "${BASE}/omni-providers/SKILL.md"
+curl "${BASE}/pusula-providers/SKILL.md"
 ```
 
 ---
@@ -273,14 +273,14 @@ curl -X POST http://localhost:20128/api/agent-skills/generate \
 curl -X POST http://localhost:20128/api/agent-skills/generate \
   -H "Authorization: Bearer <admin-key>" \
   -H "Content-Type: application/json" \
-  -d '{"dryRun":false,"onlyIds":["omni-providers","cli-serve"]}'
+  -d '{"dryRun":false,"onlyIds":["pusula-providers","cli-serve"]}'
 ```
 
 Die Antwort des Generators ist ein `GeneratorReport`:
 
 ```json
 {
-  "generated": ["omni-providers", "cli-serve"],
+  "generated": ["pusula-providers", "cli-serve"],
   "unchanged": [],
   "pruned": [],
   "orphansDetected": [],
@@ -310,7 +310,7 @@ curl "http://localhost:20128/api/agent-skills/coverage"
 
 ## Verwandte Inhalte
 
-- [SKILLS.md](./SKILLS.md) — Omni-Skills-Framework (LLM-Tool-Injektion + Marktplatz)
+- [SKILLS.md](./SKILLS.md) — Pusula-Skills-Framework (LLM-Tool-Injektion + Marktplatz)
 - [MCP-SERVER.md](./MCP-SERVER.md) — MCP-Tool-Katalog (`pusula_agent_skills_*`-Tools)
 - [A2A-SERVER.md](./A2A-SERVER.md) — A2A-Protokoll (`list-capabilities`-Skill)
 - `src/lib/agentSkills/` — Katalog, Generator, Parser

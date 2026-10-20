@@ -440,7 +440,7 @@ export class ZaiWebExecutor extends BaseExecutor {
               "with browsers).",
             input.body,
             ZAI_CHAT_URL,
-            { "X-Omni-Fallback-Hint": "connection_cooldown" }
+            { "X-Pusula-Fallback-Hint": "connection_cooldown" }
           ),
         };
       }

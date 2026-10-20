@@ -15,7 +15,7 @@ const { parseCliRegistry, getCommandsForFamily } =
  * writes fixture .mjs files, changes CWD, returns cleanup fn.
  */
 function withFixtureCli(files: Record<string, string>): { cleanup: () => void } {
-  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-cli-test-"));
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-cli-test-"));
   const commandsDir = path.join(tmpDir, "bin", "cli", "commands");
   fs.mkdirSync(commandsDir, { recursive: true });
 
@@ -354,7 +354,7 @@ test("parseCliRegistry() skips unrecognised .mjs files", () => {
 });
 
 test("parseCliRegistry() throws if commands directory is missing", () => {
-  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-cli-missing-"));
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-cli-missing-"));
   const originalCwd = process.cwd();
   process.chdir(tmpDir);
   try {

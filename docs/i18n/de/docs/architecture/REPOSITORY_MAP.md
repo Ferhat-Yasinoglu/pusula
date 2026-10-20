@@ -24,7 +24,7 @@ Pusula/
 ├── config/               # Statische Konfiguration + Quality-Gate-Status (i18n, payloadRules, quality/)
 ├── images/               # Bild-Assets für Marketing und README
 ├── @pusula/           # Veröffentlichbare Begleitpakete (opencode-plugin, opencode-provider)
-├── skills/               # Skill-Pakete für CLI/Agenten (cli-* + omni-* + config-codex-cli)
+├── skills/               # Skill-Pakete für CLI/Agenten (cli-* + pusula-* + config-codex-cli)
 ├── examples/             # Beispiel-Plug-ins + Starter für pusula-cmd-hello
 ├── contrib/              # Beiträge der Community (podman/)
 ├── .source/              # Fumadocs-Quellkonfiguration (source.config.mjs + server/browser/dynamic)

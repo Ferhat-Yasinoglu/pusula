@@ -386,15 +386,15 @@ function reverseModelsDevProviders(provider: string): readonly string[] {
 
   const out = new Set<string>();
   const providerAlias = PROVIDER_ID_TO_ALIAS[provider] || provider;
-  for (const [modelsDevId, omniIds] of Object.entries(MODELS_DEV_PROVIDER_MAP)) {
+  for (const [modelsDevId, pusulaIds] of Object.entries(MODELS_DEV_PROVIDER_MAP)) {
     if (
-      omniIds.includes(provider) ||
-      omniIds.includes(providerAlias) ||
+      pusulaIds.includes(provider) ||
+      pusulaIds.includes(providerAlias) ||
       modelsDevId === provider ||
       modelsDevId === providerAlias
     ) {
       out.add(modelsDevId);
-      for (const id of omniIds) out.add(id);
+      for (const id of pusulaIds) out.add(id);
     }
   }
   // Frozen: the result is now shared across every future call for this provider (via

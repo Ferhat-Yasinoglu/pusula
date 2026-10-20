@@ -306,7 +306,7 @@ Pusula solves the problem of managing multiple AI provider subscriptions, quotas
 - **CodeQL security**: Fixed 10+ CodeQL alerts (polynomial-redos, insecure-randomness, shell-injection, SSRF, incomplete URLs)
 - **Web Crypto session IDs**: `generateSessionId` uses `crypto.getRandomValues()` instead of `Math.random()`
 - **Route validation**: All API routes validated with Zod v4 schemas + `validateBody()`
-- **omniModel tag sanitization**: Internal `<omniModel>` tags never leak to clients in SSE streams
+- **pusulaModel tag sanitization**: Internal `<pusulaModel>` tags never leak to clients in SSE streams
 - **TLS Fingerprint Spoofing** — Browser-like TLS fingerprint to reduce bot detection
 - **CLI Fingerprint Matching** — Per-provider request signature matching
 - **Prompt injection guard** — Request middleware detection
@@ -415,7 +415,7 @@ diagnostics) plus **memory**, **skill**, **agentSkill**, **githubSkill**, **pool
 7. CLI fingerprint matching (if enabled for provider)
 8. Upstream request with circuit breaker and rate limiting
 9. Response translation: provider → OpenAI format
-10. omniModel tag sanitization (strip internal tags)
+10. pusulaModel tag sanitization (strip internal tags)
 11. SSE streaming back to client
 12. Memory extraction (if memory system enabled)
 13. Usage logging and cost calculation

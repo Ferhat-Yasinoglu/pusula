@@ -27,7 +27,7 @@ export async function DELETE(request: Request) {
   if (scope.apiKey && !scope.apiKeyId) {
     // `info`, not `warn`: any caller can reach this branch by presenting any
     // string as a key, so a warn-level line per attempt is a log-flooding lever
-    // (omni-code-sec 2026-09-14 proof run, LEDGER-12). The 401 itself is the
+    // (pusula-code-sec 2026-09-14 proof run, LEDGER-12). The 401 itself is the
     // audit signal; the real sweeps below keep their warn-level audit lines.
     log.info("BATCHES", "delete-completed: presented API key rejected", {
       route: LOG_ROUTE,
@@ -42,7 +42,7 @@ export async function DELETE(request: Request) {
   }
 
   // The per-key operator policy every other `/v1` route applies (endpoint
-  // allowlist, access schedule, usage cap, rate limit — omni-code-sec
+  // allowlist, access schedule, usage cap, rate limit — pusula-code-sec
   // 2026-09-14 proof run, LEDGER-9/13/16). Runs after the lifecycle gate above
   // (the enforcer's own status check does not look at `revoked_at`) and before
   // the sweep scope is chosen, so a restricted key is refused with the
@@ -54,7 +54,7 @@ export async function DELETE(request: Request) {
   // A key resolved only via the ungated x-api-key/x-goog-api-key transport
   // never sets scope.apiKeyId — fall back to the id enforceApiKeyPolicy()
   // independently resolved, so that key sweeps its OWN completed batches
-  // instead of falling through to 401 (LEDGER-27, omni-code-sec round 3).
+  // instead of falling through to 401 (LEDGER-27, pusula-code-sec round 3).
   const effectiveApiKeyId = resolveEffectiveApiKeyId(scope, policy.apiKeyInfo);
 
   // A presented API key always scopes the sweep to that key — even when the

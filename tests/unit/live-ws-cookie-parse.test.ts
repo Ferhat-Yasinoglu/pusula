@@ -16,7 +16,7 @@ test("getCookieValueFromHeader reads auth_token when it is the only cookie", () 
 test("getCookieValueFromHeader reads auth_token when preceded by other cookies (#4004)", () => {
   // The standard browser "; " separator — the case the \s-vs-\\s bug broke.
   assert.equal(
-    getCookieValueFromHeader({ cookie: "omni_pref=dark; auth_token=abc123" }, "auth_token"),
+    getCookieValueFromHeader({ cookie: "pusula_pref=dark; auth_token=abc123" }, "auth_token"),
     "abc123"
   );
   assert.equal(

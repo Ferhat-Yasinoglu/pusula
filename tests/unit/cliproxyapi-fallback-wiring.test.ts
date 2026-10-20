@@ -18,7 +18,7 @@ import path from "node:path";
 
 // ─── DB harness (needed for upsertUpstreamProxyConfig tests) ──────────────────
 
-const testDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-cpa-wiring-test-"));
+const testDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-cpa-wiring-test-"));
 process.env.DATA_DIR = testDataDir;
 
 // Dynamic imports AFTER DATA_DIR is set so core.ts picks up the temp path.

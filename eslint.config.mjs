@@ -226,7 +226,7 @@ const eslintConfig = [
       // .claude/ (gitignored). They hold other sessions' in-progress work and
       // their files move mid-scan, so never lint them from the main checkout.
       ".claude/**",
-      ".omnivscodeagent/**",
+      ".pusulavscodeagent/**",
       // _tasks/ — planning/handoff/research artifacts (gitignored, external code)
       "_tasks/**",
       // .agents/ — skill definitions + their helper scripts (gitignored; the

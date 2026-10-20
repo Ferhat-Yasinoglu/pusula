@@ -18,7 +18,7 @@ import path from "node:path";
 import type { NextRequest } from "next/server";
 import { makeManagementSessionRequest } from "../helpers/managementSession.ts";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omni-obsidian-webdav-route-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-obsidian-webdav-route-"));
 const ORIGINAL_DATA_DIR = process.env.DATA_DIR;
 const ORIGINAL_INITIAL_PASSWORD = process.env.INITIAL_PASSWORD;
 const ORIGINAL_JWT_SECRET = process.env.JWT_SECRET;
@@ -111,7 +111,7 @@ test("GET with no config → webdavEnabled:false, all creds null", async () => {
 });
 
 test("POST with a valid temp dir → returns { username, password }, GET shows enabled", async () => {
-  const vaultDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-vault-"));
+  const vaultDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-vault-"));
   try {
     const req = makeRequest("http://localhost/api/settings/obsidian/webdav", {
       method: "POST",
@@ -151,7 +151,7 @@ test("POST with a valid temp dir → returns { username, password }, GET shows e
 });
 
 test("GET masks the WebDAV password for anonymous callers but reveals it to a management session (GHSA-62vw)", async () => {
-  const vaultDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-vault-62vw-"));
+  const vaultDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-vault-62vw-"));
   try {
     // Enable WebDAV so there is a stored password to leak.
     const enableRes = await route.POST(
@@ -191,7 +191,7 @@ test("GET masks the WebDAV password for anonymous callers but reveals it to a ma
 });
 
 test("POST with a non-existent path → 400, body does NOT contain a stack trace", async () => {
-  const nonExistentPath = path.join(os.tmpdir(), "omni-nonexistent-vault-" + Date.now());
+  const nonExistentPath = path.join(os.tmpdir(), "pusula-nonexistent-vault-" + Date.now());
   const req = makeRequest("http://localhost/api/settings/obsidian/webdav", {
     method: "POST",
     headers: { "content-type": "application/json" },
@@ -245,7 +245,7 @@ test("POST rejects a vaultPath INSIDE the data directory → 400 (GHSA-7pq4-8pvv
 });
 
 test("POST rejects a symlink that resolves to the data directory → 400 (GHSA-7pq4-8pvv-rx7r)", async () => {
-  const linkParent = fs.mkdtempSync(path.join(os.tmpdir(), "omni-vault-link-"));
+  const linkParent = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-vault-link-"));
   const link = path.join(linkParent, "vault");
   try {
     fs.symlinkSync(TEST_DATA_DIR, link, "dir");
@@ -263,7 +263,7 @@ test("POST rejects a symlink that resolves to the data directory → 400 (GHSA-7
 });
 
 test("POST with a directory unrelated to the data directory still succeeds (sibling in tmp)", async () => {
-  const vaultDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-vault-ok-"));
+  const vaultDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-vault-ok-"));
   try {
     const res = await postVault(vaultDir);
     assert.equal(res.status, 200);
@@ -286,7 +286,7 @@ test("POST with invalid body (missing vaultPath) → 400", async () => {
 });
 
 test("DELETE after enable → webdavEnabled:false, creds cleared in GET", async () => {
-  const vaultDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-vault2-"));
+  const vaultDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-vault2-"));
   try {
     // Enable first
     const enableReq = makeRequest("http://localhost/api/settings/obsidian/webdav", {
@@ -319,7 +319,7 @@ test("DELETE after enable → webdavEnabled:false, creds cleared in GET", async 
 });
 
 test("GET when disabled does not leak password even if stale data exists", async () => {
-  const vaultDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-vault3-"));
+  const vaultDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-vault3-"));
   try {
     // Enable, then disable
     const enableReq = makeRequest("http://localhost/api/settings/obsidian/webdav", {
@@ -356,7 +356,7 @@ test("Unauthenticated GET → 401 when auth is required", async () => {
 });
 
 test("Unauthenticated POST → 401 when auth is required", async () => {
-  const vaultDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-vault4-"));
+  const vaultDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-vault4-"));
   try {
     process.env.INITIAL_PASSWORD = "bootstrap-password";
     await settingsDb.updateSettings({ requireLogin: true, password: "" });

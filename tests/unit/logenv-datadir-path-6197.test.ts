@@ -38,7 +38,7 @@ function withEnv(overrides: Record<string, string | undefined>, fn: () => void) 
 }
 
 test("getAppLogFilePath: default anchors to DATA_DIR, not process.cwd()", () => {
-  const dataDir = path.join(os.tmpdir(), "omni-log-6197");
+  const dataDir = path.join(os.tmpdir(), "pusula-log-6197");
   withEnv({ DATA_DIR: dataDir, APP_LOG_FILE_PATH: undefined }, () => {
     const resolved = getAppLogFilePath();
     assert.ok(

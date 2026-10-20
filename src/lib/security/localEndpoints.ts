@@ -16,13 +16,13 @@
  *
  * This function is a SECONDARY, best-effort, defense-in-depth check layered behind
  * that gate. In the Next.js runtime it is currently INERT for real requests:
- * `globalThis.__omniRequestHeaders` is not populated per-request, so the loopback/
+ * `globalThis.__pusulaRequestHeaders` is not populated per-request, so the loopback/
  * bearer branches below never run and the function falls through to its env-gated
  * default. Do NOT rely on it as the trust boundary — keep `/api/local/*` classified
  * in `routeGuard.ts` (that is what actually closes the hole). The header-driven
  * branches remain for the desktop/embedded path that does inject the header.
  *
- * Rules (apply only when `__omniRequestHeaders` is wired by the caller):
+ * Rules (apply only when `__pusulaRequestHeaders` is wired by the caller):
  *   1. Allow requests whose `host` header matches the dev server's bind host
  *      (localhost / 127.0.0.1 / ::1) AND whose `x-forwarded-for` is absent
  *      or set to a loopback address. This blocks proxied requests from the
@@ -41,7 +41,7 @@
  *   - log the invocation via the audit channel so misuse is detectable
  */
 export function isLocalRequestAllowed(): { allowed: true } | { allowed: false; reason: string } {
-  const headers = (globalThis as { __omniRequestHeaders?: Headers }).__omniRequestHeaders;
+  const headers = (globalThis as { __pusulaRequestHeaders?: Headers }).__pusulaRequestHeaders;
   if (headers) {
     // 1. Bearer token path (desktop app trust)
     const expected = process.env.PUSULA_LOCAL_ENDPOINTS_TOKEN;

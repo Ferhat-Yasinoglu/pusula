@@ -808,11 +808,11 @@ test("resolveSelfLoopBearer falls back to a random per-process secret when no en
 
 test("resolveSelfLoopBearer prefers PUSULA_API_KEY over ROUTER_API_KEY", () => {
   const restore = withSelfLoopEnv({
-    PUSULA_API_KEY: "omni-key",
+    PUSULA_API_KEY: "pusula-key",
     ROUTER_API_KEY: "router-key",
   });
   try {
-    assert.equal(resolveSelfLoopBearer(), "omni-key");
+    assert.equal(resolveSelfLoopBearer(), "pusula-key");
   } finally {
     restore();
   }

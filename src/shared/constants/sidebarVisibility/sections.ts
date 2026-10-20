@@ -18,7 +18,7 @@ const HOME_ITEMS: readonly SidebarItemDefinition[] = [
   },
 ];
 
-const OMNI_PROXY_ITEMS: readonly SidebarItemDefinition[] = [
+const PUSULA_PROXY_ITEMS: readonly SidebarItemDefinition[] = [
   {
     id: "endpoints",
     href: "/dashboard/endpoint",
@@ -609,9 +609,9 @@ const AGENTIC_FEATURES_ITEMS: readonly SidebarSectionChild[] = [
   },
   {
     id: "skills",
-    href: "/dashboard/omni-skills",
-    i18nKey: "omniSkills",
-    subtitleKey: "omniSkillsSubtitle",
+    href: "/dashboard/pusula-skills",
+    i18nKey: "pusulaSkills",
+    subtitleKey: "pusulaSkillsSubtitle",
     icon: "auto_fix_high",
   },
   MCP_ITEM,
@@ -826,11 +826,11 @@ export const SIDEBAR_SECTIONS: readonly SidebarSectionDefinition[] = [
     showTitle: false,
   },
   {
-    id: "omni-proxy",
-    titleKey: "omniProxySection",
-    titleFallback: "OmniProxy",
+    id: "pusula-proxy",
+    titleKey: "pusulaProxySection",
+    titleFallback: "PusulaProxy",
     children: [
-      ...OMNI_PROXY_ITEMS,
+      ...PUSULA_PROXY_ITEMS,
       COMPRESSION_CONTEXT_GROUP,
       TOOLS_GROUP,
       INTEGRATIONS_GROUP,

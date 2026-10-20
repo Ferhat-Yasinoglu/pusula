@@ -21,7 +21,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const testDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-7645-cpa-cred-"));
+const testDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-7645-cpa-cred-"));
 process.env.DATA_DIR = testDataDir;
 
 const coreDb = await import("../../src/lib/db/core.ts");

@@ -20,7 +20,7 @@
  *
  * Kept in its own module so `imageGeneration.ts` and `imageUpscale/shared.ts`
  * share ONE implementation instead of rediscovering the null-prototype contract
- * per sink (omni-code-review LEDGER-22 / LEDGER-37).
+ * per sink (pusula-code-review LEDGER-22 / LEDGER-37).
  */
 
 import { redactSensitiveErrorText } from "../utils/error.ts";
@@ -51,7 +51,7 @@ function renderImageErrorForLog(value: unknown): string {
  * The `Error` branch has to be as total as the others: `name`/`message` are ordinary
  * (re)assignable properties, so an Error can carry a null-prototype object or a throwing
  * getter in either slot, and a bare `${value.name}: ${value.message}` would throw the very
- * `TypeError` this module exists to prevent (omni-code-review LEDGER-56).
+ * `TypeError` this module exists to prevent (pusula-code-review LEDGER-56).
  */
 function renderErrorInstanceForLog(error: Error): string {
   return `${readErrorPart(error, "name", "Error")}: ${readErrorPart(

@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-unknown-quota-"));
+const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-unknown-quota-"));
 process.env.DATA_DIR = dataDir;
 const core = await import("../../src/lib/db/core.ts");
 const cache = await import("../../src/domain/quotaCache.ts");

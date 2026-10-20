@@ -1138,16 +1138,16 @@ export const PusulaPlugin: Plugin = async (_input, options) => {
       >;
     };
     if (!cfg.command) cfg.command = {};
-    if (!cfg.command["omni-sync"]) {
-      cfg.command["omni-sync"] = {
+    if (!cfg.command["pusula-sync"]) {
+      cfg.command["pusula-sync"] = {
         description: "Force-refresh Pusula model catalog (like Pi /omni sync)",
         template:
           `Force-refresh the Pusula model catalog now using the pusula_sync_models tool ` +
           `(provider ${bareProviderId}). After the tool returns, briefly report model count and whether the sync succeeded.`,
       };
     }
-    if (!cfg.command["omni-autosync"]) {
-      cfg.command["omni-autosync"] = {
+    if (!cfg.command["pusula-autosync"]) {
+      cfg.command["pusula-autosync"] = {
         description: "Show Pusula auto-sync / cache status",
         template:
           `Report Pusula discovery status for provider ${bareProviderId}: ` +

@@ -4,7 +4,7 @@ import path from "node:path";
 import fs from "node:fs";
 import os from "node:os";
 
-const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-binmgr-test-"));
+const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-binmgr-test-"));
 const originalDataDir = process.env.DATA_DIR;
 process.env.DATA_DIR = tmpDir;
 
@@ -172,13 +172,13 @@ describe("binaryManager", () => {
       fs.mkdirSync(fakePowerShellDir, { recursive: true });
       fs.writeFileSync(
         path.join(fakePowerShellDir, "powershell"),
-        '#!/bin/sh\nprintf \'%s\\n\' "$@" > "$OMNI_TEST_COMMAND_LOG"\n' +
-          'mkdir -p "$OMNI_TEST_EXTRACT_DIR"\nprintf \'installed-binary\' > "$OMNI_TEST_EXTRACT_DIR/cli-proxy-api"\n'
+        '#!/bin/sh\nprintf \'%s\\n\' "$@" > "$PUSULA_TEST_COMMAND_LOG"\n' +
+          'mkdir -p "$PUSULA_TEST_EXTRACT_DIR"\nprintf \'installed-binary\' > "$PUSULA_TEST_EXTRACT_DIR/cli-proxy-api"\n'
       );
       fs.chmodSync(path.join(fakePowerShellDir, "powershell"), 0o755);
       process.env.PATH = `${fakePowerShellDir}:${originalPath || ""}`;
-      process.env.OMNI_TEST_COMMAND_LOG = commandLog;
-      process.env.OMNI_TEST_EXTRACT_DIR = extractedDir;
+      process.env.PUSULA_TEST_COMMAND_LOG = commandLog;
+      process.env.PUSULA_TEST_EXTRACT_DIR = extractedDir;
 
       globalThis.fetch = async (input: string | URL | Request) => {
         const url = String(input);
@@ -224,8 +224,8 @@ describe("binaryManager", () => {
         archMock.mock.restore();
         globalThis.fetch = originalFetch;
         process.env.PATH = originalPath;
-        delete process.env.OMNI_TEST_COMMAND_LOG;
-        delete process.env.OMNI_TEST_EXTRACT_DIR;
+        delete process.env.PUSULA_TEST_COMMAND_LOG;
+        delete process.env.PUSULA_TEST_EXTRACT_DIR;
       }
     });
 
@@ -278,13 +278,13 @@ describe("binaryManager", () => {
       fs.mkdirSync(fakePowerShellDir, { recursive: true });
       fs.writeFileSync(
         path.join(fakePowerShellDir, "powershell"),
-        '#!/bin/sh\nprintf \'%s\\n\' "$@" > "$OMNI_TEST_COMMAND_LOG_PT"\n' +
-          'mkdir -p "$OMNI_TEST_EXTRACT_DIR_PT"\nprintf \'installed-binary\' > "$OMNI_TEST_EXTRACT_DIR_PT/cli-proxy-api"\n'
+        '#!/bin/sh\nprintf \'%s\\n\' "$@" > "$PUSULA_TEST_COMMAND_LOG_PT"\n' +
+          'mkdir -p "$PUSULA_TEST_EXTRACT_DIR_PT"\nprintf \'installed-binary\' > "$PUSULA_TEST_EXTRACT_DIR_PT/cli-proxy-api"\n'
       );
       fs.chmodSync(path.join(fakePowerShellDir, "powershell"), 0o755);
       process.env.PATH = `${fakePowerShellDir}:${originalPath || ""}`;
-      process.env.OMNI_TEST_COMMAND_LOG_PT = commandLog;
-      process.env.OMNI_TEST_EXTRACT_DIR_PT = extractedDir;
+      process.env.PUSULA_TEST_COMMAND_LOG_PT = commandLog;
+      process.env.PUSULA_TEST_EXTRACT_DIR_PT = extractedDir;
 
       globalThis.fetch = async (input: string | URL | Request) => {
         const url = String(input);
@@ -321,8 +321,8 @@ describe("binaryManager", () => {
       } finally {
         globalThis.fetch = originalFetch;
         process.env.PATH = originalPath;
-        delete process.env.OMNI_TEST_COMMAND_LOG_PT;
-        delete process.env.OMNI_TEST_EXTRACT_DIR_PT;
+        delete process.env.PUSULA_TEST_COMMAND_LOG_PT;
+        delete process.env.PUSULA_TEST_EXTRACT_DIR_PT;
       }
     });
   });

@@ -21,7 +21,7 @@ import path from "node:path";
 import test from "node:test";
 import type { NextRequest } from "next/server";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omni-rule12-sweep-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-rule12-sweep-"));
 const ORIGINAL_DATA_DIR = process.env.DATA_DIR;
 
 // Set DATA_DIR before importing anything that touches the DB.

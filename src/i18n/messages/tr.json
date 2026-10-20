@@ -1020,7 +1020,7 @@
     "cloudAgents": "Bulut Aracıları",
     "memory": "Bellek",
     "skills": "Beceriler",
-    "omniSkills": "OmniSkills",
+    "pusulaSkills": "PusulaSkills",
     "agentSkills": "Temsilci Becerileri",
     "chaosConfig": "Kaos Modu",
     "docs": "Dokümanlar",
@@ -1177,7 +1177,7 @@
     "settingsResilience": "Dayanıklılık",
     "modelLockout": "Model Kilitleme",
     "settingsAdvanced": "Gelişmiş",
-    "omniProxySection": "OmniProxy",
+    "pusulaProxySection": "PusulaProxy",
     "quotaTracker": "Sağlayıcı Kotası",
     "providerQuota": "Sağlayıcı Kotası",
     "runtime": "Çalışma Zamanı",
@@ -1245,7 +1245,7 @@
     "playgroundSubtitle": "İstemleri canlı olarak test et",
     "searchToolsSubtitle": "Arama aracı kayıt defteri",
     "memorySubtitle": "Kalıcı ajan belleği",
-    "omniSkillsSubtitle": "Sandbox beceri kayıt defteri",
+    "pusulaSkillsSubtitle": "Sandbox beceri kayıt defteri",
     "agentSkillsSubtitle": "A2A beceri kayıt defteri",
     "mcpSubtitle": "MCP sunucusu kontrolleri",
     "a2aSubtitle": "A2A protokol sunucusu",
@@ -1682,7 +1682,7 @@
     "settingsAdvancedDescription": "Gelişmiş yük kuralları, istek sınırları ve proxy API ayarları",
     "mitmProxyDescription": "Trafik incelemesi ve hata ayıklama için MITM proxy ayarlarını yapılandırın",
     "oneProxyDescription": "Gelişmiş proxy zincirleme için 1Proxy ayarlarını yapılandırın",
-    "omniSkillsDescription": "Otomatik istem ve araç yürütme için korumalı alan becerilerini yükleyin ve yönetin"
+    "pusulaSkillsDescription": "Otomatik istem ve araç yürütme için korumalı alan becerilerini yükleyin ve yönetin"
   },
   "cloudSyncStatus": {
     "synced": "Eşitlendi",
@@ -12424,91 +12424,91 @@
   },
   "agentSkills": {
     "catalog": {
-      "omni-auth": {
+      "pusula-auth": {
         "name": "Kimlik Doğrulama",
         "description": "API anahtarı kimlik doğrulamasını ve oturum belirteçlerini yönetin. İstekleri Bearer belirteci ile doğrulamak, oturum çerezleri almak ve Pusula API için oturum açma gereksinimlerini yapılandırmak için buradan başlayın."
       },
-      "omni-providers": {
+      "pusula-providers": {
         "name": "Sağlayıcılar",
         "description": "REST API aracılığıyla sağlayıcı bağlantılarını, API anahtarlarını, OAuth akışlarını ve bağlantı testlerini yönetin. Yapay zeka sağlayıcı entegrasyonlarını (OpenAI, Anthropic, Gemini ve 160+) listeleyin, ekleyin, güncelleyin, kaldırın ve test edin."
       },
-      "omni-models": {
+      "pusula-models": {
         "name": "Modeller",
         "description": "Yapılandırılmış tüm sağlayıcılardaki mevcut yapay zeka modellerini sorgulayın. Modelleri listeleyin, model takma adlarını çözümleyin ve sağlayıcıya özel varyantlar dahil olmak üzere tüm model kataloğuna göz atın."
       },
-      "omni-combos-routing": {
+      "pusula-combos-routing": {
         "name": "Kombolar ve Yönlendirme",
         "description": "14 stratejiye (öncelikli, ağırlıklı, round-robin, Auto-combo vb.) sahip yönlendirme komboları oluşturun ve yönetin. Yedekleme zincirlerini yapılandırın, yönlendirme sonuçlarını test edin ve kombo metriklerini alın."
       },
-      "omni-api-keys": {
+      "pusula-api-keys": {
         "name": "API Anahtarları",
         "description": "Pusula API anahtarları oluşturun, listeleyin, döndürün ve iptal edin. Anahtar başına kapsamları, harcama limitlerini ve son kullanma tarihlerini denetleyin. Anahtarlar, tüm proxy ve yönetim uç noktalarına erişimi kontrol eder."
       },
-      "omni-usage-logs": {
+      "pusula-usage-logs": {
         "name": "Kullanım ve Günlükler",
         "description": "Ayrıntılı çağrı günlüklerine ve kullanım analizlerine erişin. Sağlayıcıya, modele, zaman aralığına, duruma ve maliyete göre filtreleyin. Günlükleri dışa aktarın ve tüm bağlantılardaki token kullanımını toplayın."
       },
-      "omni-budget": {
+      "pusula-budget": {
         "name": "Bütçe ve Hız Limitleri",
         "description": "API anahtarı başına veya genel olarak harcama limitlerini, token kotalarını ve hız sınırı politikalarını yapılandırın. Mevcut tüketimi inceleyin ve sağlayıcılar genelinde maliyet kontrolleri uygulayın."
       },
-      "omni-settings": {
+      "pusula-settings": {
         "name": "Ayarlar",
         "description": "Genel uygulama ayarlarını okuyun ve güncelleyin: sistem istemleri, düşünme bütçesi, IP filtreleri, veri yükü kuralları, kombo varsayılanları ve oturum açma zorunluluğu yapılandırması."
       },
-      "omni-proxies": {
+      "pusula-proxies": {
         "name": "Proxy Yapılandırması",
         "description": "Yukarı akış sağlayıcı istekleri için HTTP/HTTPS/SOCKS proxy'lerini yapılandırın. Sağlayıcı başına veya genel proxy kuralları belirleyin, bağlantıyı test edin ve proxy rotasyonunu yönetin."
       },
-      "omni-cache": {
+      "pusula-cache": {
         "name": "Önbellek",
         "description": "LLM yanıt önbelleğini yönetin. Önbellek istatistiklerini görüntüleyin, girdileri temizleyin, TTL politikalarını yapılandırın ve anlamsal benzerlik önbelleğe alma eşiklerini kontrol edin."
       },
-      "omni-compression": {
+      "pusula-compression": {
         "name": "Sıkıştırma",
         "description": "RTK (komut çıktısı), Caveman (düz yazı) ve yığınlanmış sıkıştırma modlarını yapılandırın. Dil paketlerini, özel kuralları yönetin ve token miktarını %60–90 oranında azaltan istem sıkıştırmasını test edin."
       },
-      "omni-context-rtk": {
+      "pusula-context-rtk": {
         "name": "Bağlam ve RTK",
         "description": "RTK filtrelerini, bağlam mühendisliği kurallarını ve bağlam aktarım ayarlarını yapılandırın. Gerçek istem örnekleriyle sıkıştırmayı test edin ve bağlam dönüştürme işlem hatlarını yönetin."
       },
-      "omni-resilience": {
+      "pusula-resilience": {
         "name": "Dayanıklılık ve İzleme",
         "description": "Sağlayıcı durumunu, devre kesici durumlarını, p50/p95/p99 gecikme metriklerini ve bütçe koruma uyarılarını izleyin. Bağlantı bekleme sürelerini ve model kilitlenmelerini gerçek zamanlı olarak inceleyin."
       },
-      "omni-cli-tools": {
+      "pusula-cli-tools": {
         "name": "CLI Araçları",
         "description": "API aracılığıyla sunulan CLI aracı entegrasyonlarını yönetin. Pusula'un otomasyon yüzeyini genişleten CLI aracı eklentilerini listeleyin, yapılandırın ve çağırın."
       },
-      "omni-tunnels": {
+      "pusula-tunnels": {
         "name": "Tüneller",
         "description": "Pusula'u internete açmak veya uzak temsilciler ve CI işlem hatlarıyla erişimi paylaşmak için güvenli tüneller (ngrok, Cloudflare Tunnel, özel) oluşturun ve yönetin."
       },
-      "omni-sync-cloud": {
+      "pusula-sync-cloud": {
         "name": "Bulut Senkronizasyonu",
         "description": "Pusula yapılandırmasını, sağlayıcı bağlantılarını ve ayarlarını bulut depolama alanına/alanından senkronize edin. Bulut çalışanı kimlik doğrulamasını ve uzak yedekleme hedeflerini yönetin."
       },
-      "omni-db-backups": {
+      "pusula-db-backups": {
         "name": "Veritabanı ve Yedeklemeler",
         "description": "Sistem yedeklemelerini tetikleyin, yedekleme dosyalarından geri yükleyin ve SQLite veritabanı yaşam döngüsünü yönetin. Dışa aktarma, içe aktarma ve artımlı anlık görüntü stratejilerini destekler."
       },
-      "omni-webhooks": {
+      "pusula-webhooks": {
         "name": "Webhook'lar",
         "description": "Webhook uç noktalarını kaydedin, listeleyin, test edin ve kaldırın. Olay aboneliklerini (request.completed, request.failed, quota.exceeded vb.) yapılandırın ve teslimat yeniden denemelerini yönetin."
       },
-      "omni-mcp": {
+      "pusula-mcp": {
         "name": "MCP Sunucusu",
         "description": "Pusula MCP sunucusuna bağlanın (110 araç, 3 taşıma protokolü: SSE/stdio/HTTP). 33 izin kapsamı genelinde yönlendirme, önbellek, sıkıştırma, bellek, yetenekler, sağlayıcılar ve denetim araçlarını kapsar."
       },
-      "omni-agents-a2a": {
+      "pusula-agents-a2a": {
         "name": "Temsilciler ve A2A Protokolü",
         "description": "JSON-RPC 2.0 temsilciler arası (agent-to-agent) protokolü aracılığıyla Pusula ile etkileşime geçin. Yerleşik 6 A2A yeteneği: smart-routing, quota-management, provider-discovery, cost-analysis, health-report, list-capabilities."
       },
-      "omni-version-manager": {
+      "pusula-version-manager": {
         "name": "Sürüm Yöneticisi",
         "description": "Gömülü hizmetleri (9Router, CLIProxyAPI) yükleyin, başlatın, durdurun, yeniden başlatın ve güncelleyin. Hizmet durumunu izleyin, günlükleri alın ve yalnızca yerel hizmet uç noktaları için otomatik başlatmayı yapılandırın."
       },
-      "omni-inference": {
+      "pusula-inference": {
         "name": "Çıkarım (OpenAI uyumlu)",
         "description": "Temel OpenAI uyumlu çıkarım uç noktaları: sohbet tamamlamaları, yerleştirmeler, görseller, ses (TTS/STT), denetlemeler, yeniden sıralama ve Responses API. Yapay zeka temsilcileri için birincil entegrasyon yüzeyi."
       },
@@ -12600,7 +12600,7 @@
         "name": "Yapılandırma: Codex CLI",
         "description": "OpenAI Codex CLI'yı herhangi bir makinede (Linux, macOS, Windows) Pusula'u OpenAI uyumlu bir arka uç olarak kullanacak şekilde yapılandırmaya yönelik adım adım ajan iş akışı. İşletim sistemini ve kabuğu tespit eder, config.toml dosyasını ve 7 adlandırılmış profili yazar, ortam değişkenlerini ayarlar ve kurulumu doğrular."
       },
-      "omni-github-skills": {
+      "pusula-github-skills": {
         "name": "GitHub Beceri Keşfi",
         "description": "SKILL.md, CLAUDE.md, .cursorrules ve benzeri ajan becerisi dosyalarını içeren GitHub depolarından ajan becerilerini arayın, puanlayın, tarayın ve içe aktarın. 160'tan fazla sağlayıcı kategorisindeki topluluk becerilerini keşfedin, sezgisel puanlama ile alaka düzeyini değerlendirin, kötü amaçlı yazılımları veya sabit kodlanmış gizli bilgileri kontrol edin ve Hermes, Claude Code, Gemini CLI veya OpenCode ajan dizinlerine yükleyin."
       }
@@ -14140,7 +14140,7 @@
   },
   "conductor": {
     "title": "Conductor — CLI-ajansı filosu",
-    "subtitle": "OmniConductor merkezi: koşucular, görev kuyruğu ve konseyler, canlı",
+    "subtitle": "PusulaConductor merkezi: koşucular, görev kuyruğu ve konseyler, canlı",
     "runners": "Koşucular",
     "tasks": "Görevler",
     "colName": "Ad",

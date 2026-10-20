@@ -134,7 +134,7 @@ describe("the route passes the caller's key through", () => {
     );
   });
 
-  it("does not re-run validateApiKey: getApiKeyRequestScope is the single lifecycle gate and the audit reason is its keyState (omni-code-review LEDGER-3/9)", async () => {
+  it("does not re-run validateApiKey: getApiKeyRequestScope is the single lifecycle gate and the audit reason is its keyState (pusula-code-review LEDGER-3/9)", async () => {
     const { readFileSync } = await import("node:fs");
     const { fileURLToPath } = await import("node:url");
     const src = readFileSync(

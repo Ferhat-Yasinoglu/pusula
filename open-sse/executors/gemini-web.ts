@@ -753,7 +753,7 @@ export class GeminiWebExecutor extends BaseExecutor {
               status: 503,
               headers: {
                 "Content-Type": "application/json",
-                "X-Omni-Fallback-Hint": "connection_cooldown",
+                "X-Pusula-Fallback-Hint": "connection_cooldown",
               },
             }
           ),

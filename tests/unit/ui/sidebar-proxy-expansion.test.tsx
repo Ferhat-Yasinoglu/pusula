@@ -15,15 +15,15 @@ import {
 
 describe("sidebar proxy expansion", () => {
   it("proxy navigation is always present and cannot be hidden by legacy settings", () => {
-    const omniProxy = SIDEBAR_SECTIONS.find((section) => section.id === "omni-proxy");
-    expect(omniProxy).toBeDefined();
-    expect(getSectionItems(omniProxy!).some((item) => item.id === "proxy")).toBe(true);
+    const pusulaProxy = SIDEBAR_SECTIONS.find((section) => section.id === "pusula-proxy");
+    expect(pusulaProxy).toBeDefined();
+    expect(getSectionItems(pusulaProxy!).some((item) => item.id === "proxy")).toBe(true);
     expect((HIDEABLE_SIDEBAR_ITEM_IDS as readonly string[]).includes("proxy")).toBe(false);
     expect(normalizeHiddenSidebarItems(["proxy", "logs"])).toEqual(["logs"]);
   });
 
   it("opening another section closes all unpinned siblings", () => {
-    const expanded = new Set<SidebarSectionId>(["omni-proxy", "analytics"]);
+    const expanded = new Set<SidebarSectionId>(["pusula-proxy", "analytics"]);
     const next = toggleExpandedSection(expanded, new Set(), "configuration");
     expect([...next]).toEqual(["configuration"]);
   });

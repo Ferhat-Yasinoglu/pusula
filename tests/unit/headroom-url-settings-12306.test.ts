@@ -10,7 +10,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const testDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-12306-headroom-"));
+const testDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-12306-headroom-"));
 const originalDataDir = process.env.DATA_DIR;
 process.env.DATA_DIR = testDataDir;
 

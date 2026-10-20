@@ -6,7 +6,7 @@ import path from "node:path";
 
 // Feature 5004 — model_context_overrides DB module round-trip.
 
-const moduleDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-mco-module-"));
+const moduleDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-mco-module-"));
 process.env.DATA_DIR = moduleDataDir;
 
 const coreDb = await import("../../src/lib/db/core.ts");

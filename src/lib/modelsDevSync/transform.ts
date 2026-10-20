@@ -219,9 +219,9 @@ export function transformModelsDevToPricing(raw: ModelsDevData): PricingByProvid
       }
 
       // Write to ALL mapped Pusula providers
-      for (const omniProvider of pusulaProviders) {
-        if (!result[omniProvider]) result[omniProvider] = {};
-        result[omniProvider][modelId] = entry;
+      for (const pusulaProvider of pusulaProviders) {
+        if (!result[pusulaProvider]) result[pusulaProvider] = {};
+        result[pusulaProvider][modelId] = entry;
       }
     }
   }
@@ -282,9 +282,9 @@ export function transformModelsDevToCapabilities(raw: ModelsDevData): Capabiliti
               : null,
       };
 
-      for (const omniProvider of pusulaProviders) {
-        if (!result[omniProvider]) result[omniProvider] = {};
-        result[omniProvider][modelId] = cap;
+      for (const pusulaProvider of pusulaProviders) {
+        if (!result[pusulaProvider]) result[pusulaProvider] = {};
+        result[pusulaProvider][modelId] = cap;
       }
     }
   }

@@ -1020,7 +1020,7 @@
     "cloudAgents": "Cloud-Agenten",
     "memory": "Speicher",
     "skills": "Fähigkeiten",
-    "omniSkills": "OmniSkills",
+    "pusulaSkills": "PusulaSkills",
     "agentSkills": "AgentSkills",
     "chaosConfig": "Chaos-Modus",
     "docs": "Dokumente",
@@ -1177,7 +1177,7 @@
     "settingsResilience": "Ausfallsicherheit",
     "modelLockout": "Modellsperre",
     "settingsAdvanced": "Erweitert",
-    "omniProxySection": "OmniProxy",
+    "pusulaProxySection": "PusulaProxy",
     "quotaTracker": "Anbieterkontingent",
     "providerQuota": "Anbieterkontingent",
     "runtime": "Laufzeitumgebung",
@@ -1245,7 +1245,7 @@
     "playgroundSubtitle": "Prompts live testen",
     "searchToolsSubtitle": "Suchtool-Verzeichnis",
     "memorySubtitle": "Persistenter Agentenspeicher",
-    "omniSkillsSubtitle": "Sandbox-Skill-Verzeichnis",
+    "pusulaSkillsSubtitle": "Sandbox-Skill-Verzeichnis",
     "agentSkillsSubtitle": "A2A-Skill-Verzeichnis",
     "mcpSubtitle": "MCP-Server-Steuerung",
     "a2aSubtitle": "A2A-Protokollserver",
@@ -1682,7 +1682,7 @@
     "settingsAdvancedDescription": "Erweiterte Payload-Regeln, Anfragelimits und Proxy-API-Einstellungen",
     "mitmProxyDescription": "MITM-Proxy-Einstellungen für Datenverkehrsinspektion und Debugging konfigurieren",
     "oneProxyDescription": "1Proxy-Einstellungen für erweiterte Proxy-Verkettung konfigurieren",
-    "omniSkillsDescription": "Sandbox-Skills für die automatisierte Prompt- und Tool-Ausführung installieren und verwalten"
+    "pusulaSkillsDescription": "Sandbox-Skills für die automatisierte Prompt- und Tool-Ausführung installieren und verwalten"
   },
   "cloudSyncStatus": {
     "synced": "Synchronisiert",
@@ -12424,91 +12424,91 @@
   },
   "agentSkills": {
     "catalog": {
-      "omni-auth": {
+      "pusula-auth": {
         "name": "Authentifizierung",
         "description": "Verwalten Sie API-Schlüssel-Authentifizierung und Sitzungstoken. Beginnen Sie hier, um Anfragen über Bearer-Token zu authentifizieren, Sitzungscookies zu erhalten und Anmeldeanforderungen für die Pusula-API zu konfigurieren."
       },
-      "omni-providers": {
+      "pusula-providers": {
         "name": "Anbieter",
         "description": "Verwalten Sie Anbieterverbindungen, API-Schlüssel, OAuth-Flows und Verbindungstests über die REST-API. Listen Sie KI-Anbieterintegrationen (OpenAI, Anthropic, Gemini und 160+) auf, fügen Sie sie hinzu, aktualisieren, entfernen und testen Sie sie."
       },
-      "omni-models": {
+      "pusula-models": {
         "name": "Modelle",
         "description": "Verfügbare KI-Modelle über alle konfigurierten Anbieter hinweg abfragen. Modelle auflisten, Modell-Aliase auflösen und den vollständigen Modellkatalog einschließlich anbieterspezifischer Varianten durchsuchen."
       },
-      "omni-combos-routing": {
+      "pusula-combos-routing": {
         "name": "Kombinationen & Routing",
         "description": "Routing-Combos mit 14 Strategien (priority, weighted, round-robin, Auto-combo etc.) erstellen und verwalten. Fallback-Ketten konfigurieren, Routing-Ergebnisse testen und Combo-Metriken abrufen."
       },
-      "omni-api-keys": {
+      "pusula-api-keys": {
         "name": "API-Schlüssel",
         "description": "Pusula-API-Schlüssel erstellen, auflisten, rotieren und widerrufen. Gültigkeitsbereiche, Ausgabenlimits und Ablaufdaten pro Schlüssel steuern. Schlüssel regeln den Zugriff auf alle Proxy- und Verwaltungs-Endpunkte."
       },
-      "omni-usage-logs": {
+      "pusula-usage-logs": {
         "name": "Nutzung & Protokolle",
         "description": "Auf detaillierte Aufrufprotokolle und Nutzungsanalysen zugreifen. Nach Anbieter, Modell, Zeitraum, Status und Kosten filtern. Protokolle exportieren und Token-Nutzung über alle Verbindungen hinweg aggregieren."
       },
-      "omni-budget": {
+      "pusula-budget": {
         "name": "Budget & Rate-Limits",
         "description": "Ausgabenlimits, Token-Kontingente und Rate-Limit-Richtlinien pro API-Schlüssel oder global konfigurieren. Den aktuellen Verbrauch einsehen und Kostenkontrollen über Anbieter hinweg durchsetzen."
       },
-      "omni-settings": {
+      "pusula-settings": {
         "name": "Einstellungen",
         "description": "Globale Anwendungseinstellungen lesen und aktualisieren: System-Prompts, Thinking-Budget, IP-Filter, Payload-Regeln, Combo-Standardwerte und require-login-Konfiguration."
       },
-      "omni-proxies": {
+      "pusula-proxies": {
         "name": "Proxy-Konfiguration",
         "description": "HTTP/HTTPS/SOCKS-Proxys für Upstream-Anbieteranfragen konfigurieren. Anbieterspezifische oder globale Proxy-Regeln festlegen, Konnektivität testen und Proxy-Rotation verwalten."
       },
-      "omni-cache": {
+      "pusula-cache": {
         "name": "Cache",
         "description": "Den LLM-Antwort-Cache verwalten. Cache-Statistiken anzeigen, Einträge löschen, TTL-Richtlinien konfigurieren und Schwellenwerte für semantische Ähnlichkeit beim Caching steuern."
       },
-      "omni-compression": {
+      "pusula-compression": {
         "name": "Komprimierung",
         "description": "RTK- (Befehlsausgabe), Caveman- (Prosa) und gestapelte Komprimierungsmodi konfigurieren. Sprachpakete und benutzerdefinierte Regeln verwalten sowie Prompt-Komprimierung testen, die Tokens um 60–90 % reduziert."
       },
-      "omni-context-rtk": {
+      "pusula-context-rtk": {
         "name": "Kontext & RTK",
         "description": "RTK-Filter, Context-Engineering-Regeln und Context-Relay-Einstellungen konfigurieren. Komprimierung mit echten Prompt-Beispielen testen und Kontext-Transformations-Pipelines verwalten."
       },
-      "omni-resilience": {
+      "pusula-resilience": {
         "name": "Resilienz & Monitoring",
         "description": "Anbieter-Status, Circuit-Breaker-Zustände, p50/p95/p99-Latenzmetriken und Budget-Guard-Warnungen überwachen. Verbindungs-Cooldowns und Modell-Sperren in Echtzeit einsehen."
       },
-      "omni-cli-tools": {
+      "pusula-cli-tools": {
         "name": "CLI-Tools",
         "description": "Über die API bereitgestellte CLI-Tool-Integrationen verwalten. CLI-Tool-Plugins auflisten, konfigurieren und aufrufen, die die Automatisierungsoberfläche von Pusula erweitern."
       },
-      "omni-tunnels": {
+      "pusula-tunnels": {
         "name": "Tunnel",
         "description": "Sichere Tunnel (ngrok, Cloudflare Tunnel, benutzerdefiniert) erstellen und verwalten, um Pusula im Internet freizugeben oder den Zugriff mit Remote-Agenten und CI-Pipelines zu teilen."
       },
-      "omni-sync-cloud": {
+      "pusula-sync-cloud": {
         "name": "Cloud-Sync",
         "description": "Pusula-Konfiguration, Anbieterverbindungen und Einstellungen mit dem Cloud-Speicher synchronisieren. Cloud-Worker-Authentifizierung und Remote-Backup-Ziele verwalten."
       },
-      "omni-db-backups": {
+      "pusula-db-backups": {
         "name": "Datenbank & Backups",
         "description": "System-Backups auslösen, aus Backup-Dateien wiederherstellen und den Lebenszyklus der SQLite-Datenbank verwalten. Unterstützt Export-, Import- und inkrementelle Snapshot-Strategien."
       },
-      "omni-webhooks": {
+      "pusula-webhooks": {
         "name": "Webhooks",
         "description": "Webhook-Endpunkte registrieren, auflisten, testen und entfernen. Ereignisabonnements (request.completed, request.failed, quota.exceeded usw.) konfigurieren und Zustellungswiederholungen verwalten."
       },
-      "omni-mcp": {
+      "pusula-mcp": {
         "name": "MCP-Server",
         "description": "Verbindung zum Pusula-MCP-Server herstellen (110 Tools, 3 Transporte: SSE/stdio/HTTP). Deckt Routing-, Cache-, Komprimierungs-, Speicher-, Skill-, Anbieter- und Audit-Tools über 33 Berechtigungsbereiche hinweg ab."
       },
-      "omni-agents-a2a": {
+      "pusula-agents-a2a": {
         "name": "Agenten & A2A-Protokoll",
         "description": "Über das JSON-RPC 2.0 Agent-to-Agent-Protokoll mit Pusula interagieren. 6 integrierte A2A-Skills: smart-routing, quota-management, provider-discovery, cost-analysis, health-report, list-capabilities."
       },
-      "omni-version-manager": {
+      "pusula-version-manager": {
         "name": "Versionsmanager",
         "description": "Eingebettete Dienste (9Router, CLIProxyAPI) installieren, starten, stoppen, neu starten und aktualisieren. Dienststatus überwachen, Protokolle abrufen und Autostart für rein lokale Dienst-Endpunkte konfigurieren."
       },
-      "omni-inference": {
+      "pusula-inference": {
         "name": "Inferenz (OpenAI-kompatibel)",
         "description": "Die zentralen OpenAI-kompatiblen Inferenz-Endpunkte: Chat-Completions, Embeddings, Images, Audio (TTS/STT), Moderations, Rerank und die Responses API. Die primäre Integrationsfläche für KI-Agenten."
       },
@@ -12600,7 +12600,7 @@
         "name": "Konfiguration: Codex CLI",
         "description": "Schritt-für-Schritt-Agenten-Workflow zur Konfiguration der OpenAI Codex CLI auf jedem Rechner (Linux, macOS, Windows) für die Nutzung von Pusula als OpenAI-kompatibles Backend. Erkennt Betriebssystem und Shell, schreibt config.toml und 7 benannte Profile, setzt Umgebungsvariablen und überprüft das Setup."
       },
-      "omni-github-skills": {
+      "pusula-github-skills": {
         "name": "GitHub-Skill-Erkennung",
         "description": "Agent Skills aus GitHub-Repositories suchen, bewerten, scannen und importieren, die SKILL.md, CLAUDE.md, .cursorrules und ähnliche Agent-Skill-Dateien enthalten. Community-Skills aus über 160 Anbieterkategorien entdecken, Relevanz mittels heuristischer Bewertung evaluieren, auf Malware oder fest codierte Secrets prüfen und in Agenten-Verzeichnisse von Hermes, Claude Code, Gemini CLI oder OpenCode installieren."
       }
@@ -12620,7 +12620,7 @@
       },
       "comparison": {
         "colAgent": "Agenten-Skills",
-        "colOmni": "Omni-Skills",
+        "colOmni": "Pusula-Skills",
         "whatIs": {
           "label": "Was es ist",
           "agent": "Maschinenlesbare SKILL.md, die einem externen Agenten beibringt, Pusula zu bedienen",
@@ -14140,7 +14140,7 @@
   },
   "conductor": {
     "title": "Conductor — CLI-Agent-Flotte",
-    "subtitle": "OmniConductor-Hub: Runner, Aufgabenwarteschlange und Gremien, live",
+    "subtitle": "PusulaConductor-Hub: Runner, Aufgabenwarteschlange und Gremien, live",
     "runners": "Läufer",
     "tasks": "Aufgaben",
     "colName": "Name",

@@ -11,7 +11,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const testDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-executor-proxy-test-"));
+const testDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-executor-proxy-test-"));
 process.env.DATA_DIR = testDataDir;
 
 // Dynamic imports AFTER DATA_DIR is set so core.ts picks up the temp path.

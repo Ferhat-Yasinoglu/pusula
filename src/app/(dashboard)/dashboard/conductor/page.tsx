@@ -2,7 +2,7 @@ import ConductorPageClient from "./ConductorPageClient";
 
 export const metadata = {
   title: "Conductor — Pusula",
-  description: "OmniConductor CLI-agent fleet: runners, task queue and councils, live.",
+  description: "PusulaConductor CLI-agent fleet: runners, task queue and councils, live.",
 };
 
 export default function ConductorPage() {

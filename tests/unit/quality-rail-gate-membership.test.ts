@@ -125,7 +125,7 @@ test("the new gates run on jobs that stay pinned to hosted runners", () => {
   assert.ok(lintRunsOn, "lint-guard must declare runs-on");
   assert.match(
     lintRunsOn[1],
-    /omni-light/,
+    /pusula-light/,
     "lint-guard runs on the box's light pool (OOM on hosted)"
   );
   assert.match(

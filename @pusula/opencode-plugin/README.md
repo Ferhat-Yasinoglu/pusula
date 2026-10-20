@@ -11,7 +11,7 @@ This plugin solves that by:
 - Fetching `/v1/models` and `/api/combos` **at OpenCode startup, in Node.js** — no CORS, no WebView restrictions
 - Emitting the provider block **dynamically** in the plugin's `config`/`provider` hook — so `opencode.json` only needs the plugin entry, not a static `provider.pusula`
 - Re-fetching on a configurable TTL (default 5 min) **and** background auto-discovery while OpenCode is running (`autoSyncIntervalMs`, default 5 min), so new models / combo changes appear without restarting OpenCode
-- Exposing a force-refresh path (`pusula_sync_models` tool + `/omni-sync` command template) equivalent to Pi `/omni sync`
+- Exposing a force-refresh path (`pusula_sync_models` tool + `/pusula-sync` command template) equivalent to Pi `/omni sync`
 - Computing `limit.context` for combos as `min(member.context_length)` from the live catalog (no more `null` values that cause 4K-token truncation)
 - **Auto-pickup of `interleaved` capability** for thinking models (merged via PR #3138)
 
@@ -105,12 +105,12 @@ While OpenCode is running, the plugin keeps the model catalog fresh in two ways:
 
 1. **Tool:** `pusula_sync_models` — invalidates in-memory + disk caches, re-fetches `GET /v1/models` (and combos/enrichment when enabled), returns `{ ok, count, ... }`.
 2. **Command templates** (type these in OpenCode):
-   - `/omni-sync` — asks the agent to call `pusula_sync_models` and report the result
-   - `/omni-autosync` — asks the agent to report current `autoSyncIntervalMs` / `modelCacheTtl` status
+   - `/pusula-sync` — asks the agent to call `pusula_sync_models` and report the result
+   - `/pusula-autosync` — asks the agent to report current `autoSyncIntervalMs` / `modelCacheTtl` status
 
 ```text
-/omni-sync
-/omni-autosync
+/pusula-sync
+/pusula-autosync
 ```
 
 ## Multi-instance (prod + preprod side-by-side)

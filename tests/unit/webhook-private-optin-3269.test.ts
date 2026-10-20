@@ -12,7 +12,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omni-wh-3269-"));
+process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-wh-3269-"));
 
 const { OutboundUrlGuardError } = await import("../../src/shared/network/outboundUrlGuard.ts");
 const { parseAndValidateWebhookUrl } =

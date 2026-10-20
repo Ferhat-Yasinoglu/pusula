@@ -4,12 +4,12 @@ import assert from "node:assert/strict";
 const sidebarVisibility = await import("../../src/shared/constants/sidebarVisibility.ts");
 
 function getToolsGroup() {
-  const omniProxySection = sidebarVisibility.SIDEBAR_SECTIONS.find(
-    (section) => section.id === "omni-proxy"
+  const pusulaProxySection = sidebarVisibility.SIDEBAR_SECTIONS.find(
+    (section) => section.id === "pusula-proxy"
   );
-  assert.ok(omniProxySection, "expected omni-proxy section to exist");
+  assert.ok(pusulaProxySection, "expected pusula-proxy section to exist");
 
-  const toolsGroup = omniProxySection.children.find(
+  const toolsGroup = pusulaProxySection.children.find(
     (
       child
     ): child is (typeof sidebarVisibility.SIDEBAR_SECTIONS)[number]["children"][number] & {
@@ -19,7 +19,7 @@ function getToolsGroup() {
       (child as { type: string }).type === "group" &&
       (child as { id: string }).id === "tools"
   );
-  assert.ok(toolsGroup, "expected tools group to exist in omni-proxy section");
+  assert.ok(toolsGroup, "expected tools group to exist in pusula-proxy section");
   return toolsGroup as {
     type: "group";
     id: string;

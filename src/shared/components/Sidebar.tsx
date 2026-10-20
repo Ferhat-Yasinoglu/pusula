@@ -48,7 +48,7 @@ import {
 } from "@/shared/constants/sidebarVisibility";
 
 const isE2EMode = process.env.NEXT_PUBLIC_PUSULA_E2E_MODE === "1";
-const DEFAULT_EXPANDED: SidebarSectionId = "omni-proxy";
+const DEFAULT_EXPANDED: SidebarSectionId = "pusula-proxy";
 const EXPANDED_SECTIONS_KEY = "sidebar-expanded-sections";
 const PINNED_SECTIONS_KEY = "sidebar-pinned-sections";
 const PINNED_ITEMS_KEY = "sidebar-pinned-items";

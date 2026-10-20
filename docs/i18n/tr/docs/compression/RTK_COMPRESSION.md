@@ -147,7 +147,7 @@ Yorum kaldırma işlemi `open-sse/services/compression/engines/rtk/codeStripper.
 
 > **Not — GCF / tablo biçimli kodlama ayrı bir motordur.** RTK, "GCF"
 > (Graph Compact Format) tablo biçimli/sütunlu JSON kodlayıcısını **içermez**. Daha eski bir
-> `omni-tabular` kodlayıcısının yerini alan bu kodlayıcı, **headroom** motorunda bulunur
+> `pusula-tabular` kodlayıcısının yerini alan bu kodlayıcı, **headroom** motorunda bulunur
 > (`open-sse/services/compression/engines/headroom/`; paketlenmiş codec ise
 > `headroom/gcf/` altındadır). Burada belgelenen RTK filtre işlem hattıyla ilişkili değildir.
 

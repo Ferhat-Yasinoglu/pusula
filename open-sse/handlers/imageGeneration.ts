@@ -253,7 +253,7 @@ function normalizeImageAspectRatio(value: unknown, fallbackSize: unknown): strin
  * applies. A string outside that set is clamped to `1K` rather than forwarded because we have
  * not confirmed what upstream does with an unrecognised value; the clamp is reported through
  * `clamped: true` so the caller can warn and the call log can record the raw request next to
- * what was actually sent (omni-code-review LEDGER-6 / LEDGER-48 / LEDGER-57).
+ * what was actually sent (pusula-code-review LEDGER-6 / LEDGER-48 / LEDGER-57).
  */
 function normalizeImageGenerationSize(value: unknown): {
   value: string | undefined;

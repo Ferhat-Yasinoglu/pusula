@@ -44,7 +44,7 @@ interface PendingLogin {
   expiresAt: string;
 }
 
-interface OmniConnection {
+interface PusulaConnection {
   id: string;
   name: string;
   email: string | null;
@@ -84,11 +84,11 @@ async function fetchDarioAccounts(): Promise<{ accounts: DarioAccount[] } | { er
   }
 }
 
-async function fetchOmniConnectionsList(): Promise<OmniConnection[] | null> {
+async function fetchOmniConnectionsList(): Promise<PusulaConnection[] | null> {
   try {
     const res = await fetch("/api/services/dario/admin/import-from-pusula");
     const json = (await res.json().catch(() => null)) as {
-      connections?: OmniConnection[];
+      connections?: PusulaConnection[];
       error?: string;
     } | null;
     if (!res.ok) return null;
@@ -110,8 +110,8 @@ export function DarioAccountPanel() {
   const [busy, setBusy] = useState<null | "start" | "complete">(null);
   const [notice, setNotice] = useState<string | null>(null);
 
-  const [omniConnections, setOmniConnections] = useState<OmniConnection[]>([]);
-  const [omniLoading, setOmniLoading] = useState(true);
+  const [pusulaConnections, setOmniConnections] = useState<PusulaConnection[]>([]);
+  const [pusulaLoading, setOmniLoading] = useState(true);
   const [importBusyId, setImportBusyId] = useState<string | null>(null);
 
   const refreshAccounts = useCallback(async () => {
@@ -321,9 +321,9 @@ export function DarioAccountPanel() {
             Reuse an existing Pusula Claude connection&apos;s OAuth tokens instead of logging in
             again — skips the browser approval step entirely.
           </p>
-          {omniLoading && omniConnections.length === 0 ? (
+          {pusulaLoading && pusulaConnections.length === 0 ? (
             <div className="h-8 animate-pulse bg-bg-subtle rounded" />
-          ) : omniConnections.length === 0 ? (
+          ) : pusulaConnections.length === 0 ? (
             <div className="flex items-center justify-between gap-3 rounded-lg border border-border px-3 py-2">
               <p className="text-xs text-text-muted">
                 No eligible Pusula Claude connections found.
@@ -335,7 +335,7 @@ export function DarioAccountPanel() {
               </Tooltip>
             </div>
           ) : (
-            omniConnections.map((c) => (
+            pusulaConnections.map((c) => (
               <div
                 key={c.id}
                 className="flex items-center justify-between gap-3 rounded-lg border border-border px-3 py-2"

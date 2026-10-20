@@ -257,7 +257,7 @@ export interface ServiceSupervisorCooldown {
 }
 
 /**
- * G-02: detect embedded service supervisor failures (X-Omni-Fallback-Hint: connection_cooldown).
+ * G-02: detect embedded service supervisor failures (X-Pusula-Fallback-Hint: connection_cooldown).
  * These are NOT upstream AI provider failures — they are local supervisor state changes. Returns
  * a short 5s connection-cooldown decision (no provider circuit-breaker trip), or null when the
  * status/header don't match.
@@ -269,9 +269,9 @@ export function serviceSupervisorCooldown(
   if (status !== 503 || !headers) return null;
   const hintValue =
     typeof (headers as Headers).get === "function"
-      ? (headers as Headers).get("x-omni-fallback-hint")
-      : (headers as Record<string, string>)["x-omni-fallback-hint"] ||
-        (headers as Record<string, string>)["X-Omni-Fallback-Hint"];
+      ? (headers as Headers).get("x-pusula-fallback-hint")
+      : (headers as Record<string, string>)["x-pusula-fallback-hint"] ||
+        (headers as Record<string, string>)["X-Pusula-Fallback-Hint"];
   if (typeof hintValue !== "string" || hintValue.toLowerCase() !== "connection_cooldown") {
     return null;
   }

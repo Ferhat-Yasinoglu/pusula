@@ -26,7 +26,7 @@ Pusula/
 ├── config/               # Static config + quality-gate state (i18n, payloadRules, quality/)
 ├── images/               # Marketing / README image assets
 ├── @pusula/           # Publishable companion packages (opencode-plugin, opencode-provider)
-├── skills/               # CLI/agent skill packs (cli-* + omni-* + config-codex-cli)
+├── skills/               # CLI/agent skill packs (cli-* + pusula-* + config-codex-cli)
 ├── examples/             # Sample plugins + pusula-cmd-hello starter
 ├── contrib/              # Community contributions (podman/)
 ├── .source/              # Fumadocs source config (source.config.mjs + server/browser/dynamic)

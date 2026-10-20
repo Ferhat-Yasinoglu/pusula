@@ -332,11 +332,11 @@ export async function POST(req: NextRequest) {
           status: "running",
           message: "Rebuilding native modules (better-sqlite3)...",
         });
-        const omniPath = await resolveGlobalPusulaPath();
+        const pusulaPath = await resolveGlobalPusulaPath();
         await execFileAsync(
           "npm",
           ["rebuild", "better-sqlite3"],
-          buildNpmExecOptions(process.platform, { cwd: omniPath, timeoutMs: 120_000 })
+          buildNpmExecOptions(process.platform, { cwd: pusulaPath, timeoutMs: 120_000 })
         );
         send({ step: "rebuild", status: "done", message: "Native modules rebuilt" });
 

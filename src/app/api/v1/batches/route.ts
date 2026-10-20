@@ -34,7 +34,7 @@ export async function POST(request: Request) {
   }
 
   // per-key operator policy (endpoint allowlist, schedule, usage cap, rate
-  // limit) — LEDGER-2 of the omni-code-sec 2026-09-21 run / #14481. Called
+  // limit) — LEDGER-2 of the pusula-code-sec 2026-09-21 run / #14481. Called
   // UNCONDITIONALLY, exactly like batches/delete-completed/route.ts: a bare
   // `x-api-key`/`x-goog-api-key` credential (no anthropic-version, non-Claude
   // UA) is accepted by the CLIENT_API auth layer but ignored by
@@ -51,7 +51,7 @@ export async function POST(request: Request) {
   // never sets scope.apiKeyId (see the comment above) — fall back to the id
   // enforceApiKeyPolicy() independently resolved, so the batch is not
   // attributed to nobody, and its ownership check below still recognizes the
-  // key's own input file (LEDGER-27, omni-code-sec round 3).
+  // key's own input file (LEDGER-27, pusula-code-sec round 3).
   const effectiveApiKeyId = resolveEffectiveApiKeyId(scope, policy.apiKeyInfo);
 
   try {
@@ -131,7 +131,7 @@ export async function GET(request: Request) {
   }
 
   // per-key operator policy (endpoint allowlist, schedule, usage cap, rate
-  // limit) — LEDGER-2 of the omni-code-sec 2026-09-21 run / #14481. Called
+  // limit) — LEDGER-2 of the pusula-code-sec 2026-09-21 run / #14481. Called
   // UNCONDITIONALLY, exactly like batches/delete-completed/route.ts: a bare
   // `x-api-key`/`x-goog-api-key` credential (no anthropic-version, non-Claude
   // UA) is accepted by the CLIENT_API auth layer but ignored by

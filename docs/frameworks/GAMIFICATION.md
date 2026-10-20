@@ -360,7 +360,7 @@ keeps evaluation fast (< 5ms for most events).
 | Getting Warmed Up   | usage        | common    | 100 requests                 |
 | Power User          | usage        | uncommon  | 1,000 requests               |
 | Centurion           | usage        | rare      | 10,000 requests              |
-| OmniPower           | usage        | legendary | 100,000 requests             |
+| PusulaPower           | usage        | legendary | 100,000 requests             |
 | Provider Hopper     | contribution | common    | Use 5 different providers    |
 | Provider Master     | contribution | uncommon  | Use 20 different providers   |
 | Combo Architect     | contribution | uncommon  | Create 5 combos              |

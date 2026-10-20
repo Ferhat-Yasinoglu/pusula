@@ -24,7 +24,7 @@ import {
 import { CursorApiKeyExchangeError } from "@pusula/open-sse/services/cursorApiKeyAuth.ts";
 
 const SECRET = "unit-test-jwt-secret-with-enough-entropy-0123456789";
-const OMNI_KEY = "sk-pusula-unit-key";
+const PUSULA_KEY = "sk-pusula-unit-key";
 const CURSOR_KEY = "crsr_unit_cursor_key";
 const UPSTREAM = "https://upstream.example";
 const NOW = 1_800_000_000_000;
@@ -48,8 +48,8 @@ function makeDeps(overrides: Partial<CursorCliProxyDeps> = {}): {
     }) as unknown as typeof fetch,
     now: () => NOW,
     getSecret: () => SECRET,
-    validateApiKey: async (key) => key === OMNI_KEY,
-    getApiKeyMetadata: async (key) => (key === OMNI_KEY ? { id: "key-1", name: "unit key" } : null),
+    validateApiKey: async (key) => key === PUSULA_KEY,
+    getApiKeyMetadata: async (key) => (key === PUSULA_KEY ? { id: "key-1", name: "unit key" } : null),
     getApiKeyById: async (id) => (id === "key-1" ? { isActive: true, revokedAt: null } : null),
     requireApiKey: () => true,
     listCursorConnections: async () => [{ id: "conn-1", apiKey: CURSOR_KEY, priority: 1 }],
@@ -126,7 +126,7 @@ describe("cursorCliProxy: /auth/exchange_user_api_key", () => {
   it("mints a 1h Pusula session JWT for a valid Pusula API key", async () => {
     const { deps, logs } = makeDeps();
     const res = await handleCursorCliProxy(
-      exchangeRequest(OMNI_KEY),
+      exchangeRequest(PUSULA_KEY),
       ["auth", "exchange_user_api_key"],
       deps
     );
@@ -138,7 +138,7 @@ describe("cursorCliProxy: /auth/exchange_user_api_key", () => {
     assert.equal(claims.aud, CURSOR_CLI_SESSION_AUDIENCE);
     assert.equal(claims.sub, "key-1");
     assert.equal(claims.exp, Math.floor(NOW / 1000) + CURSOR_CLI_SESSION_TTL_SECONDS);
-    assert.ok(!body.accessToken.includes(OMNI_KEY));
+    assert.ok(!body.accessToken.includes(PUSULA_KEY));
     await flushLogs();
     assert.equal(logs.length, 1);
     assert.equal(logs[0].path, `${CURSOR_CLI_PROXY_PREFIX}/auth/exchange_user_api_key`);
@@ -174,7 +174,7 @@ describe("cursorCliProxy: /auth/exchange_user_api_key", () => {
   it("returns 503 without minting when JWT_SECRET is missing", async () => {
     const { deps } = makeDeps({ getSecret: () => undefined });
     const res = await handleCursorCliProxy(
-      exchangeRequest(OMNI_KEY),
+      exchangeRequest(PUSULA_KEY),
       ["auth", "exchange_user_api_key"],
       deps
     );
@@ -184,7 +184,7 @@ describe("cursorCliProxy: /auth/exchange_user_api_key", () => {
   it("rejects non-JSON and non-POST exchange calls", async () => {
     const { deps } = makeDeps();
     const bad = await handleCursorCliProxy(
-      exchangeRequest(OMNI_KEY, "not-json"),
+      exchangeRequest(PUSULA_KEY, "not-json"),
       ["auth", "exchange_user_api_key"],
       deps
     );
@@ -235,7 +235,7 @@ describe("cursorCliProxy: forwarded RPCs", () => {
   it("rejects a raw Pusula API key on RPC paths so the CLI exchanges first", async () => {
     const { deps, upstreamCalls } = makeDeps();
     const res = await handleCursorCliProxy(
-      rpcRequest(OMNI_KEY),
+      rpcRequest(PUSULA_KEY),
       ["aiserver.v1.DashboardService", "GetMe"],
       deps
     );

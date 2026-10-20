@@ -95,8 +95,8 @@ test("#13145 a timeout degrades to the uncompressed body instead of stalling the
   // re-running the same CPU-bound pipeline in-process would block every other in-flight
   // request. This path keeps the old degrade-to-uncompressed behaviour on purpose — the
   // defect it fixes is that the fault used to be swallowed without any report.
-  const previous = process.env.OMNI_COMPRESSION_WORKER_TIMEOUT_MS;
-  process.env.OMNI_COMPRESSION_WORKER_TIMEOUT_MS = "1";
+  const previous = process.env.PUSULA_COMPRESSION_WORKER_TIMEOUT_MS;
+  process.env.PUSULA_COMPRESSION_WORKER_TIMEOUT_MS = "1";
   try {
     const { applyCompressionAsync } =
       await import("../../open-sse/services/compression/strategySelector.ts");
@@ -107,8 +107,8 @@ test("#13145 a timeout degrades to the uncompressed body instead of stalling the
     );
     assert.equal(result.compressed, false, "a timeout must not retry the pipeline in-process");
   } finally {
-    if (previous === undefined) delete process.env.OMNI_COMPRESSION_WORKER_TIMEOUT_MS;
-    else process.env.OMNI_COMPRESSION_WORKER_TIMEOUT_MS = previous;
+    if (previous === undefined) delete process.env.PUSULA_COMPRESSION_WORKER_TIMEOUT_MS;
+    else process.env.PUSULA_COMPRESSION_WORKER_TIMEOUT_MS = previous;
     const { closeCompressionWorkerPoolForTests } =
       await import("../../open-sse/services/compression/compressionWorkerPool.ts");
     await closeCompressionWorkerPoolForTests();

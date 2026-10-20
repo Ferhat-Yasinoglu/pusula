@@ -106,7 +106,7 @@ test("fetchRemoteImage blocks redirects to cloud-metadata hosts under the defaul
   );
 });
 
-// omni-code-review 2026-09-21_release-v3.8.51_vs_main_e2e-areas LEDGER-50 (round-1 LEDGER-32):
+// pusula-code-review 2026-09-21_release-v3.8.51_vs_main_e2e-areas LEDGER-50 (round-1 LEDGER-32):
 // `fetchUntrustedRemoteImage` is the ONE entry point for caller-supplied / upstream-returned
 // URLs. It must hard-code `guard: "public-only"` and `pinDns: true` (GHSA-34rg-3pqj-35g9 /
 // #13883) — a caller cannot loosen either, even by passing the opposite value explicitly.

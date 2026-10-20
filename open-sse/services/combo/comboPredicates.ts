@@ -215,7 +215,7 @@ const PROVIDER_BREAKER_FAILURE_STATUSES = new Set([408, 500, 502, 503, 504]);
  *   homogeneous same-provider combo pool never trips the breaker and instead burns every
  *   attempt against the same dead proxy until it hits the 503 max-retry limit.
  * - G-02 / #2743: when the fallback result carries `skipProviderBreaker` (an embedded
- *   service supervisor outage signalled via `X-Omni-Fallback-Hint: connection_cooldown`)
+ *   service supervisor outage signalled via `X-Pusula-Fallback-Hint: connection_cooldown`)
  *   apply connection cooldown ONLY — never trip the whole-provider breaker.
  *
  * #7907/#7908: also skip the breaker trip when the failure is a local stream lifecycle

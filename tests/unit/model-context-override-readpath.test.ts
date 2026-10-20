@@ -6,7 +6,7 @@ import path from "node:path";
 
 // Feature 5004 — getModelContextLimit reads the override before the static catalog.
 
-const moduleDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-mco-readpath-"));
+const moduleDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-mco-readpath-"));
 process.env.DATA_DIR = moduleDataDir;
 
 const coreDb = await import("../../src/lib/db/core.ts");

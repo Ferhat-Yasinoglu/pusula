@@ -104,7 +104,7 @@ export function authenticateA2A(request: Request): boolean {
 }
 
 /**
- * Traduz uma task A2A externa em `POST /v1/tasks` do hub do OmniConductor.
+ * Traduz uma task A2A externa em `POST /v1/tasks` do hub do PusulaConductor.
  * Só skills da frota (`conductor` / `conductor-cli-<profile>` — as anunciadas no
  * Agent Card) são delegáveis; os estados voltam pelo espelho SSE→A2A (RF1).
  */

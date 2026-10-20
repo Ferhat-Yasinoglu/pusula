@@ -137,16 +137,16 @@ test("intelligent combo selection defaults only inside the intelligent filter", 
 
 test("sidebar visibility excludes the removed auto-combo item", async () => {
   const sidebarVisibility = await import("../../src/shared/constants/sidebarVisibility.ts");
-  const omniProxySection = sidebarVisibility.SIDEBAR_SECTIONS.find(
-    (section) => section.id === "omni-proxy"
+  const pusulaProxySection = sidebarVisibility.SIDEBAR_SECTIONS.find(
+    (section) => section.id === "pusula-proxy"
   );
 
   assert.equal(
     (sidebarVisibility.HIDEABLE_SIDEBAR_ITEM_IDS as readonly string[]).includes("auto-combo"),
     false
   );
-  assert.ok(omniProxySection);
-  const items = sidebarVisibility.getSectionItems(omniProxySection);
+  assert.ok(pusulaProxySection);
+  const items = sidebarVisibility.getSectionItems(pusulaProxySection);
   assert.equal(
     items.some((item) => (item.id as string) === "auto-combo"),
     false

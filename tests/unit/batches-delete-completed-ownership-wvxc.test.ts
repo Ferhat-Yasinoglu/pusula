@@ -18,7 +18,7 @@
  *   - each chunk is atomic: a failure after the file soft-deletes rolls the file
  *     content of that chunk back, so no batch row is left pointing at a nulled
  *     file; BOTH modes commit per chunk of INSTANCE_SWEEP_CHUNK ids, so the
- *     write lock is never held across chunks (omni-code-sec LEDGER-4/20/21);
+ *     write lock is never held across chunks (pusula-code-sec LEDGER-4/20/21);
  *   - the chunk loop must make progress: a DELETE that silently removes nothing
  *     throws instead of re-selecting the same chunk forever (LEDGER-22);
  *   - a scope naming BOTH `apiKeyId` and `allTenants` is rejected by the

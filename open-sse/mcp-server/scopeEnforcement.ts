@@ -51,8 +51,8 @@ function extractMetaScopeList(meta: unknown): string[] {
 
   const omni = metaRecord.pusula;
   if (omni && typeof omni === "object") {
-    const omniScopes = normalizeScopeList((omni as Record<string, unknown>).scopes);
-    if (omniScopes.length > 0) return omniScopes;
+    const pusulaScopes = normalizeScopeList((omni as Record<string, unknown>).scopes);
+    if (pusulaScopes.length > 0) return pusulaScopes;
   }
 
   return [];

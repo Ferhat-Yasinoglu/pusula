@@ -28,7 +28,7 @@ const sandboxes: string[] = [];
 
 function makeSandbox(): string {
   // realpath so assertions survive tmpdir symlinks (e.g. /tmp → /private/tmp).
-  const dir = realpathSync(mkdtempSync(join(tmpdir(), "omni-worker-anchors-")));
+  const dir = realpathSync(mkdtempSync(join(tmpdir(), "pusula-worker-anchors-")));
   sandboxes.push(dir);
   return dir;
 }

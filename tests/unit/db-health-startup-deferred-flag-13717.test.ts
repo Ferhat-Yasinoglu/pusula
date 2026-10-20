@@ -22,7 +22,7 @@ const SCRIPT = `
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import Database from 'better-sqlite3';
-const core = await import(process.env.OMNI_CORE_TS_PATH);
+const core = await import(process.env.PUSULA_CORE_TS_PATH);
 // Without a "test"-tokened argv/NODE_ENV, shouldRunStartupDbHealthCheck()
 // (src/lib/db/core.ts) runs the check on EVERY getDbInstance() cold-open,
 // not only when PUSULA_FORCE_DB_HEALTHCHECK is set (that env only matters
@@ -120,7 +120,7 @@ function runCase(deferred: "0" | "1") {
         APP_LOG_TO_FILE: "false",
         DISABLE_SQLITE_AUTO_BACKUP: "true",
         PUSULA_TEST_DEFERRED: deferred,
-        OMNI_CORE_TS_PATH: path.join(process.cwd(), "src/lib/db/core.ts"),
+        PUSULA_CORE_TS_PATH: path.join(process.cwd(), "src/lib/db/core.ts"),
       },
       encoding: "utf8",
       timeout: 60000,

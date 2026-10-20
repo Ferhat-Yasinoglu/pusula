@@ -1,7 +1,7 @@
 export const HIDEABLE_SIDEBAR_ITEM_IDS = [
   // Home
   "home",
-  // OmniProxy — flat
+  // PusulaProxy — flat
   "api-manager",
   "endpoints",
   "providers",
@@ -10,7 +10,7 @@ export const HIDEABLE_SIDEBAR_ITEM_IDS = [
   "combos",
   "combos-live",
   "quota",
-  // OmniProxy > Compression Context (Settings → Combos → engines → Studio)
+  // PusulaProxy > Compression Context (Settings → Combos → engines → Studio)
   "context-settings",
   "context-combos",
   "context-caveman",
@@ -25,7 +25,7 @@ export const HIDEABLE_SIDEBAR_ITEM_IDS = [
   "context-omniglyph",
   "compression-studio",
   "compression-exclusions",
-  // OmniProxy > Tools
+  // PusulaProxy > Tools
   "cli-code",
   "cli-agents",
   "acp-agents",
@@ -35,11 +35,11 @@ export const HIDEABLE_SIDEBAR_ITEM_IDS = [
   "agent-bridge",
   "traffic-inspector",
   "discovery",
-  // OmniProxy > Integrations
+  // PusulaProxy > Integrations
   "api-endpoints",
   "webhooks",
   "log-export",
-  // OmniProxy — proxy tools
+  // PusulaProxy — proxy tools
   "mitm-proxy",
   "1proxy",
   // Analytics
@@ -126,7 +126,7 @@ export type SidebarItemId = HideableSidebarItemId | AlwaysVisibleSidebarItemId;
 export type SidebarSectionId =
   | "home"
   | "pinned"
-  | "omni-proxy"
+  | "pusula-proxy"
   | "analytics"
   | "costs"
   | "monitoring"

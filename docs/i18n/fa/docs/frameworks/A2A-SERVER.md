@@ -168,7 +168,7 @@ Pusula شش مهارت A2A را ارائه میکند که در `src/lib/a2a/tas
 ```
 | شناسه | نام | دستهبندی | حوزه | نقاط پایانی/فرمانها | URL خام |
 | --- | --- | --- | --- | --- | --- |
-| omni-auth | احراز هویت و نشستها | api | auth | POST /api/auth/login, ... | https://raw.githubusercontent.com/... |
+| pusula-auth | احراز هویت و نشستها | api | auth | POST /api/auth/login, ... | https://raw.githubusercontent.com/... |
 ...
 ```
 
@@ -187,9 +187,9 @@ Pusula شش مهارت A2A را ارائه میکند که در `src/lib/a2a/tas
 | `/api/a2a/tasks/[id]`        | GET  | دریافت وظیفه بر اساس شناسه                                | مدیریتی                                            |
 | `/api/a2a/tasks/[id]/cancel` | POST | لغو وظیفهٔ در حال اجرا                                    | مدیریتی                                            |
 | `/.well-known/agent.json`    | GET  | کارت عامل (کشف A2A)                                       | (عمومی، با کش 3600 ثانیهای)                        |
-| `/api/a2a/tasks`             | POST | واگذاری ورودی به ناوگان OmniConductor (Conductor PRD RF5) | Bearer در برابر `PUSULA_API_KEY` + `a2aEnabled` |
+| `/api/a2a/tasks`             | POST | واگذاری ورودی به ناوگان PusulaConductor (Conductor PRD RF5) | Bearer در برابر `PUSULA_API_KEY` + `a2aEnabled` |
 
-**واگذاری ورودی Conductor (`POST /api/a2a/tasks`):** عاملهای خارجی A2A، کارهای کدنویسی را از طریق Pusula به ناوگان OmniConductor واگذار میکنند. بدنه: `{ skill: "conductor" | "conductor-cli-<profile>", messages: [{role, content}], metadata: { conductor: { repo: { url, base_ref? }, mode?, cli?, model? } } }` — فقط مهارتهای ناوگان Conductor (همانهایی که در کارت عامل اعلام شدهاند) قابل واگذاری هستند؛ `metadata.conductor.repo.url` الزامی است (ناوگان روی مخازن git کار میکند). این مسیر با استفاده از `CONDUCTOR_ORCHESTRATOR_TOKEN` سمت سرور (با `CONDUCTOR_HUB_TOKEN` بهعنوان جایگزین) به `POST /v1/tasks` هاب ترجمه میشود و `201 { conductor_task_id, state: "submitted" }` را برمیگرداند؛ وضعیتهای وظیفه از طریق آینهٔ SSE→A2A (RF1) بازگردانده میشوند و از طریق `GET /api/a2a/tasks?skill=conductor` قابل مشاهده هستند.
+**واگذاری ورودی Conductor (`POST /api/a2a/tasks`):** عاملهای خارجی A2A، کارهای کدنویسی را از طریق Pusula به ناوگان PusulaConductor واگذار میکنند. بدنه: `{ skill: "conductor" | "conductor-cli-<profile>", messages: [{role, content}], metadata: { conductor: { repo: { url, base_ref? }, mode?, cli?, model? } } }` — فقط مهارتهای ناوگان Conductor (همانهایی که در کارت عامل اعلام شدهاند) قابل واگذاری هستند؛ `metadata.conductor.repo.url` الزامی است (ناوگان روی مخازن git کار میکند). این مسیر با استفاده از `CONDUCTOR_ORCHESTRATOR_TOKEN` سمت سرور (با `CONDUCTOR_HUB_TOKEN` بهعنوان جایگزین) به `POST /v1/tasks` هاب ترجمه میشود و `201 { conductor_task_id, state: "submitted" }` را برمیگرداند؛ وضعیتهای وظیفه از طریق آینهٔ SSE→A2A (RF1) بازگردانده میشوند و از طریق `GET /api/a2a/tasks?skill=conductor` قابل مشاهده هستند.
 
 ---
 

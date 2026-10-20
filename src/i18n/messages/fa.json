@@ -1020,7 +1020,7 @@
     "cloudAgents": "عوامل ابری",
     "memory": "حافظه",
     "skills": "مهارتها",
-    "omniSkills": "OmniSkills",
+    "pusulaSkills": "PusulaSkills",
     "agentSkills": "AgentSkills",
     "chaosConfig": "حالت آشوب",
     "docs": "مستندات",
@@ -1177,7 +1177,7 @@
     "settingsResilience": "تابآوری",
     "modelLockout": "قفلکردن مدل",
     "settingsAdvanced": "پیشرفته",
-    "omniProxySection": "OmniProxy",
+    "pusulaProxySection": "PusulaProxy",
     "quotaTracker": "سهمیه ارائهدهنده",
     "providerQuota": "سهمیه ارائهدهنده",
     "runtime": "محیط اجرا",
@@ -1245,7 +1245,7 @@
     "playgroundSubtitle": "آزمایش زندهٔ پرامپتها",
     "searchToolsSubtitle": "فهرست ابزارهای جستجو",
     "memorySubtitle": "حافظه پایدار عامل",
-    "omniSkillsSubtitle": "فهرست مهارتهای سندباکس",
+    "pusulaSkillsSubtitle": "فهرست مهارتهای سندباکس",
     "agentSkillsSubtitle": "فهرست مهارتهای A2A",
     "mcpSubtitle": "کنترلهای سرور MCP",
     "a2aSubtitle": "سرور پروتکل A2A",
@@ -1682,7 +1682,7 @@
     "settingsAdvancedDescription": "قواعد پیشرفته بار داده، محدودیتهای درخواست و تنظیمات API پروکسی",
     "mitmProxyDescription": "تنظیمات پروکسی MITM را برای بازرسی ترافیک و اشکالزدایی پیکربندی کنید",
     "oneProxyDescription": "تنظیمات 1Proxy را برای زنجیرهسازی پیشرفته پروکسی پیکربندی کنید",
-    "omniSkillsDescription": "نصب و مدیریت مهارت‌های sandbox برای اجرای خودکار پرامپت و ابزار"
+    "pusulaSkillsDescription": "نصب و مدیریت مهارت‌های sandbox برای اجرای خودکار پرامپت و ابزار"
   },
   "cloudSyncStatus": {
     "synced": "همگام‌سازی شد",
@@ -12424,91 +12424,91 @@
   },
   "agentSkills": {
     "catalog": {
-      "omni-auth": {
+      "pusula-auth": {
         "name": "احراز هویت",
         "description": "مدیریت احراز هویت کلید API و توکن‌های نشست. از اینجا برای احراز هویت درخواست‌ها از طریق توکن Bearer، دریافت کوکی‌های نشست و پیکربندی الزامات ورود برای Pusula API شروع کنید."
       },
-      "omni-providers": {
+      "pusula-providers": {
         "name": "ارائه‌دهندگان",
         "description": "مدیریت اتصالات ارائه‌دهنده، کلیدهای API، جریان‌های OAuth و تست‌های اتصال از طریق REST API. فهرست، افزودن، به‌روزرسانی، حذف و تست ادغام‌های ارائه‌دهنده هوش مصنوعی (OpenAI، Anthropic، Gemini و +160)."
       },
-      "omni-models": {
+      "pusula-models": {
         "name": "مدل‌ها",
         "description": "پرس‌وجوی مدل‌های هوش مصنوعی موجود در تمام ارائه‌دهندگان پیکربندی‌شده. فهرست کردن مدل‌ها، حل نام‌های مستعار مدل و مرور کاتالوگ کامل مدل‌ها شامل انواع خاص ارائه‌دهنده."
       },
-      "omni-combos-routing": {
+      "pusula-combos-routing": {
         "name": "ترکیب‌ها و مسیریابی",
         "description": "ایجاد و مدیریت ترکیب‌های مسیریابی با ۱۴ استراتژی (priority، weighted، round-robin، Auto-combo و غیره). پیکربندی زنجیره‌های fallback، تست نتایج مسیریابی و دریافت معیارهای ترکیب."
       },
-      "omni-api-keys": {
+      "pusula-api-keys": {
         "name": "کلیدهای API",
         "description": "ایجاد، فهرست‌بندی، چرخش و ابطال کلیدهای Pusula API. کنترل دامنه‌های دسترسی به ازای هر کلید، سقف‌های هزینه و انقضا. کلیدها دسترسی به تمام اندپوینت‌های پروکسی و مدیریتی را کنترل می‌کنند."
       },
-      "omni-usage-logs": {
+      "pusula-usage-logs": {
         "name": "مصرف و لاگ‌ها",
         "description": "دسترسی به لاگ‌های دقیق تماس و تحلیل‌های مصرف. فیلتر بر اساس ارائه‌دهنده، مدل، بازه زمانی، وضعیت و هزینه. خروجی گرفتن از لاگ‌ها و تجمیع مصرف توکن در تمام اتصالات."
       },
-      "omni-budget": {
+      "pusula-budget": {
         "name": "بودجه و محدودیت‌های نرخ",
         "description": "پیکربندی سقف‌های هزینه، سهمیه‌های توکن و سیاست‌های محدودیت نرخ به ازای هر کلید API یا به‌صورت سراسری. بررسی مصرف فعلی و اعمال کنترل‌های هزینه در میان ارائه‌دهندگان."
       },
-      "omni-settings": {
+      "pusula-settings": {
         "name": "تنظیمات",
         "description": "خواندن و به‌روزرسانی تنظیمات سراسری برنامه: پرامپت‌های سیستم، بودجه تفکر، فیلترهای IP، قوانین payload، پیش‌فرض‌های ترکیب و پیکربندی require-login."
       },
-      "omni-proxies": {
+      "pusula-proxies": {
         "name": "پیکربندی پروکسی",
         "description": "پیکربندی پروکسی‌های HTTP/HTTPS/SOCKS برای درخواست‌های ارائه‌دهنده بالادستی. تنظیم قوانین پروکسی به ازای هر ارائه‌دهنده یا به‌صورت سراسری، تست اتصال و مدیریت چرخش پروکسی."
       },
-      "omni-cache": {
+      "pusula-cache": {
         "name": "حافظه پنهان",
         "description": "مدیریت حافظه پنهان پاسخ‌های LLM. مشاهده آمار حافظه پنهان، پاک‌سازی ورودی‌ها، پیکربندی سیاست‌های TTL و کنترل آستانه‌های ذخیره‌سازی شباهت معنایی."
       },
-      "omni-compression": {
+      "pusula-compression": {
         "name": "فشرده‌سازی",
         "description": "پیکربندی حالت‌های فشرده‌سازی RTK (خروجی دستور)، Caveman (متن ساده) و فشرده‌سازی انباشته (stacked). مدیریت بسته‌های زبان، قوانین سفارشی و تست فشرده‌سازی پرامپت با کاهش ۶۰–۹۰٪ توکن‌ها."
       },
-      "omni-context-rtk": {
+      "pusula-context-rtk": {
         "name": "کانتکست و RTK",
         "description": "پیکربندی فیلترهای RTK، قوانین مهندسی کانتکست و تنظیمات رله کانتکست. تست فشرده‌سازی با نمونه‌های واقعی پرامپت و مدیریت پایپ‌لاین‌های تبدیل کانتکست."
       },
-      "omni-resilience": {
+      "pusula-resilience": {
         "name": "تاب‌آوری و نظارت",
         "description": "نظارت بر سلامت ارائه‌دهنده، وضعیت‌های circuit-breaker، معیارهای تاخیر p50/p95/p99 و هشدارهای محافظت از بودجه. بررسی زمان‌های انتظار اتصال و قفل شدن مدل‌ها به‌صورت بلادرنگ."
       },
-      "omni-cli-tools": {
+      "pusula-cli-tools": {
         "name": "ابزارهای CLI",
         "description": "مدیریت ادغام‌های ابزار CLI ارائه شده از طریق API. فهرست کردن، پیکربندی و فراخوانی پلاگین‌های ابزار CLI که سطح اتوماسیون Pusula را گسترش می‌دهند."
       },
-      "omni-tunnels": {
+      "pusula-tunnels": {
         "name": "تونل‌ها",
         "description": "ایجاد و مدیریت تونل‌های امن (ngrok، Cloudflare Tunnel، سفارشی) برای ارائه Pusula به اینترنت یا اشتراک‌گذاری دسترسی با عامل‌های راه دور و پایپ‌لاین‌های CI."
       },
-      "omni-sync-cloud": {
+      "pusula-sync-cloud": {
         "name": "همگام‌سازی ابری",
         "description": "همگام‌سازی پیکربندی Pusula، اتصالات ارائه‌دهنده و تنظیمات به/از فضای ذخیره‌سازی ابری. مدیریت احراز هویت ورکر ابری و اهداف پشتیبان‌گیری راه دور."
       },
-      "omni-db-backups": {
+      "pusula-db-backups": {
         "name": "پایگاه داده و پشتیبان‌گیری‌ها",
         "description": "راه‌اندازی پشتیبان‌گیری‌های سیستم، بازیابی از فایل‌های پشتیبان و مدیریت چرخه عمر پایگاه داده SQLite. پشتیبانی از استراتژی‌های خروجی گرفتن، وارد کردن و اسنپ‌شات‌های افزایشی."
       },
-      "omni-webhooks": {
+      "pusula-webhooks": {
         "name": "وب‌هوک‌ها",
         "description": "نقاط پایانی webhook را ثبت، فهرست، آزمایش و حذف کنید. اشتراکهای رویداد (request.completed، request.failed، quota.exceeded و غیره) را پیکربندی کرده و تلاشهای مجدد برای تحویل را مدیریت کنید."
       },
-      "omni-mcp": {
+      "pusula-mcp": {
         "name": "سرور MCP",
         "description": "اتصال به سرور Pusula MCP (۳۷ ابزار، ۳ انتقال: SSE/stdio/HTTP). شامل مسیریابی، کش، فشرده‌سازی، حافظه، مهارت‌ها، ارائه‌دهندگان و ابزارهای حسابرسی در ۱۶ محدوده مجوز."
       },
-      "omni-agents-a2a": {
+      "pusula-agents-a2a": {
         "name": "عامل‌ها و پروتکل A2A",
         "description": "تعامل با Pusula از طریق پروتکل عامل‌به‌عامل JSON-RPC 2.0. ۶ مهارت داخلی A2A: smart-routing، quota-management، provider-discovery، cost-analysis، health-report، list-capabilities."
       },
-      "omni-version-manager": {
+      "pusula-version-manager": {
         "name": "مدیریت نسخه",
         "description": "نصب، شروع، توقف، راه‌اندازی مجدد و به‌روزرسانی سرویس‌های تعبیه‌شده (9Router، CLIProxyAPI). نظارت بر وضعیت سرویس، دریافت لاگ‌ها و پیکربندی شروع خودکار برای نقاط پایانی سرویس فقط محلی."
       },
-      "omni-inference": {
+      "pusula-inference": {
         "name": "استنتاج (سازگار با OpenAI)",
         "description": "نقاط پایانی استنتاج اصلی سازگار با OpenAI: تکمیل‌های چت، امبدینگ‌ها، تصاویر، صوتی (TTS/STT)، تعدیل‌ها، رتبه‌بندی مجدد و Responses API. سطح ادغام اولیه برای عامل‌های هوش مصنوعی."
       },
@@ -12600,7 +12600,7 @@
         "name": "پیکربندی: Codex CLI",
         "description": "گردش کار گام‌به‌گام عامل برای پیکربندی OpenAI Codex CLI روی هر دستگاهی (Linux، macOS، Windows) جهت استفاده از Pusula به عنوان یک بک‌اند سازگار با OpenAI. سیستم‌عامل و شل را شناسایی می‌کند، فایل config.toml و ۷ پروفایل نام‌گذاری‌شده را می‌نویسد، متغیرهای محیطی را تنظیم می‌کند و راه‌اندازی را تأیید می‌کند."
       },
-      "omni-github-skills": {
+      "pusula-github-skills": {
         "name": "کشف مهارت گیت‌هاب",
         "description": "مهارت‌های عامل را از مخازن گیت‌هاب که حاوی SKILL.md، CLAUDE.md، .cursorrules و فایل‌های مهارت عامل مشابه هستند، جستجو، امتیازدهی، اسکن و وارد کنید. مهارت‌های جامعه کاربری را در بیش از ۱۶۰ دسته ارائه‌دهنده کشف کنید، ارتباط آن‌ها را با امتیازدهی اکتشافی ارزیابی کنید، وجود بدافزار یا اسرار هاردکد شده را بررسی کنید و در دایرکتوری‌های عامل Hermes، Claude Code، Gemini CLI یا OpenCode نصب کنید."
       }
@@ -14140,7 +14140,7 @@
   },
   "conductor": {
     "title": "کنترل‌کننده — ناوگان عامل CLI",
-    "subtitle": "هاب OmniConductor: اجراکننده‌ها، صف وظایف و شوراها، زنده",
+    "subtitle": "هاب PusulaConductor: اجراکننده‌ها، صف وظایف و شوراها، زنده",
     "runners": "دوندگان",
     "tasks": "کارها",
     "colName": "نام",

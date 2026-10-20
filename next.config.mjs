@@ -525,7 +525,7 @@ const nextConfig = {
       // Dashboard routes
       {
         source: "/dashboard/skills",
-        destination: "/dashboard/omni-skills",
+        destination: "/dashboard/pusula-skills",
         permanent: true,
       },
       {

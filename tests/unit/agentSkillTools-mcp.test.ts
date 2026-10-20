@@ -134,11 +134,11 @@ test("AgentSkillsListSchema rejects invalid category", () => {
 // (main branch) resolves, or (c) a skill not found throws correctly.
 // The deep integration (fetch round-trip) is covered by e2e/ecosystem tests.
 
-test("pusula_agent_skills_get({id:'omni-providers'}) returns correct skill metadata before markdown fetch", async () => {
+test("pusula_agent_skills_get({id:'pusula-providers'}) returns correct skill metadata before markdown fetch", async () => {
   const { getSkillById } = await import("../../src/lib/agentSkills/catalog.ts");
-  const skill = getSkillById("omni-providers");
-  assert.ok(skill != null, "omni-providers should exist in catalog");
-  assert.equal(skill!.id, "omni-providers");
+  const skill = getSkillById("pusula-providers");
+  assert.ok(skill != null, "pusula-providers should exist in catalog");
+  assert.equal(skill!.id, "pusula-providers");
   assert.equal(skill!.category, "api");
   assert.ok(typeof skill!.name === "string" && skill!.name.length > 0);
   assert.ok(typeof skill!.rawUrl === "string");
@@ -178,8 +178,8 @@ test("AgentSkillsGetSchema requires id field", () => {
 });
 
 test("AgentSkillsGetSchema parses valid id", () => {
-  const parsed = AgentSkillsGetSchema.parse({ id: "omni-providers" });
-  assert.equal(parsed.id, "omni-providers");
+  const parsed = AgentSkillsGetSchema.parse({ id: "pusula-providers" });
+  assert.equal(parsed.id, "pusula-providers");
 });
 
 // ─── pusula_agent_skills_coverage ────────────────────────────────────────

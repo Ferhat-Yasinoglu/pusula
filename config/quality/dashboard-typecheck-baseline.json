@@ -81,25 +81,25 @@
   "src/app/(dashboard)/dashboard/memory/components/tabs/MemoriesTab.tsx": {
     "TS2322": 2
   },
-  "src/app/(dashboard)/dashboard/omni-skills/OmniSkillsPageClient.tsx": {
+  "src/app/(dashboard)/dashboard/pusula-skills/PusulaSkillsPageClient.tsx": {
     "TS2503": 2
   },
-  "src/app/(dashboard)/dashboard/omni-skills/components/OmniExecutionsTab.tsx": {
+  "src/app/(dashboard)/dashboard/pusula-skills/components/PusulaExecutionsTab.tsx": {
     "TS2503": 2
   },
-  "src/app/(dashboard)/dashboard/omni-skills/components/OmniMarketplaceTab.tsx": {
+  "src/app/(dashboard)/dashboard/pusula-skills/components/PusulaMarketplaceTab.tsx": {
     "TS2503": 2
   },
-  "src/app/(dashboard)/dashboard/omni-skills/components/OmniSandboxTab.tsx": {
+  "src/app/(dashboard)/dashboard/pusula-skills/components/PusulaSandboxTab.tsx": {
     "TS2503": 2
   },
-  "src/app/(dashboard)/dashboard/omni-skills/components/OmniSkillCard.tsx": {
+  "src/app/(dashboard)/dashboard/pusula-skills/components/PusulaSkillCard.tsx": {
     "TS2503": 2
   },
-  "src/app/(dashboard)/dashboard/omni-skills/components/OmniSkillsList.tsx": {
+  "src/app/(dashboard)/dashboard/pusula-skills/components/PusulaSkillsList.tsx": {
     "TS2503": 2
   },
-  "src/app/(dashboard)/dashboard/omni-skills/components/SkillInspectorPane.tsx": {
+  "src/app/(dashboard)/dashboard/pusula-skills/components/SkillInspectorPane.tsx": {
     "TS2503": 2
   },
   "src/app/(dashboard)/dashboard/playground/components/PresetPicker.tsx": {

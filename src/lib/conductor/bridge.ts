@@ -1,5 +1,5 @@
 /**
- * Conductor Bridge — mirrors OmniConductor hub tasks into the local A2A TaskManager.
+ * Conductor Bridge — mirrors PusulaConductor hub tasks into the local A2A TaskManager.
  *
  * The hub's SSE feed is the source of truth; this mirror is disposable and fully
  * rebuildable by replay (`last_event_id`). State spelling differs on purpose:

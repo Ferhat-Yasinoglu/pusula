@@ -35,7 +35,7 @@ describe("risk-gate integration", () => {
     });
     const out = (res.body.messages as Array<{ content: string }>)[0].content;
     assert.ok(out.includes(PEM), "secret survived verbatim");
-    assert.ok(!out.includes("OMNI_CAVEMAN"), "no placeholder leaked into output");
+    assert.ok(!out.includes("PUSULA_CAVEMAN"), "no placeholder leaked into output");
     assert.equal(res.stats?.riskGate?.spansProtected, 1);
     assert.equal(res.stats?.riskGate?.categories.private_key, 1);
   });

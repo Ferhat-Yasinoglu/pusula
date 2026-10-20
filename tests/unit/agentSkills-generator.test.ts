@@ -97,7 +97,7 @@ test("dry-run generates report with 46 total (generated+unchanged)", async () =>
 
 // ── Apply: writes SKILL.md ─────────────────────────────────────────────────────
 
-test("apply mode writes SKILL.md with valid frontmatter for omni-providers", async () => {
+test("apply mode writes SKILL.md with valid frontmatter for pusula-providers", async () => {
   const tmpDir = mkTmpDir();
   try {
     refreshCatalog();
@@ -105,21 +105,21 @@ test("apply mode writes SKILL.md with valid frontmatter for omni-providers", asy
       dryRun: false,
       prune: false,
       outputDir: tmpDir,
-      onlyIds: ["omni-providers"],
+      onlyIds: ["pusula-providers"],
     });
 
     assert.equal(report.errors.length, 0, `Errors: ${JSON.stringify(report.errors)}`);
     assert.equal(report.generated.length, 1);
-    assert.equal(report.generated[0], "omni-providers");
+    assert.equal(report.generated[0], "pusula-providers");
 
-    const skillFile = path.join(tmpDir, "omni-providers", "SKILL.md");
+    const skillFile = path.join(tmpDir, "pusula-providers", "SKILL.md");
     assert.ok(fs.existsSync(skillFile), `SKILL.md not found at ${skillFile}`);
 
     const content = fs.readFileSync(skillFile, "utf-8");
 
     // Frontmatter present
     assert.ok(content.startsWith("---\n"), "Missing frontmatter start");
-    assert.ok(content.includes("name: omni-providers"), "Missing name in frontmatter");
+    assert.ok(content.includes("name: pusula-providers"), "Missing name in frontmatter");
     assert.ok(content.includes("---\n"), "Missing frontmatter end");
 
     // Generated comment present
@@ -188,11 +188,11 @@ test("apply mode writes SKILL.md for an API skill with correct sections", async 
       dryRun: false,
       prune: false,
       outputDir: tmpDir,
-      onlyIds: ["omni-auth"],
+      onlyIds: ["pusula-auth"],
     });
 
     assert.equal(report.errors.length, 0);
-    const content = fs.readFileSync(path.join(tmpDir, "omni-auth", "SKILL.md"), "utf-8");
+    const content = fs.readFileSync(path.join(tmpDir, "pusula-auth", "SKILL.md"), "utf-8");
     assert.ok(content.includes("## Overview"), "Missing Overview section");
     assert.ok(content.includes("## Authentication"), "Missing Authentication section");
     assert.ok(content.includes("## Endpoints"), "Missing endpoints section");
@@ -226,18 +226,18 @@ test("generic API skill GET and mutation examples use standalone Bearer auth", a
       dryRun: false,
       prune: false,
       outputDir: tmpDir,
-      onlyIds: ["omni-providers", "omni-settings"],
+      onlyIds: ["pusula-providers", "pusula-settings"],
     });
 
     assert.equal(report.errors.length, 0, `Errors: ${JSON.stringify(report.errors)}`);
-    for (const id of ["omni-providers", "omni-settings"]) {
+    for (const id of ["pusula-providers", "pusula-settings"]) {
       const content = fs.readFileSync(path.join(tmpDir, id, "SKILL.md"), "utf-8");
       assert.ok(content.includes('  -H "Authorization: Bearer $PUSULA_TOKEN"'));
       assert.ok(!content.includes("cookie.jar"), `${id} must not assume a session cookie`);
       assert.ok(!content.includes("CSRF_TOKEN"), `${id} must not assume a CSRF token`);
     }
 
-    const providers = fs.readFileSync(path.join(tmpDir, "omni-providers", "SKILL.md"), "utf-8");
+    const providers = fs.readFileSync(path.join(tmpDir, "pusula-providers", "SKILL.md"), "utf-8");
     const providersGet = providers.slice(
       providers.indexOf("### GET /api/providers"),
       providers.indexOf("### POST /api/providers")
@@ -250,7 +250,7 @@ test("generic API skill GET and mutation examples use standalone Bearer auth", a
     assert.ok(providersPost.includes('  -H "Authorization: Bearer $PUSULA_TOKEN" \\\n'));
     assert.ok(providersPost.includes('  -H "Content-Type: application/json" \\\n'));
 
-    const settings = fs.readFileSync(path.join(tmpDir, "omni-settings", "SKILL.md"), "utf-8");
+    const settings = fs.readFileSync(path.join(tmpDir, "pusula-settings", "SKILL.md"), "utf-8");
     const settingsPatch = settings.slice(
       settings.indexOf("### PATCH /api/settings"),
       settings.indexOf("### POST /api/settings/purge-request-history")
@@ -274,7 +274,7 @@ test("idempotency: second apply run reports 0 generated, all unchanged", async (
       dryRun: false,
       prune: false,
       outputDir: tmpDir,
-      onlyIds: ["omni-providers", "cli-serve"],
+      onlyIds: ["pusula-providers", "cli-serve"],
     });
     assert.equal(report1.generated.length, 2, "First run should generate 2 skills");
 
@@ -283,7 +283,7 @@ test("idempotency: second apply run reports 0 generated, all unchanged", async (
       dryRun: false,
       prune: false,
       outputDir: tmpDir,
-      onlyIds: ["omni-providers", "cli-serve"],
+      onlyIds: ["pusula-providers", "cli-serve"],
     });
     assert.equal(report2.generated.length, 0, "Second run should generate 0 (already up-to-date)");
     assert.equal(report2.unchanged.length, 2, "Second run should report 2 unchanged");
@@ -352,7 +352,7 @@ test("prune does not delete catalog skill dirs", async () => {
     refreshCatalog();
 
     // Pre-create a valid skill dir
-    const validDir = path.join(tmpDir, "omni-providers");
+    const validDir = path.join(tmpDir, "pusula-providers");
     fs.mkdirSync(validDir, { recursive: true });
     fs.writeFileSync(path.join(validDir, "SKILL.md"), "# Existing\n");
 
@@ -367,9 +367,9 @@ test("prune does not delete catalog skill dirs", async () => {
       onlyIds: [],
     });
 
-    // omni-providers should not be in orphansDetected
+    // pusula-providers should not be in orphansDetected
     assert.ok(
-      !report.orphansDetected.includes("omni-providers"),
+      !report.orphansDetected.includes("pusula-providers"),
       "Valid skill mistakenly flagged as orphan"
     );
     assert.ok(report.orphansDetected.includes("orphan-xyz"), "Orphan not detected");
@@ -390,10 +390,10 @@ test("marker preservation: custom block survives regeneration", async () => {
       dryRun: false,
       prune: false,
       outputDir: tmpDir,
-      onlyIds: ["omni-providers"],
+      onlyIds: ["pusula-providers"],
     });
 
-    const skillFile = path.join(tmpDir, "omni-providers", "SKILL.md");
+    const skillFile = path.join(tmpDir, "pusula-providers", "SKILL.md");
     const originalContent = fs.readFileSync(skillFile, "utf-8");
 
     // Inject a custom block
@@ -407,7 +407,7 @@ test("marker preservation: custom block survives regeneration", async () => {
       dryRun: false,
       prune: false,
       outputDir: tmpDir,
-      onlyIds: ["omni-providers"],
+      onlyIds: ["pusula-providers"],
     });
 
     assert.equal(report2.errors.length, 0, `Errors: ${JSON.stringify(report2.errors)}`);
@@ -428,13 +428,13 @@ test("marker preservation: custom block survives regeneration", async () => {
 
 // ── buildSkillMarkdown ─────────────────────────────────────────────────────────
 
-test("buildSkillMarkdown returns valid frontmatter + body for omni-providers", () => {
+test("buildSkillMarkdown returns valid frontmatter + body for pusula-providers", () => {
   refreshCatalog();
   const sources = emptySources();
-  const result = buildSkillMarkdown("omni-providers", sources);
+  const result = buildSkillMarkdown("pusula-providers", sources);
 
   assert.ok(typeof result.frontmatter === "object", "frontmatter must be an object");
-  assert.equal(result.frontmatter.name, "omni-providers");
+  assert.equal(result.frontmatter.name, "pusula-providers");
   assert.ok(result.frontmatter.description.length > 0, "description must be non-empty");
   assert.ok(
     typeof result.body === "string" && result.body.length > 0,
@@ -447,7 +447,7 @@ test("buildSkillMarkdown body has no erroneously escaped characters", () => {
   const sources = emptySources();
 
   // Test several skills
-  const testIds = ["omni-providers", "cli-serve", "omni-auth", "cli-health"];
+  const testIds = ["pusula-providers", "cli-serve", "pusula-auth", "cli-health"];
   for (const id of testIds) {
     const result = buildSkillMarkdown(id, sources);
 
@@ -476,7 +476,7 @@ test("buildSkillMarkdown throws for unknown skillId", () => {
 test("buildSkillMarkdown API skill body contains expected sections", () => {
   refreshCatalog();
   const sources = emptySources();
-  const result = buildSkillMarkdown("omni-cache", sources);
+  const result = buildSkillMarkdown("pusula-cache", sources);
 
   assert.ok(result.body.includes("## Overview"), "Missing Overview section");
   assert.ok(result.body.includes("## Authentication"), "Missing Authentication section");
@@ -518,11 +518,11 @@ test("onlyIds filter limits generation to specified IDs", async () => {
       dryRun: false,
       prune: false,
       outputDir: tmpDir,
-      onlyIds: ["omni-providers", "cli-serve"],
+      onlyIds: ["pusula-providers", "cli-serve"],
     });
 
     assert.equal(report.generated.length, 2);
-    assert.ok(report.generated.includes("omni-providers"));
+    assert.ok(report.generated.includes("pusula-providers"));
     assert.ok(report.generated.includes("cli-serve"));
 
     // Only 2 dirs created
@@ -543,10 +543,10 @@ test("generated SKILL.md contains the mandatory generated comment", async () => 
       dryRun: false,
       prune: false,
       outputDir: tmpDir,
-      onlyIds: ["omni-providers"],
+      onlyIds: ["pusula-providers"],
     });
 
-    const content = fs.readFileSync(path.join(tmpDir, "omni-providers", "SKILL.md"), "utf-8");
+    const content = fs.readFileSync(path.join(tmpDir, "pusula-providers", "SKILL.md"), "utf-8");
     assert.ok(
       content.includes(
         "<!-- generated by src/lib/agentSkills/generator.ts; manual edits will be overwritten -->"

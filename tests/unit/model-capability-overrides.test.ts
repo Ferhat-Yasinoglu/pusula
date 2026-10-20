@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const moduleDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-model-capability-overrides-"));
+const moduleDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-model-capability-overrides-"));
 process.env.DATA_DIR = moduleDataDir;
 
 const coreDb = await import("../../src/lib/db/core.ts");

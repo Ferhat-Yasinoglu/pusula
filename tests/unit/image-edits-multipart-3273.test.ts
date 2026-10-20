@@ -13,7 +13,7 @@ import { fetch as undiciFetch } from "undici";
 // "[object FormData]" (text/plain), dropping every field including `model`.
 // This test reproduces that exact condition by routing through undici's fetch.
 
-process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omni-img-3273-"));
+process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-img-3273-"));
 
 const { handleOpenAIImageEdit } = await import("../../open-sse/handlers/imageGeneration.ts");
 const { resetDbInstance } = await import("../../src/lib/db/core.ts");

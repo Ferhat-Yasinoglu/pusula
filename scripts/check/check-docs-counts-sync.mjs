@@ -753,14 +753,14 @@ export function buildChecks() {
             "docs/frameworks/MCP-SERVER.md",
             "llm.txt",
             "open-sse/mcp-server/README.md",
-            "skills/omni-mcp/SKILL.md",
+            "skills/pusula-mcp/SKILL.md",
           ]
         ),
         claim(f.mcpScopes, "MCP scopes", { pattern: /(\d+) scopes/gi }, [
           "README.md",
           "AGENTS.md",
           "llm.txt",
-          "skills/omni-mcp/SKILL.md",
+          "skills/pusula-mcp/SKILL.md",
         ]),
         claim(f.cliTotal, "CLI tools", { pattern: /(\d+) tools(?=\s*\(\d+ CLI)/gi }, ["README.md"]),
         claim(
@@ -917,7 +917,7 @@ export function buildChecks() {
         "docs/architecture/RESILIENCE_GUIDE.md",
         "docs/frameworks/OPEN_SSE_ARCHITECTURE.md",
         "docs/getting-started/AUTO-COMBO-GUIDE.md",
-        "skills/omni-combos-routing/SKILL.md",
+        "skills/pusula-combos-routing/SKILL.md",
         "open-sse/services/autoCombo/routerStrategy.ts",
         "open-sse/services/taskAwareRouter.ts",
         "tests/unit/lkgp-enabled-context-11181.test.ts",

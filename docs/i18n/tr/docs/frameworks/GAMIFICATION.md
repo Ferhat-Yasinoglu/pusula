@@ -343,7 +343,7 @@ Değerlendirme **olay güdümlüdür** — her oyunlaştırma olayından sonra �
 | Isınmaya Başlama        | kullanım | yaygın        | 100 istek                     |
 | Uzman Kullanıcı         | kullanım | nadir olmayan | 1.000 istek                   |
 | Yüzbaşı                 | kullanım | nadir         | 10.000 istek                  |
-| OmniPower               | kullanım | efsanevi      | 100.000 istek                 |
+| PusulaPower               | kullanım | efsanevi      | 100.000 istek                 |
 | Sağlayıcı Gezgini       | katkı    | yaygın        | 5 farklı sağlayıcı kullanma   |
 | Sağlayıcı Ustası        | katkı    | nadir olmayan | 20 farklı sağlayıcı kullanma  |
 | Kombinasyon Mimarı      | katkı    | nadir olmayan | 5 kombinasyon oluşturma       |

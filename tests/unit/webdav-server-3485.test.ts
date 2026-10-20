@@ -145,7 +145,7 @@ function basicAuth(user: string, pass: string): string {
 // Setup
 // ─────────────────────────────────────────────────────────────────────────────
 
-const VAULT_ROOT = fs.mkdtempSync(path.join(os.tmpdir(), "omni-webdav-vault-"));
+const VAULT_ROOT = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-webdav-vault-"));
 const ORIG_KEY = process.env.STORAGE_ENCRYPTION_KEY;
 
 test.after(() => {
@@ -468,8 +468,8 @@ const TEST_PASS = "test-password-123";
 const AUTH_HEADER = basicAuth(TEST_USER, TEST_PASS);
 
 // Create integration test environment
-const intDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-webdav-int-"));
-const intVaultDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-webdav-vault-int-"));
+const intDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-webdav-int-"));
+const intVaultDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-webdav-vault-int-"));
 
 test.before(async () => {
   await createTestDb(intDataDir, {
@@ -648,8 +648,8 @@ test("GET with wrong password returns 401", async () => {
 // ─────────────────────────────────────────────────────────────────────────────
 
 test("disabled WebDAV returns 503", async () => {
-  const disabledDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-webdav-disabled-"));
-  const disabledVaultDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-webdav-disabled-vault-"));
+  const disabledDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-webdav-disabled-"));
+  const disabledVaultDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-webdav-disabled-vault-"));
 
   try {
     await createTestDb(disabledDataDir, {
@@ -673,7 +673,7 @@ test("disabled WebDAV returns 503", async () => {
 });
 
 test("no DB / missing config returns 503", async () => {
-  const emptyDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-webdav-empty-"));
+  const emptyDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-webdav-empty-"));
 
   try {
     // No DB file at all
@@ -728,8 +728,8 @@ test("encrypted password in DB is decrypted and auth works", async () => {
   const encSecret = "integration-enc-key-value-32chars!";
   process.env.STORAGE_ENCRYPTION_KEY = encSecret;
 
-  const encDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-webdav-enc-"));
-  const encVaultDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-webdav-enc-vault-"));
+  const encDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-webdav-enc-"));
+  const encVaultDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-webdav-enc-vault-"));
 
   try {
     const encryptedPass = encryptTs(encSecret, TEST_PASS);

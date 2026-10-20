@@ -276,7 +276,7 @@ describe("NineRouterExecutor", () => {
       assert.equal(body.error.code, "service_not_running");
     });
 
-    it("G-02: 503 service_not_running response includes X-Omni-Fallback-Hint: connection_cooldown", async () => {
+    it("G-02: 503 service_not_running response includes X-Pusula-Fallback-Hint: connection_cooldown", async () => {
       // No supervisor → 503
       const exec = new NineRouterExecutor("http://127.0.0.1:20130");
       const result = await exec.execute({

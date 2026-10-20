@@ -17,7 +17,7 @@ const IS_WINDOWS = process.platform === "win32";
 
 async function withTempEnv(fn: (paths: { root: string; home: string }) => void | Promise<void>) {
   const originalEnv = { ...process.env };
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), "omni-datadir-"));
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-datadir-"));
   const home = path.join(root, "home");
   fs.mkdirSync(home, { recursive: true });
 

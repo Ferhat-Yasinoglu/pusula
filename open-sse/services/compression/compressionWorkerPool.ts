@@ -123,9 +123,9 @@ export class CompressionWorkerPool {
   private readonly idleMs: number;
 
   constructor({
-    size = positiveInteger(process.env.OMNI_COMPRESSION_WORKERS, 2),
-    timeoutMs = positiveInteger(process.env.OMNI_COMPRESSION_WORKER_TIMEOUT_MS, 120_000),
-    idleMs = positiveInteger(process.env.OMNI_COMPRESSION_WORKER_IDLE_MS, 60_000),
+    size = positiveInteger(process.env.PUSULA_COMPRESSION_WORKERS, 2),
+    timeoutMs = positiveInteger(process.env.PUSULA_COMPRESSION_WORKER_TIMEOUT_MS, 120_000),
+    idleMs = positiveInteger(process.env.PUSULA_COMPRESSION_WORKER_IDLE_MS, 60_000),
   }: { size?: number; timeoutMs?: number; idleMs?: number } = {}) {
     this.size = Math.max(1, Math.floor(size));
     this.timeoutMs = Math.max(1, Math.floor(timeoutMs));

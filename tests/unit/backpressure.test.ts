@@ -8,7 +8,7 @@ import type { CapacityResult } from "../../src/sse/utils/backpressure.ts";
 // ---------------------------------------------------------------------------
 
 beforeEach(() => {
-  delete process.env.OMNI_MAX_CONCURRENT_CONNECTIONS;
+  delete process.env.PUSULA_MAX_CONCURRENT_CONNECTIONS;
 });
 
 test("backpressure: cap=0 never rejects regardless of active count", () => {

@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const testRoot = fs.mkdtempSync(path.join(os.tmpdir(), "omni-video-provider-error-"));
+const testRoot = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-video-provider-error-"));
 const originalEnv = {
   DATA_DIR: process.env.DATA_DIR,
   PUSULA_PLUGINS_DIR: process.env.PUSULA_PLUGINS_DIR,

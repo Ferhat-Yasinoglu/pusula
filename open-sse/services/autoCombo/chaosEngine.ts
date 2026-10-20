@@ -16,7 +16,7 @@
  *   - Broadcast is PROGRESSIVE: each panel model's answer is enqueued onto the
  *     SSE stream the moment that model lands — the client does not wait for the
  *     whole panel to finish before receiving the first part. Each part is wrapped
- *     in an SSE `omni-chaos-part` event carrying its own model id. IDEs that
+ *     in an SSE `pusula-chaos-part` event carrying its own model id. IDEs that
  *     understand the protocol can render several panels; IDEs that don't just see
  *     the canonical final block (the highest-scoring model's answer is used as the
  *     final response chunk).
@@ -64,7 +64,7 @@ export type ChaosPart = {
  *
  * When `emitCustomEvent` is true (opt-in via
  * `stream_options.include_chaos_parts`), the custom event name
- * `omni-chaos-part` + metadata `data:` block is also emitted so a
+ * `pusula-chaos-part` + metadata `data:` block is also emitted so a
  * protocol-aware IDE can split panels out.
  *
  * The part's text is NOT included in the metadata event — it arrives in the
@@ -77,7 +77,7 @@ export function serializeChaosPart(
   emitCustomEvent = false
 ): string {
   const meta = {
-    type: "omni-chaos-part",
+    type: "pusula-chaos-part",
     model: part.model,
     index: part.index,
     ok: part.ok,
@@ -88,7 +88,7 @@ export function serializeChaosPart(
   if (!emitCustomEvent) {
     return comment + "\n";
   }
-  return comment + `event: omni-chaos-part\n` + `data: ${JSON.stringify(meta)}\n\n`;
+  return comment + `event: pusula-chaos-part\n` + `data: ${JSON.stringify(meta)}\n\n`;
 }
 
 /**
@@ -362,7 +362,7 @@ function concatSseText(sse: string): string {
  *     PROGRESSIVELY as each model lands (comments are ignored by every SSE
  *     parser, so OpenAI-compatible clients see only the final chunk)
  *   - when `stream_options.include_chaos_parts: true` is set, the per-panel
- *     `omni-chaos-part` custom event is emitted instead of the bare comment
+ *     `pusula-chaos-part` custom event is emitted instead of the bare comment
  *   - a final `data:` OpenAI-style chunk carrying the primary model's answer
  *     (so non-aware clients / IDEs still get a usable completion)
  *   - a terminating `data: [DONE]`

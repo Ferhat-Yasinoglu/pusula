@@ -19,7 +19,7 @@ describe("applyRiskMask / restoreRiskBlocks", () => {
     const { maskedBody, blocks, stats } = applyRiskMask(body, { enabled: true });
     const maskedText = (maskedBody.messages as Array<{ content: string }>)[0].content;
     assert.ok(!maskedText.includes("BEGIN PRIVATE KEY"), "secret removed from masked body");
-    assert.ok(maskedText.includes("OMNI_CAVEMAN"), "uses SENTINEL placeholder family");
+    assert.ok(maskedText.includes("PUSULA_CAVEMAN"), "uses SENTINEL placeholder family");
     assert.equal(stats.spansProtected, 1);
     assert.equal(stats.categories.private_key, 1);
 

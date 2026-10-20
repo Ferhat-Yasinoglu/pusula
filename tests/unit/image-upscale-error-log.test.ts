@@ -1,5 +1,5 @@
 /**
- * LEDGER-22 / LEDGER-37 (omni-code-review, release/v3.8.51 vs main):
+ * LEDGER-22 / LEDGER-37 (pusula-code-review, release/v3.8.51 vs main):
  * the `/v1/images/upscale` call-log sink must render `error: unknown` through the
  * same total, credential-redacting stringifier the generation sink uses — never a
  * bare `String(opts.error)`.
@@ -83,7 +83,7 @@ test("stringifyImageErrorForLog serializes a null-prototype object instead of th
   );
 });
 
-// omni-code-review 2026-09-21_release-v3.8.51_vs_main_e2e-areas LEDGER-49: the object branch is
+// pusula-code-review 2026-09-21_release-v3.8.51_vs_main_e2e-areas LEDGER-49: the object branch is
 // the one `sanitizeUpstreamDetails()` payloads and raw upstream JSON take, so its redaction
 // must be pinned on a credential-bearing key — not only on the string/Error branches.
 test("stringifyImageErrorForLog redacts a credential inside a null-prototype object payload", () => {
@@ -102,7 +102,7 @@ test("stringifyImageErrorForLog redacts a credential inside a null-prototype obj
   );
 });
 
-// omni-code-review 2026-09-21_release-v3.8.51_vs_main_e2e-areas LEDGER-56: the Error branch
+// pusula-code-review 2026-09-21_release-v3.8.51_vs_main_e2e-areas LEDGER-56: the Error branch
 // must be as total as the other three — a throwing or non-string `message`/`name` must never
 // turn a handled provider failure back into an unhandled throw.
 test("stringifyImageErrorForLog does not throw on an Error whose message getter throws", () => {

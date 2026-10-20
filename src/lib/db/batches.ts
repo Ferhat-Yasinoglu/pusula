@@ -505,7 +505,7 @@ export function isFileReferencedByOtherBatch(fileId: string, excludeBatchIds: st
  * set back — within a chunk, no batch row is left pointing at a file whose
  * content was already nulled. BOTH modes walk the matching batches in chunks
  * of `INSTANCE_SWEEP_CHUNK` ids and commit that unit once per chunk
- * (SEC-D; key mode since the omni-code-sec proof run, LEDGER-4/20/21): the
+ * (SEC-D; key mode since the pusula-code-sec proof run, LEDGER-4/20/21): the
  * SQLite write lock is held for one chunk at a time and never across chunks,
  * so the lowest-privilege caller — any valid API key — cannot hold the
  * instance's single writer for the length of its whole sweep. Each chunk stays

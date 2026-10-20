@@ -51,7 +51,7 @@ test("createApiKey creates a key and returns it with id, key, name, machineId", 
   const key = await apiKeys.createApiKey("Test Key", "machine-001");
   assert.ok(key.id);
   assert.ok(key.key);
-  assert.ok(key.key.startsWith("omni_") || key.key.length > 0);
+  assert.ok(key.key.startsWith("pusula_") || key.key.length > 0);
   assert.equal(key.name, "Test Key");
   assert.equal(key.machineId, "machine-001");
 });
@@ -134,7 +134,7 @@ test("validateApiKey returns true for valid key", async () => {
 
 test("validateApiKey returns false for non-existent key", async () => {
   await resetStorage();
-  assert.equal(await apiKeys.validateApiKey("omni_nonexistent_key_abc123"), false);
+  assert.equal(await apiKeys.validateApiKey("pusula_nonexistent_key_abc123"), false);
 });
 
 test("validateApiKey returns false for banned key", async () => {
@@ -212,7 +212,7 @@ test("getApiKeyMetadata returns metadata for valid key", async () => {
 
 test("getApiKeyMetadata returns null for non-existent key", async () => {
   await resetStorage();
-  assert.equal(await apiKeys.getApiKeyMetadata("omni_meta_nonexistent"), null);
+  assert.equal(await apiKeys.getApiKeyMetadata("pusula_meta_nonexistent"), null);
 });
 
 // ──────────────── isModelAllowedForKey ────────────────
@@ -231,7 +231,7 @@ test("isModelAllowedForKey returns false when no modelId provided", async () => 
 
 test("isModelAllowedForKey returns false for non-existent key", async () => {
   await resetStorage();
-  assert.equal(await apiKeys.isModelAllowedForKey("omni_bogus_key", "gpt-4"), false);
+  assert.equal(await apiKeys.isModelAllowedForKey("pusula_bogus_key", "gpt-4"), false);
 });
 
 test("isModelAllowedForKey returns true when allowedModels is unrestricted (empty)", async () => {

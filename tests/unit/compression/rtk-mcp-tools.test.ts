@@ -7,7 +7,7 @@ import { cleanupTempDataDir } from "../../_setup/tempDataDir.ts";
 
 // T07 — pusula_rtk_discover / pusula_rtk_learn MCP tools (read-only; audited).
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omni-rtk-mcp-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-rtk-mcp-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../../src/lib/db/core.ts");

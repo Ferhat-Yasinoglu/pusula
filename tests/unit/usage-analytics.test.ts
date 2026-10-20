@@ -325,12 +325,12 @@ test("getUsageStats groups renamed API key usage by stable ID", async () => {
   ).run(
     "api-key-rename",
     "Current Name",
-    "omni-test-key",
+    "pusula-test-key",
     "machine1234567890",
     "[]",
     0,
     now,
-    "omni-test-ke"
+    "pusula-test-ke"
   );
 
   await usageHistory.saveRequestUsage({

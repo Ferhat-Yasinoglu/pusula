@@ -4,20 +4,20 @@ import { isLocalRequestAllowed } from "../../../src/lib/security/localEndpoints.
 
 /**
  * Tests for the /api/local/* security guard. The guard reads from
- * `globalThis.__omniRequestHeaders` (set by the Next.js middleware shim) and
+ * `globalThis.__pusulaRequestHeaders` (set by the Next.js middleware shim) and
  * from `process.env` (production opt-in and bearer token). Each test cleans
  * up both before and after running so the order doesn't matter.
  */
 
-type OmniGlobals = { __omniRequestHeaders?: Headers };
-const G = globalThis as OmniGlobals;
+type PusulaGlobals = { __pusulaRequestHeaders?: Headers };
+const G = globalThis as PusulaGlobals;
 
 function reset() {
-  delete G.__omniRequestHeaders;
+  delete G.__pusulaRequestHeaders;
 }
 
 function setHeaders(headers: Record<string, string>) {
-  G.__omniRequestHeaders = new Headers(headers);
+  G.__pusulaRequestHeaders = new Headers(headers);
 }
 
 test("isLocalRequestAllowed: allows when no headers injected and not production", () => {

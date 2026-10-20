@@ -77,7 +77,7 @@ function extractCustomBlock(content: string): string | null {
 function buildApiBody(skill: AgentSkill, sources: BuildSources): string {
   const areaMap = sources.openapi.areas;
   const ops = areaMap.get(skill.area as Parameters<typeof areaMap.get>[0]) ?? [];
-  const usesDashboardSession = skill.id === "omni-auth";
+  const usesDashboardSession = skill.id === "pusula-auth";
 
   const lines: string[] = [];
 
@@ -114,7 +114,7 @@ function buildApiBody(skill: AgentSkill, sources: BuildSources): string {
         lines.push(op.description);
         lines.push("");
       }
-      // Minimal curl example. Only omni-auth establishes and consumes a dashboard
+      // Minimal curl example. Only pusula-auth establishes and consumes a dashboard
       // session; generic API skills use independently usable Bearer examples.
       lines.push("```bash");
       lines.push(...buildApiOperationExample(op, usesDashboardSession));

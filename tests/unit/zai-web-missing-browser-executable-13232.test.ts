@@ -45,7 +45,7 @@ describe("issue #13232 — Z.ai browser transport classifies a missing Chromium 
   });
 
   it(
-    "returns a classified 503 + X-Omni-Fallback-Hint: connection_cooldown instead of a bare " +
+    "returns a classified 503 + X-Pusula-Fallback-Hint: connection_cooldown instead of a bare " +
       "502 (contrast: gemini-web.ts isMissingBrowserExecutable, #3516)",
     async () => {
       const executor = new mod.ZaiWebExecutor();
@@ -69,7 +69,7 @@ describe("issue #13232 — Z.ai browser transport classifies a missing Chromium 
           "not a generic retryable 502 that trips the whole-provider circuit breaker."
       );
       assert.equal(
-        response.headers.get("X-Omni-Fallback-Hint"),
+        response.headers.get("X-Pusula-Fallback-Hint"),
         "connection_cooldown",
         "the connection-cooldown hint must be set so accountFallback applies a short cooldown " +
           "instead of tripping the provider circuit breaker."

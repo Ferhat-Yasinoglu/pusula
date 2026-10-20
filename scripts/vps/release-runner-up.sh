@@ -3,7 +3,7 @@
 # de release usar runners dedicados (anti-fila). Falha => o caller cai no GitHub-hosted.
 #
 # Uso:  scripts/vps/release-runner-up.sh [timeout_seg]
-# Saída: exit 0 + seta a repo-var USE_VPS_RUNNER=true  quando >=1 runner omni-release online
+# Saída: exit 0 + seta a repo-var USE_VPS_RUNNER=true  quando >=1 runner pusula-release online
 #        exit 1 + seta USE_VPS_RUNNER=false            em qualquer falha/timeout (fallback)
 #
 # Pré-requisitos no host que roda o /generate-release:

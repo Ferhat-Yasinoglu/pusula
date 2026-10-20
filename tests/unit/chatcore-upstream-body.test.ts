@@ -9,7 +9,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const testDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-upstream-body-test-"));
+const testDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-upstream-body-test-"));
 process.env.DATA_DIR = testDataDir;
 
 const coreDb = await import("../../src/lib/db/core.ts");
@@ -708,7 +708,7 @@ test("injects a stable prompt_cache_key for Codex automatic prefix caching", asy
   const first = await prepareUpstreamBody(opts);
   const second = await prepareUpstreamBody(opts);
 
-  assert.match(String(first.prompt_cache_key), /^omni-[0-9a-f]{32}$/);
+  assert.match(String(first.prompt_cache_key), /^pusula-[0-9a-f]{32}$/);
   assert.equal(second.prompt_cache_key, first.prompt_cache_key);
 });
 
@@ -737,5 +737,5 @@ test("injects prompt_cache_key for Kimi Code's OpenAI protocol", async () => {
     targetFormat: "openai",
     credentials: { accessToken: "oauth-token" },
   });
-  assert.match(String(out.prompt_cache_key), /^omni-[0-9a-f]{32}$/);
+  assert.match(String(out.prompt_cache_key), /^pusula-[0-9a-f]{32}$/);
 });

@@ -13,12 +13,12 @@ const PROXY_SCRIPT = path.resolve(
 const UPSTREAM_PORT = 9222; // upstreamPort in cdp-proxy.mjs
 const PROXY_PORT = 9223; // listenPort in cdp-proxy.mjs
 const TOKEN = "test-secret-token-13679";
-const TOKEN_HEADER = "X-Omni-Cdp-Token";
+const TOKEN_HEADER = "X-Pusula-Cdp-Token";
 
 // #13679 item #9: docker/chatgpt-web-codex-browser/cdp-proxy.mjs republishes
 // Chromium's loopback CDP (127.0.0.1:9222) onto 0.0.0.0:9223 with NO auth
 // check at all — unlike the sibling docker/vnc-browser/chromium/cdp-bridge.py,
-// which requires an `X-Omni-Cdp-Token` header once CDP_BRIDGE_TOKEN is set
+// which requires an `X-Pusula-Cdp-Token` header once CDP_BRIDGE_TOKEN is set
 // (#12571). This proves cdp-proxy.mjs must gate requests the same way once an
 // operator opts in via CDP_PROXY_TOKEN.
 

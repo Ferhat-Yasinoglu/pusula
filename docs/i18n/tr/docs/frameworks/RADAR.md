@@ -6,10 +6,12 @@
 
 > **Doğruluk kaynağı:** `src/lib/radar/`, `src/lib/db/radar.ts`, `src/app/api/radar/`
 > **Son güncelleme:** 2026-09-01 — v3.8.51
-> **Barındırılan hizmet kanıt sınırı:** burada açıklanan sunucu tarafı kuralları,
-> 2026-09-01 tarihinde, tam olarak `main@dce70f004364912f3f144cdb69f4cbcde16093ed`
-> revizyonundaki, bilerek özel tutulan Radar sunucusuna karşı doğrulanmıştır. Bu uygulama,
-> bu OSS deposunda dağıtılmaz; barındırılan hizmetin kullanılabilirliği ayrı bir operasyonel durum olmaya devam eder.
+> **Yalnızca kendi sunucunuzda barındırılır:** bu proje hiçbir Radar akış hizmeti işletmez ve
+> varsayılan bir üst kaynak ana makinesi içermez. Operatör kendi akış sunucusunu çalıştırıp
+> `RADAR_FEED_URL` değerini ayarlayana kadar Radar ağ açısından etkisiz kalır (bkz.
+> [Bir feed'i kendi sunucunuzda barındırma](#how-to-self-host-a-feed)). Aşağıda açıklanan sunucu
+> tarafı kuralları, böyle bir sunucunun uygulaması gereken sözleşmedir — bu deponun sunduğu
+> barındırılan bir hizmetin açıklaması değildir.
 
 Radar, sürüm temel çizgisinin (`open-sse/config/freeModelCatalog.data.ts` içindeki
 `FREE_MODEL_BUDGETS`) üzerine imzalı ve kısa süre önce düzenlenmiş bir ücretsiz model
@@ -29,19 +31,19 @@ aynı panodan geri yükleyebilir. Temel katalog diskte hiçbir zaman değiştiri
 
 ## v3.8.51 sürümündeki teslimat durumu
 
-Aşağıdaki durum, bu OSS sürümünün uyguladığı özellikleri daha sonraki Radar çalışma
-akışlarından ayırır. Bu, kod düzeyinde bir durumdur; belirli bir barındırılan dağıtımın
-veya harici entegrasyonun şu anda kullanılabilir olduğuna dair bir taahhüt değildir.
+Aşağıdaki durum, bu OSS sürümünün uyguladığı özellikleri operatörün kendi sunucusunda barındırdığı
+akış sunucusuna ait olanlardan ayırır. Bu, kod düzeyinde bir durumdur; bu proje barındırılan bir dağıtım
+veya harici entegrasyon sağlamaz.
 
 | Alan                              | Bu sürümdeki durum                                                                                                                                                                                                                                                       |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | İmzalı katalog istemcisi          | Ayrı katılım onayı, Ed25519 doğrulaması, yerel şifrelenmiş ayarlar/önbellek, kalıcı görüntüleme/etkinleştirme geçersiz kılmaları, geri alınabilir silme işaretleri, zamanlayıcı ve pano ile `RADAR_ENABLED` arkasında uygulanmıştır.                                     |
-| Katkıcı etkinleştirmesi           | Pano, sunucuda barındırılan GitHub talep akışına bağlantı verir ve mevcut bir `omr_…` anahtarını kabul eder. Katkıcı uygunluğu özel hizmet tarafından belirlenir; OSS istemcisi hiçbir GitHub belirteci veya anahtar verme mantığı içermez.                              |
+| Katkıcı etkinleştirmesi           | Pano, isteğe bağlı talep bağlantısını yalnızca operatör `RADAR_CONTRIBUTOR_CLAIM_URL` değerini kendi akış sunucusundaki bir akışa ayarladığında gösterir ve mevcut bir `omr_…` anahtarını kabul eder. Uygunluk o sunucu tarafından belirlenir; OSS istemcisi hiçbir GitHub belirteci veya anahtar verme mantığı içermez. |
 | Destekçi anahtarı etkinleştirmesi | Uygulanmıştır. Ham anahtar doğrulanır, bekleme durumunda şifrelenir, okumalarda maskelenir ve yalnızca sunucu tarafı eşitleme tarafından gönderilir. Anahtarın değiştirilmesi veya temizlenmesi, yetkilendirmeye duyarlı dört akış önbelleğinin tamamını geçersiz kılar. |
 | Yönlendirme bağlantıları          | Ayrı olarak imzalanan ve saatlik yenilenen bir akış şeklinde uygulanmıştır. Sabit bağlantılar topluluk katmanında hemen kullanılabilir; sınırlı kampanyalar canlı katman verileri olarak kalır.                                                                          |
 | Destekçi teklifleri               | Ayrı, imzalı ve yalnızca canlı ortamda sunulan bir akış ve pano sayfası olarak uygulanmıştır. İstemci, kapalı avantaj şemasını yeniden doğrular, son geçerli önbelleği korur, süresi dolmuş girdileri filtreler ve iş ortağı tekliflerini açıkça etiketler.              |
 | İstihbarat ve destekçi tanıma     | Radar'a ait ELO, olgusal katalog güncelliği/eğilimi, doğrulanmış yerel destekçi rozeti, pano sayfası ve yalnızca yerel CLI durum/eşitleme komutları içeren, katı biçimde imzalanmış ve yalnızca canlı ortamda sunulan bir akış olarak uygulanmıştır.                     |
-| Ödemeler ve işlemsel e-posta      | OSS istemcisinde uygulanmamıştır. Satın alma, bağış, makbuz inceleme, kurtarma ve posta teslimatı özel hizmete aittir; barındırılan hizmetin kullanılabilirliği hâlâ hizmetin gözetimli dağıtımına ve sağlayıcı yapılandırmasına bağlıdır.                               |
+| Anahtar verme, ödemeler, e-posta  | OSS istemcisinde uygulanmamıştır. Destekçi anahtarlarını vermek, tahsis etmek, kurtarmak veya e-postayla göndermek tamamen kendi sunucunuzda barındırılan akış sunucusunun işidir; bu depo hiçbir ödeme kodu içermez ve barındırılan hiçbir hizmete bağlantı vermez.                       |
 | Araştırma aracısı çalışma akışı   | Bu istemci sürümünün parçası değildir. Düzenlenmiş akış içerikleri sunucu tarafı verileri olarak kalır; bir Pusula kurulumunda hiçbir otonom araştırma aracısı çalışmaz.                                                                                              |
 
 ---
@@ -63,9 +65,9 @@ sağlayıcı yapılandırması, kullanım kaydı veya yerel kapatma durumu gönd
 - en yeniden en eskiye etkin öğe seçimi, yerel ayardan İngilizceye geri dönüş ve kimlik başına yerel kapatma.
 
 Ayrıştırıcı, eski çatalların bozuk bir Değişiklik Günlüğü görünümü olmadan geçiş yapabilmesi için
-önceki tekil `{ active, title, message, ... }` biçimini geçici olarak kabul eder. Geçersiz akışlar etkisizdir. Radar'ın kullanıma sunulma
-girdisi `active: false` ile gelir; bunun `true` olarak değiştirilmesi, birleştirme ve dağıtım sonrasında
-ayrı olarak gerçekleştirilen bir sürüm eylemidir ve `RADAR_ENABLED` değerini veya bağımsız akış eşitleme seçimini değiştirmez.
+önceki tekil `{ active, title, message, ... }` biçimini geçici olarak kabul eder. Geçersiz akışlar etkisizdir. Dağıtılan
+`news.json` boş bir v2 akışıdır (`{ "schemaVersion": 2, "items": [] }`); duyuru isteyen bir operatör kendi öğelerini
+oraya yayımlar. Bir öğenin `active` bayrağını değiştirmek `RADAR_ENABLED` değerini veya bağımsız akış eşitleme seçimini hiçbir zaman değiştirmez.
 
 ---
 
@@ -102,24 +104,25 @@ yönlendirmeyi veya model seçimini değiştirmez — aşağıdaki ayrı katıl�
 yapmadan önce bayrağı _ve_ katılım seçeneğini denetler:
 
 ```
-Bayrak kapalı     → { status: "disabled" }   — ağ çağrısı yok
-Katılım seçilmedi → { status: "opt_out" }    — ağ çağrısı yok
+Bayrak kapalı               → { status: "disabled" }        — ağ çağrısı yok
+Katılım seçilmedi           → { status: "opt_out" }         — ağ çağrısı yok
+RADAR_FEED_URL ayarlanmamış → { status: "not_configured" }  — tek bir "Radar feed URL not configured; skipping" günlük satırı, ağ çağrısı yok
 ```
 
-Her ikisi de açıkken eşitleme yolu şöyledir:
+Üç koşul da sağlandığında eşitleme yolu şöyledir:
 
 1. `x-pusula-radar-schema: 2` ve isteğe bağlı bir `Authorization: Bearer <supporter key>`
-   üstbilgisiyle (aşağıya bakın) `GET <feed base URL>/v1/catalog/latest`. Şema üstbilgisi olmadığında
+   üstbilgisiyle (aşağıya bakın) `GET ${RADAR_FEED_URL}/v1/catalog/latest` (ör.
+   `https://radar.example.com/v1/catalog/latest`). Şema üstbilgisi olmadığında
    sunucular varsayılan olarak ayrıca imzalanmış v1 geçiş artefaktını sunar; böylece eski kurulu istemciler
    güncellemeleri almaya devam eder.
-2. Bu, yalnızca indirmeye yönelik bir uygulama akışıdır ancak yine de bir HTTPS isteğidir. Barındırılan
-   altyapı, kaynak IP gibi olağan bağlantı meta verilerini alır. Bir destekçi anahtarı
-   yapılandırıldığında eşitleme, hizmetin yetkilendirmeyi belirleyebilmesi için bu anahtarı Bearer
-   üstbilgisinde de gönderir. Yukarıdaki kanıt sınırında belirtilen tam özel sunucu revizyonunda,
-   akış isteği muhasebesi; manuel kötüye kullanım incelemesi için anahtar karmalarını, toplu kullanımı ve
-   IP'nin günlük olarak dönüşümlü, kısaltılmış HMAC değerini kullanır; bu tablolar ne anahtarı ne de IP'yi
-   ham biçimde kalıcı olarak saklar. Altyapı erişim günlükleri ve şifrelenmiş teslimat giden kutusu
-   ayrı operasyonel sınırlardır.
+2. Bu, yalnızca indirmeye yönelik bir uygulama akışıdır ancak yine de bir HTTPS isteğidir. İşlettiğiniz
+   akış sunucusu, kaynak IP gibi olağan bağlantı meta verilerini alır. Bir destekçi anahtarı
+   yapılandırıldığında eşitleme, sunucunuzun yetkilendirmeyi belirleyebilmesi için bu anahtarı Bearer
+   üstbilgisinde de gönderir. Sunucunun istekler hakkında ne sakladığı operatörün kendi politikasıdır;
+   referans sözleşme, manuel kötüye kullanım incelemesi için ham anahtarlar veya IP'ler yerine anahtar
+   karmalarını, toplu kullanımı ve IP'nin günlük olarak dönüşümlü, kısaltılmış HMAC değerini tutar.
+   Altyapı erişim günlükleri ayrı bir operasyonel sınırdır.
 3. Pusula; istemleri, yanıtları, konuşmaları, sağlayıcı kimlik bilgilerini, model trafiğini,
    çalışma süresini, gecikmeyi veya yerel sağlayıcı yapılandırmasını Radar hizmetine hiçbir zaman göndermez.
 4. Yanıt doğrulanır, geçerliliği denetlenir ve yerel olarak önbelleğe alınır (bkz.
@@ -147,7 +150,9 @@ isteğe bağlı bir Bearer belirtecidir (`radar_settings.supporter_key`) (bkz.
 
 Etkin olmayan kontrol paneli, bu kuralları iki etkinleştirme işleminden biri gerçekleştirilmeden **önce**
 `src/app/(dashboard)/dashboard/radar/RadarAccessExplainer.tsx` dosyasından oluşturur.
-Standart erişim ölçeği şöyledir:
+Açıklayıcı metin aşağıdaki referans erişim ölçeğini tanımlar. Hangi seviyelerin gerçekten var olduğuna ve
+kimlerin bunlara hak kazandığına tamamen kendi sunucunuzda barındırılan akış sunucusu karar verir (sunulan
+`x-pusula-feed-tier` üstbilgisi aracılığıyla); OSS istemcisi yalnızca `community` ile `live` arasında ayrım yapar:
 
 | Seviye                  | Uygunluk                                                                                     | Erişim                                              | Tekrarlama/geçerlilik süresi kuralı                                |
 | ----------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------------ |
@@ -164,69 +169,71 @@ satın alımlar, bağışlar, katkıda bulunan dönemleri ve manuel haklar mevcu
 itibaren birikir; ömür boyu erişim bunlara baskındır. Sıralamadaki bir değişiklik, daha önce verilmiş
 süreyi geriye dönük olarak hiçbir zaman iptal etmez veya kısaltmaz.
 
-Barındırılan lisans kişiseldir ve kullanıcıya yönelik kural, aynı anda yalnızca bir etkin kurulumdur. Bu
+Her türlü lisans veya paylaşım önleme politikası akış sunucusunun operatörüne aittir. Bu
 sürüm bir donanım kilidi bulunduğunu **iddia etmez**: OSS eşitlemesi donanım parmak izi çıkarmaz
-veya kriptografik bir cihaz kirası tutmaz. Yukarıda belirtilen doğrulanmış özel sunucu revizyonunda,
-uygulanan yaptırım erişim hakkı doğrulamasının yanı sıra aynı canlı anahtarın 24 saat içinde dördüncü
-farklı IP'den görülmesi durumunda oluşturulan manuel inceleme sinyalinden ibarettir. Bu sinyal bir
-anahtarı hiçbir zaman otomatik olarak engellemez veya iptal etmez. Kurtarma işlemi, mevcut sona erme
-tarihini koruyarak kayıp anahtarı iptal eder ve yenisiyle değiştirir; satın alınan veya verilen süreyi
-yeniden başlatmaz.
+veya kriptografik bir cihaz kirası tutmaz. Referans sunucu sözleşmesi, erişim hakkı doğrulamasının yanı
+sıra aynı canlı anahtarın 24 saat içinde dördüncü farklı IP'den görülmesi durumunda bir manuel inceleme
+sinyali uygular; bu sinyal bir anahtarı hiçbir zaman otomatik olarak engellemez veya iptal etmez. Bir
+sunucunun sunması hâlinde kurtarma işlemi, mevcut sona erme tarihini koruyarak kayıp anahtarı iptal eder
+ve yenisiyle değiştirir.
 
 Canlı teklifler manuel olarak düzenlenir ve değişebilir ya da geçerliliğini yitirebilir. Kaydolma ekranı
 ayrıca gizlilik sınırını da açıkça belirtir: imzalı katalog/yönlendirme meta verileri indirilir; geçerli bir
 anahtar ek olarak imzalı tekliflerin ve Intel'in kilidini açar; Bearer anahtarı ve normal bağlantı meta
-verileri barındırılan hizmete ulaşır; istemler, yanıtlar, konuşmalar, sağlayıcı kimlik bilgileri, model
+verileri operatörün akış sunucusuna ulaşır; istemler, yanıtlar, konuşmalar, sağlayıcı kimlik bilgileri, model
 trafiği, çalışma süresi, gecikme ve yerel sağlayıcı yapılandırması ulaşmaz.
 
 ---
 
 ## Destekçi anahtarı edinme
 
-Etkinleştirme ekranı (`/dashboard/radar`), destekçi anahtarı **edinmek** için iki
-akışa bağlantı verir. OSS deposunun kendisi hiçbir zaman anahtar sağlamaz, ödeme kodu çalıştırmaz ve
-**asla fiyat belirtmez** — fiyatlandırma bu depoda değil, tamamen
-hedef sayfalarda belirlenir ve gösterilir (spesifikasyon kararı D14).
+Destekçi anahtarları (`omr_` + 40 onaltılık karakter), operatörün kendi sunucusunda barındırdığı Radar akış
+sunucusu tarafından verilir — bu depo hiçbir zaman anahtar vermez, ödeme kodu çalıştırmaz ve
+**asla fiyat belirtmez** (spesifikasyon kararı D14). Etkinleştirme ekranı (`/dashboard/radar`), o
+sunucudaki iki isteğe bağlı akışa bağlantı verebilir. Her düğme yalnızca URL'si yapılandırıldığında
+oluşturulur; ikisi de ayarlanmadığında bölümün tamamı kaybolur:
 
-- **"Katkıda bulunan biriyim"** — özel Radar sunucusunda barındırılan bir GitHub OAuth talep akışı olan `RADAR_CONTRIBUTOR_CLAIM_URL` adresini (varsayılan:
-  `https://radar.pusula.online/auth/github`) açar. En son tamamlanan haftalık sıralamayı kontrol eder: İlk 10, 365 gün
-  ve 11–100. sıralardakiler 90 gün kazanır. İlk 100 dışında PR sayısı hiçbir zaman erişim sağlamaz; akış
-  bunun yerine ayrı, tek kullanımlık yıldız + takip düzeyini kontrol eder.
-- **"Projeyi destekle"** — tek seferlik 6 aylık, 1 yıllık ve
-  ömür boyu seçeneklerin barındırıldığı sayfa olan `RADAR_SUPPORTER_PLANS_URL` adresini (varsayılan:
-  `https://radar.pusula.online/planos`) açar. OSS sayfası yine herhangi bir parasal değer göstermez.
+- **"Katkıda bulunan biriyim"** — `RADAR_CONTRIBUTOR_CLAIM_URL` adresini (ör.
+  `https://radar.example.com/auth/github`) açar: akış sunucunuzdaki, katkıcı uygunluğunu kendi sıralama
+  kurallarınıza göre denetleyen — genellikle GitHub OAuth tabanlı — bir talep akışı (yukarıdaki referans
+  ölçekte: İlk 10, 365 gün; 11–100. sıralar 90 gün kazanır; tek başına PR sayısı hiçbir zaman erişim
+  sağlamaz ve yıldız + takip düzeyi tek kullanımlıktır).
+- **"Projeyi destekle"** — `RADAR_SUPPORTER_PLANS_URL` adresini (ör.
+  `https://radar.example.com/plans`) açar: sunucunuzun destekçi anahtarlarını dağıtmak için kullandığı
+  sayfa. OSS sayfası herhangi bir parasal değer göstermez.
 
 Her iki URL de sunucu tarafında çözümlenir (`src/lib/radar/links.ts`, `RADAR_FEED_URL` ile aynı
-ortam değişkeniyle geçersiz kılma kalıbı) ve mevcut
-`GET /api/radar/settings` yanıtı (`contributorClaimUrl`, `supporterPlansUrl`) üzerinden kontrol paneline iletilir —
-istemci bileşeni hiçbir zaman doğrudan `process.env` okumaz.
+yalnızca-ortam-değişkeni kalıbı), yalnızca mutlak http(s) URL'leri olarak kabul edilir ve mevcut
+`GET /api/radar/settings` yanıtı (`contributorClaimUrl`, `supporterPlansUrl`; ayarlanmadığında her biri `null`)
+üzerinden kontrol paneline iletilir — istemci bileşeni hiçbir zaman doğrudan `process.env` okumaz.
 
-| Değişken                      | Amaç                                                                                                     |
-| ----------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `RADAR_CONTRIBUTOR_CLAIM_URL` | Katkıda bulunan talep URL'sini geçersiz kılar (varsayılan `https://radar.pusula.online/auth/github`). |
-| `RADAR_SUPPORTER_PLANS_URL`   | Destekçi planları URL'sini geçersiz kılar (varsayılan `https://radar.pusula.online/planos`).          |
+| Değişken                      | Amaç                                                                                                        |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `RADAR_CONTRIBUTOR_CLAIM_URL` | Akış sunucunuzdaki isteğe bağlı katkıcı talep URL'si. Varsayılan yok — ayarlanmadığında düğme gizlenir.     |
+| `RADAR_SUPPORTER_PLANS_URL`   | Akış sunucunuzdaki isteğe bağlı destekçi planları URL'si. Varsayılan yok — ayarlanmadığında düğme gizlenir. |
 
 ### Kayıp bir destekçi anahtarını kurtarma
 
-Barındırılan hizmetin kurtarma giriş noktası `https://radar.pusula.online/recover` adresidir; ayrıca
-planlar sayfasından da buna bağlantı verilir. Yerel kurulum satın alanın/katkıda bulunanın e-posta adresini
-hiçbir zaman almadığı ve şifrelenmiş ayarlarından ham anahtarı yeniden oluşturamadığı için kurtarma işlemi
-tamamen OSS istemcisinin dışında kalır.
+Anahtar kurtarma, sunulduğu durumlarda, kendi sunucunuzda barındırılan akış sunucusunda yaşar (örneğin
+planlar sayfasından bağlantı verilen `https://radar.example.com/recover`). Yerel kurulum satın alanın/katkıda
+bulunanın e-posta adresini hiçbir zaman almadığı ve şifrelenmiş ayarlarından ham anahtarı yeniden
+oluşturamadığı için kurtarma işlemi tamamen OSS istemcisinin dışında kalır. Bir sunucunun uygulayabileceği
+referans akış:
 
-1. Anahtarla ilişkili e-posta adresini gönderin. Hizmet, kurtarılabilir bir lisansın bulunup
+1. Anahtarla ilişkili e-posta adresini gönderin. Sunucu, kurtarılabilir bir lisansın bulunup
    bulunmadığına bakılmaksızın aynı kabul sayfasını döndürür; böylece form hesapların varlığını açığa çıkarmaz.
 2. Uygunsa teslimat çalışanı kısa ömürlü, tek kullanımlık bir bağlantı gönderir. Bağlantı açıldığında
    belirteç hemen geçici, şifrelenmiş bir `HttpOnly`/`Secure` çerezine taşınır ve temiz
    `/recover` URL'sine yönlendirme yapılır; sayfa belirteç, e-posta, eski anahtar veya yedek anahtar içermez.
-3. İptali onaylayın. Özel hizmet, önceki anahtarı iptal eder, aynı plan/sona erme tarihiyle
+3. İptali onaylayın. Sunucu, önceki anahtarı iptal eder, aynı plan/sona erme tarihiyle
    yedek anahtarı oluşturur ve tek bir işlem içinde e-postayla gönderilmek üzere kuyruğa alır. Yedek anahtar hiçbir zaman
    tarayıcıya döndürülmez.
 4. Yedek anahtarı `/dashboard/radar` içine yapıştırın. Eski anahtar artık `community` düzeyine gerilemeli;
    yedek anahtar ise doğrulanmış bir `live` eşitleme üretmelidir. Aynı kurtarma bağlantısının yeniden açılması
    genel bir geçersiz/süresi dolmuş yanıtıyla başarısız olmalıdır.
 
-Barındırılan kurtarma rotası ve posta çalışanı kodda mevcut olsa bile belirli bir dağıtımda kullanılamayabilir.
-Sunucu dağıtılmadan, teslimat sağlayıcısı kontrollü bir alıcıyla yapılandırılmadan ve tek kullanımlık bağlantının
+Bir kurtarma rotası ve posta çalışanı sunucu kodunda mevcut olsa bile belirli bir dağıtımda kullanılamayabilir.
+Sunucunuz dağıtılmadan, teslimat sağlayıcısı kontrollü bir alıcıyla yapılandırılmadan ve tek kullanımlık bağlantının
 tamamı test edilmeden bu akışı üretime hazır olarak nitelendirmeyin.
 
 Bir ziyaretçi anahtara (`omr_` + 40 onaltılık karakter) sahip olduğunda etkinleştirme ekranındaki
@@ -238,25 +245,25 @@ amacıyla önce paylaşılan `isValidSupporterKeyFormat()` yardımcısı
 (`src/lib/radar/supporterKey.ts`) kullanılarak istemci tarafında kontrol edilir; her durumda sunucunun Zod şeması
 yetkili kontroldür. Bir anahtar ayarlandıktan sonra etkinleştirme ekranı, boş bir giriş yerine maskelenmiş biçimi
 (`GET /api/radar/settings` yanıtındaki `supporterKeyMasked`) ve yeni bir anahtar yapıştırmak için bir
-"anahtarı değiştir" denetimini gösterir — ham anahtar hiçbir zaman yeniden görüntülenmez. Yukarıdaki iki
-talep/plan düğmesi, ilk etapta anahtar _edinmenin_ yolu olmaya devam eder; bu giriş ise hâlihazırda anahtarı
+"anahtarı değiştir" denetimini gösterir — ham anahtar hiçbir zaman yeniden görüntülenmez. Yukarıdaki isteğe bağlı
+talep/plan bağlantıları, operatör bunları yapılandırdığında, anahtarları veren sunucuya işaret eder; bu giriş ise hâlihazırda anahtarı
 bulunan bir operatörün onu etkinleştirdiği yerdir.
 
 ### Uçtan uca etkinleştirme ve yönlendirmeli kurulum
 
-Özel akış hizmeti ile bu OSS istemcisi arasında kasıtlı olarak dar bir sınır vardır: hizmet
+Kendi sunucunuzda barındırdığınız akış sunucusu ile bu OSS istemcisi arasında kasıtlı olarak dar bir sınır vardır: sunucu
 destekçi anahtarını sağlar ve doğrular; yerel Pusula kurulumu ise anahtarı şifreler,
 imzalı yapıtları sunucu tarafında eşitler ve sağlayıcı kurulumuna rehberlik eder. Destekli doğrulama sırası şöyledir:
 
-1. Katılımcı talebi, planlar/ödeme, kurtarma süreci veya yetkili bir özel sunucu operatörü üzerinden yeni düzenlenmiş ya da kurtarılmış bir anahtar edinin. Ham anahtarı günlüklere, ekran görüntülerine, sorun yorumlarına veya komut satırı bağımsız değişkenlerine yapıştırmayın.
-2. Yerel Pusula kurulumunda `RADAR_ENABLED` özellik bayrağını etkinleştirin. Bu işlem kullanıcı arayüzünü görünür hâle getirir ancak ayrı katılım tercihi kaydedilene kadar ağ etkinliği başlatmaz.
+1. Akış sunucunuzdan (talep akışı, planlar sayfası, kurtarma süreci veya operatörünün manuel tahsisi yoluyla) bir anahtar edinin. Ham anahtarı günlüklere, ekran görüntülerine, sorun yorumlarına veya komut satırı bağımsız değişkenlerine yapıştırmayın.
+2. O sunucu için `RADAR_FEED_URL` (ve eşleşen `RADAR_FEED_PUBKEY`) değerini ayarlayın, ardından yerel Pusula kurulumunda `RADAR_ENABLED` özellik bayrağını etkinleştirin. Bu işlem kullanıcı arayüzünü görünür hâle getirir ancak ayrı katılım tercihi kaydedilene kadar ağ etkinliği başlatmaz.
 3. `/dashboard/radar` sayfasını açın, anahtarı yapıştırın ve etkinleştirin. Tarayıcı, `{ optIn: true, supporterKey }` ile tek bir yerel `POST /api/radar/settings` isteği gönderir; anahtar yerel olarak şifrelenir ve yanıt yalnızca `omr_****<last4>` değerini içerir.
 4. Etkinleştirme ekranının katalog eşitlemesini çalıştırmasına izin verin veya **Şimdi eşitle** seçeneğini belirleyin. Sayfanın `live` durumunu, bir akış sürümünü ve bir getirme zamanını bildirdiğini doğrulayın. Kimliği doğrulanmış yerel tanılama için `GET /api/radar/status`, anahtarı döndürmeden katılım/anahtar durumunu ve dört önbellek durumunu bildirir. `POST /api/radar/sync-all`; kataloğu, yönlendirmeleri, teklifleri ve Intel'i açıkça yenileyebilir.
 5. `/dashboard/radar/setup?provider=<provider>` sayfasını açın. Sağlayıcıya ait kimlik bilgisi URL'sini izleyin, **API anahtarı ekle** seçeneğini belirleyin, gerçek sağlayıcı formu üzerinden kaydedin, rehbere dönün ve **Bağlantıyı test et** işlemini çalıştırın. Rehber, normal `/api/providers` ve `/api/providers/<connection-id>/test` rotalarını kullanır; paralel bir Radar kimlik bilgisi oluşturmaz.
 6. En az iki uyumlu sağlayıcı bağlantısı etkin olduktan sonra `/dashboard/radar/combos` sayfasını açın. Önerilen aileyi inceleyin ve mevcut combo API'si üzerinden combo'yu oluşturun. Teklifler ve Intel, yalnızca canlı kullanıma yönelik ayrı imzalı önbellekler olarak kalır ve kendilerine ayrılmış Radar sayfalarında kontrol edilebilir.
 7. `/dashboard/radar` ve kurulum sayfasını yeniden yükleyin. Katılım tercihi, maskelenmiş anahtar durumu, doğrulanmış önbellek, kaydedilmiş sağlayıcı bağlantısı ve test işlemi yeniden yüklemeden sonra korunmalıdır. Kanıtı yalnızca ham anahtar ve sağlayıcı kimlik bilgisi artık görünür olmadığında kaydedin.
 
-Bir anahtarın kaydedilmesi tek başına canlı yetkilendirmenin kanıtı değildir. Kanıt; özel hizmetin `GET /v1/license/check` sonucunun, OSS kataloğunun sunduğu `live` katmanının, doğrulanmış imzalı bir önbelleğin ve gerçek sağlayıcı bağlantısı/test akışının birleşimidir. Geçersiz, süresi dolmuş veya iptal edilmiş bir anahtar, kataloğu güvenli biçimde `community` düzeyine düşürür; başarılı bir canlı anahtar doğrulaması olarak bildirilmemelidir.
+Bir anahtarın kaydedilmesi tek başına canlı yetkilendirmenin kanıtı değildir. Kanıt; akış sunucunuzun lisans denetiminin (referans sözleşmede `GET /v1/license/check`), OSS kataloğunun sunduğu `live` katmanının, doğrulanmış imzalı bir önbelleğin ve gerçek sağlayıcı bağlantısı/test akışının birleşimidir. Geçersiz, süresi dolmuş veya iptal edilmiş bir anahtar, kataloğu güvenli biçimde `community` düzeyine düşürür; başarılı bir canlı anahtar doğrulaması olarak bildirilmemelidir.
 
 ### Özel yönetici paneli bağlantısı
 
@@ -286,16 +293,16 @@ Doğrulama için kullanılan ortak anahtar `src/lib/radar/pinnedKeys.ts` içinde
 anahtar, rotasyon öncesinde başa eklenebilir ve önceki anahtarla imzalanmış eski
 önbelleğe alınmış akışlar yeniden eşitlenene kadar geçerli kalır.
 
-### Çatallara uygun env geçersiz kılmaları
+### Akış sunucusu env değişkenleri (yerleşik ana makine yok)
 
-İki env değişkeni, çatalların ve kendi barındırdığı kurulumların istemciyi varsayılan
-Pusula hizmeti yerine kendi akışlarına yönlendirmesine olanak tanır — aşağıdaki
+Radar hiçbir akış ana makinesi olmadan dağıtılır. İki env değişkeni istemciyi sizin işlettiğiniz akış
+sunucusuna yönlendirir — aşağıdaki
 [Bir akış nasıl kendi sunucunuzda barındırılır](#how-to-self-host-a-feed) bölümüne bakın:
 
-| Değişken            | Amaç                                                                                                                 |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `RADAR_FEED_URL`    | Akış temel URL'sini geçersiz kılar (varsayılan: `https://radar.pusula.online`).                                   |
-| `RADAR_FEED_PUBKEY` | Sabitlenmiş ortak anahtarı geçersiz kılar (base64-DER SPKI veya PEM) ve yerleşik diziyi bu tek anahtarla değiştirir. |
+| Değişken            | Amaç                                                                                                                                                                                                                                                                                              |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `RADAR_FEED_URL`    | Akış sunucunuzun mutlak http(s) temel URL'si, ör. `https://radar.example.com`. **Gerekli:** ayarlanmadığı sürece her eşitleme tek bir `Radar feed URL not configured; skipping` satırı günlüğe yazar ve ağa dokunmadan `{ status: "not_configured" }` döndürür (`src/lib/radar/feedUrl.ts`). |
+| `RADAR_FEED_PUBKEY` | Sunucunuzun imzalamada kullandığı Ed25519 anahtar çiftinin açık yarısı (base64-DER SPKI veya PEM); sabitlenmiş anahtar dizisini bu tek anahtarla değiştirir.                                                                                                                                     |
 
 ### Sürüm alt sınırı
 
@@ -684,17 +691,17 @@ Tasarım gereği gevşek bağlantı:
 
 ## Bir feed'i kendi sunucunuzda barındırma
 
-Katalog üzerinde tam denetim isteyen bir fork veya kendi sunucusunda barındıran taraf, istemci koduna dokunmadan kendi feed hizmetini çalıştırabilir:
+Radar yalnızca sizin çalıştırdığınız bir akış sunucusuyla konuşur — barındırılan bir hizmet veya geri dönülecek varsayılan bir ana makine yoktur. Böyle bir sunucuyu ayağa kaldırmak istemci kodunda değişiklik gerektirmez:
 
 1. `RadarFeedSchema` (`src/lib/radar/feedSchema.ts`) şemasını karşılayan bir JSON gövdesi döndüren `GET /v1/catalog/latest` endpoint'ini sunun — üst düzeyde `feed:
 "pusula-radar"`, `schemaVersion: 2`, `version`, `tier`, `providers`, `models`,
    `quirks` ve `totals`. `x-pusula-radar-schema: 2` başlığını dikkate alın; geçiş uyumlu bir sunucu, bu başlık olmadan gelen istekleri varsayılan olarak ayrı imzalanmış bir v1 artefaktına yönlendirmelidir.
 2. Yanıtın birebir baytlarını bir Ed25519 anahtar çiftiyle imzalayın ve base64 imzayı `x-pusula-feed-signature` yanıt başlığında döndürün.
-3. `RADAR_FEED_URL` değerini yeni temel URL'ye, `RADAR_FEED_PUBKEY` değerini ise eşleşen ortak anahtara (base64-DER SPKI veya PEM) ayarlayın — [ortam değişkeni referansına](../reference/ENVIRONMENT.md#27-radar-feed-self-hosting) bakın.
+3. `RADAR_FEED_URL` değerini sunucunun temel URL'sine (ör. `https://radar.example.com`), `RADAR_FEED_PUBKEY` değerini ise eşleşen ortak anahtara (base64-DER SPKI veya PEM) ayarlayın — [ortam değişkeni referansına](../reference/ENVIRONMENT.md#27-radar-feed-self-hosting) bakın. Sunucu destekçi anahtarı veriyorsa isteğe bağlı olarak `RADAR_CONTRIBUTOR_CLAIM_URL` / `RADAR_SUPPORTER_PLANS_URL` değerlerini aynı sunucudaki sayfalara ayarlayın; ayarlanmadıkları sürece pano bu düğmeleri gizler.
 4. `RADAR_ENABLED` değişkenini etkinleştirin ve `POST /api/radar/settings`
    (`{ optIn: true }`) aracılığıyla katılım sağlayın.
 
-Başka hiçbir kod değişikliği gerekmez — `verifyFeedBytes()` geçersiz kılmayı otomatik olarak algılar (`src/lib/radar/pinnedKeys.ts` içindeki `getFeedPublicKeys()`); sürüm karşılaştırması, şema doğrulaması ve birleştirme kuralları, kendi sunucunuzda barındırılan bir feed'e de aynı şekilde uygulanır.
+Başka hiçbir kod değişikliği gerekmez — `verifyFeedBytes()` anahtarı otomatik olarak algılar (`src/lib/radar/pinnedKeys.ts` içindeki `getFeedPublicKeys()`); sürüm karşılaştırması, şema doğrulaması ve birleştirme kuralları, kendi sunucunuzda barındırılan bir feed'e de aynı şekilde uygulanır.
 
 Yönlendirme bağlantıları (yukarıdaki [Yönlendirme bağlantıları (ücretsiz krediler)](#referral-links-free-credits) bölümüne bakın) ayrı ve isteğe bağlı bir artefakttır: yalnızca `/v1/catalog/latest` sunan bir fork da tamamen çalışır — `syncRadarReferrals()`, `/v1/referrals/latest` üzerinden bir `404` aldığında `{ status: "error" }` durumuna düşer ve önbellek boş kalır; böylece `GET /api/radar/referrals`, sayfanın geri kalanının başarısız olmasına neden olmak yerine `{ fixed: [], campaigns: [], tier: null }` döndürmeye devam eder. Yönlendirme bağlantıları da sunmak için `RadarReferralsFeedSchema` (`src/lib/radar/referralsFeedSchema.ts`) şemasını karşılayan `GET /v1/referrals/latest` endpoint'ini sunun ve bunu katalog feed'iyle aynı Ed25519 anahtar çiftiyle imzalayın.
 

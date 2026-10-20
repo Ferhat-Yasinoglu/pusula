@@ -15,7 +15,7 @@ Agent Skills فایلهای ساختاریافتهٔ SKILL.md هستند که ب
 
 این کاتالوگ شامل **45 مهارت عامل** است (23 مورد REST API + 21 مورد CLI + 1 گردشکار پیکربندی). هر مهارت دارای موارد زیر است:
 
-- یک **شناسهٔ متعارف** (`omni-auth`، `cli-serve` و غیره)
+- یک **شناسهٔ متعارف** (`pusula-auth`، `cli-serve` و غیره)
 - یک فایل **SKILL.md** در `skills/{id}/SKILL.md` با فرادادهٔ YAML (`name`، `description`) + بدنهٔ غنی Markdown
 - **نقاط پایانی REST** (مهارتهای API) یا **زیرفرمانهای CLI** (مهارتهای CLI) که از مشخصات OpenAPI و رجیستری CLI استخراج شدهاند
 - یک **نشانی خام GitHub** برای دریافت زنده: `https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/refs/heads/main/skills/{id}/SKILL.md`
@@ -53,7 +53,7 @@ src/lib/a2a/skills/listCapabilities.ts        — مهارت A2A: list-capabilit
 
 ```markdown
 ---
-name: omni-providers
+name: pusula-providers
 description: "اتصالهای ارائهدهندگان را مدیریت کنید: افزودن، آزمایش، چرخش و حذف اعتبارنامهها."
 ---
 
@@ -82,7 +82,7 @@ description: "اتصالهای ارائهدهندگان را مدیریت کنی
 
 مولد هنگام بازتولید، محتوای میان `<!-- skill:custom-start -->` و `<!-- skill:custom-end -->` را حفظ میکند. ده مهارت دارای بلوکهای سفارشی گردآوریشده هستند:
 
-`omni-mcp`، `omni-compression`، `cli-providers`، `cli-eval`، `omni-agents-a2a`، `omni-combos-routing`، `omni-auth`، `omni-resilience`، `omni-inference`، `cli-serve`.
+`pusula-mcp`، `pusula-compression`، `cli-providers`، `cli-eval`، `pusula-agents-a2a`، `pusula-combos-routing`، `pusula-auth`، `pusula-resilience`، `pusula-inference`، `cli-serve`.
 
 ---
 
@@ -105,7 +105,7 @@ curl "http://localhost:20128/api/agent-skills?category=api"
 مثال — دریافت یک SKILL.md:
 
 ```bash
-curl -H "Accept: text/markdown" "http://localhost:20128/api/agent-skills/omni-providers/raw"
+curl -H "Accept: text/markdown" "http://localhost:20128/api/agent-skills/pusula-providers/raw"
 ```
 
 ---
@@ -150,28 +150,28 @@ curl -H "Accept: text/markdown" "http://localhost:20128/api/agent-skills/omni-pr
 
 | شناسه                  | حوزه            | نقطه ورود                         |
 | :--------------------- | :-------------- | :-------------------------------- |
-| `omni-auth`            | auth            | احراز هویت و مدیریت نشست          |
-| `omni-providers`       | providers       | مدیریت اتصال ارائهدهنده           |
-| `omni-models`          | models          | کاتالوگ مدل و قابلیتها            |
-| `omni-combos-routing`  | combos-routing  | راهبردهای مسیریابی ترکیبی         |
-| `omni-api-keys`        | api-keys        | مدیریت کلید API                   |
-| `omni-usage-logs`      | usage-logs      | گزارشهای استفاده و هزینه          |
-| `omni-budget`          | budget          | محافظهای بودجه                    |
-| `omni-settings`        | settings        | تنظیمات سراسری                    |
-| `omni-proxies`         | proxies         | مدیریت مخزن پراکسی                |
-| `omni-cache`           | cache           | حافظه نهان معنایی و پرامپت        |
-| `omni-compression`     | compression     | موتورهای فشردهسازی زمینه          |
-| `omni-context-rtk`     | context-rtk     | فشردهسازی RTK                     |
-| `omni-resilience`      | resilience      | قطعکنندههای مدار و دورههای انتظار |
-| `omni-cli-tools`       | cli-tools       | پراکسی REST ابزارهای CLI          |
-| `omni-tunnels`         | tunnels         | مدیریت تونل                       |
-| `omni-sync-cloud`      | sync-cloud      | همگامسازی ابری                    |
-| `omni-db-backups`      | db-backups      | پشتیبانگیری از پایگاه داده        |
-| `omni-webhooks`        | webhooks        | توزیعکننده رویداد وبهوک           |
-| `omni-mcp`             | mcp             | سرور MCP (110 ابزار، 3 انتقال)    |
-| `omni-agents-a2a`      | agents-a2a      | پروتکل عامل A2A                   |
-| `omni-version-manager` | version-manager | مدیریت نسخه و بهروزرسانی          |
-| `omni-inference`       | inference       | استنتاج مستقیم / تکمیلها          |
+| `pusula-auth`            | auth            | احراز هویت و مدیریت نشست          |
+| `pusula-providers`       | providers       | مدیریت اتصال ارائهدهنده           |
+| `pusula-models`          | models          | کاتالوگ مدل و قابلیتها            |
+| `pusula-combos-routing`  | combos-routing  | راهبردهای مسیریابی ترکیبی         |
+| `pusula-api-keys`        | api-keys        | مدیریت کلید API                   |
+| `pusula-usage-logs`      | usage-logs      | گزارشهای استفاده و هزینه          |
+| `pusula-budget`          | budget          | محافظهای بودجه                    |
+| `pusula-settings`        | settings        | تنظیمات سراسری                    |
+| `pusula-proxies`         | proxies         | مدیریت مخزن پراکسی                |
+| `pusula-cache`           | cache           | حافظه نهان معنایی و پرامپت        |
+| `pusula-compression`     | compression     | موتورهای فشردهسازی زمینه          |
+| `pusula-context-rtk`     | context-rtk     | فشردهسازی RTK                     |
+| `pusula-resilience`      | resilience      | قطعکنندههای مدار و دورههای انتظار |
+| `pusula-cli-tools`       | cli-tools       | پراکسی REST ابزارهای CLI          |
+| `pusula-tunnels`         | tunnels         | مدیریت تونل                       |
+| `pusula-sync-cloud`      | sync-cloud      | همگامسازی ابری                    |
+| `pusula-db-backups`      | db-backups      | پشتیبانگیری از پایگاه داده        |
+| `pusula-webhooks`        | webhooks        | توزیعکننده رویداد وبهوک           |
+| `pusula-mcp`             | mcp             | سرور MCP (110 ابزار، 3 انتقال)    |
+| `pusula-agents-a2a`      | agents-a2a      | پروتکل عامل A2A                   |
+| `pusula-version-manager` | version-manager | مدیریت نسخه و بهروزرسانی          |
+| `pusula-inference`       | inference       | استنتاج مستقیم / تکمیلها          |
 
 ### مهارتهای CLI (21)
 
@@ -216,7 +216,7 @@ curl -H "Accept: text/markdown" "http://localhost:20128/api/agent-skills/omni-pr
 curl "http://your-pusula/api/agent-skills" | jq '.skills[] | {id, name, category}'
 
 # دریافت SKILL.md برای تزریق زمینه
-curl "http://your-pusula/api/agent-skills/omni-providers/raw" > omni-providers.md
+curl "http://your-pusula/api/agent-skills/pusula-providers/raw" > pusula-providers.md
 ```
 
 ### 2. کشف از طریق MCP
@@ -247,7 +247,7 @@ table = resp.json()["result"]["artifacts"][0]["content"]
 
 ```bash
 BASE="https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/refs/heads/main/skills"
-curl "${BASE}/omni-providers/SKILL.md"
+curl "${BASE}/pusula-providers/SKILL.md"
 ```
 
 ---
@@ -273,14 +273,14 @@ curl -X POST http://localhost:20128/api/agent-skills/generate \
 curl -X POST http://localhost:20128/api/agent-skills/generate \
   -H "Authorization: Bearer <admin-key>" \
   -H "Content-Type: application/json" \
-  -d '{"dryRun":false,"onlyIds":["omni-providers","cli-serve"]}'
+  -d '{"dryRun":false,"onlyIds":["pusula-providers","cli-serve"]}'
 ```
 
 پاسخ مولد یک `GeneratorReport` است:
 
 ```json
 {
-  "generated": ["omni-providers", "cli-serve"],
+  "generated": ["pusula-providers", "cli-serve"],
   "unchanged": [],
   "pruned": [],
   "orphansDetected": [],

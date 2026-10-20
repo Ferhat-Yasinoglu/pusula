@@ -25,7 +25,7 @@ const WORKFLOWS = join(ROOT, ".github/workflows");
 
 // The exact runs-on expression npm-publish.yml used when it broke.
 const VPS_EXPR =
-  "${{ (vars.USE_VPS_RUNNER == 'true' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)) && fromJSON('[\"self-hosted\",\"omni-release\"]') || 'ubuntu-latest' }}";
+  "${{ (vars.USE_VPS_RUNNER == 'true' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)) && fromJSON('[\"self-hosted\",\"pusula-release\"]') || 'ubuntu-latest' }}";
 
 function workflow(runsOn: string, run: string, extra = ""): string {
   return [
@@ -44,7 +44,7 @@ function workflow(runsOn: string, run: string, extra = ""): string {
 
 test("classifyRunsOn: literal, array, object-with-labels and the fromJSON expression are self-hosted", () => {
   assert.equal(classifyRunsOn("self-hosted"), "self-hosted");
-  assert.equal(classifyRunsOn(["self-hosted", "omni-release"]), "self-hosted");
+  assert.equal(classifyRunsOn(["self-hosted", "pusula-release"]), "self-hosted");
   assert.equal(classifyRunsOn({ group: "Default", labels: ["self-hosted"] }), "self-hosted");
   assert.equal(classifyRunsOn(VPS_EXPR), "self-hosted");
 });
@@ -74,7 +74,7 @@ test("also catches the literal label and the --provenance-file form", () => {
   );
   assert.equal(
     findProvenanceOnSelfHosted(
-      workflow("[self-hosted, omni-release]", "npm publish --provenance-file=./p.json")
+      workflow("[self-hosted, pusula-release]", "npm publish --provenance-file=./p.json")
     ).length,
     0,
     "--provenance-file is a different flag (a pre-built bundle) and is not what the registry rejects"

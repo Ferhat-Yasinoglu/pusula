@@ -1500,7 +1500,7 @@ export const agentSkillsListTool: McpToolDefinition<
 
 // --- pusula_agent_skills_get ---
 export const agentSkillsGetInput = z.object({
-  id: z.string().describe("Canonical skill ID (e.g. 'omni-providers', 'cli-serve')"),
+  id: z.string().describe("Canonical skill ID (e.g. 'pusula-providers', 'cli-serve')"),
 });
 
 export const agentSkillsGetOutput = z.object({

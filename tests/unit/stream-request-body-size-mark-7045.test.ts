@@ -1,5 +1,5 @@
 // PR #7045 (@oyi77, performance.mark/measure SSE instrumentation) regression coverage +
-// fix for a review-flagged leak: the "omni-request-body-size" mark is created on every
+// fix for a review-flagged leak: the "pusula-request-body-size" mark is created on every
 // createSSEStream() call with a fixed name and, before this fix, was never cleared —
 // each call added another entry to Node's global performance timeline, unbounded over a
 // long-running server's lifetime. It must now be observable (via PerformanceObserver,
@@ -62,7 +62,7 @@ test("createSSEStream emits a request-body-size mark with the JSON byte length a
   const observedMarks = [];
   const originalMark = performance.mark.bind(performance);
   t.mock.method(performance, "mark", (name, options) => {
-    if (name === "omni-request-body-size") observedMarks.push(options?.detail);
+    if (name === "pusula-request-body-size") observedMarks.push(options?.detail);
     return originalMark(name, options);
   });
 
@@ -82,7 +82,7 @@ test("createSSEStream emits a request-body-size mark with the JSON byte length a
 });
 
 test("createSSEStream clears the request-body-size mark immediately (no unbounded growth)", async () => {
-  performance.clearMarks("omni-request-body-size");
+  performance.clearMarks("pusula-request-body-size");
 
   const body = { messages: [{ role: "user", content: "hello" }] };
   for (let i = 0; i < 5; i++) {
@@ -96,14 +96,14 @@ test("createSSEStream clears the request-body-size mark immediately (no unbounde
   }
 
   assert.equal(
-    performance.getEntriesByName("omni-request-body-size").length,
+    performance.getEntriesByName("pusula-request-body-size").length,
     0,
     "the mark must not accumulate across repeated calls"
   );
 });
 
 test("createSSEStream skips the mark when body is absent (bodySize stays 0)", async () => {
-  performance.clearMarks("omni-request-body-size");
+  performance.clearMarks("pusula-request-body-size");
 
   await drainSSEStream({
     mode: "passthrough",
@@ -113,7 +113,7 @@ test("createSSEStream skips the mark when body is absent (bodySize stays 0)", as
   });
 
   assert.equal(
-    performance.getEntriesByName("omni-request-body-size").length,
+    performance.getEntriesByName("pusula-request-body-size").length,
     0,
     "no mark expected when there is no request body"
   );

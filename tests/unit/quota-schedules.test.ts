@@ -10,7 +10,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const testDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-quota-schedules-"));
+const testDataDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-quota-schedules-"));
 process.env.DATA_DIR = testDataDir;
 
 const {

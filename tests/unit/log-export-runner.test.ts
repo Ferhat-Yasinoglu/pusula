@@ -5,7 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import { generateKeyPairSync } from "node:crypto";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omni-log-export-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-log-export-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.STORAGE_ENCRYPTION_KEY = "log-export-runner-test-key";
 

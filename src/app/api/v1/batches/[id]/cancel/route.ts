@@ -30,7 +30,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   }
 
   // per-key operator policy (endpoint allowlist, schedule, usage cap, rate
-  // limit) — LEDGER-2 of the omni-code-sec 2026-09-21 run / #14481. Called
+  // limit) — LEDGER-2 of the pusula-code-sec 2026-09-21 run / #14481. Called
   // UNCONDITIONALLY, exactly like batches/delete-completed/route.ts: a bare
   // `x-api-key`/`x-goog-api-key` credential (no anthropic-version, non-Claude
   // UA) is accepted by the CLIENT_API auth layer but ignored by
@@ -49,7 +49,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   // A key resolved only via the ungated x-api-key/x-goog-api-key transport
   // never sets scope.apiKeyId — fall back to the id enforceApiKeyPolicy()
   // independently resolved, so that key can still cancel its own batch
-  // (LEDGER-27, omni-code-sec round 3).
+  // (LEDGER-27, pusula-code-sec round 3).
   const effectiveApiKeyId = resolveEffectiveApiKeyId(scope, policy.apiKeyInfo);
 
   // The shared 3-way rule: the operator's dashboard (session auth) may cancel

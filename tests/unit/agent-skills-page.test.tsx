@@ -50,7 +50,7 @@ vi.mock("next/dynamic", () => ({
 
 function makeSkill(overrides: Partial<AgentSkill> = {}): AgentSkill {
   return {
-    id: "omni-providers",
+    id: "pusula-providers",
     name: "Providers",
     description: "Manage provider connections and API keys.",
     category: "api",
@@ -58,8 +58,8 @@ function makeSkill(overrides: Partial<AgentSkill> = {}): AgentSkill {
     icon: "hub",
     endpoints: ["POST /api/providers", "GET /api/providers"],
     rawUrl:
-      "https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/refs/heads/main/skills/omni-providers/SKILL.md",
-    githubUrl: "https://github.com/Ferhat-Yasinoglu/pusula/blob/main/skills/omni-providers/SKILL.md",
+      "https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/refs/heads/main/skills/pusula-providers/SKILL.md",
+    githubUrl: "https://github.com/Ferhat-Yasinoglu/pusula/blob/main/skills/pusula-providers/SKILL.md",
     ...overrides,
   };
 }
@@ -69,7 +69,7 @@ function make42Skills(): AgentSkill[] {
   for (let i = 0; i < 22; i++) {
     skills.push(
       makeSkill({
-        id: `omni-skill-${i}`,
+        id: `pusula-skill-${i}`,
         name: `API Skill ${i}`,
         category: "api",
       })
@@ -260,7 +260,7 @@ describe("AgentSkillsPageClient", () => {
   it("clicking a card triggers preview fetch after 200ms debounce", async () => {
     vi.useFakeTimers();
     const skills = make42Skills();
-    const fetchMock = mockFetch(skills, FULL_COVERAGE, "# omni-skill-0 doc");
+    const fetchMock = mockFetch(skills, FULL_COVERAGE, "# pusula-skill-0 doc");
     vi.stubGlobal("fetch", fetchMock);
 
     const { AgentSkillsPageClient } =
@@ -624,7 +624,7 @@ describe("SkillPreviewPane", () => {
     await act(async () => {
       localRoot.render(
         <SkillPreviewPane
-          skillId="omni-providers"
+          skillId="pusula-providers"
           markdown="# Providers\nContent here."
           loading={false}
         />
@@ -644,7 +644,7 @@ describe("SkillPreviewPane", () => {
     const container = makeContainer();
     const localRoot = createRoot(container);
     await act(async () => {
-      localRoot.render(<SkillPreviewPane skillId="omni-providers" markdown="" loading={false} />);
+      localRoot.render(<SkillPreviewPane skillId="pusula-providers" markdown="" loading={false} />);
     });
 
     // markdown is "" (falsy) — should show error state

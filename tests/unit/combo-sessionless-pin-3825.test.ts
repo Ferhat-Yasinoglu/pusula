@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-// Regression for #3825: PR #3399 disabled the <omniModel>-tag history pinning and
+// Regression for #3825: PR #3399 disabled the <pusulaModel>-tag history pinning and
 // replaced it with a server-side session pin in combo.ts that is gated on
 // `relayOptions?.sessionId`. Most OpenAI-compatible clients send no session id, so
 // the read/write never fired → combos lost model stickiness → every turn re-ran the
@@ -131,7 +131,7 @@ test("context_cache_protection ON + NO sessionId: combo re-pins to the same mode
   );
 });
 
-test("context_cache_protection OFF + NO sessionId: no pin, strategy re-runs each turn, no <omniModel> tag (#3825 scope guard)", async () => {
+test("context_cache_protection OFF + NO sessionId: no pin, strategy re-runs each turn, no <pusulaModel> tag (#3825 scope guard)", async () => {
   const calls: string[] = [];
   const forwardedContents: string[] = [];
   // Identical priority+failover setup as the positive case, but with the toggle OFF.
@@ -178,7 +178,7 @@ test("context_cache_protection OFF + NO sessionId: no pin, strategy re-runs each
     "with protection OFF the combo must re-run strategy each turn (no sessionless pin)"
   );
   assert.ok(
-    forwardedContents.every((c) => !c.includes("<omniModel>")),
-    "no <omniModel> tag may be injected into the forwarded body (#454/#3399)"
+    forwardedContents.every((c) => !c.includes("<pusulaModel>")),
+    "no <pusulaModel> tag may be injected into the forwarded body (#454/#3399)"
   );
 });

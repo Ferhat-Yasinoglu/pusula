@@ -36,7 +36,7 @@ test("system sidebar items: monitoring has activity at top then logs/audit/syste
 });
 
 test("primary sidebar items place limits after cache", () => {
-  const items = sectionItems("omni-proxy");
+  const items = sectionItems("pusula-proxy");
   assert.deepEqual(
     items.map((item) => item.id),
     [
@@ -82,9 +82,9 @@ test("primary sidebar items place limits after cache", () => {
 
 test("context sidebar section sits between primary and cli", () => {
   const sectionIds = sidebarVisibility.SIDEBAR_SECTIONS.map((section) => section.id);
-  assert.deepEqual(sectionIds.slice(0, 4), ["home", "omni-proxy", "analytics", "costs"]);
+  assert.deepEqual(sectionIds.slice(0, 4), ["home", "pusula-proxy", "analytics", "costs"]);
 
-  const items = sectionItems("omni-proxy");
+  const items = sectionItems("pusula-proxy");
   assert.deepEqual(
     items
       .filter((item) => item.id.startsWith("context-"))
@@ -164,8 +164,8 @@ test("plugins has a discoverable sidebar entry (#3656 follow-up)", async () => {
   assert.match(pluginsPage, /scanForPlugins|installedTab|fetchPlugins/i);
 });
 
-test("model catalog is available from the OmniProxy sidebar and can be hidden", () => {
-  const item = sectionItems("omni-proxy").find((candidate) => candidate.id === "model-catalog");
+test("model catalog is available from the PusulaProxy sidebar and can be hidden", () => {
+  const item = sectionItems("pusula-proxy").find((candidate) => candidate.id === "model-catalog");
   assert.ok(item, "expected the model catalog sidebar item to exist");
   assert.equal(item.href, "/dashboard/models");
   assert.equal(sidebarVisibility.HIDEABLE_SIDEBAR_ITEM_IDS.includes("model-catalog"), true);

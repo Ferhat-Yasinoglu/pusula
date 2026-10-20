@@ -5,8 +5,8 @@
  *  1. All 46 skill IDs from the catalog have a skills/{id}/ folder with SKILL.md.
  *  2. Zero pusula-* folders remain (post-prune: old pusula-* skill dirs were removed).
  *  3. 14 specific IDs have <!-- skill:custom-start --> ... <!-- skill:custom-end --> blocks:
- *     omni-mcp, omni-compression, cli-providers, cli-eval, omni-agents-a2a,
- *     omni-combos-routing, omni-auth, omni-resilience, omni-inference, cli-serve.
+ *     pusula-mcp, pusula-compression, cli-providers, cli-eval, pusula-agents-a2a,
+ *     pusula-combos-routing, pusula-auth, pusula-resilience, pusula-inference, cli-serve.
  *
  * Does NOT spin up a server.
  */
@@ -24,18 +24,18 @@ const ALL_IDS = getCatalog().map((skill) => skill.id);
 // IDs that must have a custom block
 const CUSTOM_BLOCK_IDS = [
   "cli-skill-collector",
-  "omni-mcp",
-  "omni-compression",
+  "pusula-mcp",
+  "pusula-compression",
   "cli-providers",
   "cli-eval",
-  "omni-agents-a2a",
-  "omni-combos-routing",
-  "omni-auth",
-  "omni-resilience",
-  "omni-inference",
+  "pusula-agents-a2a",
+  "pusula-combos-routing",
+  "pusula-auth",
+  "pusula-resilience",
+  "pusula-inference",
   "cli-serve",
-  "omni-providers",
-  "omni-settings",
+  "pusula-providers",
+  "pusula-settings",
   "config-codex-cli",
   "ponytail",
 ] as const;

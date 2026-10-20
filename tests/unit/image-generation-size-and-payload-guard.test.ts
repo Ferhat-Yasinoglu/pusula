@@ -16,7 +16,7 @@ test.after(() => {
   core.resetDbInstance();
 });
 
-// omni-code-review 2026-09-21_release-v3.8.51_vs_main_e2e-areas LEDGER-12 — `hasUsableImage`
+// pusula-code-review 2026-09-21_release-v3.8.51_vs_main_e2e-areas LEDGER-12 — `hasUsableImage`
 // (fetchImageEndpoint): a 2xx whose items carry no usable `b64_json`/`url` must surface as a
 // retryable 502 so image combos fall back, on both the generation and the edit path.
 function mockOpenAICompatibleUpstream(payload: unknown) {
@@ -111,7 +111,7 @@ test("handleOpenAIImageEdit applies the same usable-image gate to the edit path"
   }
 });
 
-// omni-code-review 2026-09-21_release-v3.8.51_vs_main_e2e-areas LEDGER-6 (+ round-2
+// pusula-code-review 2026-09-21_release-v3.8.51_vs_main_e2e-areas LEDGER-6 (+ round-2
 // LEDGER-47/48/54/58/59/60) — `image_size` is forwarded to Antigravity's
 // `imageConfig.imageSize` only when the caller supplied it; an unrecognised string is clamped
 // to "1K" WITH a warn line, everything else leaves the key out so the upstream default

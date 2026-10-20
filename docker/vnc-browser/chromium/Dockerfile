@@ -10,7 +10,7 @@
 #
 # SECURITY (#12571): 9223 is gated by a per-session shared secret
 # (CDP_BRIDGE_TOKEN, injected via `-e` by src/lib/vncSession/service.ts) that
-# every caller must present as an `X-Omni-Cdp-Token` header before the bridge
+# every caller must present as an `X-Pusula-Cdp-Token` header before the bridge
 # forwards a single byte to Chromium — see cdp-bridge.py for the check. The
 # container also runs on a dedicated Docker network (not the default bridge)
 # so sibling containers can't reach 9223 either. Do not remove either control

@@ -9,7 +9,7 @@ type Section = { id: string; children: (Item | Group)[] };
 function makeSections(): Section[] {
   return [
     {
-      id: "omni-proxy",
+      id: "pusula-proxy",
       children: [
         { id: "combos", label: "Combos" },
         { id: "providers", label: "Providers" },
@@ -42,7 +42,7 @@ test("empty/whitespace query returns all sections unchanged (identity-ish)", () 
 test("filters flat items by case-insensitive substring match on label", () => {
   const result = filterSidebarSectionsByQuery(makeSections(), "combo");
   assert.equal(result.length, 1);
-  assert.equal(result[0].id, "omni-proxy");
+  assert.equal(result[0].id, "pusula-proxy");
   assert.deepEqual(
     result[0].children.map((c) => ("label" in c ? c.id : c.id)),
     ["combos"]

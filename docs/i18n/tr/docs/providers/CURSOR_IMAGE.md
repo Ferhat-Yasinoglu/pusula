@@ -63,7 +63,7 @@ tutmalı veya Cursor görsel trafiğini tek bir örneğe yönlendirmelidir.
 
 ```bash
 curl -sS https://<host>/v1/images/generations \
-  -H "Authorization: Bearer <omni-api-key>" \
+  -H "Authorization: Bearer <pusula-api-key>" \
   -H "Content-Type: application/json" \
   -d '{"model":"cursor/auto","prompt":"a lantern in fog","size":"1024x1024"}'
 ```

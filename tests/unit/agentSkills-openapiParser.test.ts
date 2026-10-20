@@ -15,7 +15,7 @@ const { parseOpenapi, getEndpointsForArea } =
  * changes CWD to it, and returns a cleanup function.
  */
 function withFixtureOpenapi(yamlContent: string): { cleanup: () => void } {
-  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-openapi-test-"));
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-openapi-test-"));
   // openapiParser reads docs/openapi.yaml (consolidated location since #4781,
   // previously docs/reference/openapi.yaml) — the fixture must mirror that path.
   const docsDir = path.join(tmpDir, "docs");
@@ -180,7 +180,7 @@ test("parseOpenapi() OpenapiPath entries have required fields", () => {
 });
 
 test("parseOpenapi() throws if openapi.yaml is missing", () => {
-  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "omni-openapi-missing-"));
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-openapi-missing-"));
   const originalCwd = process.cwd();
   process.chdir(tmpDir);
   try {

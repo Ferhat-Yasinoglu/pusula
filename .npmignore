@@ -102,7 +102,7 @@ _tasks/
 .idea/
 .config/
 .data/
-.omnivscodeagent/
+.pusulavscodeagent/
 .omc/
 *.sqlite-*
 *.tsbuildinfo

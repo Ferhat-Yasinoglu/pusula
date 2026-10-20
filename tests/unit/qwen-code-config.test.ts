@@ -166,13 +166,13 @@ test("migrates matching legacy security.auth credentials out of settings.json", 
         auth: {
           selectedType: "openai",
           apiKey: "sk-legacy-secret",
-          baseUrl: "http://omni-host/v1",
+          baseUrl: "http://pusula-host/v1",
           other: true,
         },
       },
       model: { name: "old-model", temperature: 0.2 },
     },
-    { baseUrl: "http://omni-host", model: "new-model" }
+    { baseUrl: "http://pusula-host", model: "new-model" }
   );
 
   assert.deepEqual(settings.security, {
@@ -180,7 +180,7 @@ test("migrates matching legacy security.auth credentials out of settings.json", 
   });
   assert.deepEqual(settings.model, {
     name: "new-model",
-    baseUrl: "http://omni-host/v1",
+    baseUrl: "http://pusula-host/v1",
     temperature: 0.2,
   });
   assert.equal(JSON.stringify(settings).includes("sk-legacy-secret"), false);
@@ -259,7 +259,7 @@ test("reset removes only managed models and their active selection", () => {
         ],
       },
     },
-    { baseUrl: "http://omni-host", model: "managed-model" }
+    { baseUrl: "http://pusula-host", model: "managed-model" }
   );
 
   const reset = removeQwenCodeSettings(existing);
@@ -281,17 +281,17 @@ test("reset also removes matching deprecated security.auth credentials", () => {
       auth: {
         selectedType: "openai",
         apiKey: "sk-old-secret",
-        baseUrl: "http://omni-host/v1",
+        baseUrl: "http://pusula-host/v1",
       },
     },
-    model: { name: "managed", baseUrl: "http://omni-host/v1" },
+    model: { name: "managed", baseUrl: "http://pusula-host/v1" },
     modelProviders: {
       openai: [
         {
           id: "managed",
           name: "managed (Pusula)",
           envKey: "PUSULA_API_KEY",
-          baseUrl: "http://omni-host/v1",
+          baseUrl: "http://pusula-host/v1",
         },
       ],
     },
@@ -308,7 +308,7 @@ test("reset removes matching deprecated auth when the selected model is unrelate
       auth: {
         selectedType: "openai",
         apiKey: "sk-old-secret",
-        baseUrl: "http://omni-host/v1",
+        baseUrl: "http://pusula-host/v1",
       },
     },
     model: { name: "some-other-model", baseUrl: "https://other.example/v1" },
@@ -318,7 +318,7 @@ test("reset removes matching deprecated auth when the selected model is unrelate
           id: "managed",
           name: "managed (Pusula)",
           envKey: "PUSULA_API_KEY",
-          baseUrl: "http://omni-host/v1",
+          baseUrl: "http://pusula-host/v1",
         },
       ],
     },

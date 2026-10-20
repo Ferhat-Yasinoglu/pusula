@@ -180,7 +180,7 @@ Leerraum reduziert, Kommentare jedoch nicht entfernt. Der Durchlauf für bereini
 
 > **Hinweis — GCF/tabellarische Codierung ist eine separate Engine.** RTK enthält **nicht** den tabellarischen/spaltenorientierten
 > „GCF“-JSON-Encoder (Graph Compact Format). Dieser Encoder — der einen älteren
-> `omni-tabular`-Encoder ersetzt hat — befindet sich in der **headroom**-Engine
+> `pusula-tabular`-Encoder ersetzt hat — befindet sich in der **headroom**-Engine
 > (`open-sse/services/compression/engines/headroom/`, der eingebundene Codec liegt unter
 > `headroom/gcf/`). Er steht in keinem Zusammenhang mit der hier dokumentierten RTK-Filterpipeline.
 

@@ -17,13 +17,13 @@ test.beforeEach(() => {
 });
 
 test("dynamic root path traversal outside bounding box throws error", async () => {
-  const tmpBase = fs.mkdtempSync(path.join(os.tmpdir(), "omni-corpus-base-"));
+  const tmpBase = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-corpus-base-"));
   const subFolder = path.join(tmpBase, "allowed-sub");
   fs.mkdirSync(subFolder, { recursive: true });
 
   setLocalCorpusRoot(subFolder);
 
-  const outsideFolder = fs.mkdtempSync(path.join(os.tmpdir(), "omni-corpus-outside-"));
+  const outsideFolder = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-corpus-outside-"));
 
   assert.throws(() => getConfiguredLocalCorpusStatus(outsideFolder), /Path traversal forbidden/);
 
@@ -32,7 +32,7 @@ test("dynamic root path traversal outside bounding box throws error", async () =
 });
 
 test("path traversal check rejects sibling directory with matching string prefix", async () => {
-  const tmpBase = fs.mkdtempSync(path.join(os.tmpdir(), "omni-corpus-prefix"));
+  const tmpBase = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-corpus-prefix"));
   const siblingFolder = tmpBase + "-sibling";
   fs.mkdirSync(siblingFolder, { recursive: true });
 
@@ -45,7 +45,7 @@ test("path traversal check rejects sibling directory with matching string prefix
 });
 
 test("search and read configured local corpus support dynamic root within bounds", async () => {
-  const tmpBase = fs.mkdtempSync(path.join(os.tmpdir(), "omni-corpus-valid-"));
+  const tmpBase = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-corpus-valid-"));
   const sampleFile = path.join(tmpBase, "test.txt");
   fs.writeFileSync(sampleFile, "Line 1: searchable text\nLine 2: content");
 
@@ -68,7 +68,7 @@ test("search and read configured local corpus support dynamic root within bounds
 });
 
 test("LRU cache respects access order and PUSULA_CORPUS_CACHE_SIZE", async () => {
-  const tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), "omni-corpus-lru-root-"));
+  const tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-corpus-lru-root-"));
   setLocalCorpusRoot(tmpRoot);
 
   process.env.PUSULA_CORPUS_CACHE_SIZE = "2";

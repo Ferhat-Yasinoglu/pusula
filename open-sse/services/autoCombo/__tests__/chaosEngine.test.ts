@@ -5,7 +5,7 @@
  *   - runChaosPanel fans out to all models in parallel and collects each answer
  *   - a hung model is bounded by panelHardTimeoutMs (never stalls forever)
  *   - a failed model is reported as ok:false but does not break the panel
- *   - handleChaosChat emits the `omni-chaos-part` broadcast events + a final
+ *   - handleChaosChat emits the `pusula-chaos-part` broadcast events + a final
  *     OpenAI-style chunk carrying the primary model's answer
  *   - single-model chaos degrades to a direct handleSingleModel call
  */
@@ -85,11 +85,11 @@ describe("runChaosPanel", () => {
 });
 
 describe("serializeChaosPart", () => {
-  it("emits a comment + omni-chaos-part event envelope when custom event is requested", () => {
+  it("emits a comment + pusula-chaos-part event envelope when custom event is requested", () => {
     const part: ChaosPart = { model: "a/gpt", index: 0, ok: true, text: "hi" };
     const s = serializeChaosPart(part, false, true);
-    expect(s).toContain("event: omni-chaos-part");
-    expect(s).toContain('"type":"omni-chaos-part"');
+    expect(s).toContain("event: pusula-chaos-part");
+    expect(s).toContain('"type":"pusula-chaos-part"');
     expect(s).toContain('"model":"a/gpt"');
     expect(s).toContain(": chaos 0 ok a/gpt");
   });
@@ -100,8 +100,8 @@ describe("serializeChaosPart", () => {
     // comment line kept (ignored by every SSE parser by spec)
     expect(s).toContain(": chaos 0 ok a/gpt");
     // NO custom event/data — those break openai-node / @ai-sdk validators
-    expect(s).not.toContain("event: omni-chaos-part");
-    expect(s).not.toContain('"type":"omni-chaos-part"');
+    expect(s).not.toContain("event: pusula-chaos-part");
+    expect(s).not.toContain('"type":"pusula-chaos-part"');
     expect(s).not.toMatch(/^data:/m);
   });
 });
@@ -118,14 +118,14 @@ describe("handleChaosChat", () => {
     expect(res.headers.get("X-Pusula-Chaos-Panel")).toBe("2");
     const body = await res.text();
     // NO custom event by default — OpenAI-compatible parsers choke on it
-    expect(body.match(/event: omni-chaos-part/g)?.length ?? 0).toBe(0);
+    expect(body.match(/event: pusula-chaos-part/g)?.length ?? 0).toBe(0);
     expect(body.match(/^: chaos /gm)?.length ?? 0).toBe(2);
     // final canonical chunk carries the primary answer
     expect(body).toContain("ans-b/opus");
     expect(body).toContain("[DONE]");
   });
 
-  it("emits omni-chaos-part events when stream_options.include_chaos_parts is set", async () => {
+  it("emits pusula-chaos-part events when stream_options.include_chaos_parts is set", async () => {
     const handle = fakeHandle(async (model) => textResponse(`ans-${model}`));
     const res = await handleChaosChat({
       body: { messages: [], stream_options: { include_chaos_parts: true } },
@@ -133,7 +133,7 @@ describe("handleChaosChat", () => {
       handleSingleModel: handle,
     });
     const body = await res.text();
-    expect(body.match(/event: omni-chaos-part/g)?.length).toBe(2);
+    expect(body.match(/event: pusula-chaos-part/g)?.length).toBe(2);
     expect(body).toContain("ans-b/opus");
     expect(body).toContain("[DONE]");
   });
@@ -164,7 +164,7 @@ describe("handleChaosChat", () => {
     expect(res.status).toBe(200);
     const body = await res.text();
     // NO custom events by default (comments only), error conveyed via final chunk
-    expect(body.match(/event: omni-chaos-part/g)?.length ?? 0).toBe(0);
+    expect(body.match(/event: pusula-chaos-part/g)?.length ?? 0).toBe(0);
     expect(body).toContain("All chaos panel models failed");
     expect(body).toContain("[DONE]");
   });

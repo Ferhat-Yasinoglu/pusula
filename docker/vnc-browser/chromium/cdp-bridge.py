@@ -11,7 +11,7 @@ Docker bridge network, not just the host, and CDP grants full control over a
 live, credential-bearing browser session (Runtime.evaluate, cookie theft,
 etc). Every connection MUST present the shared secret in CDP_BRIDGE_TOKEN
 (env, injected per-session by src/lib/vncSession/service.ts) as an
-`X-Omni-Cdp-Token: <token>` header on its first HTTP request/WS-upgrade
+`X-Pusula-Cdp-Token: <token>` header on its first HTTP request/WS-upgrade
 before a single byte is forwarded upstream. A missing/invalid token gets the
 connection closed immediately with no response, so probing gives no signal.
 """
@@ -20,7 +20,7 @@ import os, socket, threading, sys
 SRC_HOST, SRC_PORT = "127.0.0.1", 9222
 PUB_HOST, PUB_PORT = "0.0.0.0", 9223
 TOKEN = os.environ.get("CDP_BRIDGE_TOKEN", "")
-TOKEN_HEADER = f"x-omni-cdp-token: {TOKEN}".lower()
+TOKEN_HEADER = f"x-pusula-cdp-token: {TOKEN}".lower()
 PEEK_TIMEOUT_S = 5
 MAX_PEEK_BYTES = 8192
 

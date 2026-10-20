@@ -776,8 +776,8 @@ export function createSSEStream(options: StreamOptions = {}) {
     // over a long-running server's lifetime. A wired PerformanceObserver still
     // receives the entry (delivery is queued independently of the buffer) even though
     // clearMarks() removes it from getEntriesByName()/getEntriesByType() right after.
-    performance.mark("omni-request-body-size", { detail: bodySize });
-    performance.clearMarks("omni-request-body-size");
+    performance.mark("pusula-request-body-size", { detail: bodySize });
+    performance.clearMarks("pusula-request-body-size");
   }
 
   // Canonical streaming timing (TTFT / ITL / interruption). One instance per

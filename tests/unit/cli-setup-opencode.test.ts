@@ -17,7 +17,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const FIXTURE_ROOT = fs.mkdtempSync(path.join(os.tmpdir(), "omni-oc-setup-"));
+const FIXTURE_ROOT = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-oc-setup-"));
 const FAKE_PLUGIN_DIR = path.join(FIXTURE_ROOT, "plugin");
 const CONFIG_DIR = path.join(FIXTURE_ROOT, "opencode-config");
 
@@ -107,13 +107,13 @@ describe("pusula setup opencode", () => {
     assert.equal(r.exitCode, 0);
 
     const cfg = readConfig();
-    const omniEntries = cfg.plugin.filter(
+    const pusulaEntries = cfg.plugin.filter(
       (p: unknown) =>
         Array.isArray(p) && (p[1] as { providerId?: string })?.providerId === "pusula"
     );
-    assert.equal(omniEntries.length, 1, "re-run must not duplicate the entry");
+    assert.equal(pusulaEntries.length, 1, "re-run must not duplicate the entry");
     assert.equal(
-      omniEntries[0][1].baseURL,
+      pusulaEntries[0][1].baseURL,
       "http://10.0.0.9:20128",
       "re-run updates baseURL in place"
     );

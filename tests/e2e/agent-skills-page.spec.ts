@@ -28,15 +28,15 @@ function makeAgentSkills(): AgentSkill[] {
   const skills: AgentSkill[] = [];
   for (let i = 0; i < 23; i++) {
     skills.push({
-      id: `omni-skill-${i}`,
+      id: `pusula-skill-${i}`,
       name: `API Skill ${i}`,
       description: `API skill description ${i}`,
       category: "api",
       area: `area-${i}`,
       icon: "api",
       endpoints: [`GET /api/skill-${i}`],
-      rawUrl: `https://raw.githubusercontent.com/example/Pusula/main/skills/omni-skill-${i}/SKILL.md`,
-      githubUrl: `https://github.com/example/Pusula/blob/main/skills/omni-skill-${i}/SKILL.md`,
+      rawUrl: `https://raw.githubusercontent.com/example/Pusula/main/skills/pusula-skill-${i}/SKILL.md`,
+      githubUrl: `https://github.com/example/Pusula/blob/main/skills/pusula-skill-${i}/SKILL.md`,
     });
   }
   for (let i = 0; i < 21; i++) {
@@ -136,7 +136,7 @@ test.describe("Agent Skills page", () => {
     await expect(cards).toHaveCount(45, { timeout: 15_000 });
   });
 
-  test("clicking omni-skill-0 card renders markdown in preview pane", async ({ page }) => {
+  test("clicking pusula-skill-0 card renders markdown in preview pane", async ({ page }) => {
     const skills = makeAgentSkills();
     const mockMarkdown = "# API Skill 0\n\nThis skill manages connections.";
 
@@ -148,7 +148,7 @@ test.describe("Agent Skills page", () => {
       }
     });
 
-    await page.route(/\/api\/agent-skills\/omni-skill-0\/raw/, async (route) => {
+    await page.route(/\/api\/agent-skills\/pusula-skill-0\/raw/, async (route) => {
       await fulfillText(route, mockMarkdown);
     });
 
@@ -168,7 +168,7 @@ test.describe("Agent Skills page", () => {
     expect(previewText?.trim().length).toBeGreaterThan(0);
   });
 
-  test("cross-link 'Understand the difference' navigates to /dashboard/omni-skills", async ({
+  test("cross-link 'Understand the difference' navigates to /dashboard/pusula-skills", async ({
     page,
   }) => {
     const skills = makeAgentSkills();
@@ -193,20 +193,20 @@ test.describe("Agent Skills page", () => {
     await expect(crossLink).toBeVisible({ timeout: 5_000 });
 
     await crossLink.click();
-    await page.waitForURL(/\/dashboard\/omni-skills/, { timeout: 15_000 });
-    expect(page.url()).toContain("/dashboard/omni-skills");
+    await page.waitForURL(/\/dashboard\/pusula-skills/, { timeout: 15_000 });
+    expect(page.url()).toContain("/dashboard/pusula-skills");
   });
 
-  test("/dashboard/skills redirects to /dashboard/omni-skills", async ({ page }) => {
+  test("/dashboard/skills redirects to /dashboard/pusula-skills", async ({ page }) => {
     await page.goto("/dashboard/skills", { waitUntil: "commit", timeout: NAVIGATION_TIMEOUT_MS });
-    // Next.js redirects /dashboard/skills → /dashboard/omni-skills (next.config.mjs).
+    // Next.js redirects /dashboard/skills → /dashboard/pusula-skills (next.config.mjs).
     // If auth is required the app then client-redirects to /login (bare path, no /dashboard/ prefix).
-    await page.waitForURL(/\/(login|onboarding|dashboard\/(omni-skills|onboarding))/, {
+    await page.waitForURL(/\/(login|onboarding|dashboard\/(pusula-skills|onboarding))/, {
       timeout: 15_000,
     });
     const finalUrl = page.url();
     expect(
-      finalUrl.includes("/dashboard/omni-skills") ||
+      finalUrl.includes("/dashboard/pusula-skills") ||
         finalUrl.includes("/login") ||
         finalUrl.includes("/onboarding")
     ).toBe(true);

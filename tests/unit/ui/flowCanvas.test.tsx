@@ -58,7 +58,7 @@ describe("FlowCanvas (U0 — shared ReactFlow wrapper)", () => {
 
   it("applies the provided container className for sizing/theming", () => {
     const container = mount(
-      <FlowCanvas nodes={nodes} edges={edges} className="omni-test-canvas h-[300px]" />
+      <FlowCanvas nodes={nodes} edges={edges} className="pusula-test-canvas h-[300px]" />
     );
     expect(container.querySelector(".omni-test-canvas")).toBeTruthy();
   });

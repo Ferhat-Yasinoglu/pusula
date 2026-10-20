@@ -24,7 +24,7 @@ Pusula/
 ├── config/               # پیکربندی ایستا + وضعیت دروازه کیفیت (i18n، payloadRules، quality/)
 ├── images/               # داراییهای تصویری بازاریابی / README
 ├── @pusula/           # بستههای همراه قابل انتشار (opencode-plugin، opencode-provider)
-├── skills/               # بستههای مهارت CLI/عامل (cli-* + omni-* + config-codex-cli)
+├── skills/               # بستههای مهارت CLI/عامل (cli-* + pusula-* + config-codex-cli)
 ├── examples/             # افزونههای نمونه + پروژه آغازین pusula-cmd-hello
 ├── contrib/              # مشارکتهای جامعه کاربری (podman/)
 ├── .source/              # پیکربندی منبع Fumadocs (source.config.mjs + server/browser/dynamic)

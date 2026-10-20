@@ -215,44 +215,44 @@ test("R2/R5: JSON import preserves explicit restricted + empty and infers legacy
       {
         id: "json-restricted-empty",
         name: "JSON Restricted Empty",
-        key: "omni_json_restricted_empty",
+        key: "pusula_json_restricted_empty",
         modelAccessMode: "restricted",
         allowedModels: [],
       },
       {
         id: "json-legacy-restricted",
         name: "JSON Legacy Restricted",
-        key: "omni_json_legacy_restricted",
+        key: "pusula_json_legacy_restricted",
         allowedModels: ["ollama-cloud/*"],
       },
       {
         id: "json-legacy-all",
         name: "JSON Legacy All",
-        key: "omni_json_legacy_all",
+        key: "pusula_json_legacy_all",
         allowedModels: [],
       },
     ],
   });
   apiKeys.resetApiKeyState();
 
-  const restrictedEmpty = await apiKeys.getApiKeyMetadata("omni_json_restricted_empty");
+  const restrictedEmpty = await apiKeys.getApiKeyMetadata("pusula_json_restricted_empty");
   assert.equal(restrictedEmpty?.modelAccessMode, "restricted");
   assert.deepEqual(restrictedEmpty?.allowedModels, []);
   assert.equal(
-    await apiKeys.isModelAllowedForKey("omni_json_restricted_empty", "openai/gpt-4.1"),
+    await apiKeys.isModelAllowedForKey("pusula_json_restricted_empty", "openai/gpt-4.1"),
     false
   );
 
-  const legacyRestricted = await apiKeys.getApiKeyMetadata("omni_json_legacy_restricted");
+  const legacyRestricted = await apiKeys.getApiKeyMetadata("pusula_json_legacy_restricted");
   assert.equal(legacyRestricted?.modelAccessMode, "restricted");
   assert.equal(
-    await apiKeys.isModelAllowedForKey("omni_json_legacy_restricted", "ollama-cloud/new-model"),
+    await apiKeys.isModelAllowedForKey("pusula_json_legacy_restricted", "ollama-cloud/new-model"),
     true
   );
 
-  const legacyAll = await apiKeys.getApiKeyMetadata("omni_json_legacy_all");
+  const legacyAll = await apiKeys.getApiKeyMetadata("pusula_json_legacy_all");
   assert.equal(legacyAll?.modelAccessMode, "all");
-  assert.equal(await apiKeys.isModelAllowedForKey("omni_json_legacy_all", "any/model"), true);
+  assert.equal(await apiKeys.isModelAllowedForKey("pusula_json_legacy_all", "any/model"), true);
 });
 
 test("R2/R5: startup db.json migration preserves explicit restricted-empty mode", async () => {
@@ -267,7 +267,7 @@ test("R2/R5: startup db.json migration preserves explicit restricted-empty mode"
         {
           id: "startup-restricted-empty",
           name: "Startup Restricted Empty",
-          key: "omni_startup_restricted_empty",
+          key: "pusula_startup_restricted_empty",
           modelAccessMode: "restricted",
           allowedModels: [],
         },
@@ -276,11 +276,11 @@ test("R2/R5: startup db.json migration preserves explicit restricted-empty mode"
   );
 
   core.getDbInstance();
-  const metadata = await apiKeys.getApiKeyMetadata("omni_startup_restricted_empty");
+  const metadata = await apiKeys.getApiKeyMetadata("pusula_startup_restricted_empty");
   assert.equal(metadata?.modelAccessMode, "restricted");
   assert.deepEqual(metadata?.allowedModels, []);
   assert.equal(
-    await apiKeys.isModelAllowedForKey("omni_startup_restricted_empty", "openai/gpt-4.1"),
+    await apiKeys.isModelAllowedForKey("pusula_startup_restricted_empty", "openai/gpt-4.1"),
     false
   );
 });

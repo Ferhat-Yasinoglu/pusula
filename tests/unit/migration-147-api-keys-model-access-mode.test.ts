@@ -59,7 +59,7 @@ function insertKey(db: TestDb, id: string, name: string, allowedModelsJson: stri
   db.prepare("INSERT INTO api_keys (id, name, key, allowed_models) VALUES (?, ?, ?, ?)").run(
     id,
     name,
-    `omni_${id}`,
+    `pusula_${id}`,
     allowedModelsJson
   );
 }

@@ -364,7 +364,7 @@ bleibt die Auswertung schnell (< 5 ms für die meisten Ereignisse).
 | Aufwärmphase        | Nutzung   | gewöhnlich   | 100 Anfragen                       |
 | Power-User          | Nutzung   | ungewöhnlich | 1.000 Anfragen                     |
 | Zenturio            | Nutzung   | selten       | 10.000 Anfragen                    |
-| OmniPower           | Nutzung   | legendär     | 100.000 Anfragen                   |
+| PusulaPower           | Nutzung   | legendär     | 100.000 Anfragen                   |
 | Anbieter-Hopper     | Beitrag   | gewöhnlich   | 5 verschiedene Anbieter verwenden  |
 | Anbieter-Meister    | Beitrag   | ungewöhnlich | 20 verschiedene Anbieter verwenden |
 | Combo-Architekt     | Beitrag   | ungewöhnlich | 5 Combos erstellen                 |

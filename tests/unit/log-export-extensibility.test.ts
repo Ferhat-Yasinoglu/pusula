@@ -11,7 +11,7 @@ import os from "node:os";
 import path from "node:path";
 import { z } from "zod";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omni-log-export-ext-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-log-export-ext-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.STORAGE_ENCRYPTION_KEY = "log-export-extensibility-test-key";
 

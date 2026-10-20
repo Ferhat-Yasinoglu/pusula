@@ -24,7 +24,7 @@ Pusula/
 ├── config/               # Statik yapılandırma + kalite kapısı durumu (i18n, payloadRules, quality/)
 ├── images/               # Pazarlama / README görsel varlıkları
 ├── @pusula/           # Yayımlanabilir yardımcı paketler (opencode-plugin, opencode-provider)
-├── skills/               # CLI/ajan beceri paketleri (cli-* + omni-* + config-codex-cli)
+├── skills/               # CLI/ajan beceri paketleri (cli-* + pusula-* + config-codex-cli)
 ├── examples/             # Örnek eklentiler + pusula-cmd-hello başlangıç şablonu
 ├── contrib/              # Topluluk katkıları (podman/)
 ├── .source/              # Fumadocs kaynak yapılandırması (source.config.mjs + server/browser/dynamic)

@@ -182,7 +182,7 @@ whitespace collapse but no comment removal. The stripped-block run is tagged `rt
 
 > **Note — GCF / tabular encoding is a separate engine.** RTK does **not** contain the "GCF"
 > (Graph Compact Format) tabular/columnar JSON encoder. That encoder — which replaced an older
-> `omni-tabular` encoder — lives in the **headroom** engine
+> `pusula-tabular` encoder — lives in the **headroom** engine
 > (`open-sse/services/compression/engines/headroom/`, with the vendored codec under
 > `headroom/gcf/`). It is unrelated to the RTK filter pipeline documented here.
 
