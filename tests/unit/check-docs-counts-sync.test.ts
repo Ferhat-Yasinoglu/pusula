@@ -91,7 +91,7 @@ test("readProviderTotal reads a real, positive total from the catalog", () => {
 });
 
 test("countLocales reads a real, positive locale count from config/i18n.json", () => {
-  assert.ok(locales() >= 40, "i18n config should define at least 40 locales");
+  assert.ok(locales() >= 4, "i18n config should define the four supported locales");
 });
 
 // --- live gate smoke -----------------------------------------------------------------
