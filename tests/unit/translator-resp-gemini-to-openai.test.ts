@@ -504,7 +504,7 @@ test("Gemini stream: converts prefixed textual Tool call block with zero-width c
           content: {
             parts: [
               {
-                text: '(empty)[Tool call: terminal]\nArguments: {"command":"sqlite3 ~/.o\u200dmniroute/storage.sqlite"}',
+                text: '(empty)[Tool call: terminal]\nArguments: {"command":"sqlite3 ~/.p\u200dusula/storage.sqlite"}',
               },
             ],
           },

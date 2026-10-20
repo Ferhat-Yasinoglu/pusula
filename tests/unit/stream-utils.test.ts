@@ -227,7 +227,7 @@ test("createSSEStream passthrough normalizes tool-call finishes and reports the 
 test("createSSEStream passthrough converts textual tool-call content into structured call log tool_calls", async () => {
   let onCompletePayload = null;
   const toolArgs = JSON.stringify({
-    command: 'sqlite3 /root/.o\u200dmniroute/pusula.db ".tables"',
+    command: 'sqlite3 /root/.p\u200dusula/pusula.db ".tables"',
   });
   const toolText = `[Tool call: terminal]\nArguments: ${toolArgs}`;
 
@@ -279,7 +279,7 @@ test("createSSEStream passthrough converts textual tool-call content into struct
 test("createSSEStream passthrough converts split textual tool-call content at completion", async () => {
   let onCompletePayload = null;
   const splitToolArgs = JSON.stringify({
-    command: 'sqlite3 ~/.o\u200dmniroute/o\u200dmniroute.db ".tables"',
+    command: 'sqlite3 ~/.p\u200dusula/p\u200dusula.db ".tables"',
   });
   const chunks = ["[Tool call: terminal]\n", `Arguments: ${splitToolArgs}`];
 
@@ -558,7 +558,7 @@ Arguments: {"path":"/opt/Pusula/src","target":"files"}`;
 
 test("createSSEStream passthrough suppresses malformed textual tool-call content", async () => {
   let onCompletePayload = null;
-  const malformedToolText = `(empty)[Tool call: terminal]\nArguments: {"command":"sqlite3 /opt/O\u200dmniRoute/data/o\u200dmniroute.`;
+  const malformedToolText = `(empty)[Tool call: terminal]\nArguments: {"command":"sqlite3 /opt/P\u200dusula/data/p\u200dusula.`;
 
   const text = await readTransformed(
     [

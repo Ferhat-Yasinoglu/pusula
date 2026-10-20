@@ -23,9 +23,9 @@ test("is case-insensitive and falls back when unknown or empty", () => {
 
 // The fixtures above pin the resolver's behaviour; this one pins the shipped
 // config/i18n.json wiring. `in` was a real locale until it was retired as a
-// duplicate of `id` — a saved NEXT_LOCALE=in cookie must still land on `id`
-// instead of silently falling back to English.
-test("the shipped config resolves a saved NEXT_LOCALE=in cookie to id", () => {
+// duplicate of `id`; `id` is not a shipped locale either, so a saved
+// NEXT_LOCALE=in cookie must fall back to the default locale.
+test("the shipped config resolves a saved NEXT_LOCALE=in cookie to the default", () => {
   assert.ok(!REAL_LOCALES.includes("in"), "`in` must no longer be a configured locale");
-  assert.equal(resolveRequestedLocale("in", REAL_LOCALES, REAL_ALIASES, "en"), "id");
+  assert.equal(resolveRequestedLocale("in", REAL_LOCALES, REAL_ALIASES, "en"), "en");
 });

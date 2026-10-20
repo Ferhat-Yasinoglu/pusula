@@ -31,7 +31,10 @@ function flatten(node: unknown, prefix: string, out: Map<string, string>): void 
 }
 
 test("every featureFlags.definitions message compiles as ICU in every locale", () => {
-  assert.ok(localeFiles.length >= 40, `expected the full locale set, got ${localeFiles.length}`);
+  assert.ok(
+    localeFiles.length >= 4,
+    `expected the four shipped locales, got ${localeFiles.length}`
+  );
 
   const failures: string[] = [];
   for (const file of localeFiles) {

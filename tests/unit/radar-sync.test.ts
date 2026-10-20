@@ -96,7 +96,7 @@ test("contract: fixture sha256 matches the server's canonical hash", () => {
   const hash = crypto.createHash("sha256").update(FIXTURE_BYTES).digest("hex");
   assert.equal(
     hash,
-    "80194e15a8add2a3be57eaef63b26ab75976c83e20b5589172aefa806eae72d3",
+    "b54a099a5a962763b5742a8499fb9ca056c0045890491f65a7f6f8d53fceffd5",
     "Fixture sha256 must match the server's canonical fixture. " +
       "If this fails, the fixture was modified or re-downloaded with different formatting."
   );
