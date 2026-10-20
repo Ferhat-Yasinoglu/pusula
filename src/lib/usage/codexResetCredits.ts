@@ -5,10 +5,10 @@ import {
   fetchAndPersistProviderLimits,
   refreshAndUpdateCredentials,
 } from "@/lib/usage/providerLimits";
-import { invalidateCodexQuotaCache } from "@omniroute/open-sse/services/codexQuotaFetcher.ts";
-import { getCodexBackendIdentityHeaders } from "@omniroute/open-sse/config/codexClient.ts";
-import { runWithProxyContext } from "@omniroute/open-sse/utils/proxyFetch.ts";
-import { sanitizeErrorMessage } from "@omniroute/open-sse/utils/error.ts";
+import { invalidateCodexQuotaCache } from "@pusula/open-sse/services/codexQuotaFetcher.ts";
+import { getCodexBackendIdentityHeaders } from "@pusula/open-sse/config/codexClient.ts";
+import { runWithProxyContext } from "@pusula/open-sse/utils/proxyFetch.ts";
+import { sanitizeErrorMessage } from "@pusula/open-sse/utils/error.ts";
 
 const CODEX_RESET_CREDIT_CONSUME_URL =
   "https://chatgpt.com/backend-api/wham/rate-limit-reset-credits/consume";

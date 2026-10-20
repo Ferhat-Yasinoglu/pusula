@@ -93,7 +93,7 @@ export default function OnboardingWizard() {
   // required only for a non-loopback (e.g. Docker/NAT-forwarded) caller
   // completing a fresh install; a no-op header on every other install.
   const bootstrapHeaders = (base: Record<string, string> = {}) =>
-    bootstrapToken ? { ...base, "x-omniroute-bootstrap-token": bootstrapToken } : base;
+    bootstrapToken ? { ...base, "x-pusula-bootstrap-token": bootstrapToken } : base;
 
   // Returns true when the caller should stop (a bootstrap-token prompt was
   // shown), false when the response was a "real" failure to report normally.

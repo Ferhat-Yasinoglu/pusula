@@ -38,7 +38,7 @@ onu çalıştırmanın en fazla değer sağladığı andır.
 
 `quality.yml` artık taslak olmayan kod PR'ları ve Mergify kuyruk dalları için `Build (advisory)` işini içeriyor.
 Bu iş, `ci.yml` dosyasındaki üretim derleme tarifini yansıtır: Node 24, `npm-ci-retry`,
-`check:node-runtime` ve `OMNIROUTE_USE_TURBOPACK=1` ile `npm run build`. Bu iş akışında sonraki hiçbir kalite işi bir derleme çıktısını kullanmadığından, kasıtlı olarak derleme çıktısı yüklemez.
+`check:node-runtime` ve `PUSULA_USE_TURBOPACK=1` ile `npm run build`. Bu iş akışında sonraki hiçbir kalite işi bir derleme çıktısını kullanmadığından, kasıtlı olarak derleme çıktısı yüklemez.
 Sinyalin PR'dan sürüme geçişi engelleyen bir kapı hâline gelmesi için bir haftalık kararlı sürüm PR'ı çalıştırmalarının ardından `continue-on-error` seçeneğini kaldırın.
 
 ## Çözüm C — `npm run check:release-green` (motor)

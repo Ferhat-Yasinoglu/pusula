@@ -4,9 +4,9 @@
 
 ---
 
-> **Status:** Akzeptiert · **Kontext:** [#5670](https://github.com/diegosouzapw/OmniRoute/issues/5670),
-> [#5603](https://github.com/diegosouzapw/OmniRoute/issues/5603) · **Vertrag:** `domain/routing/routerBackends.ts`
-> (typisierte Registry — der Code wird mit [#5868](https://github.com/diegosouzapw/OmniRoute/pull/5868) integriert)
+> **Status:** Akzeptiert · **Kontext:** [#5670](https://github.com/Ferhat-Yasinoglu/pusula/issues/5670),
+> [#5603](https://github.com/Ferhat-Yasinoglu/pusula/issues/5603) · **Vertrag:** `domain/routing/routerBackends.ts`
+> (typisierte Registry — der Code wird mit [#5868](https://github.com/Ferhat-Yasinoglu/pusula/pull/5868) integriert)
 
 Dieser ADR legt fest, wie `ts` (nativ), `bifrost`, `cliproxy`, `9router` und
 VibeProxy-kompatible Engines zueinander in Beziehung stehen, damit Mitwirkende
@@ -20,10 +20,10 @@ Die Rolle einer Engine wird durch **zwei unabhängige Achsen** beschrieben, die
 gemeinsam im `RouterBackendDefinition` der Registry abgebildet sind:
 
 1. **Lebenszyklus** (`RouterBackendLifecycle`) — _wie die Engine ausgeführt wird_:
-   - `in-process` — wird innerhalb des OmniRoute-Node-Prozesses ausgeführt (die native TS-Pipeline).
-   - `supervised` — ein lokaler Kindprozess, den OmniRoute über `ServiceSupervisor`
+   - `in-process` — wird innerhalb des Pusula-Node-Prozesses ausgeführt (die native TS-Pipeline).
+   - `supervised` — ein lokaler Kindprozess, den Pusula über `ServiceSupervisor`
      installiert/startet/stoppt/auf Funktionsfähigkeit prüft und anschließend als Provider-Verbindung verwendet.
-   - `external` — ein HTTP-Endpunkt, an den OmniRoute Anfragen weiterleitet, den es
+   - `external` — ein HTTP-Endpunkt, an den Pusula Anfragen weiterleitet, den es
      jedoch **nicht** verwaltet (konfiguriert über eine Basis-URL in einer Umgebungsvariable).
    - `disabled` — registriert, aber nicht auswählbar.
 2. **Auswahlachse** (Relay-Routing-Backend) — _ob das Relay Anfragen dorthin weiterleitet_:
@@ -40,7 +40,7 @@ Relay-Weiterleitung, das (historisch) ausschließlich `external` war.
 ## Die Registry — zentrale Quelle der Wahrheit
 
 Das Vertragsmodul `domain/routing/routerBackends.ts` (der Code wird mit
-[#5868](https://github.com/diegosouzapw/OmniRoute/pull/5868) integriert) deklariert jede Engine genau einmal,
+[#5868](https://github.com/Ferhat-Yasinoglu/pusula/pull/5868) integriert) deklariert jede Engine genau einmal,
 einschließlich ihres Lebenszyklus, ihrer Fähigkeiten, Dienstidentität, ihres
 Standardports, ihrer Health-Konfiguration und ihrer Telemetrieunterstützung.
 Verbraucher rufen Engines über `getRouterBackend(id)`, `listRouterBackends()` und
@@ -57,7 +57,7 @@ behandeln.
 
 ¹ Die Hochstufung von Bifrost zu einem `supervised` eingebetteten Dienst (über
 `/api/services/bifrost/` installierbar/startbar) wird in
-[#5817](https://github.com/diegosouzapw/OmniRoute/pull/5817) nachverfolgt; bis dieser PR integriert ist,
+[#5817](https://github.com/Ferhat-Yasinoglu/pusula/pull/5817) nachverfolgt; bis dieser PR integriert ist,
 ist Bifrost ausschließlich `external` (nur über `BIFROST_BASE_URL` erreichbar).
 
 `capabilities` (`chat`, `responses`, `streaming`, `tools`, `vision`,
@@ -115,7 +115,7 @@ Backend aus; die Hauptschnittstelle `/api/v1/chat/completions` bezieht
 `routingBackend.ts` niemals ein.
 
 - **Auswahl** (`resolveRelayRoutingBackend`): ein einzelner globaler Umschalter per Umgebungsvariable —
-  `OMNIROUTE_RELAY_BACKEND` / `RELAY_ROUTING_BACKEND` ∈ {`ts`, `bifrost`, `auto`}.
+  `PUSULA_RELAY_BACKEND` / `RELAY_ROUTING_BACKEND` ∈ {`ts`, `bifrost`, `auto`}.
   Falls nicht gesetzt: `auto`, wenn Bifrost konfiguriert und aktiviert ist, andernfalls `ts`.
 - **Verhalten:**
   - `bifrost` (erzwungen): Bifrost-Fehler → harter `502`, kein Fallback.
@@ -126,8 +126,8 @@ Backend aus; die Hauptschnittstelle `/api/v1/chat/completions` bezieht
 Die Auswahl erfolgt derzeit **auf Relay-Ebene nach dem Alles-oder-nichts-Prinzip** — in `release/v3.8.43` gibt es
 keinen Engine-Wechsel pro Anbieter oder Anfrage. Die anfragebezogene Schranke wird derzeit
 durch die Sidecar-Manifest-Arbeiten hinzugefügt
-([#5869](https://github.com/diegosouzapw/OmniRoute/pull/5869) Manifest +
-[#5870](https://github.com/diegosouzapw/OmniRoute/pull/5870) `shouldTryBifrostForRequest`),
+([#5869](https://github.com/Ferhat-Yasinoglu/pusula/pull/5869) Manifest +
+[#5870](https://github.com/Ferhat-Yasinoglu/pusula/pull/5870) `shouldTryBifrostForRequest`),
 wodurch `auto` nur noch laut Manifest geeignete Anbieter über Bifrost routen kann.
 
 ## Dashboard-Integration

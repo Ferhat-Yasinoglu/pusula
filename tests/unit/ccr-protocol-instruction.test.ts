@@ -37,9 +37,9 @@ This is line ten and still counting to make the block big enough.`;
 
 const SMALL_TEXT = "Short content that should NOT be compressed.";
 
-const RETRIEVE_TOOL_OPENAI = { type: "function", function: { name: "omniroute_ccr_retrieve" } };
-const RETRIEVE_TOOL_FLAT = { name: "omniroute_ccr_retrieve" };
-const RETRIEVE_TOOL_CLAUDE = { name: "omniroute_ccr_retrieve", input_schema: {} };
+const RETRIEVE_TOOL_OPENAI = { type: "function", function: { name: "pusula_ccr_retrieve" } };
+const RETRIEVE_TOOL_FLAT = { name: "pusula_ccr_retrieve" };
+const RETRIEVE_TOOL_CLAUDE = { name: "pusula_ccr_retrieve", input_schema: {} };
 
 type Msg = { role: string; content: string };
 
@@ -89,7 +89,7 @@ describe("ccr protocol instruction (#8033)", () => {
     const result = ccrEngine.apply(body);
 
     // #7746 follow-up: a caller whose tools[] does not advertise
-    // omniroute_ccr_retrieve can never resolve a content-addressed marker, so
+    // pusula_ccr_retrieve can never resolve a content-addressed marker, so
     // replacing its text would strand it behind an unresolvable hash. The engine
     // therefore now SKIPS entirely for such callers (callerSupportsCcrRetrieve →
     // false ⇒ compressed:false), which is a strictly safer outcome than the old
@@ -153,7 +153,7 @@ describe("ccr protocol instruction (#8033)", () => {
     const messages = result.body["messages"] as Array<{ role: string; content: unknown }>;
     const instruction = messages[0].content as string;
 
-    assert.ok(instruction.includes("omniroute_ccr_retrieve"), "must mention the tool name");
+    assert.ok(instruction.includes("pusula_ccr_retrieve"), "must mention the tool name");
     assert.ok(
       instruction.includes("[CCR retrieve hash=<24hex> chars=N]"),
       "must show the marker shape"
@@ -190,7 +190,7 @@ describe("ccr protocol instruction (#8033)", () => {
         tools: [
           {
             type: "function",
-            function: { name: "mcp__docker__omniroute__omniroute_ccr_retrieve" },
+            function: { name: "mcp__docker__pusula__pusula_ccr_retrieve" },
           },
         ],
       }),
@@ -198,17 +198,17 @@ describe("ccr protocol instruction (#8033)", () => {
       "Docker MCP Toolkit style double-prefix name"
     );
     assert.equal(
-      callerSupportsCcrRetrieve({ tools: [{ name: "mcp__docker__omniroute_ccr_retrieve" }] }),
+      callerSupportsCcrRetrieve({ tools: [{ name: "mcp__docker__pusula_ccr_retrieve" }] }),
       true,
       "single mcp__<server>__<tool> namespace prefix"
     );
     assert.equal(
-      callerSupportsCcrRetrieve({ tools: [{ name: "omniroute.omniroute_ccr_retrieve" }] }),
+      callerSupportsCcrRetrieve({ tools: [{ name: "pusula.pusula_ccr_retrieve" }] }),
       true,
       "dotted namespace prefix"
     );
     assert.equal(
-      callerSupportsCcrRetrieve({ tools: [{ name: "omniroute/omniroute_ccr_retrieve" }] }),
+      callerSupportsCcrRetrieve({ tools: [{ name: "pusula/pusula_ccr_retrieve" }] }),
       true,
       "slashed namespace prefix"
     );
@@ -216,12 +216,12 @@ describe("ccr protocol instruction (#8033)", () => {
 
   it("does NOT loosen matching into a plain substring test", () => {
     assert.equal(
-      callerSupportsCcrRetrieve({ tools: [{ name: "omniroute_ccr_retrieve_v2" }] }),
+      callerSupportsCcrRetrieve({ tools: [{ name: "pusula_ccr_retrieve_v2" }] }),
       false,
       "near-miss suffix must not match"
     );
     assert.equal(
-      callerSupportsCcrRetrieve({ tools: [{ name: "xomniroute_ccr_retrieve" }] }),
+      callerSupportsCcrRetrieve({ tools: [{ name: "xpusula_ccr_retrieve" }] }),
       false,
       "no separator boundary before the suffix must not match"
     );

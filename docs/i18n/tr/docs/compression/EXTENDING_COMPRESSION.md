@@ -4,7 +4,7 @@
 
 ---
 
-> **Kısaca**: OmniRoute'un sıkıştırma motoru **takılabilir** yapıdadır — özel motorlar kaydedebilir, yeni diller için dil paketleri sunabilir ve yığınlanmış işlem hatları oluşturabilirsiniz. Bu kılavuz bunun nasıl yapılacağını gösterir.
+> **Kısaca**: Pusula'un sıkıştırma motoru **takılabilir** yapıdadır — özel motorlar kaydedebilir, yeni diller için dil paketleri sunabilir ve yığınlanmış işlem hatları oluşturabilirsiniz. Bu kılavuz bunun nasıl yapılacağını gösterir.
 
 **İlgili kılavuzlar:**
 
@@ -83,8 +83,8 @@ interface CompressionEngine {
 Mümkün olan en basit motor — mesajlardaki fazladan boşlukları kaldırır.
 
 ````ts
-import type { CompressionEngine } from "omniroute/compression/engines/types";
-import { registerCompressionEngine } from "omniroute/compression/engines/registry";
+import type { CompressionEngine } from "pusula/compression/engines/types";
+import { registerCompressionEngine } from "pusula/compression/engines/registry";
 
 function preserveCodeBlocks(text: string): string {
   // Kod bloğu işaretçilerine göre ayır ve bunların içindeki boşlukları koru
@@ -195,7 +195,7 @@ registerCompressionEngine(whitespaceEngine);
 ### Özel Motorların Yerleştirileceği Konum
 
 ```
-~/.omniroute/compression/engines/my-engine.ts    # Kullanıcı düzeyi
+~/.pusula/compression/engines/my-engine.ts    # Kullanıcı düzeyi
 <project>/compression-engines/my-engine.ts        # Proje düzeyi (başlangıçta yüklenir)
 ```
 
@@ -206,7 +206,7 @@ Alternatif olarak bir eklentiden program aracılığıyla yükleyin:
 import {
   registerCompressionEngine,
   unregisterCompressionEngine,
-} from "@omniroute/open-sse/services/compression/engines/registry";
+} from "@pusula/open-sse/services/compression/engines/registry";
 import { myEngine } from "./engines/my-engine";
 
 export default definePlugin({
@@ -231,7 +231,7 @@ Motorunuzu bir eklentide veya başlangıç işlevinde kaydedin. Kaydedildikten s
 
 ## Dil Paketleri Oluşturma
 
-Mağara adamı tarzı sıkıştırma, her doğal dildeki dolgu ifadelerini, kaçamak anlatımları ve gereksiz uzun kalıpları işlemek için **dile özgü kural paketleri** kullanır. OmniRoute, **6 dil paketiyle** birlikte gelir: `en`, `es`, `fr`, `de`, `ja`, `pt-BR`.
+Mağara adamı tarzı sıkıştırma, her doğal dildeki dolgu ifadelerini, kaçamak anlatımları ve gereksiz uzun kalıpları işlemek için **dile özgü kural paketleri** kullanır. Pusula, **6 dil paketiyle** birlikte gelir: `en`, `es`, `fr`, `de`, `ja`, `pt-BR`.
 
 ### Paket Yapısı
 
@@ -323,7 +323,7 @@ Doğrulama, bir paket yüklendiğinde (`_schema.json` şemasına göre) otomatik
 ### Özel Bir Dil Paketini Yükleme
 
 ```ts
-import { loadRulePack } from "omniroute/compression/ruleLoader";
+import { loadRulePack } from "pusula/compression/ruleLoader";
 
 await loadRulePack("./my-custom-rules/hi/filler.json");
 ```
@@ -331,7 +331,7 @@ await loadRulePack("./my-custom-rules/hi/filler.json");
 Alternatif olarak, tanınan bir konuma yerleştirin:
 
 ```
-~/.omniroute/compression/rules/hi/filler.json  # Kullanıcı düzeyi
+~/.pusula/compression/rules/hi/filler.json  # Kullanıcı düzeyi
 <project>/.compression/rules/hi/filler.json   # Proje düzeyi
 ```
 
@@ -388,7 +388,7 @@ N numaralı motorun çıktısı, N+1 numaralı motorun girdisi olur.
 
 ### Sıkıştırma Modları
 
-OmniRoute; yapılandırmaya, otomatik tetikleme eşiklerine ve kombinasyon geçersiz kılmalarına göre **her istek için BİR mod** seçer.
+Pusula; yapılandırmaya, otomatik tetikleme eşiklerine ve kombinasyon geçersiz kılmalarına göre **her istek için BİR mod** seçer.
 Kullanılabilir modlar `open-sse/services/compression/types.ts` dosyasında tanımlanmıştır (`CompressionMode` türü):
 
 | Mod          | Motorlar             | Kullanım amacı                                                                                                                                                                                                   |
@@ -474,10 +474,10 @@ Yığınlama her zaman daha iyi değildir:
 
 ### Özel İşlem Hattı Oluşturma
 
-Adlandırılmış bir işlem hattı kayıt defteri yoktur. Yığınlanmış bir işlem hattı, `applyStackedCompression()` işlevine (`@omniroute/open-sse/services/compression/strategySelector` paketinden dışa aktarılır) iletilen **satır içi bir adım dizisinden** ibarettir:
+Adlandırılmış bir işlem hattı kayıt defteri yoktur. Yığınlanmış bir işlem hattı, `applyStackedCompression()` işlevine (`@pusula/open-sse/services/compression/strategySelector` paketinden dışa aktarılır) iletilen **satır içi bir adım dizisinden** ibarettir:
 
 ```ts
-import { applyStackedCompression } from "@omniroute/open-sse/services/compression/strategySelector";
+import { applyStackedCompression } from "@pusula/open-sse/services/compression/strategySelector";
 
 const result = applyStackedCompression(body, [
   { engine: "rtk", intensity: "aggressive" },
@@ -505,10 +505,10 @@ Bunu yapılandırmadan yönetmek için `mode: "stacked"` ayarını yapın ve ad�
 
 ## Üst Kaynak Senkronizasyon Politikası
 
-OmniRoute'un sıkıştırma motorları README dosyasında çeşitli üst kaynak projelere atıfta bulunur
+Pusula'un sıkıştırma motorları README dosyasında çeşitli üst kaynak projelere atıfta bulunur
 ("RTK, Caveman, LLMLingua-2 ve Troglodita'dan esinlenilmiştir"). Katkıda bulunanların sıkça
 sorduğu bir soru şudur: **Üst kaynak RTK'ye yeni bir araç filtresi veya Caveman'e yeni bir kural
-paketi eklendiğinde, bu yenilik OmniRoute'a nasıl ulaşır?** Bu bölüm, bu sorunun kesin yanıtıdır.
+paketi eklendiğinde, bu yenilik Pusula'a nasıl ulaşır?** Bu bölüm, bu sorunun kesin yanıtıdır.
 
 ### Depoya alınmış kopyalar ve bağımsız uygulamalar
 
@@ -529,7 +529,7 @@ ağaçları değildir.** `git pull` ile çekilebilecek bir üst kaynak kopyası 
 Tasarım gereği **otomatik üst kaynak sürüm takibi ve `compression-sync`
 etiketi yoktur**. Motorlar yeniden uygulamalar olduğundan, üst kaynaktaki bir RTK
 filtresi veya Caveman kural paketi kod olarak birleştirilmez; bunun yerine
-**OmniRoute'un kendi biçiminde yeni bir kural/filtre olarak yeniden ifade edilir**
+**Pusula'un kendi biçiminde yeni bir kural/filtre olarak yeniden ifade edilir**
 (bkz. [COMPRESSION_RULES_FORMAT.md](./COMPRESSION_RULES_FORMAT.md)) ve normal bir
 PR aracılığıyla gerektiğinde eklenir. Yukarıdaki genişletme noktaları (özel motor,
 dil paketi, RTK filtresi), bu tür katkılar için onaylanmış yöntemlerdir.
@@ -543,14 +543,14 @@ Bu akışın yakın tarihli örnekleri:
 ### Headroom (girdi sıkıştırma proxy'si)
 
 Headroom **tamamen dahilîdir** — sabitlenmiş, depoya alınmış bir `gcf` codec anlık
-görüntüsünün yanı sıra OmniRoute'un kendi `smartcrusher` / `toon` / `tabular`
+görüntüsünün yanı sıra Pusula'un kendi `smartcrusher` / `toon` / `tabular`
 katmanlarından oluşur. Depoya alınmış kopyanın ötesinde takip edilecek aktif bir
 üst kaynak yoktur; `gcf` güncellemeleri codec değiştiğinde elle yenilenir ve
 sıkıştırma bütçesi geçidine (`check:compression-budget`) göre yeniden doğrulanır.
 
 ### Üst kaynaktan esinlenen bir iyileştirme önerme
 
-1. **Depoya almayın** — üst kaynak kuralını/filtresini OmniRoute'un biçiminde yeniden ifade edin.
+1. **Depoya almayın** — üst kaynak kuralını/filtresini Pusula'un biçiminde yeniden ifade edin.
 2. Aşağıdaki eşleşen genişletme noktası üzerinden ekleyin (dil paketi, RTK filtresi veya
    özel motor).
 3. Lisans taşıyan kaynak kodunu kopyalamak yerine PR açıklamasında üst kaynak

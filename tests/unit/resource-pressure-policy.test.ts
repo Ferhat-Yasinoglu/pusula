@@ -343,9 +343,9 @@ describe("resource pressure policy", () => {
     ]);
   });
 
-  it("#13124 OMNIROUTE_PRESSURE_PSI_DISABLED ignores host PSI and keeps cgroup", () => {
-    const previous = process.env.OMNIROUTE_PRESSURE_PSI_DISABLED;
-    process.env.OMNIROUTE_PRESSURE_PSI_DISABLED = "1";
+  it("#13124 PUSULA_PRESSURE_PSI_DISABLED ignores host PSI and keeps cgroup", () => {
+    const previous = process.env.PUSULA_PRESSURE_PSI_DISABLED;
+    process.env.PUSULA_PRESSURE_PSI_DISABLED = "1";
     try {
       const tracker = createResourcePressureTracker(fastThresholds);
       const psiCritical = baseSignals({
@@ -374,8 +374,8 @@ describe("resource pressure policy", () => {
       assert.equal(tracker.observe(cgroupCritical).severity, "critical");
       assert.equal(tracker.getState().reason, "cgroup_ratio");
     } finally {
-      if (previous === undefined) delete process.env.OMNIROUTE_PRESSURE_PSI_DISABLED;
-      else process.env.OMNIROUTE_PRESSURE_PSI_DISABLED = previous;
+      if (previous === undefined) delete process.env.PUSULA_PRESSURE_PSI_DISABLED;
+      else process.env.PUSULA_PRESSURE_PSI_DISABLED = previous;
     }
   });
 });

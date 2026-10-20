@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-process.env.OMNIROUTE_API_KEY = "test-configured-key-12888";
+process.env.PUSULA_API_KEY = "test-configured-key-12888";
 process.env.JWT_SECRET = "test-jwt-secret-for-probe-12888";
 
 const { authenticateA2ARequest, resolveA2AOwner } = await import("../../src/lib/a2a/authenticate.ts");

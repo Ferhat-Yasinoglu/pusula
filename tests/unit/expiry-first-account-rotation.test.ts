@@ -29,7 +29,7 @@ import { selectExpiryFirstConnection } from "@/sse/services/expiryFirstAccountSe
 import {
   resolveExpiryFirstConfig,
   scoreExpiryFirstQuota,
-} from "@omniroute/open-sse/services/combo/quotaScoring.ts";
+} from "@pusula/open-sse/services/combo/quotaScoring.ts";
 
 const HOUR = 60 * 60 * 1000;
 const NOW = Date.UTC(2026, 8, 22, 11, 36);

@@ -4,7 +4,7 @@ import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "omniroute-14335-"));
+process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "pusula-14335-"));
 
 const { handleImageGeneration } = await import("../../open-sse/handlers/imageGeneration.ts");
 

@@ -1,4 +1,4 @@
-# CLI Tools — OmniRoute (Türkçe)
+# CLI Tools — Pusula (Türkçe)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../reference/CLI-TOOLS.md) · 🇪🇹 [am](../../../am/docs/reference/CLI-TOOLS.md) · 🇸🇦 [ar](../../../ar/docs/reference/CLI-TOOLS.md) · 🇦🇿 [az](../../../az/docs/reference/CLI-TOOLS.md) · 🇧🇬 [bg](../../../bg/docs/reference/CLI-TOOLS.md) · 🇧🇩 [bn](../../../bn/docs/reference/CLI-TOOLS.md) · 🇧🇦 [bs](../../../bs/docs/reference/CLI-TOOLS.md) · 🇨🇿 [cs](../../../cs/docs/reference/CLI-TOOLS.md) · 🇩🇰 [da](../../../da/docs/reference/CLI-TOOLS.md) · 🇩🇪 [de](../../../de/docs/reference/CLI-TOOLS.md) · 🇬🇷 [el](../../../el/docs/reference/CLI-TOOLS.md) · 🇪🇸 [es](../../../es/docs/reference/CLI-TOOLS.md) · 🇪🇪 [et](../../../et/docs/reference/CLI-TOOLS.md) · 🇮🇷 [fa](../../../fa/docs/reference/CLI-TOOLS.md) · 🇫🇮 [fi](../../../fi/docs/reference/CLI-TOOLS.md) · 🇫🇷 [fr](../../../fr/docs/reference/CLI-TOOLS.md) · 🇮🇪 [ga](../../../ga/docs/reference/CLI-TOOLS.md) · 🇮🇳 [gu](../../../gu/docs/reference/CLI-TOOLS.md) · 🇳🇬 [ha](../../../ha/docs/reference/CLI-TOOLS.md) · 🇮🇱 [he](../../../he/docs/reference/CLI-TOOLS.md) · 🇮🇳 [hi](../../../hi/docs/reference/CLI-TOOLS.md) · 🇭🇷 [hr](../../../hr/docs/reference/CLI-TOOLS.md) · 🇭🇺 [hu](../../../hu/docs/reference/CLI-TOOLS.md) · 🇦🇲 [hy](../../../hy/docs/reference/CLI-TOOLS.md) · 🇮🇩 [id](../../../id/docs/reference/CLI-TOOLS.md) · 🇳🇬 [ig](../../../ig/docs/reference/CLI-TOOLS.md) · 🇮🇹 [it](../../../it/docs/reference/CLI-TOOLS.md) · 🇯🇵 [ja](../../../ja/docs/reference/CLI-TOOLS.md) · 🇬🇪 [ka](../../../ka/docs/reference/CLI-TOOLS.md) · 🇰🇭 [km](../../../km/docs/reference/CLI-TOOLS.md) · 🇮🇳 [kn](../../../kn/docs/reference/CLI-TOOLS.md) · 🇰🇷 [ko](../../../ko/docs/reference/CLI-TOOLS.md) · 🇱🇹 [lt](../../../lt/docs/reference/CLI-TOOLS.md) · 🇱🇻 [lv](../../../lv/docs/reference/CLI-TOOLS.md) · 🇮🇳 [ml](../../../ml/docs/reference/CLI-TOOLS.md) · 🇮🇳 [mr](../../../mr/docs/reference/CLI-TOOLS.md) · 🇲🇾 [ms](../../../ms/docs/reference/CLI-TOOLS.md) · 🇲🇹 [mt](../../../mt/docs/reference/CLI-TOOLS.md) · 🇲🇲 [my](../../../my/docs/reference/CLI-TOOLS.md) · 🇳🇵 [ne](../../../ne/docs/reference/CLI-TOOLS.md) · 🇳🇱 [nl](../../../nl/docs/reference/CLI-TOOLS.md) · 🇳🇴 [no](../../../no/docs/reference/CLI-TOOLS.md) · 🇮🇳 [or](../../../or/docs/reference/CLI-TOOLS.md) · 🇮🇳 [pa](../../../pa/docs/reference/CLI-TOOLS.md) · 🇵🇭 [phi](../../../phi/docs/reference/CLI-TOOLS.md) · 🇵🇱 [pl](../../../pl/docs/reference/CLI-TOOLS.md) · 🇵🇹 [pt](../../../pt/docs/reference/CLI-TOOLS.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/reference/CLI-TOOLS.md) · 🇷🇴 [ro](../../../ro/docs/reference/CLI-TOOLS.md) · 🇷🇺 [ru](../../../ru/docs/reference/CLI-TOOLS.md) · 🇱🇰 [si](../../../si/docs/reference/CLI-TOOLS.md) · 🇸🇰 [sk](../../../sk/docs/reference/CLI-TOOLS.md) · 🇸🇮 [sl](../../../sl/docs/reference/CLI-TOOLS.md) · 🇷🇸 [sr](../../../sr/docs/reference/CLI-TOOLS.md) · 🇸🇪 [sv](../../../sv/docs/reference/CLI-TOOLS.md) · 🇰🇪 [sw](../../../sw/docs/reference/CLI-TOOLS.md) · 🇮🇳 [ta](../../../ta/docs/reference/CLI-TOOLS.md) · 🇮🇳 [te](../../../te/docs/reference/CLI-TOOLS.md) · 🇹🇭 [th](../../../th/docs/reference/CLI-TOOLS.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/reference/CLI-TOOLS.md) · 🇵🇰 [ur](../../../ur/docs/reference/CLI-TOOLS.md) · 🇺🇿 [uz](../../../uz/docs/reference/CLI-TOOLS.md) · 🇻🇳 [vi](../../../vi/docs/reference/CLI-TOOLS.md) · 🇳🇬 [yo](../../../yo/docs/reference/CLI-TOOLS.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/reference/CLI-TOOLS.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/reference/CLI-TOOLS.md)
 
@@ -6,13 +6,13 @@
 
 Son güncelleme: 2026-08-23
 
-OmniRoute, üç özel pano sayfasına yayılmış üç CLI aracı kategorisiyle entegre olur:
+Pusula, üç özel pano sayfasına yayılmış üç CLI aracı kategorisiyle entegre olur:
 
 | Sayfa          | Rota                    | Kavram                                                                                | Sayı                  |
 | -------------- | ----------------------- | ------------------------------------------------------------------------------------- | --------------------- |
-| **CLI Code's** | `/dashboard/cli-code`   | OmniRoute'a yönlendirdiğiniz kodlama araçları (İstemci → CLI → OmniRoute → Sağlayıcı) | 26                    |
-| **CLI Agents** | `/dashboard/cli-agents` | OmniRoute'a yönlendirdiğiniz otonom ajanlar (aynı akış, daha geniş kapsam)            | 10                    |
-| **ACP Agents** | `/dashboard/acp-agents` | OmniRoute'un stdio/ACP aracılığıyla arka uç olarak başlattığı CLI'lar (ters akış)     | kayıt defterine bakın |
+| **CLI Code's** | `/dashboard/cli-code`   | Pusula'a yönlendirdiğiniz kodlama araçları (İstemci → CLI → Pusula → Sağlayıcı) | 26                    |
+| **CLI Agents** | `/dashboard/cli-agents` | Pusula'a yönlendirdiğiniz otonom ajanlar (aynı akış, daha geniş kapsam)            | 10                    |
+| **ACP Agents** | `/dashboard/acp-agents` | Pusula'un stdio/ACP aracılığıyla arka uç olarak başlattığı CLI'lar (ters akış)     | kayıt defterine bakın |
 
 Eski rotalar 308 ile yönlendirilir: `/dashboard/cli-tools` → `/dashboard/cli-code`, `/dashboard/agents` → `/dashboard/acp-agents`.
 
@@ -24,14 +24,14 @@ Eski rotalar 308 ile yönlendirilir: `/dashboard/cli-tools` → `/dashboard/cli-
 CLI Code's / CLI Agents (tüketim akışı):
 Claude / Codex / OpenCode / Cline / KiloCode / Continue / Hermes Agent / Goose / ...
            │
-           ▼  (tümü OmniRoute'a yönlendirilir)
+           ▼  (tümü Pusula'a yönlendirilir)
     http://YOUR_SERVER:20128/v1
            │
-           ▼  (OmniRoute, isteği doğru sağlayıcıya yönlendirir)
+           ▼  (Pusula, isteği doğru sağlayıcıya yönlendirir)
     Anthropic / OpenAI / Gemini / DeepSeek / Groq / Mistral / ...
 
 ACP Agents (ters başlatma akışı):
-    İstemci isteği → OmniRoute → CLI'ı stdio/ACP aracılığıyla başlatır → yanıt
+    İstemci isteği → Pusula → CLI'ı stdio/ACP aracılığıyla başlatır → yanıt
 ```
 
 **Avantajlar:**
@@ -45,25 +45,25 @@ ACP Agents (ters başlatma akışı):
 
 ## `setup-*` ile Otomatik Yapılandırma
 
-Her aracın yapılandırmasını elle yazmak zorunda değilsiniz. OmniRoute, desteklenen her CLI için, çalışan bir OmniRoute'tan (yerel veya uzak) **canlı** model kataloğunu okuyan ve aracın kendi yapılandırmasını makinenize yazan bir `setup-*` komutu sunar:
+Her aracın yapılandırmasını elle yazmak zorunda değilsiniz. Pusula, desteklenen her CLI için, çalışan bir Pusula'tan (yerel veya uzak) **canlı** model kataloğunu okuyan ve aracın kendi yapılandırmasını makinenize yazan bir `setup-*` komutu sunar:
 
 ```bash
-omniroute setup-codex        omniroute setup-claude       omniroute setup-opencode
-omniroute setup-cline        omniroute setup-kilo         omniroute setup-continue
-omniroute setup-cursor       omniroute setup-roo          omniroute setup-crush
-omniroute setup-goose        omniroute setup-qwen         omniroute setup-aider
-omniroute setup-5dive
+pusula setup-codex        pusula setup-claude       pusula setup-opencode
+pusula setup-cline        pusula setup-kilo         pusula setup-continue
+pusula setup-cursor       pusula setup-roo          pusula setup-crush
+pusula setup-goose        pusula setup-qwen         pusula setup-aider
+pusula setup-5dive
 ```
 
-Her biri `--remote <url> --api-key <key>` (uzak bir OmniRoute'a karşı yerel bir aracı yapılandırma), `--dry-run` (yazmadan önizleme) ve `--port` parametrelerini kabul eder. Model otomatik keşfi olmayan araçlar (Cline, Kilo, Roo, Goose, Aider, Qwen, 5dive) `--model <id>` (ve etkileşimsiz çalıştırmalar için `--yes`) parametresini alır. `setup-5dive`, `$HOME` altına yazmayan tek tariftir: filo ana bilgisayarında kök sahipli bir kimlik doğrulama profili yazarak bir 5dive aracı filosunu yapılandırır, bu nedenle `sudo` aracılığıyla yeniden yürütülür ve kendi uzak modu yoktur. Doğru ortam enjekte edilmiş ve hiç yapılandırma yazılmamış bir CLI başlatmak için genel `omniroute run <target>` başlatıcısını kullanın (claude, codex, aider, goose, opencode, qwen, gemini — hedefler ve takma adlar `bin/cli/cli-manifest.mjs` dosyasından gelir); eski araç başına başlatıcılar `omniroute launch` (Claude Code) ve `omniroute launch-codex` (Codex) hala mevcuttur. Gemini CLI yalnızca başlatma amaçlıdır: bir `omniroute run` hedefidir ancak `setup-*`/`configure` tarifi yoktur.
+Her biri `--remote <url> --api-key <key>` (uzak bir Pusula'a karşı yerel bir aracı yapılandırma), `--dry-run` (yazmadan önizleme) ve `--port` parametrelerini kabul eder. Model otomatik keşfi olmayan araçlar (Cline, Kilo, Roo, Goose, Aider, Qwen, 5dive) `--model <id>` (ve etkileşimsiz çalıştırmalar için `--yes`) parametresini alır. `setup-5dive`, `$HOME` altına yazmayan tek tariftir: filo ana bilgisayarında kök sahipli bir kimlik doğrulama profili yazarak bir 5dive aracı filosunu yapılandırır, bu nedenle `sudo` aracılığıyla yeniden yürütülür ve kendi uzak modu yoktur. Doğru ortam enjekte edilmiş ve hiç yapılandırma yazılmamış bir CLI başlatmak için genel `pusula run <target>` başlatıcısını kullanın (claude, codex, aider, goose, opencode, qwen, gemini — hedefler ve takma adlar `bin/cli/cli-manifest.mjs` dosyasından gelir); eski araç başına başlatıcılar `pusula launch` (Claude Code) ve `pusula launch-codex` (Codex) hala mevcuttur. Gemini CLI yalnızca başlatma amaçlıdır: bir `pusula run` hedefidir ancak `setup-*`/`configure` tarifi yoktur.
 
 > **Tam referans:** her komutun ne yazdığı, her bayrak, yerel ve uzak arasındaki farklar ve hangi araçların `/v1` soneki istediği gibi ana tablo **[CLI Entegrasyonları](../guides/CLI-INTEGRATIONS.md)** bölümünde yer almaktadır.
 
 ### Bunları bir kapsayıcı içinde çalıştırma
 
-OmniRoute kapsayıcısı içinde yürütülen bir `setup-*` komutu, kapsayıcının kendi ana dizinine yazar; bu dizin hiçbir ana bilgisayar CLI'si tarafından okunmaz ve kapsayıcıyla birlikte kaybolur. OmniRoute bunu algılar ve yazmak yerine talimatlarla birlikte `2` koduyla çıkar. İki desteklenen yol vardır — CLI'yi ana bilgisayara kurup kapsayıcıya `omniroute connect` yapmak veya yapılandırma dizinlerini bağlayıp `CLI_CONFIG_HOME`'u (compose `host` profili) ayarlamak. Her `setup-*` komutu, ayrıca `omniroute configure` ve `omniroute config set`, kapsayıcının kendi CLI'larını yapılandırmak istediğinizde `--allow-container-write` parametresini kabul eder; `OMNIROUTE_ALLOW_CONTAINER_CONFIG_WRITE=true` sunucu için de aynısını yapar. [Docker Kılavuzu → Ana bilgisayar CLI araçlarını yapılandırma](../guides/DOCKER_GUIDE.md#configuring-host-cli-tools-when-omniroute-runs-in-docker) bölümüne bakın.
+Pusula kapsayıcısı içinde yürütülen bir `setup-*` komutu, kapsayıcının kendi ana dizinine yazar; bu dizin hiçbir ana bilgisayar CLI'si tarafından okunmaz ve kapsayıcıyla birlikte kaybolur. Pusula bunu algılar ve yazmak yerine talimatlarla birlikte `2` koduyla çıkar. İki desteklenen yol vardır — CLI'yi ana bilgisayara kurup kapsayıcıya `pusula connect` yapmak veya yapılandırma dizinlerini bağlayıp `CLI_CONFIG_HOME`'u (compose `host` profili) ayarlamak. Her `setup-*` komutu, ayrıca `pusula configure` ve `pusula config set`, kapsayıcının kendi CLI'larını yapılandırmak istediğinizde `--allow-container-write` parametresini kabul eder; `PUSULA_ALLOW_CONTAINER_CONFIG_WRITE=true` sunucu için de aynısını yapar. [Docker Kılavuzu → Ana bilgisayar CLI araçlarını yapılandırma](../guides/DOCKER_GUIDE.md#configuring-host-cli-tools-when-pusula-runs-in-docker) bölümüne bakın.
 
-Kontrol panelinin **uygulama uç noktası** (`POST /api/cli-tools/apply`) aynı korumayı uygular: bir kapsayıcıda, hedefi ana bilgisayardan bağlanmamış bir yazma işlemi, `containerEphemeralTarget: true` ile **`422`** yanıtı verir, güvenli hata metni ve — ana bilgisayar tarifi olan araçlar için (claude, codex, opencode, cline, kilo, continue) — bunun yerine ana bilgisayarda çalıştırılacak bir `hostSetupCommand` (örn. `omniroute setup-opencode`) sağlar; hiçbir şey yazılmaz. `dryRun: true` kapsayıcı modunda çalışmaya devam eder ve diske dokunmadan sansürlenmiş bir önizleme + hedef yolu döndürür. Önizleme içeriği, kopyalanacak veya içe aktarılacak kimlik bilgisi içeren bir yapılandırma değildir. Ana bilgisayarda orijinal araç/temel URL/API anahtarı/model girdileriyle uygulayın veya belirtilen ana bilgisayar tarafı kurulum komutunu kullanın. Önizleme başlığı ve istek sözleşmesi için [CLI yapılandırma güvenliği](../security/CLI-CONFIGURATION.md) bölümüne bakın. Bu davranış kasıtlıdır ve `tests/unit/api/cli-tools/apply-container-guard.test.ts` tarafından regresyonlara karşı korunmaktadır — bir 422 hatasını korumayı kaldırarak asla "düzeltmeyin".
+Kontrol panelinin **uygulama uç noktası** (`POST /api/cli-tools/apply`) aynı korumayı uygular: bir kapsayıcıda, hedefi ana bilgisayardan bağlanmamış bir yazma işlemi, `containerEphemeralTarget: true` ile **`422`** yanıtı verir, güvenli hata metni ve — ana bilgisayar tarifi olan araçlar için (claude, codex, opencode, cline, kilo, continue) — bunun yerine ana bilgisayarda çalıştırılacak bir `hostSetupCommand` (örn. `pusula setup-opencode`) sağlar; hiçbir şey yazılmaz. `dryRun: true` kapsayıcı modunda çalışmaya devam eder ve diske dokunmadan sansürlenmiş bir önizleme + hedef yolu döndürür. Önizleme içeriği, kopyalanacak veya içe aktarılacak kimlik bilgisi içeren bir yapılandırma değildir. Ana bilgisayarda orijinal araç/temel URL/API anahtarı/model girdileriyle uygulayın veya belirtilen ana bilgisayar tarafı kurulum komutunu kullanın. Önizleme başlığı ve istek sözleşmesi için [CLI yapılandırma güvenliği](../security/CLI-CONFIGURATION.md) bölümüne bakın. Bu davranış kasıtlıdır ve `tests/unit/api/cli-tools/apply-container-guard.test.ts` tarafından regresyonlara karşı korunmaktadır — bir 422 hatasını korumayı kaldırarak asla "düzeltmeyin".
 
 ---
 
@@ -93,8 +93,8 @@ tek bir bildirim kaynağı vardır ve bir sapma testi bunların uyumlu kalmasın
 | ---------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | **Kataloglanmış**      | Pano kataloğunda görünür (ad, sağlayıcı, belgeler, yapılandırma türü)                       | `src/shared/constants/cliTools.ts` (`CLI_TOOLS`)                          |
 | **Algılanabilir**      | İkili dosya/yapılandırma algılama, sistem durumu kontrolleri, yapılandırma yolları          | `src/shared/services/cliRuntime.ts` (`CLI_TOOLS` çalışma zamanı kataloğu) |
-| **Yapılandırılabilir** | `omniroute configure <cli>` tarafından desteklenir (kurulum tarifi mevcuttur)               | `bin/cli/cli-manifest.mjs` (`configure: true`)                            |
-| **Başlatılabilir**     | `omniroute run <target>` tarafından desteklenir (ortam/değişken enjeksiyonu tanımlanmıştır) | `bin/cli/cli-manifest.mjs` (`run: true`)                                  |
+| **Yapılandırılabilir** | `pusula configure <cli>` tarafından desteklenir (kurulum tarifi mevcuttur)               | `bin/cli/cli-manifest.mjs` (`configure: true`)                            |
+| **Başlatılabilir**     | `pusula run <target>` tarafından desteklenir (ortam/değişken enjeksiyonu tanımlanmıştır) | `bin/cli/cli-manifest.mjs` (`run: true`)                                  |
 
 `bin/cli/cli-manifest.mjs`, CLI komut
 yüzeyleri için kurallı çalıştırılabilir manifesttir: `run`, `configure` ve kabuk tamamlama oluşturucularının tümü
@@ -163,7 +163,7 @@ bir yüzeye eklenen bir hedef, sessizce sapmak yerine test paketinin başarısı
 
 ## 3. ACP Aracıları (/dashboard/acp-agents)
 
-Bu sayfa (önceki adı `/dashboard/agents`), OmniRoute'un stdio/ACP protokolü aracılığıyla arka uç yürütme motorları olarak **başlatabildiği** CLI'ları gösterir. Katalog, `src/lib/acp/registry.ts` içinde ayrı olarak tutulur ve `CLI_TOOLS` ile **aynı değildir**.
+Bu sayfa (önceki adı `/dashboard/agents`), Pusula'un stdio/ACP protokolü aracılığıyla arka uç yürütme motorları olarak **başlatabildiği** CLI'ları gösterir. Katalog, `src/lib/acp/registry.ts` içinde ayrı olarak tutulur ve `CLI_TOOLS` ile **aynı değildir**.
 
 ---
 
@@ -228,7 +228,7 @@ interface ToolBatchStatus {
 | `POST /api/cli-tools/codewhale-settings`    | CodeWhale (OPENAI_BASE_URL, birincil + eski `~/.deepseek` eşitlemesi) |
 | `POST /api/cli-tools/smelt-settings`        | Smelt                                                                 |
 | `POST /api/cli-tools/pi-settings`           | Pi kodlama ajanı                                                      |
-| `POST /api/cli-tools/grok-build-settings`   | Grok Build (~/.grok/config.toml, `[model.omniroute]`)                 |
+| `POST /api/cli-tools/grok-build-settings`   | Grok Build (~/.grok/config.toml, `[model.pusula]`)                 |
 | `POST /api/cli-tools/qwen-settings`         | Qwen Code (`~/.qwen/settings.json` + özel `.env` anahtarı)            |
 
 Tüm rotalar, hata yanıtları için `sanitizeErrorMessage()` kullanır (Kesin Kural #12).
@@ -290,7 +290,7 @@ Eksiksiz PT-BR ve EN çevirileri sağlanmıştır. Diğer 39 yerel ayar, `src/i1
 
 ## 9. Hızlı Başlangıç
 
-### Adım 1 — OmniRoute API Anahtarı Alın
+### Adım 1 — Pusula API Anahtarı Alın
 
 1. `/dashboard/api-manager` sayfasını açın → **API Anahtarı Oluştur**
 2. Anahtara bir ad verin (ör. `cli-tools`) ve tüm izinleri seçin
@@ -323,7 +323,7 @@ npm install -g kilocode
 # Qwen Code
 npm install -g @qwen-code/qwen-code
 
-# Google Gemini CLI (`omniroute run gemini` aracılığıyla başlatılabilir → /v1beta yüzeyi)
+# Google Gemini CLI (`pusula run gemini` aracılığıyla başlatılabilir → /v1beta yüzeyi)
 npm install -g @google/gemini-cli
 
 # Aider
@@ -354,14 +354,14 @@ cargo install smelt  # Rust tabanlı
 ### Adım 4 — Genel Ortam Değişkenlerini Ayarlayın
 
 ```bash
-# OmniRoute Evrensel Uç Noktası
+# Pusula Evrensel Uç Noktası
 export OPENAI_BASE_URL="http://localhost:20128/v1"
-export OPENAI_API_KEY="sk-your-omniroute-key"
+export OPENAI_API_KEY="sk-your-pusula-key"
 export ANTHROPIC_BASE_URL="http://localhost:20128"
-export ANTHROPIC_AUTH_TOKEN="sk-your-omniroute-key"
+export ANTHROPIC_AUTH_TOKEN="sk-your-pusula-key"
 # Gemini CLI, GOOGLE_GEMINI_BASE_URL değerini KÖK düzeyinde okur (SDK'sı /v1beta/... yolunu kendisi ekler)
 export GOOGLE_GEMINI_BASE_URL="http://localhost:20128"
-export GEMINI_API_KEY="sk-your-omniroute-key"
+export GEMINI_API_KEY="sk-your-pusula-key"
 ```
 
 > **Uzak sunucu** için `localhost:20128` değerini sunucu IP'si veya etki alanıyla değiştirin,
@@ -379,7 +379,7 @@ mkdir -p ~/.claude && cat > ~/.claude/settings.json << EOF
 {
   "env": {
     "ANTHROPIC_BASE_URL": "http://localhost:20128",
-    "ANTHROPIC_AUTH_TOKEN": "sk-your-omniroute-key"
+    "ANTHROPIC_AUTH_TOKEN": "sk-your-pusula-key"
   }
 }
 EOF
@@ -395,20 +395,20 @@ Claude Code için birleştirilmiş Anthropic ağ geçidi kökünü kullanın. Bu
 
 Modern Codex (v0.137+) yalnızca `~/.codex/config.toml` dosyasını okur — eski
 `config.yaml`, eski npm CLI'ına aittir ve sessizce yok sayılır. API
-anahtarı dosyanın içinde değil, her zaman `OMNIROUTE_API_KEY` ortam değişkeninde (`env_key`)
+anahtarı dosyanın içinde değil, her zaman `PUSULA_API_KEY` ortam değişkeninde (`env_key`)
 kalır:
 
 ```bash
 mkdir -p ~/.codex && cat > ~/.codex/config.toml << EOF
-model_provider = "omniroute"
+model_provider = "pusula"
 
-[model_providers.omniroute]
-name                 = "OmniRoute"
+[model_providers.pusula]
+name                 = "Pusula"
 base_url             = "http://localhost:20128/v1"
-env_key              = "OMNIROUTE_API_KEY"
+env_key              = "PUSULA_API_KEY"
 requires_openai_auth = false
 EOF
-export OMNIROUTE_API_KEY="sk-your-omniroute-key"
+export PUSULA_API_KEY="sk-your-pusula-key"
 ```
 
 Tam başvuru (profiller, `wire_api`, bağlam pencereleri): [CODEX-CLI-CONFIGURATION.md](../guides/CODEX-CLI-CONFIGURATION.md).
@@ -424,12 +424,12 @@ mkdir -p ~/.config/opencode && cat > ~/.config/opencode/opencode.json << EOF
 {
   "\$schema": "https://opencode.ai/config.json",
   "provider": {
-    "omniroute": {
+    "pusula": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "OmniRoute",
+      "name": "Pusula",
       "options": {
         "baseURL": "http://localhost:20128/v1",
-        "apiKey": "sk-your-omniroute-key"
+        "apiKey": "sk-your-pusula-key"
       },
       "models": {
         "claude-sonnet-4-5": { "name": "claude-sonnet-4-5" },
@@ -445,7 +445,7 @@ EOF
 **Test:** `opencode`
 
 > Düşünme varyantlarını göndermek için
-> `opencode run "your prompt" --model omniroute/claude-sonnet-4-5-thinking --variant high`
+> `opencode run "your prompt" --model pusula/claude-sonnet-4-5-thinking --variant high`
 > komutunu kullanın.
 
 ---
@@ -459,7 +459,7 @@ mkdir -p ~/.cline/data && cat > ~/.cline/data/globalState.json << EOF
 {
   "apiProvider": "openai",
   "openAiBaseUrl": "http://localhost:20128/v1",
-  "openAiApiKey": "sk-your-omniroute-key"
+  "openAiApiKey": "sk-your-pusula-key"
 }
 EOF
 ```
@@ -467,7 +467,7 @@ EOF
 **VS Code modu:**
 Cline uzantısı ayarları → API Sağlayıcısı: `OpenAI Compatible` → Temel URL: `http://localhost:20128/v1`
 
-Alternatif olarak OmniRoute kontrol panelini kullanın → **CLI Araçları → Cline → Yapılandırmayı Uygula**.
+Alternatif olarak Pusula kontrol panelini kullanın → **CLI Araçları → Cline → Yapılandırmayı Uygula**.
 
 ---
 
@@ -476,7 +476,7 @@ Alternatif olarak OmniRoute kontrol panelini kullanın → **CLI Araçları → 
 **CLI modu:**
 
 ```bash
-kilocode --api-base http://localhost:20128/v1 --api-key sk-your-omniroute-key
+kilocode --api-base http://localhost:20128/v1 --api-key sk-your-pusula-key
 ```
 
 **VS Code ayarları:**
@@ -484,11 +484,11 @@ kilocode --api-base http://localhost:20128/v1 --api-key sk-your-omniroute-key
 ```json
 {
   "kilo-code.openAiBaseUrl": "http://localhost:20128/v1",
-  "kilo-code.apiKey": "sk-your-omniroute-key"
+  "kilo-code.apiKey": "sk-your-pusula-key"
 }
 ```
 
-Alternatif olarak OmniRoute kontrol panelini kullanın → **CLI Araçları → KiloCode → Yapılandırmayı Uygula**.
+Alternatif olarak Pusula kontrol panelini kullanın → **CLI Araçları → KiloCode → Yapılandırmayı Uygula**.
 
 ---
 
@@ -498,11 +498,11 @@ Alternatif olarak OmniRoute kontrol panelini kullanın → **CLI Araçları → 
 
 ```yaml
 models:
-  - name: OmniRoute
+  - name: Pusula
     provider: openai
     model: auto
     apiBase: http://localhost:20128/v1
-    apiKey: sk-your-omniroute-key
+    apiKey: sk-your-pusula-key
     default: true
 ```
 
@@ -512,25 +512,25 @@ Düzenleme işleminden sonra VS Code'u yeniden başlatın.
 
 #### VS Code Insiders (`chatLanguageModels.json`)
 
-VS Code Insiders özel uç nokta modelleri için yapılandırıldığında ve OmniRoute'un özel bir üst bilgi alanı olmadan çalışmasını istediğinizde bunu kullanın.
+VS Code Insiders özel uç nokta modelleri için yapılandırıldığında ve Pusula'un özel bir üst bilgi alanı olmadan çalışmasını istediğinizde bunu kullanın.
 
 **Önerilen konum:**
 
 - Linux: `~/.config/Code - Insiders/User/chatLanguageModels.json`
 - Windows: `%APPDATA%/Code - Insiders/User/chatLanguageModels.json`
 
-**Tokenleştirilmiş OmniRoute takma adını kullanan örnek:**
+**Tokenleştirilmiş Pusula takma adını kullanan örnek:**
 
 ```json
 [
   {
     "vendor": "customendpoint",
     "id": "auto",
-    "name": "OmniRoute Auto",
+    "name": "Pusula Auto",
     "family": "gpt-4",
     "version": "1.0.0",
-    "url": "http://localhost:20128/api/v1/vscode/sk-your-omniroute-key/chat/completions",
-    "modelsUrl": "http://localhost:20128/api/v1/vscode/sk-your-omniroute-key/models",
+    "url": "http://localhost:20128/api/v1/vscode/sk-your-pusula-key/chat/completions",
+    "modelsUrl": "http://localhost:20128/api/v1/vscode/sk-your-pusula-key/models",
     "requestFormat": "openai-chat-completions",
     "contextWindow": 256000,
     "maxOutputTokens": 32768,
@@ -543,7 +543,7 @@ VS Code Insiders özel uç nokta modelleri için yapılandırıldığında ve Om
 
 **Notlar:**
 
-- `sk-your-omniroute-key` değerini OmniRoute'ta oluşturulan bir API anahtarıyla değiştirin.
+- `sk-your-pusula-key` değerini Pusula'ta oluşturulan bir API anahtarıyla değiştirin.
 - `url` alanı `/api/v1/vscode/{token}/chat/completions` yolunu göstermelidir.
 - `modelsUrl` alanı `/api/v1/vscode/{token}/models` yolunu göstermelidir.
 - İstemci özel başlıkları desteklediğinde normal `/v1` + Bearer başlığı akışını tercih edin.
@@ -557,40 +557,40 @@ VS Code Insiders özel uç nokta modelleri için yapılandırıldığında ve Om
 # AWS/Kiro hesabınızda oturum açın:
 kiro-cli login
 
-# CLI kendi kimlik doğrulamasını kullanır — Kiro CLI'ın kendisi için arka uç olarak OmniRoute'a gerek yoktur.
-# Diğer araçlar için kiro-cli'ı OmniRoute ile birlikte kullanın.
+# CLI kendi kimlik doğrulamasını kullanır — Kiro CLI'ın kendisi için arka uç olarak Pusula'a gerek yoktur.
+# Diğer araçlar için kiro-cli'ı Pusula ile birlikte kullanın.
 kiro-cli status
 ```
 
-**Kiro IDE** masaüstü uygulaması için OmniRoute tarafından
+**Kiro IDE** masaüstü uygulaması için Pusula tarafından
 `/dashboard/cli-tools → Kiro` altında sunulan MITM uç noktasını kullanın.
 
 ---
 
-## 10. Dahili OmniRoute CLI
+## 10. Dahili Pusula CLI
 
-`omniroute` ikili dosyası; sunucu yaşam döngüsü, kurulum, tanılama ve sağlayıcı yönetimi için komutlar sağlar. Giriş noktası: `bin/omniroute.mjs`.
+`pusula` ikili dosyası; sunucu yaşam döngüsü, kurulum, tanılama ve sağlayıcı yönetimi için komutlar sağlar. Giriş noktası: `bin/pusula.mjs`.
 
 ```bash
-omniroute                              # Sunucuyu başlatır (varsayılan port 20128)
-omniroute setup                        # Etkileşimli kurulum sihirbazı
-omniroute doctor                       # Yapılandırmayı, DB'yi, portları ve çalışma zamanını kontrol eder
-omniroute providers list               # Yapılandırılmış sağlayıcı bağlantıları
-omniroute providers test-all           # Her etkin bağlantıyı test eder
-omniroute reset-password               # Yönetici parolasını sıfırlar
-omniroute logs                         # İstek günlüklerini akış halinde gösterir
-omniroute health                       # Ayrıntılı sistem durumu (kesiciler, önbellek, bellek)
-omniroute --version                    # Sürümü yazdırır
-omniroute --help                       # Tüm komutları gösterir
+pusula                              # Sunucuyu başlatır (varsayılan port 20128)
+pusula setup                        # Etkileşimli kurulum sihirbazı
+pusula doctor                       # Yapılandırmayı, DB'yi, portları ve çalışma zamanını kontrol eder
+pusula providers list               # Yapılandırılmış sağlayıcı bağlantıları
+pusula providers test-all           # Her etkin bağlantıyı test eder
+pusula reset-password               # Yönetici parolasını sıfırlar
+pusula logs                         # İstek günlüklerini akış halinde gösterir
+pusula health                       # Ayrıntılı sistem durumu (kesiciler, önbellek, bellek)
+pusula --version                    # Sürümü yazdırır
+pusula --help                       # Tüm komutları gösterir
 ```
 
 ### Kurulum ve Başlatma
 
 ```bash
-omniroute setup                        # Etkileşimli kurulum sihirbazı
-omniroute setup --non-interactive      # CI/otomasyon modu (ortam değişkenlerini + bayrakları okur)
-omniroute setup --password '<value>'   # Yönetici parolasını doğrudan ayarlar
-omniroute setup --add-provider \
+pusula setup                        # Etkileşimli kurulum sihirbazı
+pusula setup --non-interactive      # CI/otomasyon modu (ortam değişkenlerini + bayrakları okur)
+pusula setup --password '<value>'   # Yönetici parolasını doğrudan ayarlar
+pusula setup --add-provider \
   --provider openai \
   --api-key '<value>' \
   --test-provider                      # Tek seferde bir sağlayıcı ekler ve test eder
@@ -600,21 +600,21 @@ Etkileşimsiz kurulum için tanınan ortam değişkenleri:
 
 | Değişken            | Amaç                                                                                     |
 | ------------------- | ---------------------------------------------------------------------------------------- |
-| `OMNIROUTE_API_KEY` | Sağlayıcı API anahtarı (Commander `.env()` aracılığıyla `--api-key` seçeneğine bağlanır) |
-| `DATA_DIR`          | OmniRoute veri dizinini geçersiz kılar                                                   |
+| `PUSULA_API_KEY` | Sağlayıcı API anahtarı (Commander `.env()` aracılığıyla `--api-key` seçeneğine bağlanır) |
+| `DATA_DIR`          | Pusula veri dizinini geçersiz kılar                                                   |
 
 Diğer tüm etkileşimsiz girdiler ortam değişkenleri olarak değil, bayraklar olarak geçirilir:
 `--password`, `--provider`, `--provider-name`, `--provider-base-url`, `--default-model`
-(yukarıdaki `omniroute setup` seçeneklerine bakın).
+(yukarıdaki `pusula setup` seçeneklerine bakın).
 
 ### Tanılama
 
 ```bash
-omniroute doctor                       # Yapılandırmayı, DB'yi, portları, çalışma zamanını, belleği ve çalışırlığı kontrol eder
-omniroute doctor --json                # Makine tarafından okunabilir JSON
-omniroute doctor --no-liveness         # HTTP sistem durumu yoklamasını atlar
-omniroute doctor --host 0.0.0.0        # Çalışırlık ana makinesini geçersiz kılar
-omniroute doctor --liveness-url <url>  # Tam sistem durumu uç noktası URL'sini geçersiz kılar
+pusula doctor                       # Yapılandırmayı, DB'yi, portları, çalışma zamanını, belleği ve çalışırlığı kontrol eder
+pusula doctor --json                # Makine tarafından okunabilir JSON
+pusula doctor --no-liveness         # HTTP sistem durumu yoklamasını atlar
+pusula doctor --host 0.0.0.0        # Çalışırlık ana makinesini geçersiz kılar
+pusula doctor --liveness-url <url>  # Tam sistem durumu uç noktası URL'sini geçersiz kılar
 ```
 
 Doctor şu kontrolleri çalıştırır: `Config`, `Database`, `Storage/encryption`,
@@ -624,47 +624,47 @@ Doctor şu kontrolleri çalıştırır: `Config`, `Database`, `Storage/encryptio
 ### Sağlayıcı Yönetimi
 
 ```bash
-omniroute providers available                       # OmniRoute sağlayıcı kataloğu
-omniroute providers available --search openai       # Kataloğu kimliğe/ada/takma ada/kategoriye göre filtreler
-omniroute providers available --category api-key    # Kategoriye göre filtreler (api-key, oauth, free, ...)
-omniroute providers available --json                # Makine tarafından okunabilir JSON
+pusula providers available                       # Pusula sağlayıcı kataloğu
+pusula providers available --search openai       # Kataloğu kimliğe/ada/takma ada/kategoriye göre filtreler
+pusula providers available --category api-key    # Kategoriye göre filtreler (api-key, oauth, free, ...)
+pusula providers available --json                # Makine tarafından okunabilir JSON
 
-omniroute providers list                            # Yapılandırılmış sağlayıcı bağlantıları
-omniroute providers list --json
+pusula providers list                            # Yapılandırılmış sağlayıcı bağlantıları
+pusula providers list --json
 
-omniroute providers test <id|name>                  # Yapılandırılmış bir bağlantıyı test eder
-omniroute providers test-all                        # Her etkin bağlantıyı test eder
-omniroute providers validate                        # Yalnızca yerel yapısal doğrulama
-omniroute providers add <provider> --credential-env PROVIDER_KEY
-omniroute providers import ./providers.json --dry-run --json
-omniroute providers auth <provider>                 # Mevcut OAuth akışı
-omniroute providers edit <id|name> --default-model <model>
-omniroute providers remove <id|name> --yes
+pusula providers test <id|name>                  # Yapılandırılmış bir bağlantıyı test eder
+pusula providers test-all                        # Her etkin bağlantıyı test eder
+pusula providers validate                        # Yalnızca yerel yapısal doğrulama
+pusula providers add <provider> --credential-env PROVIDER_KEY
+pusula providers import ./providers.json --dry-run --json
+pusula providers auth <provider>                 # Mevcut OAuth akışı
+pusula providers edit <id|name> --default-model <model>
+pusula providers remove <id|name> --yes
 ```
 
 `providers add/import/auth/edit/remove` öncelikli olarak API'yi kullanır ve bu nedenle
 etkin yerel veya uzak bağlam üzerinde çalışır. Kimlik bilgisi girdisi için
 `--credential-stdin` veya `--credential-env` kullanılmalıdır; `--dry-run --json` yalnızca
-gizlenmiş varlık/yapı bilgilerini bildirir. `providers available`, OmniRoute kataloğunu okur;
+gizlenmiş varlık/yapı bilgilerini bildirir. `providers available`, Pusula kataloğunu okur;
 `providers list/test/test-all/validate` yerel SQLite davranışlarını korur ve
 sunucunun çalışmasını gerektirmez.
 
 ### Kurtarma ve Sıfırlama
 
 ```bash
-omniroute reset-password                # Yönetici parolasını sıfırlar (ayrıca: omniroute-reset-password)
-omniroute reset-encrypted-columns       # Şifrelenmiş kimlik bilgilerini sıfırlamak için uyarı + deneme çalıştırması gösterir
-omniroute reset-encrypted-columns --force  # SQLite'taki şifrelenmiş kimlik bilgilerini gerçekten null yapar
+pusula reset-password                # Yönetici parolasını sıfırlar (ayrıca: pusula-reset-password)
+pusula reset-encrypted-columns       # Şifrelenmiş kimlik bilgilerini sıfırlamak için uyarı + deneme çalıştırması gösterir
+pusula reset-encrypted-columns --force  # SQLite'taki şifrelenmiş kimlik bilgilerini gerçekten null yapar
 ```
 
 ### Kimlik Bilgilerini Dışa Aktarma (⚠ dikkatli kullanın)
 
 ```bash
-omniroute auth export                                 # Uyarı + onay geçidi gösterir — DB erişimi yoktur
-omniroute auth export --force                          # TÜM bağlantıların ŞİFRESİ ÇÖZÜLMÜŞ kimlik bilgilerini JSON olarak stdout'a aktarır
-omniroute auth export --force --id <id>                 # Yalnızca eşleşen bağlantıyı dışa aktarır
-omniroute auth export --force --format env               # OMNIROUTE_<PROVIDER>_<FIELD>=<value> satırları üretir
-omniroute auth export --force --out creds.json           # Bir dosyaya yazar (0600 izinleriyle oluşturulur)
+pusula auth export                                 # Uyarı + onay geçidi gösterir — DB erişimi yoktur
+pusula auth export --force                          # TÜM bağlantıların ŞİFRESİ ÇÖZÜLMÜŞ kimlik bilgilerini JSON olarak stdout'a aktarır
+pusula auth export --force --id <id>                 # Yalnızca eşleşen bağlantıyı dışa aktarır
+pusula auth export --force --format env               # PUSULA_<PROVIDER>_<FIELD>=<value> satırları üretir
+pusula auth export --force --out creds.json           # Bir dosyaya yazar (0600 izinleriyle oluşturulur)
 ```
 
 `auth export` **yalnızca yerel** olarak çalışır (doğrudan SQLite okuması, HTTP rotası yoktur) ve kasıtlı olarak
@@ -676,36 +676,36 @@ ayarlanmış olması gerekir. Şifresi çözülemeyen bir alan (eski anahtar, bo
 
 ### Diğer alt komutlar
 
-Aksi belirtilmedikçe bunlar çalışan bir OmniRoute sunucusu gerektirir:
+Aksi belirtilmedikçe bunlar çalışan bir Pusula sunucusu gerektirir:
 
 ```bash
-omniroute status                       # Kapsamlı çalışma zamanı durumu
-omniroute logs                         # İstek günlüklerini akış halinde göster (--json, --search, --follow)
-omniroute config list                  # Yapılandırılmış CLI araçlarını göster
+pusula status                       # Kapsamlı çalışma zamanı durumu
+pusula logs                         # İstek günlüklerini akış halinde göster (--json, --search, --follow)
+pusula config list                  # Yapılandırılmış CLI araçlarını göster
 
-omniroute provider list                # Kullanılabilir sağlayıcıları listele (providers list diğer adı)
-omniroute provider add                 # OmniRoute'u bir araca sağlayıcı olarak kaydet
-omniroute keys add | list | remove     # API anahtarlarını yönet
-omniroute models [provider]            # Modelleri listele (--json, --search)
-omniroute combo list | switch | create | delete
+pusula provider list                # Kullanılabilir sağlayıcıları listele (providers list diğer adı)
+pusula provider add                 # Pusula'u bir araca sağlayıcı olarak kaydet
+pusula keys add | list | remove     # API anahtarlarını yönet
+pusula models [provider]            # Modelleri listele (--json, --search)
+pusula combo list | switch | create | delete
 
-omniroute backup                       # Yapılandırmanın ve veritabanının anlık görüntüsünü al
-omniroute restore                      # Önceki bir anlık görüntüden geri yükle
+pusula backup                       # Yapılandırmanın ve veritabanının anlık görüntüsünü al
+pusula restore                      # Önceki bir anlık görüntüden geri yükle
 
-omniroute health                       # Ayrıntılı sistem durumu (devre kesiciler, önbellek, bellek)
-omniroute quota                        # Sağlayıcı kota kullanımı
-omniroute cache                        # Önbellek durumu
-omniroute cache clear                  # Anlamsal ve imza önbelleklerini temizle
+pusula health                       # Ayrıntılı sistem durumu (devre kesiciler, önbellek, bellek)
+pusula quota                        # Sağlayıcı kota kullanımı
+pusula cache                        # Önbellek durumu
+pusula cache clear                  # Anlamsal ve imza önbelleklerini temizle
 
-omniroute mcp status | restart         # MCP sunucusu durumu / yeniden başlatma
-omniroute a2a status | card            # A2A sunucusu durumu / aracı kartı
+pusula mcp status | restart         # MCP sunucusu durumu / yeniden başlatma
+pusula a2a status | card            # A2A sunucusu durumu / aracı kartı
 
-omniroute tunnel list | create | stop  # Tünelleri yönet (cloudflare/tailscale/ngrok)
-omniroute env show | get <k> | set <k> <v>  # Ortam değişkenlerini incele / ayarla (geçici)
+pusula tunnel list | create | stop  # Tünelleri yönet (cloudflare/tailscale/ngrok)
+pusula env show | get <k> | set <k> <v>  # Ortam değişkenlerini incele / ayarla (geçici)
 
-omniroute test                         # Sağlayıcı bağlantısı hızlı testi
-omniroute update                       # Güncellemeleri denetle
-omniroute completion                   # Kabuk tamamlama betiği oluştur
+pusula test                         # Sağlayıcı bağlantısı hızlı testi
+pusula update                       # Güncellemeleri denetle
+pusula completion                   # Kabuk tamamlama betiği oluştur
 ```
 
 ### Yaygın bayraklar
@@ -734,7 +734,7 @@ omniroute completion                   # Kabuk tamamlama betiği oluştur
 | `/v1/audio/speech`         | Metinden sese                      | ElevenLabs, OpenAI TTS          |
 | `/v1/audio/transcriptions` | Konuşmadan metne                   | Deepgram, AssemblyAI            |
 
-Token içeren bir OmniRoute URL'siyle kullanıma hazır örnekler:
+Token içeren bir Pusula URL'siyle kullanıma hazır örnekler:
 
 ```txt
 Token örneği: sk-a3ab3c080beaee3a-69f4a4-070d71af
@@ -753,7 +753,7 @@ Ollama sohbeti: http://localhost:20128/api/v1/vscode/sk-a3ab3c080beaee3a-69f4a4-
 
 | Hata                                             | Neden                         | Çözüm                                                         |
 | ------------------------------------------------ | ----------------------------- | ------------------------------------------------------------- |
-| `Connection refused`                             | OmniRoute çalışmıyor          | `omniroute serve`                                             |
+| `Connection refused`                             | Pusula çalışmıyor          | `pusula serve`                                             |
 | `401 Unauthorized`                               | Yanlış API anahtarı           | `/dashboard/api-manager` bölümünden kontrol edin              |
 | `No combo configured`                            | Etkin yönlendirme kombosu yok | `/dashboard/combos` bölümünde ayarlayın                       |
 | CLI "not installed" gösteriyor                   | İkili dosya PATH'te değil     | `which <command>` komutuyla kontrol edin                      |

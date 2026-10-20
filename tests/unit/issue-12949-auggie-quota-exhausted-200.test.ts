@@ -8,9 +8,9 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const { AuggieExecutor } = await import("@omniroute/open-sse/executors/auggie");
+const { AuggieExecutor } = await import("@pusula/open-sse/executors/auggie");
 
-const TMP_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-auggie-quota-test-"));
+const TMP_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-auggie-quota-test-"));
 
 function writeFakeBin(name: string, script: string): string {
   const p = path.join(TMP_DIR, name);

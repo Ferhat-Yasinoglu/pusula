@@ -6,11 +6,11 @@
 
 ## Genel Bakış
 
-OmniRoute CLI komutları, `x-omniroute-cli-token` istek üstbilgisi üzerinden
+Pusula CLI komutları, `x-pusula-cli-token` istek üstbilgisi üzerinden
 gönderilen bir `HMAC-SHA256(machine-id, salt)` belirteci kullanarak yerel yönetim
 API'sinde kimlik doğrulaması yapar.
 
-Bu, CLI alt komutlarının (`omniroute status`, `omniroute providers` vb.) her
+Bu, CLI alt komutlarının (`pusula status`, `pusula providers` vb.) her
 çalıştırmada kullanıcının bir JWT veya parola sağlamasına gerek kalmadan yönetim
 uç noktalarını çağırmasına olanak tanır.
 
@@ -24,10 +24,10 @@ uç noktalarını çağırmasına olanak tanır.
    özeti döndürür.
 3. CLI, belirteci yalnızca çözümlenen hedef açık bir geri döngü URL'si
    (`localhost`, `127.0.0.0/8` veya geri döngü IPv6) olduğunda
-   `x-omniroute-cli-token` olarak gönderir. Belirteci taşıyan istekler
+   `x-pusula-cli-token` olarak gönderir. Belirteci taşıyan istekler
    `redirect: error` kullanır; böylece yerel bir yönlendirme belirteci başka bir
    kaynağa iletemez. Uzak bağlamlar bunun yerine kapsamlı erişim belirteçlerini
-   kullanır. Türetme kullanılamıyorsa CLI üstbilgiyi atlar ve `omniroute doctor`,
+   kullanır. Türetme kullanılamıyorsa CLI üstbilgiyi atlar ve `pusula doctor`,
    boş bir belirteci geçerli saymak yerine hatayı bildirir.
 4. Sunucu (`src/server/authz/policies/management.ts`), aynı salt değerini
    kullanarak beklenen belirteci yeniden hesaplar ve zamanlamaya dayalı çıkarımı
@@ -45,10 +45,10 @@ uç noktalarını çağırmasına olanak tanır.
 
 ## Varsayılan salt (kurulum başına rastgele)
 
-`OMNIROUTE_CLI_SALT` ayarlanmadığında salt, bir kez oluşturulan ve
+`PUSULA_CLI_SALT` ayarlanmadığında salt, bir kez oluşturulan ve
 `<DATA_DIR>/cli-token-salt.json` konumunda (`0600` moduyla) kalıcı olarak saklanan
 rastgele 64 karakterlik bir onaltılık dizedir; depoya eklenmiş sabit
-`omniroute-cli-auth-v1` değeri değildir. Hem `src/lib/machineToken.ts` içindeki
+`pusula-cli-auth-v1` değeri değildir. Hem `src/lib/machineToken.ts` içindeki
 `getActiveSalt()` hem de `bin/cli/utils/cliToken.mjs` içindeki karşılığı aynı
 dosyayı okur; böylece sunucu ve bu kurulumdaki her CLI çağrısı aynı değerde
 uzlaşır. Depoya eklenmiş sabit değer yalnızca henüz kalıcı veya ortam değişkeni
@@ -56,19 +56,19 @@ tabanlı bir salt oluşturulamadığında son çare olarak kullanılır (örneğ
 daha önce hiç çalıştırılmadan önceki yeni bir yalnızca-CLI kurulumu). Bu, eski
 sabit varsayılanın zayıflığını giderir: `/etc/machine-id` genellikle herkes
 tarafından okunabilir olduğundan, aksi takdirde herhangi bir yerel kullanıcı
-`OMNIROUTE_CLI_SALT` değerinin hiç ayarlanmadığı her kurulum için aynı belirteci
+`PUSULA_CLI_SALT` değerinin hiç ayarlanmadığı her kurulum için aynı belirteci
 türetebilirdi.
 
 ## Salt rotasyonu
 
-Türetilmiş token'ı kod değişikliği yapmadan döndürmek için `OMNIROUTE_CLI_SALT` değerini ayarlayın — bu değer, kurulum başına kalıcı olarak saklanan salt değerine her zaman göre önceliklidir. Rotasyondan sonra bu makinedeki tüm CLI işlemleri yeni token'ı otomatik olarak kullanır. Önceki türetilmiş değeri açığa çıkarmış olabilecek bir işlem listesi sızıntısından sonra kullanışlıdır.
+Türetilmiş token'ı kod değişikliği yapmadan döndürmek için `PUSULA_CLI_SALT` değerini ayarlayın — bu değer, kurulum başına kalıcı olarak saklanan salt değerine her zaman göre önceliklidir. Rotasyondan sonra bu makinedeki tüm CLI işlemleri yeni token'ı otomatik olarak kullanır. Önceki türetilmiş değeri açığa çıkarmış olabilecek bir işlem listesi sızıntısından sonra kullanışlıdır.
 
 ```bash
 # Kalıcı rotasyon (kabuk profiline ekleyin)
-export OMNIROUTE_CLI_SALT="my-secret-salt-2026"
+export PUSULA_CLI_SALT="my-secret-salt-2026"
 
 # Yeni token'ın kullanıldığını doğrulayın
-omniroute status
+pusula status
 ```
 
 ## Eski biçim (SHA-256, 32 karakter) — hâlâ kabul ediliyor
@@ -86,7 +86,7 @@ Dolayısıyla bir token, 64 karakterlik HMAC özetiyle **veya** 32 karakterlik e
 SHA-256 önekiyle eşleşirse geçerlidir.
 
 **Devre dışı bırakma:** CLI token mekanizmasını tamamen devre dışı bırakmak için
-`OMNIROUTE_DISABLE_CLI_TOKEN=true` değerini (`env` veya `.env` içinde) ayarlayın;
+`PUSULA_DISABLE_CLI_TOKEN=true` değerini (`env` veya `.env` içinde) ayarlayın;
 bundan sonra tüm erişimler açıkça belirtilmiş bir API anahtarı gerektirir. Çok
 kullanıcılı ana makinelerde bu önerilir; çünkü `machine-id` kullanıcı başına değil,
 cihaz başınadır ve aynı ana makinedeki başka bir kullanıcı aynı token'ı hesaplayabilir.

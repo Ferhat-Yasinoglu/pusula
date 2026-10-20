@@ -1,4 +1,4 @@
-# OmniRoute Agent Skills Catalog (Türkçe)
+# Pusula Agent Skills Catalog (Türkçe)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../frameworks/AGENT-SKILLS.md) · 🇪🇹 [am](../../../am/docs/frameworks/AGENT-SKILLS.md) · 🇸🇦 [ar](../../../ar/docs/frameworks/AGENT-SKILLS.md) · 🇦🇿 [az](../../../az/docs/frameworks/AGENT-SKILLS.md) · 🇧🇬 [bg](../../../bg/docs/frameworks/AGENT-SKILLS.md) · 🇧🇩 [bn](../../../bn/docs/frameworks/AGENT-SKILLS.md) · 🇧🇦 [bs](../../../bs/docs/frameworks/AGENT-SKILLS.md) · 🇨🇿 [cs](../../../cs/docs/frameworks/AGENT-SKILLS.md) · 🇩🇰 [da](../../../da/docs/frameworks/AGENT-SKILLS.md) · 🇩🇪 [de](../../../de/docs/frameworks/AGENT-SKILLS.md) · 🇬🇷 [el](../../../el/docs/frameworks/AGENT-SKILLS.md) · 🇪🇸 [es](../../../es/docs/frameworks/AGENT-SKILLS.md) · 🇪🇪 [et](../../../et/docs/frameworks/AGENT-SKILLS.md) · 🇮🇷 [fa](../../../fa/docs/frameworks/AGENT-SKILLS.md) · 🇫🇮 [fi](../../../fi/docs/frameworks/AGENT-SKILLS.md) · 🇫🇷 [fr](../../../fr/docs/frameworks/AGENT-SKILLS.md) · 🇮🇪 [ga](../../../ga/docs/frameworks/AGENT-SKILLS.md) · 🇮🇳 [gu](../../../gu/docs/frameworks/AGENT-SKILLS.md) · 🇳🇬 [ha](../../../ha/docs/frameworks/AGENT-SKILLS.md) · 🇮🇱 [he](../../../he/docs/frameworks/AGENT-SKILLS.md) · 🇮🇳 [hi](../../../hi/docs/frameworks/AGENT-SKILLS.md) · 🇭🇷 [hr](../../../hr/docs/frameworks/AGENT-SKILLS.md) · 🇭🇺 [hu](../../../hu/docs/frameworks/AGENT-SKILLS.md) · 🇦🇲 [hy](../../../hy/docs/frameworks/AGENT-SKILLS.md) · 🇮🇩 [id](../../../id/docs/frameworks/AGENT-SKILLS.md) · 🇳🇬 [ig](../../../ig/docs/frameworks/AGENT-SKILLS.md) · 🇮🇹 [it](../../../it/docs/frameworks/AGENT-SKILLS.md) · 🇯🇵 [ja](../../../ja/docs/frameworks/AGENT-SKILLS.md) · 🇬🇪 [ka](../../../ka/docs/frameworks/AGENT-SKILLS.md) · 🇰🇭 [km](../../../km/docs/frameworks/AGENT-SKILLS.md) · 🇮🇳 [kn](../../../kn/docs/frameworks/AGENT-SKILLS.md) · 🇰🇷 [ko](../../../ko/docs/frameworks/AGENT-SKILLS.md) · 🇱🇹 [lt](../../../lt/docs/frameworks/AGENT-SKILLS.md) · 🇱🇻 [lv](../../../lv/docs/frameworks/AGENT-SKILLS.md) · 🇮🇳 [ml](../../../ml/docs/frameworks/AGENT-SKILLS.md) · 🇮🇳 [mr](../../../mr/docs/frameworks/AGENT-SKILLS.md) · 🇲🇾 [ms](../../../ms/docs/frameworks/AGENT-SKILLS.md) · 🇲🇹 [mt](../../../mt/docs/frameworks/AGENT-SKILLS.md) · 🇲🇲 [my](../../../my/docs/frameworks/AGENT-SKILLS.md) · 🇳🇵 [ne](../../../ne/docs/frameworks/AGENT-SKILLS.md) · 🇳🇱 [nl](../../../nl/docs/frameworks/AGENT-SKILLS.md) · 🇳🇴 [no](../../../no/docs/frameworks/AGENT-SKILLS.md) · 🇮🇳 [or](../../../or/docs/frameworks/AGENT-SKILLS.md) · 🇮🇳 [pa](../../../pa/docs/frameworks/AGENT-SKILLS.md) · 🇵🇭 [phi](../../../phi/docs/frameworks/AGENT-SKILLS.md) · 🇵🇱 [pl](../../../pl/docs/frameworks/AGENT-SKILLS.md) · 🇵🇹 [pt](../../../pt/docs/frameworks/AGENT-SKILLS.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/frameworks/AGENT-SKILLS.md) · 🇷🇴 [ro](../../../ro/docs/frameworks/AGENT-SKILLS.md) · 🇷🇺 [ru](../../../ru/docs/frameworks/AGENT-SKILLS.md) · 🇱🇰 [si](../../../si/docs/frameworks/AGENT-SKILLS.md) · 🇸🇰 [sk](../../../sk/docs/frameworks/AGENT-SKILLS.md) · 🇸🇮 [sl](../../../sl/docs/frameworks/AGENT-SKILLS.md) · 🇷🇸 [sr](../../../sr/docs/frameworks/AGENT-SKILLS.md) · 🇸🇪 [sv](../../../sv/docs/frameworks/AGENT-SKILLS.md) · 🇰🇪 [sw](../../../sw/docs/frameworks/AGENT-SKILLS.md) · 🇮🇳 [ta](../../../ta/docs/frameworks/AGENT-SKILLS.md) · 🇮🇳 [te](../../../te/docs/frameworks/AGENT-SKILLS.md) · 🇹🇭 [th](../../../th/docs/frameworks/AGENT-SKILLS.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/frameworks/AGENT-SKILLS.md) · 🇵🇰 [ur](../../../ur/docs/frameworks/AGENT-SKILLS.md) · 🇺🇿 [uz](../../../uz/docs/frameworks/AGENT-SKILLS.md) · 🇻🇳 [vi](../../../vi/docs/frameworks/AGENT-SKILLS.md) · 🇳🇬 [yo](../../../yo/docs/frameworks/AGENT-SKILLS.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/frameworks/AGENT-SKILLS.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/frameworks/AGENT-SKILLS.md)
 
@@ -7,7 +7,7 @@
 > **Doğruluk kaynağı:** `src/lib/agentSkills/` (katalog, oluşturucu, ayrıştırıcılar) + `skills/` dizini (SKILL.md dosyaları)
 > **Son güncelleme:** 2026-08-02 — v3.8.50
 
-Agent Skills; harici agent'lara, MCP istemcilerine ve A2A orkestratörlerine OmniRoute'un REST API'sini ve CLI'ını nasıl kullanacaklarını öğreten, yapılandırılmış SKILL.md dosyalarıdır. [Omni Skills](./SKILLS.md)'den (OmniRoute içinde yürütülen LLM araç tanımlarıdır) farklı olarak Agent Skills, doğrudan agent bağlamına aktarılabilen statik markdown içeriğinden oluşan bir _dokümantasyon kataloğudur_.
+Agent Skills; harici agent'lara, MCP istemcilerine ve A2A orkestratörlerine Pusula'un REST API'sini ve CLI'ını nasıl kullanacaklarını öğreten, yapılandırılmış SKILL.md dosyalarıdır. [Omni Skills](./SKILLS.md)'den (Pusula içinde yürütülen LLM araç tanımlarıdır) farklı olarak Agent Skills, doğrudan agent bağlamına aktarılabilen statik markdown içeriğinden oluşan bir _dokümantasyon kataloğudur_.
 
 ---
 
@@ -18,7 +18,7 @@ Katalogda **45 Agent Skill** bulunur (23 REST API + 21 CLI + 1 yapılandırma i�
 - Bir **standart ID** (`omni-auth`, `cli-serve` vb.)
 - YAML frontmatter (`name`, `description`) ve zengin bir markdown gövdesi içeren `skills/{id}/SKILL.md` konumundaki bir **SKILL.md** dosyası
 - OpenAPI spesifikasyonundan ve CLI kayıt defterinden türetilen **REST endpoint'leri** (API skill'leri) veya **CLI alt komutları** (CLI skill'leri)
-- Canlı erişim için bir **GitHub ham içerik URL'si**: `https://raw.githubusercontent.com/diegosouzapw/OmniRoute/refs/heads/main/skills/{id}/SKILL.md`
+- Canlı erişim için bir **GitHub ham içerik URL'si**: `https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/refs/heads/main/skills/{id}/SKILL.md`
 
 ---
 
@@ -116,9 +116,9 @@ curl -H "Accept: text/markdown" "http://localhost:20128/api/agent-skills/omni-pr
 
 | Araç                              | Açıklama                                                           |
 | :-------------------------------- | :----------------------------------------------------------------- |
-| `omniroute_agent_skills_list`     | Yetenekleri listele (isteğe bağlı `category` / `area` filtreleri)  |
-| `omniroute_agent_skills_get`      | `id` ile tek bir yeteneğin meta verilerini + SKILL.md dosyasını al |
-| `omniroute_agent_skills_coverage` | Kapsam istatistikleri (API/CLI mevcut/toplam)                      |
+| `pusula_agent_skills_list`     | Yetenekleri listele (isteğe bağlı `category` / `area` filtreleri)  |
+| `pusula_agent_skills_get`      | `id` ile tek bir yeteneğin meta verilerini + SKILL.md dosyasını al |
+| `pusula_agent_skills_coverage` | Kapsam istatistikleri (API/CLI mevcut/toplam)                      |
 
 Kapsam bağlantıları ve kimlik doğrulama için [MCP-SERVER.md](./MCP-SERVER.md) belgesine bakın.
 
@@ -177,27 +177,27 @@ Protokol ayrıntıları için [A2A-SERVER.md](./A2A-SERVER.md) belgesine bakın.
 
 | Kimlik                | Alan               | CLI Komut Kökü          |
 | :-------------------- | :----------------- | :---------------------- |
-| `cli-serve`           | cli-serve          | `omniroute serve`       |
-| `cli-health`          | cli-health         | `omniroute health`      |
-| `cli-providers`       | cli-providers      | `omniroute providers`   |
-| `cli-keys`            | cli-keys           | `omniroute keys`        |
-| `cli-models`          | cli-models         | `omniroute models`      |
-| `cli-chat`            | cli-chat           | `omniroute chat`        |
-| `cli-routing`         | cli-routing        | `omniroute routing`     |
-| `cli-resilience`      | cli-resilience     | `omniroute resilience`  |
-| `cli-compression`     | cli-compression    | `omniroute compression` |
-| `cli-contexts`        | cli-contexts       | `omniroute contexts`    |
-| `cli-cost-usage`      | cli-cost-usage     | `omniroute cost`        |
-| `cli-mcp`             | cli-mcp            | `omniroute mcp`         |
-| `cli-a2a`             | cli-a2a            | `omniroute a2a`         |
-| `cli-tunnel`          | cli-tunnel         | `omniroute tunnel`      |
-| `cli-backup-sync`     | cli-backup-sync    | `omniroute backup`      |
-| `cli-policy-audit`    | cli-policy-audit   | `omniroute policy`      |
-| `cli-batches`         | cli-batches        | `omniroute batch`       |
-| `cli-eval`            | cli-eval           | `omniroute eval`        |
-| `cli-plugins-skills`  | cli-plugins-skills | `omniroute plugins`     |
-| `cli-setup`           | cli-setup          | `omniroute setup`       |
-| `cli-skill-collector` | cli-setup          | `omniroute skills`      |
+| `cli-serve`           | cli-serve          | `pusula serve`       |
+| `cli-health`          | cli-health         | `pusula health`      |
+| `cli-providers`       | cli-providers      | `pusula providers`   |
+| `cli-keys`            | cli-keys           | `pusula keys`        |
+| `cli-models`          | cli-models         | `pusula models`      |
+| `cli-chat`            | cli-chat           | `pusula chat`        |
+| `cli-routing`         | cli-routing        | `pusula routing`     |
+| `cli-resilience`      | cli-resilience     | `pusula resilience`  |
+| `cli-compression`     | cli-compression    | `pusula compression` |
+| `cli-contexts`        | cli-contexts       | `pusula contexts`    |
+| `cli-cost-usage`      | cli-cost-usage     | `pusula cost`        |
+| `cli-mcp`             | cli-mcp            | `pusula mcp`         |
+| `cli-a2a`             | cli-a2a            | `pusula a2a`         |
+| `cli-tunnel`          | cli-tunnel         | `pusula tunnel`      |
+| `cli-backup-sync`     | cli-backup-sync    | `pusula backup`      |
+| `cli-policy-audit`    | cli-policy-audit   | `pusula policy`      |
+| `cli-batches`         | cli-batches        | `pusula batch`       |
+| `cli-eval`            | cli-eval           | `pusula eval`        |
+| `cli-plugins-skills`  | cli-plugins-skills | `pusula plugins`     |
+| `cli-setup`           | cli-setup          | `pusula setup`       |
+| `cli-skill-collector` | cli-setup          | `pusula skills`      |
 
 ### Yapılandırma iş akışı (1)
 
@@ -213,17 +213,17 @@ Protokol ayrıntıları için [A2A-SERVER.md](./A2A-SERVER.md) belgesine bakın.
 
 ```bash
 # Tam kataloğu alın
-curl "http://your-omniroute/api/agent-skills" | jq '.skills[] | {id, name, category}'
+curl "http://your-pusula/api/agent-skills" | jq '.skills[] | {id, name, category}'
 
 # Bağlam enjeksiyonu için SKILL.md dosyasını alın
-curl "http://your-omniroute/api/agent-skills/omni-providers/raw" > omni-providers.md
+curl "http://your-pusula/api/agent-skills/omni-providers/raw" > omni-providers.md
 ```
 
 ### 2. MCP ile Keşif
 
 ```typescript
 // Bir Claude Desktop / Cursor MCP istemcisinde:
-const result = await client.callTool("omniroute_agent_skills_list", {
+const result = await client.callTool("pusula_agent_skills_list", {
   category: "api",
 });
 // result.skills → her biri rawUrl içeren AgentSkill dizisi
@@ -234,7 +234,7 @@ const result = await client.callTool("omniroute_agent_skills_list", {
 ```python
 import requests
 
-resp = requests.post("http://your-omniroute/a2a", json={
+resp = requests.post("http://your-pusula/a2a", json={
     "jsonrpc": "2.0", "id": "1",
     "method": "message/send",
     "params": {"skill": "list-capabilities", "messages": [{"role": "user", "content": "list"}]}
@@ -246,7 +246,7 @@ table = resp.json()["result"]["artifacts"][0]["content"]
 ### 4. Doğrudan GitHub raw getirme (sunucu gerekmez)
 
 ```bash
-BASE="https://raw.githubusercontent.com/diegosouzapw/OmniRoute/refs/heads/main/skills"
+BASE="https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/refs/heads/main/skills"
 curl "${BASE}/omni-providers/SKILL.md"
 ```
 
@@ -311,7 +311,7 @@ curl "http://localhost:20128/api/agent-skills/coverage"
 ## İlgili Kaynaklar
 
 - [SKILLS.md](./SKILLS.md) — Omni Skills çerçevesi (LLM araç enjeksiyonu + pazar yeri)
-- [MCP-SERVER.md](./MCP-SERVER.md) — MCP araç kataloğu (`omniroute_agent_skills_*` araçları)
+- [MCP-SERVER.md](./MCP-SERVER.md) — MCP araç kataloğu (`pusula_agent_skills_*` araçları)
 - [A2A-SERVER.md](./A2A-SERVER.md) — A2A protokolü (`list-capabilities` skill'i)
 - `src/lib/agentSkills/` — katalog, oluşturucu, ayrıştırıcılar
 - `skills/` — oluşturulan SKILL.md dosyaları (45 girdi)

@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-agy-lease-flag-"));
+process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-agy-lease-flag-"));
 
 const { FEATURE_FLAG_DEFINITIONS } =
   await import("../../src/shared/constants/featureFlagDefinitions.ts");

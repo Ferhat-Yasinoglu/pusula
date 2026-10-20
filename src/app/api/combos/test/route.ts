@@ -4,12 +4,12 @@ import { buildComboTestRequestBody, extractComboTestResponseText } from "@/lib/c
 import { getComboByName, getCombos } from "@/lib/db/combos";
 import { pickApiKeyForInternalUse } from "@/lib/db/apiKeys";
 import { getRuntimePorts } from "@/lib/runtime/ports";
-import { resolveNestedComboTargets } from "@omniroute/open-sse/services/combo.ts";
-import type { ResolvedComboTarget } from "@omniroute/open-sse/services/combo/types.ts";
+import { resolveNestedComboTargets } from "@pusula/open-sse/services/combo.ts";
+import type { ResolvedComboTarget } from "@pusula/open-sse/services/combo/types.ts";
 import { testComboSchema } from "@/shared/validation/schemas";
 import { isValidationFailure, validateBody } from "@/shared/validation/helpers";
 import { requireManagementAuth } from "@/lib/api/requireManagementAuth";
-import { sanitizeErrorMessage } from "@omniroute/open-sse/utils/error";
+import { sanitizeErrorMessage } from "@pusula/open-sse/utils/error";
 
 export const COMBO_TEST_TIMEOUT_MS = 60_000;
 export const COMBO_TEST_TOTAL_TIMEOUT_MS = 180_000;
@@ -93,9 +93,9 @@ async function testComboTarget(
           ...(internalApiKey ? { Authorization: `Bearer ${internalApiKey}` } : {}),
           "X-Internal-Test": "combo-health-check",
           // Force a fresh execution path so combo tests cannot be satisfied by
-          // OmniRoute's semantic cache or other request reuse layers.
-          "X-OmniRoute-No-Cache": "true",
-          ...(target.connectionId ? { "X-OmniRoute-Connection": target.connectionId } : {}),
+          // Pusula's semantic cache or other request reuse layers.
+          "X-Pusula-No-Cache": "true",
+          ...(target.connectionId ? { "X-Pusula-Connection": target.connectionId } : {}),
           "X-Request-Id": `combo-test-${randomUUID()}`,
         },
         body: JSON.stringify(testBody),

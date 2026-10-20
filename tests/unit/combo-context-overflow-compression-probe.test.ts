@@ -6,7 +6,7 @@ import path from "node:path";
 
 /**
  * #10225 — combo known-context-overflow must NOT hard-reject a compressible
- * request before OmniRoute's compression pipeline can run.
+ * request before Pusula's compression pipeline can run.
  *
  * Root cause: getKnownContextOverflow() estimates the RAW body (ceil(serializedChars/4)
  * over the whole Responses input[]) during combo target resolution, before any
@@ -25,7 +25,7 @@ import path from "node:path";
  * the final context gate — a local 400 only if the compressed body still cannot fit.
  */
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-combo-overflow-compress-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-combo-overflow-compress-"));
 const ORIGINAL_DATA_DIR = process.env.DATA_DIR;
 process.env.DATA_DIR = TEST_DATA_DIR;
 
@@ -239,9 +239,9 @@ async function invokeChatCoreCapturingUpstream(body: Record<string, unknown>) {
   let sentBodyJson: string | null = null;
   globalThis.fetch = async (url: RequestInfo | URL, init: RequestInit = {}) => {
     // Stacked compression reports each engine step to the dashboard live feed through a
-    // loopback `/__omniroute_event` POST (#14529 made header-less requests stacked). That is
+    // loopback `/__pusula_event` POST (#14529 made header-less requests stacked). That is
     // internal telemetry, not upstream dispatch — only a provider request counts here.
-    if (String(url instanceof Request ? url.url : url).includes("/__omniroute_event")) {
+    if (String(url instanceof Request ? url.url : url).includes("/__pusula_event")) {
       return new Response(null, { status: 204 });
     }
     dispatched = true;

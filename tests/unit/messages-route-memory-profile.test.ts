@@ -60,7 +60,7 @@ test("JON-562 worker environment is an allowlist and drops credential-shaped var
     LANG: "C.UTF-8",
     LINEAR_API_KEY: "must-not-cross",
     OPENAI_API_KEY: "must-not-cross",
-    OMNIROUTE_MANAGEMENT_TOKEN: "must-not-cross",
+    PUSULA_MANAGEMENT_TOKEN: "must-not-cross",
   });
 
   assert.deepEqual(env, {
@@ -119,7 +119,7 @@ test("JON-562 retention gate rejects any context-sized backing result", () => {
 });
 
 test("JON-562 raw snapshot cleanup runs when a case fails or times out", async () => {
-  const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-JON-562-cleanup-"));
+  const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-JON-562-cleanup-"));
   const snapshot = path.join(outputDir, "post-gc.heapsnapshot");
   fs.writeFileSync(snapshot, "synthetic raw snapshot");
   try {
@@ -136,7 +136,7 @@ test("JON-562 raw snapshot cleanup runs when a case fails or times out", async (
 });
 
 test("JON-562 worker deletes raw snapshots unless a successful driver handoff owns them", () => {
-  const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-JON-562-worker-cleanup-"));
+  const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-JON-562-worker-cleanup-"));
   const failedSnapshot = path.join(outputDir, "failed.heapsnapshot");
   const handedOffSnapshot = path.join(outputDir, "handed-off.heapsnapshot");
   fs.writeFileSync(failedSnapshot, "failed worker raw snapshot");
@@ -158,7 +158,7 @@ test("JON-562 worker deletes raw snapshots unless a successful driver handoff ow
 });
 
 test("JON-562 standalone analyzer deletes an invalid raw snapshot on failure", () => {
-  const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-JON-562-analyzer-fail-"));
+  const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-JON-562-analyzer-fail-"));
   const snapshot = path.join(outputDir, "post-gc.heapsnapshot");
   fs.writeFileSync(snapshot, "not valid JSON");
   try {
@@ -193,7 +193,7 @@ test("JON-562 standalone analyzer deletes an invalid raw snapshot on failure", (
 });
 
 test("JON-562 standalone analyzer deletes raw input when required arguments are missing", () => {
-  const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-JON-562-analyzer-args-"));
+  const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-JON-562-analyzer-args-"));
   const snapshot = path.join(outputDir, "post-gc.heapsnapshot");
   fs.writeFileSync(snapshot, "synthetic raw snapshot");
   try {
@@ -224,7 +224,7 @@ test("JON-562 standalone analyzer deletes raw input when required arguments are 
 });
 
 test("JON-562 standalone analyzer deletes raw input when size validation fails", () => {
-  const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-JON-562-analyzer-size-"));
+  const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-JON-562-analyzer-size-"));
   const snapshot = path.join(outputDir, "post-gc.heapsnapshot");
   fs.writeFileSync(snapshot, "synthetic raw snapshot");
   try {
@@ -266,7 +266,7 @@ test(
   // up as `driver failed: null !== 0`, indistinguishable from a real hang.
   { timeout: 360_000 },
   () => {
-    const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-JON-562-canary-"));
+    const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-JON-562-canary-"));
     try {
       const result = spawnSync(
         process.execPath,

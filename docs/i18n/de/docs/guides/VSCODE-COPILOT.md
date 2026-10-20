@@ -4,7 +4,7 @@
 
 ---
 
-**OmniCopilot** fügt jedes von OmniRoute bereitgestellte Modell zur _nativen_ Modellauswahl von GitHub Copilot Chat hinzu. Keine zweite Seitenleiste, keine separate Chat-Benutzeroberfläche — Copilots Agentenmodus, Tool-Aufrufe, MCP-Server und benutzerdefinierte Anweisungen funktionieren weiterhin, lediglich mit dem von Ihnen ausgewählten Modell.
+**OmniCopilot** fügt jedes von Pusula bereitgestellte Modell zur _nativen_ Modellauswahl von GitHub Copilot Chat hinzu. Keine zweite Seitenleiste, keine separate Chat-Benutzeroberfläche — Copilots Agentenmodus, Tool-Aufrufe, MCP-Server und benutzerdefinierte Anweisungen funktionieren weiterhin, lediglich mit dem von Ihnen ausgewählten Modell.
 
 |                            |                                                                                                                                                 |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -21,13 +21,13 @@
 
 ## Einrichtung
 
-1. **OmniRoute ausführen** — `npm install -g omniroute && omniroute` (Dashboard unter `http://localhost:20128`).
-2. **Erweiterung installieren** — suchen Sie in der Erweiterungsansicht nach „OmniRoute“.
-3. **Modell auswählen** — Copilot Chat → Modellauswahl → **Modelle verwalten…** → **OmniRoute**, und wählen Sie dann
+1. **Pusula ausführen** — `npm install -g pusula && pusula` (Dashboard unter `http://localhost:20128`).
+2. **Erweiterung installieren** — suchen Sie in der Erweiterungsansicht nach „Pusula“.
+3. **Modell auswählen** — Copilot Chat → Modellauswahl → **Modelle verwalten…** → **Pusula**, und wählen Sie dann
    die gewünschten Modelle aus.
 
-Wenn OmniRoute auf dem Standardport läuft, muss nichts konfiguriert werden. Öffnen Sie für eine Remote-Instanz das
-**OmniRoute-Symbol in der Aktivitätsleiste** (oder führen Sie `OmniRoute: Manage Connection` aus) und legen Sie Folgendes fest:
+Wenn Pusula auf dem Standardport läuft, muss nichts konfiguriert werden. Öffnen Sie für eine Remote-Instanz das
+**Pusula-Symbol in der Aktivitätsleiste** (oder führen Sie `Pusula: Manage Connection` aus) und legen Sie Folgendes fest:
 
 - **Server-URL** — die Server-Stammadresse, z. B. `http://192.168.0.15:20128`. Das Suffix `/v1` wird
   von der Erweiterung angehängt; geben Sie es nicht mit an.
@@ -72,7 +72,7 @@ HTTP 400 — Model '<id>' is an image-generation model and cannot be used on
 
 Daher werden sie anhand ihres Feldes `type` herausgefiltert, bevor sie die Modellauswahl erreichen. **Responses-API-
 Modelle bleiben erhalten** — jeder Codex-/GPT-5.x-Eintrag gibt `supported_endpoints: ["responses"]` an,
-und OmniRoute übersetzt diese für `/v1/chat/completions`, sodass sie problemlos verwendet werden können.
+und Pusula übersetzt diese für `/v1/chat/completions`, sodass sie problemlos verwendet werden können.
 
 ### Anbieter, die Sie nie konfiguriert haben
 
@@ -85,7 +85,7 @@ Erweiterung ändert sich nichts.
 
 ## Dashboard in einem VS-Code-Tab
 
-`omnicopilot.dashboardOpen: "editor"` rendert das OmniRoute-Dashboard über den
+`omnicopilot.dashboardOpen: "editor"` rendert das Pusula-Dashboard über den
 Simple Browser in einem Editor-Tab statt in einem externen Browser. Das Einbetten muss **serverseitig explizit aktiviert werden**. Dies geschieht mit
 `DASHBOARD_ALLOW_EMBED=vscode`, wodurch die HTML-Seiten mit
 `frame-ancestors 'self' vscode-webview:` statt mit den standardmäßigen Einstellungen `frame-ancestors 'none'` +
@@ -106,23 +106,23 @@ npm start
 | Installationsmethode       | Kann das Einbetten aktiviert werden?                                                                                                                           |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Aus dem Quellcode          | ✅ Die Variable wie oben gezeigt beim Build-Befehl setzen                                                                                                      |
-| `npm install -g omniroute` | ❌ Das veröffentlichte Paket enthält ein vorab erstelltes Bundle — stattdessen aus dem Quellcode erstellen                                                     |
-| Docker-Image               | ✅ `docker build --build-arg DASHBOARD_ALLOW_EMBED=vscode -t omniroute:embed .` — beim vorab erstellten Image auf Docker Hub ist das Einbetten nicht aktiviert |
+| `npm install -g pusula` | ❌ Das veröffentlichte Paket enthält ein vorab erstelltes Bundle — stattdessen aus dem Quellcode erstellen                                                     |
+| Docker-Image               | ✅ `docker build --build-arg DASHBOARD_ALLOW_EMBED=vscode -t pusula:embed .` — beim vorab erstellten Image auf Docker Hub ist das Einbetten nicht aktiviert |
 
 Ohne einen Build mit aktivierter Einbettung verweigert die Seite die Darstellung in einem Frame. Die Erweiterung erkennt dies anhand der
 Antwort-Header und weicht auf den externen Browser aus — nichts geht kaputt, und es wird einmalig darauf hingewiesen.
 Siehe [`ENVIRONMENT.md`](../reference/ENVIRONMENT.md) und Issue
-[#10273](https://github.com/diegosouzapw/OmniRoute/issues/10273).
+[#10273](https://github.com/Ferhat-Yasinoglu/pusula/issues/10273).
 
 ---
 
 ## Konfiguration anderer Tools direkt aus VS Code
 
-**`OmniRoute: Configure Coding CLI`** steuert die `omniroute`-CLI, um sofort einsatzbereite Profile
+**`Pusula: Configure Coding CLI`** steuert die `pusula`-CLI, um sofort einsatzbereite Profile
 für Codex CLI, Claude Code, Cline, Continue, Cursor, Aider, OpenCode, Goose, Crush, Qwen Code,
 Kilo und Roo zu erstellen — dieselben Konfigurationen, die in
 [`CLI-INTEGRATIONS.md`](CLI-INTEGRATIONS.md) beschrieben sind. Der API-Schlüssel wird über die
-Umgebungsvariable `OMNIROUTE_API_KEY` an die CLI übergeben, niemals über die Befehlszeile.
+Umgebungsvariable `PUSULA_API_KEY` an die CLI übergeben, niemals über die Befehlszeile.
 
 ---
 
@@ -130,18 +130,18 @@ Umgebungsvariable `OMNIROUTE_API_KEY` an die CLI übergeben, niemals über die B
 
 | Symptom                                                                  | Ursache / Lösung                                                                                                                                                                                                                                                                                                                           |
 | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Keine OmniRoute-Modelle in der Auswahlliste                              | Der Server ist nicht erreichbar. Der Punkt in der Statusleiste wird grau; führen Sie `OmniRoute: Check Connection` aus. Die Erkennung erfolgt absichtlich ohne Rückmeldung und fügt keine Modelle hinzu, statt zu einer Eingabe aufzufordern.                                                                                              |
+| Keine Pusula-Modelle in der Auswahlliste                              | Der Server ist nicht erreichbar. Der Punkt in der Statusleiste wird grau; führen Sie `Pusula: Check Connection` aus. Die Erkennung erfolgt absichtlich ohne Rückmeldung und fügt keine Modelle hinzu, statt zu einer Eingabe aufzufordern.                                                                                              |
 | Jedes Modell wird zweimal angezeigt                                      | Sie verwenden eine OmniCopilot-Version vor 1.0.1 — führen Sie ein Update durch. Die Erweiterung fordert jetzt `?prefix=alias` an.                                                                                                                                                                                                          |
 | Ein Bild-/Audiomodell wurde früher aufgeführt und ist jetzt verschwunden | Absichtlich seit 1.0.1 — es konnte nie auf eine Chat-Anfrage antworten.                                                                                                                                                                                                                                                                    |
-| Panel fehlt in der Aktivitätsleiste                                      | VS Code verschiebt zusätzliche Ansichtscontainer in das **„…“**-Überlaufmenü am unteren Rand der Aktivitätsleiste. Ein per Rechtsklick ausgeblendeter Container bleibt ausgeblendet. Klicken Sie mit der rechten Maustaste auf die Aktivitätsleiste → aktivieren Sie **OmniRoute**, oder öffnen Sie es mit `OmniRoute: Manage Connection`. |
+| Panel fehlt in der Aktivitätsleiste                                      | VS Code verschiebt zusätzliche Ansichtscontainer in das **„…“**-Überlaufmenü am unteren Rand der Aktivitätsleiste. Ein per Rechtsklick ausgeblendeter Container bleibt ausgeblendet. Klicken Sie mit der rechten Maustaste auf die Aktivitätsleiste → aktivieren Sie **Pusula**, oder öffnen Sie es mit `Pusula: Manage Connection`. |
 | Dashboard wird trotz `editor`-Modus im Browser geöffnet                  | Der Server wurde nicht mit `DASHBOARD_ALLOW_EMBED=vscode` **erstellt** (siehe oben) — das Setzen der Variable beim Start einer vorab erstellten Installation bewirkt nichts. Dieses Ausweichverhalten ist beabsichtigt.                                                                                                                    |
-| Modellliste ist nach einer Änderung der Anbieter veraltet                | `OmniRoute: Refresh Models` oder der ↻-Link im Panel.                                                                                                                                                                                                                                                                                      |
+| Modellliste ist nach einer Änderung der Anbieter veraltet                | `Pusula: Refresh Models` oder der ↻-Link im Panel.                                                                                                                                                                                                                                                                                      |
 
 ---
 
 ## Siehe auch
 
 - [`CLI-INTEGRATIONS.md`](CLI-INTEGRATIONS.md) — alle anderen Coding-Tools
-- [`REMOTE-MODE.md`](REMOTE-MODE.md) — Steuerung einer entfernten OmniRoute-Instanz
+- [`REMOTE-MODE.md`](REMOTE-MODE.md) — Steuerung einer entfernten Pusula-Instanz
 - [`../reference/API_REFERENCE.md`](../reference/API_REFERENCE.md) — der `/v1/models`-Vertrag
 - [`docs/CATALOG.md`](https://github.com/diegosouzapw/OmniCopilot/blob/main/docs/CATALOG.md) — die eigenen Kataloghinweise der Erweiterung

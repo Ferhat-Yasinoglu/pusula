@@ -4,7 +4,7 @@ import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "omniroute-images-"));
+process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "pusula-images-"));
 
 const core = await import("../../src/lib/db/core.ts");
 const { handleImageGeneration, handleOpenAIImageEdit } =

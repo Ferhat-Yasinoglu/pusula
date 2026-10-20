@@ -4,7 +4,7 @@
 
 ---
 
-OmniRoute steuert anhand einer einzigen, zentralisierten Positivliste, welche
+Pusula steuert anhand einer einzigen, zentralisierten Positivliste, welche
 **Browser-Ursprünge** Cross-Origin-Antworten lesen dürfen. Das Modell ist
 **standardmäßig restriktiv**: Kein Ursprung ist erlaubt, bis Sie ihn ausdrücklich
 freigeben. Diese Seite dokumentiert, wie die Positivliste ausgewertet wird, was
@@ -50,7 +50,7 @@ Für jede Anfrage berechnet die Middleware den Wert von
 ## Bedrohungsmodell — was `CORS_ALLOW_ALL=true` wirklich offenlegt
 
 Die allgemeine OWASP-Warnung („Wildcard-CORS = jede Website kann Ihre API
-aufrufen“) sollte ernst genommen werden, doch die Offenlegung durch OmniRoute
+aufrufen“) sollte ernst genommen werden, doch die Offenlegung durch Pusula
 ist **begrenzter als im allgemeinen Fall**, und zwar aufgrund einer konkreten
 Implementierungseigenschaft:
 
@@ -58,7 +58,7 @@ Implementierungseigenschaft:
 > `Access-Control-Allow-Credentials` aus.** Ein Browser stellt eine
 > _authentifizierte_ (Cookies enthaltende) Cross-Origin-Antwort nicht bereit,
 > sofern der Server nicht `Access-Control-Allow-Credentials: true` sendet.
-> OmniRoutes gemeinsamer CORS-Pfad tut dies niemals.
+> Pusulas gemeinsamer CORS-Pfad tut dies niemals.
 
 Das bedeutet für die einzelnen Oberflächen selbst bei `CORS_ALLOW_ALL=true`:
 
@@ -100,7 +100,7 @@ explizite Positivliste wird unabhängig von diesen CORS-Leitlinien nachverfolgt.
   CORS_ALLOWED_ORIGINS="https://app.example.com, https://admin.example.com"
   ```
 
-- Wenn OmniRoute hinter einem Reverse-Proxy/Tunnel (nginx, Caddy, Cloudflare
+- Wenn Pusula hinter einem Reverse-Proxy/Tunnel (nginx, Caddy, Cloudflare
   Tunnel, Tailscale) ausgeführt wird, ist CORS **nicht** Ihr einziger Schutzmechanismus — der Loopback-Routenschutz
   schützt weiterhin Routen, die Prozesse starten können (siehe
   [ROUTE_GUARD_TIERS](./ROUTE_GUARD_TIERS.md)). Fälschen Sie nicht
@@ -116,7 +116,7 @@ explizite Positivliste wird unabhängig von diesen CORS-Leitlinien nachverfolgt.
 Selbst in der Entwicklung benötigen Sie den Platzhalter nur selten. Lassen Sie ausschließlich die verwendeten Entwicklungsserver zu:
 
 ```bash
-# Vite- (5173) und Next.js-Entwicklungsserver (3000), die ein lokales OmniRoute aufrufen
+# Vite- (5173) und Next.js-Entwicklungsserver (3000), die ein lokales Pusula aufrufen
 CORS_ALLOWED_ORIGINS="http://localhost:5173, http://localhost:3000"
 ```
 
@@ -136,14 +136,14 @@ Neustart erforderlich ist.
   Ursprünge für Verwaltung und Dashboard nicht in eine permissive Konfiguration auf; sie müssen weiterhin strikt
   standardmäßig gesperrt bleiben.
 
-## Beispiel: Reverse-Proxy vor OmniRoute
+## Beispiel: Reverse-Proxy vor Pusula
 
-CORS wird von OmniRoute selbst durchgesetzt. Daher sollte der Proxy im Allgemeinen **keine**
+CORS wird von Pusula selbst durchgesetzt. Daher sollte der Proxy im Allgemeinen **keine**
 `Access-Control-*`-Header hinzufügen oder umschreiben (doppelte Header verursachen Fehler in Browsern). Terminieren Sie TLS
-und leiten Sie die Anfragen weiter — lassen Sie OmniRoute die Preflight-Anfrage beantworten:
+und leiten Sie die Anfragen weiter — lassen Sie Pusula die Preflight-Anfrage beantworten:
 
 ```nginx
-# nginx — an OmniRoute weiterleiten; hier KEINE Access-Control-*-Header einfügen
+# nginx — an Pusula weiterleiten; hier KEINE Access-Control-*-Header einfügen
 location / {
     proxy_pass http://127.0.0.1:20128;
     proxy_set_header Host $host;
@@ -152,7 +152,7 @@ location / {
 }
 ```
 
-Legen Sie die zulässigen Browser-Ursprünge in OmniRoute (`CORS_ALLOWED_ORIGINS` oder auf der
+Legen Sie die zulässigen Browser-Ursprünge in Pusula (`CORS_ALLOWED_ORIGINS` oder auf der
 Registerkarte „Security“) fest, nicht im Proxy.
 
 ## Quelldateien

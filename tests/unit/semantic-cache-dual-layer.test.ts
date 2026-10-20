@@ -231,7 +231,7 @@ describe("Semantic Cache — Dual-Layer Architecture", () => {
       assert.equal(differentResult.hit, false, "Unrelated query should miss cache");
     });
 
-    it("respects per-request threshold override via x-omniroute-cache-threshold", async () => {
+    it("respects per-request threshold override via x-pusula-cache-threshold", async () => {
       // 0.85 similarity between vectors
       const mockEmbeddingGenerator = async (text: string) => {
         if (text.includes("query-1")) return { embedding: [1, 0, 0], inputTokens: 5 };
@@ -262,7 +262,7 @@ describe("Semantic Cache — Dual-Layer Architecture", () => {
       // Strict per-request threshold 0.95: similarity 0.85 < 0.95 -> MISS
       const missStrict = await manager.lookup({
         body: { model: "gpt-4o", messages: [{ role: "user", content: "query-2" }], temperature: 0 },
-        headers: { "x-omniroute-cache-threshold": "0.95" },
+        headers: { "x-pusula-cache-threshold": "0.95" },
         model: "gpt-4o",
         provider: "openai",
       });
@@ -271,7 +271,7 @@ describe("Semantic Cache — Dual-Layer Architecture", () => {
   });
 
   describe("Request Overrides & Bypasses", () => {
-    it("respects Cache-Control: no-cache and x-omniroute-no-cache: true", async () => {
+    it("respects Cache-Control: no-cache and x-pusula-no-cache: true", async () => {
       const manager = new SemanticCacheManager({ enabled: true }, new MemoryVectorStore());
       const body = {
         model: "gpt-4",
@@ -288,7 +288,7 @@ describe("Semantic Cache — Dual-Layer Architecture", () => {
 
       const bypassedX = await manager.lookup({
         body,
-        headers: { "x-omniroute-no-cache": "true" },
+        headers: { "x-pusula-no-cache": "true" },
         model: "gpt-4",
         provider: "openai",
       });
@@ -305,7 +305,7 @@ describe("Semantic Cache — Dual-Layer Architecture", () => {
       assert.equal(bypassedCC.bypassed, true);
     });
 
-    it("respects x-omniroute-cache-type: direct and x-omniroute-cache-type: semantic", async () => {
+    it("respects x-pusula-cache-type: direct and x-pusula-cache-type: semantic", async () => {
       let semCalls = 0;
       const mockEmbeddingGenerator = async () => {
         semCalls++;
@@ -321,7 +321,7 @@ describe("Semantic Cache — Dual-Layer Architecture", () => {
       // Direct-only mode skips semantic search completely on miss
       const result = await manager.lookup({
         body: { model: "m", messages: [{ role: "user", content: "new" }], temperature: 0 },
-        headers: { "x-omniroute-cache-type": "direct" },
+        headers: { "x-pusula-cache-type": "direct" },
         model: "m",
         provider: "p",
       });
@@ -329,7 +329,7 @@ describe("Semantic Cache — Dual-Layer Architecture", () => {
       assert.equal(semCalls, 0, "direct mode must not call embedding generator");
     });
 
-    it("respects x-omniroute-cache-no-store: true", async () => {
+    it("respects x-pusula-cache-no-store: true", async () => {
       const manager = new SemanticCacheManager({ enabled: true }, new MemoryVectorStore());
       const body = {
         model: "gpt-4",
@@ -339,7 +339,7 @@ describe("Semantic Cache — Dual-Layer Architecture", () => {
 
       await manager.store({
         body,
-        headers: { "x-omniroute-cache-no-store": "true" },
+        headers: { "x-pusula-cache-no-store": "true" },
         response: { id: "1", choices: [] },
         model: "gpt-4",
         provider: "openai",

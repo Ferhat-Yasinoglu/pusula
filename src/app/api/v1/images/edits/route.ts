@@ -3,12 +3,12 @@ import {
   handleCodexImageEdit,
   handleOpenAIImageEdit,
   handleOpenRouterImageEdit,
-} from "@omniroute/open-sse/handlers/imageGeneration.ts";
+} from "@pusula/open-sse/handlers/imageGeneration.ts";
 import {
   handleFalAIImageEdit,
   FAL_IMAGE_EDIT_MAX_REFERENCES,
   isFalImageEditModel,
-} from "@omniroute/open-sse/handlers/imageGeneration/providers/fal.ts";
+} from "@pusula/open-sse/handlers/imageGeneration/providers/fal.ts";
 import { createInjectionGuard } from "@/middleware/promptInjectionGuard";
 import {
   getProviderCredentialsWithQuotaPreflight,
@@ -18,15 +18,15 @@ import {
   parseImageModel,
   getImageProvider,
   getImageModelEntry,
-} from "@omniroute/open-sse/config/imageRegistry.ts";
-import { errorResponse, unavailableResponse } from "@omniroute/open-sse/utils/error.ts";
-import { HTTP_STATUS } from "@omniroute/open-sse/config/constants.ts";
+} from "@pusula/open-sse/config/imageRegistry.ts";
+import { errorResponse, unavailableResponse } from "@pusula/open-sse/utils/error.ts";
+import { HTTP_STATUS } from "@pusula/open-sse/config/constants.ts";
 import { getComboByName, getCombos } from "@/lib/db/combos";
-import { resolveComboTargets } from "@omniroute/open-sse/services/combo.ts";
+import { resolveComboTargets } from "@pusula/open-sse/services/combo.ts";
 import {
   runImageComboTargets,
   type ImageComboDispatchResult,
-} from "@omniroute/open-sse/services/imageCombo.ts";
+} from "@pusula/open-sse/services/imageCombo.ts";
 import { isAllRateLimitedCredentials } from "@/app/api/v1/_shared/rateLimit";
 import * as log from "@/sse/utils/logger";
 import { toJsonErrorPayload } from "@/shared/utils/upstreamError";
@@ -39,8 +39,8 @@ import {
 } from "@/lib/images/imageRouteModel";
 import { isMicrosoftDesignerWebProviderRetiredError } from "@/shared/constants/designerWebRetirement";
 import { resolveProxyForConnection } from "@/lib/db/settings";
-import { runWithProxyContext } from "@omniroute/open-sse/utils/proxyFetch.ts";
-import { isCodexFreePlan } from "@omniroute/open-sse/executors/codex/tools.ts";
+import { runWithProxyContext } from "@pusula/open-sse/utils/proxyFetch.ts";
+import { isCodexFreePlan } from "@pusula/open-sse/executors/codex/tools.ts";
 import {
   getBodySizeLimit,
   readRequestBodyWithLimit,

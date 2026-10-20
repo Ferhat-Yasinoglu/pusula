@@ -39,7 +39,7 @@
 
 `quality.yml` اکنون برای PRهای کدِ غیراپنویس و شاخههای صف Mergify شامل `Build (advisory)` است.
 این مورد از دستورالعمل ساخت پروداکشن در `ci.yml` پیروی میکند: Node 24،‏ `npm-ci-retry`،
-`check:node-runtime` و `npm run build` با `OMNIROUTE_USE_TURBOPACK=1`. عمداً هیچ آرتیفکت ساختی
+`check:node-runtime` و `npm run build` با `PUSULA_USE_TURBOPACK=1`. عمداً هیچ آرتیفکت ساختی
 آپلود نمیشود، زیرا در این گردشکار هیچ کار کیفیتیِ پاییندستی آن را مصرف نمیکند.
 پس از یک هفته اجرای پایدار PRهای انتشار، `continue-on-error` را حذف کنید تا این سیگنال به یک
 دروازه مسدودکننده از PR تا انتشار تبدیل شود.

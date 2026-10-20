@@ -20,13 +20,13 @@
  * no real timers, no real DB, no real network.
  */
 
-import { logger } from "@omniroute/open-sse/utils/logger.ts";
-import { sanitizeErrorMessage } from "@omniroute/open-sse/utils/error.ts";
-import type { BaseExecutor } from "@omniroute/open-sse/executors/base";
-import { splitCodexReasoningSuffix } from "@omniroute/open-sse/executors/codex/reasoningSuffix.ts";
-import { isModelSelectable } from "@omniroute/open-sse/services/modelLifecycle.ts";
-import { getCodexUsage } from "@omniroute/open-sse/services/usage/codex.ts";
-import { throttleQuotaFetch } from "@omniroute/open-sse/services/quotaFetchThrottle.ts";
+import { logger } from "@pusula/open-sse/utils/logger.ts";
+import { sanitizeErrorMessage } from "@pusula/open-sse/utils/error.ts";
+import type { BaseExecutor } from "@pusula/open-sse/executors/base";
+import { splitCodexReasoningSuffix } from "@pusula/open-sse/executors/codex/reasoningSuffix.ts";
+import { isModelSelectable } from "@pusula/open-sse/services/modelLifecycle.ts";
+import { getCodexUsage } from "@pusula/open-sse/services/usage/codex.ts";
+import { throttleQuotaFetch } from "@pusula/open-sse/services/quotaFetchThrottle.ts";
 import { getSettings } from "@/lib/db/settings";
 import { getProviderConnections, updateProviderConnection } from "@/lib/db/providers";
 import { isConnectionUnavailableToAuxiliaryActivity } from "@/lib/exclusiveLeaseIsolation";
@@ -108,7 +108,7 @@ async function loadQuotaAutoPingExecutor(provider: string): Promise<BaseExecutor
   }
 
   try {
-    codexExecutorPromise ??= import("@omniroute/open-sse/executors/codex.ts").then(
+    codexExecutorPromise ??= import("@pusula/open-sse/executors/codex.ts").then(
       ({ CodexExecutor }) => new CodexExecutor()
     );
     return await codexExecutorPromise;
@@ -135,7 +135,7 @@ export async function resolveQuotaAutoPingModel(
 ): Promise<string | null> {
   // Lazy for the same reason loadQuotaAutoPingExecutor is: this module sits on the
   // instrumentation boot path and the model registry is a large import graph (#12074).
-  const { getProviderModels } = await import("@omniroute/open-sse/config/providerModels.ts");
+  const { getProviderModels } = await import("@pusula/open-sse/config/providerModels.ts");
   for (const model of getProviderModels(provider)) {
     if (splitCodexReasoningSuffix(model.id).effort !== null) continue;
     if (!isModelSelectable(provider, model.id, { asOf })) continue;

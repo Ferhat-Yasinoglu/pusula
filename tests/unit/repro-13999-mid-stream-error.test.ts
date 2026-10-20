@@ -43,7 +43,7 @@ import type { ReadableStream as NodeWebReadableStream } from "node:stream/web";
 import { useDecollidedMigrationsDir } from "./helpers/decollidedMigrationsDir.ts";
 
 useDecollidedMigrationsDir();
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-logs-export-13999-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-logs-export-13999-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 if (typeof mock.module !== "function") {

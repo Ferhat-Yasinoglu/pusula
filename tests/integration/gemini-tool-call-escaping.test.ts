@@ -3,14 +3,14 @@
  *
  * Live integration tests verifying tool call argument escaping through
  * the Chat Completions endpoint, the Responses API endpoint, and the
- * OmniRoute combo routing engine — both streaming and non-streaming.
+ * Pusula combo routing engine — both streaming and non-streaming.
  *
  * Gemma4 models emit literal 0x0A bytes in functionCall.args string values.
- * OmniRoute's translator must escape these into valid JSON \n sequences.
+ * Pusula's translator must escape these into valid JSON \n sequences.
  *
  * Environment:
- *   OMNIROUTE_API_KEY  — required (else tests skip)
- *   OMNIROUTE_URL      — defaults to http://localhost:3000
+ *   PUSULA_API_KEY  — required (else tests skip)
+ *   PUSULA_URL      — defaults to http://localhost:3000
  *   TEST_DELAY_MS      — delay between tests, defaults to 5000
  */
 import test from "node:test";
@@ -92,49 +92,49 @@ test("gemini direct: streaming responses tool call produces valid JSON", { skip 
   console.log(`  [OK] gemini direct streaming responses: ${toolCalls.length} tool calls`);
 });
 
-// ── OmniRoute Combo — Chat Completions ────────────────────────────────────
+// ── Pusula Combo — Chat Completions ────────────────────────────────────
 
-test("omniroute combo: tool call arguments are valid JSON", { skip }, async () => {
+test("pusula combo: tool call arguments are valid JSON", { skip }, async () => {
   const data = await sendToolCallChatRequest(MODEL, TOOL_CALL_PROMPT);
   const toolCalls = extractToolCalls(data);
   validateToolCallArguments(toolCalls);
-  console.log(`  [OK] omniroute combo: ${toolCalls.length} tool calls, model=${data.model}`);
+  console.log(`  [OK] pusula combo: ${toolCalls.length} tool calls, model=${data.model}`);
 });
 
-test("omniroute combo: streaming tool call produces valid JSON", { skip }, async () => {
+test("pusula combo: streaming tool call produces valid JSON", { skip }, async () => {
   const data = await sendStreamingToolCallChatRequest(MODEL, TOOL_CALL_PROMPT);
   const toolCalls = extractToolCalls(data);
   if (toolCalls.length === 0) {
-    console.log("  [skip] omniroute combo streaming: model did not produce a tool call");
+    console.log("  [skip] pusula combo streaming: model did not produce a tool call");
     return;
   }
   validateToolCallArguments(toolCalls);
   console.log(
-    `  [OK] omniroute combo streaming: ${toolCalls.length} tool calls, finish=${data.choices[0].finish_reason}`
+    `  [OK] pusula combo streaming: ${toolCalls.length} tool calls, finish=${data.choices[0].finish_reason}`
   );
 });
 
-// ── OmniRoute Combo — Responses API ───────────────────────────────────────
+// ── Pusula Combo — Responses API ───────────────────────────────────────
 
-test("omniroute combo: responses tool call arguments are valid JSON", { skip }, async () => {
+test("pusula combo: responses tool call arguments are valid JSON", { skip }, async () => {
   const data = await sendToolCallResponsesRequest(MODEL, TOOL_CALL_PROMPT);
   const toolCalls = extractToolCallsFromResponses(data);
   if (toolCalls.length === 0) {
-    console.log("  [skip] omniroute combo responses: no tool call in response");
+    console.log("  [skip] pusula combo responses: no tool call in response");
     return;
   }
   validateToolCallArguments(toolCalls);
   console.log(
-    `  [OK] omniroute combo responses: ${toolCalls.length} tool calls, model=${data.model}`
+    `  [OK] pusula combo responses: ${toolCalls.length} tool calls, model=${data.model}`
   );
 });
 
-test("omniroute combo: streaming responses tool call produces valid JSON", { skip }, async () => {
+test("pusula combo: streaming responses tool call produces valid JSON", { skip }, async () => {
   const toolCalls = await sendStreamingToolCallResponsesRequest(MODEL, TOOL_CALL_PROMPT);
   if (toolCalls.length === 0) {
-    console.log("  [skip] omniroute combo streaming responses: model did not produce a tool call");
+    console.log("  [skip] pusula combo streaming responses: model did not produce a tool call");
     return;
   }
   validateToolCallArguments(toolCalls);
-  console.log(`  [OK] omniroute combo streaming responses: ${toolCalls.length} tool calls`);
+  console.log(`  [OK] pusula combo streaming responses: ${toolCalls.length} tool calls`);
 });

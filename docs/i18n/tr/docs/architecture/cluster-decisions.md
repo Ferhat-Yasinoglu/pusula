@@ -6,15 +6,15 @@
 
 **Durum:** öneri (@diegosouzapw incelemesi bekleniyor)
 **Tarih:** 2026-06-20
-**Referanslar:** [#3932](https://github.com/diegosouzapw/OmniRoute/issues/3932), PR #4381
+**Referanslar:** [#3932](https://github.com/Ferhat-Yasinoglu/pusula/issues/3932), PR #4381
 
 ## Özet
 
-[`docker-compose.yml`](../../docker-compose.yml) içindeki mevcut 8 hizmetli dağıtım için isteğe bağlı iki Compose profili (`memory`, `bifrost`). Varsayılan başlatma davranışı **değişmemiştir**: 3 × `omniroute` replikası + Caddy + Redis + CliproxyAPI. İki yeni profil, `docker compose --profile <name> up` ile etkinleştirilen isteğe bağlı yardımcı konteynerler olarak Qdrant ve Bifrost'u ekler. **Mevcut hiçbir hizmet kaldırılmaz veya değiştirilmez.**
+[`docker-compose.yml`](../../docker-compose.yml) içindeki mevcut 8 hizmetli dağıtım için isteğe bağlı iki Compose profili (`memory`, `bifrost`). Varsayılan başlatma davranışı **değişmemiştir**: 3 × `pusula` replikası + Caddy + Redis + CliproxyAPI. İki yeni profil, `docker compose --profile <name> up` ile etkinleştirilen isteğe bağlı yardımcı konteynerler olarak Qdrant ve Bifrost'u ekler. **Mevcut hiçbir hizmet kaldırılmaz veya değiştirilmez.**
 
 ## Bu yaklaşım neden ihtiyatlıdır?
 
-OmniRoute'un mevcut dağıtım yapısı zaten yalın ve kendini kanıtlamıştır:
+Pusula'un mevcut dağıtım yapısı zaten yalın ve kendini kanıtlamıştır:
 
 - **`redis:7-alpine`**, üretim ölçeğindeki hız sınırlama/önbellek iş yükünü yönetir.
 - **SQLite + sqlite-vec + FTS5**, yerel bellek + vektör + metin aramasını karşılar (bkz. [`src/lib/memory/vectorStore.ts:108`](../../src/lib/memory/vectorStore.ts)).
@@ -30,14 +30,14 @@ Buradaki iki profil, **SQLite sınırına ulaşan dağıtımlar için ölçek b�
 **Ne zaman etkinleştirilmeli:**
 
 - Dağıtım başına > 1M gömme (sqlite-vec, büyük ölçekte yavaşlamaya başlar).
-- `omniroute-1/2/3` arasında paylaşılan vektör durumuna ihtiyaç duyan çok replikalı dağıtım.
+- `pusula-1/2/3` arasında paylaşılan vektör durumuna ihtiyaç duyan çok replikalı dağıtım.
 - Hâlihazırda harici bir Qdrant kümeniz varsa (Qdrant Cloud, şirket içi).
 
 **Ekledikleri:**
 
 | Hizmet   | İmaj                    | Portlar     | Notlar                                             |
 | -------- | ----------------------- | ----------- | -------------------------------------------------- |
-| `qdrant` | `qdrant/qdrant:v1.12.4` | `6333` HTTP | HNSW dizini; kalıcı `omniroute_qdrant_data` birimi |
+| `qdrant` | `qdrant/qdrant:v1.12.4` | `6333` HTTP | HNSW dizini; kalıcı `pusula_qdrant_data` birimi |
 
 **Etkinleştirme:** Ayarlar kullanıcı arayüzünde `qdrantEnabled = true` olarak ayarlayın **veya** `QDRANT_HOST=qdrant` ortam değişkenini belirleyin. Öncelik kuralları için [`src/lib/memory/qdrant.ts:60`](../../src/lib/memory/qdrant.ts) dosyasına bakın (ayarlar tablosu → ortam değişkeni → varsayılan).
 
@@ -47,15 +47,15 @@ Buradaki iki profil, **SQLite sınırına ulaşan dağıtımlar için ölçek b�
 
 **Ne zaman etkinleştirilmeli:**
 
-- ≥3 `omniroute` replikası çalıştırıyor ve sağlayıcı rotasyonunu tek bir Go sürecinde merkezîleştirmek istiyorsanız.
+- ≥3 `pusula` replikası çalıştırıyor ve sağlayıcı rotasyonunu tek bir Go sürecinde merkezîleştirmek istiyorsanız.
 - Tüm replikalardaki yukarı akış sağlayıcısı istekleri için tek bir denetim/günlükleme yüzeyi istiyorsanız.
-- Katman 1 yönlendirme katmanını OmniRoute replikalarından bağımsız olarak yatay biçimde ölçeklendirmek istiyorsanız.
+- Katman 1 yönlendirme katmanını Pusula replikalarından bağımsız olarak yatay biçimde ölçeklendirmek istiyorsanız.
 
 **Ekledikleri:**
 
 | Hizmet    | İmaj                              | Portlar | Notlar                                                                            |
 | --------- | --------------------------------- | ------- | --------------------------------------------------------------------------------- |
-| `bifrost` | `ghcr.io/maximhq/bifrost:v1.6.11` | `8080`  | Go tabanlı Katman 1 yönlendiricisi; kalıcı `omniroute_bifrost_logs` günlük birimi |
+| `bifrost` | `ghcr.io/maximhq/bifrost:v1.6.11` | `8080`  | Go tabanlı Katman 1 yönlendiricisi; kalıcı `pusula_bifrost_logs` günlük birimi |
 
 **Etkinleştirme:** `.env.example` içinde `BIFROST_BASE_URL=http://bifrost:8080` olarak ayarlayın. [`src/app/api/v1/relay/chat/completions/bifrost/route.ts`](../../src/app/api/v1/relay/chat/completions/bifrost/route.ts) içindeki mevcut yardımcı konteyner proxy rotası (PR #4381 ile eklenmiştir) bunu otomatik olarak kullanacaktır.
 
@@ -68,7 +68,7 @@ Buradaki iki profil, **SQLite sınırına ulaşan dağıtımlar için ölçek b�
 | Bileşen                              | Karar         | Gerekçe                                                                                                                        |
 | ------------------------------------ | ------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | **Dragonfly**                        | **ÇIKARILDI** | `redis:7-alpine`, üretim ölçeğindeki hız sınırlama iş yükü için zaten yeterlidir; aşılması gereken bir kapasite sınırı yoktur. |
-| **NATS**                             | **ÇIKARILDI** | Her `omniroute` replikası tek bir Node.js işlemidir; çok işlemli bir pub/sub iş yükü mevcut değildir.                          |
+| **NATS**                             | **ÇIKARILDI** | Her `pusula` replikası tek bir Node.js işlemidir; çok işlemli bir pub/sub iş yükü mevcut değildir.                          |
 | **PostgreSQL**                       | **ÇIKARILDI** | SQLite + sqlite-vec + FTS5, 3 kullanım durumunun tümünü kapsar; 97 migrasyon ve Electron paketleme, geçişi engellemektedir.    |
 | **Neo4j**                            | **ÇIKARILDI** | Yönlendirme, 5 tablolu bir birleştirmedir; SQLite üzerindeki özyinelemeli CTE yeterlidir.                                      |
 | **MinIO**                            | **ÇIKARILDI** | Çok MB'lı blob iş yükü yoktur; görüntüler/sesler doğrudan geçiş proxy'leridir.                                                 |

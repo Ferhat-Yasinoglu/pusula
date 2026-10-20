@@ -4,7 +4,7 @@
 
 ---
 
-Die transparente TPROXY-Entschlüsselung ist der **5. Erfassungsmodus** von OmniRoute für den
+Die transparente TPROXY-Entschlüsselung ist der **5. Erfassungsmodus** von Pusula für den
 [Traffic Inspector](../frameworks/TRAFFIC_INSPECTOR.md)-/[AgentBridge](../frameworks/AGENTBRIDGE.md)-
 MITM-Stack. Sie fängt lokalen ausgehenden HTTPS-Datenverkehr unter Linux mithilfe
 von Kernel-TPROXY und richtlinienbasiertem Routing ab und **entschlüsselt** ihn — **ohne**
@@ -57,7 +57,7 @@ Verwenden Sie diesen Modus, wenn Sie Datenverkehr eines Prozesses erfassen und e
 
 Da das Abfangen im Kernel erfolgt, benötigt der ursprüngliche Prozess **keine
 Konfigurationsänderung** — der Prozess muss jedoch der dynamischen CA vertrauen,
-die OmniRoute installiert (siehe [§4](#4-the-per-sni-dynamic-ca-and-trust-store-installer)).
+die Pusula installiert (siehe [§4](#4-the-per-sni-dynamic-ca-and-trust-store-installer)).
 
 ---
 
@@ -75,7 +75,7 @@ Add-on nicht erstellt), gibt der Add-on-Loader (`src/mitm/tproxy/transparentSock
 `null` zurück, anstatt eine Ausnahme auszulösen. Der Status des Erfassungsmodus meldet dann
 `available: false`, der Umschalter im Dashboard ist **deaktiviert** und zeigt den Tooltip
 „TPROXY-Entschlüsselung erfordert Linux + root + das native Add-on“ an, während der Rest von
-OmniRoute weiterhin funktioniert.
+Pusula weiterhin funktioniert.
 
 ---
 
@@ -124,10 +124,10 @@ Der Loader prüft in dieser Prioritätsreihenfolge:
 > statischen selbstsignierten Leaf-Zertifikats. Er verwendet eine **separate**
 > CA-Instanz (`src/mitm/cert/rootCa.ts`, dauerhaft gespeichert unter
 > `<DATA_DIR>/mitm/ca.key`/`ca.crt`) und installiert sie im bereits vorhandenen
-> Trust-Store-Slot `omniroute-mitm.crt` (wodurch das alte einzelne Leaf-Zertifikat
+> Trust-Store-Slot `pusula-mitm.crt` (wodurch das alte einzelne Leaf-Zertifikat
 > dort ersetzt wird — keine Bereinigung zweier Vertrauenseinträge erforderlich);
 > sie bleibt vollständig vom unten beschriebenen TPROXY-eigenen Slot
-> `omniroute-tproxy-ca.crt` getrennt. Bei neuen AgentBridge-Installationen wird
+> `pusula-tproxy-ca.crt` getrennt. Bei neuen AgentBridge-Installationen wird
 > das CA-Modell automatisch verwendet; eine Installation, die dem alten
 > statischen Leaf-Zertifikat bereits vertraut, verwendet es weiterhin, bis der
 > Betreiber sich über `MITM_ROOT_CA_ENABLED=true` dafür entscheidet (siehe
@@ -150,7 +150,7 @@ auch für AgentBridge und die vollständige `MITM_TOOL_HOSTS`-Menge
 `selfsigned`), die:
 
 - über `generateMitmCa()` eine langlebige CA erzeugt (CN
-  `"OmniRoute MITM CA"`, 10 Jahre Gültigkeit,
+  `"Pusula MITM CA"`, 10 Jahre Gültigkeit,
   `basicConstraints CA=true` + `keyUsage keyCertSign,cRLSign`, 2048-Bit-RSA /
   SHA-256).
 - über `issueLeafCert()` **bei Bedarf ein Leaf-Zertifikat pro SNI-Hostname**
@@ -168,9 +168,9 @@ Der private Schlüssel der CA **verlässt niemals die Maschine**.
 
 Der abgefangene Client muss der dynamischen CA vertrauen. Daher wird beim Start
 des Erfassungsmodus das CA-Zertifikat in einem **dedizierten Slot** des
-Trust Stores des Betriebssystems installiert — `omniroute-tproxy-ca.crt`
+Trust Stores des Betriebssystems installiert — `pusula-tproxy-ca.crt`
 (Konstante `TPROXY_CA_CERT_NAME`) —, der vom Slot des statischen
-MITM-Zertifikats (`omniroute-mitm.crt`) getrennt bleibt, sodass sich beide
+MITM-Zertifikats (`pusula-mitm.crt`) getrennt bleibt, sodass sich beide
 niemals gegenseitig überschreiben.
 
 `installTproxyCa(caPem, sudoPassword?)` erkennt das Anchor-Verzeichnis der
@@ -276,7 +276,7 @@ Bypass-Socket-Markierung (**SO_MARK**):
 | Kontrolle                                | Details                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **API nur über Loopback**                | `/api/tools/agent-bridge/tproxy` wird durch das Präfix `/api/tools/agent-bridge/` in `LOCAL_ONLY_API_PREFIXES` (`src/server/authz/routeGuard.ts`) abgedeckt. Die Loopback-Erzwingung erfolgt **vor** der Authentifizierung (Harte Regeln Nr. 15 + Nr. 17) — ein über einen Tunnel offengelegtes JWT kann keine TPROXY-Erfassung starten, die `iptables`-Regeln anwendet und über untergeordnete Prozesse eine CA im Vertrauensspeicher installiert. |
-| **Dedizierter CA-Speicherplatz**         | Die dynamische CA wird als `omniroute-tproxy-ca.crt` installiert und überschreibt niemals das statische MITM-Zertifikat.                                                                                                                                                                                                                                                                                                                            |
+| **Dedizierter CA-Speicherplatz**         | Die dynamische CA wird als `pusula-tproxy-ca.crt` installiert und überschreibt niemals das statische MITM-Zertifikat.                                                                                                                                                                                                                                                                                                                            |
 | **CA-Schlüssel verlässt den Host nie**   | `DynamicCertStore` hält den CA-Schlüssel im Arbeitsspeicher; er wird nicht exportiert.                                                                                                                                                                                                                                                                                                                                                              |
 | **Maskierung von Geheimnissen**          | `maskSecret()` für Anfrage-/Antworttexte und `sanitizeHeaders()` für Header werden **vor** `globalTrafficBuffer.push()` ausgeführt.                                                                                                                                                                                                                                                                                                                 |
 | **Keine Shell-Interpolation**            | Alle `iptables`-/`ip`-/Vertrauensspeicherbefehle werden über `execFile`/`execFileWithPassword` mit Argument-Arrays ausgeführt (Harte Regel Nr. 13).                                                                                                                                                                                                                                                                                                 |
@@ -285,7 +285,7 @@ Bypass-Socket-Markierung (**SO_MARK**):
 
 **Die MITM-CA ist eine äußerst mächtige Funktion.** Eine vom Betriebssystem als vertrauenswürdig
 eingestufte CA, die Zertifikate für jeden beliebigen Host signieren kann, bedeutet, dass alles,
-was OmniRoute abfängt, entschlüsselt werden kann. Sie ist durch den expliziten, ausschließlich
+was Pusula abfängt, entschlüsselt werden kann. Sie ist durch den expliziten, ausschließlich
 lokalen TPROXY-Erfassungsmodus geschützt, standardmäßig deaktiviert, und der Eintrag im
 Vertrauensspeicher wird entfernt, wenn Sie den Modus beenden.
 
@@ -386,7 +386,7 @@ gibt `available: false` zurück, wenn das Add-on fehlt.
 - Vergewissern Sie sich, dass der abgefangene Prozess tatsächlich eine Verbindung zum konfigurierten `dport`
   herstellt (Standardwert: `443`).
 - Vergewissern Sie sich, dass der Prozess der dynamischen CA vertraut. Die CA wird unter
-  `omniroute-tproxy-ca.crt` installiert; bei Apps mit eigenem Vertrauensspeicher (Firefox/Chrome NSS)
+  `pusula-tproxy-ca.crt` installiert; bei Apps mit eigenem Vertrauensspeicher (Firefox/Chrome NSS)
   muss das Zertifikat möglicherweise auch dort hinzugefügt werden.
 - Führen Sie den **Diagnose**-Selbsttest von AgentBridge aus (siehe
   [`AGENTBRIDGE.md`](../frameworks/AGENTBRIDGE.md)), um zu prüfen, ob das Zertifikat als vertrauenswürdig gilt
@@ -395,7 +395,7 @@ gibt `available: false` zurück, wenn das Add-on fehlt.
 ### Veraltete Firewall-Regeln nach einem Absturz
 
 `revertTproxy()` ist die exakte Umkehrung der Anwendung und idempotent. Beim Beenden des
-Modus werden die Regeln rückgängig gemacht. Falls OmniRoute während einer Sitzung beendet wurde, verwenden Sie die
+Modus werden die Regeln rückgängig gemacht. Falls Pusula während einer Sitzung beendet wurde, verwenden Sie die
 AgentBridge-Aktion **Repair** (`POST /api/tools/agent-bridge/repair`), um verwaiste Systemzustände
 (DNS-Spoofing, Root-CA, System-Proxy) rückgängig zu machen. Die TPROXY-`mangle`-Regeln und die Route werden außerdem
 bei einem Neustart automatisch entfernt.

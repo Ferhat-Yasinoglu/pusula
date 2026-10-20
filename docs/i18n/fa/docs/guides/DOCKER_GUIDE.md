@@ -1,4 +1,4 @@
-# 🐳 Docker Guide — OmniRoute (فارسی)
+# 🐳 Docker Guide — Pusula (فارسی)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../guides/DOCKER_GUIDE.md) · 🇪🇹 [am](../../../am/docs/guides/DOCKER_GUIDE.md) · 🇸🇦 [ar](../../../ar/docs/guides/DOCKER_GUIDE.md) · 🇦🇿 [az](../../../az/docs/guides/DOCKER_GUIDE.md) · 🇧🇬 [bg](../../../bg/docs/guides/DOCKER_GUIDE.md) · 🇧🇩 [bn](../../../bn/docs/guides/DOCKER_GUIDE.md) · 🇧🇦 [bs](../../../bs/docs/guides/DOCKER_GUIDE.md) · 🇨🇿 [cs](../../../cs/docs/guides/DOCKER_GUIDE.md) · 🇩🇰 [da](../../../da/docs/guides/DOCKER_GUIDE.md) · 🇩🇪 [de](../../../de/docs/guides/DOCKER_GUIDE.md) · 🇬🇷 [el](../../../el/docs/guides/DOCKER_GUIDE.md) · 🇪🇸 [es](../../../es/docs/guides/DOCKER_GUIDE.md) · 🇪🇪 [et](../../../et/docs/guides/DOCKER_GUIDE.md) · 🇫🇮 [fi](../../../fi/docs/guides/DOCKER_GUIDE.md) · 🇫🇷 [fr](../../../fr/docs/guides/DOCKER_GUIDE.md) · 🇮🇪 [ga](../../../ga/docs/guides/DOCKER_GUIDE.md) · 🇮🇳 [gu](../../../gu/docs/guides/DOCKER_GUIDE.md) · 🇳🇬 [ha](../../../ha/docs/guides/DOCKER_GUIDE.md) · 🇮🇱 [he](../../../he/docs/guides/DOCKER_GUIDE.md) · 🇮🇳 [hi](../../../hi/docs/guides/DOCKER_GUIDE.md) · 🇭🇷 [hr](../../../hr/docs/guides/DOCKER_GUIDE.md) · 🇭🇺 [hu](../../../hu/docs/guides/DOCKER_GUIDE.md) · 🇦🇲 [hy](../../../hy/docs/guides/DOCKER_GUIDE.md) · 🇮🇩 [id](../../../id/docs/guides/DOCKER_GUIDE.md) · 🇳🇬 [ig](../../../ig/docs/guides/DOCKER_GUIDE.md) · 🇮🇹 [it](../../../it/docs/guides/DOCKER_GUIDE.md) · 🇯🇵 [ja](../../../ja/docs/guides/DOCKER_GUIDE.md) · 🇬🇪 [ka](../../../ka/docs/guides/DOCKER_GUIDE.md) · 🇰🇭 [km](../../../km/docs/guides/DOCKER_GUIDE.md) · 🇮🇳 [kn](../../../kn/docs/guides/DOCKER_GUIDE.md) · 🇰🇷 [ko](../../../ko/docs/guides/DOCKER_GUIDE.md) · 🇱🇹 [lt](../../../lt/docs/guides/DOCKER_GUIDE.md) · 🇱🇻 [lv](../../../lv/docs/guides/DOCKER_GUIDE.md) · 🇮🇳 [ml](../../../ml/docs/guides/DOCKER_GUIDE.md) · 🇮🇳 [mr](../../../mr/docs/guides/DOCKER_GUIDE.md) · 🇲🇾 [ms](../../../ms/docs/guides/DOCKER_GUIDE.md) · 🇲🇹 [mt](../../../mt/docs/guides/DOCKER_GUIDE.md) · 🇲🇲 [my](../../../my/docs/guides/DOCKER_GUIDE.md) · 🇳🇵 [ne](../../../ne/docs/guides/DOCKER_GUIDE.md) · 🇳🇱 [nl](../../../nl/docs/guides/DOCKER_GUIDE.md) · 🇳🇴 [no](../../../no/docs/guides/DOCKER_GUIDE.md) · 🇮🇳 [or](../../../or/docs/guides/DOCKER_GUIDE.md) · 🇮🇳 [pa](../../../pa/docs/guides/DOCKER_GUIDE.md) · 🇵🇭 [phi](../../../phi/docs/guides/DOCKER_GUIDE.md) · 🇵🇱 [pl](../../../pl/docs/guides/DOCKER_GUIDE.md) · 🇵🇹 [pt](../../../pt/docs/guides/DOCKER_GUIDE.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/guides/DOCKER_GUIDE.md) · 🇷🇴 [ro](../../../ro/docs/guides/DOCKER_GUIDE.md) · 🇷🇺 [ru](../../../ru/docs/guides/DOCKER_GUIDE.md) · 🇱🇰 [si](../../../si/docs/guides/DOCKER_GUIDE.md) · 🇸🇰 [sk](../../../sk/docs/guides/DOCKER_GUIDE.md) · 🇸🇮 [sl](../../../sl/docs/guides/DOCKER_GUIDE.md) · 🇷🇸 [sr](../../../sr/docs/guides/DOCKER_GUIDE.md) · 🇸🇪 [sv](../../../sv/docs/guides/DOCKER_GUIDE.md) · 🇰🇪 [sw](../../../sw/docs/guides/DOCKER_GUIDE.md) · 🇮🇳 [ta](../../../ta/docs/guides/DOCKER_GUIDE.md) · 🇮🇳 [te](../../../te/docs/guides/DOCKER_GUIDE.md) · 🇹🇭 [th](../../../th/docs/guides/DOCKER_GUIDE.md) · 🇹🇷 [tr](../../../tr/docs/guides/DOCKER_GUIDE.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/guides/DOCKER_GUIDE.md) · 🇵🇰 [ur](../../../ur/docs/guides/DOCKER_GUIDE.md) · 🇺🇿 [uz](../../../uz/docs/guides/DOCKER_GUIDE.md) · 🇻🇳 [vi](../../../vi/docs/guides/DOCKER_GUIDE.md) · 🇳🇬 [yo](../../../yo/docs/guides/DOCKER_GUIDE.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/guides/DOCKER_GUIDE.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/guides/DOCKER_GUIDE.md)
 
@@ -12,7 +12,7 @@
 - [با فایل محیطی](#with-environment-file)
 - [Docker Compose](#docker-compose)
 - [پروفایلهای موجود](#available-profiles)
-- [پیکربندی ابزارهای CLI میزبان هنگام اجرای OmniRoute در Docker](#configuring-host-cli-tools-when-omniroute-runs-in-docker)
+- [پیکربندی ابزارهای CLI میزبان هنگام اجرای Pusula در Docker](#configuring-host-cli-tools-when-pusula-runs-in-docker)
 - [Redis Sidecar](#redis-sidecar)
 - [Compose برای محیط عملیاتی](#production-compose)
 - [مراحل Dockerfile](#dockerfile-stages)
@@ -35,12 +35,12 @@
 
 ```bash
 docker run -d \
-  --name omniroute \
+  --name pusula \
   --restart unless-stopped \
   --stop-timeout 40 \
   -p 20128:20128 \
-  -v omniroute-data:/app/data \
-  diegosouzapw/omniroute:latest
+  -v pusula-data:/app/data \
+  ferhat-yasinoglu/pusula:latest
 ```
 
 ## با فایل محیطی
@@ -50,13 +50,13 @@ docker run -d \
 cp .env.example .env
 
 docker run -d \
-  --name omniroute \
+  --name pusula \
   --restart unless-stopped \
   --stop-timeout 40 \
   --env-file .env \
   -p 20128:20128 \
-  -v omniroute-data:/app/data \
-  diegosouzapw/omniroute:latest
+  -v pusula-data:/app/data \
+  ferhat-yasinoglu/pusula:latest
 ```
 
 ## Docker Compose
@@ -80,41 +80,41 @@ docker compose --profile cli --profile cliproxyapi up -d
 
 ## پروفایلهای موجود
 
-OmniRoute برای الگوهای اصلی استقرار، پروفایلهای Compose ارائه میدهد. پروفایلی را انتخاب کنید که با محیط شما مطابقت دارد.
+Pusula برای الگوهای اصلی استقرار، پروفایلهای Compose ارائه میدهد. پروفایلی را انتخاب کنید که با محیط شما مطابقت دارد.
 
 | پروفایل         | سرویس            | زمان استفاده                                                                                                                                                    | دستور                                        |
 | --------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| `base` (پیشفرض) | `omniroute-base` | سرور بدون رابط گرافیکی / محیط اجرای حداقلی، بدون CLIهای ارائهدهندگان                                                                                            | `docker compose --profile base up -d`        |
-| `cli`           | `omniroute-cli`  | گردشکارهای عاملمحوری که `omniroute providers/setup/doctor` و CLIهای همراه (Codex، Claude Code، Droid، OpenClaw) را فراخوانی میکنند                              | `docker compose --profile cli up -d`         |
-| `host`          | `omniroute-host` | میزبانهای Linux که با نصب `~/.local/bin`، `~/.codex`، `~/.claude` و غیره بهصورت فقطخواندنی، دسترسی مشابه `network_mode` به CLIهای میزبان میخواهند               | `docker compose --profile host up -d`        |
+| `base` (پیشفرض) | `pusula-base` | سرور بدون رابط گرافیکی / محیط اجرای حداقلی، بدون CLIهای ارائهدهندگان                                                                                            | `docker compose --profile base up -d`        |
+| `cli`           | `pusula-cli`  | گردشکارهای عاملمحوری که `pusula providers/setup/doctor` و CLIهای همراه (Codex، Claude Code، Droid، OpenClaw) را فراخوانی میکنند                              | `docker compose --profile cli up -d`         |
+| `host`          | `pusula-host` | میزبانهای Linux که با نصب `~/.local/bin`، `~/.codex`، `~/.claude` و غیره بهصورت فقطخواندنی، دسترسی مشابه `network_mode` به CLIهای میزبان میخواهند               | `docker compose --profile host up -d`        |
 | `cliproxyapi`   | `cliproxyapi`    | اجرای سرویس جانبی [CLIProxyAPI](https://github.com/router-for-me/CLIProxyAPI) روی پورت `8317` برای پروکسیکردن CLI بالادستی                                      | `docker compose --profile cliproxyapi up -d` |
-| `web`           | `omniroute-web`  | ارائهدهندگان مبتنی بر نشست وب که به مرورگر نیاز دارند: `gemini-web`، `claude-web`، `claude-turnstile` (`runner-web` را میسازد و Chromium در آن گنجانده شده است) | `docker compose --profile web up -d`         |
+| `web`           | `pusula-web`  | ارائهدهندگان مبتنی بر نشست وب که به مرورگر نیاز دارند: `gemini-web`، `claude-web`، `claude-turnstile` (`runner-web` را میسازد و Chromium در آن گنجانده شده است) | `docker compose --profile web up -d`         |
 
 > میتوان چند پروفایل را با هم ترکیب کرد: `docker compose --profile cli --profile cliproxyapi up -d`.
 
-## پیکربندی ابزارهای CLI میزبان هنگامی که OmniRoute در Docker اجرا میشود
+## پیکربندی ابزارهای CLI میزبان هنگامی که Pusula در Docker اجرا میشود
 
-`omniroute setup-codex`، `setup-claude`، `config set <tool>` و دکمهٔ
+`pusula setup-codex`، `setup-claude`، `config set <tool>` و دکمهٔ
 **ذخیرهٔ پیکربندی** در داشبورد، همگی فایلهایی مانند `~/.codex/*.config.toml` را مینویسند. این مسیرها
 فقط روی ماشینی معنا دارند که CLI واقعاً در آن اجرا میشود. اگر آنها را داخل
 کانتینر اجرا کنید، عملیات نوشتن در پوشهٔ خانگی خود کانتینر (`/home/node` —
 ایمیج با `USER node` اجرا میشود) انجام خواهد شد؛ جایی که هیچ CLI میزبانی آن را
 نمیخواند و بهمحض ایجاد مجدد کانتینر، حذف میشود.
 
-OmniRoute این وضعیت را تشخیص میدهد و بهجای گزارش موفقیتی که قابل استفاده نیست،
+Pusula این وضعیت را تشخیص میدهد و بهجای گزارش موفقیتی که قابل استفاده نیست،
 از نوشتن خودداری کرده و دستورالعملهایی ارائه میدهد: CLI با کد `2` خارج میشود و API با کد `422`
 و `containerEphemeralTarget: true` پاسخ میدهد.
 
-### توصیهشده: CLI را روی میزبان و OmniRoute را در Docker اجرا کنید
+### توصیهشده: CLI را روی میزبان و Pusula را در Docker اجرا کنید
 
 کانتینر، API را ارائه میکند؛ CLI نیز ابزارهای میزبان شما را پیکربندی میکند.
 
 ```bash
 docker compose --profile base up -d
 
-npm install -g omniroute
-omniroute connect http://localhost:20128   # CLI را به کانتینر متصل کنید
-omniroute setup-codex                      # مسیر واقعی ~/.codex را روی میزبان شما مینویسد
+npm install -g pusula
+pusula connect http://localhost:20128   # CLI را به کانتینر متصل کنید
+pusula setup-codex                      # مسیر واقعی ~/.codex را روی میزبان شما مینویسد
 ```
 
 هنگامی که Codex، Claude Code، Cursor یا ابزارهای مشابه روی لپتاپ شما اجرا میشوند،
@@ -135,7 +135,7 @@ volumes:
   - ~/.claude:/host-home/.claude:rw
 ```
 
-bind mount همان چیزی است که مسیر را قابل اعتماد میکند: OmniRoute فایل
+bind mount همان چیزی است که مسیر را قابل اعتماد میکند: Pusula فایل
 `/proc/self/mountinfo` را میخواند و نوشتن در مسیرهای mountشده (و نیز دایرکتوریهایی
 که فرزندانشان mount شدهاند، که دقیقاً با ساختار `/host-home` در بالا مطابقت دارد) مجاز میداند،
 درحالیکه همچنان از نوشتن در مسیرهای mountنشده خودداری میکند.
@@ -144,7 +144,7 @@ bind mount همان چیزی است که مسیر را قابل اعتماد م�
 
 هنگامی که CLIها واقعاً داخل کانتینر قرار دارند (پروفایل `cli`)، عملیات نوشتن
 عمدی است. گزینهٔ `--allow-container-write` را به هر فرمان `setup-*` بدهید، یا برای
-سرور مقدار `OMNIROUTE_ALLOW_CONTAINER_CONFIG_WRITE=true` را تنظیم کنید. عملیات نوشتن
+سرور مقدار `PUSULA_ALLOW_CONTAINER_CONFIG_WRITE=true` را تنظیم کنید. عملیات نوشتن
 با هشداری مبنی بر اینکه پس از حذف کانتینر باقی نخواهد ماند، انجام میشود.
 
 > **هشدار امنیتی — پروفایل `cli` بههمراه mount کردن `docker.sock`.**
@@ -176,16 +176,16 @@ bind mount همان چیزی است که مسیر را قابل اعتماد م�
 
 ## سایدکار Redis
 
-OmniRoute برای پشتیبانی از محدودکننده نرخ توزیعشده و کش اشتراکی به Redis متکی است. سرویس `redis` **همیشه** در `docker-compose.yml` تعریف شده است (هیچ محدودیت پروفایلی ندارد) و همراه با هر پروفایل دیگری اجرا میشود.
+Pusula برای پشتیبانی از محدودکننده نرخ توزیعشده و کش اشتراکی به Redis متکی است. سرویس `redis` **همیشه** در `docker-compose.yml` تعریف شده است (هیچ محدودیت پروفایلی ندارد) و همراه با هر پروفایل دیگری اجرا میشود.
 
 | جزئیات                            | مقدار                                  |
 | --------------------------------- | -------------------------------------- |
 | ایمیج                             | `redis:7-alpine`                       |
-| نام کانتینر                       | `omniroute-redis`                      |
+| نام کانتینر                       | `pusula-redis`                      |
 | پورت داخلی                        | `6379`                                 |
 | پورت میزبان (قابل بازنویسی)       | `REDIS_PORT` (پیشفرض `6379`)           |
 | آدرس اتصال میزبان (قابل بازنویسی) | `REDIS_BIND_HOST` (پیشفرض `127.0.0.1`) |
-| ولوم                              | `omniroute-redis-data` → `/data`       |
+| ولوم                              | `pusula-redis-data` → `/data`       |
 | بررسی سلامت                       | `redis-cli ping` (با فاصله 10 ثانیه)   |
 
 متغیرهای محیطی مرتبط:
@@ -215,9 +215,9 @@ docker compose up -d --scale redis=0
 | فایل                | `docker-compose.prod.yml`                                                        |
 | پورت پیشفرض داشبورد | `PROD_DASHBOARD_PORT=20130` (نگاشتشده به `${DASHBOARD_PORT:-20128}` داخلی)       |
 | پورت پیشفرض API     | `PROD_API_PORT=20131`                                                            |
-| ایمیج               | `omniroute:prod` (ساختهشده از تارگت `runner-cli`)                                |
-| کانتینر Redis       | `omniroute-redis-prod` (`redis:8.6.2`، با ولوم اختصاصی `redis-prod-data`)        |
-| ولوم داده           | `omniroute-prod-data` (نامگذاریشده و پایدار میان بازسازیها)                      |
+| ایمیج               | `pusula:prod` (ساختهشده از تارگت `runner-cli`)                                |
+| کانتینر Redis       | `pusula-redis-prod` (`redis:8.6.2`، با ولوم اختصاصی `redis-prod-data`)        |
+| ولوم داده           | `pusula-prod-data` (نامگذاریشده و پایدار میان بازسازیها)                      |
 | بررسیهای سلامت      | `node healthcheck.mjs` + `redis-cli ping`، با `depends_on` وابسته به سلامت Redis |
 
 نحوه استفاده:
@@ -249,23 +249,23 @@ docker compose -f docker-compose.prod.yml down
 ساخت دستی یک target مشخص:
 
 ```bash
-docker build --target runner-base -t omniroute:base .
-docker build --target runner-cli  -t omniroute:cli  .
-docker build --target runner-web  -t omniroute:web  .
+docker build --target runner-base -t pusula:base .
+docker build --target runner-cli  -t pusula:cli  .
+docker build --target runner-web  -t pusula:web  .
 ```
 
 ### منابع زمان ساخت
 
 سه آرگومان ساخت، هزینه مرحله `builder` را کنترل میکنند. این آرگومانها فقط مختص زمان ساخت هستند —
-`OMNIROUTE_MEMORY_MB` (در پایین) یک تنظیم جداگانه برای زمان اجرا است.
+`PUSULA_MEMORY_MB` (در پایین) یک تنظیم جداگانه برای زمان اجرا است.
 
 | آرگومان ساخت                | پیشفرض | اثر                                                                                                          |
 | --------------------------- | ------ | ------------------------------------------------------------------------------------------------------------ |
-| `OMNIROUTE_USE_TURBOPACK`   | `1`    | مقدار `0` باعث ساخت با webpack میشود. اوج مصرف حافظه کمتر است، اما سرعت پایینتر خواهد بود.                   |
-| `OMNIROUTE_BUILD_MEMORY_MB` | `6144` | سقف heap در V8 (`--max-old-space-size`) برای `next build` اجراشده.                                           |
-| `OMNIROUTE_BUILD_WORKERS`   | `2`    | مقدار `CIRCLE_NODE_TOTAL` را تأمین میکند؛ Next برای جمعآوری دادههای صفحه، `workers = N - 1` را محاسبه میکند. |
+| `PUSULA_USE_TURBOPACK`   | `1`    | مقدار `0` باعث ساخت با webpack میشود. اوج مصرف حافظه کمتر است، اما سرعت پایینتر خواهد بود.                   |
+| `PUSULA_BUILD_MEMORY_MB` | `6144` | سقف heap در V8 (`--max-old-space-size`) برای `next build` اجراشده.                                           |
+| `PUSULA_BUILD_WORKERS`   | `2`    | مقدار `CIRCLE_NODE_TOTAL` را تأمین میکند؛ Next برای جمعآوری دادههای صفحه، `workers = N - 1` را محاسبه میکند. |
 
-`OMNIROUTE_BUILD_WORKERS` همان مقداری است که باید روی یک سازنده قدرتمند افزایش دهید و
+`PUSULA_BUILD_WORKERS` همان مقداری است که باید روی یک سازنده قدرتمند افزایش دهید و
 وقتی یک ساخت دارای محدودیت منابع **پس از** `✓ Compiled successfully` متوقف میشود، به آن
 مشکوک شوید. هر worker مربوط به دادههای صفحه یک فرایند مستقل است و فرایند والد
 `next build` نیز همینطور است؛ یک بازتولید زنده روی VPS (issue #7518) نشان داد که
@@ -281,7 +281,7 @@ buildkit مرحله را با خطای `ResourceExhausted: ... cannot allocate m
 از ظرفیت runner فراتر بروند، با شکست مواجه میشود.
 
 Turbopack عملیات کامپایل را در حافظه native مربوط به Rust انجام میدهد که **خارج از**
-heap مربوط به V8 قرار دارد، بنابراین `OMNIROUTE_BUILD_MEMORY_MB` آن را محدود نمیکند. در میزبانی
+heap مربوط به V8 قرار دارد، بنابراین `PUSULA_BUILD_MEMORY_MB` آن را محدود نمیکند. در میزبانی
 با سقف حافظه، فرایند ساخت توسط OOM killer و از طریق SIGKILL، بدون نمایش هیچ متن خطایی،
 متوقف میشود — صرفاً در میانه `Creating an optimized production build` متوقف
 میشود و بهجای اتمام حافظه، شبیه هنگکردن به نظر میرسد. اگر میزبان ساخت محدودیت منابع دارد،
@@ -289,15 +289,15 @@ bundler را تغییر دهید:
 
 ```bash
 docker build --target runner-base \
-  --build-arg OMNIROUTE_USE_TURBOPACK=0 \
-  -t omniroute:base .
+  --build-arg PUSULA_USE_TURBOPACK=0 \
+  -t pusula:base .
 ```
 
 `webpackBuildWorker` فعال است، بنابراین `next build` یک فرایند والد **و** یک فرایند worker
-را اجرا میکند و هرکدام بهصورت جداگانه از `OMNIROUTE_BUILD_MEMORY_MB` تبعیت میکنند. سقف حافظه
+را اجرا میکند و هرکدام بهصورت جداگانه از `PUSULA_BUILD_MEMORY_MB` تبعیت میکنند. سقف حافظه
 کانتینر را تقریباً بیشتر از دو برابر این مقدار در نظر بگیرید، نه یک برابر.
 
-اندازهگیریشده روی این درخت (`--target runner-base`، `OMNIROUTE_BUILD_MEMORY_MB=6144`):
+اندازهگیریشده روی این درخت (`--target runner-base`، `PUSULA_BUILD_MEMORY_MB=6144`):
 
 | Bundler   | سقف حافظه کانتینر | نتیجه                                      |
 | --------- | ----------------- | ------------------------------------------ |
@@ -307,34 +307,34 @@ docker build --target runner-base \
 
 ### مقادیر پیشفرض زمان اجرا
 
-مقادیر پیشفرض صادرشده توسط `runner-base`: `PORT=20128`، `HOSTNAME=0.0.0.0`، `OMNIROUTE_MEMORY_MB=1024`، `NODE_OPTIONS=--max-old-space-size=1024`، `DATA_DIR=/app/data`، `OMNIROUTE_MIGRATIONS_DIR=/app/migrations`.
+مقادیر پیشفرض صادرشده توسط `runner-base`: `PORT=20128`، `HOSTNAME=0.0.0.0`، `PUSULA_MEMORY_MB=1024`، `NODE_OPTIONS=--max-old-space-size=1024`، `DATA_DIR=/app/data`، `PUSULA_MIGRATIONS_DIR=/app/migrations`.
 
 رفتار حافظه در Docker:
 
-- ایمیج مقدار `OMNIROUTE_MEMORY_MB=1024` را تنظیم میکند و `NODE_OPTIONS=--max-old-space-size=1024` را از آن بهدست میآورد.
-- فرایند واقعی سرور توسط راهانداز مستقل آغاز میشود؛ این راهانداز `OMNIROUTE_MEMORY_MB` را میخواند و `--max-old-space-size=<OMNIROUTE_MEMORY_MB>` را اضافه میکند.
-- Node از آخرین مقدار تکرارشدهٔ `--max-old-space-size` استفاده میکند؛ بنابراین تنظیم `OMNIROUTE_MEMORY_MB` محدودیت مؤثر heap در Docker را کنترل میکند.
+- ایمیج مقدار `PUSULA_MEMORY_MB=1024` را تنظیم میکند و `NODE_OPTIONS=--max-old-space-size=1024` را از آن بهدست میآورد.
+- فرایند واقعی سرور توسط راهانداز مستقل آغاز میشود؛ این راهانداز `PUSULA_MEMORY_MB` را میخواند و `--max-old-space-size=<PUSULA_MEMORY_MB>` را اضافه میکند.
+- Node از آخرین مقدار تکرارشدهٔ `--max-old-space-size` استفاده میکند؛ بنابراین تنظیم `PUSULA_MEMORY_MB` محدودیت مؤثر heap در Docker را کنترل میکند.
 - از آنجا که ایمیج همیشه این مقدار را تنظیم میکند، مقدار جایگزین خودِ راهانداز که بر اساس RAM کالیبره میشود، در Docker هرگز اعمال نمیشود. این مقدار را متناسب با بار کاری بهصراحت افزایش دهید (جدول زیر). مقدار `2048` همچنان برای `/v1/responses` مربوط به عامل کدنویسی بسیار کم است.
 
 ### RAM زمان اجرا برای عاملهای کدنویسی
 
-مقدار پیشفرض 1 GiB در Docker حداقلِ لازم برای داشبورد/گفتوگوی سبک است، نه اندازهای مناسب برای محیط عملیاتی. بدنههای طولانی `POST /v1/responses` (شامل صدها پیام و دهها ابزار) هنگام فشردهسازی، چندین گراف درونحافظهای را نگه میدارند. دو درخواست همپوشان با اندازهٔ تقریبی ~3 MiB / ~750k توکن، V8 را با old-space برابر با **12 GiB** متوقف کردهاند (`FATAL ERROR: Reached heap limit`) و همچنین باعث OOM در cgroup با ظرفیت 16 GiB شدهاند. [#7849](https://github.com/diegosouzapw/OmniRoute/issues/7849) را ببینید.
+مقدار پیشفرض 1 GiB در Docker حداقلِ لازم برای داشبورد/گفتوگوی سبک است، نه اندازهای مناسب برای محیط عملیاتی. بدنههای طولانی `POST /v1/responses` (شامل صدها پیام و دهها ابزار) هنگام فشردهسازی، چندین گراف درونحافظهای را نگه میدارند. دو درخواست همپوشان با اندازهٔ تقریبی ~3 MiB / ~750k توکن، V8 را با old-space برابر با **12 GiB** متوقف کردهاند (`FATAL ERROR: Reached heap limit`) و همچنین باعث OOM در cgroup با ظرفیت 16 GiB شدهاند. [#7849](https://github.com/Ferhat-Yasinoglu/pusula/issues/7849) را ببینید.
 
 اندازهٔ **`--memory` در cgroup را بیشتر از heap در نظر بگیرید** — بافرهای بومی، SQLite و دادههای میانی فشردهسازی خارج از V8 قرار میگیرند.
 
-| بار کاری                            | `OMNIROUTE_MEMORY_MB`    | کانتینر / cgroup       | توضیحات                                                                                                |
+| بار کاری                            | `PUSULA_MEMORY_MB`    | کانتینر / cgroup       | توضیحات                                                                                                |
 | ----------------------------------- | ------------------------ | ---------------------- | ------------------------------------------------------------------------------------------------------ |
 | داشبورد، یک گفتوگوی سبک             | `1024` (پیشفرض ایمیج)    | ≥2 GiB                 |                                                                                                        |
 | یک عامل کدنویسی (Claude/Codex/Grok) | `8192`                   | ≥10 GiB                | حالت معمول برای یک نشست `/v1/responses`                                                                |
 | دو `/v1/responses` طولانی همزمان    | `10240`–`12288`          | ≥12–16 GiB             | توقف اندازهگیریشدهٔ V8 با heap حدود ~12 GiB                                                            |
 | سه یا بیشتر زمینهٔ طولانی همزمان    | روی یک فرایند اجرا نکنید | سریالیسازی / RAM بیشتر | پذیرش پیشفرض بارهای سنگین، 1 مورد در حال اجرا است؛ افزایش آن بدون RAM کافی، توقف را دوباره ایجاد میکند |
 
-وقتی `OMNIROUTE_MEMORY_MB` **تنظیم نشده باشد**، دستور `omniroute serve` روی سختافزار مستقیم حدود 35٪ از RAM را کالیبره میکند (با محدودسازی در بازهٔ `[512, 4096]`). Docker همیشه مقدار `1024` را تنظیم میکند؛ بنابراین این کالیبراسیون هرگز در ایمیج رسمی اجرا نمیشود.
+وقتی `PUSULA_MEMORY_MB` **تنظیم نشده باشد**، دستور `pusula serve` روی سختافزار مستقیم حدود 35٪ از RAM را کالیبره میکند (با محدودسازی در بازهٔ `[512, 4096]`). Docker همیشه مقدار `1024` را تنظیم میکند؛ بنابراین این کالیبراسیون هرگز در ایمیج رسمی اجرا نمیشود.
 
 ```bash
-docker run -d --name omniroute --restart unless-stopped --stop-timeout 40 \
-  -e OMNIROUTE_MEMORY_MB=8192 --memory=10g \
-  -p 127.0.0.1:20128:20128 -v omniroute-data:/app/data diegosouzapw/omniroute:latest
+docker run -d --name pusula --restart unless-stopped --stop-timeout 40 \
+  -e PUSULA_MEMORY_MB=8192 --memory=10g \
+  -p 127.0.0.1:20128:20128 -v pusula-data:/app/data ferhat-yasinoglu/pusula:latest
 ```
 
 ## متغیرهای حیاتی محیطی
@@ -343,24 +343,24 @@ docker run -d --name omniroute --restart unless-stopped --stop-timeout 40 \
 
 | متغیر                         | کاربرد                                                                                                                                                                                                                                                                                | مقدار پیشفرض               |
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
-| `OMNIROUTE_WS_BRIDGE_SECRET`  | راز مشترک برای پل WebSocket. **در محیط عملیاتی الزامی است** — آن را روی یک رشته تصادفی قدرتمند تنظیم کنید.                                                                                                                                                                            | تنظیمنشده (باید ارائه شود) |
+| `PUSULA_WS_BRIDGE_SECRET`  | راز مشترک برای پل WebSocket. **در محیط عملیاتی الزامی است** — آن را روی یک رشته تصادفی قدرتمند تنظیم کنید.                                                                                                                                                                            | تنظیمنشده (باید ارائه شود) |
 | `REDIS_URL`                   | رشته اتصال برای محدودکننده نرخ / بخش پشتیبان حافظه نهان                                                                                                                                                                                                                               | `redis://redis:6379`       |
 | `REDIS_PORT`                  | پورت سمت میزبان برای کانتینر Redis همراه                                                                                                                                                                                                                                              | `6379`                     |
 | `REDIS_BIND_HOST`             | رابط میزبان که پورت Redis همراه روی آن منتشر میشود (مگر اینکه AUTH را اضافه کنید، از رابط loopback استفاده میشود)                                                                                                                                                                     | `127.0.0.1`                |
-| `AUTO_UPDATE_HOST_REPO_DIR`   | مسیر میزبان که برای گردشکارهای بهروزرسانی خودکار، در پروفایل `cli` روی `/workspace/omniroute` سوار میشود                                                                                                                                                                              | `.` (دایرکتوری فعلی)       |
-| `OMNIROUTE_MEMORY_MB`         | سقف heap زمان اجرای Node برای سرور مستقل Docker؛ مقدار پیشفرض ایمیج در بالا را بازنویسی میکند. عاملهای کدنویسی: `8192`+ (به [RAM زمان اجرا](#runtime-ram-for-coding-agents) مراجعه کنید).                                                                                             | `1024`                     |
+| `AUTO_UPDATE_HOST_REPO_DIR`   | مسیر میزبان که برای گردشکارهای بهروزرسانی خودکار، در پروفایل `cli` روی `/workspace/pusula` سوار میشود                                                                                                                                                                              | `.` (دایرکتوری فعلی)       |
+| `PUSULA_MEMORY_MB`         | سقف heap زمان اجرای Node برای سرور مستقل Docker؛ مقدار پیشفرض ایمیج در بالا را بازنویسی میکند. عاملهای کدنویسی: `8192`+ (به [RAM زمان اجرا](#runtime-ram-for-coding-agents) مراجعه کنید).                                                                                             | `1024`                     |
 | `DASHBOARD_PORT` / `API_PORT` | پورتهای در معرض دسترس داشبورد (20128) و API (20129) را بازنویسی میکند                                                                                                                                                                                                                 | `20128` / `20129`          |
 | `APP_BIND_HOST`               | رابط میزبانی که docker-compose پورتهای داشبورد/API/live-WS را روی آن منتشر میکند. با `REQUIRE_API_KEY=false` (مقدار پیشفرض)، `0.0.0.0` پراکسی ناشناس `/v1` را در معرض LAN قرار میدهد — فقط با `REQUIRE_API_KEY=true` یا قرار دادن یک پراکسی معکوس در جلو، دامنه دسترسی را گسترش دهید. | `127.0.0.1`                |
 | `CLIPROXY_BIND_HOST`          | رابط میزبانی که docker-compose سرویس جانبی `cliproxyapi` را روی آن منتشر میکند — حجم داده آن حاوی اعتبارنامههای ارائهدهنده است.                                                                                                                                                       | `127.0.0.1`                |
-| `OMNIROUTE_PLUGINS_DIR`       | دایرکتوریای که اسکنر افزونه زمان اجرا از آن میخواند و افزونهها را در آن نصب میکند. هنگامی که افزونهها بهصورت bind mount متصل شدهاند، آن را تنظیم کنید: مقدار پیشفرض از `HOME` پیروی میکند که ممکن است یک ایمیج آن را export نکند.                                                     | `~/.omniroute/plugins`     |
-| `OMNIROUTE_BASE_PATH`         | زیرمسیر URL هنگامی که برنامه پشت یک پراکسی معکوس منتشر میشود (برای مثال، `/omniroute`)                                                                                                                                                                                                | _(خالی = ریشه)_            |
-| `NEXT_PUBLIC_BASE_URL`        | مبدأ عمومی مرورگر شامل زیرمسیر (برای مثال، `https://host/omniroute`)                                                                                                                                                                                                                  | تنظیمنشده                  |
+| `PUSULA_PLUGINS_DIR`       | دایرکتوریای که اسکنر افزونه زمان اجرا از آن میخواند و افزونهها را در آن نصب میکند. هنگامی که افزونهها بهصورت bind mount متصل شدهاند، آن را تنظیم کنید: مقدار پیشفرض از `HOME` پیروی میکند که ممکن است یک ایمیج آن را export نکند.                                                     | `~/.pusula/plugins`     |
+| `PUSULA_BASE_PATH`         | زیرمسیر URL هنگامی که برنامه پشت یک پراکسی معکوس منتشر میشود (برای مثال، `/pusula`)                                                                                                                                                                                                | _(خالی = ریشه)_            |
+| `NEXT_PUBLIC_BASE_URL`        | مبدأ عمومی مرورگر شامل زیرمسیر (برای مثال، `https://host/pusula`)                                                                                                                                                                                                                  | تنظیمنشده                  |
 | `PROD_DASHBOARD_PORT`         | پورت داشبورد سمت میزبان برای `docker-compose.prod.yml`                                                                                                                                                                                                                                | `20130`                    |
 | `CLIPROXYAPI_PORT`            | پورت سمت میزبان برای سرویس جانبی `cliproxyapi`                                                                                                                                                                                                                                        | `8317`                     |
 
 ## پروکسی معکوس روی یک زیرمسیر (Traefik / nginx)
 
-مقدار `basePath` در Next.js داخل بستهٔ مستقل کامپایل میشود. OmniRoute مقدار تعبیهشده را در یک فایل نشانه در ریشهٔ برنامه ثبت میکند (این فایل هنگام اجرای `npm run build` نوشته و توسط `scripts/docker/ensure-docker-base-path.mjs` خوانده میشود) و هنگام راهاندازی کانتینر، آن را با `OMNIROUTE_BASE_PATH` مقایسه میکند. اگر این مقادیر متفاوت باشند و ایمیج برای ریشهٔ دامنه ساخته شده باشد، entrypoint پیش از اجرای `node dev/run-standalone.mjs`، manifestهای مستقل، مقادیر literal تعبیهشدهٔ `basePath`/`assetPrefix` (نسخهٔ Next 16 نشانیهای دارایی SSR را صرفاً از `assetPrefix` رندر میکند — patcher زیرمسیر را در آن نیز منعکس میکند)، نشانیهای تعبیهشدهٔ داراییهای `/_next/static` (manifestهای ارجاع کلاینت، importهای رسانه و صفحات خطای ازپیشرندرشده) و shim مربوط به `process.env` در کلاینت را بازنویسی میکند.
+مقدار `basePath` در Next.js داخل بستهٔ مستقل کامپایل میشود. Pusula مقدار تعبیهشده را در یک فایل نشانه در ریشهٔ برنامه ثبت میکند (این فایل هنگام اجرای `npm run build` نوشته و توسط `scripts/docker/ensure-docker-base-path.mjs` خوانده میشود) و هنگام راهاندازی کانتینر، آن را با `PUSULA_BASE_PATH` مقایسه میکند. اگر این مقادیر متفاوت باشند و ایمیج برای ریشهٔ دامنه ساخته شده باشد، entrypoint پیش از اجرای `node dev/run-standalone.mjs`، manifestهای مستقل، مقادیر literal تعبیهشدهٔ `basePath`/`assetPrefix` (نسخهٔ Next 16 نشانیهای دارایی SSR را صرفاً از `assetPrefix` رندر میکند — patcher زیرمسیر را در آن نیز منعکس میکند)، نشانیهای تعبیهشدهٔ داراییهای `/_next/static` (manifestهای ارجاع کلاینت، importهای رسانه و صفحات خطای ازپیشرندرشده) و shim مربوط به `process.env` در کلاینت را بازنویسی میکند.
 
 ### ساخت با Compose (پیشنهادشده)
 
@@ -368,32 +368,32 @@ docker run -d --name omniroute --restart unless-stopped --stop-timeout 40 \
 
 ```bash
 # .env
-OMNIROUTE_BASE_PATH=/omniroute
-NEXT_PUBLIC_BASE_URL=https://myhostname.example.com/omniroute
+PUSULA_BASE_PATH=/pusula
+NEXT_PUBLIC_BASE_URL=https://myhostname.example.com/pusula
 ```
 
 ```bash
 docker compose --profile base up -d --build
 ```
 
-فایل `docker-compose.yml` مقدار `OMNIROUTE_BASE_PATH` را هم بهعنوان آرگومان ساخت Docker و هم بهعنوان متغیر محیطی زمان اجرا ارسال میکند.
+فایل `docker-compose.yml` مقدار `PUSULA_BASE_PATH` را هم بهعنوان آرگومان ساخت Docker و هم بهعنوان متغیر محیطی زمان اجرا ارسال میکند.
 
 ### ایمیج ریشهٔ ازپیشساختهشده + زیرمسیر زمان اجرا
 
-ایمیجهای منتشرشدهٔ `diegosouzapw/omniroute:*` برای ریشهٔ دامنه ساخته شدهاند. بااینحال، میتوانید `OMNIROUTE_BASE_PATH` را هنگام اجرا تنظیم کنید؛ کانتینر در زمان راهاندازی، بسته را یکبار patch میکند. آن را همراه با مبدأ عمومی متناظر تنظیم کنید:
+ایمیجهای منتشرشدهٔ `ferhat-yasinoglu/pusula:*` برای ریشهٔ دامنه ساخته شدهاند. بااینحال، میتوانید `PUSULA_BASE_PATH` را هنگام اجرا تنظیم کنید؛ کانتینر در زمان راهاندازی، بسته را یکبار patch میکند. آن را همراه با مبدأ عمومی متناظر تنظیم کنید:
 
 ```yaml
 services:
-  omniroute:
-    image: diegosouzapw/omniroute:latest
+  pusula:
+    image: ferhat-yasinoglu/pusula:latest
     environment:
-      OMNIROUTE_BASE_PATH: /omniroute
-      NEXT_PUBLIC_BASE_URL: https://myhostname.example.com/omniroute
+      PUSULA_BASE_PATH: /pusula
+      NEXT_PUBLIC_BASE_URL: https://myhostname.example.com/pusula
 ```
 
-پروکسی معکوس را طوری پیکربندی کنید که مسیر خارجی را بهصورت **کامل** ارسال کند (پیشوند را حذف نکنید). Traefik باید `PathPrefix(`/omniroute`)` را بدون `StripPrefix` به کانتینر مسیریابی کند تا Next.js مسیر `/omniroute/...` را دریافت کند و داراییها را از `/omniroute/_next/...` ارائه دهد.
+پروکسی معکوس را طوری پیکربندی کنید که مسیر خارجی را بهصورت **کامل** ارسال کند (پیشوند را حذف نکنید). Traefik باید `PathPrefix(`/pusula`)` را بدون `StripPrefix` به کانتینر مسیریابی کند تا Next.js مسیر `/pusula/...` را دریافت کند و داراییها را از `/pusula/_next/...` ارائه دهد.
 
-بررسی سلامت Docker، endpoint سبکوزن چرخهٔ حیات `/healthz` را با پیشوند `OMNIROUTE_BASE_PATH` فعال بررسی میکند. مسیر `/api/monitoring/health` همچنان برای عیبیابی انسانی/داشبورد در دسترس است؛ برای بازگرداندن HEALTHCHECK کانتینر به این مسیر (برای مثال، جهت اعمال بررسی سلامت عمیق)، مقدار `OMNIROUTE_HEALTHCHECK_PATH=/api/monitoring/health` را تنظیم کنید. این مسیر یک بررسی **عمیق** است (پایگاه داده + خلاصهٔ پایش) — اگر دوباره آن را فعال کنید، برای `HEALTHCHECK` کمتکرار Docker مناسب است، اما برای بازههای زمانی `livenessProbe` در Kubernetes **مناسب نیست**.
+بررسی سلامت Docker، endpoint سبکوزن چرخهٔ حیات `/healthz` را با پیشوند `PUSULA_BASE_PATH` فعال بررسی میکند. مسیر `/api/monitoring/health` همچنان برای عیبیابی انسانی/داشبورد در دسترس است؛ برای بازگرداندن HEALTHCHECK کانتینر به این مسیر (برای مثال، جهت اعمال بررسی سلامت عمیق)، مقدار `PUSULA_HEALTHCHECK_PATH=/api/monitoring/health` را تنظیم کنید. این مسیر یک بررسی **عمیق** است (پایگاه داده + خلاصهٔ پایش) — اگر دوباره آن را فعال کنید، برای `HEALTHCHECK` کمتکرار Docker مناسب است، اما برای بازههای زمانی `livenessProbe` در Kubernetes **مناسب نیست**.
 
 برای هماهنگکنندهها (Kubernetes، Nomad و غیره):
 
@@ -408,22 +408,22 @@ services:
 
 ## Docker Compose با Caddy (HTTPS Auto-TLS)
 
-میتوان OmniRoute را با استفاده از صدور خودکار گواهی SSL توسط Caddy بهصورت امن در دسترس قرار داد. مطمئن شوید رکورد DNS نوع A دامنه شما به IP سرورتان اشاره میکند.
+میتوان Pusula را با استفاده از صدور خودکار گواهی SSL توسط Caddy بهصورت امن در دسترس قرار داد. مطمئن شوید رکورد DNS نوع A دامنه شما به IP سرورتان اشاره میکند.
 
 ```yaml
 services:
-  omniroute:
-    image: diegosouzapw/omniroute:latest
-    container_name: omniroute
+  pusula:
+    image: ferhat-yasinoglu/pusula:latest
+    container_name: pusula
     restart: unless-stopped
     volumes:
-      - omniroute-data:/app/data
+      - pusula-data:/app/data
     environment:
       - PORT=20128
       # مبدأ قابلدسترسی برای مرورگر جهت فراخوانیهای بازگشتی OAuth، پیوندهای داشبورد و URLهای عمومی تولیدشده.
       - NEXT_PUBLIC_BASE_URL=https://your-domain.com
       # URL داخلی سروربهسرور برای کارهای زمانبندیشده / واکشیهای داخلی.
-      - BASE_URL=http://omniroute:20128
+      - BASE_URL=http://pusula:20128
       - AUTH_COOKIE_SECURE=true
 
   caddy:
@@ -433,17 +433,17 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    command: caddy reverse-proxy --from https://your-domain.com --to http://omniroute:20128
+    command: caddy reverse-proxy --from https://your-domain.com --to http://pusula:20128
 
 volumes:
-  omniroute-data:
+  pusula-data:
 ```
 
-Caddy هدرهای استاندارد هدایت را برای کانتینر بالادستی تنظیم میکند. OmniRoute از
+Caddy هدرهای استاندارد هدایت را برای کانتینر بالادستی تنظیم میکند. Pusula از
 `NEXT_PUBLIC_BASE_URL` بهعنوان مبدأ عمومی مرجع برای فراخوانیهای بازگشتی OAuth و پیوندهای عمومی
 تولیدشده استفاده میکند؛ عملیات نوشتن احراز هویتشده در داشبورد از درخواستهای هممبدأ بههمراه محافظت
-CSRF وابسته به نشست استفاده میکنند. `OMNIROUTE_TRUST_PROXY` را فقط برای استقرارهای پیشرفتهای فعال
-کنید که در آنها عمداً میخواهید OmniRoute مبدأ عمومی را بهجای پیکربندی صریح، از هدرهای هدایتشده
+CSRF وابسته به نشست استفاده میکنند. `PUSULA_TRUST_PROXY` را فقط برای استقرارهای پیشرفتهای فعال
+کنید که در آنها عمداً میخواهید Pusula مبدأ عمومی را بهجای پیکربندی صریح، از هدرهای هدایتشده
 مورداعتماد استخراج کند.
 
 ## تونل سریع Cloudflare
@@ -455,24 +455,24 @@ CSRF وابسته به نشست استفاده میکنند. `OMNIROUTE_TRUST_PR
 ### نکات تونل
 
 - URLهای Quick Tunnel موقت هستند و پس از هر راهاندازی مجدد تغییر میکنند.
-- Quick Tunnelها پس از راهاندازی مجدد OmniRoute یا کانتینر بهطور خودکار بازیابی نمیشوند. در صورت نیاز، آنها را دوباره از داشبورد فعال کنید.
+- Quick Tunnelها پس از راهاندازی مجدد Pusula یا کانتینر بهطور خودکار بازیابی نمیشوند. در صورت نیاز، آنها را دوباره از داشبورد فعال کنید.
 - نصب مدیریتشده در حال حاضر از Linux، macOS و Windows روی `x64` / `arm64` پشتیبانی میکند.
 - Quick Tunnelهای مدیریتشده بهطور پیشفرض از انتقال HTTP/2 استفاده میکنند تا از هشدارهای پرتکرار مربوط به بافر UDP در QUIC در محیطهای کانتینری محدود جلوگیری شود. اگر انتقال دیگری میخواهید، `CLOUDFLARED_PROTOCOL=quic` یا `auto` را تنظیم کنید.
 - ایمیجهای Docker گواهیهای CA ریشه سیستم را همراه خود دارند و آنها را به `cloudflared` مدیریتشده ارسال میکنند؛ این کار هنگام راهاندازی اولیه تونل درون کانتینر، از خطاهای اعتماد TLS جلوگیری میکند.
-- اگر میخواهید OmniRoute بهجای دانلود یک فایل باینری جدید از فایل باینری موجود استفاده کند، `CLOUDFLARED_BIN=/absolute/path/to/cloudflared` را تنظیم کنید.
+- اگر میخواهید Pusula بهجای دانلود یک فایل باینری جدید از فایل باینری موجود استفاده کند، `CLOUDFLARED_BIN=/absolute/path/to/cloudflared` را تنظیم کنید.
 
 ## برچسبهای ایمیج
 
 | ایمیج                    | برچسب    | اندازه | توضیحات                                                              |
 | ------------------------ | -------- | ------ | -------------------------------------------------------------------- |
-| `diegosouzapw/omniroute` | `latest` | ~250MB | بالاترین نسخهٔ پایدار SemVer که **منتشر شده است** (نه `main` در git) |
-| `diegosouzapw/omniroute` | `3.8.0`  | ~250MB | برای GitOps از این نوع برچسب ثابت استفاده کنید                       |
+| `ferhat-yasinoglu/pusula` | `latest` | ~250MB | بالاترین نسخهٔ پایدار SemVer که **منتشر شده است** (نه `main` در git) |
+| `ferhat-yasinoglu/pusula` | `3.8.0`  | ~250MB | برای GitOps از این نوع برچسب ثابت استفاده کنید                       |
 
 مانیفست چندسکویی: `linux/amd64` + `linux/arm64` بهصورت بومی (Apple Silicon، AWS Graviton، Raspberry Pi). Docker معماری منطبق را بهطور خودکار انتخاب میکند؛ اگر لازم است شبیهسازی AMD64 را روی میزبانهای ARM اجباری کنید، `--platform linux/amd64` را ارسال کنید.
 
 ### کانالهای انتشار
 
-OmniRoute کانالهای Docker جداگانهای را برای انتشارهای پایدار، آزمایش شاخهٔ انتشار فعال و بیلدهای توسعه منتشر میکند.
+Pusula کانالهای Docker جداگانهای را برای انتشارهای پایدار، آزمایش شاخهٔ انتشار فعال و بیلدهای توسعه منتشر میکند.
 
 | کانال                           | منبع                                | تغییرپذیری                  | کاربرد پیشنهادی                                                                                                                     |
 | ------------------------------- | ----------------------------------- | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
@@ -499,16 +499,16 @@ OmniRoute کانالهای Docker جداگانهای را برای انتشار�
 کانال `next` با هر push به شاخهٔ پیشفرض فعلی `release/v*` دوباره ساخته میشود و برای هر دو معماری AMD64 و ARM64 منتشر میگردد. شاخههای نگهداری قدیمیتر نمیتوانند آن را بازنویسی کنند. این کانال، پیش از ایجاد برچسب پایدار بعدی، یک ایمیج قابل pull برای اصلاحاتی فراهم میکند که در شاخهٔ انتشار فعال ادغام شدهاند.
 
 ```bash
-docker pull diegosouzapw/omniroute:next
-docker pull diegosouzapw/omniroute:next-web
+docker pull ferhat-yasinoglu/pusula:next
+docker pull ferhat-yasinoglu/pusula:next-web
 ```
 
 برای Docker Compose، برچسب ایمیج مورداستفادهٔ پروفایل انتخابشده را بازنویسی کنید، سپس سرویس را pull و دوباره ایجاد کنید:
 
 ```yaml
 services:
-  omniroute:
-    image: diegosouzapw/omniroute:next
+  pusula:
+    image: ferhat-yasinoglu/pusula:next
 ```
 
 ```bash
@@ -521,14 +521,14 @@ docker compose up -d
 `next` یک کانال پیشانتشار شناور است. ممکن است با هر push به شاخهٔ انتشار فعال تغییر کند و **برای استفاده در محیط عملیاتی پشتیبانی نمیشود**. هنگام ارزیابی یک بیلد مشخص، ایمیج را با digest آن ثابت کنید:
 
 ```bash
-docker pull diegosouzapw/omniroute:next
-docker image inspect diegosouzapw/omniroute:next --format '{{index .RepoDigests 0}}'
+docker pull ferhat-yasinoglu/pusula:next
+docker image inspect ferhat-yasinoglu/pusula:next --format '{{index .RepoDigests 0}}'
 ```
 
-پیش از آزمایش، از volume دادهٔ OmniRoute یا دایرکتوری دادهٔ bind-mounted نسخهٔ پشتیبان تهیه کنید. برای بازگشت، نسخهٔ پایدار یا digest مورداستفادهٔ قبلی را بازیابی کرده و کانتینر را دوباره ایجاد کنید:
+پیش از آزمایش، از volume دادهٔ Pusula یا دایرکتوری دادهٔ bind-mounted نسخهٔ پشتیبان تهیه کنید. برای بازگشت، نسخهٔ پایدار یا digest مورداستفادهٔ قبلی را بازیابی کرده و کانتینر را دوباره ایجاد کنید:
 
 ```bash
-docker pull diegosouzapw/omniroute:<stable-version>
+docker pull ferhat-yasinoglu/pusula:<stable-version>
 docker compose up -d
 ```
 
@@ -545,12 +545,12 @@ docker compose up -d
 
 ## دسترسپذیری: SQLite پیشفرض تکنمونهای است
 
-پیکربندی استاندارد Docker / Kubernetes برای OmniRoute شامل **یک پردازش Node + یک نویسنده SQLite** است. دسترسپذیری بالا در این توپولوژی **پشتیبانی نمیشود**.
+پیکربندی استاندارد Docker / Kubernetes برای Pusula شامل **یک پردازش Node + یک نویسنده SQLite** است. دسترسپذیری بالا در این توپولوژی **پشتیبانی نمیشود**.
 
 | محدودیت                                             | پیامد                                                                                                                                                                                                                                                                                                                                                             |
 | --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | نویسنده منفرد                                       | چندین نمونه را با یک فایل SQLite مشترک اجرا **نکنید**. این کار پایگاه داده را خراب میکند.                                                                                                                                                                                                                                                                         |
-| ایجاد مجدد / راهاندازی مجدد / توقف توسط HEALTHCHECK | **قطعی کامل** برای SSEهای در حال اجرا، نشستهای داشبورد و وضعیت درونحافظهای رخ میدهد. اتصال تمام کلاینتهای متصل قطع میشود. درخواستهای جدید در بازهای که هیچ endpointای وجود ندارد، از reverse proxy خطای **`502 Bad Gateway: Unknown error`** دریافت میکنند، نه JSON مربوط به OmniRoute — کلاینتها نمیتوانند این وضعیت را از خرابی ارائهدهنده تشخیص دهند (#11015). |
+| ایجاد مجدد / راهاندازی مجدد / توقف توسط HEALTHCHECK | **قطعی کامل** برای SSEهای در حال اجرا، نشستهای داشبورد و وضعیت درونحافظهای رخ میدهد. اتصال تمام کلاینتهای متصل قطع میشود. درخواستهای جدید در بازهای که هیچ endpointای وجود ندارد، از reverse proxy خطای **`502 Bad Gateway: Unknown error`** دریافت میکنند، نه JSON مربوط به Pusula — کلاینتها نمیتوانند این وضعیت را از خرابی ارائهدهنده تشخیص دهند (#11015). |
 | event loop مشترک با `/healthz`                      | یک چرخه شلوغ کاتالوگ یا فشردهسازی میتواند probeها را به تأخیر بیندازد؛ در این صورت، timeout کوتاه باعث راهاندازی مجدد **تنها** نمونه میشود.                                                                                                                                                                                                                       |
 
 **ماتریس probeها** (همچنین [توصیههای مربوط به probeهای Kubernetes](../ops/MONITORING_GUIDE.md#kubernetes-probe-recommendations) را ببینید):
@@ -574,7 +574,7 @@ spec:
     spec:
       terminationGracePeriodSeconds: 90
       containers:
-        - name: omniroute
+        - name: pusula
           lifecycle:
             preStop:
               exec:
@@ -592,15 +592,15 @@ spec:
 
 توقف `preStop` به kube فرصت میدهد پیش از SIGTERM، endpointهای Service را حذف کند تا ترافیک **جدید** دیگر به پردازشی که در حال خاتمه است ارسال نشود. SSE مربوط به `/v1/responses` که در حال اجراست، از طریق مجوزهای سنگینوزن پذیرش (#11015) تا سقف `SHUTDOWN_TIMEOUT_MS` (بهطور پیشفرض 30 ثانیه) تخلیه میشود. درخواستهای جدیدی که همچنان به پردازش میرسند، پاسخ `503` بههمراه `Retry-After: 5` دریافت میکنند. فاصله بدون endpoint در `Recreate` تا زمانی که جایگزین Ready شود، همچنان یک قطعی کامل است — این ویژگی توپولوژی SQLite است، نه پیکربندی نادرست probe.
 
-دسترسپذیری بالای چندنویسندهای با Postgres خارجی، یک مسیر استاندارد و مستندشده **نیست**. اگر به دسترسپذیری بالا نیاز دارید، یک نمونه را حفظ کنید یا توپولوژیای را اجرا کنید که پروژه آن را آزمایش کرده و جداگانه مستند ساخته است. کار مربوط به Postgres/MySQL در [#8075](https://github.com/diegosouzapw/OmniRoute/issues/8075) پیگیری میشود. تا زمانی که آن قابلیت منتشر شود، تنها روش پشتیبانیشده برای افزایش ظرفیت درخواستهای **بزرگ** `/v1/responses`، استفاده از N پردازش مستقل (بخش بعدی) است، نه `replicas > 1` روی یک volume.
+دسترسپذیری بالای چندنویسندهای با Postgres خارجی، یک مسیر استاندارد و مستندشده **نیست**. اگر به دسترسپذیری بالا نیاز دارید، یک نمونه را حفظ کنید یا توپولوژیای را اجرا کنید که پروژه آن را آزمایش کرده و جداگانه مستند ساخته است. کار مربوط به Postgres/MySQL در [#8075](https://github.com/Ferhat-Yasinoglu/pusula/issues/8075) پیگیری میشود. تا زمانی که آن قابلیت منتشر شود، تنها روش پشتیبانیشده برای افزایش ظرفیت درخواستهای **بزرگ** `/v1/responses`، استفاده از N پردازش مستقل (بخش بعدی) است، نه `replicas > 1` روی یک volume.
 
 ## مقیاسافزایی افقی: N فرایند مستقل
 
-یک فرایند Node برابر با **یک heap از V8** است. دو درخواست همپوشان عامل کدنویسی با اندازه حدود ~3 MiB / ~750k-token به `POST /v1/responses` (RTK + Caveman)، آن heap را در حدود ~12 Gi متوقف میکنند (`FATAL ERROR: Reached heap limit`) و میتوانند در یک cgroup با ظرفیت 16 Gi باعث OOM شوند. به [#7849](https://github.com/diegosouzapw/OmniRoute/issues/7849) مراجعه کنید. این اندازهگیری یک هشدار درباره **بودجه حافظه** است، نه حداکثر سخت محصول برای دو درخواست طولانی همزمان به `/v1/responses`. پذیرش چتهای سنگین توسط بودجه بایت ورودی که بهطور خودکار محاسبه میشود (`OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES`، `src/shared/middleware/admissionBudget.ts`) کنترل میشود؛ این بودجه بر اساس همان سقف V8/cgroup تعیین میشود — افزایش دستی آن (یا تنظیم محدودیت قدیمی مبتنی بر تعداد درخواست یعنی `OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT`) در فرایندی که از قبل اندازهگذاری شده است، دوباره موجب توقف میشود. چتهای کوچک، `/healthz`، `/v1/models` و MCP **مشمول** این محدودیت نیستند.
+یک فرایند Node برابر با **یک heap از V8** است. دو درخواست همپوشان عامل کدنویسی با اندازه حدود ~3 MiB / ~750k-token به `POST /v1/responses` (RTK + Caveman)، آن heap را در حدود ~12 Gi متوقف میکنند (`FATAL ERROR: Reached heap limit`) و میتوانند در یک cgroup با ظرفیت 16 Gi باعث OOM شوند. به [#7849](https://github.com/Ferhat-Yasinoglu/pusula/issues/7849) مراجعه کنید. این اندازهگیری یک هشدار درباره **بودجه حافظه** است، نه حداکثر سخت محصول برای دو درخواست طولانی همزمان به `/v1/responses`. پذیرش چتهای سنگین توسط بودجه بایت ورودی که بهطور خودکار محاسبه میشود (`PUSULA_CHAT_MAX_INFLIGHT_BYTES`، `src/shared/middleware/admissionBudget.ts`) کنترل میشود؛ این بودجه بر اساس همان سقف V8/cgroup تعیین میشود — افزایش دستی آن (یا تنظیم محدودیت قدیمی مبتنی بر تعداد درخواست یعنی `PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT`) در فرایندی که از قبل اندازهگذاری شده است، دوباره موجب توقف میشود. چتهای کوچک، `/healthz`، `/v1/models` و MCP **مشمول** این محدودیت نیستند.
 
 ### یک فرایند: بیش از دو `/v1/responses` طولانی
 
-یک فرایند **سالم** (با heap کمتر از `OMNIROUTE_CHAT_ADMISSION_HEAP_SHED_RATIO`، با مقدار پیشفرض `0.75`) **ممکن است** بیش از دو درخواست طولانی همزمان `POST /v1/responses` را اجرا کند، بهشرط آنکه بودجه بایت درخواستهای در حال اجرای کل فرایند (`OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES` / #10110) همچنان ظرفیت داشته باشد. بدنههایی با اندازه برابر یا بیشتر از `OMNIROUTE_CHAT_LARGE_BODY_BYTES` (بهطور پیشفرض 256 KiB)، همان مجوز سنگینوزن درخواستهای دارای ساختار پیچیده را دریافت میکنند و از همان مسیر گریز `tryAcquireHealthyHeadroom` در [#10437](https://github.com/diegosouzapw/OmniRoute/pull/10437) (`OMNIROUTE_CHAT_ADMISSION_HEALTHY_HEADROOM`) استفاده میکنند. پشتیبانی از دهها کلاینت طولانی SSE بهصورت همزمان (اپراتورها اغلب به 40–50 مورد نیاز دارند) مسئلهای مربوط به **بودجه حافظه** است — heap، اسلاتهای اصلی/ظرفیت مازاد و `OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES` را متناسب تنظیم کنید — و نه یک محدودیت سخت محصول با عنوان «حداکثر 2». یک heap تحت فشار همچنان درخواستها را با `503` قابلتلاشمجدد کنار میگذارد تا مشکل #7849 بازنگردد.
+یک فرایند **سالم** (با heap کمتر از `PUSULA_CHAT_ADMISSION_HEAP_SHED_RATIO`، با مقدار پیشفرض `0.75`) **ممکن است** بیش از دو درخواست طولانی همزمان `POST /v1/responses` را اجرا کند، بهشرط آنکه بودجه بایت درخواستهای در حال اجرای کل فرایند (`PUSULA_CHAT_MAX_INFLIGHT_BYTES` / #10110) همچنان ظرفیت داشته باشد. بدنههایی با اندازه برابر یا بیشتر از `PUSULA_CHAT_LARGE_BODY_BYTES` (بهطور پیشفرض 256 KiB)، همان مجوز سنگینوزن درخواستهای دارای ساختار پیچیده را دریافت میکنند و از همان مسیر گریز `tryAcquireHealthyHeadroom` در [#10437](https://github.com/Ferhat-Yasinoglu/pusula/pull/10437) (`PUSULA_CHAT_ADMISSION_HEALTHY_HEADROOM`) استفاده میکنند. پشتیبانی از دهها کلاینت طولانی SSE بهصورت همزمان (اپراتورها اغلب به 40–50 مورد نیاز دارند) مسئلهای مربوط به **بودجه حافظه** است — heap، اسلاتهای اصلی/ظرفیت مازاد و `PUSULA_CHAT_MAX_INFLIGHT_BYTES` را متناسب تنظیم کنید — و نه یک محدودیت سخت محصول با عنوان «حداکثر 2». یک heap تحت فشار همچنان درخواستها را با `503` قابلتلاشمجدد کنار میگذارد تا مشکل #7849 بازنگردد.
 
 برای **چندبرابر کردن heapها** (old-spaceهای مستقل V8) **در حال حاضر**:
 
@@ -618,34 +618,34 @@ spec:
 
 ```yaml
 services:
-  omniroute-a:
-    image: diegosouzapw/omniroute:3.8.49
+  pusula-a:
+    image: ferhat-yasinoglu/pusula:3.8.49
     environment:
       DATA_DIR: /app/data
-      OMNIROUTE_MEMORY_MB: "12288"
+      PUSULA_MEMORY_MB: "12288"
       QUOTA_STORE_DRIVER: redis
       QUOTA_STORE_REDIS_URL: redis://redis:6379
-    volumes: [omniroute-a-data:/app/data]
+    volumes: [pusula-a-data:/app/data]
     ports: ["20128:20128"]
-  omniroute-b:
-    image: diegosouzapw/omniroute:3.8.49
+  pusula-b:
+    image: ferhat-yasinoglu/pusula:3.8.49
     environment:
       DATA_DIR: /app/data
-      OMNIROUTE_MEMORY_MB: "12288"
+      PUSULA_MEMORY_MB: "12288"
       QUOTA_STORE_DRIVER: redis
       QUOTA_STORE_REDIS_URL: redis://redis:6379
-    volumes: [omniroute-b-data:/app/data]
+    volumes: [pusula-b-data:/app/data]
     ports: ["20138:20128"]
 volumes:
-  omniroute-a-data:
-  omniroute-b-data:
+  pusula-a-data:
+  pusula-b-data:
 ```
 
-چگالی درونفرایندی (با انتقال فشردهسازی به خارج از isolate مربوط به HTTP) در [#11023](https://github.com/diegosouzapw/OmniRoute/issues/11023) پیگیری میشود. یک cluster منطقی واحد روی وضعیت پایدار مشترک در [#8075](https://github.com/diegosouzapw/OmniRoute/issues/8075) پیگیری میشود.
+چگالی درونفرایندی (با انتقال فشردهسازی به خارج از isolate مربوط به HTTP) در [#11023](https://github.com/Ferhat-Yasinoglu/pusula/issues/11023) پیگیری میشود. یک cluster منطقی واحد روی وضعیت پایدار مشترک در [#8075](https://github.com/Ferhat-Yasinoglu/pusula/issues/8075) پیگیری میشود.
 
 ## نکات مهم
 
-- **حالت WAL در SQLite:** باید اجازه دهید `docker stop` کامل شود تا OmniRoute بتواند آخرین تغییرات را در `storage.sqlite` ثبت نهایی کند. فایلهای Compose ارائهشده از قبل مهلت توقف 40 ثانیهای را تنظیم کردهاند. اگر ایمیج را مستقیماً اجرا میکنید، گزینه `--stop-timeout 40` را حفظ کنید.
+- **حالت WAL در SQLite:** باید اجازه دهید `docker stop` کامل شود تا Pusula بتواند آخرین تغییرات را در `storage.sqlite` ثبت نهایی کند. فایلهای Compose ارائهشده از قبل مهلت توقف 40 ثانیهای را تنظیم کردهاند. اگر ایمیج را مستقیماً اجرا میکنید، گزینه `--stop-timeout 40` را حفظ کنید.
 - **`DISABLE_SQLITE_AUTO_BACKUP`:** اگر پشتیبانگیریهای دورهای/پیش از نوشتن بهصورت خارجی مدیریت میشوند، آن را روی `true` تنظیم کنید. مهاجرت پایگاههای داده موجود همچنان به یک اسنپشات ایمنی ماندگار مختص خود و محافظ مهاجرت انبوه نیاز دارد.
 - **ماندگاری دادهها:** همیشه یک volume را روی `/app/data` mount کنید تا پایگاه داده، کلیدها و پیکربندیهایتان در طول راهاندازیهای مجدد کانتینر حفظ شوند.
 - **پیکربندی پورت:** برای تغییر پورت پیشفرض `20128`، متغیر محیطی `PORT` را بازنویسی کنید.

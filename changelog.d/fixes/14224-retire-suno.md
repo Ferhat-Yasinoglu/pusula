@@ -1,1 +1,1 @@
-- fix(providers): retire the suno music provider — studio-api.suno.ai is permanently suspended (503) and the live host requires a paid captcha-solving dependency OmniRoute declined to add (#14224)
+- fix(providers): retire the suno music provider — studio-api.suno.ai is permanently suspended (503) and the live host requires a paid captcha-solving dependency Pusula declined to add (#14224)

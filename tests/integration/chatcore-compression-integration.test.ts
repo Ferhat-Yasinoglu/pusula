@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-compression-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-compression-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.REQUIRE_API_KEY = "false";
 process.env.API_KEY_SECRET = process.env.API_KEY_SECRET || "test-compression-secret";
@@ -694,7 +694,7 @@ test("chatCore integration: assigned compression combo applies language packs an
     assert.equal(capturedBody.messages?.[0]?.role, "user");
     const styleMessage = capturedBody.messages?.at(-1);
     assert.equal(styleMessage?.role, "system");
-    assert.match(styleMessage?.content ?? "", /OmniRoute Output Styles/);
+    assert.match(styleMessage?.content ?? "", /Pusula Output Styles/);
     assert.match(styleMessage?.content ?? "", /Responda conciso/);
 
     for (
@@ -792,7 +792,7 @@ test("chatCore integration: default stacked compression combo applies for unassi
     assert.equal(capturedBody.messages?.[0]?.role, "user");
     const styleMessage = capturedBody.messages?.at(-1);
     assert.equal(styleMessage?.role, "system");
-    assert.match(styleMessage?.content ?? "", /OmniRoute Output Styles/);
+    assert.match(styleMessage?.content ?? "", /Pusula Output Styles/);
     assert.match(styleMessage?.content ?? "", /Responda conciso/);
 
     let summary = compressionAnalyticsDb.getCompressionAnalyticsSummary();

@@ -6,8 +6,8 @@
  * real key from a stored keyId is expected to happen server-side, mirroring
  * claude-settings/route.ts and codex-settings/route.ts. The POST handler for
  * hermes-agent-settings never resolved `keyId` before this fix, so it always
- * fell through to the literal placeholder "YOUR_OMNIROUTE_API_KEY_HERE" in
- * providers.omniroute.api_key, delegation.api_key, and every auxiliary.*.api_key.
+ * fell through to the literal placeholder "YOUR_PUSULA_API_KEY_HERE" in
+ * providers.pusula.api_key, delegation.api_key, and every auxiliary.*.api_key.
  *
  * This test drives the real POST handler end-to-end (real DB-backed API key,
  * real JWT auth cookie, preview mode so nothing is written to disk) and
@@ -86,8 +86,8 @@ test("POST hermes-agent-settings preview never serializes the resolved key", asy
   assert.equal(body.success, true);
 
   const parsed = yaml.load(body.yaml) as HermesAgentParsedConfig;
-  const provider = parsed.custom_providers.find((entry) => entry.name === "omniroute");
-  assert.equal(provider?.key_env, "OMNIROUTE_API_KEY");
+  const provider = parsed.custom_providers.find((entry) => entry.name === "pusula");
+  assert.equal(provider?.key_env, "PUSULA_API_KEY");
   assert.equal(provider?.api_key, undefined);
   assert.ok(!body.yaml.includes(realKey));
   assert.equal(parsed.delegation.api_key, undefined);
@@ -117,7 +117,7 @@ test("POST hermes-agent-settings stores the resolved key only in a mode-0600 Her
   const configPath = path.join(process.env.HERMES_HOME!, "config.yaml");
   const env = fs.readFileSync(envPath, "utf8");
   const config = fs.readFileSync(configPath, "utf8");
-  assert.match(env, new RegExp(`^OMNIROUTE_API_KEY=${created.key}$`, "m"));
+  assert.match(env, new RegExp(`^PUSULA_API_KEY=${created.key}$`, "m"));
   assert.ok(!config.includes(created.key));
   assert.equal(fs.statSync(envPath).mode & 0o777, 0o600);
 });
@@ -151,7 +151,7 @@ test("POST hermes-agent-settings refuses apply when neither keyId nor Hermes .en
 test("POST hermes-agent-settings does not trust known placeholder values in Hermes .env", async () => {
   const envPath = path.join(process.env.HERMES_HOME!, ".env");
   const configPath = path.join(process.env.HERMES_HOME!, "config.yaml");
-  fs.writeFileSync(envPath, "OMNIROUTE_API_KEY=YOUR_OMNIROUTE_API_KEY_HERE\n", { mode: 0o600 });
+  fs.writeFileSync(envPath, "PUSULA_API_KEY=YOUR_PUSULA_API_KEY_HERE\n", { mode: 0o600 });
   const configBefore = fs.readFileSync(configPath, "utf8");
 
   const response = await route.POST(

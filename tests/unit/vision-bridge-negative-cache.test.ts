@@ -16,7 +16,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-process.env.DATA_DIR = `/tmp/omniroute-test-vision-negative-cache-${Date.now()}`;
+process.env.DATA_DIR = `/tmp/pusula-test-vision-negative-cache-${Date.now()}`;
 
 const { getBestVisionModel, clearSelectionCache } = await import(
   "../../src/lib/guardrails/visionBridgeRouter.ts"

@@ -4,7 +4,7 @@
 
 ---
 
-Diese Seite erläutert das lokale Verhalten der `.env`-Datei des Projekts sowie den Umgang mit Umgebungsdateien und Geheimnissen bei der Entwicklung von OmniRoute.
+Diese Seite erläutert das lokale Verhalten der `.env`-Datei des Projekts sowie den Umgang mit Umgebungsdateien und Geheimnissen bei der Entwicklung von Pusula.
 
 ## `.env`-Verhalten bei `postinstall`
 

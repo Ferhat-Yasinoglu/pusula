@@ -9,7 +9,7 @@
 > `src/app/(dashboard)/dashboard/plugins/`
 > **آخرین بهروزرسانی:** 2026-06-28 — v3.8.40
 
-OmniRoute همراه با یک سیستم افزونه به سبک WordPress ارائه میشود. افزونهها
+Pusula همراه با یک سیستم افزونه به سبک WordPress ارائه میشود. افزونهها
 دایرکتوریهای مستقلی هستند — هرکدام دارای یک مانیفست `plugin.json` و یک فایل
 ورودی — که به خط لوله درخواست (`onRequest` / `onResponse` / `onError`) و
 رویدادهای چرخه حیات (`onInstall` / `onActivate` / `onDeactivate` / `onUninstall`)
@@ -155,10 +155,10 @@ curl -X PUT http://localhost:20128/api/plugins/my-plugin/config \
 
 ### دایرکتوری افزونهها
 
-افزونهها در دایرکتوری دادهٔ OmniRoute قرار میگیرند:
+افزونهها در دایرکتوری دادهٔ Pusula قرار میگیرند:
 
 ```
-~/.omniroute/plugins/<plugin-name>/
+~/.pusula/plugins/<plugin-name>/
   ├─ plugin.json
   └─ index.js          # (یا هر فایلی که manifest.main به آن اشاره میکند)
 ```
@@ -166,24 +166,24 @@ curl -X PUT http://localhost:20128/api/plugins/my-plugin/config \
 `getDefaultPluginDir()` (`src/lib/plugins/scanner.ts`) آن دایرکتوری را در
 سه مرحله تعیین میکند:
 
-1. **`OMNIROUTE_PLUGINS_DIR`**، در صورت تنظیم بودن — بدون هیچ تغییری و مستقل از مقدار `HOME` استفاده میشود. این
+1. **`PUSULA_PLUGINS_DIR`**، در صورت تنظیم بودن — بدون هیچ تغییری و مستقل از مقدار `HOME` استفاده میشود. این
    گزینهٔ صریح برای Docker/K8s است؛ جایی که درخت افزونهها بهصورت bind mount در مسیری
    قرار میگیرد که معمولاً ارتباطی با دایرکتوری home کانتینر ندارد (#11827).
-2. `<home>/.omniroute/plugins`، که در آن `<home>` از متغیرهای محیطی `HOME` / `USERPROFILE`
+2. `<home>/.pusula/plugins`، که در آن `<home>` از متغیرهای محیطی `HOME` / `USERPROFILE`
    گرفته میشود.
-3. `/tmp/.omniroute/plugins`، هنگامی که فرایند هیچ homeای export نکرده باشد.
+3. `/tmp/.pusula/plugins`، هنگامی که فرایند هیچ homeای export نکرده باشد.
 
 دایرکتوری تعیینشده هنگام راهاندازی یکبار با عنوان `scanner.dir_resolved` ثبت میشود و
-ورودی انتخابشده (`OMNIROUTE_PLUGINS_DIR`، `home` یا `no-home-fallback`) را مشخص میکند — بنابراین imageای
+ورودی انتخابشده (`PUSULA_PLUGINS_DIR`، `home` یا `no-home-fallback`) را مشخص میکند — بنابراین imageای
 که بدون اعلام روی مرحلهٔ 3 قرار میگیرد، این موضوع را گزارش میکند، نه اینکه فقط فهرست خالی افزونهها را نمایش دهد.
 `POST /api/plugins/scan` هر زیردایرکتوری موجود در آن مسیر را که دارای یک
 `plugin.json` معتبر باشد، کشف و ثبت میکند؛ همین دایرکتوری همچنین ریشهای است که
 `pluginManager.install()` افزونهها را در آن کپی میکند، بنابراین override، فرایند کشف و
 نصب را با هم جابهجا میکند.
 
-> **`OMNIROUTE_PLUGINS_DIR` همان `OMNIROUTE_PLUGIN_PATH` نیست.** مورد دوم فقط توسط
-> بارگذار افزونههای فرمان CLI (`bin/cli/plugins.mjs`) خوانده میشود تا packageهای npm با نام `omniroute-cmd-*`
-> را پیدا کند که زیرفرمانهایی به `omniroute` اضافه میکنند — این متغیر هیچ تأثیری بر اسکنر زمان اجرا
+> **`PUSULA_PLUGINS_DIR` همان `PUSULA_PLUGIN_PATH` نیست.** مورد دوم فقط توسط
+> بارگذار افزونههای فرمان CLI (`bin/cli/plugins.mjs`) خوانده میشود تا packageهای npm با نام `pusula-cmd-*`
+> را پیدا کند که زیرفرمانهایی به `pusula` اضافه میکنند — این متغیر هیچ تأثیری بر اسکنر زمان اجرا
 > که در اینجا توضیح داده شد ندارد. برای اطلاعات مربوط به آن بخش، [PLUGINS.md](./PLUGINS.md) را ببینید.
 
 ### URL سفارشی registry بازارچه
@@ -277,7 +277,7 @@ URLی که در هر یک از این لایهها ناموفق باشد، در�
 | `main`             | string?   | فایل ورودی؛ مقدار پیشفرض `index.js`                              |
 | `source`           | enum?     | `local` \| `marketplace` (مقدار پیشفرض `local`)                  |
 | `tags`             | string[]? | برچسبهای جستوجو                                                  |
-| `requires`         | object?   | `{ omniroute?, permissions[] }`                                  |
+| `requires`         | object?   | `{ pusula?, permissions[] }`                                  |
 | `hooks`            | object?   | مقادیر بولی که مشخص میکنند افزونه کدام hookها را پیادهسازی میکند |
 | `skills`           | object[]? | تعریفهای اختیاری skill                                           |
 | `enabledByDefault` | boolean?  | فعالسازی خودکار هنگام نصب                                        |
@@ -292,7 +292,7 @@ URLی که در هر یک از این لایهها ناموفق باشد، در�
 ```
 نصب (POST /api/plugins، مسیر)
   → اسکن/اعتبارسنجی manifest → کپی به staging → اطمینان از قرار داشتن main درون دایرکتوری
-  → تغییر نام اتمی به ~/.omniroute/plugins/<name> → درج ردیف در پایگاه داده
+  → تغییر نام اتمی به ~/.pusula/plugins/<name> → درج ردیف در پایگاه داده
   → اجرای onInstall → اگر enabledByDefault بود: فعالسازی
 
 فعالسازی (POST /api/plugins/{name}/activate)

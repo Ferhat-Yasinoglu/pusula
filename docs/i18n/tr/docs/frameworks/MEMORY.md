@@ -7,7 +7,7 @@
 > **Doğruluk kaynağı:** `src/lib/memory/` ve `src/app/api/memory/`
 > **Son güncelleme:** 2026-06-28 — v3.8.40 (varsayılan olarak kapalı + int8 niceleme telafisi)
 
-OmniRoute, API anahtarına (ve isteğe bağlı olarak oturum kimliğine) göre belirlenen kalıcı konuşma belleği sağlar. Anılar, hafif regex kalıp eşleştirmesi aracılığıyla LLM yanıtlarından otomatik olarak çıkarılır ve sonraki isteklere başta yer alan bir sistem mesajı olarak (veya sistem rolünü reddeden sağlayıcılarda ilk kullanıcı mesajı olarak) yeniden eklenir.
+Pusula, API anahtarına (ve isteğe bağlı olarak oturum kimliğine) göre belirlenen kalıcı konuşma belleği sağlar. Anılar, hafif regex kalıp eşleştirmesi aracılığıyla LLM yanıtlarından otomatik olarak çıkarılır ve sonraki isteklere başta yer alan bir sistem mesajı olarak (veya sistem rolünü reddeden sağlayıcılarda ilk kullanıcı mesajı olarak) yeniden eklenir.
 
 > **Bellek varsayılan olarak KAPALIDIR (v3.8.30+).** `DEFAULT_MEMORY_SETTINGS.enabled`
 > artık `false` değerindedir (`src/lib/memory/settings.ts`). Belleğin etkinleştirilmesi,
@@ -15,7 +15,7 @@ OmniRoute, API anahtarına (ve isteğe bağlı olarak oturum kimliğine) göre b
 > isteğine ekler ve bunun için ücret alınır — bu, yeni kurulumlar ve kendi
 > bağlamlarını yöneten istemciler açısından beklenmedik bir maliyettir. **Ayarlar → Bellek**
 > altında açıkça etkinleştirin (`MemorySkillsTab`, bellek etkinleştirildiğinde
-> belirgin bir token maliyeti uyarısı gösterir). İstemci, `x-omniroute-no-memory`
+> belirgin bir token maliyeti uyarısı gösterir). İstemci, `x-pusula-no-memory`
 > istek üstbilgisini (`true`/`1`/`yes`) kullanarak tek bir isteği kapsam dışında
 > bırakabilir — [API_REFERENCE.md](../reference/API_REFERENCE.md) içindeki istek üstbilgisi
 > tablosuna bakın. Belleksiz bir istek `memoryOwnerId = null` olarak ayarlanır;
@@ -247,7 +247,7 @@ sqlite-vec → FTS5 sırasıyla geri dönüş yapar.
   kosinüs mesafeli vektörler oluşturur) ve `{memoryId,
 apiKeyId, sessionId, key, content, metadata, createdAtUnix, expiresAtUnix}` yükünü içeren bir noktayı ekler veya günceller.
 - `searchSemanticMemory(query, topK, scope)` — sorguyu gömer, koleksiyonda
-  `kind = "omniroute_memory"` filtresiyle ve isteğe bağlı olarak
+  `kind = "pusula_memory"` filtresiyle ve isteğe bağlı olarak
   `apiKeyId` / `sessionId` ile arama yapar. `topK` değerini `[1, 20]` aralığıyla sınırlar.
 - `deleteSemanticMemoryPoint(id)` — tek bir noktayı siler. SQLite satırı
   kaldırıldıktan sonra `deleteMemory()` tarafından çağrılır (D15).
@@ -381,7 +381,7 @@ bilgileri saklamadan döndürür.
    Herhangi bir eşleşme varsa her zaman en az bir girdi döndürür.
 
 `estimateTokens` dışa aktarılır ve getirme, özetleme ve MCP
-`omniroute_memory_search` aracı tarafından kullanılır.
+`pusula_memory_search` aracı tarafından kullanılır.
 
 ## Enjeksiyon (`injection.ts`)
 
@@ -435,7 +435,7 @@ Alan açıklamaları için ayrıca yukarıdaki "Ayarlar uzantısı" bölümüne 
 | `memoryVectorStore`         | `vectorStore`            | `"auto"`   |
 
 Qdrant ile ilgili DB anahtarları (`qdrantEnabled`, `qdrantHost`, `qdrantPort`,
-`qdrantApiKey`, varsayılanı `"omniroute_memory"` olan `qdrantCollection`,
+`qdrantApiKey`, varsayılanı `"pusula_memory"` olan `qdrantCollection`,
 varsayılanı `"openai/text-embedding-3-small"` olan `qdrantEmbeddingModel`),
 `qdrant.ts` içindeki `normalizeQdrantConfig()` tarafından okunur.
 
@@ -504,15 +504,15 @@ Tüm uç noktalar yönetim kimlik doğrulaması (`requireManagementAuth`) gerekt
 
 MCP sunucusu etkinleştirildiğinde üç bellek aracı kaydedilir:
 
-- `omniroute_memory_search` — `{apiKeyId, query?, type?, maxTokens?, limit?}`
+- `pusula_memory_search` — `{apiKeyId, query?, type?, maxTokens?, limit?}`
   → `retrieveMemories()` işlevini sarmalar. v3.8.6 (D16) itibarıyla `strategy`,
   `"exact"` olarak sabit kodlanmak yerine `getMemorySettings()` üzerinden
   okunur. `query` sağlanırsa ve `strategy`, `semantic` veya `hybrid` ise
   kullanılabilir olduğunda vektör deposu kullanılır.
-- `omniroute_memory_add` — `{apiKeyId, sessionId?, type, key, content,
+- `pusula_memory_add` — `{apiKeyId, sessionId?, type, key, content,
 metadata?}` → `createMemory()` işlevini sarmalar. Yalnızca 4 standart türü
   kabul eder: `factual`, `episodic`, `procedural`, `semantic` (D17).
-- `omniroute_memory_clear` — `{apiKeyId, type?, olderThan?}` → eşleşen
+- `pusula_memory_clear` — `{apiKeyId, type?, olderThan?}` → eşleşen
   girdileri listeler, isteğe bağlı olarak oluşturulma öncesi zaman damgasına
   göre filtreler, ardından her birini `deleteMemory()` aracılığıyla siler
   (bu işlem ayrıca vektörleri sqlite-vec + Qdrant üzerinden kaldırır).
@@ -575,7 +575,7 @@ tutar (1.000 girdili LRU, varsayılan TTL 5 dk).
 - Gelecekte bir `expires_at` değerine sahip girdiler getirme işleminden filtrelenir;
   `retentionDays` süresinden daha eski girdiler, `retrieveMemories` içindeki
   `created_at >= cutoff` koşulu tarafından hariç tutulur.
-- Kalıcı silme için `DELETE /api/memory/[id]` veya `omniroute_memory_clear` kullanın.
+- Kalıcı silme için `DELETE /api/memory/[id]` veya `pusula_memory_clear` kullanın.
 - Çıkarma işlemi, `setImmediate` aracılığıyla başlatılıp beklenmeden devam eder;
   hatalar `memory.extraction.background.failed` altında günlüğe kaydedilir ve
   hiçbir zaman çağırana yansıtılmaz.
@@ -620,7 +620,7 @@ tutar (1.000 girdili LRU, varsayılan TTL 5 dk).
 
 ## Gömme Sağlayıcısı Seçme (v3.8.16+)
 
-OmniRoute'un bellek motoru **dört gömme kaynağını** (`src/lib/memory/embedding/`) destekler. Her biri **gecikme, maliyet, model kalitesi ve kurulum karmaşıklığı** açısından farklı avantaj ve dezavantajlara sahiptir.
+Pusula'un bellek motoru **dört gömme kaynağını** (`src/lib/memory/embedding/`) destekler. Her biri **gecikme, maliyet, model kalitesi ve kurulum karmaşıklığı** açısından farklı avantaj ve dezavantajlara sahiptir.
 
 ### Gömme Kaynakları
 
@@ -864,7 +864,7 @@ tür önekli sıkıştırılmış bir satırdan oluşur.
 
 ```bash
 curl -X POST http://localhost:20128/api/memory/summarize \
-  -H "Authorization: Bearer $OMNIROUTE_KEY"
+  -H "Authorization: Bearer $PUSULA_KEY"
 ```
 
 Kapalı bırakmak için `autoSummarize` ayarını varsayılan değerinde (`false`) tutmanız yeterlidir.
@@ -879,7 +879,7 @@ Kapalı bırakmak için `autoSummarize` ayarını varsayılan değerinde (`false
 ```bash
 # Cron tarzı: her gün saat 03.00'te özetle
 0 3 * * * curl -X POST http://localhost:20128/api/memory/summarize \
-  -H "Authorization: Bearer $OMNIROUTE_KEY"
+  -H "Authorization: Bearer $PUSULA_KEY"
 ```
 
 ---

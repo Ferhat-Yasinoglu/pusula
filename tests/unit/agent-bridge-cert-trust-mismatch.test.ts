@@ -26,7 +26,7 @@ import { generateCert } from "../../src/mitm/cert/generate.ts";
 import { resolveActiveCertPath } from "../../src/mitm/cert/activeCert.ts";
 
 function tmpDataDir(): string {
-  return fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-agentbridge-"));
+  return fs.mkdtempSync(path.join(os.tmpdir(), "pusula-agentbridge-"));
 }
 
 test("AgentBridge cert-trust check now targets the cert file the active migration decision actually installs (root-CA model)", async () => {

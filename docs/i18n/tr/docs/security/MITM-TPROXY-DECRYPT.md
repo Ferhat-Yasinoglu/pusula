@@ -4,7 +4,7 @@
 
 ---
 
-TPROXY şeffaf şifre çözme, OmniRoute'un
+TPROXY şeffaf şifre çözme, Pusula'un
 [Traffic Inspector](../frameworks/TRAFFIC_INSPECTOR.md) / [AgentBridge](../frameworks/AGENTBRIDGE.md)
 MITM yığını için **5. yakalama modudur**. Linux'ta yerel giden HTTPS trafiğini,
 çekirdek TPROXY + ilke tabanlı yönlendirme kullanarak — `/etc/hosts` üzerinde
@@ -60,7 +60,7 @@ istediğinizde kullanın:
 - sistem geneli bir proxy değişikliğiyle işleyişini bozmak istemiyorsanız.
 
 Yakalama çekirdekte gerçekleştiği için kaynak işlemin **yapılandırmasında herhangi
-bir değişiklik gerekmez** — ancak işlem, OmniRoute'un yüklediği dinamik CA'ya
+bir değişiklik gerekmez** — ancak işlem, Pusula'un yüklediği dinamik CA'ya
 güvenmelidir (bkz. [§4](#4-the-per-sni-dynamic-ca-and-trust-store-installer)).
 
 ---
@@ -80,7 +80,7 @@ araç zincirinin bulunmaması, eklentinin derlenmemiş olması), eklenti yükley
 yerine `null` döndürür. Bu durumda yakalama modu durumu `available: false`
 olarak bildirilir, kontrol panelindeki geçiş düğmesi
 "TPROXY decrypt requires Linux + root + the native addon" araç ipucuyla birlikte
-**devre dışı bırakılır** ve OmniRoute'un geri kalanı çalışmaya devam eder.
+**devre dışı bırakılır** ve Pusula'un geri kalanı çalışmaya devam eder.
 
 ---
 
@@ -130,9 +130,9 @@ Yükleyici, öncelik sırasına göre şunları arar:
 > tek bir statik kendinden imzalı yaprak sertifika yerine aynı CA/yaprak mimarisi
 > modelini kullanıyor. **Ayrı** bir CA örneği kullanır
 > (`src/mitm/cert/rootCa.ts`, `<DATA_DIR>/mitm/ca.key`/`ca.crt` konumunda kalıcı
-> olarak saklanır) ve önceden mevcut olan `omniroute-mitm.crt` güven deposu
+> olarak saklanır) ve önceden mevcut olan `pusula-mitm.crt` güven deposu
 > yuvasına yüklenir (buradaki eski tek yaprak sertifikanın yerini alır — çift
-> güven temizliği gerekmez); aşağıdaki TPROXY'nin kendi `omniroute-tproxy-ca.crt`
+> güven temizliği gerekmez); aşağıdaki TPROXY'nin kendi `pusula-tproxy-ca.crt`
 > yuvasından tamamen ayrı tutulur. Yeni AgentBridge kurulumları CA modelini
 > otomatik olarak edinir; eski statik yaprak sertifikaya zaten güvenen bir
 > kurulum, operatör `MITM_ROOT_CA_ENABLED=true` aracılığıyla açıkça etkinleştirene
@@ -155,7 +155,7 @@ girdisi) için aynı gereksinime sahiptir.
 çalıştırır ve şunları yapar:
 
 - `generateMitmCa()` aracılığıyla uzun ömürlü bir CA oluşturur (CN
-  `"OmniRoute MITM CA"`, 10 yıllık geçerlilik, `basicConstraints CA=true` +
+  `"Pusula MITM CA"`, 10 yıllık geçerlilik, `basicConstraints CA=true` +
   `keyUsage keyCertSign,cRLSign`, 2048 bit RSA / SHA-256).
 - `issueLeafCert()` aracılığıyla **her SNI ana makine adı için isteğe bağlı bir
   yaprak sertifika** düzenler (1 yıllık geçerlilik, `subjectAltName` = SNI ana
@@ -171,9 +171,9 @@ CA özel anahtarı **makineden asla ayrılmaz**.
 
 Yakalanan istemcinin dinamik CA'ya güvenmesi gerekir; bu nedenle yakalama modu
 başlatıldığında CA sertifikası işletim sistemi güven deposuna **özel bir yuva**
-altında yüklenir — `omniroute-tproxy-ca.crt` (`TPROXY_CA_CERT_NAME` sabiti) —
+altında yüklenir — `pusula-tproxy-ca.crt` (`TPROXY_CA_CERT_NAME` sabiti) —
 ve iki sertifikanın hiçbir zaman birbirinin üzerine yazmaması için statik MITM
-sertifikasının yuvasından (`omniroute-mitm.crt`) ayrı tutulur.
+sertifikasının yuvasından (`pusula-mitm.crt`) ayrı tutulur.
 
 `installTproxyCa(caPem, sudoPassword?)`, dağıtımın güven kökü dizinini
 (öncelikle Debian tarzı dizini) algılar ve eşleşen yenileme komutunu çalıştırır:
@@ -267,14 +267,14 @@ oluşurdu. İletim yolu, bypass soket işareti (**SO_MARK**) kullanarak bunu ön
 | Kontrol                                   | Ayrıntı                                                                                                                                                                                                                                                                                                                                                                                                       |
 | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Yalnızca loopback API'si**              | `/api/tools/agent-bridge/tproxy`, `LOCAL_ONLY_API_PREFIXES` (`src/server/authz/routeGuard.ts`) içindeki `/api/tools/agent-bridge/` öneki kapsamındadır. Loopback zorlaması kimlik doğrulamadan **önce** çalışır (Kesin Kurallar #15 + #17) — bir tünel üzerinden sızdırılan JWT, `iptables` kurallarını uygulayan ve alt süreçler aracılığıyla güven deposuna bir CA yükleyen TPROXY yakalamasını başlatamaz. |
-| **Ayrılmış CA yuvası**                    | Dinamik CA, statik MITM sertifikasının üzerine asla yazmadan `omniroute-tproxy-ca.crt` konumuna yüklenir.                                                                                                                                                                                                                                                                                                     |
+| **Ayrılmış CA yuvası**                    | Dinamik CA, statik MITM sertifikasının üzerine asla yazmadan `pusula-tproxy-ca.crt` konumuna yüklenir.                                                                                                                                                                                                                                                                                                     |
 | **CA anahtarı ana makineden asla çıkmaz** | `DynamicCertStore`, CA anahtarını bellekte tutar; anahtar dışa aktarılmaz.                                                                                                                                                                                                                                                                                                                                    |
 | **Gizli bilgi maskeleme**                 | İstek/yanıt gövdelerinde `maskSecret()` ve başlıklarda `sanitizeHeaders()`, `globalTrafficBuffer.push()` çağrısından **önce** çalışır.                                                                                                                                                                                                                                                                        |
 | **Kabuk enterpolasyonu yok**              | Tüm `iptables`/`ip`/güven deposu komutları, bağımsız değişken dizileriyle `execFile`/`execFileWithPassword` üzerinden çalıştırılır (Kesin Kural #13).                                                                                                                                                                                                                                                         |
 | **Yukarı akış sertifikası doğrulaması**   | Yeniden şifrelenen yönlendirme, varsayılan olarak yukarı akış sertifikasını doğrular (`rejectUnauthorized: true`).                                                                                                                                                                                                                                                                                            |
 | **Hata temizleme**                        | Rotanın hata yanıtları `sanitizeErrorMessage()` işlevinden geçirilir (Kesin Kural #12).                                                                                                                                                                                                                                                                                                                       |
 
-**MITM CA güçlü bir yetenektir.** Herhangi bir ana makine için sertifika imzalayabilen ve işletim sistemi tarafından güvenilen bir CA, OmniRoute'un yakaladığı her şeyin şifresinin çözülebileceği anlamına gelir. Bu özellik, varsayılan olarak kapalı olan açık ve yalnızca yerel TPROXY yakalama moduyla sınırlandırılmıştır ve modu durdurduğunuzda güven deposu girdisi kaldırılır.
+**MITM CA güçlü bir yetenektir.** Herhangi bir ana makine için sertifika imzalayabilen ve işletim sistemi tarafından güvenilen bir CA, Pusula'un yakaladığı her şeyin şifresinin çözülebileceği anlamına gelir. Bu özellik, varsayılan olarak kapalı olan açık ve yalnızca yerel TPROXY yakalama moduyla sınırlandırılmıştır ve modu durdurduğunuzda güven deposu girdisi kaldırılır.
 
 ---
 
@@ -368,7 +368,7 @@ Geçiş düğmesini `isTransparentSocketAvailable()` denetler; eklenti eksik old
 - Yakalanan sürecin gerçekten yapılandırılmış `dport` değerine
   (varsayılan `443`) bağlandığını doğrulayın.
 - Sürecin dinamik CA'ya güvendiğini doğrulayın. CA,
-  `omniroute-tproxy-ca.crt` adıyla yüklenir; kendi güven deposuna sahip uygulamalarda (Firefox/Chrome NSS)
+  `pusula-tproxy-ca.crt` adıyla yüklenir; kendi güven deposuna sahip uygulamalarda (Firefox/Chrome NSS)
   sertifikanın buraya da eklenmesi gerekebilir.
 - Sertifika güveni / sunucu sağlık kontrolleri için AgentBridge **Diagnose**
   kendi kendine testini çalıştırın (bkz.
@@ -377,7 +377,7 @@ Geçiş düğmesini `isTransparentSocketAvailable()` denetler; eklenti eksik old
 ### Çökme sonrasında kalan güvenlik duvarı kuralları
 
 `revertTproxy()`, uygulama işleminin tam tersidir ve idempotenttir. Modun durdurulması
-kuralları geri alır; OmniRoute oturumun ortasında sonlandırıldıysa, sahipsiz sistem
+kuralları geri alır; Pusula oturumun ortasında sonlandırıldıysa, sahipsiz sistem
 durumunu (DNS yanıltma, kök CA, sistem proxy'si) geri almak için AgentBridge
 **Repair** eylemini (`POST /api/tools/agent-bridge/repair`) kullanın. TPROXY `mangle`
 kuralları ve yönlendirme de yeniden başlatma sırasında otomatik olarak temizlenir.

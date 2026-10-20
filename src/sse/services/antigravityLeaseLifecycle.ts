@@ -1,6 +1,6 @@
 import { randomUUID } from "crypto";
 
-import { buildErrorBody } from "@omniroute/open-sse/utils/error.ts";
+import { buildErrorBody } from "@pusula/open-sse/utils/error.ts";
 
 import { isAntigravityAccountLeaseEnabled } from "@/shared/utils/featureFlags";
 import { releaseAntigravityLease } from "./antigravityRoutingState";

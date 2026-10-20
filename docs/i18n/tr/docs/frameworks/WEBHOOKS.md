@@ -7,7 +7,7 @@
 > **Doğruluk kaynağı:** `src/lib/webhookDispatcher.ts`, `src/lib/db/webhooks.ts`, `src/app/api/webhooks/`
 > **Son güncelleme:** 2026-06-28 — v3.8.40
 
-OmniRoute, platform olaylarında HTTP webhook'larını tetikleyebilir. Bunları Slack, PagerDuty, Datadog, dahili uyarı hizmetleri veya herhangi bir HTTP alıcısıyla entegrasyon sağlamak için kullanın.
+Pusula, platform olaylarında HTTP webhook'larını tetikleyebilir. Bunları Slack, PagerDuty, Datadog, dahili uyarı hizmetleri veya herhangi bir HTTP alıcısıyla entegrasyon sağlamak için kullanın.
 
 Dağıtıcı, her teslimatı HMAC-SHA256 ile imzalar, geçici hatalarda yeniden dener, her webhook için teslimat durumunu izler ve sürekli başarısız olan uç noktaları otomatik olarak devre dışı bırakır.
 
@@ -49,17 +49,17 @@ Dağıtım, çağıran açısından başlat-ve-unut şeklindedir: `Promise.allSe
 
 ## HMAC İmzalama
 
-Bir webhook'un `secret` değeri olduğunda OmniRoute, JSON gövdesini imzalar ve şunları gönderir:
+Bir webhook'un `secret` değeri olduğunda Pusula, JSON gövdesini imzalar ve şunları gönderir:
 
 ```
 Content-Type: application/json
-User-Agent: OmniRoute-Webhook/1.0
+User-Agent: Pusula-Webhook/1.0
 X-Webhook-Event: <event>
 X-Webhook-Timestamp: <ISO-8601>
 X-Webhook-Signature: sha256=<hex HMAC-SHA256(secret, body)>
 ```
 
-> Üstbilgi adları `X-Webhook-*` önekini kullanır (`X-OmniRoute-*` değil). İmza
+> Üstbilgi adları `X-Webhook-*` önekini kullanır (`X-Pusula-*` değil). İmza
 > değeri `sha256=<hex>` biçimindedir — önekin tamamını doğrulayın.
 
 `createWebhook`, secret olmadan çağrılırsa DB modülü bir secret oluşturur
@@ -204,7 +204,7 @@ yükü ve imzayı kabul ettiğini hızlıca doğrulamak için kullanışlıdır.
   "event": "test.ping",
   "timestamp": "2026-05-13T20:32:00.000Z",
   "data": {
-    "message": "OmniRoute'tan test webhook teslimatı",
+    "message": "Pusula'tan test webhook teslimatı",
     "webhookId": "<uuid>"
   }
 }

@@ -1,5 +1,5 @@
 /**
- * `omniroute restart` declared `--port` with a Commander default of "20128", so the
+ * `pusula restart` declared `--port` with a Commander default of "20128", so the
  * `opts.port ?? process.env.PORT` fallback in runServe() never reached PORT: a server
  * started on PORT=3000 (from the shell or <DATA_DIR>/.env) came back on 20128 after a
  * restart. #7049 fixed the same default on `dashboard`.

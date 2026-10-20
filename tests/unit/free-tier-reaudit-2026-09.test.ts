@@ -5,9 +5,9 @@ import test from "node:test";
 import {
   FREE_MODEL_BUDGETS,
   computeFreeModelTotals,
-} from "@omniroute/open-sse/config/freeModelCatalog.ts";
-import { FREE_TIER_BUDGETS } from "@omniroute/open-sse/config/freeTierCatalog.ts";
-import { REGISTRY } from "@omniroute/open-sse/config/providerRegistry.ts";
+} from "@pusula/open-sse/config/freeModelCatalog.ts";
+import { FREE_TIER_BUDGETS } from "@pusula/open-sse/config/freeTierCatalog.ts";
+import { REGISTRY } from "@pusula/open-sse/config/providerRegistry.ts";
 
 /**
  * 2026-09-02 re-audit against the providers' own pages — the official pages

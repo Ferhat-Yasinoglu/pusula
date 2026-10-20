@@ -107,7 +107,7 @@ bleibt der Konfigurationszustand erhalten.
 ## Modal für den Code-Export
 
 `ExportCodeModal.tsx` verwendet `codeExport.ts`, um curl-/Python-/TypeScript-Snippets
-aus dem aktuellen `PlaygroundState` zu generieren. Der API-Schlüssel-Platzhalter ist immer `$OMNIROUTE_API_KEY` (D11).
+aus dem aktuellen `PlaygroundState` zu generieren. Der API-Schlüssel-Platzhalter ist immer `$PUSULA_API_KEY` (D11).
 
 ---
 
@@ -197,7 +197,7 @@ Authentifizierung: optional (`REQUIRE_API_KEY`). Fehler über `buildErrorBody()`
 | Metriken zeigen `null` für TTFT                  | Handler für den ersten Chunk nicht eingebunden | Prüfen, ob `useStreamMetrics.onFirstChunk()` in der SSE-Reader-Schleife aufgerufen wird                           |
 | Voreinstellung wird nicht gespeichert            | DB-Migration nicht ausgeführt                  | `npm run db:migrate` ausführen oder den Server neu starten (die Migration wird beim Start automatisch ausgeführt) |
 | „Prompt verbessern“ gibt 502 zurück              | Modell nicht in der Konfiguration festgelegt   | Vor der Verbesserung muss im Konfigurationsbereich ein Modellname eingegeben werden                               |
-| Exportierter Code zeigt `MISSING_API_KEY`        | Platzhalter nicht eingefügt                    | `codeExport.ts` verwendet immer `API_KEY_PLACEHOLDER = "$OMNIROUTE_API_KEY"`                                      |
+| Exportierter Code zeigt `MISSING_API_KEY`        | Platzhalter nicht eingefügt                    | `codeExport.ts` verwendet immer `API_KEY_PLACEHOLDER = "$PUSULA_API_KEY"`                                      |
 
 ---
 

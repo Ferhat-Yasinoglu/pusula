@@ -139,7 +139,7 @@ const EXPECTED: Record<InventoryKind, Record<string, number>> = {
     "src/app/api/providers/route.ts": 3,
     "src/app/api/providers/test-batch/route.ts": 2,
     "src/app/api/rate-limits/route.ts": 1,
-    "src/app/api/services/dario/admin/import-from-omniroute/route.ts": 2,
+    "src/app/api/services/dario/admin/import-from-pusula/route.ts": 2,
     // 7a921299 (configurable semantic-cache embeddings): the provider picker reads the connection rows once.
     "src/app/api/settings/cache-config/embeddingOptions.ts": 1,
     "src/app/api/settings/export-json/route.ts": 1,

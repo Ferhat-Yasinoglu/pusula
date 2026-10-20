@@ -114,7 +114,7 @@ Search Tools Studio صفحهٔ `/dashboard/search-tools` را از یک محیط
 
 `ExportCodeModal` (واردشده از Playground Studio) بههمراه `codeExport.ts`، قطعهکدهای
 curl / Python / TypeScript را برای فراخوانیهای `/v1/search` و `/v1/web/fetch` تولید میکنند.
-مقدار جایگزین کلید API همیشه `$OMNIROUTE_API_KEY` است (D11، مشترک با Playground Studio).
+مقدار جایگزین کلید API همیشه `$PUSULA_API_KEY` است (D11، مشترک با Playground Studio).
 
 ---
 

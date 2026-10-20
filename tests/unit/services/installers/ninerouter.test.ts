@@ -5,8 +5,8 @@ import os from "node:os";
 import path from "node:path";
 import { execSync } from "node:child_process";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-installer-"));
-const FAKE_BIN_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-fake-bin-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-installer-"));
+const FAKE_BIN_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-fake-bin-"));
 const MOCK_NINEROUTER_VERSION = "0.5.30";
 
 process.env.DATA_DIR = TEST_DATA_DIR;
@@ -86,7 +86,7 @@ test("install creates package.json structure", async () => {
     name: string;
     private: boolean;
   };
-  assert.equal(parsedHost.name, "omniroute-9router-host");
+  assert.equal(parsedHost.name, "pusula-9router-host");
   assert.ok(parsedHost.private);
 
   assert.equal(result.installedVersion, MOCK_NINEROUTER_VERSION);

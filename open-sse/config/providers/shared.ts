@@ -207,7 +207,7 @@ export interface RegistryEntry {
   /**
    * When true, the provider rejects non-streaming requests (HTTP 400).
    * resolveStreamFlag will keep streaming even when the client requests JSON;
-   * OmniRoute accumulates the stream and converts it to a JSON body for the client. (#2081)
+   * Pusula accumulates the stream and converts it to a JSON body for the client. (#2081)
    */
   forceStream?: boolean;
   /**

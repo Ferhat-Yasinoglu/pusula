@@ -1,11 +1,11 @@
 /**
  * Regression: the vision-bridge SELF-LOOP must authenticate with a real
- * DB-backed API key, not the `sk_omniroute` sentinel.
+ * DB-backed API key, not the `sk_pusula` sentinel.
  *
  * Root cause on runtime v3.8.49: `callVisionModelSingle` used
- * `resolvedApiKey || "sk_omniroute"` for the Authorization header of the
- * OmniRoute self-loop request. On instances with REQUIRE_API_KEY enabled the
- * runtime rejects `sk_omniroute` with 401 "Missing API key", so EVERY
+ * `resolvedApiKey || "sk_pusula"` for the Authorization header of the
+ * Pusula self-loop request. On instances with REQUIRE_API_KEY enabled the
+ * runtime rejects `sk_pusula` with 401 "Missing API key", so EVERY
  * vision-bridge describe call failed and image requests were never processed.
  */
 import test from "node:test";
@@ -39,24 +39,24 @@ test("falls back to the injected resolver (DB key) when no env key is set", asyn
   }
 });
 
-test("never returns the sk_omniroute sentinel when a real key is resolvable", async () => {
+test("never returns the sk_pusula sentinel when a real key is resolvable", async () => {
   const previous = process.env.VISION_BRIDGE_API_KEY;
   delete process.env.VISION_BRIDGE_API_KEY;
   try {
     const key = await resolveSelfLoopApiKey(async () => "sk-db-key");
-    assert.notStrictEqual(key, "sk_omniroute");
+    assert.notStrictEqual(key, "sk_pusula");
   } finally {
     if (previous === undefined) delete process.env.VISION_BRIDGE_API_KEY;
     else process.env.VISION_BRIDGE_API_KEY = previous;
   }
 });
 
-test("falls back to sk_omniroute only when nothing else is available", async () => {
+test("falls back to sk_pusula only when nothing else is available", async () => {
   const previous = process.env.VISION_BRIDGE_API_KEY;
   delete process.env.VISION_BRIDGE_API_KEY;
   try {
     const key = await resolveSelfLoopApiKey(async () => "");
-    assert.strictEqual(key, "sk_omniroute");
+    assert.strictEqual(key, "sk_pusula");
   } finally {
     if (previous === undefined) delete process.env.VISION_BRIDGE_API_KEY;
     else process.env.VISION_BRIDGE_API_KEY = previous;

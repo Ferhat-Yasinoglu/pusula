@@ -4,7 +4,7 @@
 
 ---
 
-OmniRoute verfügt über **vier Anmeldedatenfamilien**, die Verwaltungsrouten autorisieren können.
+Pusula verfügt über **vier Anmeldedatenfamilien**, die Verwaltungsrouten autorisieren können.
 Sie sind nicht austauschbar. Inferenz-API-Schlüssel (`sk-…`) verwalten den
 Server **nicht**, sofern ihnen nicht ausdrücklich der Geltungsbereich `manage` oder `admin` gewährt wurde.
 
@@ -13,8 +13,8 @@ Kanonische Implementierung: `src/lib/api/requireManagementAuth.ts`.
 | Anmeldedaten                      | Typische Form                            | Erstellt unter                                             | Vorgesehene Verwendung         | Verwaltungsberechtigung                                                                            |
 | --------------------------------- | ---------------------------------------- | ---------------------------------------------------------- | ------------------------------ | -------------------------------------------------------------------------------------------------- |
 | Dashboard-JWT-Sitzung             | `auth_token`-Cookie                      | Dashboard-Anmeldung                                        | Browser-Benutzeroberfläche     | Vollständige Dashboard-Verwaltung gemäß den Regeln für CSRF, Lokalität und stets geschützte Routen |
-| CLI-Machine-ID-Token              | intern / lokal                           | CLI-Bootstrap (`omniroute` auf demselben Rechner)          | Lokale CLI                     | Nur lokale Verwaltung                                                                              |
-| Zugriffstoken mit Geltungsbereich | `oma_live_…`                             | **Einstellungen → Zugriffstoken** oder `omniroute connect` | Remote-CLI und Verwaltungs-API | Muss den für die Route erforderlichen Geltungsbereich `read`, `write` oder `admin` erfüllen        |
+| CLI-Machine-ID-Token              | intern / lokal                           | CLI-Bootstrap (`pusula` auf demselben Rechner)          | Lokale CLI                     | Nur lokale Verwaltung                                                                              |
+| Zugriffstoken mit Geltungsbereich | `oma_live_…`                             | **Einstellungen → Zugriffstoken** oder `pusula connect` | Remote-CLI und Verwaltungs-API | Muss den für die Route erforderlichen Geltungsbereich `read`, `write` oder `admin` erfüllen        |
 | Inferenz-API-Schlüssel            | `sk-…` (und andere API-Schlüsselpräfixe) | **API-Manager / API-Schlüssel**                            | `/v1/*`-Inferenz               | **Keine**, sofern die Schlüsselmetadaten nicht `manage` oder `admin` enthalten                     |
 
 `oma_`-Anmeldedaten sind Verwaltungs-/CLI-Anmeldedaten. Sie sind **keine** Inferenz-API-Schlüssel.
@@ -70,14 +70,14 @@ Chat-Client-Schlüssel nicht für die Automatisierung, es sei denn, Sie haben ih
 
 ### CLI-Machine-ID-Token
 
-1. Führen Sie `omniroute` auf **demselben Host** wie den Server aus (Loopback).
-2. Die CLI erstellt ein Machine-ID-Token unter `~/.omniroute/` (chmod 600).
+1. Führen Sie `pusula` auf **demselben Host** wie den Server aus (Loopback).
+2. Die CLI erstellt ein Machine-ID-Token unter `~/.pusula/` (chmod 600).
 3. Dies funktioniert **nicht** von einem anderen Rechner aus. Verwenden Sie für eine Remote-CLI ein Zugriffstoken.
 
 ### Zugriffstoken mit Geltungsbereich (`oma_live_…`)
 
 1. Dashboard: **Einstellungen → Zugriffstoken** → erstellen (Name + Geltungsbereich). **Das Geheimnis wird nur einmal angezeigt.**
-2. Oder per CLI: `omniroute connect <host>` (Passwort → Token). Siehe [Remote-Modus](./REMOTE-MODE.md).
+2. Oder per CLI: `pusula connect <host>` (Passwort → Token). Siehe [Remote-Modus](./REMOTE-MODE.md).
 3. Header: `Authorization: Bearer oma_live_…`
 4. Widerrufen Sie es auf derselben Zugriffstoken-Seite (oder löschen Sie den CLI-Kontext).
 5. Der Server speichert nur einen Hash. Behandeln Sie den Klartext wie ein Passwort.
@@ -108,14 +108,14 @@ Fügen Sie Verwaltungszugangsdaten nicht in den URL-Pfad oder die Abfragezeichen
 Schreibgeschützt (Anbieter auflisten). Verwenden Sie ein `read`-Zugriffstoken:
 
 ```bash
-curl -sS "$OMNIROUTE_URL/api/providers" \
+curl -sS "$PUSULA_URL/api/providers" \
   -H "Authorization: Bearer oma_live_<read-token>"
 ```
 
 Ändernd (eine Anbieterverbindung erstellen). Verwenden Sie ein `write`-/`admin`-Zugriffstoken oder einen API-Schlüssel mit `manage`-Berechtigungsumfang:
 
 ```bash
-curl -sS -X POST "$OMNIROUTE_URL/api/providers" \
+curl -sS -X POST "$PUSULA_URL/api/providers" \
   -H "Authorization: Bearer oma_live_<write-or-admin-token>" \
   -H "Content-Type: application/json" \
   -d '{"provider":"openai","apiKey":"<upstream-key>"}'
@@ -124,7 +124,7 @@ curl -sS -X POST "$OMNIROUTE_URL/api/providers" \
 Inferenz (keine Verwaltung). Regulärer API-Schlüssel, kein `manage` erforderlich:
 
 ```bash
-curl -sS "$OMNIROUTE_URL/v1/models" \
+curl -sS "$PUSULA_URL/v1/models" \
   -H "Authorization: Bearer sk-<inference-key>"
 ```
 
@@ -154,6 +154,6 @@ verwendet das Sitzungscookie.
 | ---------------------------------------------------------- | ----------------------------------------------------------------------- |
 | Browser                                                    | Dashboard-Sitzung                                                       |
 | CLI auf dem Serverhost                                     | Maschinen-Token                                                         |
-| CLI auf einem Laptop mit Verbindung zu einem Remote-Server | `oma_live_…` aus `omniroute connect`                                    |
+| CLI auf einem Laptop mit Verbindung zu einem Remote-Server | `oma_live_…` aus `pusula connect`                                    |
 | CI / Skripte (nur Verwaltung)                              | `oma_live_…` mit dem kleinstmöglichen ausreichenden Berechtigungsumfang |
 | CI, die sowohl `/v1` als auch `/api` aufrufen muss         | API-Schlüssel mit `manage` **oder** zwei Anmeldedaten                   |

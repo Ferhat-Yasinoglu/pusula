@@ -4,7 +4,7 @@
 
 ---
 
-OmniRoute, farklı kapsamlara sahip, süreç içinde yerel **iki** şerit sistemine sahiptir. Bunlar
+Pusula, farklı kapsamlara sahip, süreç içinde yerel **iki** şerit sistemine sahiptir. Bunlar
 birbirini tamamlar; operatörler hangisine baktıklarını bilmelidir.
 
 ## 1. Bayt düzeyinde süreç genelinde kabul (`chatBodyAdmission.ts`)
@@ -27,8 +27,8 @@ birbirini tamamlar; operatörler hangisine baktıklarını bilmelidir.
   (birden fazla alt ajan/CLI, gövdeler rutin olarak > 256 KB) yaklaşık `1`
   etkin eşzamanlılığa düşürüyor ve tamamen normal yük altında 503 hatalarına
   neden oluyordu. Artık yalnızca bir operatör açıkça
-  `OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT` ayarladığında bağlayıcıdır. Ayarlanmadığında
-  kabul, bunun yerine `OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES` tarafından, yani
+  `PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT` ayarladığında bağlayıcıdır. Ayarlanmadığında
+  kabul, bunun yerine `PUSULA_CHAT_MAX_INFLIGHT_BYTES` tarafından, yani
   sürecin gerçek bellek tavanından (`src/shared/middleware/admissionBudget.ts`)
   otomatik türetilen bir bütçe tarafından sınırlandırılır: V8 yığın sınırı ile
   herhangi bir cgroup/container sınırından daha düşük olanın %25'i, 8x geçici
@@ -48,11 +48,11 @@ birbirini tamamlar; operatörler hangisine baktıklarını bilmelidir.
   seçeneğidir; böylece takas alanı kullanan bir ana makine, boşta olan bir
   container'ın 503 döndürmesine neden olamaz.
 - **Ayarlama:**
-  - `OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES` — otomatik türetilen bayt bütçesi için geçersiz kılma
-  - `OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT` — eski istek sayısı üst sınırı, yalnızca isteğe bağlı
-  - `OMNIROUTE_CHAT_ADMISSION_QUEUE_MS` — 503'ten önce kuyrukta bekleme süresi (varsayılan 2000)
-  - `OMNIROUTE_CHAT_ADMISSION_MAX_QUEUED_BYTES` — kuyruktaki baytlar için yığın valfi (varsayılan 4 MB)
-  - `OMNIROUTE_CHAT_VIRTUAL_TTL_MS` / `OMNIROUTE_CHAT_VIRTUAL_MAX_SESSIONS` — #10110'dan beri kullanım dışı
+  - `PUSULA_CHAT_MAX_INFLIGHT_BYTES` — otomatik türetilen bayt bütçesi için geçersiz kılma
+  - `PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT` — eski istek sayısı üst sınırı, yalnızca isteğe bağlı
+  - `PUSULA_CHAT_ADMISSION_QUEUE_MS` — 503'ten önce kuyrukta bekleme süresi (varsayılan 2000)
+  - `PUSULA_CHAT_ADMISSION_MAX_QUEUED_BYTES` — kuyruktaki baytlar için yığın valfi (varsayılan 4 MB)
+  - `PUSULA_CHAT_VIRTUAL_TTL_MS` / `PUSULA_CHAT_VIRTUAL_MAX_SESSIONS` — #10110'dan beri kullanım dışı
     işlemsiz seçenekler (yapılandırma uyumluluğu için kabul edilir, yok sayılır)
 - **Raporlar:** `GET /api/monitoring/health` → `chatAdmission` (#11244) — #503-fanout
   eklemeleri `inflightBytes`, `maxInflightBytes`, `budgetSource`
@@ -64,10 +64,10 @@ birbirini tamamlar; operatörler hangisine baktıklarını bilmelidir.
 
 - **Kapsam:** sağlayıcı yönlendirmesi için kiracı anahtarı kabulü — kuyruk maliyeti, gecikme güdümlü
   sınır uyarlaması, şerit kuyruklama ve şerit metrikleri.
-- **Etkinleştirme:** **isteğe bağlı.** `OMNIROUTE_CHAT_VIRTUAL_LANES=true` olmadığı sürece devre dışıdır. Bu olmadan,
+- **Etkinleştirme:** **isteğe bağlı.** `PUSULA_CHAT_VIRTUAL_LANES=true` olmadığı sürece devre dışıdır. Bu olmadan,
   uyarlanabilir denetleyici paylaşılan kuyruk davranışını korur (#9654'ün 1. ölçütü yalnızca
   bir operatör şeritleri etkinleştirdiğinde karşılanır).
-- **Yapılandırma:** `OMNIROUTE_CHAT_VIRTUAL_LANES` + uyarlanabilir yapılandırma (`maxQueueCount`,
+- **Yapılandırma:** `PUSULA_CHAT_VIRTUAL_LANES` + uyarlanabilir yapılandırma (`maxQueueCount`,
   `maxQueueCost`, `defaultMaxWaitMs`, …).
 - **Raporlar:** `GET /api/monitoring/health` → `adaptiveAdmission` → `laneCount`,
   `laneQueuedCount`, `laneQueuedCost`, `laneTenants` (opak şerit kimlikleri, hiçbir zaman ham
@@ -82,7 +82,7 @@ fan-out ile dağıtır. #9654 Dalga 2'den beri **her fan-out hedefi yönlendirme
 
 - **Kapsam:** combo, fusion ve chaos motoru tarafından yönlendirilen her fan-out hedefi.
   Sistem 1 (bayt düzeyi) bundan etkilenmez — fan-out hedeflerini hiçbir zaman yoklamaz.
-- **Etkinleştirme:** **sistem 2 ile isteğe bağlı.** `OMNIROUTE_CHAT_VIRTUAL_LANES`
+- **Etkinleştirme:** **sistem 2 ile isteğe bağlı.** `PUSULA_CHAT_VIRTUAL_LANES`
   ayarlanmadığında işlem yapmaz — bu modda üst istek zaten paylaşılan kuyruk kirasını
   elinde tuttuğundan, yoklama çift sayım yapar ve combo hedeflerini reddederdi.
 - **Anlam:**
@@ -119,7 +119,7 @@ fan-out ile dağıtır. #9654 Dalga 2'den beri **her fan-out hedefi yönlendirme
 - `adaptiveAdmission.laneCount` / `laneTenants` → **uyarlanabilir sanal şeritler** (sistem 2).
 - `adaptiveAdmission.virtualLanes === true` → 3. bölümdeki fan-out probları da
   etkindir. `virtualLanes` alanı eksik veya `false` olan bir yük,
-  `OMNIROUTE_CHAT_VIRTUAL_LANES` değişkeninin ayarlanmadığı anlamına gelir — bayt düzeyindeki şeritler (sistem 1)
+  `PUSULA_CHAT_VIRTUAL_LANES` değişkeninin ayarlanmadığı anlamına gelir — bayt düzeyindeki şeritler (sistem 1)
   hâlâ etkindir, ancak bu özellik etkinleştirilene kadar `adaptiveAdmission` kapsamındaki hiçbir şey
   (ve hiçbir fan-out geçiş kontrolü) devrede değildir.
 
@@ -132,15 +132,15 @@ etkinleştirildiğinde uygulanır.
 
 ## 4. Tek süreçte uzun `/v1/responses` (sağlıklı kapasite payı)
 
-[#10437](https://github.com/diegosouzapw/OmniRoute/pull/10437), heap kullanımı
-`OMNIROUTE_CHAT_ADMISSION_HEAP_SHED_RATIO` değerinin altındayken yapısal açıdan ağır ikinci bir isteğin
+[#10437](https://github.com/Ferhat-Yasinoglu/pusula/pull/10437), heap kullanımı
+`PUSULA_CHAT_ADMISSION_HEAP_SHED_RATIO` değerinin altındayken yapısal açıdan ağır ikinci bir isteğin
 kabul edilmesi için `tryAcquireHealthyHeadroom` işlevini ekledi. `admitChatRequest` tarafından kullanılan BYTE
-yolu (gövdeler ≥ `OMNIROUTE_CHAT_LARGE_BODY_BYTES`,
+yolu (gövdeler ≥ `PUSULA_CHAT_LARGE_BODY_BYTES`,
 varsayılan 256 KiB; `POST /v1/responses` dâhil) **aynı** istisnayı kullanır.
 
 Bu, ikiden fazla eşzamanlı uzun SSE `/v1/responses` için desteklenen **tek süreçli**
 yöntemdir: birincil + sağlıklı kapasite payını yalnızca heap'in
-ve süreç genelindeki devam eden isteklerin bayt bütçesinin (`OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES`
+ve süreç genelindeki devam eden isteklerin bayt bütçesinin (`PUSULA_CHAT_MAX_INFLIGHT_BYTES`
 / #10110) izin verdiği ölçüde artırın. Onlarca uzun SSE istemcisi (40–50), katı bir
 “en fazla 2” ürün sınırı değil, bu bellek bütçesiyle ilgili bir konudur. Baskı altındaki bir heap, #7849'un
 yeniden ortaya çıkmaması için yeniden denenebilir `503` yanıtlarıyla yük azaltmayı sürdürür.

@@ -24,7 +24,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-image-combo-empty-200-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-image-combo-empty-200-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.JWT_SECRET = "test-jwt-secret-for-image-combo-empty-200-tests";
 process.env.API_KEY_SECRET = process.env.API_KEY_SECRET || "image-combo-empty-200-test-secret";
@@ -32,7 +32,7 @@ process.env.API_KEY_SECRET = process.env.API_KEY_SECRET || "image-combo-empty-20
 const core = await import("@/lib/db/core.ts");
 const providersDb = await import("@/lib/db/providers.ts");
 const { createCombo } = await import("@/lib/db/combos");
-const { executeImageCombo } = await import("@omniroute/open-sse/services/imageCombo");
+const { executeImageCombo } = await import("@pusula/open-sse/services/imageCombo");
 
 const PNG_B64 = Buffer.from([0x89, 0x50, 0x4e, 0x47]).toString("base64");
 
@@ -194,7 +194,7 @@ test("empty 200 from first leg falls back to second leg and second leg image is 
   );
 });
 
-test("fallback metadata reflects the additional attempt via X-OmniRoute-Fallback-Attempts", async () => {
+test("fallback metadata reflects the additional attempt via X-Pusula-Fallback-Attempts", async () => {
   await resetStorage();
   await seedOpenRouterConnection();
   await seedTwoLegCombo("empty-200-fallback-meta-combo");
@@ -211,7 +211,7 @@ test("fallback metadata reflects the additional attempt via X-OmniRoute-Fallback
   );
 
   assert.equal(response.status, 200);
-  const attempts = response.headers.get("X-OmniRoute-Fallback-Attempts");
+  const attempts = response.headers.get("X-Pusula-Fallback-Attempts");
   assert.ok(attempts !== null, "fallback attempts header must be present");
   assert.equal(attempts, "1", "one leg failed over, so fallback attempts must be 1");
 });
@@ -272,7 +272,7 @@ test("direct image model request with empty 200 is a retryable 502 (behavior pre
   await resetStorage();
   await seedOpenRouterConnection();
 
-  const { handleImageGeneration } = await import("@omniroute/open-sse/handlers/imageGeneration");
+  const { handleImageGeneration } = await import("@pusula/open-sse/handlers/imageGeneration");
 
   // Empty 200 → retryable 502 (previously a bogus success)
   stubFetchAlwaysEmpty();

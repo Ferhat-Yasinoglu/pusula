@@ -14,7 +14,7 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-13789-nonfunction-tools-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-13789-nonfunction-tools-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../src/lib/db/core.ts");
@@ -115,7 +115,7 @@ test("#13789 agentrouter+glm: a request with non-function tools reaches the exec
         },
       },
       // Acceptance shape from the issue: a hosted `{ type: "web_search" }` tool.
-      // The web-search fallback converts this to the omniroute_web_search function
+      // The web-search fallback converts this to the pusula_web_search function
       // tool on this provider, so it never reaches upstream as a non-function type.
       { type: "web_search" },
       // The shapes that actually leak on the current tip: a named Claude server
@@ -142,7 +142,7 @@ test("#13789 agentrouter+glm: a request with non-function tools reaches the exec
   const names = new Set(tools.map((t) => t.function?.name));
   assert.ok(names.has("get_weather"), "the plain function tool survives");
   assert.ok(names.has("computer"), "the named server tool is converted, not forwarded raw");
-  assert.ok(names.has("omniroute_web_search"), "web_search lands as the fallback function tool");
+  assert.ok(names.has("pusula_web_search"), "web_search lands as the fallback function tool");
   assert.equal(
     names.has("code_interpreter"),
     false,

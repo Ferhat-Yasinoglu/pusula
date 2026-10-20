@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { Readable } from "node:stream";
 
-// Repro probe for issue #12413: `omniroute oauth start --provider antigravity`
+// Repro probe for issue #12413: `pusula oauth start --provider antigravity`
 // prints the Google authorize URL (which advertises
 // redirect_uri=http://localhost:8080/callback) and then silently waits for a
 // pasted callback URL/code — nothing in the CLI output warns the operator

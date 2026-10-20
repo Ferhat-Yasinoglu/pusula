@@ -1,9 +1,9 @@
 /**
- * omniroute setup-opencode — Remote-aware OpenCode provider generator
- * (openai-compatible). Distinct from `omniroute setup opencode` (which wires the
- * @omniroute/opencode-plugin). This writes the `omniroute` provider into
+ * pusula setup-opencode — Remote-aware OpenCode provider generator
+ * (openai-compatible). Distinct from `pusula setup opencode` (which wires the
+ * @pusula/opencode-plugin). This writes the `pusula` provider into
  * the active OpenCode JSON/JSONC config with every catalog model, so you can run
- * `opencode -m omniroute/<model>`.
+ * `opencode -m pusula/<model>`.
  *
  * Reuses the proven server-side generator (config-generator/opencode.ts) for the
  * catalog fetch + merge, then references the API key by env var (never on disk).
@@ -16,7 +16,7 @@ import { printHeading, printInfo, printSuccess, printError } from "../io.mjs";
 import { resolveActiveContext } from "../contexts.mjs";
 import { guardHostConfigTarget } from "../utils/config-home-guard.mjs";
 
-const ENV_KEY_REF = "{env:OMNIROUTE_API_KEY}";
+const ENV_KEY_REF = "{env:PUSULA_API_KEY}";
 const JSON_FORMATTING_OPTIONS = { insertSpaces: true, tabSize: 2 };
 
 /** Resolve baseUrl + (literal) apiKey from flags → active context → localhost. */
@@ -26,7 +26,7 @@ export function resolveOpencodeTarget(opts = {}) {
     baseUrl = String(opts.remote).replace(/\/+$/, "");
   } else {
     try {
-      const c = resolveActiveContext(opts.context ?? process.env.OMNIROUTE_CONTEXT);
+      const c = resolveActiveContext(opts.context ?? process.env.PUSULA_CONTEXT);
       baseUrl = c?.baseUrl;
     } catch {
       /* no context */
@@ -35,7 +35,7 @@ export function resolveOpencodeTarget(opts = {}) {
       baseUrl = `http://localhost:${Number(opts.port ?? process.env.PORT ?? 20128) || 20128}`;
   }
 
-  // Precedence: explicit --api-key flag > OMNIROUTE_API_KEY env var > active
+  // Precedence: explicit --api-key flag > PUSULA_API_KEY env var > active
   // context's management token. A context's accessToken/apiKey is a CLI
   // management credential (oma_live_...) with no /v1/* inference scope — it
   // must never silently outrank a real inference key the caller supplied
@@ -44,10 +44,10 @@ export function resolveOpencodeTarget(opts = {}) {
   // buildHeaders()). Only fall back to the context token when neither an
   // explicit flag nor the env var is set.
   let apiKey = opts.apiKey ?? opts["api-key"];
-  if (!apiKey) apiKey = process.env.OMNIROUTE_API_KEY || "";
+  if (!apiKey) apiKey = process.env.PUSULA_API_KEY || "";
   if (!apiKey) {
     try {
-      const c = resolveActiveContext(opts.context ?? process.env.OMNIROUTE_CONTEXT);
+      const c = resolveActiveContext(opts.context ?? process.env.PUSULA_CONTEXT);
       apiKey = c?.accessToken || c?.apiKey || "";
     } catch {
       /* no context auth */
@@ -60,7 +60,7 @@ export function resolveOpencodeTarget(opts = {}) {
  * Post-process the generator output: reference the API key by env var (keep the
  * secret off disk) and optionally keep only models whose id matches `only`.
  * Pure + testable. Returns the final JSONC string while preserving comments
- * outside the OmniRoute-managed fields.
+ * outside the Pusula-managed fields.
  *
  * @param {string} rawJson  output of generateOpencodeConfig
  * @param {{ only?: string[] }} [opts]
@@ -76,12 +76,12 @@ export function postProcessOpencodeConfig(rawJson, opts = {}) {
     throw new Error(`Failed to parse generated OpenCode config${details ? `: ${details}` : ""}`);
   }
 
-  const prov = config.provider?.omniroute;
+  const prov = config.provider?.pusula;
   let json = rawJson;
   if (prov?.options) {
     json = applyEdits(
       json,
-      modify(json, ["provider", "omniroute", "options", "apiKey"], ENV_KEY_REF, {
+      modify(json, ["provider", "pusula", "options", "apiKey"], ENV_KEY_REF, {
         formattingOptions: JSON_FORMATTING_OPTIONS,
       })
     );
@@ -96,7 +96,7 @@ export function postProcessOpencodeConfig(rawJson, opts = {}) {
     models = kept;
     json = applyEdits(
       json,
-      modify(json, ["provider", "omniroute", "models"], kept, {
+      modify(json, ["provider", "pusula", "models"], kept, {
         formattingOptions: JSON_FORMATTING_OPTIONS,
       })
     );
@@ -115,11 +115,11 @@ export async function runSetupOpencodeCommand(opts = {}) {
         .filter(Boolean)
     : null;
 
-  printHeading("OmniRoute → OpenCode provider (openai-compatible)");
+  printHeading("Pusula → OpenCode provider (openai-compatible)");
   printInfo(`Connecting to ${baseUrl} …`);
 
   // Deferred import: opencode.ts is TypeScript; tsx is registered by
-  // bin/omniroute.mjs before any command runs, so importing here is safe.
+  // bin/pusula.mjs before any command runs, so importing here is safe.
   let raw;
   let configPath;
   try {
@@ -131,7 +131,7 @@ export async function runSetupOpencodeCommand(opts = {}) {
 
     const guard = await guardHostConfigTarget(configPath, {
       toolLabel: "OpenCode",
-      hostCommand: "omniroute setup-opencode",
+      hostCommand: "pusula setup-opencode",
       allowContainerWrite: Boolean(opts.allowContainerWrite ?? opts["allow-container-write"]),
       dryRun,
     });
@@ -141,12 +141,12 @@ export async function runSetupOpencodeCommand(opts = {}) {
       baseUrl,
       apiKey,
       model: opts.model,
-      providerId: "omniroute",
+      providerId: "pusula",
       configPath,
     });
   } catch (err) {
     printError(`Failed to generate OpenCode config: ${err?.message || err}`);
-    printInfo("Make sure OmniRoute is running and --remote/--api-key are correct.");
+    printInfo("Make sure Pusula is running and --remote/--api-key are correct.");
     return 1;
   }
 
@@ -155,16 +155,16 @@ export async function runSetupOpencodeCommand(opts = {}) {
 
   if (dryRun) {
     console.log(json.length > 4000 ? json.slice(0, 4000) + "\n… (truncated)" : json);
-    printInfo(`[dry-run] ${modelCount} model(s) under provider 'omniroute' → ${configPath}`);
+    printInfo(`[dry-run] ${modelCount} model(s) under provider 'pusula' → ${configPath}`);
     return 0;
   }
 
   if (!existsSync(configDir)) mkdirSync(configDir, { recursive: true });
   writeFileSync(configPath, json, "utf8");
   printSuccess(
-    `${basename(configPath)} updated at ${configPath} (${modelCount} models under 'omniroute')`
+    `${basename(configPath)} updated at ${configPath} (${modelCount} models under 'pusula')`
   );
-  printInfo('Use it:  opencode -m omniroute/<model> "..."   (export OMNIROUTE_API_KEY first)');
+  printInfo('Use it:  opencode -m pusula/<model> "..."   (export PUSULA_API_KEY first)');
   return 0;
 }
 
@@ -172,13 +172,13 @@ export function registerSetupOpencode(program) {
   program
     .command("setup-opencode")
     .description(
-      "Generate the OmniRoute openai-compatible provider in the active OpenCode config " +
+      "Generate the Pusula openai-compatible provider in the active OpenCode config " +
         "from the live model catalog (local or remote VPS)"
     )
-    .option("--port <port>", "Local OmniRoute port (ignored when --remote is set)", "20128")
-    .option("--remote <url>", "Remote OmniRoute URL, e.g. http://192.168.0.15:20128")
-    .option("--api-key <key>", "OmniRoute API key (defaults to OMNIROUTE_API_KEY env var)")
-    .option("--model <id>", "Set the default top-level model (omniroute/<id>)")
+    .option("--port <port>", "Local Pusula port (ignored when --remote is set)", "20128")
+    .option("--remote <url>", "Remote Pusula URL, e.g. http://192.168.0.15:20128")
+    .option("--api-key <key>", "Pusula API key (defaults to PUSULA_API_KEY env var)")
+    .option("--model <id>", "Set the default top-level model (pusula/<id>)")
     .option("--only <patterns>", "Comma-separated substrings — keep only matching model IDs")
     .option("--dry-run", "Print what would be written without touching the filesystem")
     .option(
@@ -187,7 +187,7 @@ export function registerSetupOpencode(program) {
     )
     .action(async (opts, cmd) => {
       // Commander parses the ancestor program's own global --api-key option
-      // (bin/cli/program.mjs, bound to .env("OMNIROUTE_API_KEY")) against any
+      // (bin/cli/program.mjs, bound to .env("PUSULA_API_KEY")) against any
       // occurrence of the flag in argv, so it wins the value even when the
       // user typed --api-key AFTER `setup-opencode` — this local option's own
       // `opts.apiKey` never sees it. cmd.optsWithGlobals() resolves to the

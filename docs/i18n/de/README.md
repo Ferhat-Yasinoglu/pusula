@@ -6,14 +6,14 @@
 
 <div align="center">
 
-<img src="./docs/screenshots/MainOmniRoute.png" alt="OmniRoute Dashboard" width="820"/>
+<img src="./docs/screenshots/MainPusula.png" alt="Pusula Dashboard" width="820"/>
 
 <br/>
 <br/>
 
-# 🚀 OmniRoute — Das kostenlose KI-Gateway
+# 🚀 Pusula — Das kostenlose KI-Gateway
 
-<img src="./docs/diagrams/readme-hero.svg" width="100%" alt="OmniRoute — Hören Sie nie auf zu programmieren. Jedes KI-Tool → 358 Anbieter — 150+ kostenlos — über einen Endpunkt. Claude Code, Codex, Cursor, Cline, Copilot & Antigravity in KOSTENLOSES Claude / GPT / Gemini mit automatischem Fallback. RTK + Caveman gestapelte Komprimierung spart 15–95% Tokens (~89% im Durchschnitt) — nie wieder Limits erreichen. 358 KI-Anbieter · 150+ kostenlose Stufen · ~1,62 Mrd. kostenlose Tokens/Monat · 19 Routing-Strategien · $0 zum Start."/>
+<img src="./docs/diagrams/readme-hero.svg" width="100%" alt="Pusula — Hören Sie nie auf zu programmieren. Jedes KI-Tool → 358 Anbieter — 150+ kostenlos — über einen Endpunkt. Claude Code, Codex, Cursor, Cline, Copilot & Antigravity in KOSTENLOSES Claude / GPT / Gemini mit automatischem Fallback. RTK + Caveman gestapelte Komprimierung spart 15–95% Tokens (~89% im Durchschnitt) — nie wieder Limits erreichen. 358 KI-Anbieter · 150+ kostenlose Stufen · ~1,62 Mrd. kostenlose Tokens/Monat · 19 Routing-Strategien · $0 zum Start."/>
 
 </div>
 
@@ -23,9 +23,9 @@
 
 </div>
 
-> Kostenlose Kontingente manuell zu kombinieren ist mühsam — Dutzende SDKs, Dutzende Ratenbegrenzungen und keine Ahnung, wie viel tatsächlich verfügbar ist. OmniRoute katalogisiert **489 Einträge mit kostenlosen Kontingenten über 35 wiederkehrende Pool-Schlüssel hinweg** und berechnet die angegebene Token-Gesamtmenge aus den **17 Pools mit einem veröffentlichten positiven monatlichen Budget sowie fünf modellspezifischen Groq-Obergrenzen**, wobei gemeinsam genutzte Pools dedupliziert werden. Kontingente, die erst nach einer regionalen Identitätsprüfung verfügbar werden (derzeit: ModelScope), werden separat ausgewiesen — +~6 Mio. hinter einer regionalen Identitätsprüfung — und niemals in die Gesamtangabe einbezogen. Das Ergebnis bleibt im Dashboard (`/dashboard/free-tiers`) sichtbar.
+> Kostenlose Kontingente manuell zu kombinieren ist mühsam — Dutzende SDKs, Dutzende Ratenbegrenzungen und keine Ahnung, wie viel tatsächlich verfügbar ist. Pusula katalogisiert **489 Einträge mit kostenlosen Kontingenten über 35 wiederkehrende Pool-Schlüssel hinweg** und berechnet die angegebene Token-Gesamtmenge aus den **17 Pools mit einem veröffentlichten positiven monatlichen Budget sowie fünf modellspezifischen Groq-Obergrenzen**, wobei gemeinsam genutzte Pools dedupliziert werden. Kontingente, die erst nach einer regionalen Identitätsprüfung verfügbar werden (derzeit: ModelScope), werden separat ausgewiesen — +~6 Mio. hinter einer regionalen Identitätsprüfung — und niemals in die Gesamtangabe einbezogen. Das Ergebnis bleibt im Dashboard (`/dashboard/free-tiers`) sichtbar.
 
-<img src="./docs/diagrams/free-tier-budget.svg" width="100%" alt="OmniRoute-Karte für kostenlose Kontingente: dauerhaft ~1,62 Mrd. kostenlose Tokens pro Monat, im ersten Monat mit Registrierungsguthaben bis zu ~2,22 Mrd., aus 35 dokumentierten wiederkehrenden Pool-Schlüsseln, die 489 katalogisierte Einträge mit kostenlosen Kontingenten hinter einem einzigen Endpunkt abdecken. Ehrliche, nach Pools deduplizierte Berechnung — jeder gemeinsam genutzte Pool wird nur einmal gezählt, einschließlich 17 wiederkehrender Pools mit einem veröffentlichten positiven monatlichen Token-Budget sowie fünf modellspezifischen Groq-Obergrenzen; 13 Anbieter sind im Katalog für Nutzungsbedingungen-Risiken als zu vermeiden gekennzeichnet, damit du selbst entscheiden kannst. Der Budgetbalken umfasst Mistral 1 Mrd., Nara 210 Mio., LLM7 150 Mio., xKiro 150 Mio., Groq 30 Mio. (fünf modellspezifische Obergrenzen) und kleinere Pools sowie Registrierungsguthaben für den ersten Monat; dauerhaft kostenlose Anbieter ohne Token-Obergrenze werden separat angezeigt, damit sie die Gesamtangabe niemals künstlich erhöhen. Live-Anzeige von verbrauchten/verbleibenden Tokens unter /dashboard/free-tiers."/>
+<img src="./docs/diagrams/free-tier-budget.svg" width="100%" alt="Pusula-Karte für kostenlose Kontingente: dauerhaft ~1,62 Mrd. kostenlose Tokens pro Monat, im ersten Monat mit Registrierungsguthaben bis zu ~2,22 Mrd., aus 35 dokumentierten wiederkehrenden Pool-Schlüsseln, die 489 katalogisierte Einträge mit kostenlosen Kontingenten hinter einem einzigen Endpunkt abdecken. Ehrliche, nach Pools deduplizierte Berechnung — jeder gemeinsam genutzte Pool wird nur einmal gezählt, einschließlich 17 wiederkehrender Pools mit einem veröffentlichten positiven monatlichen Token-Budget sowie fünf modellspezifischen Groq-Obergrenzen; 13 Anbieter sind im Katalog für Nutzungsbedingungen-Risiken als zu vermeiden gekennzeichnet, damit du selbst entscheiden kannst. Der Budgetbalken umfasst Mistral 1 Mrd., Nara 210 Mio., LLM7 150 Mio., xKiro 150 Mio., Groq 30 Mio. (fünf modellspezifische Obergrenzen) und kleinere Pools sowie Registrierungsguthaben für den ersten Monat; dauerhaft kostenlose Anbieter ohne Token-Obergrenze werden separat angezeigt, damit sie die Gesamtangabe niemals künstlich erhöhen. Live-Anzeige von verbrauchten/verbleibenden Tokens unter /dashboard/free-tiers."/>
 
 > Animierte Zusammenfassung der Live-Seite `/dashboard/free-tiers`. Vollständige Methodik (Pool-Deduplizierung, Guthabenstufen, Nutzungsbedingungen der Anbieter): **[docs/reference/FREE_TIERS.md](docs/reference/FREE_TIERS.md)**.
 >
@@ -37,14 +37,14 @@
 
 <h3>
 
-⭐ Gib dem Repository einen Stern, wenn OMNIROUTE dir geholfen hat, Geld zu sparen und deine Arbeit zu erleichtern.
+⭐ Gib dem Repository einen Stern, wenn PUSULA dir geholfen hat, Geld zu sparen und deine Arbeit zu erleichtern.
 
 </h3>
 
-[![Sterne](https://img.shields.io/github/stars/diegosouzapw/OmniRoute?style=social)](https://github.com/diegosouzapw/OmniRoute)
-<a href="https://trendshift.io/repositories/23589" target="_blank"><img src="https://trendshift.io/api/badge/repositories/23589" alt="diegosouzapw%2FOmniRoute | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-[![Rang im Sterneverlauf](https://api.star-history.com/badge?repo=diegosouzapw/OmniRoute&theme=dark)](https://www.star-history.com/diegosouzapw/omniroute)
-[![olud.ai](https://olud.ai/badge.php?tool=diegosouzapw-omniroute)](https://olud.ai/project/diegosouzapw-omniroute.html)
+[![Sterne](https://img.shields.io/github/stars/Ferhat-Yasinoglu/pusula?style=social)](https://github.com/Ferhat-Yasinoglu/pusula)
+<a href="https://trendshift.io/repositories/23589" target="_blank"><img src="https://trendshift.io/api/badge/repositories/23589" alt="diegosouzapw%2FPusula | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+[![Rang im Sterneverlauf](https://api.star-history.com/badge?repo=Ferhat-Yasinoglu/pusula&theme=dark)](https://www.star-history.com/ferhat-yasinoglu/pusula)
+[![olud.ai](https://olud.ai/badge.php?tool=diegosouzapw-pusula)](https://olud.ai/project/diegosouzapw-pusula.html)
 
 ### 💬 Tritt der Community bei
 
@@ -54,12 +54,12 @@
 [![@diegosouzapw auf GitHub folgen](https://img.shields.io/github/followers/diegosouzapw?style=for-the-badge&logo=github&logoColor=white&label=Follow%20on%20GitHub&color=181717)](https://github.com/diegosouzapw)
 
 [![Discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/U47eFqAXCn)
-[![Telegram](https://img.shields.io/badge/Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/omnirouteOficial)
+[![Telegram](https://img.shields.io/badge/Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/pusulaOficial)
 [![WhatsApp Global](https://img.shields.io/badge/WhatsApp_Global-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://chat.whatsapp.com/FvuCbrpZmQ6I85n2vW5QIC?s=cl&p=a&mlu=4)
 [![WhatsApp Brasil](https://img.shields.io/badge/WhatsApp_Brasil-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://chat.whatsapp.com/KWgatljAjmbELQory59Oti?s=cl&p=a&mlu=4)
-[![Website](https://img.shields.io/badge/Website-omniroute.online-blue?logo=google-chrome&logoColor=white)](https://omniroute.online)
+[![Website](https://img.shields.io/badge/Website-pusula.online-blue?logo=google-chrome&logoColor=white)](https://github.com/Ferhat-Yasinoglu/pusula)
 
-**Fragen, Anbietertipps, Roadmap und Support → [Discord](https://discord.gg/U47eFqAXCn) · [Telegram](https://t.me/omnirouteOficial) · WhatsApp [🌍 Global](https://chat.whatsapp.com/FvuCbrpZmQ6I85n2vW5QIC?s=cl&p=a&mlu=4) / [🇧🇷 Brasilien](https://chat.whatsapp.com/KWgatljAjmbELQory59Oti?s=cl&p=a&mlu=4) / [Portal](https://portal.sthub.com.br/communities/groups/st-hub/channels/Omniroute-World-8kRjmK)**
+**Fragen, Anbietertipps, Roadmap und Support → [Discord](https://discord.gg/U47eFqAXCn) · [Telegram](https://t.me/pusulaOficial) · WhatsApp [🌍 Global](https://chat.whatsapp.com/FvuCbrpZmQ6I85n2vW5QIC?s=cl&p=a&mlu=4) / [🇧🇷 Brasilien](https://chat.whatsapp.com/KWgatljAjmbELQory59Oti?s=cl&p=a&mlu=4) / [Portal](https://portal.sthub.com.br/communities/groups/st-hub/channels/Pusula-World-8kRjmK)**
 
 <br/>
 
@@ -84,12 +84,12 @@
 
 ## 🧩 Verfügbar
 
-[![npm-Version](https://img.shields.io/npm/v/omniroute?color=cb3837&logo=npm)](https://www.npmjs.com/package/omniroute)
-![NPM monatlich](https://img.shields.io/npm/dm/omniroute?label=npm/month&color=cb3837&logo=npm)
-[![Docker Hub](https://img.shields.io/docker/v/diegosouzapw/omniroute?label=Docker%20Hub&logo=docker&color=2496ED)](https://hub.docker.com/r/diegosouzapw/omniroute)
+[![npm-Version](https://img.shields.io/npm/v/pusula?color=cb3837&logo=npm)](https://www.npmjs.com/package/pusula)
+![NPM monatlich](https://img.shields.io/npm/dm/pusula?label=npm/month&color=cb3837&logo=npm)
+[![Docker Hub](https://img.shields.io/docker/v/ferhat-yasinoglu/pusula?label=Docker%20Hub&logo=docker&color=2496ED)](https://hub.docker.com/r/ferhat-yasinoglu/pusula)
 [![Lizenz: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
-![Docker-Downloads](https://img.shields.io/docker/pulls/diegosouzapw/omniroute?label=docker%20pulls&logo=docker&color=2496ED)
-![Electron-Downloads](https://img.shields.io/github/downloads/diegosouzapw/omniroute/total?style=flat&label=electron%20downloads&logo=electron&color=47848F)
+![Docker-Downloads](https://img.shields.io/docker/pulls/ferhat-yasinoglu/pusula?label=docker%20pulls&logo=docker&color=2496ED)
+![Electron-Downloads](https://img.shields.io/github/downloads/ferhat-yasinoglu/pusula/total?style=flat&label=electron%20downloads&logo=electron&color=47848F)
 
 <table>
   <tr>
@@ -101,8 +101,8 @@
   <tr>
     <td align="right"><b>💡 Mehr erfahren</b></td>
     <td align="center"><a href="#-the-promise">💥 Das Versprechen</a></td>
-    <td align="center"><a href="#-why-omniroute">🤔 Warum OmniRoute?</a></td>
-    <td align="center"><a href="#-what-sets-omniroute-apart">🏆 Was OmniRoute auszeichnet</a></td>
+    <td align="center"><a href="#-why-pusula">🤔 Warum Pusula?</a></td>
+    <td align="center"><a href="#-what-sets-pusula-apart">🏆 Was Pusula auszeichnet</a></td>
   </tr>
   <tr>
     <td align="right"><b>⚙️ Funktionen</b></td>
@@ -113,18 +113,18 @@
   <tr>
     <td align="right"></td>
     <td align="center"><a href="#%EF%B8%8F-save-1595-tokens--automatically">🗜️ Komprimierung</a></td>
-    <td align="center"><a href="#%EF%B8%8F-where-omniroute-runs--anywhere">🖥️ Ausführungsumgebungen</a></td>
+    <td align="center"><a href="#%EF%B8%8F-where-pusula-runs--anywhere">🖥️ Ausführungsumgebungen</a></td>
     <td align="center"><a href="#-private--local-first">🔒 Privat</a></td>
   </tr>
   <tr>
     <td align="right"><b>👀 Ansehen</b></td>
-    <td align="center"><a href="#-omniroute-in-action">🎬 In Aktion</a></td>
+    <td align="center"><a href="#-pusula-in-action">🎬 In Aktion</a></td>
     <td align="center"><a href="#-whats-new">✨ Neuigkeiten</a></td>
     <td align="center"><a href="#-compatible-clis--coding-agents">🤖 Kompatible CLIs</a></td>
   </tr>
   <tr>
     <td align="right"><b>💚 Unterstützung</b></td>
-    <td align="center"><a href="#-support-omniroute">💚 Unterstützen / Spenden</a></td>
+    <td align="center"><a href="#-support-pusula">💚 Unterstützen / Spenden</a></td>
     <td align="center"><a href="#-community--help">💬 Community</a></td>
     <td align="center"><a href="#-sponsors">💖 Sponsoren</a></td>
   </tr>
@@ -218,7 +218,7 @@
 
 </div>
 
-<img src="./docs/diagrams/works-zero-config.svg" width="100%" alt="Funktioniert sofort nach der Installation – keine Konfiguration. Drei Schritte: 1. Installieren – npm i -g omniroute, Server startet auf localhost:20128. 2. Richten Sie Ihr Tool auf http://localhost:20128/v1 aus – jedes OpenAI-kompatible Tool (Claude Code, Cursor, Cline). 3. Es antwortet – rufen Sie das Modell auto für eine sofortige Antwort auf, ohne API-Schlüssel, ohne Registrierung, ohne Konfiguration. Der schlüssellose Anbieter OpenCode Free ist bereits in die auto-Kombination integriert, sodass eine Neuinstallation sofort funktioniert."/>
+<img src="./docs/diagrams/works-zero-config.svg" width="100%" alt="Funktioniert sofort nach der Installation – keine Konfiguration. Drei Schritte: 1. Installieren – npm i -g pusula, Server startet auf localhost:20128. 2. Richten Sie Ihr Tool auf http://localhost:20128/v1 aus – jedes OpenAI-kompatible Tool (Claude Code, Cursor, Cline). 3. Es antwortet – rufen Sie das Modell auto für eine sofortige Antwort auf, ohne API-Schlüssel, ohne Registrierung, ohne Konfiguration. Der schlüssellose Anbieter OpenCode Free ist bereits in die auto-Kombination integriert, sodass eine Neuinstallation sofort funktioniert."/>
 
 ```bash
 # Neuinstallation, keine Anmeldeinformationen – `auto` funktioniert bereits:
@@ -227,7 +227,7 @@ curl http://localhost:20128/v1/chat/completions \
   -d '{"model":"auto","messages":[{"role":"user","content":"Hello!"}]}'
 ```
 
-<sub>Bevorzugen Sie ein bestimmtes kostenloses Backend? Rufen Sie `oc/…` (OpenCode Free) direkt auf. Wechseln Sie dann zu `auto` und lassen Sie OmniRoute wählen.</sub>
+<sub>Bevorzugen Sie ein bestimmtes kostenloses Backend? Rufen Sie `oc/…` (OpenCode Free) direkt auf. Wechseln Sie dann zu `auto` und lassen Sie Pusula wählen.</sub>
 
 <sub>📦 Copy-Paste-Schnellstart-Skripte für **Python, Node.js, PHP und cURL** → [`examples/quickstart/`](examples/quickstart/)</sub>
 
@@ -246,15 +246,15 @@ curl http://localhost:20128/v1/chat/completions \
 
 <div align="center">
 
-# 🤔 Warum OmniRoute?
+# 🤔 Warum Pusula?
 
 </div>
 
-<img src="./docs/diagrams/why-pain-fix.svg" width="100%" alt="Warum OmniRoute – Schluss mit dem Jonglieren von 10 Dashboards, abgelaufenen API-Schlüsseln und unerwarteten Rechnungen. Zehn tägliche Probleme vs. Lösungen: ungenutzte Quoten laufen ab → Abonnements maximieren; Ratenbegrenzungen mitten im Coding → 4-stufiges Auto-Fallback (Abonnement → API → Günstig → Kostenlos); Tool-Ausgaben verbrennen Tokens → RTK + Caveman-Kompression (15–95 %); teure APIs → kostenoptimiertes Routing; jedes Tool hat seine eigene Einrichtung → ein Endpunkt, ein Dashboard; KI blockiert → 3-stuiger Proxy + TLS-Stealth; tote Schlüssel → 3-Schicht-Resilienz (Circuit Breaker, Schlüssel-Cooldown, Modell-Sperre); Team teilt ein Abonnement → Schlüsselpools mit Fair-Share-Quoten; Prompts über die Cloud eines anderen → Local-First mit AES-256-GCM verschlüsselten Schlüsseln; keine Ausgabentransparenz → Live-Analysen (Nutzung, Quote, Einsparungen, p95-Latenz)."/>
+<img src="./docs/diagrams/why-pain-fix.svg" width="100%" alt="Warum Pusula – Schluss mit dem Jonglieren von 10 Dashboards, abgelaufenen API-Schlüsseln und unerwarteten Rechnungen. Zehn tägliche Probleme vs. Lösungen: ungenutzte Quoten laufen ab → Abonnements maximieren; Ratenbegrenzungen mitten im Coding → 4-stufiges Auto-Fallback (Abonnement → API → Günstig → Kostenlos); Tool-Ausgaben verbrennen Tokens → RTK + Caveman-Kompression (15–95 %); teure APIs → kostenoptimiertes Routing; jedes Tool hat seine eigene Einrichtung → ein Endpunkt, ein Dashboard; KI blockiert → 3-stuiger Proxy + TLS-Stealth; tote Schlüssel → 3-Schicht-Resilienz (Circuit Breaker, Schlüssel-Cooldown, Modell-Sperre); Team teilt ein Abonnement → Schlüsselpools mit Fair-Share-Quoten; Prompts über die Cloud eines anderen → Local-First mit AES-256-GCM verschlüsselten Schlüsseln; keine Ausgabentransparenz → Live-Analysen (Nutzung, Quote, Einsparungen, p95-Latenz)."/>
 
 <div align="center">
 
-<img src="./docs/diagrams/tier-cascade.svg" width="100%" alt="OmniRoute-Anfragefluss: Ihre IDE oder CLI (Claude Code, Cursor, Cline…) ruft einen lokalen Endpunkt auf (http://localhost:20128/v1); der OmniRoute Smart Router (RTK + Caveman-Kompression, 19 Routing-Strategien, Circuit Breaker, TLS-Stealth, MCP, A2A, Guardrails) kann über 4 Anbieterstufen hinweg zurückgreifen, solange ein geeignetes, funktionierendes Ziel verfügbar ist – Stufe 1 Abonnement, Stufe 2 API-Schlüssel, Stufe 3 Günstig und Stufe 4 Kostenlos."/>
+<img src="./docs/diagrams/tier-cascade.svg" width="100%" alt="Pusula-Anfragefluss: Ihre IDE oder CLI (Claude Code, Cursor, Cline…) ruft einen lokalen Endpunkt auf (http://localhost:20128/v1); der Pusula Smart Router (RTK + Caveman-Kompression, 19 Routing-Strategien, Circuit Breaker, TLS-Stealth, MCP, A2A, Guardrails) kann über 4 Anbieterstufen hinweg zurückgreifen, solange ein geeignetes, funktionierendes Ziel verfügbar ist – Stufe 1 Abonnement, Stufe 2 API-Schlüssel, Stufe 3 Günstig und Stufe 4 Kostenlos."/>
 
 </div>
 
@@ -267,17 +267,17 @@ curl http://localhost:20128/v1/chat/completions \
 </div>
 
 <p align="center">
-  <a href="https://platform.kimi.ai?track_id=track-8197581fdd7d4139a0f562e4a03c3798&aff=omniroute">
+  <a href="https://platform.kimi.ai?track_id=track-8197581fdd7d4139a0f562e4a03c3798&aff=pusula">
     <img src="public/sponsors/kimi-k3-banner.png" width="100%" alt="Kimi K3 — Offene Spitzenintelligenz · 2,8 Billionen Parameter · Kontext mit 1 Mio. Token"/>
   </a>
 </p>
 
-> **Möchten Sie sich als Open-Source-Freund anschließen?** Dies sind die Unternehmen, die Open Source unterstützen und dabei helfen, OmniRoute voranzubringen — und wir legen öffentlich offen, wofür jedes Token eingesetzt wird, das sie uns zur Verfügung stellen. Kontaktieren Sie uns: [diegosouza.pw@outlook.com](mailto:diegosouza.pw@outlook.com)
+> **Möchten Sie sich als Open-Source-Freund anschließen?** Dies sind die Unternehmen, die Open Source unterstützen und dabei helfen, Pusula voranzubringen — und wir legen öffentlich offen, wofür jedes Token eingesetzt wird, das sie uns zur Verfügung stellen. Kontaktieren Sie uns: [diegosouza.pw@outlook.com](mailto:diegosouza.pw@outlook.com)
 
 <table>
   <tr>
     <td align="center" width="150">
-      <a href="https://platform.kimi.ai?track_id=track-8197581fdd7d4139a0f562e4a03c3798&aff=omniroute">
+      <a href="https://platform.kimi.ai?track_id=track-8197581fdd7d4139a0f562e4a03c3798&aff=pusula">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="public/providers/kimi-logomark-dark.svg">
           <img src="public/providers/kimi-logomark-light.svg" width="64" alt="Kimi (Moonshot AI)"/>
@@ -287,35 +287,35 @@ curl http://localhost:20128/v1/chat/completions \
       <img src="https://img.shields.io/badge/Founding_Friend-1783FF?style=flat-square" alt="Gründender Open-Source-Freund"/>
     </td>
     <td>
-      Vielen Dank an <b>Kimi (Moonshot AI)</b>, unseren ersten Open-Source-Freund, für die Unterstützung dieses Projekts! Kimi ist das KI-Labor hinter den Open-Weight-Modellfamilien K2 und K3 — <b>Kimi K3</b> bietet ein Kontextfenster mit 1 Mio. Token, native Bildverarbeitung und Programmierfähigkeiten auf Spitzenniveau zu einem Bruchteil der Preise geschlossener Modelle und funktioniert sofort mit Claude Code, Codex und jedem von OmniRoute unterstützten Programmierwerkzeug.
+      Vielen Dank an <b>Kimi (Moonshot AI)</b>, unseren ersten Open-Source-Freund, für die Unterstützung dieses Projekts! Kimi ist das KI-Labor hinter den Open-Weight-Modellfamilien K2 und K3 — <b>Kimi K3</b> bietet ein Kontextfenster mit 1 Mio. Token, native Bildverarbeitung und Programmierfähigkeiten auf Spitzenniveau zu einem Bruchteil der Preise geschlossener Modelle und funktioniert sofort mit Claude Code, Codex und jedem von Pusula unterstützten Programmierwerkzeug.
       <br/><br/>
-      <b>Was durch Kimis Unterstützung ermöglicht wird:</b> Kimis API-Guthaben finanzieren die KI-validierte Release-Pipeline von OmniRoute — die Phase <i>Merge-Validierung, unterstützt von Kimi K3</i>, die jeden Pull Request vor der Veröffentlichung prüft — sowie die tägliche Funktionsentwicklung. Erstklassige Kimi-Unterstützung ist auf beiden Wegen verfügbar: über die direkte <a href="https://platform.kimi.ai?track_id=track-8197581fdd7d4139a0f562e4a03c3798&aff=omniroute">Kimi API</a> (<code>kimi-k3</code>) und den <a href="https://www.kimi.ai/code?aff=omniroute">Kimi Code-Programmiertarif</a> (OAuth und API-Schlüssel). OmniRoute ist außerdem das erste brasilianische Open-Source-Projekt im Unterstützungsprogramm von Kimi. <a href="https://platform.kimi.ai?track_id=track-8197581fdd7d4139a0f562e4a03c3798&aff=omniroute"><b>Erhalten Sie einen Kimi-API-Schlüssel mit 15 % zusätzlichem Guthaben →</b></a>
+      <b>Was durch Kimis Unterstützung ermöglicht wird:</b> Kimis API-Guthaben finanzieren die KI-validierte Release-Pipeline von Pusula — die Phase <i>Merge-Validierung, unterstützt von Kimi K3</i>, die jeden Pull Request vor der Veröffentlichung prüft — sowie die tägliche Funktionsentwicklung. Erstklassige Kimi-Unterstützung ist auf beiden Wegen verfügbar: über die direkte <a href="https://platform.kimi.ai?track_id=track-8197581fdd7d4139a0f562e4a03c3798&aff=pusula">Kimi API</a> (<code>kimi-k3</code>) und den <a href="https://www.kimi.ai/code?aff=pusula">Kimi Code-Programmiertarif</a> (OAuth und API-Schlüssel). Pusula ist außerdem das erste brasilianische Open-Source-Projekt im Unterstützungsprogramm von Kimi. <a href="https://platform.kimi.ai?track_id=track-8197581fdd7d4139a0f562e4a03c3798&aff=pusula"><b>Erhalten Sie einen Kimi-API-Schlüssel mit 15 % zusätzlichem Guthaben →</b></a>
     </td>
   </tr>
   <tr>
     <td align="center" width="150">
-      <a href="https://cheaperinference.com/?utm_source=omniroute">
+      <a href="https://cheaperinference.com/?utm_source=pusula">
         <img src="./public/providers/cli-generic.svg" width="64" alt="Cheaper Inference"/>
       </a>
       <br/><b>Cheaper Inference</b><br/><sub>cheaperinference.com</sub><br/><br/>
       <img src="https://img.shields.io/badge/Open_Source_Friend-31f889?style=flat-square&labelColor=04170d" alt="Open-Source-Freund"/>
     </td>
     <td>
-      Vielen Dank an <b>Cheaper Inference</b>, einen Open-Source-Freund von OmniRoute, für die Unterstützung dieses Projekts! Cheaper Inference ist ein nach Kosten sortiertes Gateway, das 42 Spitzenmodelle — Claude, GPT-5.x, Gemini, Kimi K3, GLM, DeepSeek, Grok und MiniMax — über einen einzigen OpenAI-kompatiblen Endpunkt weiterverkauft und jede Anfrage an den günstigsten geeigneten Anbieter weiterleitet, ohne jemals mehr als den Listenpreis des Modellherstellers zu berechnen.
+      Vielen Dank an <b>Cheaper Inference</b>, einen Open-Source-Freund von Pusula, für die Unterstützung dieses Projekts! Cheaper Inference ist ein nach Kosten sortiertes Gateway, das 42 Spitzenmodelle — Claude, GPT-5.x, Gemini, Kimi K3, GLM, DeepSeek, Grok und MiniMax — über einen einzigen OpenAI-kompatiblen Endpunkt weiterverkauft und jede Anfrage an den günstigsten geeigneten Anbieter weiterleitet, ohne jemals mehr als den Listenpreis des Modellherstellers zu berechnen.
       <br/><br/>
-      <b>Erstklassige Unterstützung in OmniRoute:</b> Chat Completions, der native Endpunkt <code>/v1/responses</code>, Bildverarbeitung, Tool-Aufrufe und 3 Bildmodelle (<code>grok-imagine</code>, <code>nano-banana-pro</code>, <code>nano-banana-2</code>, erreichbar als <code>cheaperinference/&lt;model&gt;</code>). <a href="https://cheaperinference.com/?utm_source=omniroute"><b>API-Schlüssel erhalten →</b></a>
+      <b>Erstklassige Unterstützung in Pusula:</b> Chat Completions, der native Endpunkt <code>/v1/responses</code>, Bildverarbeitung, Tool-Aufrufe und 3 Bildmodelle (<code>grok-imagine</code>, <code>nano-banana-pro</code>, <code>nano-banana-2</code>, erreichbar als <code>cheaperinference/&lt;model&gt;</code>). <a href="https://cheaperinference.com/?utm_source=pusula"><b>API-Schlüssel erhalten →</b></a>
     </td>
   </tr>
 </table>
 
-<sub>Mit <code>aff=omniroute</code> gekennzeichnete Links sind Partnerlinks. Sie finanzieren das Projekt, ohne dass Ihnen zusätzliche Kosten entstehen.</sub>
+<sub>Mit <code>aff=pusula</code> gekennzeichnete Links sind Partnerlinks. Sie finanzieren das Projekt, ohne dass Ihnen zusätzliche Kosten entstehen.</sub>
 
 <br/>
 
 <details open>
 <summary><sub><b>🎟️ Affiliate-Aktion</b> — kostenlose Registrierungsgutscheine von Anbietern, die uns nicht sponsern (zum Aufklappen anklicken)</sub></summary>
 
-<sub><i>Dieser Abschnitt ist ausschließlich für Empfehlungs-/Gutscheincodes vorgesehen. Gesponserte Partnerschaften finden Sie oben unter <b>🤝 Unterstützt von unseren Open-Source-Freunden</b>. OmniRoute unterhält keine Sponsoringbeziehung oder Partnerschaft mit den hier aufgeführten Anbietern — dies sind öffentliche Gutscheine, die jeder nutzen kann.</i></sub>
+<sub><i>Dieser Abschnitt ist ausschließlich für Empfehlungs-/Gutscheincodes vorgesehen. Gesponserte Partnerschaften finden Sie oben unter <b>🤝 Unterstützt von unseren Open-Source-Freunden</b>. Pusula unterhält keine Sponsoringbeziehung oder Partnerschaft mit den hier aufgeführten Anbietern — dies sind öffentliche Gutscheine, die jeder nutzen kann.</i></sub>
 
 <table>
   <tr>
@@ -326,14 +326,14 @@ curl http://localhost:20128/v1/chat/completions \
       <br/><sub><b>AgentRouter</b></sub><br/><sub>agentrouter.org</sub>
     </td>
     <td>
-      <sub><b><a href="https://agentrouter.org/register?aff=70LM">AgentRouter</a></b> — Affiliate-Registrierung · <b>$100 kostenloses Guthaben</b> bei der Registrierung (kostenloser Server, rechnen Sie mit höherer Latenz — am besten für Tests, nicht für die Produktion). Erstklassige Unterstützung in OmniRoute seit <b>v3.8.50</b>: Chat Completions, das Anthropic-kompatible Übertragungsformat und der OpenAI-kompatible Pfad. Zu den verfügbaren Modellen gehören <code>claude-opus-4-8</code>, <code>claude-opus-5</code>, <code>gpt-5.6-sol</code> und weitere. <b><a href="https://agentrouter.org/register?aff=70LM">$100 sichern →</a></b></sub>
+      <sub><b><a href="https://agentrouter.org/register?aff=70LM">AgentRouter</a></b> — Affiliate-Registrierung · <b>$100 kostenloses Guthaben</b> bei der Registrierung (kostenloser Server, rechnen Sie mit höherer Latenz — am besten für Tests, nicht für die Produktion). Erstklassige Unterstützung in Pusula seit <b>v3.8.50</b>: Chat Completions, das Anthropic-kompatible Übertragungsformat und der OpenAI-kompatible Pfad. Zu den verfügbaren Modellen gehören <code>claude-opus-4-8</code>, <code>claude-opus-5</code>, <code>gpt-5.6-sol</code> und weitere. <b><a href="https://agentrouter.org/register?aff=70LM">$100 sichern →</a></b></sub>
       <br/><br/>
-      <sub>⚠️ <i>Affiliate-Link — OmniRoute unterhält keine Sponsoringbeziehung oder Partnerschaft mit diesem Anbieter.</i></sub>
+      <sub>⚠️ <i>Affiliate-Link — Pusula unterhält keine Sponsoringbeziehung oder Partnerschaft mit diesem Anbieter.</i></sub>
     </td>
   </tr>
 </table>
 
-<sub>Kennen Sie einen weiteren Anbieter mit einem großzügigen kostenlosen Registrierungsgutschein, von dem OmniRoute-Nutzer profitieren? Eröffnen Sie ein Issue, und wir fügen ihn hier hinzu.</sub>
+<sub>Kennen Sie einen weiteren Anbieter mit einem großzügigen kostenlosen Registrierungsgutschein, von dem Pusula-Nutzer profitieren? Eröffnen Sie ein Issue, und wir fügen ihn hier hinzu.</sub>
 
 </details>
 
@@ -347,11 +347,11 @@ curl http://localhost:20128/v1/chat/completions \
 
 <img src="./docs/diagrams/strategies-grid.svg" width="100%" alt="Alle 19 Combo-Routing-Strategien animiert — eine Kachel pro Strategie: priority, fill-first, weighted, round-robin, p2c, least-used, random, strict-random, cost-optimized, headroom, reset-window, reset-aware, context-relay, context-optimized, cache-optimized, lkgp, auto, fusion, pipeline. In der Tabelle oben steht, was die einzelnen Strategien bewirken."/>
 
-> Ein **Combo** ist eine Kette von Modellen, zwischen denen OmniRoute **automatisch** routet. Wenn das Kontingent erschöpft ist, ein Anbieter ausfällt oder die Kosten sprunghaft steigen, kann das Combo zum nächsten geeigneten und funktionsfähigen Modell wechseln. 🛡️
+> Ein **Combo** ist eine Kette von Modellen, zwischen denen Pusula **automatisch** routet. Wenn das Kontingent erschöpft ist, ein Anbieter ausfällt oder die Kosten sprunghaft steigen, kann das Combo zum nächsten geeigneten und funktionsfähigen Modell wechseln. 🛡️
 
 ### ⚡ Keine Konfiguration — einfach `auto` verwenden
 
-Es muss kein Combo erstellt werden. Setze dein Modell auf `auto` (oder eine Variante), und OmniRoute erstellt aus deinen verbundenen Anbietern ein virtuelles Combo, das in Echtzeit bewertet wird:
+Es muss kein Combo erstellt werden. Setze dein Modell auf `auto` (oder eine Variante), und Pusula erstellt aus deinen verbundenen Anbietern ein virtuelles Combo, das in Echtzeit bewertet wird:
 
 <table>
   <tr><th align="left">Modell-ID</th><th align="left">Wofür es optimiert ist</th></tr>
@@ -480,7 +480,7 @@ Alle **19** Strategien — pro Combo-Schritt frei kombinierbar:
 
 ### 🧱 Resilienz ist integriert (3 unabhängige Ebenen)
 
-<img src="./docs/diagrams/resilience-layers.svg" width="100%" alt="OmniRoute-Ausfallsicherheit — 3 unabhängige Selbstheilungsebenen, die richtige Ebene für den jeweiligen Fehler. Ebene 1: Provider-Schutzschalter (gesamter Provider): Wird nur bei 408/5xx ausgelöst, Schwellenwerte OAuth 8× / API-Schlüssel 12× / lokal 2×, wird nach 60s/30s/15s für einen HALF-OPEN-Test zurückgesetzt, verzögerte Wiederherstellung; während OPEN leitet die Kombination zum nächsten Provider um. Ebene 2: Verbindungs-Cooldown (ein Schlüssel/Konto): Basiswert 5s für OAuth / 3s für API-Schlüssel, exponentieller ×2-Backoff mit Schutz vor gleichzeitigem Wiederanlauf, bei 429 wird Retry-After berücksichtigt, ein Erfolg löscht den gesamten Fehlerstatus; ein Schlüssel im Cooldown wird übersprungen, während weitere Schlüssel weiterhin Anfragen bedienen. Ebene 3: Modellsperre (ein Modell): Modellbezogene 429-Fehler, lokale 404-Fehler oder Modusverweigerungen sperren nur dieses Modell — niemals die gesamte Verbindung. Endzustände (gesperrt, abgelaufen, Guthaben aufgebraucht) sind für den Betreiber bestimmt, nicht für Cooldowns."/>
+<img src="./docs/diagrams/resilience-layers.svg" width="100%" alt="Pusula-Ausfallsicherheit — 3 unabhängige Selbstheilungsebenen, die richtige Ebene für den jeweiligen Fehler. Ebene 1: Provider-Schutzschalter (gesamter Provider): Wird nur bei 408/5xx ausgelöst, Schwellenwerte OAuth 8× / API-Schlüssel 12× / lokal 2×, wird nach 60s/30s/15s für einen HALF-OPEN-Test zurückgesetzt, verzögerte Wiederherstellung; während OPEN leitet die Kombination zum nächsten Provider um. Ebene 2: Verbindungs-Cooldown (ein Schlüssel/Konto): Basiswert 5s für OAuth / 3s für API-Schlüssel, exponentieller ×2-Backoff mit Schutz vor gleichzeitigem Wiederanlauf, bei 429 wird Retry-After berücksichtigt, ein Erfolg löscht den gesamten Fehlerstatus; ein Schlüssel im Cooldown wird übersprungen, während weitere Schlüssel weiterhin Anfragen bedienen. Ebene 3: Modellsperre (ein Modell): Modellbezogene 429-Fehler, lokale 404-Fehler oder Modusverweigerungen sperren nur dieses Modell — niemals die gesamte Verbindung. Endzustände (gesperrt, abgelaufen, Guthaben aufgebraucht) sind für den Betreiber bestimmt, nicht für Cooldowns."/>
 
 <sub>📖 [Auto-Combo-Engine](docs/routing/AUTO-COMBO.md) · [Ausfallsicherheitsleitfaden](docs/architecture/RESILIENCE_GUIDE.md)</sub>
 
@@ -488,22 +488,22 @@ Alle **19** Strategien — pro Combo-Schritt frei kombinierbar:
 
 <div align="center">
 
-## 🏆 Was OmniRoute auszeichnet
+## 🏆 Was Pusula auszeichnet
 
 </div>
 
-<img src="./docs/diagrams/comparison-table.svg" width="100%" alt="Was OmniRoute auszeichnet – ein veralteter Feature-Snapshot im Vergleich zu 9router, OpenRouter, CLIProxyAPI und LiteLLM über 13 Funktionen hinweg. OmniRoute: 358 Anbieter, über 150 integrierte kostenlose Tarife, 19 Routing-Strategien, 12-Engine-Token-Kompression, integrierter MCP-Server mit 110 Tools, A2A-Agentenprotokoll, persistenter Speicher, Guardrails, Cloud-Agenten, TLS-Fingerprint-Stealth, Desktop/Termux/PWA und 42 i18n UI-Sprachversionen. OmniRoute ist MIT-lizenziert und selbst-hostbar. Die Funktionen und Anzahlen der Wettbewerber können sich ändern; siehe die verlinkte Methodik."/>
+<img src="./docs/diagrams/comparison-table.svg" width="100%" alt="Was Pusula auszeichnet – ein veralteter Feature-Snapshot im Vergleich zu 9router, OpenRouter, CLIProxyAPI und LiteLLM über 13 Funktionen hinweg. Pusula: 358 Anbieter, über 150 integrierte kostenlose Tarife, 19 Routing-Strategien, 12-Engine-Token-Kompression, integrierter MCP-Server mit 110 Tools, A2A-Agentenprotokoll, persistenter Speicher, Guardrails, Cloud-Agenten, TLS-Fingerprint-Stealth, Desktop/Termux/PWA und 42 i18n UI-Sprachversionen. Pusula ist MIT-lizenziert und selbst-hostbar. Die Funktionen und Anzahlen der Wettbewerber können sich ändern; siehe die verlinkte Methodik."/>
 
-<sub>📊 Vollständige Methodik &amp; Details pro Funktion im Vergleich zu 9router, OpenRouter, CLIProxyAPI &amp; LiteLLM → [`docs/comparison/OMNIROUTE_VS_ALTERNATIVES.md`](docs/comparison/OMNIROUTE_VS_ALTERNATIVES.md)</sub>
+<sub>📊 Vollständige Methodik &amp; Details pro Funktion im Vergleich zu 9router, OpenRouter, CLIProxyAPI &amp; LiteLLM → [`docs/comparison/PUSULA_VS_ALTERNATIVES.md`](docs/comparison/PUSULA_VS_ALTERNATIVES.md)</sub>
 
 <br/>
 
-## 💚 OmniRoute unterstützen
+## 💚 Pusula unterstützen
 
-OmniRoute ist MIT-lizenziert und wird offen weiterentwickelt. Wenn es Ihnen Zeit oder Geld spart, können Sie so dazu beitragen, dass es unabhängig bleibt — wählen Sie einfach, was zu Ihnen passt. Sponsoring beeinflusst niemals die Routing-Priorität; es verschafft Sichtbarkeit, keine bessere Platzierung.
+Pusula ist MIT-lizenziert und wird offen weiterentwickelt. Wenn es Ihnen Zeit oder Geld spart, können Sie so dazu beitragen, dass es unabhängig bleibt — wählen Sie einfach, was zu Ihnen passt. Sponsoring beeinflusst niemals die Routing-Priorität; es verschafft Sichtbarkeit, keine bessere Platzierung.
 
 <table>
-  <tr><td nowrap>⭐ <b>Repository mit einem Stern markieren</b></td><td>Kostenlos — hilft wirklich bei der Sichtbarkeit</td><td><a href="https://github.com/diegosouzapw/OmniRoute">OmniRoute mit einem Stern markieren</a></td></tr>
+  <tr><td nowrap>⭐ <b>Repository mit einem Stern markieren</b></td><td>Kostenlos — hilft wirklich bei der Sichtbarkeit</td><td><a href="https://github.com/Ferhat-Yasinoglu/pusula">Pusula mit einem Stern markieren</a></td></tr>
   <tr><td nowrap>🐙 <b>GitHub Sponsors</b></td><td>Einmalig oder monatlich · keine Plattformgebühr</td><td><a href="https://github.com/sponsors/diegosouzapw">github.com/sponsors/diegosouzapw</a></td></tr>
   <tr><td nowrap>☕ <b>Ko-fi</b></td><td>Schnelle einmalige Spende, keine Registrierung für Spendende erforderlich</td><td><a href="https://ko-fi.com/diegosouzapw">ko-fi.com/diegosouzapw</a></td></tr>
   <tr><td nowrap>🧋 <b>Buy Me a Coffee</b></td><td>Kleine, informelle Geste</td><td><a href="https://www.buymeacoffee.com/diegosouzapw">buymeacoffee.com/diegosouzapw</a></td></tr>
@@ -514,14 +514,14 @@ OmniRoute ist MIT-lizenziert und wird offen weiterentwickelt. Wenn es Ihnen Zeit
 
 **🇧🇷 PIX** — sofort, gebührenfrei (Brasilien)
 
-<img src="docs/assets/pix-qr.png" width="140" align="right" alt="PIX-QR-Code von OmniRoute"/>
+<img src="docs/assets/pix-qr.png" width="140" align="right" alt="PIX-QR-Code von Pusula"/>
 
 Schlüssel (zufällig): `5d865059-bc44-483a-962d-43ceb80126eb`
 
 Pix copia-e-cola:
 
 ```
-00020101021126580014br.gov.bcb.pix01365d865059-bc44-483a-962d-43ceb80126eb5204000053039865802BR5922OMNIROUTE CONTRIBUICAO6006BRASIL62070503***630475DD
+00020101021126580014br.gov.bcb.pix01365d865059-bc44-483a-962d-43ceb80126eb5204000053039865802BR5922PUSULA CONTRIBUICAO6006BRASIL62070503***630475DD
 ```
 
 <br clear="right"/>
@@ -540,17 +540,17 @@ Pix copia-e-cola:
 
 </details>
 
-🐛 Einen Fehler gefunden oder Feedback? Eröffnen Sie eine [Diskussion](https://github.com/diegosouzapw/OmniRoute/discussions).
+🐛 Einen Fehler gefunden oder Feedback? Eröffnen Sie eine [Diskussion](https://github.com/Ferhat-Yasinoglu/pusula/discussions).
 
 <br/>
 
 <p><strong>Hinweise für Entwickler:</strong> Das Projekt kann während npm install/postinstall der Einfachheit halber eine lokale <code>.env</code>-Datei für Entwickler erstellen. Diese Datei wird absichtlich über <code>.gitignore</code> ignoriert (siehe <code>.gitignore</code>) und darf niemals committet werden — falls sie versehentlich committet wurde, ändern Sie alle offengelegten Geheimnisse und entfernen Sie die Datei aus dem Verlauf. Hinweise zur Verwaltung lokaler Umgebungsdateien und Geheimnisse finden Sie unter <a href="docs/DEVELOPER-ENVIRONMENT.md">docs/DEVELOPER-ENVIRONMENT.md</a>.</p>
 
-## 📡 OmniRoute Radar
+## 📡 Pusula Radar
 
 Die wichtigste Kennzahl für das kostenlose Kontingent bleibt bei **~1,62 Mrd. Tokens/Monat** aus dem oben dokumentierten,
 poolbereinigten Katalog. Vorübergehende Startguthaben von Anbietern können den Umfang im ersten
-Monat separat auf **~2,22 Mrd.** erhöhen. Radar ist eine optionale, signierte Katalog-Überlagerung für alle, die zwischen OmniRoute-Releases aktuellere
+Monat separat auf **~2,22 Mrd.** erhöhen. Radar ist eine optionale, signierte Katalog-Überlagerung für alle, die zwischen Pusula-Releases aktuellere
 Informationen zur Verfügbarkeit kostenloser Modelle wünschen; der Community-Katalog und alle bestehenden kostenlosen
 Funktionen bleiben kostenlos.
 
@@ -559,9 +559,9 @@ veränderliche Obergrenze liegt – abhängig von der Verfügbarkeit der Anbiete
 Diese Obergrenze ist nicht garantiert: Anbieter können Kontingente, Teilnahmevoraussetzungen, Modelle oder Regionen
 jederzeit ändern.
 
-Radar ist optional und ausschließlich für GET-Anfragen vorgesehen. Der OmniRoute-Client lädt weder Prompts noch Datenverkehr, Anbieter-
+Radar ist optional und ausschließlich für GET-Anfragen vorgesehen. Der Pusula-Client lädt weder Prompts noch Datenverkehr, Anbieter-
 konfigurationen, Nutzungstelemetrie oder den lokalen Status verworfener Mitteilungen hoch. Informationen zu den Teilnahmevoraussetzungen und
-zum aktuellen Katalog finden Sie unter **[radar.omniroute.online/planos](https://radar.omniroute.online/planos)**.
+zum aktuellen Katalog finden Sie unter **[radar.pusula.online/planos](https://radar.pusula.online/planos)**.
 
 <br/>
 
@@ -579,19 +579,19 @@ zum aktuellen Katalog finden Sie unter **[radar.omniroute.online/planos](https:/
 - **🗜️ Gehärtete Komprimierung** — standardmäßig aktivierter Inflationsschutz, Caveman-Pakete für DE / FR / JA + Chinesisch (wényán), RTK-Filter für Gradle & .NET. → [Komprimierung](docs/compression/COMPRESSION_ENGINES.md)
 - **💸 Ehrliche Pauschalkosten** — Abonnement-/Coding-Plan-Provider werden in der Kostenanalyse mit **$0** ausgewiesen; Budget, Kontingent & Routing nehmen weiterhin Schätzungen vor. → [API-Referenz](docs/reference/API_REFERENCE.md)
 - **⚖️ Quota-Share-Routing** — teilt das Kontingent eines gemeinsamen Kontos fair auf gebündelte Schlüssel auf und bleibt dabei auslastungserhaltend, sodass ungenutzte Anteile verliehen werden. → [Resilienzleitfaden](docs/architecture/RESILIENCE_GUIDE.md)
-- **🤖 CLI-/Agenten-Einrichtung mit einem Befehl** — 13 registrierte `setup-*`-Befehle; `omniroute run` startet 7 CLIs (Claude Code, Codex, Aider, Goose, OpenCode, Qwen Code, Gemini CLI); `omniroute configure` unterstützt 10 Ziele mit einer interaktiven Provider- und Modellauswahl sowie kontextspezifischen Favoriten. → [CLI-Integrationen](docs/guides/CLI-INTEGRATIONS.md)
-- **🛰️ Remote-Modus** — steuern Sie eine entfernte OmniRoute-Instanz mit bereichsgebundenen Tokens (`connect` / `contexts` / `tokens`) sowie einem `antigravity`-OAuth-Helfer für VPS-Installationen. → [Remote-Modus](docs/guides/REMOTE-MODE.md)
+- **🤖 CLI-/Agenten-Einrichtung mit einem Befehl** — 13 registrierte `setup-*`-Befehle; `pusula run` startet 7 CLIs (Claude Code, Codex, Aider, Goose, OpenCode, Qwen Code, Gemini CLI); `pusula configure` unterstützt 10 Ziele mit einer interaktiven Provider- und Modellauswahl sowie kontextspezifischen Favoriten. → [CLI-Integrationen](docs/guides/CLI-INTEGRATIONS.md)
+- **🛰️ Remote-Modus** — steuern Sie eine entfernte Pusula-Instanz mit bereichsgebundenen Tokens (`connect` / `contexts` / `tokens`) sowie einem `antigravity`-OAuth-Helfer für VPS-Installationen. → [Remote-Modus](docs/guides/REMOTE-MODE.md)
 - **🧭 Intelligenteres automatisches Routing** — `auto/<category>:<tier>`-Combos, **Fusion** (Modellpanel + Bewerter), aufgabenbezogenes Routing sowie anfragespezifische Überschreibungen für Modell / Modus / USD-Budget. → [Auto-Combo](docs/routing/AUTO-COMBO.md)
 - **🗜️ Erweiterbare Komprimierung** — 12 kombinierbare Engines + Compression Studios: LLMLingua-2, zweistufiges Ultra, omniglyph, Fidelity-Gate pro Schritt, GCF v3.2, Editor mit Drag-and-drop-Neuanordnung. → [Komprimierung](docs/compression/COMPRESSION_ENGINES.md)
 - **🕵️ Transparente MITM-Entschlüsselung (TPROXY)** — erfasst CLIs, die Proxy-Umgebungsvariablen ignorieren, mit einer CA pro SNI und einem Trust-Store-Installationsprogramm. → [MITM/TPROXY](docs/security/MITM-TPROXY-DECRYPT.md)
-- **💸 Kosten-Telemetrie überall** — `X-OmniRoute-*`-Header für Kosten/Nutzung an jedem Endpunkt, Header für Cache-HIT-Einsparungen, USD-Ausgabenkontingente pro Schlüssel. → [API-Referenz](docs/reference/API_REFERENCE.md)
-- **🧠 Speicher unter Ihrer Kontrolle** — standardmäßig deaktiviert, optionale int8-Vektorquantisierung + typisierter Verfall, anfragespezifisches `x-omniroute-no-memory`. → [Speicher](docs/frameworks/MEMORY.md)
+- **💸 Kosten-Telemetrie überall** — `X-Pusula-*`-Header für Kosten/Nutzung an jedem Endpunkt, Header für Cache-HIT-Einsparungen, USD-Ausgabenkontingente pro Schlüssel. → [API-Referenz](docs/reference/API_REFERENCE.md)
+- **🧠 Speicher unter Ihrer Kontrolle** — standardmäßig deaktiviert, optionale int8-Vektorquantisierung + typisierter Verfall, anfragespezifisches `x-pusula-no-memory`. → [Speicher](docs/frameworks/MEMORY.md)
 - **🛡️ Sicherheit** — Schutz vor Prompt-Injection auf jeder LLM-Route (Red-Team-Suite), optionale Schutzvorkehrung zur Maskierung von Zugangsdaten (schwärzt offengelegte API-Schlüssel/Geheimnisse in beide Richtungen), kostenlose DuckDuckGo-Websuche als letzte Rückfallebene und eine optionale OIDC-Anmeldeschranke für das Dashboard (die Passwortanmeldung bleibt stets verfügbar). → [Schutzvorkehrungen](docs/security/GUARDRAILS.md)
 - **🖼️ Neue Endpunkte** — `/v1/ocr` (Mistral OCR) und `/v1/audio/translations` (im Whisper-Stil) vervollständigen die Medienfunktionen. → [API-Referenz](docs/reference/API_REFERENCE.md)
 - **🎨 Bild-/Video-/Audiogenerierung** — eine API für Medien: xAI Grok Imagine & Novita AI Video, ComfyUI, Magnific, Adobe Firefly, Segmind sowie Sprachanbieter wie ElevenLabs. → [API-Referenz](docs/reference/API_REFERENCE.md)
 - **🌍 Bereitstellung & Betrieb** — Reverse-Proxy-`basePath`, automatische Erkennung der Browsersprache, Geräteverfolgung pro Schlüssel, MITM-Vertrauen ohne Root-Rechte, zh-TW-Lokalisierung. → [Umgebung](docs/reference/ENVIRONMENT.md)
 - **🤝 Mehr Provider & Agenten** — Cloud-Agenten (Codex Cloud, Cursor, Devin, Jules), Grok Build (xAI) mit Browser- + OAuth-Anmeldung, vollwertige Ollama-Karte, Claude Opus 5 & Sonnet 5, offizielle Kimi-Partnerschaft (Code/Web/Moonshot), Zed, Requesty, SenseNova, Yuanbao, Agnes AI … und ein aktualisierter **Katalog mit 352 Providern**. → [Provider](docs/reference/PROVIDER_REFERENCE.md)
-- **📡 Routing-Transparenz** — jede Antwort enthält einen `X-OmniRoute-Decision`-Header, der die verwendete Strategie, den Provider und die Latenz angibt; eine neue `cache-optimized`-Combo-Strategie + der Auto-Combo-Faktor `cacheAffinity` leiten wiederholte Anfragen zurück an die Verbindung, die das zwischengespeicherte Präfix hält; und ein schreibgeschützter Endpunkt `/v1/auto-combo/{channel}/candidates` stellt den aktuellen Kandidatenpool eines `auto/*`-Kanals bereit. → [Auto-Combo](docs/routing/AUTO-COMBO.md)
+- **📡 Routing-Transparenz** — jede Antwort enthält einen `X-Pusula-Decision`-Header, der die verwendete Strategie, den Provider und die Latenz angibt; eine neue `cache-optimized`-Combo-Strategie + der Auto-Combo-Faktor `cacheAffinity` leiten wiederholte Anfragen zurück an die Verbindung, die das zwischengespeicherte Präfix hält; und ein schreibgeschützter Endpunkt `/v1/auto-combo/{channel}/candidates` stellt den aktuellen Kandidatenpool eines `auto/*`-Kanals bereit. → [Auto-Combo](docs/routing/AUTO-COMBO.md)
 - **⚡ Lokale Leistung & Infrastruktur** — lokales Redis mit einem Klick, Relay-Deployments für Cloudflare Workers / Deno Deploy, Bifrost & Mux als überwachte eingebettete Dienste. → [Eingebettete Dienste](docs/frameworks/EMBEDDED-SERVICES.md)
 - **🧩 Ebenfalls enthalten** — Plugin-Framework + Marktplatz, Omni-/Agent-/GitHub-Skills-Frameworks, Obsidian-Vault-Integration (22 MCP-Tools), OpenAI-kompatible Batch- & Files-APIs, semantischer Antwort-Cache, Gamification mit Bestenlisten, ACP-Agentenerkennung (15 integrierte Agenten), planmäßiger Log-Export nach BigQuery, `auto/chaos`-Fehlerinjektion, eine Telegram-Bot-Bridge, ein integrierter Versionsmanager und LMArena-ELO-Ranglisten kostenloser Provider. → [Dokumentation](docs/README.md)
 
@@ -644,29 +644,29 @@ zum aktuellen Katalog finden Sie unter **[radar.omniroute.online/planos](https:/
 <b>＋ funktioniert auch mit</b> · Agent Deck · Kiro · Command Code · Antigravity · Windsurf · AMP · <b>jedem OpenAI-kompatiblen Tool</b>
 </div>
 
-<sub>📖 Einrichtung aller 36 Tools (26 CLI-Codes + 10 CLI-Agenten) → [`docs/reference/CLI-TOOLS.md`](docs/reference/CLI-TOOLS.md) · 🧩 OpenCode-Plugin → [`@omniroute/opencode-provider`](https://www.npmjs.com/package/@omniroute/opencode-provider)</sub>
+<sub>📖 Einrichtung aller 36 Tools (26 CLI-Codes + 10 CLI-Agenten) → [`docs/reference/CLI-TOOLS.md`](docs/reference/CLI-TOOLS.md) · 🧩 OpenCode-Plugin → [`@pusula/opencode-provider`](https://www.npmjs.com/package/@pusula/opencode-provider)</sub>
 
 </div>
 
 <br/>
 
-**Starten Sie jede unterstützte CLI mit nur einem Befehl über OmniRoute** — ohne dass Konfigurationsdateien geschrieben werden,
+**Starten Sie jede unterstützte CLI mit nur einem Befehl über Pusula** — ohne dass Konfigurationsdateien geschrieben werden,
 Anmeldedaten werden pro Prozess injiziert, und Qwen/Gemini erhalten ein temporäres, isoliertes Home-Verzeichnis:
 
 ```bash
-omniroute run claude   --model openai/gpt-5.4          # Claude Code
-omniroute run codex    --model glm/glm-5.2             # OpenAI Codex CLI
-omniroute run aider    --model glm/glm-5.2 -- --message "reply OK"
-omniroute run goose    --model glm/glm-5.2
-omniroute run opencode --model glm/glm-5.2 -- run "reply OK"
-omniroute run qwen     --model glm/glm-5.2 -- -p "reply OK"
-omniroute run gemini   --model glm/glm-5.2 -- --skip-trust -p "reply OK"
+pusula run claude   --model openai/gpt-5.4          # Claude Code
+pusula run codex    --model glm/glm-5.2             # OpenAI Codex CLI
+pusula run aider    --model glm/glm-5.2 -- --message "reply OK"
+pusula run goose    --model glm/glm-5.2
+pusula run opencode --model glm/glm-5.2 -- run "reply OK"
+pusula run qwen     --model glm/glm-5.2 -- -p "reply OK"
+pusula run gemini   --model glm/glm-5.2 -- --skip-trust -p "reply OK"
 
 # Oder wählen Sie Anbieter und Modell interaktiv aus und schreiben Sie die eigene Konfiguration des Tools:
-omniroute configure codex          # ebenfalls: claude opencode qwen aider goose gemini cline continue kilo
+pusula configure codex          # ebenfalls: claude opencode qwen aider goose gemini cline continue kilo
 ```
 
-Jeder Befehl berücksichtigt den aktiven Remote-Kontext (`omniroute connect <host>`), `--dry-run`
+Jeder Befehl berücksichtigt den aktiven Remote-Kontext (`pusula connect <host>`), `--dry-run`
 zeigt die exakten Umgebungsvariablen/Argumente als Vorschau an, ohne sie auszuführen, und `--api-key-env NAME` hält Geheimnisse
 aus Ihrem Shell-Verlauf heraus. → [CLI-Integrationen](docs/guides/CLI-INTEGRATIONS.md)
 
@@ -743,7 +743,7 @@ aus Ihrem Shell-Verlauf heraus. → [CLI-Integrationen](docs/guides/CLI-INTEGRAT
 
 <div align="center">
 
-## 🖥️ Wo OmniRoute läuft — überall
+## 🖥️ Wo Pusula läuft — überall
 
 </div>
 
@@ -751,36 +751,36 @@ aus Ihrem Shell-Verlauf heraus. → [CLI-Integrationen](docs/guides/CLI-INTEGRAT
 
 <table>
   <tr><th align="left">Plattform</th><th align="left">Installation</th><th align="left">Highlights</th></tr>
-  <tr><td align="left" nowrap>📦 <b>npm (global)</b></td><td align="left" nowrap><code>npm install -g omniroute</code></td><td align="left">Ein Befehl, jedes Betriebssystem</td></tr>
-  <tr><td align="left" nowrap>🐳 <b>Docker</b></td><td align="left" nowrap><code>docker run … diegosouzapw/omniroute</code></td><td align="left">Multi-Architektur: <b>AMD64 + ARM64</b></td></tr>
+  <tr><td align="left" nowrap>📦 <b>npm (global)</b></td><td align="left" nowrap><code>npm install -g pusula</code></td><td align="left">Ein Befehl, jedes Betriebssystem</td></tr>
+  <tr><td align="left" nowrap>🐳 <b>Docker</b></td><td align="left" nowrap><code>docker run … ferhat-yasinoglu/pusula</code></td><td align="left">Multi-Architektur: <b>AMD64 + ARM64</b></td></tr>
   <tr><td align="left" nowrap>🖥️ <b>Desktop (Electron)</b></td><td align="left" nowrap><code>npm run electron:build</code></td><td align="left">Natives Fenster + Taskleiste — <b>Windows / macOS / Linux</b></td></tr>
-  <tr><td align="left" nowrap>🎩 <b>Menüleiste (OmniRouteTray)</b></td><td align="left" nowrap><code>brew install --cask zoispag/tap/omniroute-tray</code></td><td align="left">Überwacht und aktualisiert den Server automatisch — <b>macOS</b></td></tr>
+  <tr><td align="left" nowrap>🎩 <b>Menüleiste (PusulaTray)</b></td><td align="left" nowrap><code>brew install --cask zoispag/tap/pusula-tray</code></td><td align="left">Überwacht und aktualisiert den Server automatisch — <b>macOS</b></td></tr>
   <tr><td align="left" nowrap>💪 <b>ARM</b></td><td align="left" nowrap>nativ für <code>arm64</code></td><td align="left">Raspberry Pi, ARM-Server, Apple Silicon</td></tr>
-  <tr><td align="left" nowrap>📱 <b>Android (Termux)</b></td><td align="left" nowrap><code>pkg install nodejs && npx -y omniroute</code></td><td align="left">Läuft <b>auf deinem Smartphone</b>, rund um die Uhr, ohne Root-Zugriff</td></tr>
+  <tr><td align="left" nowrap>📱 <b>Android (Termux)</b></td><td align="left" nowrap><code>pkg install nodejs && npx -y pusula</code></td><td align="left">Läuft <b>auf deinem Smartphone</b>, rund um die Uhr, ohne Root-Zugriff</td></tr>
   <tr><td align="left" nowrap>📲 <b>PWA</b></td><td align="left" nowrap>„Zum Startbildschirm hinzufügen“</td><td align="left">Vollbildmodus, offline, über den Browser installierbar</td></tr>
-  <tr><td align="left" nowrap>🧩 <b>OpenCode-Plugin</b></td><td align="left" nowrap><code>@omniroute/opencode-provider</code></td><td align="left">Native OpenCode-Integration</td></tr>
-  <tr><td align="left" nowrap>🤖 <b>VS Code Copilot Chat</b></td><td align="left" nowrap><b>OmniCopilot</b>-Erweiterung installieren</td><td align="left">Jedes OmniRoute-Modell in der nativen Copilot-Chat-Auswahl — Stable &amp; Insiders</td></tr>
+  <tr><td align="left" nowrap>🧩 <b>OpenCode-Plugin</b></td><td align="left" nowrap><code>@pusula/opencode-provider</code></td><td align="left">Native OpenCode-Integration</td></tr>
+  <tr><td align="left" nowrap>🤖 <b>VS Code Copilot Chat</b></td><td align="left" nowrap><b>OmniCopilot</b>-Erweiterung installieren</td><td align="left">Jedes Pusula-Modell in der nativen Copilot-Chat-Auswahl — Stable &amp; Insiders</td></tr>
   <tr><td align="left" nowrap>🛠️ <b>Aus dem Quellcode</b></td><td align="left" nowrap><code>npm install && npm run dev</code></td><td align="left">Anpassen und mitwirken</td></tr>
 </table>
 
-<sub>📖 [Docker-Anleitung](docs/guides/DOCKER_GUIDE.md) · [Desktop](electron/README.md) · [Menüleisten-App](https://github.com/zoispag/omniroute-tray) · [Termux](docs/guides/TERMUX_GUIDE.md) · [PWA](docs/guides/PWA_GUIDE.md) · [OpenCode](docs/frameworks/OPENCODE.md)</sub>
+<sub>📖 [Docker-Anleitung](docs/guides/DOCKER_GUIDE.md) · [Desktop](electron/README.md) · [Menüleisten-App](https://github.com/zoispag/pusula-tray) · [Termux](docs/guides/TERMUX_GUIDE.md) · [PWA](docs/guides/PWA_GUIDE.md) · [OpenCode](docs/frameworks/OPENCODE.md)</sub>
 
 <br/>
 
 <div align="center">
 
-### 🧩 Neu: OmniRoute im nativen Copilot Chat von VS Code
+### 🧩 Neu: Pusula im nativen Copilot Chat von VS Code
 
 </div>
 
-> Keine neue Seitenleiste, keine neue Chat-Oberfläche — jedes von OmniRoute bereitgestellte Modell erscheint direkt in der
+> Keine neue Seitenleiste, keine neue Chat-Oberfläche — jedes von Pusula bereitgestellte Modell erscheint direkt in der
 > **bereits verwendeten Modellauswahl von Copilot Chat**. Seit VS Code 1.122 funktionieren Anbietermodelle
 > ohne GitHub-Anmeldung oder Copilot-Abonnement — Agentenmodus, Tool-Aufrufe und Bildverarbeitung,
 > kostenlos.
 
 Installiere die Erweiterung **[OmniCopilot](https://github.com/diegosouzapw/OmniCopilot)**, verbinde sie
-mit deinem OmniRoute-Server (standardmäßig `localhost:20128`) und öffne dann Copilot Chat → Modellauswahl
-→ **Modelle verwalten…** → **OmniRoute**.
+mit deinem Pusula-Server (standardmäßig `localhost:20128`) und öffne dann Copilot Chat → Modellauswahl
+→ **Modelle verwalten…** → **Pusula**.
 
 <table>
   <tr><th align="left">Store</th><th align="left">Link</th><th align="left">Kompatibel mit</th></tr>
@@ -788,7 +788,7 @@ mit deinem OmniRoute-Server (standardmäßig `localhost:20128`) und öffne dann 
   <tr><td align="left" nowrap>🔓 <b>Open VSX Registry</b></td><td align="left"><a href="https://open-vsx.org/extension/diegosouzapw/omnicopilot">Installieren →</a></td><td align="left">Cursor, Windsurf, VSCodium, Theia, code-server, Gitpod, Antigravity, Kiro…</td></tr>
 </table>
 
-Im Editor: Öffne die Ansicht **Erweiterungen**, suche nach **„OmniRoute“** und klicke auf **Installieren**
+Im Editor: Öffne die Ansicht **Erweiterungen**, suche nach **„Pusula“** und klicke auf **Installieren**
 — funktioniert in beiden Stores auf dieselbe Weise. Quellcode, Issues und das Runbook für die Veröffentlichung findest du unter
 [diegosouzapw/OmniCopilot](https://github.com/diegosouzapw/OmniCopilot).
 
@@ -798,23 +798,23 @@ Im Editor: Öffne die Ansicht **Erweiterungen**, suche nach **„OmniRoute“** 
 
 <div align="center">
 
-### 🎩 Neu: OmniRouteTray — dein Gateway in der Menüleiste
+### 🎩 Neu: PusulaTray — dein Gateway in der Menüleiste
 
 </div>
 
-> `omniroute serve` funktioniert am besten, wenn es immer läuft. **[OmniRouteTray](https://github.com/zoispag/omniroute-tray)**
+> `pusula serve` funktioniert am besten, wenn es immer läuft. **[PusulaTray](https://github.com/zoispag/pusula-tray)**
 > macht daraus eine einmalig einzurichtende Menüleisten-App für macOS: Sie startet den Server, hält ihn
 > auch nach Neustarts am Laufen, aktualisiert ihn direkt und macht dein aktuelles Token-Budget mit einem Klick verfügbar — **kein
-> offenes Terminalfenster und keine globale Installation mit `npm install -g omniroute`, um die du dich kümmern musst.**
+> offenes Terminalfenster und keine globale Installation mit `npm install -g pusula`, um die du dich kümmern musst.**
 
 Die App basiert auf [Tauri v2](https://v2.tauri.app/) (mit einem winzigen Rust-Kern) und bringt
-eine eigene signierte Node-24-Laufzeitumgebung mit. Sie verwaltet eine app-eigene OmniRoute-Installation und gerät daher nie mit deinem
-globalen `node`/`bun` in Konflikt. Sie **verwendet deine vorhandene Konfiguration und Datenbank unter `~/.omniroute/`** — es ist also
-dasselbe OmniRoute, das du bereits ausführst, nur mit Hut. 🎩
+eine eigene signierte Node-24-Laufzeitumgebung mit. Sie verwaltet eine app-eigene Pusula-Installation und gerät daher nie mit deinem
+globalen `node`/`bun` in Konflikt. Sie **verwendet deine vorhandene Konfiguration und Datenbank unter `~/.pusula/`** — es ist also
+dasselbe Pusula, das du bereits ausführst, nur mit Hut. 🎩
 
 <table>
   <tr><th align="left">Funktion</th><th align="left">Funktionsweise</th></tr>
-  <tr><td align="left" nowrap>🟢 <b>Überwacht den Server</b></td><td align="left">Startet <code>omniroute serve</code> und übernimmt eine bereits laufende Instanz, statt sie zu duplizieren</td></tr>
+  <tr><td align="left" nowrap>🟢 <b>Überwacht den Server</b></td><td align="left">Startet <code>pusula serve</code> und übernimmt eine bereits laufende Instanz, statt sie zu duplizieren</td></tr>
   <tr><td align="left" nowrap>📊 <b>Live-Nutzung auf einen Blick</b></td><td align="left">Kontingentanzeigen der Anbieter, Sitzungs- und Wochenlimits von Claude mit Countdown bis zur Zurücksetzung sowie Kostenaufschlüsselung für 30 Tage</td></tr>
   <tr><td align="left" nowrap>🔄 <b>Automatische direkte Updates</b></td><td align="left">Mehrstufige Installation, atomarer Austausch und Rollback bei Fehlern — immer auf dem neuesten Release</td></tr>
   <tr><td align="left" nowrap>🚀 <b>Beim Anmelden starten</b></td><td align="left">Optionaler Start bei der Anmeldung; nur in der Menüleiste, ohne Dock-Symbol</td></tr>
@@ -822,13 +822,13 @@ dasselbe OmniRoute, das du bereits ausführst, nur mit Hut. 🎩
 </table>
 
 ```sh
-brew install --cask zoispag/tap/omniroute-tray
+brew install --cask zoispag/tap/pusula-tray
 ```
 
 <sub>Bevorzugen Sie einen Download? Laden Sie die neueste <code>.dmg</code>-Datei unter
-<a href="https://github.com/zoispag/omniroute-tray/releases">Releases</a> herunter. Quellcode, Issues und Build-Dokumentation
-finden Sie unter <a href="https://github.com/zoispag/omniroute-tray">zoispag/omniroute-tray</a>.
-<br/>💛 Ein Community-Projekt von <a href="https://github.com/zoispag">@zoispag</a> — keine offizielle OmniRoute-Veröffentlichung.</sub>
+<a href="https://github.com/zoispag/pusula-tray/releases">Releases</a> herunter. Quellcode, Issues und Build-Dokumentation
+finden Sie unter <a href="https://github.com/zoispag/pusula-tray">zoispag/pusula-tray</a>.
+<br/>💛 Ein Community-Projekt von <a href="https://github.com/zoispag">@zoispag</a> — keine offizielle Pusula-Veröffentlichung.</sub>
 
 <br/>
 
@@ -838,7 +838,7 @@ finden Sie unter <a href="https://github.com/zoispag/omniroute-tray">zoispag/omn
 
 </div>
 
-<img src="./docs/diagrams/privacy-local.svg" width="100%" alt="Privat und Local-First — Gateway und Steuerungsebene von OmniRoute laufen auf Ihrem Rechner. Prompts werden an den für jede Anfrage ausgewählten Upstream-Anbieter gesendet; OmniRoute fügt keinen gehosteten Zwischenschritt zur Prompt-Verarbeitung hinzu, und Telemetrie ist standardmäßig deaktiviert. Zugangsdaten werden im Ruhezustand mit AES-256-GCM verschlüsselt; zu den Schutzmaßnahmen gehören die Einschränkung von API-Schlüsseln, IP-Filterung, Ratenbegrenzungen, Schutz vor Prompt-Injection, die Bereinigung von Upstream-Headern, optionale PII-Schwärzung, bereinigte Fehlermeldungen und ein lokales SQLite-Audit-Protokoll. OmniRoute ist MIT-lizenziert und kann selbst gehostet werden."/>
+<img src="./docs/diagrams/privacy-local.svg" width="100%" alt="Privat und Local-First — Gateway und Steuerungsebene von Pusula laufen auf Ihrem Rechner. Prompts werden an den für jede Anfrage ausgewählten Upstream-Anbieter gesendet; Pusula fügt keinen gehosteten Zwischenschritt zur Prompt-Verarbeitung hinzu, und Telemetrie ist standardmäßig deaktiviert. Zugangsdaten werden im Ruhezustand mit AES-256-GCM verschlüsselt; zu den Schutzmaßnahmen gehören die Einschränkung von API-Schlüsseln, IP-Filterung, Ratenbegrenzungen, Schutz vor Prompt-Injection, die Bereinigung von Upstream-Headern, optionale PII-Schwärzung, bereinigte Fehlermeldungen und ein lokales SQLite-Audit-Protokoll. Pusula ist MIT-lizenziert und kann selbst gehostet werden."/>
 
 <sub>📖 [Autorisierung](docs/architecture/AUTHZ_GUIDE.md) · [Schutzmechanismen](docs/security/GUARDRAILS.md) · [Compliance](docs/security/COMPLIANCE.md)</sub>
 
@@ -850,28 +850,28 @@ finden Sie unter <a href="https://github.com/zoispag/omniroute-tray">zoispag/omn
 
 </div>
 
-> Neben dem Server ist OmniRoute eine **vollständige Kommandozeilen-Schaltzentrale** mit **über 80 Befehlen** sowie offenen Agentenprotokollen, sodass ein KI-Agent sie **eigenständig** steuern kann.
+> Neben dem Server ist Pusula eine **vollständige Kommandozeilen-Schaltzentrale** mit **über 80 Befehlen** sowie offenen Agentenprotokollen, sodass ein KI-Agent sie **eigenständig** steuern kann.
 
 ### ⌨️ Eine echte CLI (nicht nur `start`)
 
 ```bash
-omniroute               # Gateway + Dashboard bereitstellen (Port 20128)
-omniroute chat          # interaktiver TUI-Chat-Client (Slash-Befehle: /model /combo /skill /memory)
-omniroute setup         # geführter Assistent für die Ersteinrichtung
-omniroute doctor        # Anbieter, Ports und native Abhängigkeiten diagnostizieren
+pusula               # Gateway + Dashboard bereitstellen (Port 20128)
+pusula chat          # interaktiver TUI-Chat-Client (Slash-Befehle: /model /combo /skill /memory)
+pusula setup         # geführter Assistent für die Ersteinrichtung
+pusula doctor        # Anbieter, Ports und native Abhängigkeiten diagnostizieren
 ```
 
-### 🛰️ Remote-Modus — CLI hier ausführen, OmniRoute auf einem VPS
+### 🛰️ Remote-Modus — CLI hier ausführen, Pusula auf einem VPS
 
-OmniRoute auf einem Server? Steuern Sie es von Ihrem Laptop aus mit **derselben CLI**. Melden Sie sich einmal
+Pusula auf einem Server? Steuern Sie es von Ihrem Laptop aus mit **derselben CLI**. Melden Sie sich einmal
 mit einem eingeschränkten Zugriffstoken an; anschließend wird jeder Befehl an das Remote-System gesendet.
 
 ```bash
-omniroute connect 192.168.0.15            # Passwort → eingeschränktes Token, als Kontext gespeichert
-omniroute models list                     # ← wird auf dem REMOTE-Server ausgeführt
-omniroute configure codex                 # ← wählt ein Remote-Modell aus und schreibt ein lokales Codex-Profil
-omniroute tokens create --name ci --scope read   # eingeschränktere Token für andere Rechner erstellen
-omniroute contexts use default            # ← zurück zum lokalen Server wechseln
+pusula connect 192.168.0.15            # Passwort → eingeschränktes Token, als Kontext gespeichert
+pusula models list                     # ← wird auf dem REMOTE-Server ausgeführt
+pusula configure codex                 # ← wählt ein Remote-Modell aus und schreibt ein lokales Codex-Profil
+pusula tokens create --name ci --scope read   # eingeschränktere Token für andere Rechner erstellen
+pusula contexts use default            # ← zurück zum lokalen Server wechseln
 ```
 
 Token sind auf `read` / `write` / `admin` beschränkt; Routen, die Prozesse starten, bleiben ausschließlich über Loopback erreichbar.
@@ -879,28 +879,28 @@ Token sind auf `read` / `write` / `admin` beschränkt; Routen, die Prozesse star
 
 <div align="left">
 
-<img src="./docs/diagrams/cli-terminal.svg" width="50%" alt="Animierte Terminal-Demo der OmniRoute-CLI — omniroute providers list, omniroute combo list und omniroute health — wechselt durch die 86 Top-Level-Befehle: providers · oauth · keys · combo · nodes · models · cache · compression · cost · usage · quota · health · resilience · telemetry · logs · audit · mcp · a2a · cloud · memory · skills · eval · tunnel · backup · sync · webhooks · policy · pricing · translator · simulate …"/>
+<img src="./docs/diagrams/cli-terminal.svg" width="50%" alt="Animierte Terminal-Demo der Pusula-CLI — pusula providers list, pusula combo list und pusula health — wechselt durch die 86 Top-Level-Befehle: providers · oauth · keys · combo · nodes · models · cache · compression · cost · usage · quota · health · resilience · telemetry · logs · audit · mcp · a2a · cloud · memory · skills · eval · tunnel · backup · sync · webhooks · policy · pricing · translator · simulate …"/>
 
 </div>
 
-### 🤝 Einen Agenten verbinden — und er steuert OmniRoute selbst
+### 🤝 Einen Agenten verbinden — und er steuert Pusula selbst
 
-Stellen Sie OmniRoute über **MCP**, **A2A**, eine **REST API**, **Webhooks** oder eine **Remote-CLI** bereit — jeder geeignete Agent (oder Ihr eigener Code) erhält die Kontrolle über das gesamte Gateway: Routing, Anbieter, Kombinationen, Cache, Komprimierung und Speicher — autonom. Die nachfolgenden HTTP-Endpunkte werden unter `http://localhost:20128` bereitgestellt.
+Stellen Sie Pusula über **MCP**, **A2A**, eine **REST API**, **Webhooks** oder eine **Remote-CLI** bereit — jeder geeignete Agent (oder Ihr eigener Code) erhält die Kontrolle über das gesamte Gateway: Routing, Anbieter, Kombinationen, Cache, Komprimierung und Speicher — autonom. Die nachfolgenden HTTP-Endpunkte werden unter `http://localhost:20128` bereitgestellt.
 
 <table>
   <tr><th align="left">Schnittstelle</th><th align="left">Endpunkt / Befehl</th><th align="left">Verwendungszweck</th></tr>
-  <tr><td align="left" nowrap>🧰 <b>MCP (stdio)</b></td><td align="left" nowrap><code>omniroute --mcp</code></td><td align="left">In Claude Desktop, Cursor oder jeden beliebigen MCP-Client integrieren</td></tr>
+  <tr><td align="left" nowrap>🧰 <b>MCP (stdio)</b></td><td align="left" nowrap><code>pusula --mcp</code></td><td align="left">In Claude Desktop, Cursor oder jeden beliebigen MCP-Client integrieren</td></tr>
   <tr><td align="left" nowrap>🌊 <b>MCP (HTTP)</b></td><td align="left" nowrap><code>/api/mcp/stream</code></td><td align="left">Remote-MCP — <b>110 Werkzeuge</b>, 33 Berechtigungsbereiche (Durchsetzung optional), vollständiges Audit-Protokoll</td></tr>
   <tr><td align="left" nowrap>📡 <b>MCP (SSE)</b></td><td align="left" nowrap><code>/api/mcp/sse</code></td><td align="left">Streaming-Transport für MCP</td></tr>
   <tr><td align="left" nowrap>🤝 <b>A2A</b></td><td align="left" nowrap><code>/.well-known/agent.json</code></td><td align="left">Agent-zu-Agent-Kommunikation, <b>JSON-RPC 2.0</b> + SSE, 6 Fähigkeiten</td></tr>
   <tr><td align="left" nowrap>🌐 <b>REST API</b></td><td align="left" nowrap><code>/v1/*</code></td><td align="left">OpenAI-kompatibel — Chat, Einbettungen, Bilder, Audio, OCR</td></tr>
   <tr><td align="left" nowrap>🔔 <b>Webhooks</b></td><td align="left" nowrap><code>/api/webhooks</code></td><td align="left">Anfrage- und Kontingentereignisse an Slack, Discord, Telegram oder eine beliebige URL senden</td></tr>
-  <tr><td align="left" nowrap>🛰️ <b>Remote-CLI</b></td><td align="left" nowrap><code>omniroute connect <host></code></td><td align="left">Eine Remote-Instanz mit eingeschränkten Zugriffstoken steuern</td></tr>
+  <tr><td align="left" nowrap>🛰️ <b>Remote-CLI</b></td><td align="left" nowrap><code>pusula connect <host></code></td><td align="left">Eine Remote-Instanz mit eingeschränkten Zugriffstoken steuern</td></tr>
 </table>
 
 ```bash
-# Claude Code über MCP den vollständigen OmniRoute-Werkzeugsatz bereitstellen:
-claude mcp add-server omniroute --type http --url http://localhost:20128/api/mcp/stream
+# Claude Code über MCP den vollständigen Pusula-Werkzeugsatz bereitstellen:
+claude mcp add-server pusula --type http --url http://localhost:20128/api/mcp/stream
 ```
 
 <sub>📖 [MCP-Server](docs/frameworks/MCP-SERVER.md) · [A2A-Server](docs/frameworks/A2A-SERVER.md) · [Agentenprotokolle](docs/frameworks/AGENT_PROTOCOLS_GUIDE.md)</sub>
@@ -915,7 +915,7 @@ claude mcp add-server omniroute --type http --url http://localhost:20128/api/mcp
 
 ### 📖 Funktionsweise — Pipeline, Architektur & Berechnung der Einsparungen
 
-<img src="./docs/diagrams/compression-pipeline.svg" width="100%" alt="OmniRoute-Komprimierungspipeline: Eine beispielhafte Client-Anfrage mit 10.000 Tokens durchläuft 12 kombinierbare Engines — Session-Dedup, CCR, Lite, RTK, Responses Tool Output, Headroom, Relevance, Caveman, Aggressive, LLMLingua-2, Ultra und OmniGlyph — und kann im dokumentierten kombinierten Beispiel den Anbieter mit etwa 1.080 Tokens erreichen. Strukturierte Inhalte werden durch Schutzmechanismen zur Erhaltung und Integritätsprüfungen nach jedem Schritt geschützt; explizit verlustbehaftete oder experimentelle Modi können geeignete Inhalte transformieren."/>
+<img src="./docs/diagrams/compression-pipeline.svg" width="100%" alt="Pusula-Komprimierungspipeline: Eine beispielhafte Client-Anfrage mit 10.000 Tokens durchläuft 12 kombinierbare Engines — Session-Dedup, CCR, Lite, RTK, Responses Tool Output, Headroom, Relevance, Caveman, Aggressive, LLMLingua-2, Ultra und OmniGlyph — und kann im dokumentierten kombinierten Beispiel den Anbieter mit etwa 1.080 Tokens erreichen. Strukturierte Inhalte werden durch Schutzmechanismen zur Erhaltung und Integritätsprüfungen nach jedem Schritt geschützt; explizit verlustbehaftete oder experimentelle Modi können geeignete Inhalte transformieren."/>
 
 Die standardmäßig kombinierte Konfiguration führt `RTK → Caveman` aus. Wenn beide dieselben Tool-/Kontextdaten verarbeiten, multiplizieren sich die Einsparungen:
 
@@ -927,7 +927,7 @@ Spanne       = 78.4 – 94.6%
 
 Codeblöcke, URLs, JSON und strukturierte Daten werden durch die Schutz-Engine **immer geschützt**.
 
-> **Warum viele Tokens verwenden, wenn wenige ausreichen?** Jede Anfrage durchläuft OmniRoutes Komprimierungspipeline **transparent** — ohne Änderungen am Client. Sie besteht jetzt aus einem **Stack aus 12 kombinierbaren Engines**, die der Reihe nach ausgeführt und je nach Routing-Kombination flexibel zusammengestellt werden — basierend auf Ideen von [RTK](https://github.com/rtk-ai/rtk), [Caveman](https://github.com/JuliusBrussee/caveman) (⭐ 90K+), [LLMLingua-2](https://github.com/microsoft/LLMLingua) und [Troglodita](https://github.com/leninejunior/troglodita) (PT-BR).
+> **Warum viele Tokens verwenden, wenn wenige ausreichen?** Jede Anfrage durchläuft Pusulas Komprimierungspipeline **transparent** — ohne Änderungen am Client. Sie besteht jetzt aus einem **Stack aus 12 kombinierbaren Engines**, die der Reihe nach ausgeführt und je nach Routing-Kombination flexibel zusammengestellt werden — basierend auf Ideen von [RTK](https://github.com/rtk-ai/rtk), [Caveman](https://github.com/JuliusBrussee/caveman) (⭐ 90K+), [LLMLingua-2](https://github.com/microsoft/LLMLingua) und [Troglodita](https://github.com/leninejunior/troglodita) (PT-BR).
 
 ### 🧱 Der Stack aus 12 Engines
 
@@ -990,7 +990,7 @@ Die 12 Engines oben reduzieren, was **hineingeht**. Drei weitere Ebenen bestimme
   - **Ich habe ADHS (handlungsorientiert)** — nächste Aktion zuerst, nummerierte Schritte, ein konkreter nächster Schritt, keine Einleitung.
   - **Knappes CJK (文言)** — ultraknapper Stil in klassischem Chinesisch (durch Gebietsschema auf `zh` beschränkt).
 - **🎯 Adaptives Kontextbudget** _(die Steuerung)_ — statt eines einzelnen Ein-/Aus-Token-Schwellenwerts werden die günstigsten Engines mit den geringsten Verlusten nur so weit hochgestuft, wie nötig ist, damit alles **in das Kontextfenster des Modells passt**. Richtlinie: `reserve-output` (Standard, modellabhängig) · `percentage` · `absolute`. Modus: `floor` (garantiert die Einhaltung) · `replace-autotrigger` (Ihre explizite Auswahl hat Vorrang) · `off` (veralteter Schwellenwert).
-- **🎛️ Wo über die Komprimierung entschieden wird** _(Priorität, hoch → niedrig)_ — `x-omniroute-compression`-Header pro Anfrage › Überschreibung durch Routing-Kombination › aktives benanntes Profil › adaptiv / automatische Auslösung › Panel-Standard › aus. Der angewendete Plan wird im Antwort-Header `X-OmniRoute-Compression: <mode>; source=<source>` zurückgegeben.
+- **🎛️ Wo über die Komprimierung entschieden wird** _(Priorität, hoch → niedrig)_ — `x-pusula-compression`-Header pro Anfrage › Überschreibung durch Routing-Kombination › aktives benanntes Profil › adaptiv / automatische Auslösung › Panel-Standard › aus. Der angewendete Plan wird im Antwort-Header `X-Pusula-Compression: <mode>; source=<source>` zurückgegeben.
 
 Automatische Auslösung anhand eines Token-Schwellenwerts, Aktivierung der adaptiven Steuerung, Festlegen eines benannten Profils, einmalige Einstellung pro Anfrage oder Zuweisen einer Pipeline pro Routing-Kombination — je nachdem, was zur Arbeitslast passt. Ein optionales lokales **Evaluierungswerkzeug** (`npm run eval:compression`) bewertet die Wiedergabetreue im Verhältnis zur Einsparung anhand eines festgelegten Korpus, bevor Sie eine Änderung übernehmen.
 
@@ -1007,8 +1007,8 @@ Automatische Auslösung anhand eines Token-Schwellenwerts, Aktivierung der adapt
 **1) Installieren und ausführen**
 
 ```bash
-npm install -g omniroute
-omniroute
+npm install -g pusula
+pusula
 ```
 
 > 💡 Sehen Sie `npm warn ERESOLVE` oder Peer-Dependency-Warnungen? [Sie sind harmlos](docs/guides/TROUBLESHOOTING.md#npm-install-warnings-eresolve--peer--deprecated).
@@ -1033,9 +1033,9 @@ Modell:         auto            (intelligentes Routing ohne Konfiguration — od
 curl http://localhost:20128/v1/models -H "Authorization: Bearer YOUR_KEY"
 ```
 
-Ihre verbundenen Modelle sollten aufgelistet werden. 🎉 Das war's — beginnen Sie mit dem Programmieren; OmniRoute übernimmt automatisch das Routing und weicht bei Bedarf auf Alternativen aus.
+Ihre verbundenen Modelle sollten aufgelistet werden. 🎉 Das war's — beginnen Sie mit dem Programmieren; Pusula übernimmt automatisch das Routing und weicht bei Bedarf auf Alternativen aus.
 
-Falls Ihr Client keine benutzerdefinierten Header senden kann, stellt OmniRoute außerdem tokenisierte Kompatibilitätsaliase bereit:
+Falls Ihr Client keine benutzerdefinierten Header senden kann, stellt Pusula außerdem tokenisierte Kompatibilitätsaliase bereit:
 
 ```txt
 OpenAI-Katalog:  http://localhost:20128/vscode/YOUR_KEY/
@@ -1055,39 +1055,39 @@ Verwenden Sie diese nur für Clients, die `Authorization: Bearer ...` nicht anh�
 **🐳 Docker**
 
 ```bash
-docker run -d --name omniroute --restart unless-stopped --stop-timeout 40 \
-  -p 127.0.0.1:20128:20128 -v omniroute-data:/app/data diegosouzapw/omniroute:latest
+docker run -d --name pusula --restart unless-stopped --stop-timeout 40 \
+  -p 127.0.0.1:20128:20128 -v pusula-data:/app/data ferhat-yasinoglu/pusula:latest
 ```
 
-`:latest` folgt der höchsten **veröffentlichten** stabilen SemVer-Version. Es folgt nicht dem Git-Branch `main`. Verwenden Sie für GitOps eine feste Version mit `:X.Y.Z`. Siehe [Docker-Veröffentlichungskanäle](docs/guides/DOCKER_GUIDE.md#release-channels). Das Image setzt **`OMNIROUTE_MEMORY_MB=1024`** fest. Das reicht für das Dashboard und einen einfachen Chat. **Coding-Agenten** (`POST /v1/responses` von Claude Code, Codex, Grok, …) benötigen einen wesentlich größeren V8-Heap, andernfalls kommt es bei zwei sich überschneidenden langen Kontexten bei etwa 12 GiB zu einem `FATAL ERROR`. Dimensionieren Sie den Container größer als den Heap (native Puffer befinden sich außerhalb von V8):
+`:latest` folgt der höchsten **veröffentlichten** stabilen SemVer-Version. Es folgt nicht dem Git-Branch `main`. Verwenden Sie für GitOps eine feste Version mit `:X.Y.Z`. Siehe [Docker-Veröffentlichungskanäle](docs/guides/DOCKER_GUIDE.md#release-channels). Das Image setzt **`PUSULA_MEMORY_MB=1024`** fest. Das reicht für das Dashboard und einen einfachen Chat. **Coding-Agenten** (`POST /v1/responses` von Claude Code, Codex, Grok, …) benötigen einen wesentlich größeren V8-Heap, andernfalls kommt es bei zwei sich überschneidenden langen Kontexten bei etwa 12 GiB zu einem `FATAL ERROR`. Dimensionieren Sie den Container größer als den Heap (native Puffer befinden sich außerhalb von V8):
 
-| Arbeitslast                              | Heap (`-e OMNIROUTE_MEMORY_MB`) | Container (`--memory`) |
+| Arbeitslast                              | Heap (`-e PUSULA_MEMORY_MB`) | Container (`--memory`) |
 | ---------------------------------------- | ------------------------------- | ---------------------- |
 | Dashboard / einfacher Chat               | `1024` (Image-Standardwert)     | ≥2 g                   |
 | Ein Coding-Agent                         | `8192`                          | ≥10 g                  |
 | Zwei gleichzeitige lange `/v1/responses` | `10240`–`12288`                 | ≥12–16 g               |
 
 ```bash
-docker run -d --name omniroute --restart unless-stopped --stop-timeout 40 \
-  -e OMNIROUTE_MEMORY_MB=8192 --memory=10g \
-  -p 127.0.0.1:20128:20128 -v omniroute-data:/app/data diegosouzapw/omniroute:latest
+docker run -d --name pusula --restart unless-stopped --stop-timeout 40 \
+  -e PUSULA_MEMORY_MB=8192 --memory=10g \
+  -p 127.0.0.1:20128:20128 -v pusula-data:/app/data ferhat-yasinoglu/pusula:latest
 ```
 
 Vollständige Tabelle: [Docker-Leitfaden — Laufzeit-RAM](docs/guides/DOCKER_GUIDE.md#runtime-ram-for-coding-agents).
 
-> **Docker-Kanal für Vorabversionen:** `diegosouzapw/omniroute:next` und
-> `diegosouzapw/omniroute:next-web` folgen dem aktuellen standardmäßigen `release/v*`-
+> **Docker-Kanal für Vorabversionen:** `ferhat-yasinoglu/pusula:next` und
+> `ferhat-yasinoglu/pusula:next-web` folgen dem aktuellen standardmäßigen `release/v*`-
 > Branch. Diese veränderlichen Tags sind ausschließlich zum Testen unveröffentlichter Korrekturen vorgesehen und
 > werden **für den Produktionseinsatz nicht unterstützt**. Siehe
 > [Docker-Veröffentlichungskanäle](docs/guides/DOCKER_GUIDE.md#release-channels).
 
 **🥟 Bun**
 
-Die standardmäßige Installation mit `bun install` sowie die globale Installation (`bun install -g omniroute`) werden über die Bun-Laufzeiterkennung unterstützt:
+Die standardmäßige Installation mit `bun install` sowie die globale Installation (`bun install -g pusula`) werden über die Bun-Laufzeiterkennung unterstützt:
 
-- **Integriertes `bun:sqlite`**: OmniRoute verwendet bei der Ausführung unter Bun dessen integrierten `bun:sqlite`-Treiber und greift unter Node.js auf `better-sqlite3` oder `sql.js` zurück.
-- **Automatische Auswahl des Webpack-Bundlers in der Entwicklungsumgebung**: Die Entwicklungsumgebung (`bun run dev`) erkennt Bun automatisch und deaktiviert Turbopack zugunsten von Webpack, um Inkompatibilitäten mit nativen V8-Bindings zu vermeiden. Produktions-Builds (`bun run build`) folgen `OMNIROUTE_USE_TURBOPACK` genau wie unter Node: standardmäßig Turbopack, mit `OMNIROUTE_USE_TURBOPACK=0` wird mit Webpack gebaut (`Dockerfile.bun` stellt dies als `--build-arg` bereit).
-- **Dediziertes Bun-Dockerfile**: Mehrstufiges `Dockerfile.bun` für native Bun-Produktionsbereitstellungen (`docker build -f Dockerfile.bun -t omniroute:bun .`).
+- **Integriertes `bun:sqlite`**: Pusula verwendet bei der Ausführung unter Bun dessen integrierten `bun:sqlite`-Treiber und greift unter Node.js auf `better-sqlite3` oder `sql.js` zurück.
+- **Automatische Auswahl des Webpack-Bundlers in der Entwicklungsumgebung**: Die Entwicklungsumgebung (`bun run dev`) erkennt Bun automatisch und deaktiviert Turbopack zugunsten von Webpack, um Inkompatibilitäten mit nativen V8-Bindings zu vermeiden. Produktions-Builds (`bun run build`) folgen `PUSULA_USE_TURBOPACK` genau wie unter Node: standardmäßig Turbopack, mit `PUSULA_USE_TURBOPACK=0` wird mit Webpack gebaut (`Dockerfile.bun` stellt dies als `--build-arg` bereit).
+- **Dediziertes Bun-Dockerfile**: Mehrstufiges `Dockerfile.bun` für native Bun-Produktionsbereitstellungen (`docker build -f Dockerfile.bun -t pusula:bun .`).
 
 ```bash
 # Mit Bun installieren und ausführen
@@ -1105,13 +1105,13 @@ PORT=20128 npm run dev
 **📦 pnpm**
 
 ```bash
-pnpm add -g omniroute@latest --allow-build=better-sqlite3 --allow-build=@swc/core && omniroute
+pnpm add -g pusula@latest --allow-build=better-sqlite3 --allow-build=@swc/core && pusula
 ```
 
 **🐧 Arch Linux (AUR)**
 
 ```bash
-yay -S omniroute-bin && systemctl --user enable --now omniroute.service
+yay -S pusula-bin && systemctl --user enable --now pusula.service
 ```
 
 **🔧 Nix (Flake)**
@@ -1157,7 +1157,7 @@ Ihrer Plattform/Node-Version passt, und greift andernfalls transparent auf eine 
 So überspringen Sie die native Aufwärmphase nach der Installation vollständig (CI, Headless-Systeme oder langsame Rechner):
 
 ```bash
-OMNIROUTE_SKIP_POSTINSTALL=1 npm install -g omniroute   # CI=1 überspringt sie ebenfalls
+PUSULA_SKIP_POSTINSTALL=1 npm install -g pusula   # CI=1 überspringt sie ebenfalls
 ```
 
 Für die schnellsten Installationen empfiehlt sich **pnpm** (inhaltsadressierter Speicher + Hardlinks — siehe oben).
@@ -1169,7 +1169,7 @@ gleichen Prozess über einen einzigen Port bereitgestellt, daher gibt es derzeit
 
 <div align="center">
 
-# 🎬 OmniRoute in Aktion
+# 🎬 Pusula in Aktion
 
 </div>
 
@@ -1233,7 +1233,7 @@ gleichen Prozess über einen einzigen Port bereitgestellt, daher gibt es derzeit
 
 Kanonische Kennzahlen vom 2026-08-24: **1.029 einzigartige Videos** · **11.132.922 bekannte Aufrufe** (`v > 0`) · **639 Kanäle/Profile nach Netzwerk**. Das Roh-Dashboard enthält 1.070 Zeilen; 41 Instagram-Duplikate wurden anhand der kanonischen URL normalisiert, wobei die höchste Aufrufzahl pro Video beibehalten wurde.
 
-> 🎬 **Du hast ein Video über OmniRoute erstellt?** Eröffne ein [Issue](https://github.com/diegosouzapw/OmniRoute/issues/new) oder eine [Diskussion](https://github.com/diegosouzapw/OmniRoute/discussions) mit dem Link — wir stellen es hier vor.
+> 🎬 **Du hast ein Video über Pusula erstellt?** Eröffne ein [Issue](https://github.com/Ferhat-Yasinoglu/pusula/issues/new) oder eine [Diskussion](https://github.com/Ferhat-Yasinoglu/pusula/discussions) mit dem Link — wir stellen es hier vor.
 
 <br/>
 
@@ -1248,15 +1248,15 @@ Kanonische Kennzahlen vom 2026-08-24: **1.029 einzigartige Videos** · **11.132.
 | 💼 **LinkedIn** — dem Maintainer folgen        | [linkedin.com/in/diegosouzapw](https://www.linkedin.com/in/diegosouzapw/)                                                          |
 | 🐙 **GitHub** — für Releases & Tipps folgen    | [@diegosouzapw](https://github.com/diegosouzapw)                                                                                   |
 | 💬 **Discord**                                 | [discord.gg/U47eFqAXCn](https://discord.gg/U47eFqAXCn)                                                                             |
-| ✈️ **Telegram**                                | [t.me/omnirouteOficial](https://t.me/omnirouteOficial)                                                                             |
+| ✈️ **Telegram**                                | [t.me/pusulaOficial](https://t.me/pusulaOficial)                                                                             |
 | 🟢 **WhatsApp — 🌍 Global**                    | [der Gruppe beitreten](https://chat.whatsapp.com/FvuCbrpZmQ6I85n2vW5QIC?s=cl&p=a&mlu=4)                                            |
 | 🟢 **WhatsApp — 🇧🇷 Brasilien**                 | [der Gruppe beitreten](https://chat.whatsapp.com/KWgatljAjmbELQory59Oti?s=cl&p=a&mlu=4)                                            |
-| 🌍 **Website**                                 | [omniroute.online](https://omniroute.online)                                                                                       |
-| 🌍 **🌍StHub OmniRoute-Community (kostenlos)** | [StHub-Portal](https://portal.sthub.com.br/communities/groups/st-hub/channels/Omniroute-World-8kRjmK)                              |
-| 📦 **Quellcode**                               | [github.com/diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute)                                                     |
-| 🐛 **Fehler melden**                           | [Issue erstellen](https://github.com/diegosouzapw/OmniRoute/issues) — Ausgabe von `npm run system-info` anhängen                   |
+| 🌍 **Website**                                 | [pusula.online](https://github.com/Ferhat-Yasinoglu/pusula)                                                                                       |
+| 🌍 **🌍StHub Pusula-Community (kostenlos)** | [StHub-Portal](https://portal.sthub.com.br/communities/groups/st-hub/channels/Pusula-World-8kRjmK)                              |
+| 📦 **Quellcode**                               | [github.com/Ferhat-Yasinoglu/pusula](https://github.com/Ferhat-Yasinoglu/pusula)                                                     |
+| 🐛 **Fehler melden**                           | [Issue erstellen](https://github.com/Ferhat-Yasinoglu/pusula/issues) — Ausgabe von `npm run system-info` anhängen                   |
 | 🤝 **Mitwirken**                               | [CONTRIBUTING.md](CONTRIBUTING.md) · [Branching- & Release-Modell](docs/ops/BRANCHING_MODEL.md) · ein `good first issue` auswählen |
-| 💚 **Das Projekt unterstützen**                | [Möglichkeiten zur Unterstützung ↑](#-support-omniroute) · [GitHub Sponsors](https://github.com/sponsors/diegosouzapw)             |
+| 💚 **Das Projekt unterstützen**                | [Möglichkeiten zur Unterstützung ↑](#-support-pusula) · [GitHub Sponsors](https://github.com/sponsors/diegosouzapw)             |
 
 </div>
 
@@ -1287,7 +1287,7 @@ Kanonische Kennzahlen vom 2026-08-24: **1.029 einzigartige Videos** · **11.132.
   <tr><td nowrap><b>Testen</b></td><td>Node.js Test-Runner + Vitest — <b>über 39.000 statische Testdeklarationen</b> in über 5.100 verfolgten Testdateien (Unit, Integration, E2E, Sicherheit, Ökosystem)</td></tr>
   <tr><td nowrap><b>Plattformen</b></td><td>Desktop (Electron) · Android (Termux) · PWA (jeder Browser)</td></tr>
   <tr><td nowrap><b>CI/CD</b></td><td>GitHub Actions — automatische npm-Veröffentlichung + Docker Hub bei Release</td></tr>
-  <tr><td nowrap><b>Links</b></td><td><a href="https://omniroute.online">Webseite</a> · <a href="https://www.npmjs.com/package/omniroute">npm</a> · <a href="https://hub.docker.com/r/diegosouzapw/omniroute">Docker Hub</a></td></tr>
+  <tr><td nowrap><b>Links</b></td><td><a href="https://github.com/Ferhat-Yasinoglu/pusula">Webseite</a> · <a href="https://www.npmjs.com/package/pusula">npm</a> · <a href="https://hub.docker.com/r/ferhat-yasinoglu/pusula">Docker Hub</a></td></tr>
 </table>
 
 <div align="center">
@@ -1305,8 +1305,8 @@ Kanonische Kennzahlen vom 2026-08-24: **1.029 einzigartige Videos** · **11.132.
   <tr><td nowrap><b><a href="docs/guides/USER_GUIDE.md">Benutzerhandbuch</a></b></td><td>Anbieter, Kombinationen, CLI-Integration, Bereitstellung</td></tr>
   <tr><td nowrap><b><a href="docs/guides/SETUP_GUIDE.md">Einrichtungsanleitung</a></b></td><td>Alle Installationsmethoden, Konfigurationen für CLI-Tools, Protokolleinrichtung, Zeitüberschreitungsoptimierung</td></tr>
   <tr><td nowrap><b><a href="docs/reference/CLI-TOOLS.md">Leitfaden für CLI-Tools</a></b></td><td>Toolspezifische Einrichtung für Claude Code, Codex, Cursor, Cline, OpenClaw, Kilo und Copilot</td></tr>
-  <tr><td nowrap><b><a href="docs/guides/REMOTE-MODE.md">Remote-Modus</a></b></td><td>Eine entfernte OmniRoute-Instanz (VPS) über die Laptop-CLI mithilfe von Zugriffstokens mit begrenztem Gültigkeitsbereich steuern</td></tr>
-  <tr><td nowrap><b><a href="docs/guides/CLAUDE-CODE-CONFIGURATION.md">Claude-Code-Konfiguration</a></b></td><td>Claude Code über <code>launch</code> und modellspezifische Profile mit OmniRoute (lokal/remote) verbinden</td></tr>
+  <tr><td nowrap><b><a href="docs/guides/REMOTE-MODE.md">Remote-Modus</a></b></td><td>Eine entfernte Pusula-Instanz (VPS) über die Laptop-CLI mithilfe von Zugriffstokens mit begrenztem Gültigkeitsbereich steuern</td></tr>
+  <tr><td nowrap><b><a href="docs/guides/CLAUDE-CODE-CONFIGURATION.md">Claude-Code-Konfiguration</a></b></td><td>Claude Code über <code>launch</code> und modellspezifische Profile mit Pusula (lokal/remote) verbinden</td></tr>
   <tr><td nowrap><b><a href="README.md#-quick-start">Schnellstart</a></b></td><td>Installation in 3 Schritten → verbinden → konfigurieren</td></tr>
 </table>
 
@@ -1318,7 +1318,7 @@ Kanonische Kennzahlen vom 2026-08-24: **1.029 einzigartige Videos** · **11.132.
   <tr><td nowrap><b><a href="contrib/podman/README.md">Podman-Leitfaden</a></b></td><td>Quadlet-systemd-Integration, podman-compose, SELinux</td></tr>
   <tr><td nowrap><b><a href="docs/ops/VM_DEPLOYMENT_GUIDE.md">VM-Bereitstellung</a></b></td><td>Vollständiger Leitfaden: Einrichtung von VM + nginx + Cloudflare</td></tr>
   <tr><td nowrap><b><a href="docs/ops/FLY_IO_DEPLOYMENT_GUIDE.md">Fly.io-Bereitstellung</a></b></td><td>Bereitstellung auf Fly.io mit persistentem Speicher</td></tr>
-  <tr><td nowrap><b><a href="docs/guides/TERMUX_GUIDE.md">Termux-Leitfaden</a></b></td><td>OmniRoute über Termux unter Android ausführen</td></tr>
+  <tr><td nowrap><b><a href="docs/guides/TERMUX_GUIDE.md">Termux-Leitfaden</a></b></td><td>Pusula über Termux unter Android ausführen</td></tr>
   <tr><td nowrap><b><a href="docs/guides/PWA_GUIDE.md">PWA-Leitfaden</a></b></td><td>Installation, Caching und Architektur der Progressive Web App</td></tr>
   <tr><td nowrap><b><a href="docs/guides/UNINSTALL.md">Deinstallationsanleitung</a></b></td><td>Saubere Entfernung für alle Installationsmethoden</td></tr>
   <tr><td nowrap><b><a href="docs/reference/ENVIRONMENT.md">Umgebungskonfiguration</a></b></td><td>Vollständige <code>.env</code>-Variablen und Referenzen</td></tr>
@@ -1373,7 +1373,7 @@ Kanonische Kennzahlen vom 2026-08-24: **1.029 einzigartige Videos** · **11.132.
 
 # ⭐ Wichtigste Mitwirkende
 
-> OmniRoute wird von einer engagierten Open-Source-Community geprägt. Diese Personen haben außergewöhnliche Beiträge geleistet, die sich direkt auf die Qualität, Stabilität und Reichweite des Projekts auswirken. **Vielen Dank.**
+> Pusula wird von einer engagierten Open-Source-Community geprägt. Diese Personen haben außergewöhnliche Beiträge geleistet, die sich direkt auf die Qualität, Stabilität und Reichweite des Projekts auswirken. **Vielen Dank.**
 
 ### Externe Mitwirkende nach zusammengeführten Pull Requests
 
@@ -1492,7 +1492,7 @@ Kanonische Kennzahlen vom 2026-08-24: **1.029 einzigartige Videos** · **11.132.
 
 <sub>Erneut überprüft am 2026-08-24 um 06:14:31 UTC: GitHub-zugeordnete Commits, die von der Contributors API des Repositorys für den Standard-Branch <code>release/v3.8.50</code> gemeldet wurden. Die API gab 525 Identitäten zurück (415 Benutzer, 2 Bots, 108 anonyme Identitäten); diese Tabelle schließt den Maintainer, Bots und anonyme Identitäten aus und berücksichtigt Gleichstände. Sie unterscheidet sich sowohl von der obigen Rangliste zusammengeführter PRs als auch von der unten stehenden, 639 Personen umfassenden Zählung auf Basis von Git-Metadaten.</sub>
 
-> 🙏 Die Funktionen, Fehlerbehebungen und Infrastrukturverbesserungen dieser Mitwirkenden sind ein **zentraler Bestandteil** dessen, was OmniRoute zuverlässig und funktionsreich macht. Jeder Pull Request, jeder Testfall und jede i18n-Übersetzungsdatei zählt. Open Source wird von Menschen wie ihnen geschaffen.
+> 🙏 Die Funktionen, Fehlerbehebungen und Infrastrukturverbesserungen dieser Mitwirkenden sind ein **zentraler Bestandteil** dessen, was Pusula zuverlässig und funktionsreich macht. Jeder Pull Request, jeder Testfall und jede i18n-Übersetzungsdatei zählt. Open Source wird von Menschen wie ihnen geschaffen.
 
 </div>
 
@@ -1504,7 +1504,7 @@ Kanonische Kennzahlen vom 2026-08-24: **1.029 einzigartige Videos** · **11.132.
 
 <div align="center">
 
-Ein herzliches Dankeschön an die Menschen, die OmniRoute aus eigener Tasche finanzieren — jeder Beitrag sorgt dafür, dass das Projekt kostenlos, unabhängig und in Bewegung bleibt.
+Ein herzliches Dankeschön an die Menschen, die Pusula aus eigener Tasche finanzieren — jeder Beitrag sorgt dafür, dass das Projekt kostenlos, unabhängig und in Bewegung bleibt.
 
 <table>
   <tr>
@@ -1550,7 +1550,7 @@ Ein herzliches Dankeschön an die Menschen, die OmniRoute aus eigener Tasche fin
 
 <sub>Öffentliche GitHub-Sponsoren wurden am 2026-08-24 erneut validiert. Der <code>activeOnly</code>-Status von GitHub bestimmt die oben aufgeführten Aktiv-Kennzeichnungen; zuvor offengelegte öffentliche einmalige Unterstützer werden weiterhin gewürdigt, und private Sponsoren bleiben anonym.</sub>
 
-<b><a href="https://github.com/sponsors/diegosouzapw">💖 Sponsor werden →</a></b> — jeder Dollar trägt dazu bei, dass OmniRoute kostenlos und unabhängig bleibt.
+<b><a href="https://github.com/sponsors/diegosouzapw">💖 Sponsor werden →</a></b> — jeder Dollar trägt dazu bei, dass Pusula kostenlos und unabhängig bleibt.
 
 </div>
 
@@ -1562,7 +1562,7 @@ Ein herzliches Dankeschön an die Menschen, die OmniRoute aus eigener Tasche fin
 
 </div>
 
-[![Mitwirkende](https://contrib.rocks/image?repo=diegosouzapw/OmniRoute&max=639&columns=20&anon=1)](https://github.com/diegosouzapw/OmniRoute/graphs/contributors)
+[![Mitwirkende](https://contrib.rocks/image?repo=Ferhat-Yasinoglu/pusula&max=639&columns=20&anon=1)](https://github.com/Ferhat-Yasinoglu/pusula/graphs/contributors)
 
 <sub>Geprüft am 2026-08-24 auf der eingefrorenen Basis <code>ac02c5b42f</code> und erneut an der aktuellen Spitze von <code>release/v3.8.50</code> mit <code>dafb4ae808</code> überprüft: <b>639 normalisierte menschliche Git-Identitäten</b> — 407 erscheinen als Commit-Autoren (einschließlich des Maintainers) und 232 ausschließlich in expliziten <code>Co-authored-by</code>-Trailern. Die Erhebung normalisiert GitHub-Noreply-Handles, schließt 26 Bot-, Agenten-, Dienst- oder Platzhalteridentitäten aus und führt gewöhnliche E-Mail-Adressen nicht allein deshalb zusammen, weil ihre Anzeigenamen übereinstimmen.</sub>
 
@@ -1591,11 +1591,11 @@ gh release create "v${VERSION}" --title "v${VERSION}" --generate-notes
 
 ## 📊 Sterne
 
-<a href="https://www.star-history.com/?repos=diegosouzapw%2FOmniRoute&type=date&legend=top-left">
+<a href="https://www.star-history.com/?repos=diegosouzapw%2FPusula&type=date&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=diegosouzapw/OmniRoute&type=date&theme=dark&legend=top-left&sealed_token=XP_ycEjv7s31p1edvhsMOXry51OWYsUjDRWjflSG7jQKRpO9hPGg7i_EHvwhI6QtrARTMH-YGjJhi8sumRYflEJD0DPlH_MMHjizhBYCX8fbHFrHEiNvVA" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=diegosouzapw/OmniRoute&type=date&legend=top-left&sealed_token=XP_ycEjv7s31p1edvhsMOXry51OWYsUjDRWjflSG7jQKRpO9hPGg7i_EHvwhI6QtrARTMH-YGjJhi8sumRYflEJD0DPlH_MMHjizhBYCX8fbHFrHEiNvVA" />
-   <img alt="Diagramm des Sterneverlaufs" src="https://api.star-history.com/chart?repos=diegosouzapw/OmniRoute&type=date&legend=top-left&sealed_token=XP_ycEjv7s31p1edvhsMOXry51OWYsUjDRWjflSG7jQKRpO9hPGg7i_EHvwhI6QtrARTMH-YGjJhi8sumRYflEJD0DPlH_MMHjizhBYCX8fbHFrHEiNvVA" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=Ferhat-Yasinoglu/pusula&type=date&theme=dark&legend=top-left&sealed_token=XP_ycEjv7s31p1edvhsMOXry51OWYsUjDRWjflSG7jQKRpO9hPGg7i_EHvwhI6QtrARTMH-YGjJhi8sumRYflEJD0DPlH_MMHjizhBYCX8fbHFrHEiNvVA" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=Ferhat-Yasinoglu/pusula&type=date&legend=top-left&sealed_token=XP_ycEjv7s31p1edvhsMOXry51OWYsUjDRWjflSG7jQKRpO9hPGg7i_EHvwhI6QtrARTMH-YGjJhi8sumRYflEJD0DPlH_MMHjizhBYCX8fbHFrHEiNvVA" />
+   <img alt="Diagramm des Sterneverlaufs" src="https://api.star-history.com/chart?repos=Ferhat-Yasinoglu/pusula&type=date&legend=top-left&sealed_token=XP_ycEjv7s31p1edvhsMOXry51OWYsUjDRWjflSG7jQKRpO9hPGg7i_EHvwhI6QtrARTMH-YGjJhi8sumRYflEJD0DPlH_MMHjizhBYCX8fbHFrHEiNvVA" />
  </picture>
 </a>
 
@@ -1605,11 +1605,11 @@ gh release create "v${VERSION}" --title "v${VERSION}" --generate-notes
 
 ## 🌍 StarMapper
 
-<a href="https://starmapper.bruniaux.com/diegosouzapw/omniroute">
+<a href="https://starmapper.bruniaux.com/ferhat-yasinoglu/pusula">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://starmapper.bruniaux.com/api/map-image/diegosouzapw/omniroute?theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://starmapper.bruniaux.com/api/map-image/diegosouzapw/omniroute?theme=light" />
-    <img alt="StarMapper" src="https://starmapper.bruniaux.com/api/map-image/diegosouzapw/omniroute" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://starmapper.bruniaux.com/api/map-image/ferhat-yasinoglu/pusula?theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://starmapper.bruniaux.com/api/map-image/ferhat-yasinoglu/pusula?theme=light" />
+    <img alt="StarMapper" src="https://starmapper.bruniaux.com/api/map-image/ferhat-yasinoglu/pusula" />
   </picture>
 </a>
 </div>
@@ -1622,14 +1622,14 @@ gh release create "v${VERSION}" --title "v${VERSION}" --generate-notes
 
 </div>
 
-OmniRoute steht auf den Schultern von Giganten. Es begann als Fork von **[9router](https://github.com/decolua/9router)** und als TypeScript-Portierung des Go-Projekts **[CLIProxyAPI](https://github.com/router-for-me/CLIProxyAPI)** — und von da an wurde jedes der unten aufgeführten Subsysteme von einem Open-Source-Projekt inspiriert, das diesen Weg bereits zuvor beschritten hatte. Jedes davon hat einen konkreten Teil von OmniRoute geprägt. Dies ist unser Dank an sie alle. 🙏
+Pusula steht auf den Schultern von Giganten. Es begann als Fork von **[9router](https://github.com/decolua/9router)** und als TypeScript-Portierung des Go-Projekts **[CLIProxyAPI](https://github.com/router-for-me/CLIProxyAPI)** — und von da an wurde jedes der unten aufgeführten Subsysteme von einem Open-Source-Projekt inspiriert, das diesen Weg bereits zuvor beschritten hatte. Jedes davon hat einen konkreten Teil von Pusula geprägt. Dies ist unser Dank an sie alle. 🙏
 
 > ⭐ Die Anzahl der Sterne wurde am 24. August 2026 über die REST API von GitHub verifiziert — gebt diesen Projekten einen Stern. Die Angaben sind eine exakte, datierte Momentaufnahme und werden sich selbstverständlich ändern.
 
 ### 🧬 Abstammung & Gateway
 
 <table>
-  <tr><th align="left">Projekt</th><th align="center">⭐</th><th align="left">Wie es OmniRoute inspiriert hat</th></tr>
+  <tr><th align="left">Projekt</th><th align="center">⭐</th><th align="left">Wie es Pusula inspiriert hat</th></tr>
   <tr><td nowrap><b><a href="https://github.com/decolua/9router">9router</a></b></td><td align="center">26,161</td><td>Das ursprüngliche Projekt, auf dem dieser Fork basiert — hier um multimodale APIs erweitert und vollständig in TypeScript neu geschrieben.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/router-for-me/CLIProxyAPI">CLIProxyAPI</a></b></td><td align="center">48,497</td><td>Die Go-Implementierung, die als Inspiration für diese JavaScript-/TypeScript-Portierung diente.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/BerriAI/litellm">LiteLLM</a></b></td><td align="center">57,100</td><td>Das KI-Gateway, dessen öffentlicher Preisdatenbestand unsere Synchronisierung zur Kostenverfolgung speist und dessen Modell zur Anbieter-Normalisierung unser Routing geprägt hat.</td></tr>
@@ -1637,20 +1637,20 @@ OmniRoute steht auf den Schultern von Giganten. Es begann als Fork von **[9route
   <tr><td nowrap><b><a href="https://github.com/Alishahryar1/free-claude-code">free-claude-code</a></b></td><td align="center">48,112</td><td>Muster, die in die Stream-Wiederherstellung, Aliasse ohne Denkmodus, die ersatzweise Websuche, Sliding-Window-Limits, die Schwärzung von Protokolldaten und gehärtete Startabläufe portiert wurden.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/standardagents/composer-api">composer-api</a></b></td><td align="center">322</td><td>Muster von Cursor Composer für Werkzeugauswahl, Ausgabebeschränkungen und Werkzeugübermittlung, die für den nativen Cursor-Executor angepasst wurden.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/ndycode/codex-multi-auth">codex-multi-auth</a></b></td><td align="center">457</td><td>Muster für Neuanmeldung und Refresh-Token-Rotation, die in die erneute Codex-OAuth-Authentifizierung portiert wurden.</td></tr>
-  <tr><td nowrap><b><a href="https://github.com/ex-machina-co/opencode-anthropic-auth">opencode-anthropic-auth</a></b></td><td align="center">510</td><td>Claude-Code-kompatible Transformationsvorgaben und das Verhalten von Abrechnungs-Headern, die in OmniRoutes konfigurationsgesteuerter Brücke verallgemeinert wurden.</td></tr>
-  <tr><td nowrap><b><a href="https://github.com/520mmxx/grok2api-merged">grok2api-merged</a></b></td><td align="center">2</td><td>Seine Grok-Modellzuordnungen, der Fake-TypeError-Statsig-Generator, Anfrage- und Gerätevorgaben sowie der NDJSON-Antwortprozessor wurden in wesentlichem Umfang für OmniRoutes Grok-Web-Executor angepasst.</td></tr>
+  <tr><td nowrap><b><a href="https://github.com/ex-machina-co/opencode-anthropic-auth">opencode-anthropic-auth</a></b></td><td align="center">510</td><td>Claude-Code-kompatible Transformationsvorgaben und das Verhalten von Abrechnungs-Headern, die in Pusulas konfigurationsgesteuerter Brücke verallgemeinert wurden.</td></tr>
+  <tr><td nowrap><b><a href="https://github.com/520mmxx/grok2api-merged">grok2api-merged</a></b></td><td align="center">2</td><td>Seine Grok-Modellzuordnungen, der Fake-TypeError-Statsig-Generator, Anfrage- und Gerätevorgaben sowie der NDJSON-Antwortprozessor wurden in wesentlichem Umfang für Pusulas Grok-Web-Executor angepasst.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/TQZHR/grok2api">TQZHR/grok2api</a></b></td><td align="center">705</td><td>Die wichtigste transitive Codequelle hinter grok2api-merged; ihre Implementierungen für Modelle, Header, Nutzlasten, Statsig und Prozessoren bleiben in der Entwicklungslinie von Grok Web erhalten.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/chenyme/grok2api">chenyme/grok2api</a></b></td><td align="center">7,520</td><td>Der zugrunde liegende MIT-lizenzierte Quellcode für Grok-Nutzlast- und Gerätevorgaben, den Statsig-Generator und den über TQZHR und grok2api-merged übernommenen <code>result.response</code>-Prozessor.</td></tr>
-  <tr><td nowrap><b><a href="https://github.com/miuzhaii/grok2api-pro">grok2api-pro</a></b></td><td align="center">27</td><td>Eine transitive Quelle, die von grok2api-merged für dessen Proxy-Pool-Schicht genannt wird; OmniRoute bewahrt diesen Herkunftshinweis, beansprucht jedoch keine Portierung des Proxy-Pools in seinem klar abgegrenzten Grok-Web-Executor.</td></tr>
-  <tr><td nowrap><b><a href="https://github.com/CNFlyCat/GrokProxy">GrokProxy</a></b></td><td align="center">50</td><td>Sein Cookie-authentifizierter Grok-Proxy und sein Streaming-Muster mit <code>result.response.token</code> dienten als Grundlage für OmniRoutes Grok-Web-Transport.</td></tr>
+  <tr><td nowrap><b><a href="https://github.com/miuzhaii/grok2api-pro">grok2api-pro</a></b></td><td align="center">27</td><td>Eine transitive Quelle, die von grok2api-merged für dessen Proxy-Pool-Schicht genannt wird; Pusula bewahrt diesen Herkunftshinweis, beansprucht jedoch keine Portierung des Proxy-Pools in seinem klar abgegrenzten Grok-Web-Executor.</td></tr>
+  <tr><td nowrap><b><a href="https://github.com/CNFlyCat/GrokProxy">GrokProxy</a></b></td><td align="center">50</td><td>Sein Cookie-authentifizierter Grok-Proxy und sein Streaming-Muster mit <code>result.response.token</code> dienten als Grundlage für Pusulas Grok-Web-Transport.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/lianying1716/GrokBridge">GrokBridge</a></b></td><td align="center">5</td><td>Bei der ursprünglichen Grok-Web-Implementierung wurde dessen HTTP-/Browser-Upstream-Design herangezogen; da sein direkter HTTP-Pfad von GrokProxy abgeleitet ist, wird keine eigenständige Codeportierung beansprucht.</td></tr>
-  <tr><td nowrap><b><a href="https://github.com/imjustprism/grok-web-api">grok-web-api</a></b></td><td align="center">14</td><td>Seine Rust-Schemas für <code>ChatOptions</code> und Antwortumschläge dienten als Grundlage für OmniRoutes TypeScript-Typen für Grok-Anfragen und Streaming-Antworten.</td></tr>
+  <tr><td nowrap><b><a href="https://github.com/imjustprism/grok-web-api">grok-web-api</a></b></td><td align="center">14</td><td>Seine Rust-Schemas für <code>ChatOptions</code> und Antwortumschläge dienten als Grundlage für Pusulas TypeScript-Typen für Grok-Anfragen und Streaming-Antworten.</td></tr>
 </table>
 
 ### 🗜️ Kontext- und Token-Komprimierung — Engines
 
 <table>
-  <tr><th align="left">Projekt</th><th align="center">⭐</th><th align="left">Wie es OmniRoute inspiriert hat</th></tr>
+  <tr><th align="left">Projekt</th><th align="center">⭐</th><th align="left">Wie es Pusula inspiriert hat</th></tr>
   <tr><td nowrap><b><a href="https://github.com/JuliusBrussee/caveman">Caveman</a></b></td><td align="center">100,538</td><td>Das virale „warum viele Token verwenden, wenn wenige Token reichen“-Projekt — seine Höhlenmenschen-Sprech-Philosophie bildet die Grundlage unseres Standardkomprimierungsmodus und von mehr als 30 Regeln zur Entfernung von Füllwörtern und zur Verdichtung.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/rtk-ai/rtk">RTK – Rust Token Killer</a></b></td><td align="center">77,185</td><td>Hochleistungsfähige Komprimierung von Befehlsausgaben — inspirierte unsere RTK-Engine, die JSON-Filter-DSL, die Wiederherstellung von Rohausgaben und die gestapelte RTK-→-Caveman-Pipeline.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/headroomlabs-ai/headroom">headroom</a></b></td><td align="center">67,310</td><td>Reversible Kontextkomprimierung (SmartCrusher) — inspirierte unsere <code>headroom</code>-Engine und das <code>ccr</code>-Abrufmarkermuster.</td></tr>
@@ -1658,15 +1658,15 @@ OmniRoute steht auf den Schultern von Giganten. Es begann als Fork von **[9route
   <tr><td nowrap><b><a href="https://github.com/atjsh/llmlingua-2-js">llmlingua-2-js</a></b></td><td align="center">31</td><td>Der JS/ONNX-Port (MobileBERT / XLM-RoBERTa), der als Worker-Thread-Backend für unsere LLMLingua-Engine verwendet wird.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/leninejunior/troglodita">Troglodita</a></b></td><td align="center">40</td><td>PT-BR-Tokenkomprimierung — bildet die Grundlage unseres pt-BR-Sprachpakets: Reduzierung von Pleonasmen und Entfernung von Füllwörtern, abgestimmt auf die brasilianisch-portugiesische Grammatik.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/DietrichGebert/ponytail">ponytail</a></b></td><td align="center">108,957</td><td>Der virale „faule Senior-Entwickler“-YAGNI-Coder-Skill — inspirierte unseren <b>less-code</b>-Ausgabestil: Ausrichtung auf die kleinstmögliche funktionierende Änderung, die den _generierten_ Code reduziert (das Pendant auf der Ausgabeachse zu Cavemans knapper Prosa).</td></tr>
-  <tr><td nowrap><b><a href="https://github.com/ayghri/i-have-adhd">i-have-adhd</a></b></td><td align="center">23,526</td><td>Sein handlungsorientierter, ADHS-freundlicher Antwortstil wurde für OmniRoutes prägnanten Ausgabestil in fünf Sprachen adaptiert.</td></tr>
+  <tr><td nowrap><b><a href="https://github.com/ayghri/i-have-adhd">i-have-adhd</a></b></td><td align="center">23,526</td><td>Sein handlungsorientierter, ADHS-freundlicher Antwortstil wurde für Pusulas prägnanten Ausgabestil in fünf Sprachen adaptiert.</td></tr>
 </table>
 
 ### 🧩 Kompakte Formate, Token-Forschung & codebewusste Werkzeuge
 
 <table>
-  <tr><th align="left">Projekt</th><th align="center">⭐</th><th align="left">Wie es OmniRoute inspiriert hat</th></tr>
+  <tr><th align="left">Projekt</th><th align="center">⭐</th><th align="left">Wie es Pusula inspiriert hat</th></tr>
   <tr><td nowrap><b><a href="https://github.com/toon-format/toon">TOON</a></b></td><td align="center">25,233</td><td>Token-Oriented Object Notation — sein spaltenorientiertes Modell aus Kopfzeile und Zeilen prägte unsere tabellarische Komprimierungsstufe.</td></tr>
-  <tr><td nowrap><b><a href="https://github.com/blackwell-systems/gcf">GCF – Graph Compact Format</a></b></td><td align="center">41</td><td>Sein kompaktes Graphformat und das generische Profildesign flossen in OmniRoutes tabellarische Komprimierung und das Headroom-Codec-Format ein.</td></tr>
+  <tr><td nowrap><b><a href="https://github.com/blackwell-systems/gcf">GCF – Graph Compact Format</a></b></td><td align="center">41</td><td>Sein kompaktes Graphformat und das generische Profildesign flossen in Pusulas tabellarische Komprimierung und das Headroom-Codec-Format ein.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/blackwell-systems/gcf-typescript">gcf-typescript</a></b></td><td align="center">4</td><td>Die MIT-TypeScript-Implementierung, die direkt eingebunden und als generischer Headroom-Profil-Codec erweitert wurde.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/ooples/token-optimizer-mcp">token-optimizer-mcp</a></b></td><td align="center">494</td><td>Brotli/SQLite-Cache + sitzungsbezogene Kontextdeltas — inspirierte unsere <code>session-dedup</code>-Engine.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/Mibayy/token-savior">token-savior</a></b></td><td align="center">1,122</td><td>Komprimierung von Bash-Ausgaben + MCP-Profile — inspirierte unsere disziplinierte Abbruchstrategie bei der Komprimierung und die Reduzierung von MCP-Werkzeugmanifesten.</td></tr>
@@ -1683,7 +1683,7 @@ OmniRoute steht auf den Schultern von Giganten. Es begann als Fork von **[9route
 ### 🧠 Speicher & RAG
 
 <table>
-  <tr><th align="left">Projekt</th><th align="center">⭐</th><th align="left">Wie es OmniRoute inspiriert hat</th></tr>
+  <tr><th align="left">Projekt</th><th align="center">⭐</th><th align="left">Wie es Pusula inspiriert hat</th></tr>
   <tr><td nowrap><b><a href="https://github.com/mem0ai/mem0">Mem0</a></b></td><td align="center">63,902</td><td>Universelle Speicherschicht — ihr Proxy-Modell als Schreib-/Lesegrenze prägte unsere Speicherarchitektur.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/letta-ai/letta">Letta (MemGPT)</a></b></td><td align="center">24,382</td><td>Zustandsbehaftete Agenten mit mehrstufigem Speicher — inspirierten unser mehrstufiges Modell für Context Control & Recovery (CCR).</td></tr>
   <tr><td nowrap><b><a href="https://github.com/onestardao/WFGY">WFGY</a></b></td><td align="center">1,781</td><td>Die ProblemMap-Taxonomie von 16 wiederkehrenden RAG-/LLM-Fehlermodi — das gemeinsame Vokabular in unserem Leitfaden zur Fehlerbehebung.</td></tr>
@@ -1692,15 +1692,15 @@ OmniRoute steht auf den Schultern von Giganten. Es begann als Fork von **[9route
 ### 🛰️ Datenverkehrsanalyse, MITM & transparenter Proxy
 
 <table>
-  <tr><th align="left">Projekt</th><th align="center">⭐</th><th align="left">Wie es OmniRoute inspiriert hat</th></tr>
-  <tr><td nowrap><b><a href="https://github.com/chouzz/llm-interceptor">llm-interceptor</a></b></td><td align="center">66</td><td>Die MITM-Überwachung/-Analyse des Datenverkehrs zwischen Programmierassistenten und LLMs floss in die frühen Anforderungen an den Traffic Inspector ein. Vier zuvor abgeleitete Module — SSE-Zusammenführung, Konversationsnormalisierung, Maskierung geheimer Daten und Header-Bereinigung — wurden durch unabhängige Clean-Room-Implementierungen ersetzt, die auf öffentlichen Protokollstandards basieren. Die beiden Oberflächen für Host-Passthrough (<code>passthrough.ts</code> und <code>_internal/bypass.cjs</code>) bleiben interne OmniRoute-Implementierungen, die unabhängig klassifiziert sind; sie wurden im Rahmen dieser Ersetzung nicht neu geschrieben.</td></tr>
+  <tr><th align="left">Projekt</th><th align="center">⭐</th><th align="left">Wie es Pusula inspiriert hat</th></tr>
+  <tr><td nowrap><b><a href="https://github.com/chouzz/llm-interceptor">llm-interceptor</a></b></td><td align="center">66</td><td>Die MITM-Überwachung/-Analyse des Datenverkehrs zwischen Programmierassistenten und LLMs floss in die frühen Anforderungen an den Traffic Inspector ein. Vier zuvor abgeleitete Module — SSE-Zusammenführung, Konversationsnormalisierung, Maskierung geheimer Daten und Header-Bereinigung — wurden durch unabhängige Clean-Room-Implementierungen ersetzt, die auf öffentlichen Protokollstandards basieren. Die beiden Oberflächen für Host-Passthrough (<code>passthrough.ts</code> und <code>_internal/bypass.cjs</code>) bleiben interne Pusula-Implementierungen, die unabhängig klassifiziert sind; sie wurden im Rahmen dieser Ersetzung nicht neu geschrieben.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/InterceptSuite/ProxyBridge">ProxyBridge</a></b></td><td align="center">5,995</td><td>Transparente, prozessbezogene Proxy-Weiterleitung — inspirierte unseren absturzsicheren MITM-Abbau, Socket-Leerlaufzeitüberschreitungen, die Prozesszuordnung über <code>/proc</code> und die TPROXY-Erfassung.</td></tr>
 </table>
 
 ### 📚 Modelldaten, Observability & Benutzeroberfläche
 
 <table>
-  <tr><th align="left">Projekt</th><th align="center">⭐</th><th align="left">Wie es OmniRoute inspiriert hat</th></tr>
+  <tr><th align="left">Projekt</th><th align="center">⭐</th><th align="left">Wie es Pusula inspiriert hat</th></tr>
   <tr><td nowrap><b><a href="https://github.com/anomalyco/models.dev">models.dev</a></b></td><td align="center">6,555</td><td>Offene Datenbank mit Spezifikationen, Preisen und Fähigkeiten von KI-Modellen — wird nativ mit unserem Modellkatalog synchronisiert.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/xyflow/xyflow">React Flow / xyflow</a></b></td><td align="center">38,108</td><td>Die knotenbasierte Graphbibliothek, auf der unser Compression Studio und Combo/Routing Studio in Echtzeit basieren.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/langchain-ai/langgraph">LangGraph</a></b></td><td align="center">40,314</td><td>Die Live-Visualisierung von Workflow-Graphen in LangGraph Studio inspirierte die Echtzeit-Kaskadenansicht unserer Studios.</td></tr>
@@ -1713,19 +1713,19 @@ OmniRoute steht auf den Schultern von Giganten. Es begann als Fork von **[9route
 ### 🛡️ Sicherheit
 
 <table>
-  <tr><th align="left">Projekt</th><th align="center">⭐</th><th align="left">Wie es OmniRoute inspiriert hat</th></tr>
+  <tr><th align="left">Projekt</th><th align="center">⭐</th><th align="left">Wie es Pusula inspiriert hat</th></tr>
   <tr><td nowrap><b><a href="https://github.com/tldrsec/awesome-secure-defaults">awesome-secure-defaults</a></b></td><td align="center">721</td><td>Eine kuratierte Liste standardmäßig sicherer Bibliotheken, die unsere Sicherheitsentscheidungen leitet (Helmet.js, DOMPurify, ssrf-req-filter, safe-regex, Google Tink).</td></tr>
 </table>
 
 ### 🧭 Ergänzende Werkzeuge
 
 <table>
-  <tr><th align="left">Projekt</th><th align="center">⭐</th><th align="left">Wie es OmniRoute inspiriert hat</th></tr>
+  <tr><th align="left">Projekt</th><th align="center">⭐</th><th align="left">Wie es Pusula inspiriert hat</th></tr>
   <tr><td nowrap><b><a href="https://github.com/BlockRunAI/ClawRouter">ClawRouter</a></b></td><td align="center">6,564</td><td>Inspirierte die Deduplizierung von Anfragen, einen kostenlosen Notfall-Fallback, austauschbare Auto-Combo-Strategien und die mehrsprachige Absichtsklassifizierung.</td></tr>
-  <tr><td nowrap><b><a href="https://github.com/lbjlaq/Antigravity-Manager">Antigravity-Manager</a></b></td><td align="center">30,652</td><td>Seine kontobasierte Modellneuzuordnung, die Validierung ausführbarer Pfade und das Verhalten von Tarifbezeichnungen flossen in die Antigravity-Laufzeitumgebung von OmniRoute ein.</td></tr>
-  <tr><td nowrap><b><a href="https://github.com/jlcodes99/vscode-antigravity-cockpit">vscode-antigravity-cockpit</a></b></td><td align="center">4,817</td><td>Sein kompaktes Countdown-Format für das Zurücksetzen von Kontingenten inspirierte die entsprechende Anzeige von Anbieterlimits in OmniRoute.</td></tr>
-  <tr><td nowrap><b><a href="https://github.com/iOfficeAI/AionUi">AionUi</a></b></td><td align="center">32,230</td><td>Seine ACP-Integrationen inspirierten die automatische Erkennung installierter CLI-Agenten durch OmniRoute.</td></tr>
-  <tr><td nowrap><b><a href="https://github.com/steipete/CodexBar">CodexBar</a></b></td><td align="center">20,507</td><td>Identifizierte die Grok-Build-Kontingentschnittstelle; OmniRoute überprüfte und korrigierte anschließend das aktuelle Übertragungsformat unabhängig.</td></tr>
+  <tr><td nowrap><b><a href="https://github.com/lbjlaq/Antigravity-Manager">Antigravity-Manager</a></b></td><td align="center">30,652</td><td>Seine kontobasierte Modellneuzuordnung, die Validierung ausführbarer Pfade und das Verhalten von Tarifbezeichnungen flossen in die Antigravity-Laufzeitumgebung von Pusula ein.</td></tr>
+  <tr><td nowrap><b><a href="https://github.com/jlcodes99/vscode-antigravity-cockpit">vscode-antigravity-cockpit</a></b></td><td align="center">4,817</td><td>Sein kompaktes Countdown-Format für das Zurücksetzen von Kontingenten inspirierte die entsprechende Anzeige von Anbieterlimits in Pusula.</td></tr>
+  <tr><td nowrap><b><a href="https://github.com/iOfficeAI/AionUi">AionUi</a></b></td><td align="center">32,230</td><td>Seine ACP-Integrationen inspirierten die automatische Erkennung installierter CLI-Agenten durch Pusula.</td></tr>
+  <tr><td nowrap><b><a href="https://github.com/steipete/CodexBar">CodexBar</a></b></td><td align="center">20,507</td><td>Identifizierte die Grok-Build-Kontingentschnittstelle; Pusula überprüfte und korrigierte anschließend das aktuelle Übertragungsformat unabhängig.</td></tr>
 </table>
 
 ## 📄 Lizenz
@@ -1736,9 +1736,9 @@ MIT-Lizenz – Details finden Sie unter [LICENSE](LICENSE).
 
 <div align="center">
 
-**[⬆ Zurück nach oben](#-omniroute)** · Mit ❤️ für die Open-Source-KI-Community entwickelt.
+**[⬆ Zurück nach oben](#-pusula)** · Mit ❤️ für die Open-Source-KI-Community entwickelt.
 
-<sub>OmniRoute v3.8.51 · Node ≥22.22.2 · MIT-Lizenz · <a href="https://omniroute.online">omniroute.online</a></sub>
+<sub>Pusula v3.8.51 · Node ≥22.22.2 · MIT-Lizenz · <a href="https://github.com/Ferhat-Yasinoglu/pusula">pusula.online</a></sub>
 
 </div>
 <!-- GitHub Discussions für Fragen und Antworten der Community aktiviert -->

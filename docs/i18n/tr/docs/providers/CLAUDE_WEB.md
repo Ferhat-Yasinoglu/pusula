@@ -70,7 +70,7 @@ Tarayıcı istekleri bunun yerine kimliği doğrulanmış kullanıcı arayüzü 
 
 Varsayılan yol, yapılandırılmış Chrome 146 profili ve sağlanan çerezle `tlsFetchClaude()` işlevini çağıran `sendClaudeWebDirect()` yoludur (`open-sse/services/claudeTlsClient.ts:23`). Bir çözücü başlatmaz veya yedek çerez üretmez.
 
-Hesap kapsamlı tarayıcı adaptörünü birincil aktarım yöntemi yapmak için `WEB_COOKIE_USE_BROWSER` değerini `1`, `true` veya `on` olarak ayarlayın. Tanınan bir Cloudflare 403 sınaması durumunda doğrudan aktarımdan tarayıcı adaptörüne geri dönülmesine izin vermek için `OMNIROUTE_BROWSER_POOL` değerini aynı değerlerden birine ayarlayın (`open-sse/executors/claude-web.ts:195`). Diğer HTTP hataları bu geri dönüşü tetiklemez.
+Hesap kapsamlı tarayıcı adaptörünü birincil aktarım yöntemi yapmak için `WEB_COOKIE_USE_BROWSER` değerini `1`, `true` veya `on` olarak ayarlayın. Tanınan bir Cloudflare 403 sınaması durumunda doğrudan aktarımdan tarayıcı adaptörüne geri dönülmesine izin vermek için `PUSULA_BROWSER_POOL` değerini aynı değerlerden birine ayarlayın (`open-sse/executors/claude-web.ts:195`). Diğer HTTP hataları bu geri dönüşü tetiklemez.
 
 Tarayıcı adaptörü, çerezleri aynı havuzlanmış Playwright bağlamında tutar, yukarıda açıklanan kapsamlı karma anahtarı kullanır ve tamamlamayı bu bağlamdan gönderir (`open-sse/executors/claude-web/browserTransport.ts:444`). Tarayıcı tarafından çözümlenen bir çerezi hiçbir zaman doğrudan TLS istemcisine aktarmaz. Tarayıcı yeniden denemeleri, aynı gerçek Playwright bağlamına bağlı ve süresi dolmamış bir kullanıcı arayüzü şablonu gerektirir (`open-sse/executors/claude-web/browserTransport.ts:467`). Tarayıcı yanıtı okumaları, kimliği doğrulanmış sayfada artımlı olarak çalışır, istek iptaline uyar ve 16 MiB'ı aşar aşmaz yukarı akış gövdesini iptal eder (`open-sse/executors/claude-web/browserTransport.ts:259`).
 
@@ -78,7 +78,7 @@ Yürütücü, paylaşılan istek günlükçüsüne sansürlenmiş bir denetim g�
 
 ### SSE davranışı
 
-`createClaudeWebResponse()`, LF veya CRLF çerçevelemesini ve çok satırlı `data:` alanlarını işler. Metin deltalarını `content` alanına, düşünme deltalarını `reasoning_content` alanına ve bilinen meta veri olaylarını `claude_web` yanıt uzantısına eşler. Her meta veri olayı, kendisine ait alan izin listesi üzerinden yansıtılır (`open-sse/executors/claude-web/stream.ts:37`). Konuşma, üst mesaj, asistan mesajı ve işlem meta verileri de `X-OmniRoute-Claude-Web-*` başlıklarında döndürülür (`open-sse/executors/claude-web/stream.ts:364`).
+`createClaudeWebResponse()`, LF veya CRLF çerçevelemesini ve çok satırlı `data:` alanlarını işler. Metin deltalarını `content` alanına, düşünme deltalarını `reasoning_content` alanına ve bilinen meta veri olaylarını `claude_web` yanıt uzantısına eşler. Her meta veri olayı, kendisine ait alan izin listesi üzerinden yansıtılır (`open-sse/executors/claude-web/stream.ts:37`). Konuşma, üst mesaj, asistan mesajı ve işlem meta verileri de `X-Pusula-Claude-Web-*` başlıklarında döndürülür (`open-sse/executors/claude-web/stream.ts:364`).
 
 Ayrıştırıcı; hatalı biçimlendirilmiş JSON, yukarı akış `error` olayları, bilinmeyen olay türleri, geçersiz sıralama, içerik bloğu uyuşmazlıkları veya `message_stop` öncesinde EOF durumlarında güvenli biçimde başarısız olur. Akışlı çıktı bir bitiş parçası ve bir `[DONE]` yayar; arabelleğe alınmış çıktı aynı ayrıştırıcıyı kullanır. Ayrıştırıcı, `message_stop` olayını hemen terminal olarak değerlendirir, sondaki yukarı akış verilerini iptal eder ve aşağı akış iptalini yukarı akış okuyucusuna iletir (`open-sse/executors/claude-web/stream.ts:461`, `open-sse/executors/claude-web/stream.ts:563`). Sonlandırılmamış SSE satırları ve birikmiş olaylar 1 MiB ile sınırlandırılır (`open-sse/executors/claude-web/stream.ts:17`, `open-sse/executors/claude-web/stream.ts:62`).
 
@@ -108,7 +108,7 @@ node --import tsx/esm --test tests/unit/claude-web-auto-refresh.test.ts tests/un
 
 ### Kurulum
 
-1. OmniRoute'u `npm run dev` ile veya derlenmiş bir kurulumdan başlatın.
+1. Pusula'u `npm run dev` ile veya derlenmiş bir kurulumdan başlatın.
 2. Dashboard → Providers → Add Provider bölümünü açın.
 3. Web Cookie kategorisini ve Claude Web'i seçin.
 4. Kimliği doğrulanmış bir `claude.ai` isteğinden kopyalanan Cookie başlığının tamamını yapıştırın.

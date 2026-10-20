@@ -11,8 +11,8 @@ Manage provider connections from the CLI: list available/configured providers, a
 ## Quick install
 
 ```bash
-npm install -g omniroute   # or: npx omniroute
-omniroute --version
+npm install -g pusula   # or: npx pusula
+pusula --version
 ```
 
 ## Subcommands
@@ -24,7 +24,7 @@ Manage provider connections (use
 **Example:**
 
 ```bash
-omniroute provider-cmd provider [subcommand]
+pusula provider-cmd provider [subcommand]
 ```
 
 ### `providers`
@@ -32,12 +32,12 @@ omniroute provider-cmd provider [subcommand]
 **Example:**
 
 ```bash
-omniroute providers
+pusula providers
 ```
 
 ### `providers available`
 
-Show available providers in the OmniRoute catalog
+Show available providers in the Pusula catalog
 
 **Flags:**
 
@@ -49,7 +49,7 @@ Show available providers in the OmniRoute catalog
 **Example:**
 
 ```bash
-omniroute providers available
+pusula providers available
 ```
 
 ### `providers list`
@@ -63,7 +63,7 @@ List configured provider connections
 **Example:**
 
 ```bash
-omniroute providers list
+pusula providers list
 ```
 
 ### `providers test <idOrName>`
@@ -77,7 +77,7 @@ Test a configured provider connection
 **Example:**
 
 ```bash
-omniroute providers test <idOrName>
+pusula providers test <idOrName>
 ```
 
 ### `providers test-all`
@@ -91,7 +91,7 @@ Test all active provider connections
 **Example:**
 
 ```bash
-omniroute providers test-all
+pusula providers test-all
 ```
 
 ### `providers validate`
@@ -105,7 +105,7 @@ Validate local provider configuration without calling upstream
 **Example:**
 
 ```bash
-omniroute providers validate
+pusula providers validate
 ```
 
 ### `providers rotate <idOrName>`
@@ -122,7 +122,7 @@ omniroute providers validate
 **Example:**
 
 ```bash
-omniroute providers rotate <idOrName>
+pusula providers rotate <idOrName>
 ```
 
 ### `providers status`
@@ -135,7 +135,7 @@ omniroute providers rotate <idOrName>
 **Example:**
 
 ```bash
-omniroute providers status
+pusula providers status
 ```
 
 ### `providers metrics`
@@ -154,7 +154,7 @@ omniroute providers status
 **Example:**
 
 ```bash
-omniroute providers metrics
+pusula providers metrics
 ```
 
 ### `providers metric <connectionId> <metric>`
@@ -166,7 +166,7 @@ omniroute providers metrics
 **Example:**
 
 ```bash
-omniroute providers metric <connectionId> <metric>
+pusula providers metric <connectionId> <metric>
 ```
 
 ### `test-provider test [provider] [model]`
@@ -183,23 +183,23 @@ omniroute providers metric <connectionId> <metric>
 **Example:**
 
 ```bash
-omniroute test-provider test [provider] [model]
+pusula test-provider test [provider] [model]
 ```
 
 <!-- skill:custom-start -->
-<!-- Migrated from skills/omniroute-cli-providers/SKILL.md (preserved curated content) -->
+<!-- Migrated from skills/pusula-cli-providers/SKILL.md (preserved curated content) -->
 
-# OmniRoute — CLI Providers & Keys
+# Pusula — CLI Providers & Keys
 
-Requires the `omniroute` CLI. See [CLI entry-point skill](https://raw.githubusercontent.com/diegosouzapw/OmniRoute/main/skills/omniroute-cli/SKILL.md) for install + global flags.
+Requires the `pusula` CLI. See [CLI entry-point skill](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-cli/SKILL.md) for install + global flags.
 
 ## Provider catalog (available providers)
 
 ```bash
-omniroute providers available                        # Full OmniRoute provider catalog
-omniroute providers available --search openai        # Filter by id, name, alias
-omniroute providers available --category api-key     # Filter by category
-omniroute providers available --json                 # Machine-readable JSON
+pusula providers available                        # Full Pusula provider catalog
+pusula providers available --search openai        # Filter by id, name, alias
+pusula providers available --category api-key     # Filter by category
+pusula providers available --json                 # Machine-readable JSON
 ```
 
 Categories: `api-key`, `oauth`, `free`, `local`, `combo`.
@@ -207,46 +207,46 @@ Categories: `api-key`, `oauth`, `free`, `local`, `combo`.
 ## Configured provider connections
 
 ```bash
-omniroute providers list                             # Connections in your DB
-omniroute providers list --json
+pusula providers list                             # Connections in your DB
+pusula providers list --json
 ```
 
 ## Testing connections
 
 ```bash
-omniroute providers test <id|name>                   # Test one configured connection
-omniroute providers test-all                         # Test every active connection (TUI progress)
-omniroute providers validate                         # Local-only structural validation (no HTTP)
+pusula providers test <id|name>                   # Test one configured connection
+pusula providers test-all                         # Test every active connection (TUI progress)
+pusula providers validate                         # Local-only structural validation (no HTTP)
 ```
 
 `test-all` opens an interactive TUI that shows live pass/fail per connection. Use `--json` to get a machine-readable result:
 
 ```bash
-omniroute providers test-all --json
+pusula providers test-all --json
 ```
 
-## API key management (OmniRoute keys)
+## API key management (Pusula keys)
 
-These manage the OmniRoute API keys issued under **API Manager** — not provider credentials.
+These manage the Pusula API keys issued under **API Manager** — not provider credentials.
 
 ```bash
-omniroute keys list                                  # List all OmniRoute API keys
-omniroute keys add <provider> [apiKey]               # Add an API key for a provider
-omniroute keys remove <provider>                     # Remove an API key
-omniroute keys regenerate <id>                       # Regenerate (rotate) a key
-omniroute keys revoke <id>                           # Revoke a key (disables it)
-omniroute keys reveal <id>                           # Show the full key value
-omniroute keys usage <id>                            # Show usage stats for a key
+pusula keys list                                  # List all Pusula API keys
+pusula keys add <provider> [apiKey]               # Add an API key for a provider
+pusula keys remove <provider>                     # Remove an API key
+pusula keys regenerate <id>                       # Regenerate (rotate) a key
+pusula keys revoke <id>                           # Revoke a key (disables it)
+pusula keys reveal <id>                           # Show the full key value
+pusula keys usage <id>                            # Show usage stats for a key
 
-omniroute keys rotate <id>                           # Rotate + revoke old key atomically
-omniroute keys expiration list                       # List key expiration times
+pusula keys rotate <id>                           # Rotate + revoke old key atomically
+pusula keys expiration list                       # List key expiration times
 ```
 
 ### Key policies
 
 ```bash
-omniroute keys policy show <id>                      # Show rate-limit / permission policy
-omniroute keys policy set <id> \
+pusula keys policy show <id>                      # Show rate-limit / permission policy
+pusula keys policy set <id> \
   --rate-limit 100 \
   --rate-window minute \
   --permissions chat,models                          # Set policy on a key
@@ -255,33 +255,33 @@ omniroute keys policy set <id> \
 ## Models
 
 ```bash
-omniroute models                                     # List all models (all providers)
-omniroute models openai                              # Filter by provider
-omniroute models --search gpt                        # Search by name
-omniroute models --json                              # JSON output
+pusula models                                     # List all models (all providers)
+pusula models openai                              # Filter by provider
+pusula models --search gpt                        # Search by name
+pusula models --json                              # JSON output
 ```
 
 ## OAuth providers
 
 ```bash
-omniroute oauth list                                 # List OAuth-configured providers
-omniroute oauth login <provider>                     # Start browser-based OAuth flow
-omniroute oauth logout <provider>                    # Revoke OAuth token
-omniroute oauth status <provider>                    # Show token state + expiry
-omniroute oauth refresh <provider>                   # Force token refresh
+pusula oauth list                                 # List OAuth-configured providers
+pusula oauth login <provider>                     # Start browser-based OAuth flow
+pusula oauth logout <provider>                    # Revoke OAuth token
+pusula oauth status <provider>                    # Show token state + expiry
+pusula oauth refresh <provider>                   # Force token refresh
 ```
 
-For OAuth providers (Gemini, Windsurf, Antigravity, etc.) the `login` command opens the OmniRoute dashboard OAuth flow in your browser.
+For OAuth providers (Gemini, Windsurf, Antigravity, etc.) the `login` command opens the Pusula dashboard OAuth flow in your browser.
 
 ## Provider nodes (multi-account routing)
 
 Provider nodes let you attach multiple API keys / accounts to one logical provider for round-robin or failover.
 
 ```bash
-omniroute nodes list <provider>                      # List nodes for a provider
-omniroute nodes add <provider> --api-key <key>       # Add a node
-omniroute nodes remove <provider> <nodeId>           # Remove a node
-omniroute nodes test <provider> <nodeId>             # Test one node
+pusula nodes list <provider>                      # List nodes for a provider
+pusula nodes add <provider> --api-key <key>       # Add a node
+pusula nodes remove <provider> <nodeId>           # Remove a node
+pusula nodes test <provider> <nodeId>             # Test one node
 ```
 
 ## Routing combos (CLI)
@@ -289,39 +289,39 @@ omniroute nodes test <provider> <nodeId>             # Test one node
 Create and manage routing combos from the terminal:
 
 ```bash
-omniroute combo list                                 # List all combos
-omniroute combo create <name> \
+pusula combo list                                 # List all combos
+pusula combo create <name> \
   --strategy priority \
   --targets anthropic/claude-opus-4-7,openai/gpt-4o  # Create combo
-omniroute combo switch <name>                        # Activate a combo as default
-omniroute combo delete <name>                        # Delete a combo
-omniroute combo suggest --task "code review"         # Ask OmniRoute to recommend a combo
+pusula combo switch <name>                        # Activate a combo as default
+pusula combo delete <name>                        # Delete a combo
+pusula combo suggest --task "code review"         # Ask Pusula to recommend a combo
 ```
 
-For the full REST API for combos see [omniroute-routing skill](https://raw.githubusercontent.com/diegosouzapw/OmniRoute/main/skills/omniroute-routing/SKILL.md).
+For the full REST API for combos see [pusula-routing skill](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-routing/SKILL.md).
 
 ## Quota & usage
 
 ```bash
-omniroute quota                                      # Provider quota usage + reset times
-omniroute usage                                      # Request + token usage summary
-omniroute cost                                       # Cost breakdown (by provider/model)
+pusula quota                                      # Provider quota usage + reset times
+pusula usage                                      # Request + token usage summary
+pusula cost                                       # Cost breakdown (by provider/model)
 ```
 
 ## Compression (CLI)
 
 ```bash
-omniroute compression status                         # Current compression mode + savings stats
-omniroute compression set --mode rtk                 # Enable RTK compression
-omniroute compression set --mode stacked             # Enable stacked (RTK + Caveman)
-omniroute compression set --mode off                 # Disable compression
-omniroute compression preview --mode rtk --text "..."  # Preview savings for sample text
+pusula compression status                         # Current compression mode + savings stats
+pusula compression set --mode rtk                 # Enable RTK compression
+pusula compression set --mode stacked             # Enable stacked (RTK + Caveman)
+pusula compression set --mode off                 # Disable compression
+pusula compression preview --mode rtk --text "..."  # Preview savings for sample text
 ```
 
 ## Health
 
 ```bash
-omniroute health                                     # Detailed health: circuit breakers, cache, memory
+pusula health                                     # Detailed health: circuit breakers, cache, memory
 ```
 
 ## Errors

@@ -27,7 +27,7 @@ test.after(async () => {
   fs.rmSync(isolatedDataDir, { recursive: true, force: true });
 });
 
-test("antigravity handler — forwards to OmniRoute and pipes SSE", async () => {
+test("antigravity handler — forwards to Pusula and pipes SSE", async () => {
   const r = await runHandler(
     new AntigravityHandler(),
     { model: "gpt-4o", messages: [{ role: "user", content: "hi" }] },

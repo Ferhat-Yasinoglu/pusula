@@ -90,7 +90,7 @@ test("#12561 all canonical locales define the 7 usage.kilo* keys without untrans
   }
 });
 
-test("#12561 pt.json defines featureFlagOmnirouteDisableThinkingLevelVariantsDescription", () => {
+test("#12561 pt.json defines featureFlagPusulaDisableThinkingLevelVariantsDescription", () => {
   const ptPath = path.join(MESSAGES_DIR, "pt.json");
   assert.ok(fs.existsSync(ptPath), `Catalog file missing: ${ptPath}`);
 
@@ -101,7 +101,7 @@ test("#12561 pt.json defines featureFlagOmnirouteDisableThinkingLevelVariantsDes
   );
   const ptObj = pt as Record<string, unknown>;
 
-  const key = "featureFlagOmnirouteDisableThinkingLevelVariantsDescription";
+  const key = "featureFlagPusulaDisableThinkingLevelVariantsDescription";
   assert.ok(key in ptObj, `pt.json missing ${key}`);
   const rawVal = ptObj[key];
   assert.equal(

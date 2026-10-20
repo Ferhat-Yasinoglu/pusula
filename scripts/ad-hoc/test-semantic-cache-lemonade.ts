@@ -23,7 +23,7 @@ const REDIS_URL = process.env.REDIS_URL || "redis://192.168.31.147:6379";
 
 async function main() {
   console.log("===============================================================");
-  console.log(" OmniRoute Semantic Caching — Live Verification Suite");
+  console.log(" Pusula Semantic Caching — Live Verification Suite");
   console.log("===============================================================");
   console.log(`• Lemonade Endpoint: ${LEMONADE_URL}`);
   console.log(`• Embedding Model:   ${LEMONADE_MODEL}`);
@@ -173,7 +173,7 @@ async function main() {
 
   // ── Step 3: Test Redis Vector Store ──
   console.log(" [3/4] Testing Redis Vector Store & Persistence on 192.168.31.147:6379...");
-  const redisPrefix = `omniroute:test:semcache:${Date.now()}:`;
+  const redisPrefix = `pusula:test:semcache:${Date.now()}:`;
   const redisStore = new RedisVectorStore({
     redisUrl: REDIS_URL,
     keyPrefix: redisPrefix,

@@ -4,7 +4,7 @@
 
 ---
 
-Bu belge, OmniRoute'a eklenen geri bildirim odaklı uyarlanabilir yönlendirme temelini
+Bu belge, Pusula'a eklenen geri bildirim odaklı uyarlanabilir yönlendirme temelini
 açıklamaktadır. Bilinçli olarak küçük tutulmuştur: tür belirtilmiş bir yönlendirme-sonucu
 kanalı, mevcut auto-combo puanlayıcısını besleyen çevrimiçi bir kalite sinyali, isteğe
 bağlı bir OpenTelemetry dışa aktarıcısı ve bir açıklanabilirlik uç noktası sunar. Mevcut
@@ -13,7 +13,7 @@ matrisi, autopilot) **değiştirmez** — onu tamamlar.
 
 ## 1. Mimari bağlam
 
-OmniRoute, bir **istek kritik yoluna** ve bir **kontrol/zeka düzlemine** sahip bir veri
+Pusula, bir **istek kritik yoluna** ve bir **kontrol/zeka düzlemine** sahip bir veri
 düzlemidir. Kritik yol hızlı, bellek açısından verimli, asenkron, dayanıklı ve
 öngörülebilir kalmalıdır. Değerlendirme, kalite puanlama, deneyler ve geçmişe dönük
 analiz kontrol düzlemine aittir.
@@ -23,7 +23,7 @@ AI Aracısı / IDE
       │
       ▼
 ┌─────────────────────┐
-│    OmniRoute        │   veri düzlemi (hızlı, senkron, bellek içi)
+│    Pusula        │   veri düzlemi (hızlı, senkron, bellek içi)
 │ yönlendirme / yük   │
 │ devretme            │
 │ sağlık / koruma     │
@@ -124,7 +124,7 @@ Varsayılan hedefler:
 - `MemoryRoutingEventStore` — açıklama uç noktası için sınırlı (500) döngüsel
   tampon; en yeniler önce gelir.
 - `QualityTracker` tüketicisi — EWMA kalite tahminini günceller.
-- `OtlpHttpsEventSink` — isteğe bağlıdır; yalnızca `OMNIROUTE_OTEL_ENDPOINT`
+- `OtlpHttpsEventSink` — isteğe bağlıdır; yalnızca `PUSULA_OTEL_ENDPOINT`
   (veya `OTEL_EXPORTER_OTLP_ENDPOINT`) ayarlandığında etkinleştirilir.
 
 ### Ölçülen ek yük (dürüst karşılaştırma)
@@ -228,27 +228,27 @@ Dosyalar: `open-sse/utils/streamTiming.ts`
   tek bir SSE parçası sıfır/bir/birçok token taşıyabilir. Kesin biçimde belgelenmiştir.
 - `avgItlMs()` = parçalar arası ortalama süre (ITL için parça gecikmesi vekil metriği).
 
-TTFT/ITL/kesintiye uğrama bilgileri `RoutingEvent` içine (`ttftMs`, `itlMs`) aktarılır ve OTel sink'i tarafından GenAI/OmniRoute span öznitelikleri olarak dışa aktarılır.
+TTFT/ITL/kesintiye uğrama bilgileri `RoutingEvent` içine (`ttftMs`, `itlMs`) aktarılır ve OTel sink'i tarafından GenAI/Pusula span öznitelikleri olarak dışa aktarılır.
 
 ## 4. OpenTelemetry / GenAI gözlemlenebilirliği
 
 Dosyalar: `open-sse/services/routing/otel.ts`
 
 - Bağımlılık içermeyen OTLP/HTTP JSON dışa aktarıcısı (global `fetch` kullanır, `@opentelemetry/*` SDK'sını kullanmaz).
-- Span'ler, GenAI semantik kurallarına (`gen_ai.provider.name`, `gen_ai.request.model`, `gen_ai.usage.input_tokens/output_tokens`, `gen_ai.completion.finish_reason`, `gen_ai.system`) ve OmniRoute yönlendirme özniteliklerine (sonuç, durum, ttft, yeniden denemeler, yedek seçeneğe geçiş) uyar.
+- Span'ler, GenAI semantik kurallarına (`gen_ai.provider.name`, `gen_ai.request.model`, `gen_ai.usage.input_tokens/output_tokens`, `gen_ai.completion.finish_reason`, `gen_ai.system`) ve Pusula yönlendirme özniteliklerine (sonuç, durum, ttft, yeniden denemeler, yedek seçeneğe geçiş) uyar.
 - `record()` yalnızca sınırlı bir tampona ekleme yapar (O(1)); bir arka plan zamanlayıcısı, `POST {endpoint}/v1/traces` aracılığıyla eşzamansız olarak boşaltım yapar. Aşırı yük altında en eski olaylar düşürülür (`dropped` sayacı) — veri düzlemine hiçbir zaman geri basınç uygulanmaz.
-- **Yapılandırılmadığı sürece devre dışıdır.** `OMNIROUTE_OTEL_ENDPOINT` (veya `OTEL_EXPORTER_OTLP_ENDPOINT`) ayarlanmalıdır; aksi hâlde sink kaydedilmez ve hiçbir OTel kodu çalışmaz.
+- **Yapılandırılmadığı sürece devre dışıdır.** `PUSULA_OTEL_ENDPOINT` (veya `OTEL_EXPORTER_OTLP_ENDPOINT`) ayarlanmalıdır; aksi hâlde sink kaydedilmez ve hiçbir OTel kodu çalışmaz.
 
 ## 5. Açıklanabilirlik
 
 - `GET /v1/explain/routing`, son `RoutingEvent` olaylarını (gerçek kararlar, en yenisi önce) ve sağlayıcı/model başına kalite anlık görüntüsünü döndürür.
 - Kimlik doğrulama `/v1/combos` ile aynıdır (Bearer API anahtarı veya pano oturumu; `REQUIRE_API_KEY=false` olan tek kullanıcılı yerel dağıtımlarda anonim erişim).
-- Combo düzeyindeki çağrı başına izler, mevcut `decisionTrace.ts` (`X-OmniRoute-Combo-Trace` üstbilgisi) üzerinden kullanılabilir olmaya devam eder.
+- Combo düzeyindeki çağrı başına izler, mevcut `decisionTrace.ts` (`X-Pusula-Combo-Trace` üstbilgisi) üzerinden kullanılabilir olmaya devam eder.
 - Güvenlik: olaylar yalnızca yönlendirme meta verilerini taşır; istemleri/gövdeleri/kimlik bilgilerini asla taşımaz.
 
 ## 6. Değerlendirme düzlemi entegrasyonu (Future AGI hazırlığı)
 
-OmniRoute, Future AGI'yi (veya herhangi bir değerlendiriciyi) **bir bağımlılık değil, potansiyel bir zekâ/değerlendirme arka ucu** olarak ele alır. Entegrasyon noktaları:
+Pusula, Future AGI'yi (veya herhangi bir değerlendiriciyi) **bir bağımlılık değil, potansiyel bir zekâ/değerlendirme arka ucu** olarak ele alır. Entegrasyon noktaları:
 
 - Bir `RoutingEventSink`, olayları eşzamansız olarak bir değerlendiriciye iletebilir.
 - `MemoryRoutingEventStore` ve kalite anlık görüntüsü, değerlendiriciye ham karar akışını sağlar.
@@ -279,9 +279,9 @@ Hiçbir değerlendirme, istek yolunda eşzamanlı olarak çalışmaz ve ağ geç
 
 | Değişken                      | Varsayılan   | Etki                                                                                       |
 | ----------------------------- | ------------ | ------------------------------------------------------------------------------------------ |
-| `OMNIROUTE_OTEL_ENDPOINT`     | ayarlanmamış | Ayarlandığında OTLP/HTTP iz dışa aktarıcısını etkinleştirir (ör. `http://collector:4318`). |
+| `PUSULA_OTEL_ENDPOINT`     | ayarlanmamış | Ayarlandığında OTLP/HTTP iz dışa aktarıcısını etkinleştirir (ör. `http://collector:4318`). |
 | `OTEL_EXPORTER_OTLP_ENDPOINT` | ayarlanmamış | OTLP uç noktası için yedek takma ad.                                                       |
-| `OTEL_SERVICE_NAME`           | `omniroute`  | `service.name` kaynak özniteliği.                                                          |
+| `OTEL_SERVICE_NAME`           | `pusula`  | `service.name` kaynak özniteliği.                                                          |
 
 ## 9. Testler
 

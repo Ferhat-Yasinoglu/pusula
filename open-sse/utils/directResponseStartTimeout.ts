@@ -39,7 +39,7 @@ export function resolveDirectHeadersTimeoutMs(
   attempt = 0,
   hasCallerDeadline = false
 ): number {
-  const raw = env.OMNIROUTE_DIRECT_HEADERS_TIMEOUT_MS;
+  const raw = env.PUSULA_DIRECT_HEADERS_TIMEOUT_MS;
   const base =
     raw == null || raw.trim() === ""
       ? DEFAULT_DIRECT_HEADERS_TIMEOUT_MS
@@ -64,7 +64,7 @@ export function resolveDirectHeadersTimeoutMs(
  * layer before proxyFetch ever sees the request). In that case the caller's
  * own signal is the REAL deadline and always fires first in the intended
  * path, so the retry gets a generous backstop ceiling
- * (OMNIROUTE_DIRECT_RESPONSE_RETRY_TIMEOUT_MS, default 600s) instead of
+ * (PUSULA_DIRECT_RESPONSE_RETRY_TIMEOUT_MS, default 600s) instead of
  * reusing the short flat pooled-attempt floor.
  *
  * When there is no caller-supplied deadline at all, there is no larger budget
@@ -78,7 +78,7 @@ export function resolveDirectRetryTimeoutMs(
   env: Record<string, string | undefined> = process.env
 ): number {
   if (!hasCallerDeadline) return flatFloorMs;
-  const raw = env.OMNIROUTE_DIRECT_RESPONSE_RETRY_TIMEOUT_MS;
+  const raw = env.PUSULA_DIRECT_RESPONSE_RETRY_TIMEOUT_MS;
   const ceiling =
     raw == null || raw.trim() === ""
       ? DEFAULT_DIRECT_RETRY_CEILING_MS

@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const directory = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-display-catalog-"));
+const directory = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-display-catalog-"));
 process.env.DATA_DIR = directory;
 process.env.API_KEY_SECRET = "display-catalog-test-secret";
 const core = await import("../../src/lib/db/core.ts");

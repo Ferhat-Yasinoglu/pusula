@@ -10,7 +10,7 @@
 import { getDbInstance } from "../db/core";
 import { resolveProviderId } from "@/shared/constants/providers";
 import { normalizePayloadForLog, protectPayloadForLog } from "../logPayloads";
-import { sanitizeErrorMessage } from "@omniroute/open-sse/utils/errorSanitization.ts";
+import { sanitizeErrorMessage } from "@pusula/open-sse/utils/errorSanitization.ts";
 import {
   resolveOrphanedUsageAccountIdentity,
   resolveUsageAccountIdentity,
@@ -168,7 +168,7 @@ function normalizePendingMetadata(metadata?: PendingRequestMetadata): PendingReq
 // ──────────────── Pending Requests (in-memory) ────────────────
 
 declare global {
-  var __omnirouteUsageHistoryPendingState:
+  var __pusulaUsageHistoryPendingState:
     | {
         pendingRequests: {
           byModel: Record<string, number>;
@@ -182,14 +182,14 @@ declare global {
 }
 
 // Reuse the SAME object/Map across Next.js dev HMR module re-evaluations —
-// same pattern (and reason) as src/lib/db/core.ts's `globalThis.__omnirouteDb`.
+// same pattern (and reason) as src/lib/db/core.ts's `globalThis.__pusulaDb`.
 // Without this, an edit anywhere in this module's dependency graph resets
 // in-flight request tracking to empty mid-stream, so a live poll against
 // getPendingById() (RequestLoggerDetail.tsx's Conversation Context section)
 // silently stops seeing partialAssistantText for a request that started
 // before the reload — the request keeps streaming fine, but the *next*
 // module instance's pendingById has never heard of it.
-const pendingState = (globalThis.__omnirouteUsageHistoryPendingState ??= {
+const pendingState = (globalThis.__pusulaUsageHistoryPendingState ??= {
   pendingRequests: {
     byModel: Object.create(null) as Record<string, number>,
     byAccount: Object.create(null) as Record<string, Record<string, number>>,

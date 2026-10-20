@@ -13,14 +13,14 @@ test("normalizeBasePath returns empty for root and blank values", () => {
 });
 
 test("normalizeBasePath strips trailing slashes and rejects unsafe paths", () => {
-  assert.equal(normalizeBasePath("/omniroute/"), "/omniroute");
-  assert.equal(normalizeBasePath("omniroute"), "");
+  assert.equal(normalizeBasePath("/pusula/"), "/pusula");
+  assert.equal(normalizeBasePath("pusula"), "");
   assert.equal(normalizeBasePath("/../etc"), "");
   assert.equal(normalizeBasePath("/omni?x=1"), "");
 });
 
 test("joinBasePath prefixes application routes", () => {
   assert.equal(joinBasePath("", "/api/health"), "/api/health");
-  assert.equal(joinBasePath("/omniroute", "/api/health"), "/omniroute/api/health");
-  assert.equal(joinBasePath("/omniroute", "/"), "/omniroute/");
+  assert.equal(joinBasePath("/pusula", "/api/health"), "/pusula/api/health");
+  assert.equal(joinBasePath("/pusula", "/"), "/pusula/");
 });

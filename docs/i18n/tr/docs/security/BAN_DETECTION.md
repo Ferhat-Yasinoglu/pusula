@@ -4,7 +4,7 @@
 
 ---
 
-OmniRoute, bir sağlayıcı **hesabının kalıcı olarak devre dışı** olduğunu (askıya alınmış / devre dışı bırakılmış / kullanım koşulları ihlali nedeniyle yasaklanmış) gösteren sinyalleri bulmak için yukarı akış hata yanıtlarını tarar ve eşleşme bulunduğunda bu bağlantıyı, artık istekler için seçilmemesi amacıyla **terminal `banned` durumuna** geçirir. **Security → Banned Keywords** ayar kartı bunu yapılandırır ("Kalıcı hesap yasağı algılamasını tetikleyen ek anahtar kelimeler. Yerleşik anahtar kelimeler her zaman uygulanır.").
+Pusula, bir sağlayıcı **hesabının kalıcı olarak devre dışı** olduğunu (askıya alınmış / devre dışı bırakılmış / kullanım koşulları ihlali nedeniyle yasaklanmış) gösteren sinyalleri bulmak için yukarı akış hata yanıtlarını tarar ve eşleşme bulunduğunda bu bağlantıyı, artık istekler için seçilmemesi amacıyla **terminal `banned` durumuna** geçirir. **Security → Banned Keywords** ayar kartı bunu yapılandırır ("Kalıcı hesap yasağı algılamasını tetikleyen ek anahtar kelimeler. Yerleşik anahtar kelimeler her zaman uygulanır.").
 
 Bu sayfa; yerleşik listeyi, algılama akışını, kapsamını, özel anahtar kelimelerin güvenli biçimde nasıl ekleneceğini ve işaretlenmiş bir bağlantının nasıl kurtarılacağını açıklar. Terminal durumun kendisi dayanıklılık modelinin bir parçasıdır — bkz.
 [RESILIENCE_GUIDE](../architecture/RESILIENCE_GUIDE.md) ("Terminal durumlar").

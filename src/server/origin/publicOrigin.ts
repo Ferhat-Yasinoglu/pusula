@@ -16,7 +16,7 @@ export interface BrowserMutationOriginVerdict {
 }
 
 const PUBLIC_BASE_URL_ENV = [
-  "OMNIROUTE_PUBLIC_BASE_URL",
+  "PUSULA_PUBLIC_BASE_URL",
   "NEXT_PUBLIC_BASE_URL",
   "NEXT_PUBLIC_APP_URL",
 ] as const;
@@ -114,7 +114,7 @@ function sanitizeForwardedHost(host: string | null): string | null {
 }
 
 function trustProxyMode(): "none" | "loopback" | "private" {
-  const raw = process.env.OMNIROUTE_TRUST_PROXY?.trim().toLowerCase();
+  const raw = process.env.PUSULA_TRUST_PROXY?.trim().toLowerCase();
   if (!raw || ["0", "false", "none", "off", "no", "disable", "disabled"].includes(raw)) {
     return "none";
   }
@@ -129,7 +129,7 @@ export function trustsForwardedHeaders(request: Request): boolean {
 
   const peer = resolveStampedPeer(
     request.headers.get(PEER_IP_HEADER),
-    process.env.OMNIROUTE_PEER_STAMP_TOKEN
+    process.env.PUSULA_PEER_STAMP_TOKEN
   );
   const locality = classifyHostLocality(peer);
   if (mode === "loopback") return locality === "loopback";
@@ -192,7 +192,7 @@ function requestUrlProtocol(request: Request): "http" | "https" {
 function directLocalHostOrigin(request: Request): string | null {
   const peer = resolveStampedPeer(
     request.headers.get(PEER_IP_HEADER),
-    process.env.OMNIROUTE_PEER_STAMP_TOKEN
+    process.env.PUSULA_PEER_STAMP_TOKEN
   );
   if (classifyHostLocality(peer) === "remote") return null;
 

@@ -37,8 +37,8 @@ test("export/route.ts: the sqlite backup write target lives inside an mkdtemp-cr
 });
 
 test("mkdtempSync-based paths are unique across two calls made within the same millisecond (no timestamp collision)", () => {
-  const a = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-export-"));
-  const b = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-export-"));
+  const a = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-export-"));
+  const b = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-export-"));
   try {
     assert.notEqual(a, b);
   } finally {
@@ -51,7 +51,7 @@ test("mkdtempSync rejects a pre-placed symlink at the target prefix path (exclus
   // mkdtempSync always appends 6 random characters, so an attacker cannot
   // predict (and therefore cannot pre-place a symlink at) the final path —
   // unlike the old `mkdirSync(deterministicPath, { recursive: true })`.
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-export-"));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-export-"));
   try {
     assert.ok(fs.lstatSync(dir).isDirectory());
     assert.ok(!fs.lstatSync(dir).isSymbolicLink());

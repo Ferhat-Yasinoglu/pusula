@@ -9,7 +9,7 @@ import {
 import {
   buildErrorBody,
   sanitizeErrorMessage,
-} from "@omniroute/open-sse/utils/error.ts";
+} from "@pusula/open-sse/utils/error.ts";
 import { CORS_HEADERS, handleCorsOptions } from "@/shared/utils/cors";
 import { enforceApiKeyPolicy } from "@/shared/utils/apiKeyPolicy";
 

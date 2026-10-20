@@ -15,7 +15,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-weighted-cooling-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-weighted-cooling-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const { handleComboChat } = await import("../../open-sse/services/combo.ts");
@@ -126,9 +126,9 @@ test("every target model-locked → 503 + Retry-After with the excluded targets,
     retryAfter >= 1 && retryAfter <= 60,
     `Retry-After follows the earliest lapse, got ${retryAfter}`
   );
-  assert.equal(res.headers.get("x-omniroute-combo-terminal-reason"), "all_targets_cooling_down");
-  assert.equal(res.headers.get("x-omniroute-recovery-action"), "wait");
-  assert.equal(res.headers.get("x-omniroute-retry-after-seconds"), String(retryAfter));
+  assert.equal(res.headers.get("x-pusula-combo-terminal-reason"), "all_targets_cooling_down");
+  assert.equal(res.headers.get("x-pusula-recovery-action"), "wait");
+  assert.equal(res.headers.get("x-pusula-retry-after-seconds"), String(retryAfter));
 
   const body = (await res.json()) as {
     error: { code?: string; message: string };

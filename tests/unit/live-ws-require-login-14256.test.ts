@@ -17,7 +17,7 @@ import { WebSocket } from "ws";
 
 // ── Env setup ─────────────────────────────────────────────────────────────
 // Must be done before importing the DB, which reads DATA_DIR at import time.
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-live-ws-require-login-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-live-ws-require-login-"));
 const ORIG_DATA_DIR = process.env.DATA_DIR;
 const ORIG_JWT_SECRET = process.env.JWT_SECRET;
 const ORIG_LIVE_WS_HOST = process.env.LIVE_WS_HOST;

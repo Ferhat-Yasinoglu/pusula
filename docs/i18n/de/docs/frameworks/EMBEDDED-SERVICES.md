@@ -8,9 +8,9 @@
 > **Zuletzt aktualisiert:** 2026-09-09
 > **Zielgruppe:** Entwickler, die eingebettete Dienste (9Router, CLIProxyAPI, Mux, Bifrost, open-wa) hinzufügen, warten oder debuggen.
 
-Eingebettete Dienste sind lokal installierte Sidecar-Prozesstools, die OmniRoute installiert, überwacht und
+Eingebettete Dienste sind lokal installierte Sidecar-Prozesstools, die Pusula installiert, überwacht und
 als vollwertige Routing-Ziele bereitstellt. Im Gegensatz zu externen Anbietern (die über das Internet
-mithilfe von API-Schlüsseln erreicht werden) laufen eingebettete Dienste auf demselben Rechner wie OmniRoute und kommunizieren über die Loopback-Schnittstelle.
+mithilfe von API-Schlüsseln erreicht werden) laufen eingebettete Dienste auf demselben Rechner wie Pusula und kommunizieren über die Loopback-Schnittstelle.
 
 ---
 
@@ -35,7 +35,7 @@ Sechs Dienste sind eingebettet:
 
 | Dienst          | npm-Paket                              | Standardport | Zweck                                                                                                                                                                                                                                  |
 | --------------- | -------------------------------------- | :----------: | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **9Router**     | `9router`                              |    20130     | KI-Router, den OmniRoute als Unteranbieter verwenden kann. Modelle werden als `9router/{sub}/{model}` bereitgestellt                                                                                                                   |
+| **9Router**     | `9router`                              |    20130     | KI-Router, den Pusula als Unteranbieter verwenden kann. Modelle werden als `9router/{sub}/{model}` bereitgestellt                                                                                                                   |
 | **CLIProxyAPI** | GitHub-Release-Binärdatei (`cliproxy`) |     8317     | Lokaler Proxy-Adapter für Anthropic-CLI-Authentifizierungsabläufe. Bietet Fallback-Routing, wenn OAuth-Token ablaufen                                                                                                                  |
 | **Mux**         | `mux` (headless `mux server`)          |     8322     | Lokaler Agenten-Orchestrierungs-Daemon (coder/mux). Wird ausschließlich hinsichtlich seines Lebenszyklus verwaltet — kein Routing-Ziel (kein LLM-Proxying).                                                                            |
 | **Bifrost**     | `@maximhq/bifrost`                     |     8080     | Go-KI-Gateway-Relay-Backend. Wird bei laufendem Betrieb automatisch von der Relay-Route (`/v1/relay/`) ausgewählt                                                                                                                      |
@@ -44,9 +44,9 @@ Sechs Dienste sind eingebettet:
 
 Alle sechs folgen demselben Überwachungsmodell:
 
-- OmniRoute installiert sie unter `DATA_DIR/services/{name}/` (isoliert von OmniRoutes eigener `package.json`)
-- OmniRoute startet und überwacht sie als Kindprozesse
-- OmniRoute injiziert einen flüchtigen API-Schlüssel in die Umgebung des Kindprozesses und rotiert ihn ohne Ausfallzeit (sofern anwendbar)
+- Pusula installiert sie unter `DATA_DIR/services/{name}/` (isoliert von Pusulas eigener `package.json`)
+- Pusula startet und überwacht sie als Kindprozesse
+- Pusula injiziert einen flüchtigen API-Schlüssel in die Umgebung des Kindprozesses und rotiert ihn ohne Ausfallzeit (sofern anwendbar)
 - Alle Verwaltungsrouten (`/api/services/*`) sind **LOCAL_ONLY** — ausschließlich über die Loopback-Schnittstelle zugänglich (verbindliche Regel Nr. 17)
 
 ### Wichtige Entscheidungen (aus dem Entwurfsplan)
@@ -56,7 +56,7 @@ Alle sechs folgen demselben Überwachungsmodell:
 | Dashboard-Zugriff auf die native 9Router-Benutzeroberfläche | Reverse-Proxy unter `/dashboard/providers/services/9router/embed/*`                                                   |
 | Installationsmechanismus                                    | `npm install {package}` über `execFile` (keine Shell-Interpolation)                                                   |
 | Nutzungsmodus                                               | Anbieter wird als `9router/{sub}/{model}` in der Routing-Engine registriert                                           |
-| API-Schlüsselverwaltung                                     | OmniRoute generiert den Schlüssel, verschlüsselt ihn im Ruhezustand (AES-256-GCM) und injiziert ihn über die Umgebung |
+| API-Schlüsselverwaltung                                     | Pusula generiert den Schlüssel, verschlüsselt ihn im Ruhezustand (AES-256-GCM) und injiziert ihn über die Umgebung |
 | Dashboard-Speicherort                                       | `/dashboard/providers/services` (drei Registerkarten)                                                                 |
 | Automatischer Start                                         | Umschalter pro Dienst, standardmäßig AUS                                                                              |
 
@@ -221,7 +221,7 @@ Nicht über Loopback eingehende Anfragen erhalten unabhängig vom Authentifizier
 #### `POST /api/services/9router/install`
 
 Installiert 9Router von npm. Erstellt `DATA_DIR/services/9router/` mit einer eigenen
-`package.json` und eigenen `node_modules/`. Verursacht keine Konflikte mit den Abhängigkeiten von OmniRoute.
+`package.json` und eigenen `node_modules/`. Verursacht keine Konflikte mit den Abhängigkeiten von Pusula.
 
 **Anfragetext** (alles optional):
 
@@ -382,7 +382,7 @@ Gibt den kombinierten Live- und Datenbankstatus einschließlich Versionsmetadate
 #### `POST /api/services/9router/auto-start`
 
 Schaltet das Autostart-Flag um. Wenn `enabled: true` gesetzt ist, wird der Dienst beim
-nächsten Start von OmniRoute automatisch gestartet (sofern der Dienst installiert ist).
+nächsten Start von Pusula automatisch gestartet (sofern der Dienst installiert ist).
 
 **Anfragetext:**
 
@@ -510,7 +510,7 @@ Umgebungsvariable `BIFROST_BASE_URL` hat stets Vorrang.
 Dieselbe Lebenszyklusstruktur wie bei den anderen Diensten (`install`, `start`, `stop`,
 `restart`, `update`, `status`, `auto-start`, `auto-restart-adopted`) sowie eine
 token-geschützte OAuth-Steuerungsebene unter `admin/`: `admin/accounts`,
-`admin/import-from-omniroute`, `admin/login-start`, `admin/login-complete` (alle durch
+`admin/import-from-pusula`, `admin/login-start`, `admin/login-complete` (alle durch
 `DARIO_ADMIN_TOKEN` geschützt).
 
 ### 4.6 open-wa-Endpunkte (7 Routen)
@@ -562,7 +562,7 @@ GET|POST|... /dashboard/providers/services/9router/embed/[...path]
 Dieser Proxy:
 
 - Leitet die Anfrage an `http://127.0.0.1:{port}/{path}` weiter (nur Loopback)
-- Entfernt eingehende `cookie`- und `authorization`-Header (keine Offenlegung der OmniRoute-Sitzung)
+- Entfernt eingehende `cookie`- und `authorization`-Header (keine Offenlegung der Pusula-Sitzung)
 - Injiziert `Authorization: Bearer {apiKey}` für die 9Router-Authentifizierung
 - Entfernt `set-cookie`, `content-security-policy`, `x-frame-options` und `cross-origin-*` aus der Antwort
 - Schreibt HTML-Antworten um, um `<base href>` zu injizieren und absolute Pfade zu normalisieren (`/foo` → `/dashboard/.../embed/foo`)
@@ -600,7 +600,7 @@ Stufenmatrix finden Sie unter `docs/security/ROUTE_GUARD_TIERS.md`.
 ### Einschleusung von API-Schlüsseln
 
 9Router und Mux benötigen einen API-Schlüssel bzw. ein Bearer-Token für ihre eigenen
-HTTP-Endpunkte. OmniRoute:
+HTTP-Endpunkte. Pusula:
 
 1. Generiert mittels `crypto.randomBytes(32).toString("base64url")` einen Schlüssel
    mit einem dienstspezifischen Präfix (`nr_` für 9Router, `mx_` für Mux).
@@ -792,7 +792,7 @@ Wenn der eingebettete Dienst einen OpenAI-kompatiblen Endpunkt `/v1/chat/complet
 
 1. Prüfen Sie `GET /api/services/{name}/logs` (oder den Protokollbereich im Dashboard). Suchen
    Sie nach Zeilen wie `Error: ENOENT`, `address already in use` oder `Cannot find module`.
-2. Überprüfen Sie, ob sich `npm` im PATH befindet: Führen Sie `which npm` unter demselben Benutzerkonto aus, unter dem OmniRoute ausgeführt wird.
+2. Überprüfen Sie, ob sich `npm` im PATH befindet: Führen Sie `which npm` unter demselben Benutzerkonto aus, unter dem Pusula ausgeführt wird.
 3. Überprüfen Sie, ob der Dienst installiert ist: Prüfen Sie `GET /api/services/{name}/status` auf
    `installedVersion`. Wenn der Wert `null` ist, führen Sie zuerst die Installation aus.
 4. Prüfen Sie, ob `DATA_DIR/services/{name}/node_modules/` vorhanden und nicht leer ist.
@@ -830,7 +830,7 @@ Startzeiten `healthIntervalMs` auf 5000 und `stopTimeoutMs` auf 30 000.
 3. Der Port kann in `bootstrap.ts` über das Feld `port` für jeden Dienst separat konfiguriert werden.
 
 **Hinweis:** 9Router verwendet standardmäßig Port 20130, um gezielt einen Konflikt mit
-dem Standardport 20128 von OmniRoute zu vermeiden.
+dem Standardport 20128 von Pusula zu vermeiden.
 
 ---
 
@@ -840,13 +840,13 @@ dem Standardport 20128 von OmniRoute zu vermeiden.
 
 **Ursachen:**
 
-- `DATA_DIR` oder das übergeordnete Verzeichnis ist für den OmniRoute-Prozess nicht beschreibbar.
+- `DATA_DIR` oder das übergeordnete Verzeichnis ist für den Pusula-Prozess nicht beschreibbar.
 - Die Ausführung erfolgt in einem Rootless-Docker-Container ohne Schreibzugriff auf das eingebundene Volume.
 
 **Lösung:**
 
-1. Prüfen Sie `DATA_DIR` (Standard: `~/.omniroute/`): `ls -la ~/.omniroute/`
-2. Stellen Sie sicher, dass das Verzeichnis dem Benutzer des OmniRoute-Prozesses gehört: `chown -R $USER ~/.omniroute/`
+1. Prüfen Sie `DATA_DIR` (Standard: `~/.pusula/`): `ls -la ~/.pusula/`
+2. Stellen Sie sicher, dass das Verzeichnis dem Benutzer des Pusula-Prozesses gehört: `chown -R $USER ~/.pusula/`
 3. Stellen Sie in Docker sicher, dass der Volume-Mount die richtigen Berechtigungen für den Container-Benutzer besitzt.
 
 ---
@@ -859,7 +859,7 @@ dem Standardport 20128 von OmniRoute zu vermeiden.
 
 1. Prüfen Sie, ob die npm-Registry erreichbar ist: `npm ping`.
 2. Prüfen Sie, ob ein Unternehmensproxy verwendet wird: `npm config get proxy`, `npm config get https-proxy`.
-3. Versuchen Sie die Installation manuell: `npm install {package}@latest --prefix ~/.omniroute/services/{name}/`.
+3. Versuchen Sie die Installation manuell: `npm install {package}@latest --prefix ~/.pusula/services/{name}/`.
 4. Laden Sie bei einer Air-Gap-Umgebung den Tarball vorab herunter und verwenden Sie `npm install /path/to/tarball.tgz`.
 
 ---
@@ -895,9 +895,9 @@ Siehe `docs/security/ROUTE_GUARD_TIERS.md`.
 
 **F: Werden 9Router und CLIProxyAPI in Produktions-/Cloud-Bereitstellungen verfügbar sein?**
 
-Ja. Beide Dienste folgen demselben Local-first-Modell wie OmniRoute selbst. Sie
+Ja. Beide Dienste folgen demselben Local-first-Modell wie Pusula selbst. Sie
 laufen auf demselben Rechner und kommunizieren über Loopback. „Produktion“ bezeichnet
-hier den VPS oder lokalen Server, auf dem OmniRoute bereitgestellt ist, nicht einen
+hier den VPS oder lokalen Server, auf dem Pusula bereitgestellt ist, nicht einen
 entfernten Cloud-Anbieter.
 
 ---
@@ -905,9 +905,9 @@ entfernten Cloud-Anbieter.
 **F: Wie debugge ich den Supervisor?**
 
 1. Verfolgen Sie den SSE-Protokollstream: `curl -N http://localhost:20128/api/services/9router/logs`.
-2. Prüfen Sie die strukturierten Protokolle in der pino-Ausgabe von OmniRoute,
+2. Prüfen Sie die strukturierten Protokolle in der pino-Ausgabe von Pusula,
    gefiltert nach dem Namespace `service:supervisor`.
-3. Prüfen Sie den DB-Datensatz: `sqlite3 ~/.omniroute/omniroute.db "SELECT * FROM version_manager WHERE tool='9router'"`.
+3. Prüfen Sie den DB-Datensatz: `sqlite3 ~/.pusula/pusula.db "SELECT * FROM version_manager WHERE tool='9router'"`.
 4. Verwenden Sie `GET /api/services/9router/status`, um den aktuellen Live-Status,
    die PID, den Zustand und `lastError` in einem einzigen Aufruf anzuzeigen.
 

@@ -7,7 +7,7 @@ import path from "node:path";
 import { useDecollidedMigrationsDir } from "./helpers/decollidedMigrationsDir.ts";
 
 useDecollidedMigrationsDir();
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-call-log-bodies-first-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-call-log-bodies-first-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const {
@@ -20,7 +20,7 @@ const {
 const OMITTED = "[omitted: call log artifact size limit exceeded]";
 const PIPELINE_MARKER = {
   error: {
-    _omniroute_truncated: true,
+    _pusula_truncated: true,
     reason: "call_log_artifact_size_limit_exceeded",
   },
 };

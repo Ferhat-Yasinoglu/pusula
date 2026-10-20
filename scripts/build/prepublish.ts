@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * OmniRoute — Prepublish Build Script
+ * Pusula — Prepublish Build Script
  *
  * Consumes the .build/next/standalone artifact produced by `npm run build`
  * (build-next-isolated.mjs) and assembles the npm staging `dist/` directory.
@@ -162,7 +162,7 @@ function removeEmptyDirectories(dir: string): boolean {
   return hasFiles;
 }
 
-console.log("🔨 OmniRoute — Building for npm publish...\n");
+console.log("🔨 Pusula — Building for npm publish...\n");
 
 // ── Step 1: Clean previous dist/ directory ─────────────────
 if (existsSync(DIST_DIR)) {
@@ -464,8 +464,8 @@ runBuildTool(
 );
 
 // ── Step 8.7: Bundle CLI Entrypoint ──────────────────────────
-const cliSrcFile = join(ROOT, "bin", "omniroute.ts");
-const cliDestFile = join(ROOT, "bin", "omniroute.mjs");
+const cliSrcFile = join(ROOT, "bin", "pusula.ts");
+const cliDestFile = join(ROOT, "bin", "pusula.mjs");
 
 if (existsSync(cliSrcFile)) {
   console.log("  🔨 Bundling CLI Entrypoint (TypeScript → JavaScript)...");
@@ -474,30 +474,30 @@ if (existsSync(cliSrcFile)) {
       "esbuild",
       "esbuild",
       [
-        "bin/omniroute.ts",
+        "bin/pusula.ts",
         "--bundle",
         "--platform=node",
         "--packages=external",
         "--format=esm",
-        "--outfile=bin/omniroute.mjs",
+        "--outfile=bin/pusula.mjs",
       ],
       { cwd: ROOT, stdio: "inherit" }
     );
     chmodSync(cliDestFile, 0o755);
-    console.log("  ✅ CLI Entrypoint bundled to bin/omniroute.mjs");
+    console.log("  ✅ CLI Entrypoint bundled to bin/pusula.mjs");
   } catch (err: any) {
     console.warn("  ⚠️  CLI bundle error:", err.message);
   }
 }
 
-// ── Step 8.8: Build @omniroute/opencode-plugin ──────────────
-// The plugin ships bundled inside the omniroute npm package (see root
-// package.json "files": ["@omniroute/", ...]). Its built `dist/` MUST be
-// present in the publish tarball so `omniroute setup opencode` can copy it
+// ── Step 8.8: Build @pusula/opencode-plugin ──────────────
+// The plugin ships bundled inside the pusula npm package (see root
+// package.json "files": ["@pusula/", ...]). Its built `dist/` MUST be
+// present in the publish tarball so `pusula setup opencode` can copy it
 // into the user's OpenCode plugin dir. If the build fails we surface the
 // error — shipping without the plugin's dist breaks the documented install
 // flow for every downstream user.
-const opencodePluginSrc = join(ROOT, "@omniroute", "opencode-plugin");
+const opencodePluginSrc = join(ROOT, "@pusula", "opencode-plugin");
 const opencodePluginDist = join(opencodePluginSrc, "dist", "index.js");
 if (existsSync(opencodePluginSrc) && existsSync(join(opencodePluginSrc, "package.json"))) {
   // The plugin's tsup config is ESM-only (format: ["esm"]), so a successful
@@ -505,7 +505,7 @@ if (existsSync(opencodePluginSrc) && existsSync(join(opencodePluginSrc, "package
   // dist/index.cjs. Gate the skip solely on dist/index.js.
   const pluginAlreadyBuilt = existsSync(opencodePluginDist);
   if (!pluginAlreadyBuilt) {
-    console.log("\n  🔨 Building @omniroute/opencode-plugin (tsup)...");
+    console.log("\n  🔨 Building @pusula/opencode-plugin (tsup)...");
     try {
       // The plugin is a standalone package (not an npm workspace), so the root
       // install never populates its node_modules — and tsup with `dts: true`
@@ -555,7 +555,7 @@ if (existsSync(opencodePluginSrc) && existsSync(join(opencodePluginSrc, "package
           try {
             if (attempt > 1) {
               console.log(
-                `  🔄 @omniroute/opencode-plugin npm install retry (attempt ${attempt}/3)`
+                `  🔄 @pusula/opencode-plugin npm install retry (attempt ${attempt}/3)`
               );
             }
             runPluginInstall();
@@ -578,17 +578,17 @@ if (existsSync(opencodePluginSrc) && existsSync(join(opencodePluginSrc, "package
         stdio: "inherit",
         env: { ...process.env, NODE_ENV: "production" },
       });
-      console.log("  ✅ @omniroute/opencode-plugin bundled to @omniroute/opencode-plugin/dist/");
+      console.log("  ✅ @pusula/opencode-plugin bundled to @pusula/opencode-plugin/dist/");
     } catch (err: any) {
-      console.error("  ❌ Failed to build @omniroute/opencode-plugin:", err.message);
+      console.error("  ❌ Failed to build @pusula/opencode-plugin:", err.message);
       console.error("     The published package would be missing the plugin dist.");
       console.error(
-        "     Run `cd @omniroute/opencode-plugin && npm install && npm run build` to debug."
+        "     Run `cd @pusula/opencode-plugin && npm install && npm run build` to debug."
       );
       process.exit(1);
     }
   } else {
-    console.log("  ✅ @omniroute/opencode-plugin dist/ already present (skipping rebuild)");
+    console.log("  ✅ @pusula/opencode-plugin dist/ already present (skipping rebuild)");
   }
   // Remove plugin node_modules after build — hard links created by npm install on Linux
   // (CI runner) end up in the tarball as LINK entries, which npm registry rejects with
@@ -597,10 +597,10 @@ if (existsSync(opencodePluginSrc) && existsSync(join(opencodePluginSrc, "package
   const pluginNodeModules = join(opencodePluginSrc, "node_modules");
   if (existsSync(pluginNodeModules)) {
     rmSync(pluginNodeModules, { recursive: true, force: true });
-    console.log("  🧹 Removed @omniroute/opencode-plugin/node_modules (hard link guard)");
+    console.log("  🧹 Removed @pusula/opencode-plugin/node_modules (hard link guard)");
   }
 } else {
-  console.log("  ⏭️  @omniroute/opencode-plugin not found in workspace (skipping build)");
+  console.log("  ⏭️  @pusula/opencode-plugin not found in workspace (skipping build)");
 }
 
 // ── Step 9: Copy shared utilities needed at runtime ────────
@@ -733,7 +733,7 @@ if (remainingUnexpectedFiles.length > 0) {
 
 // -- Step 11: Resolve workspace: protocol dependencies -----------------
 // npm/pnpm workspace protocol specifiers (workspace:*, workspace:^, ...)
-// are meaningless to the npm registry and make `npm install -g omniroute`
+// are meaningless to the npm registry and make `npm install -g pusula`
 // fail with EUNSUPPORTEDPROTOCOL. Rewrite any that leaked into published
 // package.json files to the concrete workspace package version.
 // Only touch files inside the staged dist/ tree; workspace member source

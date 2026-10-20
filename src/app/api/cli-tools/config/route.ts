@@ -25,10 +25,10 @@ export async function GET(request: Request) {
   if (!query.success)
     return configError(
       400,
-      "Invalid preview query; use x-omniroute-config-api-key for credentials"
+      "Invalid preview query; use x-pusula-config-api-key for credentials"
     );
-  const apiKey = request.headers.get("x-omniroute-config-api-key");
-  if (!apiKey?.trim()) return configError(400, "x-omniroute-config-api-key header is required");
+  const apiKey = request.headers.get("x-pusula-config-api-key");
+  if (!apiKey?.trim()) return configError(400, "x-pusula-config-api-key header is required");
 
   try {
     const results = await generateAllConfigs({

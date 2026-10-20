@@ -11,7 +11,7 @@ import {
   setObsidianVaultPath,
 } from "@/lib/db/obsidian";
 import { createObsidianClient } from "@/lib/obsidian/api";
-import { sanitizeErrorMessage } from "@omniroute/open-sse/utils/error";
+import { sanitizeErrorMessage } from "@pusula/open-sse/utils/error";
 import {
   CLOUD_METADATA_BLOCKED_MESSAGE,
   parseAndValidateNonMetadataUrl,

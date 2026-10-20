@@ -28,12 +28,12 @@ import {
   batchUpdateProviderConnectionsSchema,
 } from "@/shared/validation/schemas";
 import { isValidationFailure, validateBody } from "@/shared/validation/helpers";
-import { normalizeQoderPatProviderData } from "@omniroute/open-sse/services/qoderCli";
-import { projectCodexAccountPool } from "@omniroute/open-sse/services/codexAccount/index.ts";
+import { normalizeQoderPatProviderData } from "@pusula/open-sse/services/qoderCli";
+import { projectCodexAccountPool } from "@pusula/open-sse/services/codexAccount/index.ts";
 import {
   CODEX_SPARK_QUOTA_SESSION,
   CODEX_SPARK_QUOTA_WEEKLY,
-} from "@omniroute/open-sse/config/codexQuotaScopes.ts";
+} from "@pusula/open-sse/config/codexQuotaScopes.ts";
 import {
   normalizeProviderSpecificData,
   sanitizeProviderSpecificDataForResponse,
@@ -220,7 +220,7 @@ export async function POST(request: Request) {
           : "";
       try {
         const { finalizeValidatedChatGptWebCodexSecrets } =
-          await import("@omniroute/open-sse/services/chatgptWebCodexAdmin.ts");
+          await import("@pusula/open-sse/services/chatgptWebCodexAdmin.ts");
         const finalized = finalizeValidatedChatGptWebCodexSecrets(apiKey || "", validationId);
         persistedApiKey = finalized.encodedCredential;
         providerSpecificData = { ...(providerSpecificData || {}) };

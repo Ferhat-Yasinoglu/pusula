@@ -54,15 +54,15 @@ import { isClaudeExtraUsageAllowed } from "@/lib/providers/claudeExtraUsage";
 import {
   getQuotaScopeLabelForProvider,
   isAntigravityQuotaProvider,
-} from "@omniroute/open-sse/services/antigravityQuotaFamily.ts";
+} from "@pusula/open-sse/services/antigravityQuotaFamily.ts";
 import {
   rehydrateAntigravityFamilyLocksForConnections,
   persistAntigravityFamilyCooldownIfQuota,
-} from "@omniroute/open-sse/services/antigravityFamilyCooldown.ts";
+} from "@pusula/open-sse/services/antigravityFamilyCooldown.ts";
 import { markQuotaPreflightAccountUnavailable } from "./quotaPreflightUnavailable.ts";
 import { buildNoAuthModelCooldown } from "./noAuthModelCooldown.ts";
-import { getCreditsMode } from "@omniroute/open-sse/services/antigravityCredits.ts";
-import { preferAntigravityConnectionsWithStoredProject } from "@omniroute/open-sse/services/antigravityProjectPersistence.ts";
+import { getCreditsMode } from "@pusula/open-sse/services/antigravityCredits.ts";
+import { preferAntigravityConnectionsWithStoredProject } from "@pusula/open-sse/services/antigravityProjectPersistence.ts";
 import {
   isAccountUnavailable,
   getUnavailableUntil,
@@ -79,33 +79,33 @@ import {
   recordModelLockoutFailure,
   retryHintBypassesMaxCooldownMs,
   isProviderModelUnsupported400,
-} from "@omniroute/open-sse/services/accountFallback.ts";
-import { isSharedWalletCredits402 } from "@omniroute/open-sse/services/accountFallback/sharedWalletCredits.ts";
-import { isOpencodeFreeTierRefusalForProvider } from "@omniroute/open-sse/executors/opencodeGeoBlock.ts";
-import { isOpencodeFreeTierSkipped } from "@omniroute/open-sse/services/opencodeFreeTierSkip.ts";
-import { isLocalProvider } from "@omniroute/open-sse/config/providerRegistry.ts";
-import { COOLDOWN_MS, RateLimitReason } from "@omniroute/open-sse/config/constants.ts";
-import { sanitizeErrorMessage } from "@omniroute/open-sse/utils/errorSanitization.ts";
+} from "@pusula/open-sse/services/accountFallback.ts";
+import { isSharedWalletCredits402 } from "@pusula/open-sse/services/accountFallback/sharedWalletCredits.ts";
+import { isOpencodeFreeTierRefusalForProvider } from "@pusula/open-sse/executors/opencodeGeoBlock.ts";
+import { isOpencodeFreeTierSkipped } from "@pusula/open-sse/services/opencodeFreeTierSkip.ts";
+import { isLocalProvider } from "@pusula/open-sse/config/providerRegistry.ts";
+import { COOLDOWN_MS, RateLimitReason } from "@pusula/open-sse/config/constants.ts";
+import { sanitizeErrorMessage } from "@pusula/open-sse/utils/errorSanitization.ts";
 import {
   honorsRuleLockScope,
   isEgressBucketedLockScope,
   egressBucketedLockProviders,
-} from "@omniroute/open-sse/config/providerErrorRules.ts";
+} from "@pusula/open-sse/config/providerErrorRules.ts";
 import {
   preflightQuota,
   isQuotaPreflightEnabled,
-} from "@omniroute/open-sse/services/quotaPreflight.ts";
+} from "@pusula/open-sse/services/quotaPreflight.ts";
 import { resolveResilienceSettings } from "@/lib/resilience/settings";
 import { resolveModelLockoutSettings } from "@/lib/resilience/modelLockoutSettings";
 import {
   buildMixedAvailabilityError,
   isTransportCooldownErrorCode,
 } from "../services/sameAccountTransportRetry";
-import { syncHealthFromDB, type KeyHealth } from "@omniroute/open-sse/services/apiKeyRotator.ts";
+import { syncHealthFromDB, type KeyHealth } from "@pusula/open-sse/services/apiKeyRotator.ts";
 import {
   classifyProviderError,
   PROVIDER_ERROR_TYPES,
-} from "@omniroute/open-sse/services/errorClassifier.ts";
+} from "@pusula/open-sse/services/errorClassifier.ts";
 import { resolveTerminalConnectionStatus } from "./authTerminalStatus.ts";
 import {
   ALIBABA_FREE_DRAINED_LOCK_MS,
@@ -115,20 +115,20 @@ import {
   isAlibabaModelStudioProvider,
   mergeAlibabaFreeDrainedModels,
   rehydrateAlibabaFreeDrainedModelLocks,
-} from "@omniroute/open-sse/services/alibabaFreeTier.ts";
+} from "@pusula/open-sse/services/alibabaFreeTier.ts";
 
 import {
   getCodexModelScope,
   getCodexQuotaWindowFilterForModel,
   toCodexBaseQuotaWindowName,
   toCodexScopedQuotaWindowName,
-} from "@omniroute/open-sse/config/codexQuotaScopes.ts";
-import { formatQuotaUsageReason } from "@omniroute/open-sse/services/quotaWindowLabel.ts";
+} from "@pusula/open-sse/config/codexQuotaScopes.ts";
+import { formatQuotaUsageReason } from "@pusula/open-sse/services/quotaWindowLabel.ts";
 import {
   getCodexChildCooldown,
   isCodexChildUnavailable,
   persistCodexChildCooldown,
-} from "@omniroute/open-sse/services/codexAccount/index.ts";
+} from "@pusula/open-sse/services/codexAccount/index.ts";
 import {
   getProviderById,
   getProviderAlias,
@@ -197,7 +197,7 @@ import { isSyntheticEmptyStreamFailure } from "./syntheticEmptyStream.ts";
 import {
   getOAuthSessionAvailability,
   reserveOAuthSession,
-} from "@omniroute/open-sse/services/oauthSessionOccupancy.ts";
+} from "@pusula/open-sse/services/oauthSessionOccupancy.ts";
 
 type JsonRecord = Record<string, unknown>;
 interface RecoverableConnectionState {
@@ -1344,7 +1344,7 @@ export async function getProviderCredentials(
         }) ?? forcedConnectionId;
     }
 
-    // A forced connection (combo step `connectionId` / `x-omniroute-connection`) is an
+    // A forced connection (combo step `connectionId` / `x-pusula-connection`) is an
     // operator instruction, not a suggestion. resolveForcedConnectionForCredentialPool()
     // legitimately returns null for several *intentional* pin-release cases (forced ID
     // already in excludedConnectionIds after a failed attempt, cooldown, quota exhaustion,
@@ -2703,7 +2703,7 @@ export async function markAccountUnavailable(
     // worst case is one extra background refresh.
     if (provider) {
       const { invalidateFreeAccessState } =
-        await import("@omniroute/open-sse/services/autoCombo/freeAccessQuota.ts");
+        await import("@pusula/open-sse/services/autoCombo/freeAccessQuota.ts");
       invalidateFreeAccessState(provider, connectionId);
     }
 
@@ -3043,7 +3043,7 @@ export async function markAccountUnavailable(
       // combo-provider-cooldown-sibling.test.ts — "Gemini 503 should NOT skip
       // cooldown"). 502/503/504 keep the pre-#6216 model-lockout path: cooldownMs
       // 0 hot-loops the failing upstream (broke resilience-http-e2e on the PR).
-      // The empty-stream 502 is synthesized by OmniRoute, not the provider: locking
+      // The empty-stream 502 is synthesized by Pusula, not the provider: locking
       // the model benched healthy accounts and emptied the combo (incident 2026-09-21).
       if (status === 500 || isSyntheticEmptyStreamFailure(status, errorText)) {
         updateProviderConnection(connectionId, {
@@ -3528,7 +3528,7 @@ function readNonEmptyUrlToken(request: AuthRequestLike): string | null {
  *
  * Honors explicit auth headers and (for client-facing routes only) a
  * path-scoped URL token:
- * - `Authorization: Bearer <key>` (OpenAI / OmniRoute / Codex CLI / Bearer clients)
+ * - `Authorization: Bearer <key>` (OpenAI / Pusula / Codex CLI / Bearer clients)
  * - `x-api-key: <key>` (Anthropic Messages API contract — Claude Code,
  *   `@anthropic-ai/sdk`, any SDK that sets `anthropic-version`) / `x-goog-api-key` (#7034)
  * - `/vscode/<key>/...` (path-scoped tokenized aliases — only when `allowUrl`)
@@ -3540,7 +3540,7 @@ function readNonEmptyUrlToken(request: AuthRequestLike): string | null {
  * speaking the Anthropic Messages API contract. Without this scoping,
  * non-Anthropic SDKs that happen to set `x-api-key` (or local-mode tools
  * with placeholder keys) would be treated as authenticated attempts and
- * rejected by per-route gates that compare against OmniRoute keys.
+ * rejected by per-route gates that compare against Pusula keys.
  *
  * `opts.allowUrl` (default `true`) gates the path-scoped URL token. Management
  * auth MUST pass `allowUrl: false` — a credential in the URL must never
@@ -3586,7 +3586,7 @@ export function extractApiKey(request: AuthRequestLike, opts?: { allowUrl?: bool
 
 /**
  * Validate API key (optional - for local use can skip).
- * Feature #1350: Supports OMNIROUTE_API_KEY / ROUTER_API_KEY env vars as
+ * Feature #1350: Supports PUSULA_API_KEY / ROUTER_API_KEY env vars as
  * persistent passthrough keys that always validate, surviving Docker
  * restarts and backup restores without DB dependency.
  */
@@ -3594,7 +3594,7 @@ export async function isValidApiKey(apiKey: string) {
   if (!apiKey) return false;
 
   // Persistent env-var key — always valid regardless of DB state (#1350)
-  const envKey = process.env.OMNIROUTE_API_KEY || process.env.ROUTER_API_KEY;
+  const envKey = process.env.PUSULA_API_KEY || process.env.ROUTER_API_KEY;
   if (envKey && apiKey === envKey) return true;
 
   return await validateApiKey(apiKey);

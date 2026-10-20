@@ -4,9 +4,9 @@ import {
   getTargetFormat,
   buildProviderUrl,
   buildProviderHeaders,
-} from "@omniroute/open-sse/services/provider.ts";
-import { translateRequest } from "@omniroute/open-sse/translator/index.ts";
-import { FORMATS } from "@omniroute/open-sse/translator/formats.ts";
+} from "@pusula/open-sse/services/provider.ts";
+import { translateRequest } from "@pusula/open-sse/translator/index.ts";
+import { FORMATS } from "@pusula/open-sse/translator/formats.ts";
 import { getProviderConnections } from "@/lib/db/providers";
 import { isConnectionUnavailableToAuxiliaryActivity } from "@/lib/exclusiveLeaseIsolation";
 import { translatorTranslateSchema } from "@/shared/validation/schemas";

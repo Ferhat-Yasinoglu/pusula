@@ -4,7 +4,7 @@
 
 ---
 
-Die RTK-Komprimierung ist OmniRoutes befehlsorientierte Komprimierungs-Engine für Terminal- und Tool-Ausgaben. Sie ist
+Die RTK-Komprimierung ist Pusulas befehlsorientierte Komprimierungs-Engine für Terminal- und Tool-Ausgaben. Sie ist
 für Sitzungen mit Coding-Agenten konzipiert, bei denen der Kontextzuwachs hauptsächlich durch Testprotokolle, Build-Ausgaben,
 Ausgaben von Paketmanagern, Shell-Transkripte, Docker-Ausgaben, git-Ausgaben und Stacktraces entsteht.
 
@@ -17,7 +17,7 @@ rtk -> caveman
 Diese Reihenfolge komprimiert zuerst störende Maschinenausgaben und lässt Caveman anschließend die verbleibenden Fließtexte verdichten.
 
 Das vorgelagerte RTK-Projekt gibt Einsparungen von `60-90%` bei Befehlsausgaben an. Die Beispielsitzung in seiner README reduziert sich von
-`~118,000` Standard-Tokens auf `~23,900` RTK-Tokens, was einer Einsparung von `79.7%` (`~80%`) entspricht. OmniRoute verwendet
+`~118,000` Standard-Tokens auf `~23,900` RTK-Tokens, was einer Einsparung von `79.7%` (`~80%`) entspricht. Pusula verwendet
 diesen vorgelagerten Durchschnitt für die Berechnung der gestapelten Einsparungen zusammen mit der Caveman-Eingabekomprimierung:
 
 ```txt
@@ -54,7 +54,7 @@ RTK lädt Filter in dieser Reihenfolge:
 2. Globale Filter aus `DATA_DIR/rtk/filters.toml` und `DATA_DIR/rtk/filters.json`.
 3. Integrierte Filter aus `open-sse/services/compression/engines/rtk/filters/`.
 
-Innerhalb desselben Gültigkeitsbereichs haben RTK-TOML-Filter nach Schema v1 Vorrang vor OmniRoute-JSON-Filtern. TOML-
+Innerhalb desselben Gültigkeitsbereichs haben RTK-TOML-Filter nach Schema v1 Vorrang vor Pusula-JSON-Filtern. TOML-
 `match_command`-Ausdrücke werden vor der Prüfung des Befehlstyps ausgewertet, sodass ein importierter befehlsspezifischer
 Filter einen allgemeineren Filter im selben Gültigkeitsbereich überschreiben kann. Der Projektbereich hat weiterhin Vorrang vor dem globalen
 Bereich, unabhängig vom Dateiformat.
@@ -63,7 +63,7 @@ Projektfilter unterliegen bewusst einer Vertrauensprüfung, da Regex-Filter ver�
 Agenten angezeigt werden. Eine Projektfilterdatei wird akzeptiert, wenn eine der folgenden Bedingungen erfüllt ist:
 
 - `rtkConfig.trustProjectFilters` ist `true`.
-- `OMNIROUTE_RTK_TRUST_PROJECT_FILTERS=1` ist gesetzt.
+- `PUSULA_RTK_TRUST_PROJECT_FILTERS=1` ist gesetzt.
 - `.rtk/trust.json` enthält den passenden SHA-256-Hash für die Projektfilterdatei.
 
 Beispiel für eine Vertrauensdatei:
@@ -84,7 +84,7 @@ Benutzerdefinierte Filter können aus einem einzelnen Filterobjekt oder einem Ar
 
 ## Kompatibilität mit RTK-TOML-Schema v1
 
-OmniRoute kann deklarative Filterdateien gemäß RTK-TOML-Schema v1 parsen, validieren, testen und installieren.
+Pusula kann deklarative Filterdateien gemäß RTK-TOML-Schema v1 parsen, validieren, testen und installieren.
 Die unterstützten Felder sind `description`, `match_command`, `strip_ansi`, `filter_stderr`,
 `strip_lines_matching`, `keep_lines_matching`, `replace`, `match_output`, `truncate_lines_at`,
 `head_lines`, `tail_lines`, `max_lines`, `on_empty` sowie eingebettete Tests vom Typ `[[tests.<filter>]]`.
@@ -93,7 +93,7 @@ Unbekannte Felder, ungültige oder unsichere reguläre Ausdrücke, gleichzeitig 
 validiert, aber nicht installiert oder geladen werden. Fehler beim Laden benutzerdefinierter Dateien werden weiterhin
 nach dem Fail-open-Prinzip behandelt: Die ungültige Datei wird übersprungen, und die übrigen Filter funktionieren weiterhin.
 
-OmniRoute empfängt die Werkzeugausgabe, nachdem der Client sie bereits erfasst hat, daher kann `filter_stderr = true`
+Pusula empfängt die Werkzeugausgabe, nachdem der Client sie bereits erfasst hat, daher kann `filter_stderr = true`
 die Prozesserfassung nicht ändern. Das Feld wird als wirkungslose Operation akzeptiert, und die Validierung gibt eine Warnung zurück.
 Dies wird bewusst als **Kompatibilität mit RTK-TOML-Schema v1** und nicht als vollständige Kompatibilität
 mit der ausführbaren RTK-Datei, Shell-Hooks, Rust-Befehlsimplementierungen oder der Struktur des Trust-Stores bezeichnet.
@@ -434,12 +434,12 @@ Sowohl der **Anfang** als auch das **Ende** jedes Abschnitts bleiben erhalten; I
 
 **Programmatisch**:
 
-`rtkEngine` (`@omniroute/open-sse/services/compression/engines/rtk`) ist eine
+`rtkEngine` (`@pusula/open-sse/services/compression/engines/rtk`) ist eine
 `CompressionEngine` und besitzt keine `updateConfig`-Methode. Aktualisieren Sie die Konfiguration
 einer Engine stattdessen über die Registry-Hilfsfunktion:
 
 ```ts
-import { updateEngineConfig } from "@omniroute/open-sse/services/compression/engines/registry";
+import { updateEngineConfig } from "@pusula/open-sse/services/compression/engines/registry";
 
 updateEngineConfig("rtk", { intensity: "aggressive" });
 ```
@@ -449,7 +449,7 @@ updateEngineConfig("rtk", { intensity: "aggressive" });
 Verwenden Sie das **Verifizierungs-Gate** (siehe unten), um zu bestätigen, dass Ihr Filter bei der gewählten Intensität sicher ist:
 
 ```ts
-import { runRtkFilterTests } from "omniroute/compression/engines/rtk/verify";
+import { runRtkFilterTests } from "pusula/compression/engines/rtk/verify";
 
 const result = runRtkFilterTests({ intensity: "aggressive" });
 if (!result.passed) {
@@ -563,20 +563,20 @@ Das Verzeichnis `engines/rtk/filters/` enthält **49+ integrierte Filter-JSON-Da
 Legen Sie die Datei an einem der erkannten Speicherorte ab:
 
 ```
-~/.omniroute/rtk/filters/my-filter.json     # Benutzerebene
+~/.pusula/rtk/filters/my-filter.json     # Benutzerebene
 <project>/.rtk/filters/my-filter.json      # Projektebene
 ```
 
 Filter werden beim Start automatisch über `loadRtkFilters()` in `open-sse/services/compression/engines/rtk/filterLoader.ts` geladen. Der Loader erkennt Filter aus folgenden Quellen:
 
 - Integrierter Katalog: `open-sse/services/compression/engines/rtk/filters/`
-- Benutzerverzeichnis: `~/.omniroute/rtk/filters/`
+- Benutzerverzeichnis: `~/.pusula/rtk/filters/`
 - Projektverzeichnis: `<project>/.rtk/filters/`
 
 So laden Sie Filter programmgesteuert:
 
 ```ts
-import { loadRtkFilters } from "@omniroute/open-sse/services/compression/engines/rtk/filterLoader";
+import { loadRtkFilters } from "@pusula/open-sse/services/compression/engines/rtk/filterLoader";
 
 // Optionen: customFiltersEnabled (Benutzer-/Projektfilter laden, standardmäßig aktiviert),
 // trustProjectFilters, refresh.
@@ -655,7 +655,7 @@ RTK-Komprimierung (mit rawOutput.enabled=true)
 ### Wiederherstellen des Originals
 
 ```ts
-import { readRtkRawOutput } from "omniroute/compression/engines/rtk/rawOutput";
+import { readRtkRawOutput } from "pusula/compression/engines/rtk/rawOutput";
 
 const raw = readRtkRawOutput(pointerId); // pointerId aus den Komprimierungsstatistiken
 if (raw) {

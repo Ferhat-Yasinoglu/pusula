@@ -15,7 +15,7 @@ import { isDegradedDiscovery } from "../../src/app/api/providers/[id]/sync-model
  * permanent, silent auto-sync dead zone: the provider could never persist a
  * model while its /models endpoint kept answering HTTP 200.
  *
- * Observed live on OmniRoute v3.8.50: every catalog-only no-auth provider
+ * Observed live on Pusula v3.8.50: every catalog-only no-auth provider
  * (cloudflare-playground, duckduckgo-web and peers) was blocked this way.
  */
 

@@ -8,7 +8,7 @@ lastUpdated: 2026-08-31
 
 🌐 **Languages:** 🇺🇸 [English](./API_REFERENCE.md) | 🇪🇹 [አማርኛ](../i18n/am/docs/reference/API_REFERENCE.md) | 🇸🇦 [العربية](../i18n/ar/docs/reference/API_REFERENCE.md) | 🇦🇿 [Azərbaycan dili](../i18n/az/docs/reference/API_REFERENCE.md) | 🇧🇬 [Български](../i18n/bg/docs/reference/API_REFERENCE.md) | 🇧🇩 [বাংলা](../i18n/bn/docs/reference/API_REFERENCE.md) | 🇧🇦 [Bosanski](../i18n/bs/docs/reference/API_REFERENCE.md) | 🇨🇿 [Čeština](../i18n/cs/docs/reference/API_REFERENCE.md) | 🇩🇰 [Dansk](../i18n/da/docs/reference/API_REFERENCE.md) | 🇩🇪 [Deutsch](../i18n/de/docs/reference/API_REFERENCE.md) | 🇬🇷 [Ελληνικά](../i18n/el/docs/reference/API_REFERENCE.md) | 🇪🇸 [Español](../i18n/es/docs/reference/API_REFERENCE.md) | 🇪🇪 [Eesti](../i18n/et/docs/reference/API_REFERENCE.md) | 🇮🇷 [فارسی](../i18n/fa/docs/reference/API_REFERENCE.md) | 🇫🇮 [Suomi](../i18n/fi/docs/reference/API_REFERENCE.md) | 🇫🇷 [Français](../i18n/fr/docs/reference/API_REFERENCE.md) | 🇮🇪 [Gaeilge](../i18n/ga/docs/reference/API_REFERENCE.md) | 🇮🇳 [ગુજરાતી](../i18n/gu/docs/reference/API_REFERENCE.md) | 🇳🇬 [Hausa](../i18n/ha/docs/reference/API_REFERENCE.md) | 🇮🇱 [עברית](../i18n/he/docs/reference/API_REFERENCE.md) | 🇮🇳 [हिन्दी](../i18n/hi/docs/reference/API_REFERENCE.md) | 🇭🇷 [Hrvatski](../i18n/hr/docs/reference/API_REFERENCE.md) | 🇭🇺 [Magyar](../i18n/hu/docs/reference/API_REFERENCE.md) | 🇦🇲 [Հայերեն](../i18n/hy/docs/reference/API_REFERENCE.md) | 🇮🇩 [Bahasa Indonesia](../i18n/id/docs/reference/API_REFERENCE.md) | 🇳🇬 [Igbo](../i18n/ig/docs/reference/API_REFERENCE.md) | 🇮🇹 [Italiano](../i18n/it/docs/reference/API_REFERENCE.md) | 🇯🇵 [日本語](../i18n/ja/docs/reference/API_REFERENCE.md) | 🇬🇪 [ქართული](../i18n/ka/docs/reference/API_REFERENCE.md) | 🇰🇭 [ខ្មែរ](../i18n/km/docs/reference/API_REFERENCE.md) | 🇮🇳 [ಕನ್ನಡ](../i18n/kn/docs/reference/API_REFERENCE.md) | 🇰🇷 [한국어](../i18n/ko/docs/reference/API_REFERENCE.md) | 🇱🇹 [Lietuvių](../i18n/lt/docs/reference/API_REFERENCE.md) | 🇱🇻 [Latviešu](../i18n/lv/docs/reference/API_REFERENCE.md) | 🇮🇳 [മലയാളം](../i18n/ml/docs/reference/API_REFERENCE.md) | 🇮🇳 [मराठी](../i18n/mr/docs/reference/API_REFERENCE.md) | 🇲🇾 [Bahasa Melayu](../i18n/ms/docs/reference/API_REFERENCE.md) | 🇲🇹 [Malti](../i18n/mt/docs/reference/API_REFERENCE.md) | 🇲🇲 [မြန်မာ](../i18n/my/docs/reference/API_REFERENCE.md) | 🇳🇵 [नेपाली](../i18n/ne/docs/reference/API_REFERENCE.md) | 🇳🇱 [Nederlands](../i18n/nl/docs/reference/API_REFERENCE.md) | 🇳🇴 [Norsk](../i18n/no/docs/reference/API_REFERENCE.md) | 🇮🇳 [ଓଡ଼ିଆ](../i18n/or/docs/reference/API_REFERENCE.md) | 🇮🇳 [ਪੰਜਾਬੀ](../i18n/pa/docs/reference/API_REFERENCE.md) | 🇵🇭 [Filipino](../i18n/phi/docs/reference/API_REFERENCE.md) | 🇵🇱 [Polski](../i18n/pl/docs/reference/API_REFERENCE.md) | 🇵🇹 [Português (Portugal)](../i18n/pt/docs/reference/API_REFERENCE.md) | 🇧🇷 [Português (Brasil)](../i18n/pt-BR/docs/reference/API_REFERENCE.md) | 🇷🇴 [Română](../i18n/ro/docs/reference/API_REFERENCE.md) | 🇷🇺 [Русский](../i18n/ru/docs/reference/API_REFERENCE.md) | 🇱🇰 [සිංහල](../i18n/si/docs/reference/API_REFERENCE.md) | 🇸🇰 [Slovenčina](../i18n/sk/docs/reference/API_REFERENCE.md) | 🇸🇮 [Slovenščina](../i18n/sl/docs/reference/API_REFERENCE.md) | 🇷🇸 [Српски](../i18n/sr/docs/reference/API_REFERENCE.md) | 🇸🇪 [Svenska](../i18n/sv/docs/reference/API_REFERENCE.md) | 🇰🇪 [Kiswahili](../i18n/sw/docs/reference/API_REFERENCE.md) | 🇮🇳 [தமிழ்](../i18n/ta/docs/reference/API_REFERENCE.md) | 🇮🇳 [తెలుగు](../i18n/te/docs/reference/API_REFERENCE.md) | 🇹🇭 [ไทย](../i18n/th/docs/reference/API_REFERENCE.md) | 🇹🇷 [Türkçe](../i18n/tr/docs/reference/API_REFERENCE.md) | 🇺🇦 [Українська](../i18n/uk-UA/docs/reference/API_REFERENCE.md) | 🇵🇰 [اردو](../i18n/ur/docs/reference/API_REFERENCE.md) | 🇺🇿 [Oʻzbekcha](../i18n/uz/docs/reference/API_REFERENCE.md) | 🇻🇳 [Tiếng Việt](../i18n/vi/docs/reference/API_REFERENCE.md) | 🇳🇬 [Yorùbá](../i18n/yo/docs/reference/API_REFERENCE.md) | 🇨🇳 [中文 (简体)](../i18n/zh-CN/docs/reference/API_REFERENCE.md) | 🇹🇼 [中文 (繁體)](../i18n/zh-TW/docs/reference/API_REFERENCE.md)
 
-Core reference for the OmniRoute API. It covers the public `/v1` surface and the most-used management endpoints; the machine-readable [`docs/openapi.yaml`](../openapi.yaml) and the route tree under `src/app/api/` are the exhaustive sources.
+Core reference for the Pusula API. It covers the public `/v1` surface and the most-used management endpoints; the machine-readable [`docs/openapi.yaml`](../openapi.yaml) and the route tree under `src/app/api/` are the exhaustive sources.
 
 ---
 
@@ -65,33 +65,33 @@ Content-Type: application/json
 
 | Header                   | Direction | Description                                                                                                                                                                                        |
 | ------------------------ | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `X-OmniRoute-No-Cache`   | Request   | Set to `true` to bypass cache                                                                                                                                                                      |
-| `x-omniroute-no-memory`  | Request   | Set to `true` to skip memory + skills injection for this request (mirrors no-cache; avoids the per-call token/cost overhead)                                                                       |
-| `X-OmniRoute-Progress`   | Request   | Set to `true` for progress events                                                                                                                                                                  |
+| `X-Pusula-No-Cache`   | Request   | Set to `true` to bypass cache                                                                                                                                                                      |
+| `x-pusula-no-memory`  | Request   | Set to `true` to skip memory + skills injection for this request (mirrors no-cache; avoids the per-call token/cost overhead)                                                                       |
+| `X-Pusula-Progress`   | Request   | Set to `true` for progress events                                                                                                                                                                  |
 | `X-Session-Id`           | Request   | Sticky session key for external session affinity                                                                                                                                                   |
 | `x_session_id`           | Request   | Underscore variant also accepted (direct HTTP)                                                                                                                                                     |
-| `X-OmniRoute-Session-Id` | Request   | Caller-supplied session/conversation tag (also feeds memory). When present, persisted verbatim to `call_logs.session_tag` for per-session cost attribution (#8249) — never synthesized when absent |
+| `X-Pusula-Session-Id` | Request   | Caller-supplied session/conversation tag (also feeds memory). When present, persisted verbatim to `call_logs.session_tag` for per-session cost attribution (#8249) — never synthesized when absent |
 | `Idempotency-Key`        | Request   | Dedup key (5s window)                                                                                                                                                                              |
 | `X-Request-Id`           | Request   | Alternative dedup key                                                                                                                                                                              |
-| `X-OmniRoute-Cache`      | Response  | `HIT` or `MISS` (non-streaming)                                                                                                                                                                    |
-| `X-OmniRoute-Idempotent` | Response  | `true` if deduplicated                                                                                                                                                                             |
-| `X-OmniRoute-Progress`   | Response  | `enabled` if progress tracking on                                                                                                                                                                  |
-| `X-OmniRoute-Session-Id` | Response  | Effective session ID used by OmniRoute                                                                                                                                                             |
-| `X-OmniRoute-Request-Id` | Response  | Request correlation id (when known)                                                                                                                                                                |
-| `X-OmniRoute-Version`    | Response  | OmniRoute build version (always present)                                                                                                                                                           |
-| `X-OmniRoute-Cost-Saved` | Response  | USD the cache avoided on a HIT (cache hits only)                                                                                                                                                   |
-| `X-OmniRoute-Decision`   | Response  | Routing trace: `strategy=<name>; provider=<alias>; latency_ms=<n>` (`<name>` is the combo strategy, or `single` for a non-combo request) — always present on completion responses                  |
+| `X-Pusula-Cache`      | Response  | `HIT` or `MISS` (non-streaming)                                                                                                                                                                    |
+| `X-Pusula-Idempotent` | Response  | `true` if deduplicated                                                                                                                                                                             |
+| `X-Pusula-Progress`   | Response  | `enabled` if progress tracking on                                                                                                                                                                  |
+| `X-Pusula-Session-Id` | Response  | Effective session ID used by Pusula                                                                                                                                                             |
+| `X-Pusula-Request-Id` | Response  | Request correlation id (when known)                                                                                                                                                                |
+| `X-Pusula-Version`    | Response  | Pusula build version (always present)                                                                                                                                                           |
+| `X-Pusula-Cost-Saved` | Response  | USD the cache avoided on a HIT (cache hits only)                                                                                                                                                   |
+| `X-Pusula-Decision`   | Response  | Routing trace: `strategy=<name>; provider=<alias>; latency_ms=<n>` (`<name>` is the combo strategy, or `single` for a non-combo request) — always present on completion responses                  |
 
 > Nginx note: if you rely on underscore headers (for example `x_session_id`), enable `underscores_in_headers on;`.
 
-> **Cost telemetry headers:** non-streaming success responses also carry the `X-OmniRoute-*` cost-telemetry set — `X-OmniRoute-Response-Cost` (USD, fixed 10 decimals; `0.0000000000` for free/unpriced), `X-OmniRoute-Tokens-In` / `X-OmniRoute-Tokens-Out`, `X-OmniRoute-Model`, `X-OmniRoute-Provider`, `X-OmniRoute-Latency-Ms`, `X-OmniRoute-Cache-Hit`, and `X-OmniRoute-Fallback-Attempts` (only when > 0), plus `X-OmniRoute-Request-Id` and `X-OmniRoute-Version`. These are emitted by chat completions, `/v1/responses`, `/v1/messages`, **and the media endpoints** — `/v1/embeddings`, `/v1/images/generations`, `/v1/audio/speech`, `/v1/audio/transcriptions`, `/v1/rerank`, `/v1/videos/generations`, `/v1/music/generations`, and `/v1/moderations` (always cost `0`). Media cost is computed per modality (per-image, per-second, per-character, per search-unit) when pricing is available, otherwise `0` (fail-open).
+> **Cost telemetry headers:** non-streaming success responses also carry the `X-Pusula-*` cost-telemetry set — `X-Pusula-Response-Cost` (USD, fixed 10 decimals; `0.0000000000` for free/unpriced), `X-Pusula-Tokens-In` / `X-Pusula-Tokens-Out`, `X-Pusula-Model`, `X-Pusula-Provider`, `X-Pusula-Latency-Ms`, `X-Pusula-Cache-Hit`, and `X-Pusula-Fallback-Attempts` (only when > 0), plus `X-Pusula-Request-Id` and `X-Pusula-Version`. These are emitted by chat completions, `/v1/responses`, `/v1/messages`, **and the media endpoints** — `/v1/embeddings`, `/v1/images/generations`, `/v1/audio/speech`, `/v1/audio/transcriptions`, `/v1/rerank`, `/v1/videos/generations`, `/v1/music/generations`, and `/v1/moderations` (always cost `0`). Media cost is computed per modality (per-image, per-second, per-character, per search-unit) when pricing is available, otherwise `0` (fail-open).
 
-> **Cache-hit cost semantics:** on a semantic-cache HIT (`X-OmniRoute-Cache-Hit: true`) no upstream call is made, so `X-OmniRoute-Response-Cost` is `0.0000000000` (the **incremental** cost of serving the hit). The original/would-have-been cost is reported separately in `X-OmniRoute-Cost-Saved`. Billing consumers should sum `X-OmniRoute-Response-Cost` (hits cost nothing); cache analytics can aggregate `X-OmniRoute-Cost-Saved`.
+> **Cache-hit cost semantics:** on a semantic-cache HIT (`X-Pusula-Cache-Hit: true`) no upstream call is made, so `X-Pusula-Response-Cost` is `0.0000000000` (the **incremental** cost of serving the hit). The original/would-have-been cost is reported separately in `X-Pusula-Cost-Saved`. Billing consumers should sum `X-Pusula-Response-Cost` (hits cost nothing); cache analytics can aggregate `X-Pusula-Cost-Saved`.
 
 ## Exclusive Managed Session Leases
 
 Exclusive managed session leasing is an opt-in, client-neutral routing contract: one active owner
-holds one eligible OmniRoute connection. It does not lease a model, require OAuth, identify a
+holds one eligible Pusula connection. It does not lease a model, require OAuth, identify a
 particular client, or require a particular provider.
 
 The authenticating API key must have scope `lease:exclusive` and an explicit non-empty
@@ -102,7 +102,7 @@ creation and partial updates.
 POST /api/v1/session-leases
 Authorization: Bearer <managed-api-key>
 Content-Type: application/json
-X-OmniRoute-Lease-Owner: vlo_<43-base64url-characters>
+X-Pusula-Lease-Owner: vlo_<43-base64url-characters>
 
 {"action":"acquire","model":"glm/glm-4.6"}
 ```
@@ -141,7 +141,7 @@ An active lease owner can explicitly request privacy-safe display metadata for i
 
 This opt-in status action is fenced by the opaque owner, authenticated managed API key, and exact
 active generation in one database transaction. `displayName` is only the trimmed configured
-connection name; it is `null` when no safe configured name exists. OmniRoute never substitutes an
+connection name; it is `null` when no safe configured name exists. Pusula never substitutes an
 email or generated account identity. The provider value is a non-sensitive display label and never
 a generated compatible-provider identifier. Credentials, tokens, cookies, raw connection or API
 key ids, owner hashes, fencing secrets, and internal routing data are excluded.
@@ -160,8 +160,8 @@ display `connection.displayName`.
 Every managed inference request then supplies both control headers:
 
 ```http
-X-OmniRoute-Lease-Owner: vlo_<43-base64url-characters>
-X-OmniRoute-Lease-Generation: 1
+X-Pusula-Lease-Owner: vlo_<43-base64url-characters>
+X-Pusula-Lease-Generation: 1
 ```
 
 The exact owner, generation, active connection, and authenticated API key are fenced immediately
@@ -182,9 +182,9 @@ Temporary contention returns HTTP `429` with `Retry-After` and:
 
 This response only means that the ordinary eligible set was non-empty and every free candidate was
 held by a foreign active lease. Unsupported models/providers, policy mismatch, cooldown, quota,
-health, and other ordinary eligibility failures retain their existing OmniRoute responses.
+health, and other ordinary eligibility failures retain their existing Pusula responses.
 
-### `x-omniroute-compression`
+### `x-pusula-compression`
 
 Per-request override of the compression plan. Highest precedence — beats the routing-combo
 override, the active profile, auto-trigger, and the panel Default. Values:
@@ -208,7 +208,7 @@ Notes:
 The applied plan is echoed back in the response header:
 
 ```
-X-OmniRoute-Compression: <mode>; source=<source>
+X-Pusula-Compression: <mode>; source=<source>
 ```
 
 where `<source>` is one of `request-header`, `routing-override`, `active-profile`, `auto-trigger`, `default`, or `off`.
@@ -255,7 +255,7 @@ EmbeddingsV5Request docs and **forwards them intact** to `https://api.jina.ai/v1
 ```
 
 Native `{ image | audio | video | pdf }` values may be a public HTTPS URL, a `data:` URI, or raw
-base64. OmniRoute does not stringify those objects or fetch native image URLs — Jina retrieves
+base64. Pusula does not stringify those objects or fetch native image URLs — Jina retrieves
 public media itself. Extra Jina fields (`task`, `normalized`, `truncate`, `embedding_type`) are
 forwarded. Text-only Jina SKUs still reject non-text docs.
 
@@ -372,7 +372,7 @@ caller, so client code does not need to special-case the provider.
 
 ### Vertex AI DeepSeek OCR auth and endpoint resolution
 
-`vertex-deepseek-ocr` reuses the same Vertex AI authentication OmniRoute already supports for
+`vertex-deepseek-ocr` reuses the same Vertex AI authentication Pusula already supports for
 chat/image traffic (`open-sse/executors/vertex.ts`): the connection's API key is either a
 Service Account JSON credential (exchanged for a short-lived OAuth access token via the JWT-bearer
 flow) or an already-minted OAuth access token used as-is. The upstream endpoint URL is Vertex's
@@ -421,10 +421,10 @@ Clients that render a model picker should request `?prefix=alias` — this is wh
 
 ### No-thinking model variants
 
-For thinking-capable Claude models, `/v1/models` also advertises a **no-thinking** variant whose id is prefixed with `claude-3-omniroute-no-thinking/`:
+For thinking-capable Claude models, `/v1/models` also advertises a **no-thinking** variant whose id is prefixed with `claude-3-pusula-no-thinking/`:
 
 ```
-claude-3-omniroute-no-thinking/<provider>/<model>
+claude-3-pusula-no-thinking/<provider>/<model>
 ```
 
 Selecting this id (e.g. in a Claude Code config that always attaches a `thinking` block) resolves back to the real `<provider>/<model>` with reasoning suppressed — `thinking:{type:"disabled"}` on the `/v1/messages` path, or the `reasoning`/`reasoning_effort` fields dropped on the `/v1/chat/completions` path. The variant is only listed for Claude-family models that support thinking **and** honor `disabled` (so e.g. adaptive-only models that reject `disabled` are excluded). Operators can force the variant on or off per model via `ModelSpec.noThinkingAlias`.
@@ -479,7 +479,7 @@ Use this endpoint when a sidecar runs out-of-process and cannot import
 
 All POST routes follow the same shape: `Bearer your-api-key` + Zod-validated JSON body (`v1RerankSchema`, `v1ModerationSchema`, `v1AudioSpeechSchema`, etc., see `src/shared/validation/schemas.ts`). 4xx is returned on schema failure.
 
-For clients that cannot attach `Authorization: Bearer ...`, OmniRoute also accepts API keys in the URL via either query-string compatibility (`?token=...`, `?apiKey=...`, `?api_key=...`, `?key=...`) or the dedicated `/api/v1/vscode/{token}/...` endpoints documented below.
+For clients that cannot attach `Authorization: Bearer ...`, Pusula also accepts API keys in the URL via either query-string compatibility (`?token=...`, `?apiKey=...`, `?api_key=...`, `?key=...`) or the dedicated `/api/v1/vscode/{token}/...` endpoints documented below.
 
 ```bash
 # Rerank (cloud registry provider, or an OpenAI-compatible provider node as "<prefix>/<model>")
@@ -513,7 +513,7 @@ POST /v1/music/generations  { "model": "kie/suno-v4.0",   "prompt": "..." }
 > nodes (`localhost`, `127.0.0.1`, `172.16.0.0/12`) are always eligible. Nodes on any other
 > host — a LAN box or Tailscale peer — are eligible only when the operator enables the
 > `RERANK_REMOTE_PROVIDER_NODES` feature flag **and** the node's base URL passes the provider
-> outbound URL policy (`OMNIROUTE_ALLOW_LOCAL_PROVIDER_URLS` / `OMNIROUTE_ALLOW_PRIVATE_PROVIDER_URLS`);
+> outbound URL policy (`PUSULA_ALLOW_LOCAL_PROVIDER_URLS` / `PUSULA_ALLOW_PRIVATE_PROVIDER_URLS`);
 > cloud-metadata hosts are never routed to. The memory engine's rerank step calls this route over
 > loopback, so the same rule governs `rerankProviderModel` in the Memory settings.
 >
@@ -637,8 +637,8 @@ Validates a WebSocket upgrade handshake and returns the wire protocol example me
 
 ```bash
 # Same host:port as the HTTP API (default 20128); upgrade the connection:
-wscat -c "ws://localhost:20128/v1/responses?api_key=<OMNIROUTE_API_KEY>"
-# (or: -H "Authorization: Bearer <OMNIROUTE_API_KEY>")
+wscat -c "ws://localhost:20128/v1/responses?api_key=<PUSULA_API_KEY>"
+# (or: -H "Authorization: Bearer <PUSULA_API_KEY>")
 
 # First frame MUST be response.create:
 { "type": "response.create", "model": "gpt-5.5", "input": [ { "role": "user", "content": "hi" } ] }
@@ -661,35 +661,35 @@ must be the active entrypoint (it is, by default, when `app/server-ws.mjs` exist
 The OpenAI **Codex CLI** validates the model name client-side when
 `supports_websockets = true` and **rejects provider-prefixed ids** like
 `codex/gpt-5.5` (`The 'codex/gpt-5.5' model is not supported when using Codex with
-a ChatGPT account`). Send the **bare** id (e.g. `gpt-5.5`). OmniRoute's bridge is
+a ChatGPT account`). Send the **bare** id (e.g. `gpt-5.5`). Pusula's bridge is
 codex-only, so it re-resolves a bare id as a codex model
 (`resolveCodexWsModelInfo`) before tunneling upstream — even though a bare
 `gpt-5.5` would otherwise route to another provider over HTTP.
 
 #### Configuring the OpenAI Codex CLI
 
-Point the Codex CLI at OmniRoute by adding a custom provider with WebSocket
+Point the Codex CLI at Pusula by adding a custom provider with WebSocket
 support to `~/.codex/config.toml` (use a separate `CODEX_HOME` to avoid touching
 an existing config):
 
 ```toml
 model = "gpt-5.5"                 # bare id — NOT "codex/gpt-5.5"
-model_provider = "omniroute"
+model_provider = "pusula"
 
-[model_providers.omniroute]
-name = "OmniRoute (WS)"
+[model_providers.pusula]
+name = "Pusula (WS)"
 base_url = "http://localhost:20128/v1"   # no trailing slash; the WS URL is derived (use https/wss in production)
 wire_api = "responses"                    # only supported value since Feb 2026
 supports_websockets = true                # enables the Responses-over-WS transport
-env_key = "OMNIROUTE_API_KEY"             # holds the OmniRoute API key (Bearer)
+env_key = "PUSULA_API_KEY"             # holds the Pusula API key (Bearer)
 ```
 
 ```bash
-export OMNIROUTE_API_KEY=sk-...           # an OmniRoute API key (any key if REQUIRE_API_KEY=false)
+export PUSULA_API_KEY=sk-...           # an Pusula API key (any key if REQUIRE_API_KEY=false)
 codex exec "Responda apenas: PONG"
 ```
 
-The CLI upgrades `base_url + /responses` to a WebSocket and OmniRoute tunnels it
+The CLI upgrades `base_url + /responses` to a WebSocket and Pusula tunnels it
 to the selected codex OAuth connection. Validated end-to-end against the local
 server: ChatGPT returns `codex.rate_limits` + `response.created` and streams the
 completion.
@@ -790,10 +790,10 @@ Response example:
 ### Latency impact
 
 A semantic cache HIT serves the response from cache **without an upstream
-call**, so the reported `X-OmniRoute-Response-Latency` is near-zero
+call**, so the reported `X-Pusula-Response-Latency` is near-zero
 (regardless of the original upstream latency). Latency-sensitive clients
 (benchmarking, p50/p99 monitoring) should check the
-`X-OmniRoute-Cache-Latency` response header:
+`X-Pusula-Cache-Latency` response header:
 
 | Value       | Meaning                                                       |
 | ----------- | ------------------------------------------------------------- |
@@ -820,7 +820,7 @@ Set at key creation (`POST /api/keys`) or update (`PATCH /api/keys/[id]`):
 Any request can bypass the cache regardless of key settings:
 
 ```
-X-OmniRoute-No-Cache: true
+X-Pusula-No-Cache: true
 ```
 
 ---
@@ -1042,7 +1042,7 @@ Repairs missing or corrupted OAuth environment variables for a specific provider
 {
   "success": true,
   "repaired": ["CLAUDE_CODE_OAUTH_CLIENT_ID", "CLAUDE_CODE_OAUTH_CLIENT_SECRET"],
-  "backupPath": "/home/user/.omniroute/backups/env-repair-2026-04-11.bak"
+  "backupPath": "/home/user/.pusula/backups/env-repair-2026-04-11.bak"
 }
 ```
 
@@ -1135,7 +1135,7 @@ Notes:
 
 - The tokenized aliases reuse the same handlers as `/v1/*` and `/api/tags`; response shapes stay identical.
 - Prefer `Authorization: Bearer ...` whenever the client supports custom headers.
-- URL-based tokens may appear in reverse-proxy logs, browser history, and telemetry outside OmniRoute. Treat them as a compatibility option, not the default authentication mode.
+- URL-based tokens may appear in reverse-proxy logs, browser history, and telemetry outside Pusula. Treat them as a compatibility option, not the default authentication mode.
 
 ---
 
@@ -1243,7 +1243,7 @@ Higher-level routing combos (already summarized under `/api/combos*`) can also b
 
 ## Webhooks
 
-Outbound webhook subscriptions for OmniRoute events (request completion, quota exhaustion, key rotation, etc.).
+Outbound webhook subscriptions for Pusula events (request completion, quota exhaustion, key rotation, etc.).
 
 | Method | Path                      | Description                                                           |
 | ------ | ------------------------- | --------------------------------------------------------------------- |
@@ -1276,7 +1276,7 @@ Used by the auto-key management subsystem to issue and rotate API keys against a
 
 ## Agents Protocol
 
-Cloud agent tasks (Claude Code, Codex Cloud, OpenHands, etc.) executed remotely on behalf of OmniRoute users.
+Cloud agent tasks (Claude Code, Codex Cloud, OpenHands, etc.) executed remotely on behalf of Pusula users.
 
 | Method | Path                          | Description                                                                                                                                   |
 | ------ | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1322,7 +1322,7 @@ Outbound HTTP(S)/SOCKS proxies that can be assigned to providers, accounts, or g
 
 ## Resilience (extended)
 
-OmniRoute exposes three independent temporary-failure mechanisms; the management endpoints below let operators read and override them:
+Pusula exposes three independent temporary-failure mechanisms; the management endpoints below let operators read and override them:
 
 | Scope               | State storage                              | Read                                      | Reset / clear                               |
 | ------------------- | ------------------------------------------ | ----------------------------------------- | ------------------------------------------- |
@@ -1351,7 +1351,7 @@ Full conceptual reference and breaker defaults: see [`CLAUDE.md`](../../CLAUDE.m
 
 ## Skills
 
-Skill framework for extending OmniRoute with custom executable handlers, plus marketplace integrations.
+Skill framework for extending Pusula with custom executable handlers, plus marketplace integrations.
 
 | Method | Path                              | Description                                                                                                                |
 | ------ | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
@@ -1388,7 +1388,7 @@ Persistent conversational/factual memory store, scoped per API key / session.
 
 ## MCP Server
 
-OmniRoute ships an embedded Model Context Protocol server with 3 transports (stdio, SSE, streamable-http) and scoped tools. The dashboard endpoints below read status/audit data and proxy the HTTP transports.
+Pusula ships an embedded Model Context Protocol server with 3 transports (stdio, SSE, streamable-http) and scoped tools. The dashboard endpoints below read status/audit data and proxy the HTTP transports.
 
 | Method | Path | Description |
 | ------ | ---------------------- | ------------------------------------------------------------------------------------------------ | -------------------- |
@@ -1410,13 +1410,13 @@ OmniRoute ships an embedded Model Context Protocol server with 3 transports (std
 
 ## A2A Server
 
-OmniRoute exposes an A2A (Agent-to-Agent) JSON-RPC 2.0 endpoint plus a REST wrapper for inspection/dashboard use.
+Pusula exposes an A2A (Agent-to-Agent) JSON-RPC 2.0 endpoint plus a REST wrapper for inspection/dashboard use.
 
 ### JSON-RPC
 
 ```bash
 POST /a2a
-Authorization: Bearer your-api-key   # optional unless OMNIROUTE_API_KEY is set
+Authorization: Bearer your-api-key   # optional unless PUSULA_API_KEY is set
 Content-Type: application/json
 
 {
@@ -1459,7 +1459,7 @@ Returns the public A2A agent card (name, description, capabilities, skill catalo
 | GET    | `/api/a2a/tasks/[id]`        | Retrieve one task                                                                                               |
 | POST   | `/api/a2a/tasks/[id]/cancel` | Cancel a task                                                                                                   |
 
-**Auth:** the REST helpers run without management auth (dashboard-readable); the JSON-RPC `/a2a` route uses Bearer `OMNIROUTE_API_KEY` if configured.
+**Auth:** the REST helpers run without management auth (dashboard-readable); the JSON-RPC `/a2a` route uses Bearer `PUSULA_API_KEY` if configured.
 
 ---
 
@@ -1639,7 +1639,7 @@ Admin-only endpoints for operational management.
 
 ## CLI Tools Management
 
-Manage CLI tools that integrate with OmniRoute (antigravity, commandCode,
+Manage CLI tools that integrate with Pusula (antigravity, commandCode,
 devin-cli, etc.). See [Provider Reference](./PROVIDER_REFERENCE.md) for the full list.
 
 | Method | Path                                    | Description                                                                                                                                       |
@@ -1750,7 +1750,7 @@ See [Skills Framework](../frameworks/SKILLS.md) for full details.
 
 ## Plugins
 
-Manage OmniRoute plugins (third-party extensions).
+Manage Pusula plugins (third-party extensions).
 
 | Method | Path                               | Description                           |
 | ------ | ---------------------------------- | ------------------------------------- |
@@ -1776,7 +1776,7 @@ Shadow / A-B comparison of providers is **not a standalone REST surface** — it
 
 ## Guardrails
 
-Inspect the runtime guardrails (PII detection, prompt injection detection, vision bridging). Guardrails run on every request; per-call opt-out is via the `x-omniroute-disabled-guardrails` request header — there is no persisted enable/disable surface.
+Inspect the runtime guardrails (PII detection, prompt injection detection, vision bridging). Guardrails run on every request; per-call opt-out is via the `x-pusula-disabled-guardrails` request header — there is no persisted enable/disable surface.
 
 | Method | Path                   | Description                                                                              |
 | ------ | ---------------------- | ---------------------------------------------------------------------------------------- |

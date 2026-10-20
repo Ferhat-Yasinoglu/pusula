@@ -4,7 +4,7 @@
 
 ---
 
-OmniRoute verfügt über drei unterschiedliche, aber miteinander verbundene Resilienzmechanismen. Jeder hat einen anderen Geltungsbereich und Zweck. Behalten Sie diese bei der Fehlersuche im Routingverhalten getrennt voneinander.
+Pusula verfügt über drei unterschiedliche, aber miteinander verbundene Resilienzmechanismen. Jeder hat einen anderen Geltungsbereich und Zweck. Behalten Sie diese bei der Fehlersuche im Routingverhalten getrennt voneinander.
 
 ![3-Schichten-Resilienzmodell](../diagrams/exported/resilience-3layers.svg)
 
@@ -63,7 +63,7 @@ fehlgeschlagenen Provider nicht erneut durchlaufen. Einträge auf Provider-Ebene
 Unterhalb des Schwellenwerts gilt der Provider **nicht** als in der Abkühlphase befindlich; ein Erfolg
 setzt das Zeitfenster zurück. Einträge auf Verbindungsebene (`provider:connectionId`) behalten stattdessen
 den exponentiellen Backoff `minRetryCooldownMs → maxRetryCooldownMs` bei. Überschreibungen:
-`OMNIROUTE_PROVIDER_BREAKER_{OAUTH,API_KEY}_{FAILURE_THRESHOLD,FAILURE_WINDOW_MS,COOLDOWN_MS}`.
+`PUSULA_PROVIDER_BREAKER_{OAUTH,API_KEY}_{FAILURE_THRESHOLD,FAILURE_WINDOW_MS,COOLDOWN_MS}`.
 Regressionsschutz: `tests/unit/provider-cooldown-window-gate.test.ts`.
 
 ## 2. Verbindungs-Cooldown
@@ -167,7 +167,7 @@ Regressionsprüfungen: `tests/unit/claude-low-priority-mode.test.ts`,
 
 ### Sitzungsaffinität (#7274)
 
-**Geltungsbereich:** eine Client-Sitzung (Header `X-Session-Id` / `x-codex-session-id` / `x-omniroute-session`), die für **jeden** Provider an eine Verbindung gebunden ist.
+**Geltungsbereich:** eine Client-Sitzung (Header `X-Session-Id` / `x-codex-session-id` / `x-pusula-session`), die für **jeden** Provider an eine Verbindung gebunden ist.
 
 **Zweck:** Einen Multi-Turn-Agenten (Claude Code, aider, benutzerdefinierte Agenten) über mehrere Anfragen hinweg demselben Konto zuzuordnen, wodurch Kontextverluste durch Kontowechsel und wiederholte Cold-Start-429-Fehler bei Anbietern mit kontobezogenem Sitzungsstatus reduziert werden.
 
@@ -185,15 +185,15 @@ Die drei Sitzungsaffinitäts-Header werden niemals an den Upstream weitergeleite
 
 ### Exklusive Leases für verwaltete Sitzungsverbindungen
 
-**Geltungsbereich:** Ein aktiver verwalteter HTTP-Client bzw. eine aktive verwaltete Sitzung besitzt eine geeignete OmniRoute-Verbindung.
+**Geltungsbereich:** Ein aktiver verwalteter HTTP-Client bzw. eine aktive verwaltete Sitzung besitzt eine geeignete Pusula-Verbindung.
 
 **Zweck:** Dauerhafte exklusive Verbindungsinhaberschaft für Clients bereitzustellen, die über mehrere Anfragen hinweg eine strikte Routing-Grenze benötigen. Dies unterscheidet sich von Sitzungsaffinität, die lediglich eine weiche Kontinuitätspräferenz darstellt: Eine exklusive Lease persistiert den Lebenszyklusstatus in SQLite, erzwingt die globale Eindeutigkeit aktiver Inhaber und aktiver Verbindungen und weist eine veraltete Generation vor der Weiterleitung an den Anbieter zurück.
 
 Die Funktion muss pro API-Schlüssel explizit aktiviert werden. Ein verwalteter Schlüssel muss den Scope `lease:exclusive` und eine explizite, nicht leere `allowedConnections`-Liste besitzen. Jeder HTTP-Client kann den Lebenszyklus-Endpunkt verwenden; weder Clientname, User-Agent, Anbieter, OAuth-Methode noch Modell sind erforderlich. Die Lease gilt für eine Verbindung, nicht für ein Modell. Daher bleibt die Bindung bei einem Modellwechsel bestehen, solange die Verbindung weiterhin regulär geeignet ist. Die normalen Regeln für Modell, Kontingent, Zustand, Abklingzeit und Positivliste bleiben maßgeblich und können dieselbe Generation auf eine andere freie, geeignete Verbindung umstellen.
 
-Der Lebenszyklus wird über `POST /api/v1/session-leases` mit den JSON-Aktionen `acquire`, `renew` und `release` gesteuert. Verwaltete Inferenzanfragen übermitteln den opaken Wert `X-OmniRoute-Lease-Owner` und die exakte `X-OmniRoute-Lease-Generation`. Der Inhaberwert beginnt mit `vlo_`, gefolgt von 43 base64url-Zeichen; gespeichert wird ausschließlich sein SHA-256-Hash. Jede abschließende Dispatch-Schranke bindet außerdem die ID des authentifizierten API-Schlüssels und die ID der aktiven Verbindung ein. Lease-Steuerungs-Header werden aus Protokollen, gespeicherten Anfrage-Snapshots und den Upstream-Headern der Executors entfernt.
+Der Lebenszyklus wird über `POST /api/v1/session-leases` mit den JSON-Aktionen `acquire`, `renew` und `release` gesteuert. Verwaltete Inferenzanfragen übermitteln den opaken Wert `X-Pusula-Lease-Owner` und die exakte `X-Pusula-Lease-Generation`. Der Inhaberwert beginnt mit `vlo_`, gefolgt von 43 base64url-Zeichen; gespeichert wird ausschließlich sein SHA-256-Hash. Jede abschließende Dispatch-Schranke bindet außerdem die ID des authentifizierten API-Schlüssels und die ID der aktiven Verbindung ein. Lease-Steuerungs-Header werden aus Protokollen, gespeicherten Anfrage-Snapshots und den Upstream-Headern der Executors entfernt.
 
-Wenn das reguläre Routing geeignete verwaltete Kandidaten findet, aber jeder freie Kandidat durch eine fremde aktive Lease belegt ist, gibt OmniRoute HTTP `429`, den Code für nicht verfügbare Lease-Kapazität, einen Status des Wartens auf Kapazität sowie einen begrenzten, aus dem frühesten relevanten Ablaufzeitpunkt abgeleiteten `Retry-After`-Wert zurück. Eine regulär leere Eignungsmenge ist kein Lease-Konflikt und behält die bestehende Routing-Fehlersemantik bei.
+Wenn das reguläre Routing geeignete verwaltete Kandidaten findet, aber jeder freie Kandidat durch eine fremde aktive Lease belegt ist, gibt Pusula HTTP `429`, den Code für nicht verfügbare Lease-Kapazität, einen Status des Wartens auf Kapazität sowie einen begrenzten, aus dem frühesten relevanten Ablaufzeitpunkt abgeleiteten `Retry-After`-Wert zurück. Eine regulär leere Eignungsmenge ist kein Lease-Konflikt und behält die bestehende Routing-Fehlersemantik bei.
 
 Verwandte Mechanismen bleiben voneinander getrennt:
 
@@ -214,7 +214,7 @@ Verwandte Mechanismen bleiben voneinander getrennt:
   bei codex den gesamten Geltungsbereich `codex` / `spark` (jedes `gpt-5*`-Modell der
   Verbindung), bei anderen Anbietern `getQuotaScopedModelForProvider()`.
 - `404` sperrt nur das konkrete Modell (`getModelLockKey()` grenzt `not_found` ein).
-- Jeder andere Status — `5xx`-Transport-/Serverfehler und der von OmniRoute selbst
+- Jeder andere Status — `5xx`-Transport-/Serverfehler und der von Pusula selbst
   aufgrund der Qualitätsvalidierung erzeugte `502` — sperrt nur das **exakte**
   Anbieter-/Verbindungs-/Modell-Tupel. Ein fehlerhafter Stream bei einem Modell ist kein Beleg
   für ein Problem mit dem Kontingent des Kontos; vor dieser Regel entfernte eine einzige leere Antwort bei
@@ -535,7 +535,7 @@ rufen sie auf:
 connectionId)` vor der Suche in `exhaustedConnections`) — eine einfache
   Modelllisten-Combo, bei der benachbarte Ziele keine eigene festgelegte
   `connectionId` enthalten und eine solche erst je Weiterleitung aus dem
-  `X-OmniRoute-Selected-Connection-Id`-Header der Antwort aufgelöst wird,
+  `X-Pusula-Selected-Connection-Id`-Header der Antwort aufgelöst wird,
   erzielt niemals einen Treffer für diesen Schlüssel. In diesem häufigen Fall
   ist der eigentliche Schutz davor, dass ein verbleibender Zweig das gerade
   ausgeschöpfte Konto erneut verwendet, NICHT diese Menge — sondern die oben
@@ -755,7 +755,7 @@ Einschränkungen:
 - **Reset-berücksichtigendes Routing** (v3.8.0) — priorisiert Verbindungen anhand des Zeitpunkts der Kontingentzurücksetzung.
 - **Herabstufung des Hintergrundmodus** — Responses API `background: true` wird mit einer Warnung auf synchrone Verarbeitung herabgestuft.
 - **Dynamische Erkennung von Tool-Limits** — weicht auf andere Anbieter aus, wenn Limits für die Anzahl der Tools erreicht werden.
-- **Notfall-Fallback** — wird durch `OMNIROUTE_EMERGENCY_FALLBACK` gesteuert; Betreiber können es auf der Seite „Feature Flags“ ohne Neustart überschreiben.
+- **Notfall-Fallback** — wird durch `PUSULA_EMERGENCY_FALLBACK` gesteuert; Betreiber können es auf der Seite „Feature Flags“ ohne Neustart überschreiben.
 
 ---
 

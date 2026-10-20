@@ -10,7 +10,7 @@ import { randomUUID } from "node:crypto";
 // the same way the pool itself is read, and any failure isolated as null. The observation is
 // opt-in (PROXY_POOL_EGRESS_OBSERVATION feature flag, default off): tests opt in explicitly.
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-pool-egress-obs-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-pool-egress-obs-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 delete process.env.PROXY_POOL_EGRESS_OBSERVATION;
 

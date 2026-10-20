@@ -66,15 +66,15 @@ test("valid live offer feed sends Bearer server-side and caches exact signed byt
       requestUrl = String(input);
       authorization = new Headers(init?.headers).get("authorization") ?? "";
       return response(bytes, {
-        "x-omniroute-feed-signature": signature,
-        "x-omniroute-feed-tier": "live",
+        "x-pusula-feed-signature": signature,
+        "x-pusula-feed-tier": "live",
       });
     }) as typeof fetch,
     now: () => new Date("2026-08-09T12:05:00.000Z"),
   });
 
   assert.deepEqual(result, { status: "updated", version: "2026.08.09.1" });
-  assert.equal(requestUrl, "https://radar.omniroute.online/v1/offers/latest");
+  assert.equal(requestUrl, "https://radar.pusula.online/v1/offers/latest");
   assert.equal(authorization, `Bearer omr_${"a".repeat(40)}`);
   assert.equal(writes[0]!.payload, bytes.toString("utf8"));
   assert.equal(writes[0]!.signature, signature);
@@ -114,8 +114,8 @@ test("signature, schema, and live-tier failures preserve the last good cache", a
       },
       fetch: (async () =>
         response(item.bytes, {
-          "x-omniroute-feed-signature": item.signature,
-          ...(item.tier ? { "x-omniroute-feed-tier": item.tier } : {}),
+          "x-pusula-feed-signature": item.signature,
+          ...(item.tier ? { "x-pusula-feed-tier": item.tier } : {}),
         })) as typeof fetch,
     });
     assert.equal(result.status, item.expected);
@@ -141,8 +141,8 @@ test("same or older signed offer versions are rejected as stale", async () => {
     },
     fetch: (async () =>
       response(bytes, {
-        "x-omniroute-feed-signature": sign(bytes),
-        "x-omniroute-feed-tier": "live",
+        "x-pusula-feed-signature": sign(bytes),
+        "x-pusula-feed-tier": "live",
       })) as typeof fetch,
   });
 

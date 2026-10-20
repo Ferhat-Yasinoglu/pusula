@@ -11,8 +11,8 @@
  */
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { detectCompressionLanguage } from "@omniroute/open-sse/services/compression/languageDetector.ts";
-import { cavemanCompress } from "@omniroute/open-sse/services/compression/caveman.ts";
+import { detectCompressionLanguage } from "@pusula/open-sse/services/compression/languageDetector.ts";
+import { cavemanCompress } from "@pusula/open-sse/services/compression/caveman.ts";
 
 test("detector ignores single English-ambiguous keywords (configuration/error)", () => {
   assert.equal(

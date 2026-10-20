@@ -18,8 +18,8 @@ test("re-escapes an angle span the translation left bare", () => {
 
 test("doubles an apostrophe inside the span, which would close the literal early", () => {
   assert.equal(
-    preserveIcuLiteralQuotes("'<your OmniRoute API key>'", "<teie OmniRoute'i API-võti>"),
-    "'<teie OmniRoute''i API-võti>'"
+    preserveIcuLiteralQuotes("'<your Pusula API key>'", "<teie Pusula'i API-võti>"),
+    "'<teie Pusula''i API-võti>'"
   );
 });
 

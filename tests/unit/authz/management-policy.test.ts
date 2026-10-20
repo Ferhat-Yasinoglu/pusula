@@ -11,7 +11,7 @@ process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = "test-secret";
 // API-key validation falls through to a Redis-backed cache otherwise — disable
 // it for the local test loop so isValidApiKey() does not stall on ETIMEDOUT.
-process.env.OMNIROUTE_DISABLE_REDIS_AUTH_CACHE = "1";
+process.env.PUSULA_DISABLE_REDIS_AUTH_CACHE = "1";
 
 const core = await import("../../../src/lib/db/core.ts");
 const apiKeysDb = await import("../../../src/lib/db/apiKeys.ts");
@@ -152,11 +152,11 @@ const BOOTSTRAP_WRITE_PATH = "/api/settings/require-login";
 const POLICY_STAMP_TOKEN = "mgmt-policy-test-peer-stamp-token";
 
 function stampedHeaders(peerIp: string, extra: Record<string, string> = {}): Headers {
-  process.env.OMNIROUTE_PEER_STAMP_TOKEN = POLICY_STAMP_TOKEN;
+  process.env.PUSULA_PEER_STAMP_TOKEN = POLICY_STAMP_TOKEN;
   return new Headers({
     ...extra,
-    "x-omniroute-peer-ip": `${POLICY_STAMP_TOKEN}|${peerIp}`,
-    "x-omniroute-via-proxy": `${POLICY_STAMP_TOKEN}|0`,
+    "x-pusula-peer-ip": `${POLICY_STAMP_TOKEN}|${peerIp}`,
+    "x-pusula-via-proxy": `${POLICY_STAMP_TOKEN}|0`,
   });
 }
 
@@ -179,7 +179,7 @@ test("managementPolicy: rejects an anonymous remote POST /api/settings/require-l
       ctx(
         stampedHeaders("203.0.113.9", {
           host: "localhost:20128",
-          "x-omniroute-peer-locality": "loopback",
+          "x-pusula-peer-locality": "loopback",
         }),
         "POST",
         BOOTSTRAP_WRITE_PATH
@@ -191,7 +191,7 @@ test("managementPolicy: rejects an anonymous remote POST /api/settings/require-l
       assert.equal(spoofed.code, "AUTH_001");
     }
   } finally {
-    delete process.env.OMNIROUTE_PEER_STAMP_TOKEN;
+    delete process.env.PUSULA_PEER_STAMP_TOKEN;
   }
 });
 
@@ -210,12 +210,12 @@ test("managementPolicy: keeps the bootstrap first-password write open for the st
 
     // A loopback socket that is really a reverse-proxy hop (via-proxy marker
     // set by the custom server) is NOT the local operator.
-    process.env.OMNIROUTE_PEER_STAMP_TOKEN = POLICY_STAMP_TOKEN;
+    process.env.PUSULA_PEER_STAMP_TOKEN = POLICY_STAMP_TOKEN;
     const viaProxy = await policy.evaluate(
       ctx(
         new Headers({
-          "x-omniroute-peer-ip": `${POLICY_STAMP_TOKEN}|127.0.0.1`,
-          "x-omniroute-via-proxy": `${POLICY_STAMP_TOKEN}|1`,
+          "x-pusula-peer-ip": `${POLICY_STAMP_TOKEN}|127.0.0.1`,
+          "x-pusula-via-proxy": `${POLICY_STAMP_TOKEN}|1`,
         }),
         "POST",
         BOOTSTRAP_WRITE_PATH
@@ -223,7 +223,7 @@ test("managementPolicy: keeps the bootstrap first-password write open for the st
     );
     assert.equal(viaProxy.allow, false);
   } finally {
-    delete process.env.OMNIROUTE_PEER_STAMP_TOKEN;
+    delete process.env.PUSULA_PEER_STAMP_TOKEN;
   }
 });
 
@@ -244,7 +244,7 @@ test("managementPolicy: rejects 401 when auth required and no credentials", asyn
 test("managementPolicy: allows a valid internal service token only from loopback", async () => {
   process.env.JWT_SECRET = "test-jwt-secret-for-mgmt-policy";
   process.env.INITIAL_PASSWORD = "initial-pass";
-  process.env.OMNIROUTE_INTERNAL_SERVICE_TOKEN = "internal-service-token-0123456789";
+  process.env.PUSULA_INTERNAL_SERVICE_TOKEN = "internal-service-token-0123456789";
   await settingsDb.updateSettings({ requireLogin: true });
   const policy = await loadPolicy();
   const headers = new Headers({
@@ -258,7 +258,7 @@ test("managementPolicy: allows a valid internal service token only from loopback
 
   const remote = await policy.evaluate(remoteCtx(headers, "GET", "/api/combos"));
   assert.equal(remote.allow, false);
-  delete process.env.OMNIROUTE_INTERNAL_SERVICE_TOKEN;
+  delete process.env.PUSULA_INTERNAL_SERVICE_TOKEN;
 });
 
 test("managementPolicy: rejects client API keys for dashboard access", async () => {

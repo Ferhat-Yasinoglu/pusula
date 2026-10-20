@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { resolveProviderAlias } from "@omniroute/open-sse/services/providerAlias.ts";
-import { resolveCanonicalProviderModel } from "@omniroute/open-sse/services/model.ts";
+import { resolveProviderAlias } from "@pusula/open-sse/services/providerAlias.ts";
+import { resolveCanonicalProviderModel } from "@pusula/open-sse/services/model.ts";
 
 /**
  * The combos page only reads `.provider` from `resolveCanonicalProviderModel()`,

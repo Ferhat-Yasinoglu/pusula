@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-glm-reset-card-route-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-glm-reset-card-route-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = "test-glm-reset-card-route-secret";
 process.env.INITIAL_PASSWORD = "route-test-password";
@@ -234,7 +234,7 @@ test("error logging stays bounded and sanitized", async () => {
 test("auth helper refuses a wrong management password", async () => {
   const response = await route.GET(
     request("/api/usage/glm-reset-card?connectionId=c1", {
-      headers: { "x-omniroute-admin": "wrong-password" },
+      headers: { "x-pusula-admin": "wrong-password" },
     })
   );
   assert.equal(response.status, 401);

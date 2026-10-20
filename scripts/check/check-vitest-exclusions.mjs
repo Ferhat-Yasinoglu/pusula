@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * OmniRoute — Vitest exclusion gate (CI gate, blocking).
+ * Pusula — Vitest exclusion gate (CI gate, blocking).
  *
  * Every file parked in `vitest.config.ts`'s `exclude` list is a test that does not run.
  * A skipped test is indistinguishable from a test that does not exist, with the added

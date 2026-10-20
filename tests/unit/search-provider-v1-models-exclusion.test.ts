@@ -6,7 +6,7 @@ import path from "node:path";
 
 // Regression coverage for search providers leaking their static-import
 // `searchTypes` (web/news/x) into the OpenAI-compatible /v1/models catalog.
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-search-provider-catalog-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-search-provider-catalog-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 if (!process.env.API_KEY_SECRET) {
   process.env.API_KEY_SECRET = "search-provider-catalog-test-" + Date.now();

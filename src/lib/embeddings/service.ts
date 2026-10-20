@@ -1,4 +1,4 @@
-import { handleEmbedding } from "@omniroute/open-sse/handlers/embeddings.ts";
+import { handleEmbedding } from "@pusula/open-sse/handlers/embeddings.ts";
 import {
   parseEmbeddingModel,
   getEmbeddingProvider,
@@ -6,9 +6,9 @@ import {
   deriveEmbeddingProviderForChatProvider,
   type EmbeddingProviderNodeRow,
   type EmbeddingProvider,
-} from "@omniroute/open-sse/config/embeddingRegistry.ts";
-import { errorResponse, unavailableResponse } from "@omniroute/open-sse/utils/error.ts";
-import { HTTP_STATUS } from "@omniroute/open-sse/config/constants.ts";
+} from "@pusula/open-sse/config/embeddingRegistry.ts";
+import { errorResponse, unavailableResponse } from "@pusula/open-sse/utils/error.ts";
+import { HTTP_STATUS } from "@pusula/open-sse/config/constants.ts";
 import * as log from "@/sse/utils/logger";
 import { toJsonErrorPayload } from "@/shared/utils/upstreamError";
 import {
@@ -20,9 +20,9 @@ import { getCachedProviderNodes } from "@/lib/db/readCache";
 import { getComboByName, getCombos } from "@/lib/db/combos";
 import { getDatabaseSettings } from "@/lib/db/databaseSettings";
 import { resolveProxyForConnection } from "@/lib/db/settings";
-import { runWithProxyContext } from "@omniroute/open-sse/utils/proxyFetch.ts";
-import { handleComboChat } from "@omniroute/open-sse/services/combo.ts";
-import { resolveBareModelToConnectionDefault } from "@omniroute/open-sse/services/model.ts";
+import { runWithProxyContext } from "@pusula/open-sse/utils/proxyFetch.ts";
+import { handleComboChat } from "@pusula/open-sse/services/combo.ts";
+import { resolveBareModelToConnectionDefault } from "@pusula/open-sse/services/model.ts";
 import { findEmbeddingComboDimensionConflict } from "./familyGuard";
 import {
   formatMissingEmbeddingCredentialsError,
@@ -30,7 +30,7 @@ import {
 } from "./errors";
 import { isPrivateHost, isCloudMetadataHost } from "@/shared/network/outboundUrlGuard";
 import { calculateCost } from "@/lib/usage/costCalculator";
-import { attachOmniRouteMetaHeaders } from "@/domain/omnirouteResponseMeta";
+import { attachPusulaMetaHeaders } from "@/domain/pusulaResponseMeta";
 import { generateRequestId } from "@/shared/utils/requestId";
 import { resolveLocalSyncedEndpointRoute } from "@/lib/providerModels/syncedEndpointRouting";
 import { resolveAlibabaProviderEmbeddingUrl } from "@/shared/constants/alibabaProviderRegions";
@@ -243,7 +243,7 @@ export async function createEmbeddingResponse(
   // entries are checked first and keep their specialized configuration.
   if (!providerConfig && !options.resolvedProvider) {
     try {
-      const { REGISTRY } = await import("@omniroute/open-sse/config/providerRegistry.ts");
+      const { REGISTRY } = await import("@pusula/open-sse/config/providerRegistry.ts");
       const chatEntry = (REGISTRY as Record<string, { baseUrl?: string } | undefined>)[provider];
       providerConfig = deriveEmbeddingProviderForChatProvider(provider, chatEntry);
       if (providerConfig) {
@@ -303,7 +303,7 @@ export async function createEmbeddingResponse(
     // (e.g. a customModels override whose id prefix doesn't match its own
     // connection's provider id, or a stale synced-model cache -- both silent
     // for months in production) previously left no trace anywhere in
-    // OmniRoute's own logs or dashboard, only in the calling client's log.
+    // Pusula's own logs or dashboard, only in the calling client's log.
     log.warn(
       "EMBED",
       `Unknown embedding provider ${provider} for model "${body.model}" -- checked static ` +
@@ -461,7 +461,7 @@ export async function createEmbeddingResponse(
     responseHeaders.set("Content-Type", "application/json");
     const usage = (result.data as { usage?: Record<string, number> })?.usage ?? null;
     const costUsd = usage ? await calculateCost(provider, effectiveModel ?? "", usage) : 0;
-    attachOmniRouteMetaHeaders(responseHeaders, {
+    attachPusulaMetaHeaders(responseHeaders, {
       provider,
       model: effectiveModel,
       usage,

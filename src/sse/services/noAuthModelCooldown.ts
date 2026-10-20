@@ -1,4 +1,4 @@
-import { formatRetryAfter } from "@omniroute/open-sse/services/accountFallback.ts";
+import { formatRetryAfter } from "@pusula/open-sse/services/accountFallback.ts";
 import * as log from "../utils/logger";
 
 interface ActiveModelLockout {

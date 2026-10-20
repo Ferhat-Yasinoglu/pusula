@@ -5,12 +5,12 @@
 ---
 
 - **Status:** Vorgeschlagen — erfordert die Genehmigung eines Maintainers, bevor mit der Laufzeitimplementierung begonnen wird
-- **Tracking-Issue:** [#8075](https://github.com/diegosouzapw/OmniRoute/issues/8075)
+- **Tracking-Issue:** [#8075](https://github.com/Ferhat-Yasinoglu/pusula/issues/8075)
 - **Geltungsbereich:** Ausschließlich Persistenzarchitektur; diese Entscheidung fügt keine externe Datenbank hinzu und wählt auch keine aus
 
 ## Kontext
 
-OmniRoute stellt derzeit domänenorientierte Persistenzfunktionen aus `src/lib/db/` bereit, während die
+Pusula stellt derzeit domänenorientierte Persistenzfunktionen aus `src/lib/db/` bereit, während die
 von `src/lib/db/core.ts` zurückgegebene gemeinsame Verbindung den synchronen `SqliteAdapter`-Vertrag
 in `src/lib/db/adapters/types.ts` implementiert. Dieser Adapter unterstützt mehrere SQLite-Laufzeitumgebungen,
 seine Schnittstelle bleibt jedoch SQLite-spezifisch: synchrone vorbereitete Anweisungen, `pragma`,

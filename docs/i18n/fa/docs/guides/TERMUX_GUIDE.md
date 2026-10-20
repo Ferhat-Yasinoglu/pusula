@@ -4,7 +4,7 @@
 
 ---
 
-OmniRoute میتواند از طریق Termux بهعنوان یک سرور بدون رابط گرافیکی روی Android اجرا شود. برنامه دسکتاپ Electron در Termux پشتیبانی نمیشود، اما داشبورد وب و API سازگار با OpenAI از طریق مرورگر محلی یا دستگاههای دیگر در همان شبکه قابل استفاده هستند.
+Pusula میتواند از طریق Termux بهعنوان یک سرور بدون رابط گرافیکی روی Android اجرا شود. برنامه دسکتاپ Electron در Termux پشتیبانی نمیشود، اما داشبورد وب و API سازگار با OpenAI از طریق مرورگر محلی یا دستگاههای دیگر در همان شبکه قابل استفاده هستند.
 
 ## پیشنیازها
 
@@ -16,37 +16,37 @@ pkg upgrade
 pkg install nodejs python build-essential git
 ```
 
-> **نسخه Node.js:** OmniRoute به Node `>=22.22.2 <23 || >=24.0.0 <27` نیاز دارد (مطابق با `engines` در `package.json` / `SUPPORTED_NODE_RANGE`). بسته `nodejs-lts` در Termux معمولاً Node 20 LTS را ارائه میکند که **دیگر پشتیبانی نمیشود** — بهجای آن `pkg install nodejs` (نسخه جاری) را نصب کنید و با اجرای `node --version` مطمئن شوید نسخهای از شاخه 22.x/24.x+ گزارش میشود.
+> **نسخه Node.js:** Pusula به Node `>=22.22.2 <23 || >=24.0.0 <27` نیاز دارد (مطابق با `engines` در `package.json` / `SUPPORTED_NODE_RANGE`). بسته `nodejs-lts` در Termux معمولاً Node 20 LTS را ارائه میکند که **دیگر پشتیبانی نمیشود** — بهجای آن `pkg install nodejs` (نسخه جاری) را نصب کنید و با اجرای `node --version` مطمئن شوید نسخهای از شاخه 22.x/24.x+ گزارش میشود.
 
-اگر کامپایل بستههای بومی ناموفق بود، فرمان `pkg install` بالا را دوباره اجرا کنید و سپس نصب OmniRoute را مجدداً امتحان کنید.
+اگر کامپایل بستههای بومی ناموفق بود، فرمان `pkg install` بالا را دوباره اجرا کنید و سپس نصب Pusula را مجدداً امتحان کنید.
 
 ## نصب
 
 آخرین بسته منتشرشده را مستقیماً اجرا کنید:
 
 ```bash
-npx -y omniroute@latest
+npx -y pusula@latest
 ```
 
 همچنین میتوانید آن را بهصورت سراسری نصب کنید:
 
 ```bash
-npm install -g omniroute
-omniroute
+npm install -g pusula
+pusula
 ```
 
 ## اجرا
 
-OmniRoute را در حالت سرور بدون رابط گرافیکی اجرا کنید:
+Pusula را در حالت سرور بدون رابط گرافیکی اجرا کنید:
 
 ```bash
-omniroute
+pusula
 ```
 
 یا:
 
 ```bash
-npx omniroute
+npx pusula
 ```
 
 داشبورد روی آدرس زیر در دسترس است:
@@ -62,25 +62,25 @@ http://localhost:20128
 برای اجرای یک فرایند ساده در پسزمینه:
 
 ```bash
-nohup omniroute > omniroute.log 2>&1 &
+nohup pusula > pusula.log 2>&1 &
 ```
 
 برای متوقف کردن آن:
 
 ```bash
-pkill -f omniroute
+pkill -f pusula
 ```
 
 برای راهاندازی خودکار پس از روشن شدن دستگاه، افزونه Termux:Boot را نصب کرده و یک اسکریپت راهاندازی ایجاد کنید:
 
 ```bash
 mkdir -p ~/.termux/boot
-cat > ~/.termux/boot/omniroute.sh <<'EOF'
+cat > ~/.termux/boot/pusula.sh <<'EOF'
 #!/data/data/com.termux/files/usr/bin/sh
 cd "$HOME"
-nohup omniroute > "$HOME/omniroute.log" 2>&1 &
+nohup pusula > "$HOME/pusula.log" 2>&1 &
 EOF
-chmod +x ~/.termux/boot/omniroute.sh
+chmod +x ~/.termux/boot/pusula.sh
 ```
 
 بهینهسازی باتری Android میتواند فرایندهای پسزمینه طولانیمدت را متوقف کند. اگر انتظار دارید سرور آنلاین بماند، بهینهسازی باتری را برای Termux غیرفعال کنید.
@@ -105,15 +105,15 @@ http://PHONE_IP:20128
 http://192.168.1.50:20128
 ```
 
-تلفن و کلاینت را در یک شبکه مورداعتماد نگه دارید. اگر OmniRoute را خارج از تلفن در دسترس قرار میدهید، کلیدهای API و احراز هویت داشبورد را فعال کنید.
+تلفن و کلاینت را در یک شبکه مورداعتماد نگه دارید. اگر Pusula را خارج از تلفن در دسترس قرار میدهید، کلیدهای API و احراز هویت داشبورد را فعال کنید.
 
 ## دایرکتوری دادهها
 
-OmniRoute بهطور پیشفرض دادهها را در دایرکتوری خانگی Termux ذخیره میکند و از همان رفتار مسیر داده سمت سرور در Linux پیروی میکند. برای قرار دادن پایگاه داده در مسیری مشخص:
+Pusula بهطور پیشفرض دادهها را در دایرکتوری خانگی Termux ذخیره میکند و از همان رفتار مسیر داده سمت سرور در Linux پیروی میکند. برای قرار دادن پایگاه داده در مسیری مشخص:
 
 ```bash
-export DATA_DIR="$HOME/.omniroute"
-omniroute
+export DATA_DIR="$HOME/.pusula"
+pusula
 ```
 
 ## محدودیتها
@@ -129,7 +129,7 @@ omniroute
 
 ### پلتفرم پشتیبانینشده: android (تمام درخواستها HTTP 500 برمیگردانند)
 
-**نشانه:** اجرای `omniroute` / `omniroute serve` پیام `✔ OmniRoute is running!` را نمایش میدهد، اما هر درخواست داشبورد یا API یک پاسخ خام `500 Internal Server Error` برمیگرداند. فایل `~/.omniroute/logs/application/app.log` خالی میماند، اجرای `APP_LOG_LEVEL=debug` اطلاعات مفیدی نمایش نمیدهد و بدنه پاسخ متنی ساده (`Internal Server Error`) و بدون جزئیات JSON است.
+**نشانه:** اجرای `pusula` / `pusula serve` پیام `✔ Pusula is running!` را نمایش میدهد، اما هر درخواست داشبورد یا API یک پاسخ خام `500 Internal Server Error` برمیگرداند. فایل `~/.pusula/logs/application/app.log` خالی میماند، اجرای `APP_LOG_LEVEL=debug` اطلاعات مفیدی نمایش نمیدهد و بدنه پاسخ متنی ساده (`Internal Server Error`) و بدون جزئیات JSON است.
 
 **علت:** برخی بیلدهای Termux/Node مقدار `process.platform === "android"` را گزارش میکنند. تابع `getCacheDirectory()` در Next.js از این پلتفرم پشتیبانی نمیکند: این تابع به وجود قبلی `~/.cache` (یا یک دایرکتوری موقت عمومی) نیاز دارد؛ در غیر این صورت، هنگام بارگذاری قلاب ابزارسازی با خطای زیر مواجه میشود:
 
@@ -137,16 +137,16 @@ omniroute
 Error: An error occurred while loading instrumentation hook: Unsupported platform: android
 ```
 
-از آنجا که قلاب هرگز بارگذاری نمیشود، ثبت گزارش نیز آغاز نمیشود — در نتیجه علت خطای 500 کاملاً غیرقابلتشخیص به نظر میرسد. OmniRoute پیش از شروع Next.js در نقطه ورود CLI، دایرکتوری `~/.cache` را ایجاد میکند (و اگر `XDG_CACHE_HOME` تنظیم نشده باشد، آن را تنظیم میکند) تا این بررسی در Android/Termux موفق شود.
+از آنجا که قلاب هرگز بارگذاری نمیشود، ثبت گزارش نیز آغاز نمیشود — در نتیجه علت خطای 500 کاملاً غیرقابلتشخیص به نظر میرسد. Pusula پیش از شروع Next.js در نقطه ورود CLI، دایرکتوری `~/.cache` را ایجاد میکند (و اگر `XDG_CACHE_HOME` تنظیم نشده باشد، آن را تنظیم میکند) تا این بررسی در Android/Termux موفق شود.
 
 **راهحل پشتیبانیشده (بدون وصلهکردن بسته):**
 
 ```bash
 mkdir -p ~/.cache
-omniroute serve
+pusula serve
 ```
 
-در بیلدهای فعلی OmniRoute، رابط CLI این کار را بهطور خودکار در Android/Termux انجام میدهد — پس از اجرای تازه `npx -y omniroute@latest` / نصب سراسری، نباید به انجام دستی این مرحله نیاز باشد. اگر پس از ارتقا همچنان این خطا را مشاهده میکنید، یکبار `~/.cache` را مطابق بالا ایجاد کرده و برنامه را مجدداً راهاندازی کنید.
+در بیلدهای فعلی Pusula، رابط CLI این کار را بهطور خودکار در Android/Termux انجام میدهد — پس از اجرای تازه `npx -y pusula@latest` / نصب سراسری، نباید به انجام دستی این مرحله نیاز باشد. اگر پس از ارتقا همچنان این خطا را مشاهده میکنید، یکبار `~/.cache` را مطابق بالا ایجاد کرده و برنامه را مجدداً راهاندازی کنید.
 
 برای اجبار مقدار `process.platform = "linux"`، فایل `dist/server.js` را وصله **نکنید**. چنین وصلهای با هر نصب مجدد/ارتقا بازنویسی میشود و پس از ایجاد دایرکتوری کش، غیرضروری است.
 
@@ -161,7 +161,7 @@ pkg install nodejs python build-essential
 سپس دوباره اجرا کنید:
 
 ```bash
-npx -y omniroute@latest
+npx -y pusula@latest
 ```
 
 ### پورت از قبل در حال استفاده است
@@ -175,7 +175,7 @@ ss -ltnp | grep 20128
 فرایند قدیمی را متوقف کنید:
 
 ```bash
-pkill -f omniroute
+pkill -f pusula
 ```
 
 ### داشبورد از دستگاه دیگری قابل دسترسی نیست

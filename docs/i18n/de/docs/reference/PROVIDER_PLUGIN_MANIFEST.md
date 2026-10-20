@@ -14,9 +14,9 @@ Executor-Code, OAuth-Standardwerte, Header oder den Zustand der Prozessumgebung 
 Dasselbe Manifest ist für Sidecars, die außerhalb des Prozesses ausgeführt werden, über HTTP unter
 `GET /api/v1/provider-plugin-manifest` verfügbar.
 
-OmniRoute teilt Bifrost und CLIProxyAPI diese URL über den
-Request-Header `X-OmniRoute-Provider-Manifest-Url` mit. Setzen Sie
-`OMNIROUTE_PROVIDER_MANIFEST_URL`, wenn das Sidecar anstelle des lokalen Request-Ursprungs
+Pusula teilt Bifrost und CLIProxyAPI diese URL über den
+Request-Header `X-Pusula-Provider-Manifest-Url` mit. Setzen Sie
+`PUSULA_PROVIDER_MANIFEST_URL`, wenn das Sidecar anstelle des lokalen Request-Ursprungs
 eine öffentliche URL oder eine URL im Container-Netzwerk benötigt.
 
 ## Aktualisieren des Manifests
@@ -30,7 +30,7 @@ muss das Sidecar eine unbedingte Anfrage senden, anstatt eine `304`-Antwort zu a
 ## Ziel
 
 Provider-Metadaten sollen schrittweise in einen Plugin-Vertrag überführt werden, sodass der zeitkritische Request-Pfad
-letztendlich von einem Sidecar mit geringerer Latenz übernommen werden kann, während OmniRoute die
+letztendlich von einem Sidecar mit geringerer Latenz übernommen werden kann, während Pusula die
 TypeScript-Route als Richtlinien-Gate und Fallback beibehält. Das Manifest ist additiv: Es
 ändert das Request-Routing nicht eigenständig.
 
@@ -74,7 +74,7 @@ die TypeScript-Quellen erneut auszulesen.
 | `usage-fetch`        | Verfügt über eine eingebundene Nutzungs- oder Kontingent-Abruffunktion (`getUsageForProvider`).      |
 | `usage-supported`    | Die Nutzungs-API akzeptiert diesen Provider (`isSupportedUsageConnection`).                          |
 
-`usage-fetch` dient nur der Erkennung. Es gibt an, dass OmniRoute weiß, wie die Nutzung für den
+`usage-fetch` dient nur der Erkennung. Es gibt an, dass Pusula weiß, wie die Nutzung für den
 Provider abgerufen werden kann; es aktiviert den Abruf nicht, ändert keine Kontingentsemantik und impliziert nicht, dass das
 Dashboard-Kontingent-Widget für den Provider aktiviert ist — dieses Widget wird separat durch
 `USAGE_SUPPORTED_PROVIDERS` gesteuert. Die maßgebliche Quelle ist `USAGE_FETCHER_PROVIDERS` in
@@ -103,7 +103,7 @@ Empfohlene Migrationsphasen:
 
 1. Das Anbieter-Plugin-Manifest aus der TS-Registry generieren und validieren.
 2. Bifrost oder CLIProxyAPI so erweitern, dass das Manifest für Anbieter mit API-Schlüssel und statischem Endpunkt importiert werden kann.
-3. Geeignete Anbieter hinter `OMNIROUTE_RELAY_BACKEND` durch den Sidecar leiten, während der TS-Fallback aktiviert bleibt.
+3. Geeignete Anbieter hinter `PUSULA_RELAY_BACKEND` durch den Sidecar leiten, während der TS-Fallback aktiviert bleibt.
 4. Anbieter erst dann hochstufen, wenn Erfolgsrate, p99-Latenz, Streaming-Verhalten und die Behandlung nicht unterstützter Parameter dem TS-Pfad entsprechen.
 5. Native Sidecar-Plugins für benutzerdefinierte Executors schrittweise für jeweils eine Anbieterfamilie hinzufügen.
 

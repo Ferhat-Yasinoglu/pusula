@@ -83,7 +83,7 @@ describe("stripClaudeRejectedTopLevelFields on the native claude passthrough", (
 });
 
 describe("synthetic empty-stream 502 must not trigger a per-model lockout", () => {
-  // OmniRoute synthesizes this 502 itself (stream.ts emitClaudeEmptyStreamErrorAndAbort,
+  // Pusula synthesizes this 502 itself (stream.ts emitClaudeEmptyStreamErrorAndAbort,
   // code "empty_response"). Treating it as an upstream per-model server error
   // locked claude-opus-5 for 60s on HEALTHY accounts; with the remaining accounts
   // rate-limited that emptied the whole combo.

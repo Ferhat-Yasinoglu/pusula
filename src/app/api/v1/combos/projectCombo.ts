@@ -15,14 +15,14 @@
  * those features instead of requiring manual config after import.
  */
 import { getResolvedModelCapabilities } from "@/lib/modelCapabilities";
-import { resolveNestedComboTargets } from "@omniroute/open-sse/services/combo/comboStructure.ts";
+import { resolveNestedComboTargets } from "@pusula/open-sse/services/combo/comboStructure.ts";
 // The shapes live in the combo type module; comboStructure.ts only re-uses them
 // internally, so importing them from there is a TS2459/TS2724 at build time.
 import type {
   ComboCollectionLike,
   ComboLike,
   ResolvedComboTarget,
-} from "@omniroute/open-sse/services/combo/types.ts";
+} from "@pusula/open-sse/services/combo/types.ts";
 
 export interface PublicComboStep {
   kind: "model" | "combo-ref";

@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import { getIdempotencyKey, checkIdempotency } from "@/lib/idempotencyLayer";
 import { calculateCost } from "@/lib/usage/costCalculator";
-import { attachOmniRouteMetaHeaders } from "@/domain/omnirouteResponseMeta";
+import { attachPusulaMetaHeaders } from "@/domain/pusulaResponseMeta";
 import type { EffectiveServiceTier } from "./serviceTier.ts";
 
 type HeadersLike = Headers | Record<string, unknown> | null | undefined;
@@ -162,9 +162,9 @@ export async function checkIdempotencyCache({
       : 0;
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
-      "X-OmniRoute-Idempotent": "true",
+      "X-Pusula-Idempotent": "true",
     };
-    attachOmniRouteMetaHeaders(headers, {
+    attachPusulaMetaHeaders(headers, {
       provider,
       model,
       cacheHit: false,

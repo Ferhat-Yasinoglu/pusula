@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { isAdaptiveThinkingOnly } from "@/shared/constants/modelSpecs.ts";
-import { normalizeClaudeAdaptiveThinking } from "@omniroute/open-sse/services/claudeAdaptiveThinking.ts";
+import { normalizeClaudeAdaptiveThinking } from "@pusula/open-sse/services/claudeAdaptiveThinking.ts";
 
 // Issue #12132: MiniMax M3 rejects thinking.type:"enabled" with 400 (2013)
 // ("invalid thinking.type: \"enabled\" (allowed: adaptive, disabled)"), but the

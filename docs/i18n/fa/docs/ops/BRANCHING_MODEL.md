@@ -4,7 +4,7 @@
 
 ---
 
-OmniRoute از مدل انتشار **چرخههای موازی** استفاده میکند: یک شاخهٔ اختصاصی `release/vX.Y.Z`
+Pusula از مدل انتشار **چرخههای موازی** استفاده میکند: یک شاخهٔ اختصاصی `release/vX.Y.Z`
 برای چرخهٔ فعال، `main` برای خط منتشرشده و یک تگ تغییرناپذیر
 `vX.Y.Z` هنگام انتشار آن چرخه. مشاهدهٔ ثبت شدن کامیتها هم در `release/*` _و_ هم در
 `main` طبیعی است — این موضوع ناشی از اشتباه نیست.
@@ -56,7 +56,7 @@ flowchart LR
 پیش از اینکه فرض کنید شاخهٔ موردنظر شما قابل ادغام است، وجود توقف موقت باز را بررسی کنید:
 
 ```bash
-gh issue list --repo diegosouzapw/OmniRoute --label release-freeze --state open
+gh issue list --repo Ferhat-Yasinoglu/pusula --label release-freeze --state open
 ```
 
 سازوکار ادغام (برچسب `queue` توسط مالک → Mergify) در

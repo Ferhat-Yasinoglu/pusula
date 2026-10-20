@@ -4,7 +4,7 @@
 
 ---
 
-Wie OmniRoute die Kosten jeder Anfrage schätzt, erfasst und ausgibt — und warum die
+Wie Pusula die Kosten jeder Anfrage schätzt, erfasst und ausgibt — und warum die
 Zahl im Dashboard ein **Einsparungstracker** und keine Rechnung ist.
 
 Siehe auch: [Benutzerhandbuch](./USER_GUIDE.md) · [Funktionsübersicht](./FEATURES.md)
@@ -13,12 +13,12 @@ Siehe auch: [Benutzerhandbuch](./USER_GUIDE.md) · [Funktionsübersicht](./FEATU
 
 ## Was es ist (und was nicht)
 
-OmniRoute ordnet jeder Vervollständigung Kosten in USD pro Anfrage zu, indem die Anzahl
+Pusula ordnet jeder Vervollständigung Kosten in USD pro Anfrage zu, indem die Anzahl
 der Token mit den Preissätzen eines Modells multipliziert wird. Diese Zahlen bilden die
-Grundlage für das **Kosten**-Dashboard, die CLI-Befehle `omniroute cost` /
-`omniroute usage`, CSV-/JSON-Exporte und Budgets pro API-Schlüssel.
+Grundlage für das **Kosten**-Dashboard, die CLI-Befehle `pusula cost` /
+`pusula usage`, CSV-/JSON-Exporte und Budgets pro API-Schlüssel.
 
-> **Die „Kosten“ im Dashboard sind ein Einsparungstracker und keine Rechnung.** OmniRoute
+> **Die „Kosten“ im Dashboard sind ein Einsparungstracker und keine Rechnung.** Pusula
 > stellt Ihnen niemals etwas in Rechnung — es leitet Ihre Anfragen an Anbieter weiter,
 > die Sie bereits verbunden haben (Ihre eigenen Abonnements, kostenlosen Kontingente und
 > API-Schlüssel). Wenn „Gesamtkosten von $290“ ausschließlich durch kostenlose Modelle
@@ -33,7 +33,7 @@ Diese Einordnung wird direkt in der [README](../../README.md) des Projekts erlä
 
 Da es sich bei der Zahl um eine Schätzung handelt:
 
-- Sie hängt von der Preistabelle ab, die OmniRoute für jedes Modell verwendet. Ein Modell
+- Sie hängt von der Preistabelle ab, die Pusula für jedes Modell verwendet. Ein Modell
   ohne Preiseintrag verursacht Kosten von `0` (im Explorer wird es als Zeile
   „Legacy / Kostenlos“ angezeigt).
 - Auch Datenverkehr über kostenlose Kontingente und Abonnements verursacht _geschätzte_
@@ -54,7 +54,7 @@ ermittelt wird ([`src/lib/pricingSync.ts`](../../src/lib/pricingSync.ts)):
    öffentlichen Datei `model_prices_and_context_window.json` von LiteLLM abgerufen
    (und in einem separaten `pricing_synced`-Namensraum gespeichert, sodass Ihre
    Überschreibungen niemals ersetzt werden).
-3. **Fest codierte Standardwerte** — werden mit OmniRoute ausgeliefert.
+3. **Fest codierte Standardwerte** — werden mit Pusula ausgeliefert.
 
 Die externe Preissynchronisierung ist **optional** und standardmäßig deaktiviert.
 Relevante Umgebungsvariablen (siehe [`.env.example`](../../.env.example)):
@@ -100,8 +100,8 @@ einem Preis zugeordnet werden können.
 
   | Umgebungsvariable                   | Standardwert | Zweck                                                   |
   | ----------------------------------- | ------------ | ------------------------------------------------------- |
-  | `OMNIROUTE_SPEND_FLUSH_INTERVAL_MS` | `60000`      | Schreibintervall in Millisekunden.                      |
-  | `OMNIROUTE_SPEND_MAX_BUFFER_SIZE`   | `1000`       | Maximale Anzahl gepufferter Einträge vor dem Schreiben. |
+  | `PUSULA_SPEND_FLUSH_INTERVAL_MS` | `60000`      | Schreibintervall in Millisekunden.                      |
+  | `PUSULA_SPEND_MAX_BUFFER_SIZE`   | `1000`       | Maximale Anzahl gepufferter Einträge vor dem Schreiben. |
 
 Die Kostenangaben des Dashboards werden **nicht** aus einem pro Zeile gespeicherten
 Dollarbetrag ausgelesen — sie werden bei jeder Ausführung des Analyse-Endpunkts anhand
@@ -205,50 +205,50 @@ nicht anders angegeben.
 
 ## CLI
 
-Die CLI von OmniRoute stellt Befehle für Kosten, Nutzung und Preise bereit (registriert in
+Die CLI von Pusula stellt Befehle für Kosten, Nutzung und Preise bereit (registriert in
 [`bin/cli/commands/registry.mjs`](../../bin/cli/commands/registry.mjs)).
 
-### `omniroute cost`
+### `pusula cost`
 
 Ein nach `/api/usage/analytics` aggregierter Kostenbericht.
 
 ```bash
-omniroute cost                          # letzte 30 Tage, nach Anbieter gruppiert
-omniroute cost --period 7d              # letzte 7 Tage
-omniroute cost --group-by model         # gruppieren nach provider | model | combo | api-key | day
-omniroute cost --since 2026-06-01 --until 2026-06-13
-omniroute cost --api-key <key> --limit 50
+pusula cost                          # letzte 30 Tage, nach Anbieter gruppiert
+pusula cost --period 7d              # letzte 7 Tage
+pusula cost --group-by model         # gruppieren nach provider | model | combo | api-key | day
+pusula cost --since 2026-06-01 --until 2026-06-13
+pusula cost --api-key <key> --limit 50
 ```
 
 Spalten: Gruppe, Anfragen, Eingabe-/Ausgabe-Token, Kosten (USD) und prozentualer Anteil an der Gesamtsumme. Am Ende
 wird eine Gesamtsummenzeile ausgegeben (unterdrückt mit `--quiet` oder `--output json`).
 
-### `omniroute usage`
+### `pusula usage`
 
 ```bash
-omniroute usage analytics --period 30d [--provider <id>]   # Kostenzusammenfassung pro Anbieter
-omniroute usage logs [--limit 100] [--follow] [--api-key <k>] [--search <q>]
-omniroute usage quota [--provider <id>] [--check]
-omniroute usage utilization [--api-key <k>]
-omniroute usage history [--limit 100]
-omniroute usage proxy-logs [--limit 100]
+pusula usage analytics --period 30d [--provider <id>]   # Kostenzusammenfassung pro Anbieter
+pusula usage logs [--limit 100] [--follow] [--api-key <k>] [--search <q>]
+pusula usage quota [--provider <id>] [--check]
+pusula usage utilization [--api-key <k>]
+pusula usage history [--limit 100]
+pusula usage proxy-logs [--limit 100]
 
 # Budgets
-omniroute usage budget list
-omniroute usage budget get [scope]
-omniroute usage budget set <amount> [--scope global] [--period monthly]
-omniroute usage budget reset [scope]
+pusula usage budget list
+pusula usage budget get [scope]
+pusula usage budget set <amount> [--scope global] [--period monthly]
+pusula usage budget reset [scope]
 ```
 
-### `omniroute pricing`
+### `pusula pricing`
 
 ```bash
-omniroute pricing list [--provider <p>] [--model <m>] [--limit 200]
-omniroute pricing get <model>
-omniroute pricing sync [--provider <p>] [--force]   # POST /api/pricing/sync
-omniroute pricing diff [--model <m>]
-omniroute pricing defaults show
-omniroute pricing defaults set [--input <p>] [--output <p>] [--cache-read <p>] [--cache-write <p>]
+pusula pricing list [--provider <p>] [--model <m>] [--limit 200]
+pusula pricing get <model>
+pusula pricing sync [--provider <p>] [--force]   # POST /api/pricing/sync
+pusula pricing diff [--model <m>]
+pusula pricing defaults show
+pusula pricing defaults set [--input <p>] [--output <p>] [--cache-read <p>] [--cache-write <p>]
 ```
 
 > `pricing defaults show` liest `GET /api/pricing/defaults`. Um stattdessen die Preise einzelner Modelle
@@ -259,12 +259,12 @@ omniroute pricing defaults set [--input <p>] [--output <p>] [--cache-read <p>] [
 ## Fehlerbehebung
 
 - **Alle Kosten werden als $0 / „Legacy / Free“ angezeigt.** Für die verwendeten Modelle ist kein Preiseintrag vorhanden.
-  Aktivieren Sie die externe Synchronisierung (`PRICING_SYNC_ENABLED=true`) und führen Sie `omniroute pricing sync` aus oder
+  Aktivieren Sie die externe Synchronisierung (`PRICING_SYNC_ENABLED=true`) und führen Sie `pusula pricing sync` aus oder
   legen Sie die Preise manuell über die Seite „Pricing“ / `PATCH /api/pricing` fest.
 - **Ein historisches Modell hat einen falschen Preis.** Korrigieren Sie den Preis (durch Überschreiben oder erneutes Synchronisieren) – die Kosten werden
   bei jedem Abruf der Analysedaten anhand der Token-Anzahl neu berechnet, sodass die Schätzungen rückwirkend aktualisiert werden.
 - **Die Ausgaben hinken den Echtzeitdaten hinterher.** Die Ausgaben pro Schlüssel werden gebündelt verarbeitet; verringern Sie
-  `OMNIROUTE_SPEND_FLUSH_INTERVAL_MS`, wenn Sie aktuellere Zahlen benötigen.
+  `PUSULA_SPEND_FLUSH_INTERVAL_MS`, wenn Sie aktuellere Zahlen benötigen.
 
 ---
 

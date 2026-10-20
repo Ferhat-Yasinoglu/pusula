@@ -10,7 +10,7 @@ import { runDbHealthCheck } from "../../src/lib/db/healthCheck.ts";
 
 const dir = fs.mkdtempSync(path.join(os.tmpdir(), "health-sqljs-"));
 process.env.DATA_DIR = dir;
-process.env.OMNIROUTE_SKIP_DB_HEALTHCHECK = "1";
+process.env.PUSULA_SKIP_DB_HEALTHCHECK = "1";
 const core = await import("../../src/lib/db/core.ts");
 
 for (const failOpen of [false, true]) {

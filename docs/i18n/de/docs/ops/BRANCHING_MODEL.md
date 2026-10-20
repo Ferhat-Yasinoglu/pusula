@@ -4,7 +4,7 @@
 
 ---
 
-OmniRoute verwendet ein **Parallelzyklus**-Release-Modell: einen dedizierten Branch `release/vX.Y.Z`
+Pusula verwendet ein **Parallelzyklus**-Release-Modell: einen dedizierten Branch `release/vX.Y.Z`
 für den aktiven Zyklus, `main` für die veröffentlichte Linie und ein unveränderliches
 `vX.Y.Z`-Tag, sobald dieser Zyklus veröffentlicht wird. Dass Commits sowohl auf `release/*` _als auch_ auf
 `main` landen, ist zu erwarten — es handelt sich nicht um eine Verwechslung.
@@ -56,7 +56,7 @@ geöffnet. Das **hält die Entwicklung nicht auf**:
 Prüfe, ob ein offener Freeze besteht, bevor du davon ausgehst, dass der gewünschte Branch zusammengeführt werden kann:
 
 ```bash
-gh issue list --repo diegosouzapw/OmniRoute --label release-freeze --state open
+gh issue list --repo Ferhat-Yasinoglu/pusula --label release-freeze --state open
 ```
 
 Die Merge-Mechanik (`queue`-Label des Owners → Mergify) ist in

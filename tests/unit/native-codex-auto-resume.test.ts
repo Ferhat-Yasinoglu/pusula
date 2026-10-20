@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-autoresume-test-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-autoresume-test-"));
 const ORIGINAL_DATA_DIR = process.env.DATA_DIR;
 process.env.DATA_DIR = TEST_DATA_DIR;
 
@@ -142,7 +142,7 @@ describe("Native Codex Safe Auto-Resume", () => {
             status: 200,
             headers: {
               "content-type": "application/json",
-              "x-omniroute-selected-connection-id": conn1Id,
+              "x-pusula-selected-connection-id": conn1Id,
             },
           }
         );
@@ -196,7 +196,7 @@ describe("Native Codex Safe Auto-Resume", () => {
               status: 200,
               headers: {
                 "content-type": "application/json",
-                "x-omniroute-selected-connection-id": conn1Id,
+                "x-pusula-selected-connection-id": conn1Id,
               },
             }
           );
@@ -274,7 +274,7 @@ describe("Native Codex Safe Auto-Resume", () => {
             status: 200,
             headers: {
               "content-type": "application/json",
-              "x-omniroute-selected-connection-id": conn1Id,
+              "x-pusula-selected-connection-id": conn1Id,
             },
           }
         );
@@ -315,7 +315,7 @@ describe("Native Codex Safe Auto-Resume", () => {
       handleSingleModel: async () =>
         new Response(JSON.stringify({ choices: [{ message: { content: "opus" } }] }), {
           status: 200,
-          headers: { "x-omniroute-selected-connection-id": conn1.id },
+          headers: { "x-pusula-selected-connection-id": conn1.id },
         }),
       isModelAvailable: async () => true,
       log: createLog(),
@@ -392,7 +392,7 @@ describe("Native Codex Safe Auto-Resume", () => {
       handleSingleModel: async () =>
         new Response(JSON.stringify({ choices: [{ message: { content: "opus" } }] }), {
           status: 200,
-          headers: { "x-omniroute-selected-connection-id": conn1.id },
+          headers: { "x-pusula-selected-connection-id": conn1.id },
         }),
       isModelAvailable: async () => true,
       log: createLog(),
@@ -467,7 +467,7 @@ describe("Native Codex Safe Auto-Resume", () => {
       handleSingleModel: async () =>
         new Response(JSON.stringify({ choices: [{ message: { content: "opus" } }] }), {
           status: 200,
-          headers: { "x-omniroute-selected-connection-id": conn1.id },
+          headers: { "x-pusula-selected-connection-id": conn1.id },
         }),
       isModelAvailable: async () => true,
       log: createLog(),
@@ -558,7 +558,7 @@ describe("Native Codex Safe Auto-Resume", () => {
       handleSingleModel: async () =>
         new Response(JSON.stringify({ choices: [{ message: { content: "opus conn1" } }] }), {
           status: 200,
-          headers: { "x-omniroute-selected-connection-id": conn1Id },
+          headers: { "x-pusula-selected-connection-id": conn1Id },
         }),
       isModelAvailable: async () => true,
       log: createLog(),
@@ -578,7 +578,7 @@ describe("Native Codex Safe Auto-Resume", () => {
         attempted.push({ modelStr, connectionId: target?.connectionId || undefined });
         return new Response(JSON.stringify({ choices: [{ message: { content: "opus conn2" } }] }), {
           status: 200,
-          headers: { "x-omniroute-selected-connection-id": conn2Id },
+          headers: { "x-pusula-selected-connection-id": conn2Id },
         });
       },
       isModelAvailable: async () => true,
@@ -631,7 +631,7 @@ describe("Native Codex Safe Auto-Resume", () => {
       handleSingleModel: async () =>
         new Response(JSON.stringify({ choices: [{ message: { content: "opus" } }] }), {
           status: 200,
-          headers: { "x-omniroute-selected-connection-id": conn1.id },
+          headers: { "x-pusula-selected-connection-id": conn1.id },
         }),
       isModelAvailable: async () => true,
       log: createLog(),
@@ -699,7 +699,7 @@ describe("Native Codex Safe Auto-Resume", () => {
       handleSingleModel: async () =>
         new Response(JSON.stringify({ choices: [{ message: { content: "opus" } }] }), {
           status: 200,
-          headers: { "x-omniroute-selected-connection-id": conn1.id },
+          headers: { "x-pusula-selected-connection-id": conn1.id },
         }),
       isModelAvailable: async () => true,
       log: createLog(),
@@ -772,7 +772,7 @@ describe("Native Codex Safe Auto-Resume", () => {
       handleSingleModel: async () =>
         new Response(JSON.stringify({ choices: [{ message: { content: "opus" } }] }), {
           status: 200,
-          headers: { "x-omniroute-selected-connection-id": conn1.id },
+          headers: { "x-pusula-selected-connection-id": conn1.id },
         }),
       isModelAvailable: async () => true,
       log: createLog(),
@@ -846,7 +846,7 @@ describe("Native Codex Safe Auto-Resume", () => {
       handleSingleModel: async () =>
         new Response(JSON.stringify({ choices: [{ message: { content: "opus" } }] }), {
           status: 200,
-          headers: { "x-omniroute-selected-connection-id": conn1.id },
+          headers: { "x-pusula-selected-connection-id": conn1.id },
         }),
       isModelAvailable: async () => true,
       log: createLog(),
@@ -867,7 +867,7 @@ describe("Native Codex Safe Auto-Resume", () => {
         if (m === geminiModel) {
           return new Response(JSON.stringify({ choices: [{ message: { content: "gemini" } }] }), {
             status: 200,
-            headers: { "x-omniroute-selected-connection-id": conn1.id },
+            headers: { "x-pusula-selected-connection-id": conn1.id },
           });
         }
         return new Response(JSON.stringify({ error: "fail" }), { status: 500 });
@@ -1031,7 +1031,7 @@ describe("Native Codex Safe Auto-Resume", () => {
       handleSingleModel: async () =>
         new Response(JSON.stringify({ choices: [{ message: { content: "opus" } }] }), {
           status: 200,
-          headers: { "x-omniroute-selected-connection-id": conn1.id },
+          headers: { "x-pusula-selected-connection-id": conn1.id },
         }),
       isModelAvailable: async () => true,
       log: createLog(),

@@ -12,7 +12,7 @@ import {
   engineMeta,
   isSafeDefault,
   type CacheImpact,
-} from "@omniroute/open-sse/services/compression/engineCatalog.ts";
+} from "@pusula/open-sse/services/compression/engineCatalog.ts";
 
 const VALID_CACHE_IMPACTS: CacheImpact[] = ["none", "low", "moderate", "high"];
 

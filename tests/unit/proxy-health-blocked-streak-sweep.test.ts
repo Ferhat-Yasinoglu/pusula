@@ -19,10 +19,10 @@ import net from "node:net";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-blocked-streak-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-blocked-streak-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = "test-secret";
-process.env.OMNIROUTE_DISABLE_BACKGROUND_SERVICES = "true";
+process.env.PUSULA_DISABLE_BACKGROUND_SERVICES = "true";
 process.env.PROXY_AUTO_DISABLE = "true";
 process.env.PROXY_AUTO_REMOVE_AFTER = "2";
 process.env.PROXY_HEALTH_TEST_STAGGER_MS = "0";

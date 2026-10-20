@@ -25,7 +25,7 @@ import Database from 'better-sqlite3';
 const core = await import(process.env.OMNI_CORE_TS_PATH);
 // Without a "test"-tokened argv/NODE_ENV, shouldRunStartupDbHealthCheck()
 // (src/lib/db/core.ts) runs the check on EVERY getDbInstance() cold-open,
-// not only when OMNIROUTE_FORCE_DB_HEALTHCHECK is set (that env only matters
+// not only when PUSULA_FORCE_DB_HEALTHCHECK is set (that env only matters
 // for a test-detected process). Both the flag override and the broken row
 // are therefore written through a single raw better-sqlite3 connection that
 // bypasses core.ts entirely, so exactly ONE getDbInstance() call happens
@@ -38,7 +38,7 @@ try {
 
   const sqliteFile = path.join(process.env.DATA_DIR, 'storage.sqlite');
   const raw = new Database(sqliteFile);
-  if (process.env.OMNIROUTE_TEST_DEFERRED === '1') {
+  if (process.env.PUSULA_TEST_DEFERRED === '1') {
     raw.prepare(
       "INSERT OR REPLACE INTO key_value (namespace, key, value) VALUES ('feature_flags', 'DB_HEALTHCHECK_STARTUP_DEFERRED_ENABLED', 'true')"
     ).run();
@@ -48,7 +48,7 @@ try {
   ).run('openai', 'missing-connection-id', 'monthly', 75, 0, new Date().toISOString());
   raw.close();
 
-  if (process.env.OMNIROUTE_TEST_DEFERRED === '1') {
+  if (process.env.PUSULA_TEST_DEFERRED === '1') {
     // Deferred: getDbInstance() must schedule the check via setImmediate and
     // return BEFORE it runs, rather than run it inline. Whether the
     // scheduled check goes on to repair the row is a separate concern (it
@@ -119,7 +119,7 @@ function runCase(deferred: "0" | "1") {
         NODE_ENV: undefined,
         APP_LOG_TO_FILE: "false",
         DISABLE_SQLITE_AUTO_BACKUP: "true",
-        OMNIROUTE_TEST_DEFERRED: deferred,
+        PUSULA_TEST_DEFERRED: deferred,
         OMNI_CORE_TS_PATH: path.join(process.cwd(), "src/lib/db/core.ts"),
       },
       encoding: "utf8",

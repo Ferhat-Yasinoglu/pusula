@@ -1,10 +1,10 @@
-# 📖 Setup Guide — OmniRoute (Deutsch)
+# 📖 Setup Guide — Pusula (Deutsch)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../guides/SETUP_GUIDE.md) · 🇪🇹 [am](../../../am/docs/guides/SETUP_GUIDE.md) · 🇸🇦 [ar](../../../ar/docs/guides/SETUP_GUIDE.md) · 🇦🇿 [az](../../../az/docs/guides/SETUP_GUIDE.md) · 🇧🇬 [bg](../../../bg/docs/guides/SETUP_GUIDE.md) · 🇧🇩 [bn](../../../bn/docs/guides/SETUP_GUIDE.md) · 🇧🇦 [bs](../../../bs/docs/guides/SETUP_GUIDE.md) · 🇨🇿 [cs](../../../cs/docs/guides/SETUP_GUIDE.md) · 🇩🇰 [da](../../../da/docs/guides/SETUP_GUIDE.md) · 🇬🇷 [el](../../../el/docs/guides/SETUP_GUIDE.md) · 🇪🇸 [es](../../../es/docs/guides/SETUP_GUIDE.md) · 🇪🇪 [et](../../../et/docs/guides/SETUP_GUIDE.md) · 🇮🇷 [fa](../../../fa/docs/guides/SETUP_GUIDE.md) · 🇫🇮 [fi](../../../fi/docs/guides/SETUP_GUIDE.md) · 🇫🇷 [fr](../../../fr/docs/guides/SETUP_GUIDE.md) · 🇮🇪 [ga](../../../ga/docs/guides/SETUP_GUIDE.md) · 🇮🇳 [gu](../../../gu/docs/guides/SETUP_GUIDE.md) · 🇳🇬 [ha](../../../ha/docs/guides/SETUP_GUIDE.md) · 🇮🇱 [he](../../../he/docs/guides/SETUP_GUIDE.md) · 🇮🇳 [hi](../../../hi/docs/guides/SETUP_GUIDE.md) · 🇭🇷 [hr](../../../hr/docs/guides/SETUP_GUIDE.md) · 🇭🇺 [hu](../../../hu/docs/guides/SETUP_GUIDE.md) · 🇦🇲 [hy](../../../hy/docs/guides/SETUP_GUIDE.md) · 🇮🇩 [id](../../../id/docs/guides/SETUP_GUIDE.md) · 🇳🇬 [ig](../../../ig/docs/guides/SETUP_GUIDE.md) · 🇮🇹 [it](../../../it/docs/guides/SETUP_GUIDE.md) · 🇯🇵 [ja](../../../ja/docs/guides/SETUP_GUIDE.md) · 🇬🇪 [ka](../../../ka/docs/guides/SETUP_GUIDE.md) · 🇰🇭 [km](../../../km/docs/guides/SETUP_GUIDE.md) · 🇮🇳 [kn](../../../kn/docs/guides/SETUP_GUIDE.md) · 🇰🇷 [ko](../../../ko/docs/guides/SETUP_GUIDE.md) · 🇱🇹 [lt](../../../lt/docs/guides/SETUP_GUIDE.md) · 🇱🇻 [lv](../../../lv/docs/guides/SETUP_GUIDE.md) · 🇮🇳 [ml](../../../ml/docs/guides/SETUP_GUIDE.md) · 🇮🇳 [mr](../../../mr/docs/guides/SETUP_GUIDE.md) · 🇲🇾 [ms](../../../ms/docs/guides/SETUP_GUIDE.md) · 🇲🇹 [mt](../../../mt/docs/guides/SETUP_GUIDE.md) · 🇲🇲 [my](../../../my/docs/guides/SETUP_GUIDE.md) · 🇳🇵 [ne](../../../ne/docs/guides/SETUP_GUIDE.md) · 🇳🇱 [nl](../../../nl/docs/guides/SETUP_GUIDE.md) · 🇳🇴 [no](../../../no/docs/guides/SETUP_GUIDE.md) · 🇮🇳 [or](../../../or/docs/guides/SETUP_GUIDE.md) · 🇮🇳 [pa](../../../pa/docs/guides/SETUP_GUIDE.md) · 🇵🇭 [phi](../../../phi/docs/guides/SETUP_GUIDE.md) · 🇵🇱 [pl](../../../pl/docs/guides/SETUP_GUIDE.md) · 🇵🇹 [pt](../../../pt/docs/guides/SETUP_GUIDE.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/guides/SETUP_GUIDE.md) · 🇷🇴 [ro](../../../ro/docs/guides/SETUP_GUIDE.md) · 🇷🇺 [ru](../../../ru/docs/guides/SETUP_GUIDE.md) · 🇱🇰 [si](../../../si/docs/guides/SETUP_GUIDE.md) · 🇸🇰 [sk](../../../sk/docs/guides/SETUP_GUIDE.md) · 🇸🇮 [sl](../../../sl/docs/guides/SETUP_GUIDE.md) · 🇷🇸 [sr](../../../sr/docs/guides/SETUP_GUIDE.md) · 🇸🇪 [sv](../../../sv/docs/guides/SETUP_GUIDE.md) · 🇰🇪 [sw](../../../sw/docs/guides/SETUP_GUIDE.md) · 🇮🇳 [ta](../../../ta/docs/guides/SETUP_GUIDE.md) · 🇮🇳 [te](../../../te/docs/guides/SETUP_GUIDE.md) · 🇹🇭 [th](../../../th/docs/guides/SETUP_GUIDE.md) · 🇹🇷 [tr](../../../tr/docs/guides/SETUP_GUIDE.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/guides/SETUP_GUIDE.md) · 🇵🇰 [ur](../../../ur/docs/guides/SETUP_GUIDE.md) · 🇺🇿 [uz](../../../uz/docs/guides/SETUP_GUIDE.md) · 🇻🇳 [vi](../../../vi/docs/guides/SETUP_GUIDE.md) · 🇳🇬 [yo](../../../yo/docs/guides/SETUP_GUIDE.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/guides/SETUP_GUIDE.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/guides/SETUP_GUIDE.md)
 
 ---
 
-> Vollständige Einrichtungsreferenz für OmniRoute. Eine Kurzfassung finden Sie im [Schnellstart in der README](../README.md#-quick-start).
+> Vollständige Einrichtungsreferenz für Pusula. Eine Kurzfassung finden Sie im [Schnellstart in der README](../README.md#-quick-start).
 
 ## Inhaltsverzeichnis
 
@@ -23,8 +23,8 @@
 ### npm (empfohlen)
 
 ```bash
-npm install -g omniroute
-omniroute
+npm install -g pusula
+pusula
 ```
 
 Das Dashboard wird unter `http://localhost:20128` geöffnet, und die Basis-URL der API lautet `http://localhost:20128/v1`.
@@ -32,8 +32,8 @@ Das Dashboard wird unter `http://localhost:20128` geöffnet, und die Basis-URL d
 ### pnpm
 
 ```bash
-pnpm add -g omniroute@latest --allow-build=better-sqlite3 --allow-build=@swc/core
-omniroute
+pnpm add -g pusula@latest --allow-build=better-sqlite3 --allow-build=@swc/core
+pusula
 ```
 
 > **Hinweis für pnpm-Benutzer:** Das Flag `--allow-build` ist erforderlich, um native Build-Skripte für `better-sqlite3` und `@swc/core` zu aktivieren. Der Befehl `pnpm approve-builds -g` wird unter pnpm v11 für globale Installationen nicht unterstützt.
@@ -41,11 +41,11 @@ omniroute
 ### Arch Linux (AUR)
 
 ```bash
-yay -S omniroute-bin
-systemctl --user enable --now omniroute.service
+yay -S pusula-bin
+systemctl --user enable --now pusula.service
 ```
 
-Das [AUR-Paket](https://aur.archlinux.org/packages/omniroute-bin) installiert OmniRoute und stellt einen systemd-Benutzerdienst bereit.
+Das [AUR-Paket](https://aur.archlinux.org/packages/pusula-bin) installiert Pusula und stellt einen systemd-Benutzerdienst bereit.
 
 ### Aus dem Quellcode
 
@@ -54,7 +54,7 @@ npm install
 PORT=20128 DASHBOARD_PORT=20129 NEXT_PUBLIC_BASE_URL=http://localhost:20129 npm run dev
 ```
 
-> **Hinweis für Windows:** Standardmäßig verwendet OmniRoute `%APPDATA%\omniroute`, wenn das veraltete Verzeichnis `%USERPROFILE%\.omniroute` nicht vorhanden ist. Legen Sie `DATA_DIR` fest, um einen anderen Speicherort für das Datenverzeichnis auszuwählen.
+> **Hinweis für Windows:** Standardmäßig verwendet Pusula `%APPDATA%\pusula`, wenn das veraltete Verzeichnis `%USERPROFILE%\.pusula` nicht vorhanden ist. Legen Sie `DATA_DIR` fest, um einen anderen Speicherort für das Datenverzeichnis auszuwählen.
 
 > **Hinweis:** `npm install` generiert beim ersten Ausführen automatisch `.env` aus `.env.example`. Bei späteren Installationen wird eine vorhandene `.env` nicht überschrieben, sodass Anpassungen erhalten bleiben. Um sie neu zu erstellen, löschen Sie `.env`, bevor Sie den Befehl erneut ausführen.
 
@@ -64,7 +64,7 @@ Eine vollständige Docker-Einrichtung einschließlich Compose-Profilen und Caddy
 
 ### Desktop-App (Electron)
 
-OmniRoute enthält einen Desktop-Wrapper, der auf Electron 41 + electron-builder 26.10 basiert. Verfügbare Skripte (Workspace-Stammverzeichnis):
+Pusula enthält einen Desktop-Wrapper, der auf Electron 41 + electron-builder 26.10 basiert. Verfügbare Skripte (Workspace-Stammverzeichnis):
 
 ```bash
 npm run electron:dev          # Desktop-App mit Hot-Reload ausführen
@@ -82,56 +82,56 @@ Veröffentlichungen der Desktop-Installationsprogramme sind den GitHub-Releases 
 Verwenden Sie für unbeaufsichtigte Einrichtungen (Docker, Kubernetes, CI):
 
 ```bash
-omniroute setup --non-interactive
-omniroute providers test-batch
+pusula setup --non-interactive
+pusula providers test-batch
 ```
 
-In Kombination mit Umgebungsvariablen (`INITIAL_PASSWORD`, `OMNIROUTE_WS_BRIDGE_SECRET` usw.) können Sie damit eine OmniRoute-Instanz vollständig skriptgesteuert starten.
+In Kombination mit Umgebungsvariablen (`INITIAL_PASSWORD`, `PUSULA_WS_BRIDGE_SECRET` usw.) können Sie damit eine Pusula-Instanz vollständig skriptgesteuert starten.
 
 ### CLI-Optionen
 
 | Befehl                  | Beschreibung                                                                                  |
 | ----------------------- | --------------------------------------------------------------------------------------------- |
-| `omniroute`             | Server starten (`PORT=20128`, API und Dashboard auf demselben Port)                           |
-| `omniroute setup`       | Geführte CLI-Ersteinrichtung für Passwort und ersten Anbieter                                 |
-| `omniroute doctor`      | Lokale Integritätsprüfungen ausführen, ohne den Server zu starten                             |
-| `omniroute providers`   | Anbieter über die CLI erkennen, auflisten, validieren und testen                              |
-| `omniroute config`      | Konfiguration der CLI-Tools — Konfigurationen auflisten, abrufen, setzen, prüfen              |
-| `omniroute status`      | Offline-Status-Dashboard — Version, DB, Tools, Konfiguration                                  |
-| `omniroute logs`        | Nutzungsprotokolle von der API streamen (unterstützt `--follow`)                              |
-| `omniroute update`      | Nach OmniRoute-Updates suchen oder diese installieren                                         |
-| `omniroute provider`    | Anbieterverbindungen verwalten — hinzufügen, auflisten, entfernen, testen, Standard festlegen |
-| `omniroute --port 3000` | Kanonischen/API-Port auf 3000 setzen                                                          |
-| `omniroute --mcp`       | MCP-Server starten (stdio-Transport)                                                          |
-| `omniroute --no-open`   | Browser nicht automatisch öffnen                                                              |
-| `omniroute --help`      | Hilfe anzeigen                                                                                |
+| `pusula`             | Server starten (`PORT=20128`, API und Dashboard auf demselben Port)                           |
+| `pusula setup`       | Geführte CLI-Ersteinrichtung für Passwort und ersten Anbieter                                 |
+| `pusula doctor`      | Lokale Integritätsprüfungen ausführen, ohne den Server zu starten                             |
+| `pusula providers`   | Anbieter über die CLI erkennen, auflisten, validieren und testen                              |
+| `pusula config`      | Konfiguration der CLI-Tools — Konfigurationen auflisten, abrufen, setzen, prüfen              |
+| `pusula status`      | Offline-Status-Dashboard — Version, DB, Tools, Konfiguration                                  |
+| `pusula logs`        | Nutzungsprotokolle von der API streamen (unterstützt `--follow`)                              |
+| `pusula update`      | Nach Pusula-Updates suchen oder diese installieren                                         |
+| `pusula provider`    | Anbieterverbindungen verwalten — hinzufügen, auflisten, entfernen, testen, Standard festlegen |
+| `pusula --port 3000` | Kanonischen/API-Port auf 3000 setzen                                                          |
+| `pusula --mcp`       | MCP-Server starten (stdio-Transport)                                                          |
+| `pusula --no-open`   | Browser nicht automatisch öffnen                                                              |
+| `pusula --help`      | Hilfe anzeigen                                                                                |
 
 Die Headless-Einrichtung kann mit Flags oder Umgebungsvariablen skriptgesteuert werden:
 
 ```bash
-omniroute setup --non-interactive --password "$OMNIROUTE_PASSWORD"
-omniroute setup --non-interactive --add-provider --provider openai --api-key "$OPENAI_API_KEY"
-omniroute setup --non-interactive --add-provider --provider openai --api-key "$OPENAI_API_KEY" --test-provider
+pusula setup --non-interactive --password "$PUSULA_PASSWORD"
+pusula setup --non-interactive --add-provider --provider openai --api-key "$OPENAI_API_KEY"
+pusula setup --non-interactive --add-provider --provider openai --api-key "$OPENAI_API_KEY" --test-provider
 ```
 
 Lokale Diagnosen ausführen, ohne das Dashboard zu öffnen:
 
 ```bash
-omniroute doctor
-omniroute doctor --json
-omniroute doctor --no-liveness
+pusula doctor
+pusula doctor --json
+pusula doctor --no-liveness
 ```
 
 Anbieter über SSH oder Skripte verwalten, ohne das Dashboard zu öffnen:
 
 ```bash
-omniroute providers available
-omniroute providers available --search openai
-omniroute providers available --category api-key
-omniroute providers list
-omniroute providers test <id-or-name>
-omniroute providers test-all
-omniroute providers validate
+pusula providers available
+pusula providers available --search openai
+pusula providers available --category api-key
+pusula providers list
+pusula providers test <id-or-name>
+pusula providers test-all
+pusula providers validate
 ```
 
 ---
@@ -165,24 +165,24 @@ Funktioniert mit Claude Code, Codex CLI, Cursor, Cline, OpenClaw, OpenCode und O
 
 #### Automatisch mit `setup-*` konfigurieren
 
-Anstatt die Basis-URL und den Schlüssel manuell einzufügen, können Sie OmniRoute die eigene Konfiguration jedes Tools anhand des aktuellen Modellkatalogs erstellen lassen. Ein Befehl pro Tool:
+Anstatt die Basis-URL und den Schlüssel manuell einzufügen, können Sie Pusula die eigene Konfiguration jedes Tools anhand des aktuellen Modellkatalogs erstellen lassen. Ein Befehl pro Tool:
 
 ```bash
-omniroute setup-codex        # Profile unter ~/.codex/<name>.config.toml
-omniroute setup-claude       # ~/.claude/profiles/<name>/settings.json
-omniroute setup-opencode     # ~/.config/opencode/opencode.json (OpenAI-kompatibel)
-omniroute setup-cline        # Einstellungen für Cline CLI und die VS-Code-Erweiterung
-omniroute setup-kilo         # Kilo Code
-omniroute setup-continue     # ~/.continue/config.yaml (Continue / cn)
-omniroute setup-cursor       # gibt die innerhalb von Cursor auszuführenden Schritte aus
-omniroute setup-roo          # Roo-Code-Import und autoImport-Verweis
-omniroute setup-crush        # ~/.config/crush/crush.json
-omniroute setup-goose        # ~/.config/goose/config.yaml
-omniroute setup-aider        # ~/.aider.conf.yml
-omniroute setup-qwen         # ~/.qwen/settings.json und ~/.qwen/.env
+pusula setup-codex        # Profile unter ~/.codex/<name>.config.toml
+pusula setup-claude       # ~/.claude/profiles/<name>/settings.json
+pusula setup-opencode     # ~/.config/opencode/opencode.json (OpenAI-kompatibel)
+pusula setup-cline        # Einstellungen für Cline CLI und die VS-Code-Erweiterung
+pusula setup-kilo         # Kilo Code
+pusula setup-continue     # ~/.continue/config.yaml (Continue / cn)
+pusula setup-cursor       # gibt die innerhalb von Cursor auszuführenden Schritte aus
+pusula setup-roo          # Roo-Code-Import und autoImport-Verweis
+pusula setup-crush        # ~/.config/crush/crush.json
+pusula setup-goose        # ~/.config/goose/config.yaml
+pusula setup-aider        # ~/.aider.conf.yml
+pusula setup-qwen         # ~/.qwen/settings.json und ~/.qwen/.env
 ```
 
-Jeder Befehl akzeptiert `--remote <url> --api-key <key>`, um ein lokales Tool für eine **entfernte** OmniRoute-Instanz zu konfigurieren, sowie `--dry-run` für eine Vorschau. Um eine CLI mit den passenden eingefügten Umgebungsvariablen zu starten, ohne eine Konfiguration zu schreiben, verwenden Sie den allgemeinen Starter `omniroute run <target>` (claude, codex, aider, goose, opencode, qwen, gemini); die älteren toolspezifischen Starter `omniroute launch` (Claude Code) und `omniroute launch-codex` (Codex) bleiben verfügbar.
+Jeder Befehl akzeptiert `--remote <url> --api-key <key>`, um ein lokales Tool für eine **entfernte** Pusula-Instanz zu konfigurieren, sowie `--dry-run` für eine Vorschau. Um eine CLI mit den passenden eingefügten Umgebungsvariablen zu starten, ohne eine Konfiguration zu schreiben, verwenden Sie den allgemeinen Starter `pusula run <target>` (claude, codex, aider, goose, opencode, qwen, gemini); die älteren toolspezifischen Starter `pusula launch` (Claude Code) und `pusula launch-codex` (Codex) bleiben verfügbar.
 
 Die vollständige Tabelle (welcher Befehl was schreibt, alle Flags, lokal gegenüber entfernt, `/v1`-Konventionen für Basis-URLs) finden Sie unter **[CLI-Integrationen](./CLI-INTEGRATIONS.md)**.
 
@@ -197,18 +197,18 @@ Eine detaillierte Konfiguration der einzelnen Tools (Claude Code, Codex CLI, Cur
 Starten Sie den MCP-Transport im stdio-Modus:
 
 ```bash
-omniroute --mcp
+pusula --mcp
 ```
 
 Empfohlener Validierungsablauf:
 
 ```bash
 # 1. MCP-Server starten
-omniroute --mcp
+pusula --mcp
 
 # 2. Von Ihrem MCP-Client aus aufrufen:
-omniroute_get_health        # Sollte den Systemzustand zurückgeben
-omniroute_list_combos       # Sollte aktive Combos zurückgeben
+pusula_get_health        # Sollte den Systemzustand zurückgeben
+pusula_list_combos       # Sollte aktive Combos zurückgeben
 
 # 3. Oder die vollständige E2E-Suite ausführen:
 npm run test:protocols:e2e
@@ -219,7 +219,7 @@ npm run test:protocols:e2e
 **Claude Code:**
 
 ```bash
-claude mcp add-server omniroute --type http --url http://localhost:20128/api/mcp/stream
+claude mcp add-server pusula --type http --url http://localhost:20128/api/mcp/stream
 ```
 
 **Cursor / Cline:**
@@ -229,8 +229,8 @@ Fügen Sie Folgendes zu Ihren MCP-Einstellungen hinzu:
 ```json
 {
   "mcpServers": {
-    "omniroute": {
-      "command": "omniroute",
+    "pusula": {
+      "command": "pusula",
       "args": ["--mcp"],
       "env": {}
     }
@@ -269,15 +269,15 @@ Für die meisten Bereitstellungen benötigen Sie nur diese beiden Variablen:
 | Variable                 | Standardwert                   | Zweck                                                                                                                                                                         |
 | ------------------------ | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `REQUEST_TIMEOUT_MS`     | `600000`                       | Gemeinsamer Ausgangswert für den Timeout bis zum Beginn der Upstream-Antwort, verborgene Undici-Timeouts, TLS-Fingerprint-Anfragen und Anfrage-/Proxy-Timeouts der API-Bridge |
-| `STREAM_IDLE_TIMEOUT_MS` | übernimmt `REQUEST_TIMEOUT_MS` | Maximaler Abstand zwischen Streaming-Chunks, bevor OmniRoute den SSE-Stream abbricht                                                                                          |
+| `STREAM_IDLE_TIMEOUT_MS` | übernimmt `REQUEST_TIMEOUT_MS` | Maximaler Abstand zwischen Streaming-Chunks, bevor Pusula den SSE-Stream abbricht                                                                                          |
 
 Die Abwärtskompatibilität bleibt erhalten: Vorhandene Variablen wie `FETCH_TIMEOUT_MS`, `API_BRIDGE_PROXY_TIMEOUT_MS` und andere schichtspezifische Timeout-Variablen funktionieren weiterhin und überschreiben den gemeinsamen Ausgangswert.
 
 ### Anbieterspezifische Hinweise
 
-Für Claude Code-kompatible Upstreams (`anthropic-compatible-cc-*`) leitet OmniRoute den ausgehenden Header `X-Stainless-Timeout` aus dem ermittelten Fetch-Timeout ab, damit die anbieterseitigen Lese-Timeouts mit Ihrer Umgebungskonfiguration übereinstimmen.
+Für Claude Code-kompatible Upstreams (`anthropic-compatible-cc-*`) leitet Pusula den ausgehenden Header `X-Stainless-Timeout` aus dem ermittelten Fetch-Timeout ab, damit die anbieterseitigen Lese-Timeouts mit Ihrer Umgebungskonfiguration übereinstimmen.
 
-Bei Claude Code-kompatiblen Reverse-Proxys von Drittanbietern verwendet OmniRoute standardmäßig einen konservativen `anthropic-beta`-Satz und leitet, wenn `Client Cache Control` auf `Auto` belassen wird, nur vom Client bereitgestellte `cache_control`-Markierungen weiter. Aktivieren Sie den verbindungsspezifischen Schalter „Enable redact-thinking beta“ nur, wenn der Upstream ausdrücklich Claude-Streams mit redigierten Denkprozessen erfordert.
+Bei Claude Code-kompatiblen Reverse-Proxys von Drittanbietern verwendet Pusula standardmäßig einen konservativen `anthropic-beta`-Satz und leitet, wenn `Client Cache Control` auf `Auto` belassen wird, nur vom Client bereitgestellte `cache_control`-Markierungen weiter. Aktivieren Sie den verbindungsspezifischen Schalter „Enable redact-thinking beta“ nur, wenn der Upstream ausdrücklich Claude-Streams mit redigierten Denkprozessen erfordert.
 
 ### Erweiterte Timeout-Überschreibungen
 
@@ -295,11 +295,11 @@ Bei Claude Code-kompatiblen Reverse-Proxys von Drittanbietern verwendet OmniRout
 | `API_BRIDGE_SERVER_KEEPALIVE_TIMEOUT_MS` | `5000`                                       | Keep-Alive-Timeout auf dem API-Bridge-Server                                                |
 | `API_BRIDGE_SERVER_SOCKET_TIMEOUT_MS`    | `0`                                          | Timeout bei Socket-Inaktivität auf dem API-Bridge-Server (`0` deaktiviert ihn)              |
 
-> **Hinweis:** Bei Streaming-Anfragen deckt `FETCH_TIMEOUT_MS` nur den Verbindungsaufbau beziehungsweise das Warten auf die erste Upstream-Antwort ab. Sobald der Stream aktiv ist, bricht OmniRoute nur bei einem tatsächlichen Stillstand (`STREAM_IDLE_TIMEOUT_MS`) oder bei Inaktivität des Undici-Bodys (`FETCH_BODY_TIMEOUT_MS`) ab.
+> **Hinweis:** Bei Streaming-Anfragen deckt `FETCH_TIMEOUT_MS` nur den Verbindungsaufbau beziehungsweise das Warten auf die erste Upstream-Antwort ab. Sobald der Stream aktiv ist, bricht Pusula nur bei einem tatsächlichen Stillstand (`STREAM_IDLE_TIMEOUT_MS`) oder bei Inaktivität des Undici-Bodys (`FETCH_BODY_TIMEOUT_MS`) ab.
 
 ### Reverse-Proxy-Kompatibilität
 
-Wenn Sie OmniRoute hinter Nginx, Caddy, Cloudflare oder einem anderen Reverse-Proxy betreiben, stellen Sie sicher, dass die Proxy-Timeouts ebenfalls höher als Ihre OmniRoute-Stream-/Fetch-Timeouts sind.
+Wenn Sie Pusula hinter Nginx, Caddy, Cloudflare oder einem anderen Reverse-Proxy betreiben, stellen Sie sicher, dass die Proxy-Timeouts ebenfalls höher als Ihre Pusula-Stream-/Fetch-Timeouts sind.
 
 ---
 
@@ -308,7 +308,7 @@ Wenn Sie OmniRoute hinter Nginx, Caddy, Cloudflare oder einem anderen Reverse-Pr
 Führen Sie API und Dashboard für erweiterte Szenarien (Reverse-Proxy, Container-Netzwerke) auf getrennten Ports aus:
 
 ```bash
-PORT=20128 DASHBOARD_PORT=20129 omniroute
+PORT=20128 DASHBOARD_PORT=20129 pusula
 # API:       http://localhost:20128/v1
 # Dashboard: http://localhost:20129
 ```
@@ -317,11 +317,11 @@ PORT=20128 DASHBOARD_PORT=20129 omniroute
 
 ## Vorlage für Void Linux (xbps-src)
 
-Benutzer von Void Linux können mit `xbps-src` ein natives Paket erstellen. Speichern Sie diesen Block als `srcpkgs/omniroute/template`:
+Benutzer von Void Linux können mit `xbps-src` ein natives Paket erstellen. Speichern Sie diesen Block als `srcpkgs/pusula/template`:
 
 ```bash
-# Vorlagendatei für 'omniroute'
-pkgname=omniroute
+# Vorlagendatei für 'pusula'
+pkgname=pusula
 version=3.8.0
 revision=1
 hostmakedepends="nodejs python3 make"
@@ -329,13 +329,13 @@ depends="openssl"
 short_desc="Universelles KI-Gateway mit intelligenter Weiterleitung für mehrere LLM-Anbieter"
 maintainer="zenobit <zenobit@disroot.org>"
 license="MIT"
-homepage="https://github.com/diegosouzapw/OmniRoute"
-distfiles="https://github.com/diegosouzapw/OmniRoute/archive/refs/tags/v${version}.tar.gz"
+homepage="https://github.com/Ferhat-Yasinoglu/pusula"
+distfiles="https://github.com/Ferhat-Yasinoglu/pusula/archive/refs/tags/v${version}.tar.gz"
 # Prüfsumme für jede Veröffentlichung neu generieren mit:
-#   curl -L -o /tmp/omniroute.tar.gz "https://github.com/diegosouzapw/OmniRoute/archive/refs/tags/v${version}.tar.gz" && sha256sum /tmp/omniroute.tar.gz
+#   curl -L -o /tmp/pusula.tar.gz "https://github.com/Ferhat-Yasinoglu/pusula/archive/refs/tags/v${version}.tar.gz" && sha256sum /tmp/pusula.tar.gz
 checksum=PLACEHOLDER_REGENERATE_PER_RELEASE
-system_accounts="_omniroute"
-omniroute_homedir="/var/lib/omniroute"
+system_accounts="_pusula"
+pusula_homedir="/var/lib/pusula"
 export NODE_ENV=production
 export npm_config_engine_strict=false
 export npm_config_loglevel=error
@@ -375,25 +375,25 @@ do_check() {
 }
 
 do_install() {
-	vmkdir usr/lib/omniroute/.next
-	vcopy .next/standalone/. usr/lib/omniroute/.next/standalone
+	vmkdir usr/lib/pusula/.next
+	vcopy .next/standalone/. usr/lib/pusula/.next/standalone
 
 	for _d in \
 		.next/standalone/.next/server/app/dashboard \
 		.next/standalone/.next/server/app/dashboard/settings \
 		.next/standalone/.next/server/app/dashboard/providers; do
-		touch "${DESTDIR}/usr/lib/omniroute/${_d}/.keep"
+		touch "${DESTDIR}/usr/lib/pusula/${_d}/.keep"
 	done
 
-	cat > "${WRKDIR}/omniroute" <<'EOF'
+	cat > "${WRKDIR}/pusula" <<'EOF'
 #!/bin/sh
 export PORT="${PORT:-20128}"
-export DATA_DIR="${DATA_DIR:-${XDG_DATA_HOME:-${HOME}/.local/share}/omniroute}"
+export DATA_DIR="${DATA_DIR:-${XDG_DATA_HOME:-${HOME}/.local/share}/pusula}"
 export APP_LOG_TO_FILE="${APP_LOG_TO_FILE:-false}"
 mkdir -p "${DATA_DIR}"
-exec node /usr/lib/omniroute/.next/standalone/server.js "$@"
+exec node /usr/lib/pusula/.next/standalone/server.js "$@"
 EOF
-	vbin "${WRKDIR}/omniroute"
+	vbin "${WRKDIR}/pusula"
 }
 
 post_install() {
@@ -407,7 +407,7 @@ post_install() {
 
 | Befehl                   | Aktion                                                                                                |
 | ------------------------ | ----------------------------------------------------------------------------------------------------- |
-| `npm run uninstall`      | Entfernt die Systemanwendung, **behält jedoch Ihre Datenbank und Konfigurationen** in `~/.omniroute`. |
+| `npm run uninstall`      | Entfernt die Systemanwendung, **behält jedoch Ihre Datenbank und Konfigurationen** in `~/.pusula`. |
 | `npm run uninstall:full` | Entfernt die Anwendung UND **löscht dauerhaft alle Konfigurationen, Schlüssel und Datenbanken**.      |
 
 > Ausführliche Anweisungen zur Deinstallation für alle Methoden finden Sie unter [UNINSTALL.md](./UNINSTALL.md).

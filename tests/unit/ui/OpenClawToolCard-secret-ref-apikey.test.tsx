@@ -49,14 +49,14 @@ vi.mock("@/shared/components", async () => {
 const SECRET_REF_SETTINGS = {
   models: {
     providers: {
-      omniroute: {
+      pusula: {
         api: "openai-completions",
         baseUrl: "http://localhost:20128/v1",
-        apiKey: { source: "file", provider: "default", id: "/OPENCLAW_OMNIROUTE_API_KEY" },
+        apiKey: { source: "file", provider: "default", id: "/OPENCLAW_PUSULA_API_KEY" },
       },
     },
   },
-  agents: { defaults: { model: { primary: "omniroute/gpt-5" } } },
+  agents: { defaults: { model: { primary: "pusula/gpt-5" } } },
 };
 
 beforeEach(() => {

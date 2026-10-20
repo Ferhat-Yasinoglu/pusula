@@ -34,7 +34,7 @@ test("next config exposes standalone build settings and canonical rewrites", asy
   assert.equal(nextConfig.reactCompiler, true);
   assert.equal(nextConfig.images.unoptimized, true);
   assert.deepEqual(nextConfig.transpilePackages, [
-    "@omniroute/open-sse",
+    "@pusula/open-sse",
     "@lobehub/icons",
     "fumadocs-ui",
     "fumadocs-core",
@@ -87,7 +87,7 @@ test("next config declares Turbopack aliases, runtime assets and server external
     [];
 
   assert.equal(nextConfig.turbopack.root, process.cwd());
-  // #6344: the @/mitm/manager stub alias is OPT-IN (OMNIROUTE_MITM_STUB=1, Docker only).
+  // #6344: the @/mitm/manager stub alias is OPT-IN (PUSULA_MITM_STUB=1, Docker only).
   // A default production build must NOT alias it, or the stub ships to npm/Electron/VPS
   // artifacts and breaks Agent Bridge start. See the dedicated env-matrix test below.
   assert.equal(nextConfig.turbopack.resolveAlias["@/mitm/manager"], undefined);
@@ -140,41 +140,41 @@ test("next config declares Turbopack aliases, runtime assets and server external
   }
 });
 
-test("Turbopack aliases better-sqlite3 to the stub ONLY when OMNIROUTE_BETTER_SQLITE3_STUB=1 (#11343)", async () => {
-  const original = process.env.OMNIROUTE_BETTER_SQLITE3_STUB;
+test("Turbopack aliases better-sqlite3 to the stub ONLY when PUSULA_BETTER_SQLITE3_STUB=1 (#11343)", async () => {
+  const original = process.env.PUSULA_BETTER_SQLITE3_STUB;
   try {
-    delete process.env.OMNIROUTE_BETTER_SQLITE3_STUB;
+    delete process.env.PUSULA_BETTER_SQLITE3_STUB;
     const { default: def } = await loadNextConfig("bettersqlite-default");
     assert.equal(def.turbopack.resolveAlias["better-sqlite3"], undefined);
     // The default build must keep the real package reachable as an external, which
     // is exactly what the alias silently defeated.
     assert.ok(new Set(def.serverExternalPackages).has("better-sqlite3"));
 
-    process.env.OMNIROUTE_BETTER_SQLITE3_STUB = "1";
+    process.env.PUSULA_BETTER_SQLITE3_STUB = "1";
     const { default: stubbed } = await loadNextConfig("bettersqlite-optin");
     assert.equal(
       stubbed.turbopack.resolveAlias["better-sqlite3"],
       "./src/lib/db/better-sqlite3.stub.js"
     );
   } finally {
-    if (original === undefined) delete process.env.OMNIROUTE_BETTER_SQLITE3_STUB;
-    else process.env.OMNIROUTE_BETTER_SQLITE3_STUB = original;
+    if (original === undefined) delete process.env.PUSULA_BETTER_SQLITE3_STUB;
+    else process.env.PUSULA_BETTER_SQLITE3_STUB = original;
   }
 });
 
-test("Turbopack aliases @/mitm/manager to the stub ONLY when OMNIROUTE_MITM_STUB=1 (#6344)", async () => {
-  const original = process.env.OMNIROUTE_MITM_STUB;
+test("Turbopack aliases @/mitm/manager to the stub ONLY when PUSULA_MITM_STUB=1 (#6344)", async () => {
+  const original = process.env.PUSULA_MITM_STUB;
   try {
-    delete process.env.OMNIROUTE_MITM_STUB;
+    delete process.env.PUSULA_MITM_STUB;
     const { default: def } = await loadNextConfig("mitm-default");
     assert.equal(def.turbopack.resolveAlias["@/mitm/manager"], undefined);
 
-    process.env.OMNIROUTE_MITM_STUB = "1";
+    process.env.PUSULA_MITM_STUB = "1";
     const { default: docker } = await loadNextConfig("mitm-docker");
     assert.equal(docker.turbopack.resolveAlias["@/mitm/manager"], "./src/mitm/manager.stub.ts");
   } finally {
-    if (original === undefined) delete process.env.OMNIROUTE_MITM_STUB;
-    else process.env.OMNIROUTE_MITM_STUB = original;
+    if (original === undefined) delete process.env.PUSULA_MITM_STUB;
+    else process.env.PUSULA_MITM_STUB = original;
   }
 });
 
@@ -380,8 +380,8 @@ test("turbopack.ignoreIssue suppresses the compression module over-bundling warn
   assert.match(String(compressionRule.description), /Overly broad patterns/);
 });
 
-test("optimizePackageImports excludes the internal @omniroute/open-sse workspace (build-OOM guard)", async () => {
-  // Regression guard: adding the internal `@omniroute/open-sse` workspace to
+test("optimizePackageImports excludes the internal @pusula/open-sse workspace (build-OOM guard)", async () => {
+  // Regression guard: adding the internal `@pusula/open-sse` workspace to
   // optimizePackageImports makes Next.js resolve its entire barrel at build
   // time, driving the webpack production pass into a heap runaway that OOM'd
   // even at 28 GB. optimizePackageImports is for EXTERNAL barrel libs only.
@@ -390,8 +390,8 @@ test("optimizePackageImports excludes the internal @omniroute/open-sse workspace
 
   assert.ok(Array.isArray(list), "optimizePackageImports should be an array");
   assert.ok(
-    !list.includes("@omniroute/open-sse"),
-    "do NOT add the internal @omniroute/open-sse workspace to optimizePackageImports — it OOMs the production build"
+    !list.includes("@pusula/open-sse"),
+    "do NOT add the internal @pusula/open-sse workspace to optimizePackageImports — it OOMs the production build"
   );
   // The intended external barrel libs must remain optimized.
   for (const lib of ["lucide-react", "date-fns", "next-intl"]) {

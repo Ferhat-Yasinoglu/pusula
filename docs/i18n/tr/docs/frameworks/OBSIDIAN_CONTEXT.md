@@ -13,7 +13,7 @@
 
 ## Nedir?
 
-OmniRoute, yerleşik MCP sunucusu aracılığıyla ajanların okuyup yazdığı yerel bir Markdown
+Pusula, yerleşik MCP sunucusu aracılığıyla ajanların okuyup yazdığı yerel bir Markdown
 bilgi tabanı olan **Obsidian** kasasına bir **bağlam kaynağı** olarak bağlanır.
 Entegrasyon, masaüstü uygulamasında çalışan **Obsidian Local REST API** topluluk eklentisiyle
 iletişim kurar; böylece ajanlar notlarda arama yapabilir, dosyaları okuyabilir/yazabilir/yamalayabilir,
@@ -77,7 +77,7 @@ reddeder ve kalıcı olarak saklamadan önce Local REST API durum uç noktasın�
 
 `src/app/api/settings/obsidian/webdav/route.ts`, isteğe bağlı WebDAV destekli bir
 kasa senkronizasyonunu yönetir (`src/lib/obsidianSync.ts` tarafından yürütülür).
-Bu özelliğin etkinleştirilmesi, OmniRoute'u yerel bir kasa dizinine yönlendirir ve rastgele
+Bu özelliğin etkinleştirilmesi, Pusula'u yerel bir kasa dizinine yönlendirir ve rastgele
 bir WebDAV kullanıcı adı/parola çifti oluşturur:
 
 ```bash
@@ -104,7 +104,7 @@ Bir MCP çağrısı kimliği doğrulanmış bir API anahtarı kimliği taşıdı
 
 ## MCP araçları (22)
 
-`open-sse/mcp-server/tools/obsidianTools.ts` dosyasında tanımlanmıştır. Token/base-URL her çağrı için çözümlenir (önce API anahtarına özel olan, ardından genel olan). OmniRoute **senkronizasyon sunucusuna** erişen araçlar (dört `obsidian_sync_*` aracı) ayrıca OmniRoute ayarlarında yapılandırılmış senkronizasyon kimlik doğrulama token'ını gerektirir.
+`open-sse/mcp-server/tools/obsidianTools.ts` dosyasında tanımlanmıştır. Token/base-URL her çağrı için çözümlenir (önce API anahtarına özel olan, ardından genel olan). Pusula **senkronizasyon sunucusuna** erişen araçlar (dört `obsidian_sync_*` aracı) ayrıca Pusula ayarlarında yapılandırılmış senkronizasyon kimlik doğrulama token'ını gerektirir.
 
 ### Okuma araçları (`read:obsidian`)
 
@@ -121,7 +121,7 @@ Bir MCP çağrısı kimliği doğrulanmış bir API anahtarı kimliği taşıdı
 | `obsidian_get_periodic_note` | Bir tarih için günlük/haftalık/aylık dönemsel notu alır (belirtilmezse bugün).                                       |
 | `obsidian_get_tags`          | Tüm kasa etiketlerini kullanım sıklıklarıyla birlikte listeler.                                                      |
 | `obsidian_list_commands`     | Kullanılabilir Obsidian komut kimliklerini listeler (`obsidian_execute_command` ile kullanılır).                     |
-| `obsidian_sync_status`       | OmniRoute senkronizasyon sunucusu durumu: çalışıyor olma durumu, kasa adı, port, çalışma süresi, son senkronizasyon. |
+| `obsidian_sync_status`       | Pusula senkronizasyon sunucusu durumu: çalışıyor olma durumu, kasa adı, port, çalışma süresi, son senkronizasyon. |
 | `obsidian_sync_conflicts`    | Çözülmemiş senkronizasyon çakışmalarını listeler (yol, çakışma yolu, algılanma zamanı).                              |
 
 ### Yazma araçları (`write:obsidian`)
@@ -148,8 +148,8 @@ Bir MCP çağrısı kimliği doğrulanmış bir API anahtarı kimliği taşıdı
 
 Okuma araçları `read:obsidian`; yazma araçları ise `write:obsidian` kapsamını gerektirir. Uygulama
 Notion ile aynıdır — `open-sse/mcp-server/server.ts` içindeki `withScopeEnforcement()`
-tarafından gerçekleştirilir, `OMNIROUTE_MCP_ENFORCE_SCOPES=true` olduğunda etkinleştirilir ve
-izin verilen kapsamlar `OMNIROUTE_MCP_SCOPES` değişkeninden veya API anahtarının kapsam bağlamından alınır. Bkz.
+tarafından gerçekleştirilir, `PUSULA_MCP_ENFORCE_SCOPES=true` olduğunda etkinleştirilir ve
+izin verilen kapsamlar `PUSULA_MCP_SCOPES` değişkeninden veya API anahtarının kapsam bağlamından alınır. Bkz.
 [MCP-SERVER.md](./MCP-SERVER.md).
 
 ## Uç Noktalar

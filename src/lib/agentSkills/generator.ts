@@ -145,8 +145,8 @@ function buildCliBody(skill: AgentSkill, sources: BuildSources): string {
 
   lines.push("## Quick install\n");
   lines.push("```bash");
-  lines.push("npm install -g omniroute   # or: npx omniroute");
-  lines.push("omniroute --version");
+  lines.push("npm install -g pusula   # or: npx pusula");
+  lines.push("pusula --version");
   lines.push("```");
   lines.push("");
 
@@ -173,7 +173,7 @@ function buildCliBody(skill: AgentSkill, sources: BuildSources): string {
 
       lines.push("**Example:**\n");
       lines.push("```bash");
-      lines.push(`omniroute ${cmd.name}`);
+      lines.push(`pusula ${cmd.name}`);
       lines.push("```");
       lines.push("");
     }

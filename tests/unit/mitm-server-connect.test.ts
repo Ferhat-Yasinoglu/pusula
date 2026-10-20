@@ -189,7 +189,7 @@ test("parseBypassJson — filters out non-string and empty entries", () => {
   assert.deepEqual(parsed, ["valid.com", "another.com"]);
 });
 
-test("C2 header contract — server.cjs intercept must inject x-omniroute-source and x-omniroute-agent", async () => {
+test("C2 header contract — server.cjs intercept must inject x-pusula-source and x-pusula-agent", async () => {
   // This is a documentation/spec assertion: the exact header names that
   // server.cjs::intercept must inject per master plan §3.5. If anyone
   // edits server.cjs to remove or rename them, this test fails and
@@ -202,13 +202,13 @@ test("C2 header contract — server.cjs intercept must inject x-omniroute-source
   const src = fs.readFileSync(serverPath, "utf-8");
   assert.match(
     src,
-    /"x-omniroute-source":\s*"agent-bridge"/,
-    'server.cjs must inject "x-omniroute-source: agent-bridge"'
+    /"x-pusula-source":\s*"agent-bridge"/,
+    'server.cjs must inject "x-pusula-source: agent-bridge"'
   );
   assert.match(
     src,
-    /"x-omniroute-agent":\s*agentId/,
-    'server.cjs must inject "x-omniroute-agent: <id>" from the host→agent map'
+    /"x-pusula-agent":\s*agentId/,
+    'server.cjs must inject "x-pusula-agent: <id>" from the host→agent map'
   );
   // Antigravity non-regression: the historical host must still resolve to
   // the antigravity agent id, so the existing flow continues to work.

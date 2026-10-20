@@ -1,1 +1,1 @@
-- **fix(build):** combos page resolves provider prefixes through the client-safe alias map instead of the server-only model service, fixing the production build ([#14179](https://github.com/diegosouzapw/OmniRoute/pull/14179)) — thanks @maxmad64bis
+- **fix(build):** combos page resolves provider prefixes through the client-safe alias map instead of the server-only model service, fixing the production build ([#14179](https://github.com/Ferhat-Yasinoglu/pusula/pull/14179)) — thanks @maxmad64bis

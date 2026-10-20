@@ -4,7 +4,7 @@
 
 ---
 
-OmniRoute دارای **دو** سیستم مسیر محلی در سطح پردازه با دامنههای متفاوت است. این دو
+Pusula دارای **دو** سیستم مسیر محلی در سطح پردازه با دامنههای متفاوت است. این دو
 مکمل یکدیگرند؛ اپراتورها باید بدانند که کدامیک را مشاهده میکنند.
 
 ## 1. پذیرش سراسری در سطح بایت (`chatBodyAdmission.ts`)
@@ -24,8 +24,8 @@ OmniRoute دارای **دو** سیستم مسیر محلی در سطح پردا�
   پیش از این اصلاح)، توزیع همزمان عاملهای کدنویسی (چندین زیرعامل/CLI،
   با بدنههایی که معمولاً > 256 KB هستند) را به همروندی مؤثر تقریباً ۱ کاهش میداد و
   در بار کاملاً عادی، پاسخ 503 ایجاد میکرد. اکنون این سقف فقط زمانی اعمال میشود که اپراتور
-  صراحتاً `OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT` را تنظیم کند. اگر تنظیم نشده باقی بماند، پذیرش در عوض
-  با `OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES` محدود میشود — بودجهای که بهطور خودکار از
+  صراحتاً `PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT` را تنظیم کند. اگر تنظیم نشده باقی بماند، پذیرش در عوض
+  با `PUSULA_CHAT_MAX_INFLIGHT_BYTES` محدود میشود — بودجهای که بهطور خودکار از
   سقف واقعی حافظهٔ فرایند محاسبه میشود (`src/shared/middleware/admissionBudget.ts`):
   ۲۵٪ از مقدار محدودکنندهتر میان حد heap در V8 و هر حد cgroup/container،
   تقسیم بر ضریب 8x تقویت گذرای حافظه و محدودشده به بازهٔ 8 MiB تا
@@ -42,11 +42,11 @@ OmniRoute دارای **دو** سیستم مسیر محلی در سطح پردا�
   کل میزبان است و فقط در bare metal / cgroup v1 بهعنوان مسیر جایگزین استفاده میشود، بنابراین یک
   میزبان در حال swapping نمیتواند باعث شود یک container بیکار پاسخ 503 بدهد.
 - **تنظیمات:**
-  - `OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES` — مقدار جایگزین برای بودجهٔ بایتی محاسبهشده بهصورت خودکار
-  - `OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT` — سقف قدیمی تعداد درخواست، فقط با فعالسازی صریح
-  - `OMNIROUTE_CHAT_ADMISSION_QUEUE_MS` — مدت انتظار در صف پیش از 503 (پیشفرض 2000)
-  - `OMNIROUTE_CHAT_ADMISSION_MAX_QUEUED_BYTES` — شیر کنترل heap بر اساس بایتهای صفشده (پیشفرض 4 MB)
-  - `OMNIROUTE_CHAT_VIRTUAL_TTL_MS` / `OMNIROUTE_CHAT_VIRTUAL_MAX_SESSIONS` — منسوخشده و
+  - `PUSULA_CHAT_MAX_INFLIGHT_BYTES` — مقدار جایگزین برای بودجهٔ بایتی محاسبهشده بهصورت خودکار
+  - `PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT` — سقف قدیمی تعداد درخواست، فقط با فعالسازی صریح
+  - `PUSULA_CHAT_ADMISSION_QUEUE_MS` — مدت انتظار در صف پیش از 503 (پیشفرض 2000)
+  - `PUSULA_CHAT_ADMISSION_MAX_QUEUED_BYTES` — شیر کنترل heap بر اساس بایتهای صفشده (پیشفرض 4 MB)
+  - `PUSULA_CHAT_VIRTUAL_TTL_MS` / `PUSULA_CHAT_VIRTUAL_MAX_SESSIONS` — منسوخشده و
     بدون اثر از #10110 (برای سازگاری پیکربندی پذیرفته میشوند، اما نادیده گرفته میشوند)
 - **گزارشها:** `GET /api/monitoring/health` → `chatAdmission` (#11244) — شامل
   افزودههای #503-fanout یعنی `inflightBytes`، `maxInflightBytes`، `budgetSource`
@@ -58,10 +58,10 @@ OmniRoute دارای **دو** سیستم مسیر محلی در سطح پردا�
 
 - **دامنه:** پذیرش بر اساس کلید مستأجر برای ارسال به ارائهدهنده — هزینهٔ صف، تطبیق
   محدودیت با هدایت تأخیر، صفبندی مسیرها و معیارهای مسیر.
-- **دروازه:** **با فعالسازی اختیاری.** مگر اینکه `OMNIROUTE_CHAT_VIRTUAL_LANES=true` باشد، غیرفعال است. بدون آن،
+- **دروازه:** **با فعالسازی اختیاری.** مگر اینکه `PUSULA_CHAT_VIRTUAL_LANES=true` باشد، غیرفعال است. بدون آن،
   کنترلگر تطبیقی رفتار صف مشترک را حفظ میکند (معیار 1 از #9654 فقط
   پس از فعالکردن مسیرها توسط اپراتور برقرار میشود).
-- **تنظیم:** `OMNIROUTE_CHAT_VIRTUAL_LANES` + پیکربندی تطبیقی (`maxQueueCount`،
+- **تنظیم:** `PUSULA_CHAT_VIRTUAL_LANES` + پیکربندی تطبیقی (`maxQueueCount`،
   `maxQueueCost`، `defaultMaxWaitMs`، …).
 - **گزارشها:** `GET /api/monitoring/health` → `adaptiveAdmission` → `laneCount`،
   `laneQueuedCount`، `laneQueuedCost`، `laneTenants` (شناسههای مبهم مسیر، هرگز کلیدهای
@@ -76,7 +76,7 @@ fan-out میکنند. از #9654 Wave 2، **هر هدف fan-out پیش از ار
 
 - **دامنه:** هر هدف fan-out که توسط combo، fusion و موتور chaos ارسال میشود.
   سیستم 1 (سطح بایت) تحت تأثیر قرار نمیگیرد — این سیستم هرگز اهداف fan-out را بررسی نمیکند.
-- **دروازه:** **فعالسازی اختیاری همراه با سیستم 2.** هنگامی که `OMNIROUTE_CHAT_VIRTUAL_LANES`
+- **دروازه:** **فعالسازی اختیاری همراه با سیستم 2.** هنگامی که `PUSULA_CHAT_VIRTUAL_LANES`
   تنظیم نشده باشد، بدون عملیات است — در آن حالت، درخواست والد از قبل lease صف مشترک را در اختیار دارد؛
   بنابراین کاوش باعث شمارش مضاعف و رد اهداف combo میشود.
 - **معناشناسی:**
@@ -112,7 +112,7 @@ fan-out میکنند. از #9654 Wave 2، **هر هدف fan-out پیش از ار
 - `adaptiveAdmission.laneCount` / `laneTenants` → **لاینهای مجازی تطبیقی** (سیستم 2).
 - `adaptiveAdmission.virtualLanes === true` → پروبهای fan-out بخش 3 نیز
   فعال هستند. اگر در یک payload، مقدار `virtualLanes` وجود نداشته باشد یا `false` باشد،
-  یعنی `OMNIROUTE_CHAT_VIRTUAL_LANES` تنظیم نشده است — لاینهای سطح بایت (سیستم 1)
+  یعنی `PUSULA_CHAT_VIRTUAL_LANES` تنظیم نشده است — لاینهای سطح بایت (سیستم 1)
   همچنان فعالاند، اما تا زمانی که فعالسازی انجام نشود، هیچچیز در
   `adaptiveAdmission` (و هیچ گیتگذاری fan-outی) اعمال نمیشود.
 
@@ -125,17 +125,17 @@ fan-out میکنند. از #9654 Wave 2، **هر هدف fan-out پیش از ار
 
 ## 4. `/v1/responses` طولانی در یک پردازه (فضایاضافیِ سالم)
 
-[#10437](https://github.com/diegosouzapw/OmniRoute/pull/10437) تابع
+[#10437](https://github.com/Ferhat-Yasinoglu/pusula/pull/10437) تابع
 `tryAcquireHealthyHeadroom` را اضافه کرد تا هنگامی که heap پایینتر از
-`OMNIROUTE_CHAT_ADMISSION_HEAP_SHED_RATIO` است، درخواست دومی با ساختار سنگین
+`PUSULA_CHAT_ADMISSION_HEAP_SHED_RATIO` است، درخواست دومی با ساختار سنگین
 پذیرفته شود. مسیر BYTE که توسط `admitChatRequest` استفاده میشود (بدنههای ≥
-`OMNIROUTE_CHAT_LARGE_BODY_BYTES`، با مقدار پیشفرض 256 KiB، از جمله
+`PUSULA_CHAT_LARGE_BODY_BYTES`، با مقدار پیشفرض 256 KiB، از جمله
 `POST /v1/responses`) از **همان** راه گریز استفاده میکند.
 
 این دستورالعمل پشتیبانیشده برای اجرای بیش از دو `/v1/responses` طولانی و همزمان
 از نوع SSE در **یک پردازه** است: ظرفیت اصلی + فضایاضافیِ سالم را فقط تا حدی افزایش دهید
 که heap و بودجه بایتهای درحالپردازش در کل پردازه
-(`OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES` / #10110) اجازه میدهند. پشتیبانی از دهها
+(`PUSULA_CHAT_MAX_INFLIGHT_BYTES` / #10110) اجازه میدهند. پشتیبانی از دهها
 کلاینت SSE طولانی (40–50) به همین بودجه حافظه مربوط است، نه به یک محدودیت سخت
 محصولی با عنوان «حداکثر 2». heap تحت فشار همچنان درخواستها را با پاسخ قابلتلاشمجدد
 `503` دفع میکند تا مشکل #7849 بازنگردد.

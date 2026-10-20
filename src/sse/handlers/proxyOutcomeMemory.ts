@@ -1,11 +1,11 @@
-import { isEgressBucketedLockScope } from "@omniroute/open-sse/config/providerErrorRules.ts";
+import { isEgressBucketedLockScope } from "@pusula/open-sse/config/providerErrorRules.ts";
 import {
   hasProxyRefusals,
   noteProxyRecovered,
   noteProxyRefusal,
   noteProxyServed,
   proxyEgressKey,
-} from "@omniroute/open-sse/utils/proxyRefusalMemory.ts";
+} from "@pusula/open-sse/utils/proxyRefusalMemory.ts";
 import { isProxySkipRecentlyFailedEnabled } from "@/shared/utils/featureFlags";
 
 /**

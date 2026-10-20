@@ -4,18 +4,18 @@
 
 ---
 
-OmniRoute'un kendisi başka bir yerde (bir VPS, ev sunucusu veya Tailnet'inizdeki başka bir makine) çalışırken `omniroute` CLI'ını dizüstü bilgisayarınızda çalıştırın.
-`omniroute connect` ile bir kez oturum açarsınız ve bundan sonra **her** CLI komutu
+Pusula'un kendisi başka bir yerde (bir VPS, ev sunucusu veya Tailnet'inizdeki başka bir makine) çalışırken `pusula` CLI'ını dizüstü bilgisayarınızda çalıştırın.
+`pusula connect` ile bir kez oturum açarsınız ve bundan sonra **her** CLI komutu
 o uzak sunucuyu hedefler — aynı komutlar, aynı çıktı; yalnızca uzak sunucu üzerinde yürütülür.
 
-Kurulacak ikinci bir araç yoktur: uzak mod, standart `omniroute` CLI'ı ile
+Kurulacak ikinci bir araç yoktur: uzak mod, standart `pusula` CLI'ı ile
 kapsamlandırılmış **erişim token'larını** kullanır.
 
 ```bash
-npm install -g omniroute                 # standart CLI
-omniroute connect 192.168.0.15           # oturum açın (parola → kapsamlandırılmış token)
-omniroute models list                    # ← artık UZAK sunucunun modellerini listeler
-omniroute configure codex                # ← uzak katalogdan yerel bir Codex profili yazar
+npm install -g pusula                 # standart CLI
+pusula connect 192.168.0.15           # oturum açın (parola → kapsamlandırılmış token)
+pusula models list                    # ← artık UZAK sunucunun modellerini listeler
+pusula configure codex                # ← uzak katalogdan yerel bir Codex profili yazar
 ```
 
 ---
@@ -23,9 +23,9 @@ omniroute configure codex                # ← uzak katalogdan yerel bir Codex p
 ## Nasıl çalışır?
 
 ```
-dizüstü bilgisayarınız                   uzak OmniRoute (VPS)
+dizüstü bilgisayarınız                   uzak Pusula (VPS)
 ┌────────────────────┐                   ┌───────────────────────────────┐
-│ omniroute CLI      │  POST /api/cli/connect  (parola → token)           │
+│ pusula CLI      │  POST /api/cli/connect  (parola → token)           │
 │  bağlam: vps       │ ───────────────►  │ kapsamlandırılmış erişim       │
 │  baseUrl, token    │  Authorization: Bearer oma_live_…                  │
 │                    │ ───────────────►  │ token'ı oluşturur; her yönetim │
@@ -34,8 +34,8 @@ dizüstü bilgisayarınız                   uzak OmniRoute (VPS)
 └────────────────────┘                   └───────────────────────────────┘
 ```
 
-- **Bağlamlar**, her biri bir sunucuyu saklar (`~/.omniroute/config.json`, `chmod 600`).
-  `omniroute contexts use <name>` etkin sunucuyu değiştirir; `default` yereldir.
+- **Bağlamlar**, her biri bir sunucuyu saklar (`~/.pusula/config.json`, `chmod 600`).
+  `pusula contexts use <name>` etkin sunucuyu değiştirir; `default` yereldir.
 - **Erişim token'ları** (`oma_live_…`) yönetim komutlarını yetkilendirir. Bunlar,
   çıkarım API anahtarlarından (`sk-…`, `/v1/chat/completions` için kullanılır) farklıdır.
 - Bir token'ın yalnızca SHA-256 özeti sunucu tarafında saklanır. Düz metin değer
@@ -48,7 +48,7 @@ dizüstü bilgisayarınız                   uzak OmniRoute (VPS)
 ### Yönetim parolasıyla (ilk kurulum)
 
 ```bash
-omniroute connect 192.168.0.15
+pusula connect 192.168.0.15
 # http://192.168.0.15:20128 için yönetim parolası: ********
 # ✔ http://192.168.0.15:20128 adresine bağlanıldı — bağlam '192.168.0.15' (kapsam: admin)
 ```
@@ -57,20 +57,20 @@ Parola akışı varsayılan olarak bir **admin** token'ı oluşturur (parola siz
 zaten tam denetime sahipsiniz). Kapsamı `--scope` ile daraltın:
 
 ```bash
-omniroute connect 192.168.0.15 --scope write
+pusula connect 192.168.0.15 --scope write
 ```
 
 Seçenekler: `--port <p>` (ana bilgisayarda port belirtilmediğinde), `--name <ctx>` (bağlam adı),
 `--scope read|write|admin`. Tam URL olduğu gibi kullanılır:
-`omniroute connect https://omni.example.com`.
+`pusula connect https://omni.example.com`.
 
 ### Önceden oluşturulmuş bir token ile
 
-Kontrol panelinde (veya `omniroute tokens create` ile) kapsamlandırılmış bir token oluşturup
+Kontrol panelinde (veya `pusula tokens create` ile) kapsamlandırılmış bir token oluşturup
 yapıştırın — parola gerekmez:
 
 ```bash
-omniroute connect 192.168.0.15 --key oma_live_xxxxxxxx
+pusula connect 192.168.0.15 --key oma_live_xxxxxxxx
 ```
 
 CLI, token'ı `GET /api/cli/whoami` aracılığıyla doğrular ve etkin bağlam olarak kaydeder.
@@ -106,7 +106,7 @@ erişilebildiğinde** sağlar. Uzak bir VPS kurulumunda bu geri döngü sizin
 makinenizde değil sunucuda bulunur; dolayısıyla izin ekranı **sonsuza kadar takılır
 ve hiçbir zaman kod üretmez** — normal "geri çağırma URL'sini yapıştırın" yedeğinde
 yapıştırılacak hiçbir şey olmaz. (Bu, Google taraflı bir kısıtlamadır: aynı takılma,
-yalnızca OmniRoute'ta değil, paketlenmiş Antigravity masaüstü istemcisini kullanan
+yalnızca Pusula'ta değil, paketlenmiş Antigravity masaüstü istemcisini kullanan
 tüm proxy'lerde gerçekleşir.)
 
 Pano, takılıp kalmanızdan önce bunu algılar: localhost dışındaki bir adresten
@@ -115,7 +115,7 @@ URL'sini kopyalayın" bildiriminin yerine aşağıdaki iki çözüm gösterilir 
 birinde ana makineniz ile bağlantı noktanız önceden doldurulmuş olur. (LAN adresleri
 de buna dahildir — bu geri çağırma açısından `192.168.x.x`, localhost değildir.)
 
-Antigravity'yi uzak bir OmniRoute'a bağlamanın desteklenen iki yolu vardır.
+Antigravity'yi uzak bir Pusula'a bağlamanın desteklenen iki yolu vardır.
 
 ### Seçenek A — yerel oturum açma yardımcısı (önerilen)
 
@@ -123,13 +123,13 @@ OAuth işlemini, `127.0.0.1` adresine erişilebilen **kendi bilgisayarınızda**
 çalıştırın. Yardımcı doğrudan Google ile iletişim kurduğundan izin işlemi, panodaki
 sürümün tamamlayamadığı yerde tamamlanır.
 
-**Zaten bağlıysanız** (`omniroute connect <host>`), kopyalamanız gereken hiçbir şey
+**Zaten bağlıysanız** (`pusula connect <host>`), kopyalamanız gereken hiçbir şey
 yoktur — yardımcı, kimlik bilgisini sizin için ilgili kuruluma iletir:
 
 ```bash
 # YEREL makinenizde (Node.js + bir tarayıcı gerektirir):
-omniroute connect 192.168.0.15        # bir kez — yönetici kapsamlı bir bağlam belirteci üretir
-npx omniroute login antigravity
+pusula connect 192.168.0.15        # bir kez — yönetici kapsamlı bir bağlam belirteci üretir
+npx pusula login antigravity
 #   ↳ Google izin ekranını açar, geri çağırmayı yerel bir geri döngü bağlantı noktasında yakalar,
 #     takasını gerçekleştirir ve kimlik bilgisini etkin bağlama POST eder:
 #
@@ -148,13 +148,13 @@ daha önce tamamladığınız bir yetkilendirmeyi atmak yerine blob'u yazdırmay
 döner.
 
 ```bash
-npx omniroute login antigravity --no-push
-#   omniroute-cred-v1.eyJ2IjoxLCJ...
+npx pusula login antigravity --no-push
+#   pusula-cred-v1.eyJ2IjoxLCJ...
 ```
 
 Ardından **uzak** panoda **Providers → Antigravity → Connect** bölümüne gidin ve
-`omniroute-cred-v1.…` blob'unu **Step 2** alanına yapıştırın (geri çağırma URL'si
-veya kimlik bilgisi blob'u kabul eder). OmniRoute bunun kodunu çözer, Cloud Code
+`pusula-cred-v1.…` blob'unu **Step 2** alanına yapıştırın (geri çağırma URL'si
+veya kimlik bilgisi blob'u kabul eder). Pusula bunun kodunu çözer, Cloud Code
 ilk katılım işlemini sunucu tarafında çalıştırır ve bağlantıyı kalıcı olarak
 kaydeder.
 
@@ -199,7 +199,7 @@ kullandığından tünellenecek, sağlayıcıya özgü ikinci bir bağlantı nok
 ## Uzak bir kurulumda Codex / Grok bağlantısı kurma (sabit geri döngü sağlayıcıları)
 
 Codex, xAI (`xai-oauth`) ve Grok CLI (`grok-cli`), üst OAuth uygulamalarında **sabit** bir geri döngü
-`redirect_uri` kaydeder. OmniRoute bunu değiştiremez — sağlayıcı, tarayıcıyı her zaman
+`redirect_uri` kaydeder. Pusula bunu değiştiremez — sağlayıcı, tarayıcıyı her zaman
 aynı sabit kodlanmış adrese geri gönderir:
 
 | Sağlayıcı   | Sağlayıcının yönlendirdiği sabit geri çağırma adresi |
@@ -208,7 +208,7 @@ aynı sabit kodlanmış adrese geri gönderir:
 | `xai-oauth` | `http://127.0.0.1:56121/callback`                    |
 | `grok-cli`  | `http://127.0.0.1:56122/callback`                    |
 
-Buradaki `localhost`, **tarayıcının çalıştığı makine** anlamına gelirken OmniRoute'un PKCE
+Buradaki `localhost`, **tarayıcının çalıştığı makine** anlamına gelirken Pusula'un PKCE
 geri çağırma sunucusu **sunucunun** geri döngü arayüzünde dinler. Panoyu
 `http://192.168.0.15:20128` gibi bir LAN adresinden açtığınızda ikisi asla buluşmaz: yetkilendirme
 kodu kendi dizüstü bilgisayarınızın `localhost:1455` adresine teslim edilir; burada hiçbir şey dinlemediği
@@ -227,7 +227,7 @@ ssh -L 20128:127.0.0.1:20128 -L 1455:127.0.0.1:1455 <user>@192.168.0.15
 
 İki yönlendirme gereklidir ve yalnızca birini yönlendirmek yine başarısız olur:
 
-- **`20128`** (pano portu), kaynağı gerçekten localhost yapar; OmniRoute'un PKCE
+- **`20128`** (pano portu), kaynağı gerçekten localhost yapar; Pusula'un PKCE
   geri çağırma sunucusunu başlatmasını sağlayan budur — bir LAN kaynağı bu
   dala hiçbir zaman ulaşmaz.
 - **`1455`** (sağlayıcının sabit geri çağırma portu), tarayıcının geri gönderildiği
@@ -247,11 +247,11 @@ tutun.
 ## Belirteçleri yönetme
 
 ```bash
-omniroute tokens create --name "laptop" --scope write [--expires 30]
+pusula tokens create --name "laptop" --scope write [--expires 30]
 #   ↳ gizli değeri YALNIZCA BİR KEZ yazdırır — şimdi kopyalayın
-omniroute tokens list                 # maskelenmiş: kimlik, ad, kapsam, ön ek, durum, süre sonu
-omniroute tokens revoke <id|prefix>   # hemen iptal et
-omniroute tokens scopes               # üç kapsamı açıkla
+pusula tokens list                 # maskelenmiş: kimlik, ad, kapsam, ön ek, durum, süre sonu
+pusula tokens revoke <id|prefix>   # hemen iptal et
+pusula tokens scopes               # üç kapsamı açıkla
 ```
 
 `tokens` komutları bir **admin** kimlik bilgisi gerektirir. Belirteçleri
@@ -261,11 +261,11 @@ panoda **Ayarlar → Erişim Belirteçleri** altında da yönetebilirsiniz (olu�
 
 ## Uzak katalogdan bir kodlama CLI'ını yapılandırma
 
-`omniroute configure`, **etkin sunucunun** canlı model kataloğunu okur ve
+`pusula configure`, **etkin sunucunun** canlı model kataloğunu okur ve
 **sizin** makinenize bir yapılandırma yazar.
 
 ```bash
-omniroute configure codex
+pusula configure codex
 #   Sağlayıcılar: glm, kmc, ollamacloud, opencode-go, …
 #   Sağlayıcı: glm
 #   Model kimliği: glm/glm-5.2
@@ -273,10 +273,10 @@ omniroute configure codex
 #   Kullanım:  codex --profile glm52
 
 # etkileşimsiz
-omniroute configure codex --provider glm --model glm/glm-5.2 --name glm52
+pusula configure codex --provider glm --model glm/glm-5.2 --name glm52
 
 # sık kullanılan bir modeli etkileşimli seçicinin en üstünde tut
-omniroute configure codex --provider glm --model glm/glm-5.2 --favorite --yes
+pusula configure codex --provider glm --model glm/glm-5.2 --favorite --yes
 ```
 
 Seçici, yerel `model-preferences.json` dosyasında yalnızca model kimliklerini
@@ -285,23 +285,23 @@ son seçimlerden önce gösterilir; seçilen bir modeli ilgili bağlam/hedef lis
 kaldırmak için `--unfavorite` kullanın.
 
 Yazılan profil, çıkarım anahtarına env var
-(`OMNIROUTE_API_KEY`) aracılığıyla başvurur — gizli değer hiçbir zaman diske yazılmaz. Tek seferlik
-temel Codex kurulumu (`[model_providers.omniroute]` bloğu) için
+(`PUSULA_API_KEY`) aracılığıyla başvurur — gizli değer hiçbir zaman diske yazılmaz. Tek seferlik
+temel Codex kurulumu (`[model_providers.pusula]` bloğu) için
 [CODEX-CLI-CONFIGURATION.md](./CODEX-CLI-CONFIGURATION.md) belgesine bakın.
 
 ### Uzak sunucuya karşı bir CLI başlatma (yapılandırma yazılmaz)
 
-`omniroute run <target>` da etkin bağlamı dikkate alır: uzak temel URL
+`pusula run <target>` da etkin bağlamı dikkate alır: uzak temel URL
 ve bağlam kimlik bilgisi yalnızca başlatılan sürece eklenir.
 
 ```bash
-omniroute connect 192.168.0.15
-omniroute run claude   --model openai/gpt-5.4          # Claude Code → uzak sunucu
-omniroute run gemini   --model glm/glm-5.2 -- --skip-trust -p "hello"
-omniroute run opencode --model glm/glm-5.2 -- run "reply OK"
+pusula connect 192.168.0.15
+pusula run claude   --model openai/gpt-5.4          # Claude Code → uzak sunucu
+pusula run gemini   --model glm/glm-5.2 -- --skip-trust -p "hello"
+pusula run opencode --model glm/glm-5.2 -- run "reply OK"
 
 # Tam olarak neyin başlatılacağını önizleyin (yalnızca env ANAHTAR ADLARI, değerler asla gösterilmez):
-omniroute run codex --dry-run --json
+pusula run codex --dry-run --json
 ```
 
 Hedefler: `claude`, `codex`, `aider`, `goose`, `opencode`, `qwen`, `gemini`
@@ -316,32 +316,32 @@ bağlamı veya `--remote <url> --api-key <key>` seçeneklerini dikkate alır):
 
 | CLI         | Komut                      | Yazdığı yer/içerik                                                                                                                                                                                            |
 | ----------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Codex       | `omniroute setup-codex`    | `~/.codex/<name>.config.toml` profilleri (model başına)                                                                                                                                                       |
-| Claude Code | `omniroute setup-claude`   | `~/.claude/profiles/<name>/settings.json` (model başına)                                                                                                                                                      |
-| OpenCode    | `omniroute setup-opencode` | Her katalog modelini içeren, openai uyumlu `omniroute` sağlayıcısı için `~/.config/opencode/opencode.json` (`opencode -m omniroute/<model>` komutunu çalıştırın)                                              |
-| Cline       | `omniroute setup-cline`    | `~/.cline/data/{globalState,secrets}.json` (CLI modu) + yapıştırılacak VS Code uzantısı ayarlarını yazdırır (OpenAI uyumlu, `/v1` **olmadan** Temel URL)                                                      |
-| Kilo Code   | `omniroute setup-kilo`     | `~/.local/share/kilo/auth.json` (CLI) + VS Code `kilocode.*` ayarları — OpenAI uyumlu, `/v1` **içeren** Temel URL                                                                                             |
-| Continue    | `omniroute setup-continue` | `~/.continue/config.yaml` (VS Code/JetBrains + `cn` CLI) — `provider: openai`, `/v1` **içeren** `apiBase`, `${{ secrets.OMNIROUTE_API_KEY }}` üzerinden anahtar                                               |
-| Cursor      | `omniroute setup-cursor`   | Uygulama içi adımları yazdırır (Ayarlar → Modeller → `/v1` **içeren** OpenAI Temel URL'sini Geçersiz Kıl + anahtar + model). Cursor yapılandırması opak SQLite'tır — yalnızca sohbet paneli                   |
-| Roo Code    | `omniroute setup-roo`      | Bir Roo içe aktarma JSON'u (`~/.omniroute/roo-settings.json`) yazar + `roo-cline.autoImportSettingsPath` ayarını belirler + kullanıcı arayüzü adımlarını yazdırır (OpenAI uyumlu, `/v1` **içeren** Temel URL) |
-| Crush       | `omniroute setup-crush`    | `~/.config/crush/crush.json` — `openai-compat` sağlayıcısı, `/v1` **içeren** `base_url`, `$OMNIROUTE_API_KEY` üzerinden anahtar                                                                               |
-| Goose       | `omniroute setup-goose`    | `~/.config/goose/config.yaml` (`GOOSE_PROVIDER=openai` + `/v1` **olmadan** `OPENAI_HOST` + `GOOSE_MODEL`) + ortam değişkeni tarifi                                                                            |
-| Aider       | `omniroute setup-aider`    | `~/.aider.conf.yml` (`/v1` **olmadan** `openai-api-base` + `model: openai/<id>`) + ortam değişkeni tarifi (`aider --message --yes`)                                                                           |
-| Qwen Code   | `omniroute setup-qwen`     | `~/.qwen/settings.json` V4 `modelProviders.openai` girdisi + `~/.qwen/.env` içinde `OMNIROUTE_API_KEY`                                                                                                        |
+| Codex       | `pusula setup-codex`    | `~/.codex/<name>.config.toml` profilleri (model başına)                                                                                                                                                       |
+| Claude Code | `pusula setup-claude`   | `~/.claude/profiles/<name>/settings.json` (model başına)                                                                                                                                                      |
+| OpenCode    | `pusula setup-opencode` | Her katalog modelini içeren, openai uyumlu `pusula` sağlayıcısı için `~/.config/opencode/opencode.json` (`opencode -m pusula/<model>` komutunu çalıştırın)                                              |
+| Cline       | `pusula setup-cline`    | `~/.cline/data/{globalState,secrets}.json` (CLI modu) + yapıştırılacak VS Code uzantısı ayarlarını yazdırır (OpenAI uyumlu, `/v1` **olmadan** Temel URL)                                                      |
+| Kilo Code   | `pusula setup-kilo`     | `~/.local/share/kilo/auth.json` (CLI) + VS Code `kilocode.*` ayarları — OpenAI uyumlu, `/v1` **içeren** Temel URL                                                                                             |
+| Continue    | `pusula setup-continue` | `~/.continue/config.yaml` (VS Code/JetBrains + `cn` CLI) — `provider: openai`, `/v1` **içeren** `apiBase`, `${{ secrets.PUSULA_API_KEY }}` üzerinden anahtar                                               |
+| Cursor      | `pusula setup-cursor`   | Uygulama içi adımları yazdırır (Ayarlar → Modeller → `/v1` **içeren** OpenAI Temel URL'sini Geçersiz Kıl + anahtar + model). Cursor yapılandırması opak SQLite'tır — yalnızca sohbet paneli                   |
+| Roo Code    | `pusula setup-roo`      | Bir Roo içe aktarma JSON'u (`~/.pusula/roo-settings.json`) yazar + `roo-cline.autoImportSettingsPath` ayarını belirler + kullanıcı arayüzü adımlarını yazdırır (OpenAI uyumlu, `/v1` **içeren** Temel URL) |
+| Crush       | `pusula setup-crush`    | `~/.config/crush/crush.json` — `openai-compat` sağlayıcısı, `/v1` **içeren** `base_url`, `$PUSULA_API_KEY` üzerinden anahtar                                                                               |
+| Goose       | `pusula setup-goose`    | `~/.config/goose/config.yaml` (`GOOSE_PROVIDER=openai` + `/v1` **olmadan** `OPENAI_HOST` + `GOOSE_MODEL`) + ortam değişkeni tarifi                                                                            |
+| Aider       | `pusula setup-aider`    | `~/.aider.conf.yml` (`/v1` **olmadan** `openai-api-base` + `model: openai/<id>`) + ortam değişkeni tarifi (`aider --message --yes`)                                                                           |
+| Qwen Code   | `pusula setup-qwen`     | `~/.qwen/settings.json` V4 `modelProviders.openai` girdisi + `~/.qwen/.env` içinde `PUSULA_API_KEY`                                                                                                        |
 
 ```bash
 # OpenCode (openai uyumlu sağlayıcı, tüm katalog modelleri, uzak VPS)
-omniroute setup-opencode --remote http://192.168.0.15:20128 --api-key oma_live_xxx
-omniroute setup-opencode --only glm,kimi        # yalnızca eşleşen modelleri tut
-opencode -m omniroute/glm/glm-5.2 "..."          # önce OMNIROUTE_API_KEY değişkenini dışa aktarın
+pusula setup-opencode --remote http://192.168.0.15:20128 --api-key oma_live_xxx
+pusula setup-opencode --only glm,kimi        # yalnızca eşleşen modelleri tut
+opencode -m pusula/glm/glm-5.2 "..."          # önce PUSULA_API_KEY değişkenini dışa aktarın
 ```
 
-> OpenCode ayrıca daha zengin bir **eklenti** entegrasyonuna sahiptir: `omniroute setup opencode`
-> (artık `--remote` aracılığıyla uzak bağlantıları destekler) `@omniroute/opencode-plugin` paketini yükler.
+> OpenCode ayrıca daha zengin bir **eklenti** entegrasyonuna sahiptir: `pusula setup opencode`
+> (artık `--remote` aracılığıyla uzak bağlantıları destekler) `@pusula/opencode-plugin` paketini yükler.
 > `setup-opencode`, hafif openai uyumlu alternatiftir. API anahtarına
-> `{env:OMNIROUTE_API_KEY}` aracılığıyla başvurulur — hiçbir zaman diske yazılmaz.
+> `{env:PUSULA_API_KEY}` aracılığıyla başvurulur — hiçbir zaman diske yazılmaz.
 >
-> OpenCode v2'de bunun yerine `@omniroute/opencode-plugin-v2` kullanın: aynı katalog,
+> OpenCode v2'de bunun yerine `@pusula/opencode-plugin-v2` kullanın: aynı katalog,
 > farklı yükleyici sözleşmesi. Entegrasyon bağlandığında anahtarı OpenCode'un kendi kimlik bilgisi
 > deposundan okur; dolayısıyla uzak ağ geçidi için `opencode.json` dosyasında hiçbir anahtar gerekmez.
 
@@ -349,53 +349,53 @@ opencode -m omniroute/glm/glm-5.2 "..."          # önce OMNIROUTE_API_KEY deği
 
 ## Bağlamları Yönetme (sunucular arasında geçiş yapma)
 
-Bir **bağlam**, kaydedilmiş bir sunucudur (baseUrl + kimlik bilgisi + kapsam). `omniroute connect` bir bağlam oluşturur ve onu etkin hale getirir; bundan sonra her komut bu bağlamı hedefler. `omniroute contexts` ile bunları yönetin ve aralarında geçiş yapın:
+Bir **bağlam**, kaydedilmiş bir sunucudur (baseUrl + kimlik bilgisi + kapsam). `pusula connect` bir bağlam oluşturur ve onu etkin hale getirir; bundan sonra her komut bu bağlamı hedefler. `pusula contexts` ile bunları yönetin ve aralarında geçiş yapın:
 
 ```bash
-omniroute contexts list            # tüm bağlamlar; etkin olan ● ile işaretlenmiştir
-omniroute contexts current         # etkin sunucu, kimlik doğrulama durumu, kapsam
+pusula contexts list            # tüm bağlamlar; etkin olan ● ile işaretlenmiştir
+pusula contexts current         # etkin sunucu, kimlik doğrulama durumu, kapsam
 ```
 
 ```text
   | Name    | Base URL                  | Auth  | Scope | Description
-● | vps     | http://100.67.86.91:20128 | token | admin | Remote OmniRoute (…)
+● | vps     | http://100.67.86.91:20128 | token | admin | Remote Pusula (…)
   | default | http://localhost:20128    | ✗     |       |
 ```
 
 **Sunucular arasında geçiş yapın** — sonraki her komut etkin bağlamı takip eder:
 
 ```bash
-omniroute contexts use vps         # → tüm komutlar artık uzak VPS'e ulaşır
-omniroute tokens list              #   (VPS'e karşı çalışır)
+pusula contexts use vps         # → tüm komutlar artık uzak VPS'e ulaşır
+pusula tokens list              #   (VPS'e karşı çalışır)
 
-omniroute contexts use default     # → localhost'a geri dön
-omniroute tokens list              #   (yerel sunucuya karşı çalışır)
+pusula contexts use default     # → localhost'a geri dön
+pusula tokens list              #   (yerel sunucuya karşı çalışır)
 ```
 
 **Manuel olarak bir bağlam ekleyin** (`connect` yerine), inceleyin veya yeniden adlandırın:
 
 ```bash
-omniroute contexts add staging --url https://staging.example.com:20128 \
+pusula contexts add staging --url https://staging.example.com:20128 \
   --access-token oma_live_xxxx --scope write --description "staging box"
-omniroute contexts show staging    # bir bağlam için tüm detaylar
-omniroute contexts rename staging stg
+pusula contexts show staging    # bir bağlam için tüm detaylar
+pusula contexts rename staging stg
 ```
 
 **Bir bağlamı kaldırın** — onay ister; bunu atlamak için `--yes` parametresini kullanın (aksi takdirde güvenli bir şekilde reddeden betikler / etkileşimli olmayan kabuklar için gereklidir):
 
 ```bash
-omniroute contexts remove stg --yes
+pusula contexts remove stg --yes
 ```
 
-> `default` (localhost) kaldırılamaz. Etkin bağlamı kaldırmak `default` bağlamına geri döner. İpucu: bir bağlamı kaldırmak yalnızca **yerel** olarak kaydedilmiş kimlik bilgisini düşürür — erişimi tamamen sonlandırmak için sunucudaki belirteci `omniroute tokens revoke <id>` ile iptal edin.
+> `default` (localhost) kaldırılamaz. Etkin bağlamı kaldırmak `default` bağlamına geri döner. İpucu: bir bağlamı kaldırmak yalnızca **yerel** olarak kaydedilmiş kimlik bilgisini düşürür — erişimi tamamen sonlandırmak için sunucudaki belirteci `pusula tokens revoke <id>` ile iptal edin.
 
 **Bağlamları dışa aktarın / içe aktarın** (örn. makineler arasında taşımak için). Dışa aktarımlar, dosya yedeklemesiyle depolanan kimlik bilgileri de dahil olmak üzere, varsayılan olarak kimlik bilgilerini atlar. Taşınabilir, kimlik bilgisi içeren bir yedeklemeye ihtiyaç duyulduğunda `--include-secrets` parametresini açıkça kullanın:
 
 ```bash
-omniroute contexts export --out contexts.json     # gizlenmiş; varsayılan hedef: stdout
-omniroute contexts export --include-secrets --out private-contexts.json
-omniroute contexts import contexts.json            # üzerine yaz; mevcut olanları korumak için --merge
-omniroute contexts migrate --yes                  # eski düz metin belirteçlerini anahtarlığa taşı
+pusula contexts export --out contexts.json     # gizlenmiş; varsayılan hedef: stdout
+pusula contexts export --include-secrets --out private-contexts.json
+pusula contexts import contexts.json            # üzerine yaz; mevcut olanları korumak için --merge
+pusula contexts migrate --yes                  # eski düz metin belirteçlerini anahtarlığa taşı
 ```
 
 `--include-secrets`, dışa aktarmadan önce anahtarlık referanslarını çözer ve başvurulan herhangi bir kimlik bilgisi okunamıyorsa başarısız olur. `--no-secrets` her zaman önceliklidir. Dışa aktarma dosyaları `0600` moduyla atomik olarak yazılır. Açıkça sır içeren bir dışa aktarımı gizli materyal olarak ele alın. Kullanılabilir bir işletim sistemi anahtarlığı olmayan başsız sistemlerde, CLI `config.json` dosyasına `0600` moduyla geri döner ve bir kerelik bir uyarı yazdırır; bu modda varsayılan bir dışa aktarım gizli kalır.
@@ -411,22 +411,22 @@ açık bir `https://…` URL'si) değiştirin.
 
 ```bash
 # 1. Bağlan (parola → admin token'ı; etkin hâle gelen bir bağlam olarak kaydedilir)
-omniroute connect 192.168.0.15                 # veya: --key oma_live_xxxx  (parola yok)
-omniroute contexts current                     # uzak sunucuyu ve kapsamı gösterir
+pusula connect 192.168.0.15                 # veya: --key oma_live_xxxx  (parola yok)
+pusula contexts current                     # uzak sunucuyu ve kapsamı gösterir
 
 # 2. Kullan — yönetim komutları artık uzak sunucuya karşı çalışır
-omniroute tokens create --name laptop --scope read   # daha dar kapsamlı bir token oluştur
-omniroute tokens list                                 # uzak sunucudan maskelenmiş liste
+pusula tokens create --name laptop --scope read   # daha dar kapsamlı bir token oluştur
+pusula tokens list                                 # uzak sunucudan maskelenmiş liste
 
 # 3. İleri ve geri geçiş yap
-omniroute contexts use default                 # → yerel
-omniroute contexts use 192-168-0-15            # → yeniden uzak (`contexts list` içindeki ad)
+pusula contexts use default                 # → yerel
+pusula contexts use 192-168-0-15            # → yeniden uzak (`contexts list` içindeki ad)
 
 # 4. Kurulumu kaldır. NOT: `contexts remove` yalnızca YEREL kimlik bilgisini siler —
 #    sunucudaki token'ı iptal ETMEZ. Erişimi gerçekten sonlandırmak istiyorsanız
 #    önce sunucu tarafında iptal edin.
-omniroute tokens revoke <id|prefix>            # sunucudaki erişimi sonlandırır
-omniroute contexts remove 192-168-0-15 --yes   # yerel bağlamı siler (etkin olsa bile → default'a geri döner), onay istemez
+pusula tokens revoke <id|prefix>            # sunucudaki erişimi sonlandırır
+pusula contexts remove 192-168-0-15 --yes   # yerel bağlamı siler (etkin olsa bile → default'a geri döner), onay istemez
 ```
 
 > `--yes`, `contexts remove` komutunu etkileşimsiz hâle getirir (betiklerde/CI'da
@@ -439,9 +439,9 @@ omniroute contexts remove 192-168-0-15 --yes   # yerel bağlamı siler (etkin ol
 ## Güvenlik notları
 
 - Token'ın düz metin hâli yalnızca bir kez gösterilir; sadece SHA-256 özeti kalıcı olarak saklanır (API anahtarlarıyla aynı şekilde).
-- `omniroute connect`, oturum açma kaba kuvvet saldırılarına karşı kilitleme ve denetim günlüğü mekanizmalarını yeniden kullanır.
+- `pusula connect`, oturum açma kaba kuvvet saldırılarına karşı kilitleme ve denetim günlüğü mekanizmalarını yeniden kullanır.
 - Aktarım için tercihen HTTPS veya bir Tailnet kullanın; yalnızca ana makine belirtilirse LAN/Tailscale kolaylığı için varsayılan olarak `http://` kullanılır — TLS için tam bir `https://…` URL'si sağlayın.
-- Tercih edilen yerel bağlam dosyası, yalnızca bir `credentialRef` içeren `~/.omniroute/config.json` (`chmod 600`) dosyasıdır; token'ın kendisi işletim sistemi anahtar zincirinde (`keytar`) saklanır ve günlüklere hiçbir zaman yazdırılmaz. Çalışan bir yerel anahtar zinciri bulunmayan başsız kurulumlar, açık bir geri dönüş mekanizması olarak aynı `0600` dosyasını kullanır ve bir kez uyarı verir. Bir anahtar zinciri arka ucu kurduktan sonra `omniroute contexts migrate --yes` komutunu kullanın.
+- Tercih edilen yerel bağlam dosyası, yalnızca bir `credentialRef` içeren `~/.pusula/config.json` (`chmod 600`) dosyasıdır; token'ın kendisi işletim sistemi anahtar zincirinde (`keytar`) saklanır ve günlüklere hiçbir zaman yazdırılmaz. Çalışan bir yerel anahtar zinciri bulunmayan başsız kurulumlar, açık bir geri dönüş mekanizması olarak aynı `0600` dosyasını kullanır ve bir kez uyarı verir. Bir anahtar zinciri arka ucu kurduktan sonra `pusula contexts migrate --yes` komutunu kullanın.
 
 ---
 

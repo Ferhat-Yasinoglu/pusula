@@ -113,7 +113,7 @@ kontrol edilerek **istek sırasında türetilir**.
 
 `ExportCodeModal` (Playground Studio'dan içe aktarılır) + `codeExport.ts`, hem `/v1/search`
 hem de `/v1/web/fetch` çağrıları için curl / Python / TypeScript kod parçacıkları oluşturur.
-API anahtarı yer tutucusu her zaman `$OMNIROUTE_API_KEY` şeklindedir (D11, Playground Studio ile paylaşılır).
+API anahtarı yer tutucusu her zaman `$PUSULA_API_KEY` şeklindedir (D11, Playground Studio ile paylaşılır).
 
 ---
 

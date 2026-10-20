@@ -168,7 +168,7 @@ Vertrauensdatei des Projekts:
 }
 ```
 
-Die Umgebungsüberschreibung `OMNIROUTE_RTK_TRUST_PROJECT_FILTERS=1` stuft Projektfilter ohne
+Die Umgebungsüberschreibung `PUSULA_RTK_TRUST_PROJECT_FILTERS=1` stuft Projektfilter ohne
 Hash als vertrauenswürdig ein und sollte auf die kontrollierte lokale Entwicklung beschränkt werden.
 
 ## Sicherheitsregeln

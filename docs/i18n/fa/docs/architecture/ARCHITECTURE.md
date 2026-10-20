@@ -1,4 +1,4 @@
-# OmniRoute Architecture (فارسی)
+# Pusula Architecture (فارسی)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../architecture/ARCHITECTURE.md) · 🇪🇹 [am](../../../am/docs/architecture/ARCHITECTURE.md) · 🇸🇦 [ar](../../../ar/docs/architecture/ARCHITECTURE.md) · 🇦🇿 [az](../../../az/docs/architecture/ARCHITECTURE.md) · 🇧🇬 [bg](../../../bg/docs/architecture/ARCHITECTURE.md) · 🇧🇩 [bn](../../../bn/docs/architecture/ARCHITECTURE.md) · 🇧🇦 [bs](../../../bs/docs/architecture/ARCHITECTURE.md) · 🇨🇿 [cs](../../../cs/docs/architecture/ARCHITECTURE.md) · 🇩🇰 [da](../../../da/docs/architecture/ARCHITECTURE.md) · 🇩🇪 [de](../../../de/docs/architecture/ARCHITECTURE.md) · 🇬🇷 [el](../../../el/docs/architecture/ARCHITECTURE.md) · 🇪🇸 [es](../../../es/docs/architecture/ARCHITECTURE.md) · 🇪🇪 [et](../../../et/docs/architecture/ARCHITECTURE.md) · 🇫🇮 [fi](../../../fi/docs/architecture/ARCHITECTURE.md) · 🇫🇷 [fr](../../../fr/docs/architecture/ARCHITECTURE.md) · 🇮🇪 [ga](../../../ga/docs/architecture/ARCHITECTURE.md) · 🇮🇳 [gu](../../../gu/docs/architecture/ARCHITECTURE.md) · 🇳🇬 [ha](../../../ha/docs/architecture/ARCHITECTURE.md) · 🇮🇱 [he](../../../he/docs/architecture/ARCHITECTURE.md) · 🇮🇳 [hi](../../../hi/docs/architecture/ARCHITECTURE.md) · 🇭🇷 [hr](../../../hr/docs/architecture/ARCHITECTURE.md) · 🇭🇺 [hu](../../../hu/docs/architecture/ARCHITECTURE.md) · 🇦🇲 [hy](../../../hy/docs/architecture/ARCHITECTURE.md) · 🇮🇩 [id](../../../id/docs/architecture/ARCHITECTURE.md) · 🇳🇬 [ig](../../../ig/docs/architecture/ARCHITECTURE.md) · 🇮🇹 [it](../../../it/docs/architecture/ARCHITECTURE.md) · 🇯🇵 [ja](../../../ja/docs/architecture/ARCHITECTURE.md) · 🇬🇪 [ka](../../../ka/docs/architecture/ARCHITECTURE.md) · 🇰🇭 [km](../../../km/docs/architecture/ARCHITECTURE.md) · 🇮🇳 [kn](../../../kn/docs/architecture/ARCHITECTURE.md) · 🇰🇷 [ko](../../../ko/docs/architecture/ARCHITECTURE.md) · 🇱🇹 [lt](../../../lt/docs/architecture/ARCHITECTURE.md) · 🇱🇻 [lv](../../../lv/docs/architecture/ARCHITECTURE.md) · 🇮🇳 [ml](../../../ml/docs/architecture/ARCHITECTURE.md) · 🇮🇳 [mr](../../../mr/docs/architecture/ARCHITECTURE.md) · 🇲🇾 [ms](../../../ms/docs/architecture/ARCHITECTURE.md) · 🇲🇹 [mt](../../../mt/docs/architecture/ARCHITECTURE.md) · 🇲🇲 [my](../../../my/docs/architecture/ARCHITECTURE.md) · 🇳🇵 [ne](../../../ne/docs/architecture/ARCHITECTURE.md) · 🇳🇱 [nl](../../../nl/docs/architecture/ARCHITECTURE.md) · 🇳🇴 [no](../../../no/docs/architecture/ARCHITECTURE.md) · 🇮🇳 [or](../../../or/docs/architecture/ARCHITECTURE.md) · 🇮🇳 [pa](../../../pa/docs/architecture/ARCHITECTURE.md) · 🇵🇭 [phi](../../../phi/docs/architecture/ARCHITECTURE.md) · 🇵🇱 [pl](../../../pl/docs/architecture/ARCHITECTURE.md) · 🇵🇹 [pt](../../../pt/docs/architecture/ARCHITECTURE.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/architecture/ARCHITECTURE.md) · 🇷🇴 [ro](../../../ro/docs/architecture/ARCHITECTURE.md) · 🇷🇺 [ru](../../../ru/docs/architecture/ARCHITECTURE.md) · 🇱🇰 [si](../../../si/docs/architecture/ARCHITECTURE.md) · 🇸🇰 [sk](../../../sk/docs/architecture/ARCHITECTURE.md) · 🇸🇮 [sl](../../../sl/docs/architecture/ARCHITECTURE.md) · 🇷🇸 [sr](../../../sr/docs/architecture/ARCHITECTURE.md) · 🇸🇪 [sv](../../../sv/docs/architecture/ARCHITECTURE.md) · 🇰🇪 [sw](../../../sw/docs/architecture/ARCHITECTURE.md) · 🇮🇳 [ta](../../../ta/docs/architecture/ARCHITECTURE.md) · 🇮🇳 [te](../../../te/docs/architecture/ARCHITECTURE.md) · 🇹🇭 [th](../../../th/docs/architecture/ARCHITECTURE.md) · 🇹🇷 [tr](../../../tr/docs/architecture/ARCHITECTURE.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/architecture/ARCHITECTURE.md) · 🇵🇰 [ur](../../../ur/docs/architecture/ARCHITECTURE.md) · 🇺🇿 [uz](../../../uz/docs/architecture/ARCHITECTURE.md) · 🇻🇳 [vi](../../../vi/docs/architecture/ARCHITECTURE.md) · 🇳🇬 [yo](../../../yo/docs/architecture/ARCHITECTURE.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/architecture/ARCHITECTURE.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/architecture/ARCHITECTURE.md)
 
@@ -10,7 +10,7 @@ _آخرین بهروزرسانی: 2026-06-28_
 
 ## خلاصه اجرایی
 
-OmniRoute یک درگاه مسیریابی هوش مصنوعی محلی و داشبورد مبتنی بر Next.js است.
+Pusula یک درگاه مسیریابی هوش مصنوعی محلی و داشبورد مبتنی بر Next.js است.
 این سامانه یک نقطه پایانی سازگار با OpenAI (`/v1/*`) ارائه میدهد و ترافیک را با قابلیتهای تبدیل، جایگزینی، نوسازی توکن و ردیابی مصرف، میان چندین ارائهدهنده بالادستی مسیریابی میکند.
 
 قابلیتهای اصلی:
@@ -164,7 +164,7 @@ flowchart LR
         BROWSER[داشبورد مرورگر]
     end
 
-    subgraph Router[فرایند محلی OmniRoute]
+    subgraph Router[فرایند محلی Pusula]
         API[API سازگاری V1\n/v1/*]
         DASH[داشبورد + API مدیریت\n/api/*]
         CORE[هسته SSE + ترجمه\nopen-sse + src/sse]
@@ -327,7 +327,7 @@ flowchart LR
 
 ## 5) سرویسهای تعبیهشده (v3.8.4)
 
-OmniRoute میتواند فرایندهای ابزار هوش مصنوعیِ در حال اجرا بهصورت محلی را که
+Pusula میتواند فرایندهای ابزار هوش مصنوعیِ در حال اجرا بهصورت محلی را که
 **سرویسهای تعبیهشده** نامیده میشوند، نصب و نظارت کند و درخواستها را به آنها مسیریابی کند. پنج سرویس ارائه شدهاند: 9Router، CLIProxyAPI، Bifrost، Mux و Dario.
 
 لایههای معماری:
@@ -436,7 +436,7 @@ Jules) را پشت یک چرخهٔ عمر یکنواخت و مبتنی بر پا
 - کش سهمیه: `src/domain/quotaCache.ts`
 - وضعیت افت عملکرد: `src/domain/degradation.ts`
 - ممیزی پیکربندی: `src/domain/configAudit.ts`
-- سازندهٔ فرادادهٔ پاسخ OmniRoute: `src/domain/omnirouteResponseMeta.ts`
+- سازندهٔ فرادادهٔ پاسخ Pusula: `src/domain/pusulaResponseMeta.ts`
 - زیرسامانهٔ ارزیابی: `src/domain/assessment/` — کارهای ارزیابی دورهای
 
 ### E. خط لولهٔ مجوزدهی
@@ -515,7 +515,7 @@ Jules) را پشت یک چرخهٔ عمر یکنواخت و مبتنی بر پا
 
 - زیرساخت اصلی: `src/lib/db/core.ts` (better-sqlite3، مهاجرتها، WAL)
 - دسترسی به پایگاه داده: ماژولهای مشخص `src/lib/db/*` را مستقیماً import کنید (فایل تجمیعی قدیمی `localDb.ts` حذف شده است)
-- فایل: `${DATA_DIR}/storage.sqlite` (یا در صورت تنظیم بودن، `$XDG_CONFIG_HOME/omniroute/storage.sqlite`؛ در غیر این صورت `~/.omniroute/storage.sqlite`)
+- فایل: `${DATA_DIR}/storage.sqlite` (یا در صورت تنظیم بودن، `$XDG_CONFIG_HOME/pusula/storage.sqlite`؛ در غیر این صورت `~/.pusula/storage.sqlite`)
 - موجودیتها (جدولها + فضاهای نام KV): providerConnections، providerNodes، modelAliases، combos، apiKeys، settings، pricing، **customModels**، **proxyConfig**، **ipFilter**، **thinkingBudget**، **systemPrompt**
 
 ماندگاری دادههای مصرف:
@@ -811,7 +811,7 @@ flowchart LR
         Browser[Dashboard Browser]
     end
 
-    subgraph ContainerOrProcess[OmniRoute Runtime]
+    subgraph ContainerOrProcess[Pusula Runtime]
         Next[Next.js Server\nPORT=20128]
         Core[SSE Core + Executors]
         MainDB[(storage.sqlite)]
@@ -930,7 +930,7 @@ flowchart LR
 ## ماتریس سازگاری ارائهدهندگان
 
 > **توجه:** ماتریس زیر نمونهای نماینده از 351 ارائهدهنده ثبتشده در
-> OmniRoute v3.8.0 است. برای مشاهده فهرست مرجع و همواره بهروز، به
+> Pusula v3.8.0 است. برای مشاهده فهرست مرجع و همواره بهروز، به
 > [`docs/reference/PROVIDER_REFERENCE.md`](../reference/PROVIDER_REFERENCE.md) (تولیدشده بهصورت خودکار) یا منبع
 > اصلی در `src/shared/constants/providers.ts` (اعتبارسنجیشده با Zod هنگام بارگذاری) مراجعه کنید.
 
@@ -1112,7 +1112,7 @@ flowchart LR
 - درخواست خام دریافتشده از کلاینت
 - درخواست ترجمهشدهای که واقعاً به بالادست ارسال شده است
 - پاسخ ارائهدهنده که بهصورت JSON بازسازی شده است؛ پاسخهای جریانی به خلاصهٔ نهایی بههمراه فرادادهٔ جریان فشرده میشوند
-- پاسخ نهایی کلاینت که توسط OmniRoute بازگردانده شده است؛ پاسخهای جریانی در همان قالب خلاصهٔ فشرده ذخیره میشوند
+- پاسخ نهایی کلاینت که توسط Pusula بازگردانده شده است؛ پاسخهای جریانی در همان قالب خلاصهٔ فشرده ذخیره میشوند
 
 ## مرزهای حساس امنیتی
 
@@ -1138,11 +1138,11 @@ flowchart LR
 
 ## نکات معماری شناختهشده
 
-1. `usageDb` و `localDb` از خطمشی یکسانی برای دایرکتوری پایه (`DATA_DIR` -> `XDG_CONFIG_HOME/omniroute` -> `~/.omniroute`) همراه با مهاجرت فایلهای قدیمی استفاده میکنند.
+1. `usageDb` و `localDb` از خطمشی یکسانی برای دایرکتوری پایه (`DATA_DIR` -> `XDG_CONFIG_HOME/pusula` -> `~/.pusula`) همراه با مهاجرت فایلهای قدیمی استفاده میکنند.
 2. `/api/v1/route.ts` برای جلوگیری از واگرایی معنایی، کار را به همان سازنده کاتالوگ یکپارچهای واگذار میکند که توسط `/api/v1/models` (`src/app/api/v1/models/catalog.ts`) استفاده میشود.
 3. ثبتکننده درخواست، در صورت فعال بودن، تمام هدرها/بدنه را ثبت میکند؛ دایرکتوری گزارشها را حساس در نظر بگیرید.
 4. رفتار ابری به صحت `NEXT_PUBLIC_BASE_URL` و دسترسپذیری نقطه پایانی ابری وابسته است.
-5. دایرکتوری `open-sse/` بهعنوان **بسته فضای کاری npm** با نام `@omniroute/open-sse` منتشر میشود. کد منبع آن را از طریق `@omniroute/open-sse/...` وارد میکند (که توسط `transpilePackages` در Next.js تفکیک میشود). برای حفظ سازگاری، مسیرهای فایل در این سند همچنان از نام دایرکتوری `open-sse/` استفاده میکنند.
+5. دایرکتوری `open-sse/` بهعنوان **بسته فضای کاری npm** با نام `@pusula/open-sse` منتشر میشود. کد منبع آن را از طریق `@pusula/open-sse/...` وارد میکند (که توسط `transpilePackages` در Next.js تفکیک میشود). برای حفظ سازگاری، مسیرهای فایل در این سند همچنان از نام دایرکتوری `open-sse/` استفاده میکنند.
 6. نمودارهای داشبورد برای بصریسازیهای تحلیلی دسترسپذیر و تعاملی (نمودارهای میلهای استفاده از مدل و جدولهای تفکیک ارائهدهندگان همراه با نرخ موفقیت) از **Recharts** (مبتنی بر SVG) استفاده میکنند.
 7. آزمونهای E2E از **Playwright** (`tests/e2e/`) استفاده میکنند و از طریق `npm run test:e2e` اجرا میشوند. آزمونهای واحد از **اجراکننده آزمون Node.js** (`tests/unit/`) استفاده میکنند و از طریق `npm run test:unit` اجرا میشوند. کد منبع زیر `src/` از **TypeScript** (`.ts`/`.tsx`) استفاده میکند؛ فضای کاری `open-sse/` همچنان JavaScript (`.js`) باقی میماند.
 8. صفحه تنظیمات در 7 زبانه سازماندهی شده است: عمومی، ظاهر، هوش مصنوعی، امنیت، مسیریابی، تابآوری و پیشرفته. صفحه تابآوری فقط صف درخواست، دوره توقف اتصال، قطعکننده ارائهدهنده و رفتار انتظار برای پایان دوره توقف را پیکربندی میکند؛ وضعیت زنده زمان اجرای قطعکننده در صفحه سلامت نمایش داده میشود.
@@ -1153,7 +1153,7 @@ flowchart LR
 ## چکلیست تأیید عملیاتی
 
 - ساخت از کد منبع: `npm run build`
-- ساخت ایمیج Docker: `docker build -t omniroute .`
+- ساخت ایمیج Docker: `docker build -t pusula .`
 - سرویس را راهاندازی و موارد زیر را تأیید کنید:
 - `GET /api/settings`
 - `GET /api/v1/models`

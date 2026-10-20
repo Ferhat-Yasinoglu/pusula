@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-const { GrokCliExecutor } = await import("@omniroute/open-sse/executors/grok-cli");
+const { GrokCliExecutor } = await import("@pusula/open-sse/executors/grok-cli");
 
 // Codex CLI declares its native search as `{ type: "web_search", external_web_access: false }`.
 // With search interception off, that tool reaches Grok Build verbatim and the whole turn fails

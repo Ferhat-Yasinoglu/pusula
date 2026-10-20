@@ -1,4 +1,4 @@
-# 🐳 Docker Guide — OmniRoute (Türkçe)
+# 🐳 Docker Guide — Pusula (Türkçe)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../guides/DOCKER_GUIDE.md) · 🇪🇹 [am](../../../am/docs/guides/DOCKER_GUIDE.md) · 🇸🇦 [ar](../../../ar/docs/guides/DOCKER_GUIDE.md) · 🇦🇿 [az](../../../az/docs/guides/DOCKER_GUIDE.md) · 🇧🇬 [bg](../../../bg/docs/guides/DOCKER_GUIDE.md) · 🇧🇩 [bn](../../../bn/docs/guides/DOCKER_GUIDE.md) · 🇧🇦 [bs](../../../bs/docs/guides/DOCKER_GUIDE.md) · 🇨🇿 [cs](../../../cs/docs/guides/DOCKER_GUIDE.md) · 🇩🇰 [da](../../../da/docs/guides/DOCKER_GUIDE.md) · 🇩🇪 [de](../../../de/docs/guides/DOCKER_GUIDE.md) · 🇬🇷 [el](../../../el/docs/guides/DOCKER_GUIDE.md) · 🇪🇸 [es](../../../es/docs/guides/DOCKER_GUIDE.md) · 🇪🇪 [et](../../../et/docs/guides/DOCKER_GUIDE.md) · 🇮🇷 [fa](../../../fa/docs/guides/DOCKER_GUIDE.md) · 🇫🇮 [fi](../../../fi/docs/guides/DOCKER_GUIDE.md) · 🇫🇷 [fr](../../../fr/docs/guides/DOCKER_GUIDE.md) · 🇮🇪 [ga](../../../ga/docs/guides/DOCKER_GUIDE.md) · 🇮🇳 [gu](../../../gu/docs/guides/DOCKER_GUIDE.md) · 🇳🇬 [ha](../../../ha/docs/guides/DOCKER_GUIDE.md) · 🇮🇱 [he](../../../he/docs/guides/DOCKER_GUIDE.md) · 🇮🇳 [hi](../../../hi/docs/guides/DOCKER_GUIDE.md) · 🇭🇷 [hr](../../../hr/docs/guides/DOCKER_GUIDE.md) · 🇭🇺 [hu](../../../hu/docs/guides/DOCKER_GUIDE.md) · 🇦🇲 [hy](../../../hy/docs/guides/DOCKER_GUIDE.md) · 🇮🇩 [id](../../../id/docs/guides/DOCKER_GUIDE.md) · 🇳🇬 [ig](../../../ig/docs/guides/DOCKER_GUIDE.md) · 🇮🇹 [it](../../../it/docs/guides/DOCKER_GUIDE.md) · 🇯🇵 [ja](../../../ja/docs/guides/DOCKER_GUIDE.md) · 🇬🇪 [ka](../../../ka/docs/guides/DOCKER_GUIDE.md) · 🇰🇭 [km](../../../km/docs/guides/DOCKER_GUIDE.md) · 🇮🇳 [kn](../../../kn/docs/guides/DOCKER_GUIDE.md) · 🇰🇷 [ko](../../../ko/docs/guides/DOCKER_GUIDE.md) · 🇱🇹 [lt](../../../lt/docs/guides/DOCKER_GUIDE.md) · 🇱🇻 [lv](../../../lv/docs/guides/DOCKER_GUIDE.md) · 🇮🇳 [ml](../../../ml/docs/guides/DOCKER_GUIDE.md) · 🇮🇳 [mr](../../../mr/docs/guides/DOCKER_GUIDE.md) · 🇲🇾 [ms](../../../ms/docs/guides/DOCKER_GUIDE.md) · 🇲🇹 [mt](../../../mt/docs/guides/DOCKER_GUIDE.md) · 🇲🇲 [my](../../../my/docs/guides/DOCKER_GUIDE.md) · 🇳🇵 [ne](../../../ne/docs/guides/DOCKER_GUIDE.md) · 🇳🇱 [nl](../../../nl/docs/guides/DOCKER_GUIDE.md) · 🇳🇴 [no](../../../no/docs/guides/DOCKER_GUIDE.md) · 🇮🇳 [or](../../../or/docs/guides/DOCKER_GUIDE.md) · 🇮🇳 [pa](../../../pa/docs/guides/DOCKER_GUIDE.md) · 🇵🇭 [phi](../../../phi/docs/guides/DOCKER_GUIDE.md) · 🇵🇱 [pl](../../../pl/docs/guides/DOCKER_GUIDE.md) · 🇵🇹 [pt](../../../pt/docs/guides/DOCKER_GUIDE.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/guides/DOCKER_GUIDE.md) · 🇷🇴 [ro](../../../ro/docs/guides/DOCKER_GUIDE.md) · 🇷🇺 [ru](../../../ru/docs/guides/DOCKER_GUIDE.md) · 🇱🇰 [si](../../../si/docs/guides/DOCKER_GUIDE.md) · 🇸🇰 [sk](../../../sk/docs/guides/DOCKER_GUIDE.md) · 🇸🇮 [sl](../../../sl/docs/guides/DOCKER_GUIDE.md) · 🇷🇸 [sr](../../../sr/docs/guides/DOCKER_GUIDE.md) · 🇸🇪 [sv](../../../sv/docs/guides/DOCKER_GUIDE.md) · 🇰🇪 [sw](../../../sw/docs/guides/DOCKER_GUIDE.md) · 🇮🇳 [ta](../../../ta/docs/guides/DOCKER_GUIDE.md) · 🇮🇳 [te](../../../te/docs/guides/DOCKER_GUIDE.md) · 🇹🇭 [th](../../../th/docs/guides/DOCKER_GUIDE.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/guides/DOCKER_GUIDE.md) · 🇵🇰 [ur](../../../ur/docs/guides/DOCKER_GUIDE.md) · 🇺🇿 [uz](../../../uz/docs/guides/DOCKER_GUIDE.md) · 🇻🇳 [vi](../../../vi/docs/guides/DOCKER_GUIDE.md) · 🇳🇬 [yo](../../../yo/docs/guides/DOCKER_GUIDE.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/guides/DOCKER_GUIDE.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/guides/DOCKER_GUIDE.md)
 
@@ -12,7 +12,7 @@
 - [Ortam Dosyasıyla](#with-environment-file)
 - [Docker Compose](#docker-compose)
 - [Kullanılabilir Profiller](#available-profiles)
-- [OmniRoute Docker'da çalışırken ana makine CLI araçlarını yapılandırma](#configuring-host-cli-tools-when-omniroute-runs-in-docker)
+- [Pusula Docker'da çalışırken ana makine CLI araçlarını yapılandırma](#configuring-host-cli-tools-when-pusula-runs-in-docker)
 - [Redis Sidecar](#redis-sidecar)
 - [Üretim Compose Yapılandırması](#production-compose)
 - [Dockerfile Aşamaları](#dockerfile-stages)
@@ -35,12 +35,12 @@
 
 ```bash
 docker run -d \
-  --name omniroute \
+  --name pusula \
   --restart unless-stopped \
   --stop-timeout 40 \
   -p 20128:20128 \
-  -v omniroute-data:/app/data \
-  diegosouzapw/omniroute:latest
+  -v pusula-data:/app/data \
+  ferhat-yasinoglu/pusula:latest
 ```
 
 ## Ortam Dosyasıyla
@@ -50,13 +50,13 @@ docker run -d \
 cp .env.example .env
 
 docker run -d \
-  --name omniroute \
+  --name pusula \
   --restart unless-stopped \
   --stop-timeout 40 \
   --env-file .env \
   -p 20128:20128 \
-  -v omniroute-data:/app/data \
-  diegosouzapw/omniroute:latest
+  -v pusula-data:/app/data \
+  ferhat-yasinoglu/pusula:latest
 ```
 
 ## Docker Compose
@@ -80,41 +80,41 @@ docker compose --profile cli --profile cliproxyapi up -d
 
 ## Kullanılabilir Profiller
 
-OmniRoute, ana dağıtım yapılandırmaları için Compose profilleriyle birlikte gelir. Ortamınıza uygun olanı seçin.
+Pusula, ana dağıtım yapılandırmaları için Compose profilleriyle birlikte gelir. Ortamınıza uygun olanı seçin.
 
 | Profil              | Hizmet           | Ne zaman kullanılmalı                                                                                                                                         | Komut                                        |
 | ------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| `base` (varsayılan) | `omniroute-base` | Başsız sunucu / minimum çalışma ortamı; sağlayıcı CLI'ları dahil değildir                                                                                     | `docker compose --profile base up -d`        |
-| `cli`               | `omniroute-cli`  | `omniroute providers/setup/doctor` ve paketle birlikte gelen CLI'ları (Codex, Claude Code, Droid, OpenClaw) çağıran ajan tabanlı iş akışları                  | `docker compose --profile cli up -d`         |
-| `host`              | `omniroute-host` | `~/.local/bin`, `~/.codex`, `~/.claude` vb. dizinleri salt okunur bağlayarak ana makine CLI'larına `network_mode` benzeri erişim isteyen Linux ana makineleri | `docker compose --profile host up -d`        |
+| `base` (varsayılan) | `pusula-base` | Başsız sunucu / minimum çalışma ortamı; sağlayıcı CLI'ları dahil değildir                                                                                     | `docker compose --profile base up -d`        |
+| `cli`               | `pusula-cli`  | `pusula providers/setup/doctor` ve paketle birlikte gelen CLI'ları (Codex, Claude Code, Droid, OpenClaw) çağıran ajan tabanlı iş akışları                  | `docker compose --profile cli up -d`         |
+| `host`              | `pusula-host` | `~/.local/bin`, `~/.codex`, `~/.claude` vb. dizinleri salt okunur bağlayarak ana makine CLI'larına `network_mode` benzeri erişim isteyen Linux ana makineleri | `docker compose --profile host up -d`        |
 | `cliproxyapi`       | `cliproxyapi`    | Üst akış CLI proxy'lemesi için [CLIProxyAPI](https://github.com/router-for-me/CLIProxyAPI) yardımcı konteynerini `8317` portunda çalıştırmak                  | `docker compose --profile cliproxyapi up -d` |
-| `web`               | `omniroute-web`  | Tarayıcı gerektiren web oturumu sağlayıcıları: `gemini-web`, `claude-web`, `claude-turnstile` (`runner-web` derlenir, Chromium dahildir)                      | `docker compose --profile web up -d`         |
+| `web`               | `pusula-web`  | Tarayıcı gerektiren web oturumu sağlayıcıları: `gemini-web`, `claude-web`, `claude-turnstile` (`runner-web` derlenir, Chromium dahildir)                      | `docker compose --profile web up -d`         |
 
 > Birden fazla profil birleştirilebilir: `docker compose --profile cli --profile cliproxyapi up -d`.
 
-## OmniRoute Docker'da çalışırken ana makine CLI araçlarını yapılandırma
+## Pusula Docker'da çalışırken ana makine CLI araçlarını yapılandırma
 
-`omniroute setup-codex`, `setup-claude`, `config set <tool>` ve kontrol panelindeki
+`pusula setup-codex`, `setup-claude`, `config set <tool>` ve kontrol panelindeki
 **Yapılandırmayı kaydet** düğmesi, `~/.codex/*.config.toml` gibi dosyalara yazar. Bu yollar
 yalnızca CLI'ın gerçekten çalıştığı makinede anlamlıdır. Bunları kapsayıcının içinde
 çalıştırırsanız yazma işlemi, kapsayıcının kendi giriş dizininde (`/home/node` —
 imaj `USER node` ile çalışır) gerçekleşir. Ana makinedeki hiçbir CLI burayı okumaz ve
 kapsayıcı yeniden oluşturulduğu anda buradaki veriler silinir.
 
-OmniRoute bunu algılar ve kullanamayacağınız bir başarı bildirmek yerine
+Pusula bunu algılar ve kullanamayacağınız bir başarı bildirmek yerine
 talimatlarla birlikte yazma işlemini reddeder: CLI `2` koduyla sonlanır ve API,
 `containerEphemeralTarget: true` ile birlikte `422` yanıtını verir.
 
-### Önerilen: CLI'ı ana makinede, OmniRoute'u Docker'da çalıştırın
+### Önerilen: CLI'ı ana makinede, Pusula'u Docker'da çalıştırın
 
 Kapsayıcı API'ı sunar; CLI ise ana makinenizdeki araçları yapılandırır.
 
 ```bash
 docker compose --profile base up -d
 
-npm install -g omniroute
-omniroute connect http://localhost:20128   # CLI'ı kapsayıcıya yönlendirin
-omniroute setup-codex                      # ana makinenizdeki gerçek ~/.codex dizinine yazar
+npm install -g pusula
+pusula connect http://localhost:20128   # CLI'ı kapsayıcıya yönlendirin
+pusula setup-codex                      # ana makinenizdeki gerçek ~/.codex dizinine yazar
 ```
 
 Codex, Claude Code, Cursor veya benzeri araçlar dizüstü bilgisayarınızda
@@ -135,7 +135,7 @@ volumes:
   - ~/.claude:/host-home/.claude:rw
 ```
 
-Yolu güvenilir kılan şey bind mount işlemidir: OmniRoute,
+Yolu güvenilir kılan şey bind mount işlemidir: Pusula,
 `/proc/self/mountinfo` dosyasını okur ve bağlı yollara (ayrıca alt dizinleri
 bağlama noktası olan dizinlere; yukarıdaki `/host-home` yapısı tam olarak budur)
 yazılmasına izin verirken bağlı olmayan yolları reddetmeye devam eder.
@@ -144,7 +144,7 @@ yazılmasına izin verirken bağlı olmayan yolları reddetmeye devam eder.
 
 CLI'lar gerçekten kapsayıcının içinde bulunuyorsa (`cli` profili), yazma işlemi
 kasıtlıdır. Herhangi bir `setup-*` komutuna `--allow-container-write` seçeneğini
-iletin veya sunucu için `OMNIROUTE_ALLOW_CONTAINER_CONFIG_WRITE=true` değerini
+iletin veya sunucu için `PUSULA_ALLOW_CONTAINER_CONFIG_WRITE=true` değerini
 ayarlayın. Yazma işlemi, verilerin kapsayıcıdan sonra kalıcı olmayacağına ilişkin
 bir uyarıyla devam eder.
 
@@ -178,16 +178,16 @@ bir uyarıyla devam eder.
 
 ## Redis Sidecar'ı
 
-OmniRoute, dağıtık hız sınırlayıcıyı ve paylaşılan önbelleği desteklemek için Redis'e ihtiyaç duyar. `redis` hizmeti `docker-compose.yml` içinde **her zaman tanımlıdır** (herhangi bir profil kısıtlaması yoktur) ve diğer tüm profillerle birlikte başlatılır.
+Pusula, dağıtık hız sınırlayıcıyı ve paylaşılan önbelleği desteklemek için Redis'e ihtiyaç duyar. `redis` hizmeti `docker-compose.yml` içinde **her zaman tanımlıdır** (herhangi bir profil kısıtlaması yoktur) ve diğer tüm profillerle birlikte başlatılır.
 
 | Ayrıntı                                    | Değer                                       |
 | ------------------------------------------ | ------------------------------------------- |
 | İmaj                                       | `redis:7-alpine`                            |
-| Konteyner adı                              | `omniroute-redis`                           |
+| Konteyner adı                              | `pusula-redis`                           |
 | Dahili port                                | `6379`                                      |
 | Ana makine portu (geçersiz kılma)          | `REDIS_PORT` (varsayılan: `6379`)           |
 | Ana makine bağlama adresi (geçersiz kılma) | `REDIS_BIND_HOST` (varsayılan: `127.0.0.1`) |
-| Birim                                      | `omniroute-redis-data` → `/data`            |
+| Birim                                      | `pusula-redis-data` → `/data`            |
 | Sağlık denetimi                            | `redis-cli ping` (10 sn aralıkla)           |
 
 İlgili ortam değişkenleri:
@@ -217,9 +217,9 @@ Geliştirme ortamıyla birlikte çalışan yalıtılmış bir üretim anlık gö
 | Dosya                 | `docker-compose.prod.yml`                                                         |
 | Varsayılan pano portu | `PROD_DASHBOARD_PORT=20130` (dahili `${DASHBOARD_PORT:-20128}` portuna eşlenir)   |
 | Varsayılan API portu  | `PROD_API_PORT=20131`                                                             |
-| İmaj                  | `omniroute:prod` (`runner-cli` hedefinden oluşturulur)                            |
-| Redis konteyneri      | `omniroute-redis-prod` (`redis:8.6.2`, ayrılmış `redis-prod-data` birimi)         |
-| Veri birimi           | `omniroute-prod-data` (adlandırılmıştır, yeniden oluşturmalar arasında korunur)   |
+| İmaj                  | `pusula:prod` (`runner-cli` hedefinden oluşturulur)                            |
+| Redis konteyneri      | `pusula-redis-prod` (`redis:8.6.2`, ayrılmış `redis-prod-data` birimi)         |
+| Veri birimi           | `pusula-prod-data` (adlandırılmıştır, yeniden oluşturmalar arasında korunur)   |
 | Sağlık denetimleri    | `node healthcheck.mjs` + `redis-cli ping`; `depends_on`, Redis sağlığına bağlıdır |
 
 Kullanımı:
@@ -251,23 +251,23 @@ Depo, çok aşamalı bir Dockerfile (`Dockerfile`) ile gelir. Dört aşama kulla
 Belirli bir hedefi manuel olarak derleyin:
 
 ```bash
-docker build --target runner-base -t omniroute:base .
-docker build --target runner-cli  -t omniroute:cli  .
-docker build --target runner-web  -t omniroute:web  .
+docker build --target runner-base -t pusula:base .
+docker build --target runner-cli  -t pusula:cli  .
+docker build --target runner-web  -t pusula:web  .
 ```
 
 ### Derleme zamanı kaynakları
 
 Üç derleme argümanı, `builder` aşamasının kaynak maliyetini kontrol eder. Bunlar yalnızca derleme zamanında geçerlidir —
-`OMNIROUTE_MEMORY_MB` (aşağıda) ayrı bir çalışma zamanı ayarıdır.
+`PUSULA_MEMORY_MB` (aşağıda) ayrı bir çalışma zamanı ayarıdır.
 
 | Derleme argümanı            | Varsayılan | Etki                                                                                                     |
 | --------------------------- | ---------- | -------------------------------------------------------------------------------------------------------- |
-| `OMNIROUTE_USE_TURBOPACK`   | `1`        | `0`, bunun yerine webpack ile derler. En yüksek bellek kullanımı daha düşük, ancak daha yavaştır.        |
-| `OMNIROUTE_BUILD_MEMORY_MB` | `6144`     | Başlatılan `next build` için V8 yığın sınırı (`--max-old-space-size`).                                   |
-| `OMNIROUTE_BUILD_WORKERS`   | `2`        | `CIRCLE_NODE_TOTAL` değerini sağlar; Next, sayfa verisi toplama için `workers = N - 1` değerini türetir. |
+| `PUSULA_USE_TURBOPACK`   | `1`        | `0`, bunun yerine webpack ile derler. En yüksek bellek kullanımı daha düşük, ancak daha yavaştır.        |
+| `PUSULA_BUILD_MEMORY_MB` | `6144`     | Başlatılan `next build` için V8 yığın sınırı (`--max-old-space-size`).                                   |
+| `PUSULA_BUILD_WORKERS`   | `2`        | `CIRCLE_NODE_TOTAL` değerini sağlar; Next, sayfa verisi toplama için `workers = N - 1` değerini türetir. |
 
-`OMNIROUTE_BUILD_WORKERS`, büyük bir derleme makinesinde artırılması gereken ve
+`PUSULA_BUILD_WORKERS`, büyük bir derleme makinesinde artırılması gereken ve
 kısıtlı kaynaklara sahip bir derleme **`✓ Compiled successfully` sonrasında** başarısız olduğunda
 şüphelenilmesi gereken ayardır. Her sayfa verisi worker'ı ayrı bir süreçtir ve üst
 `next build` sürecinin kendisi de öyledir; canlı bir VPS yeniden üretimi (issue #7518),
@@ -283,7 +283,7 @@ süreç başına RSS çıkarım yoluyla belirlenmek yerine doğrudan ölçüldü
 başarısız olur.
 
 Turbopack, V8 yığınının **dışında** bulunan yerel Rust belleğinde derleme yaptığından
-`OMNIROUTE_BUILD_MEMORY_MB` bu belleği sınırlamaz. Bellek sınırı olan bir ana makinede
+`PUSULA_BUILD_MEMORY_MB` bu belleği sınırlamaz. Bellek sınırı olan bir ana makinede
 derleme, hiçbir hata metni olmadan OOM killer tarafından SIGKILL ile sonlandırılır —
 `Creating an optimized production build` sırasında öylece durur; bu durum, bellek
 yetersizliğinden çok takılma gibi görünür. Derleme ana makinesinin kaynakları kısıtlıysa
@@ -291,15 +291,15 @@ paketleyiciyi değiştirin:
 
 ```bash
 docker build --target runner-base \
-  --build-arg OMNIROUTE_USE_TURBOPACK=0 \
-  -t omniroute:base .
+  --build-arg PUSULA_USE_TURBOPACK=0 \
+  -t pusula:base .
 ```
 
 `webpackBuildWorker` etkindir; dolayısıyla `next build`, bir üst süreç **ve** bir worker
-süreci çalıştırır ve her biri `OMNIROUTE_BUILD_MEMORY_MB` değerini ayrı ayrı uygular.
+süreci çalıştırır ve her biri `PUSULA_BUILD_MEMORY_MB` değerini ayrı ayrı uygular.
 Konteyner sınırını bu değerin bir katının değil, yaklaşık iki katının üzerinde belirleyin.
 
-Bu kaynak ağacında ölçülen sonuçlar (`--target runner-base`, `OMNIROUTE_BUILD_MEMORY_MB=6144`):
+Bu kaynak ağacında ölçülen sonuçlar (`--target runner-base`, `PUSULA_BUILD_MEMORY_MB=6144`):
 
 | Paketleyici | Konteyner sınırı | Sonuç                                                |
 | ----------- | ---------------- | ---------------------------------------------------- |
@@ -309,34 +309,34 @@ Bu kaynak ağacında ölçülen sonuçlar (`--target runner-base`, `OMNIROUTE_BU
 
 ### Çalışma zamanı varsayılanları
 
-`runner-base` tarafından dışa aktarılan varsayılanlar: `PORT=20128`, `HOSTNAME=0.0.0.0`, `OMNIROUTE_MEMORY_MB=1024`, `NODE_OPTIONS=--max-old-space-size=1024`, `DATA_DIR=/app/data`, `OMNIROUTE_MIGRATIONS_DIR=/app/migrations`.
+`runner-base` tarafından dışa aktarılan varsayılanlar: `PORT=20128`, `HOSTNAME=0.0.0.0`, `PUSULA_MEMORY_MB=1024`, `NODE_OPTIONS=--max-old-space-size=1024`, `DATA_DIR=/app/data`, `PUSULA_MIGRATIONS_DIR=/app/migrations`.
 
 Docker'daki bellek davranışı:
 
-- İmaj, `OMNIROUTE_MEMORY_MB=1024` değerini ayarlar ve bundan `NODE_OPTIONS=--max-old-space-size=1024` değerini türetir.
-- Asıl sunucu süreci, `OMNIROUTE_MEMORY_MB` değerini okuyan ve `--max-old-space-size=<OMNIROUTE_MEMORY_MB>` seçeneğini ekleyen bağımsız başlatıcı tarafından başlatılır.
-- Node, yinelenen `--max-old-space-size` değerlerinden sonuncusunu kullanır; dolayısıyla `OMNIROUTE_MEMORY_MB` ayarı, etkin Docker heap sınırını kontrol eder.
+- İmaj, `PUSULA_MEMORY_MB=1024` değerini ayarlar ve bundan `NODE_OPTIONS=--max-old-space-size=1024` değerini türetir.
+- Asıl sunucu süreci, `PUSULA_MEMORY_MB` değerini okuyan ve `--max-old-space-size=<PUSULA_MEMORY_MB>` seçeneğini ekleyen bağımsız başlatıcı tarafından başlatılır.
+- Node, yinelenen `--max-old-space-size` değerlerinden sonuncusunu kullanır; dolayısıyla `PUSULA_MEMORY_MB` ayarı, etkin Docker heap sınırını kontrol eder.
 - İmaj bu değeri her zaman ayarladığı için başlatıcının RAM'e göre kalibre edilen yedek değeri Docker altında hiçbir zaman uygulanmaz. İş yükü için bu değeri açıkça artırın (aşağıdaki tabloya bakın). `2048`, kodlama aracılarının `/v1/responses` istekleri için hâlâ çok küçüktür.
 
 ### Kodlama aracıları için çalışma zamanı RAM'i
 
-1 GiB'lık varsayılan Docker değeri, üretim boyutu değil, pano/hafif sohbet için alt sınırdır. Uzun `POST /v1/responses` gövdeleri (yüzlerce mesaj, onlarca araç), sıkıştırma sırasında birden fazla bellek içi grafiği bellekte tutar. Çakışan yaklaşık 3 MiB / yaklaşık 750 bin token'lık iki istek, **12 GiB** old-space değerinde V8'i durdurmuş (`FATAL ERROR: Reached heap limit`) ve ayrıca 16 GiB'lık cgroup OOM sınırına ulaşmıştır. Bkz. [#7849](https://github.com/diegosouzapw/OmniRoute/issues/7849).
+1 GiB'lık varsayılan Docker değeri, üretim boyutu değil, pano/hafif sohbet için alt sınırdır. Uzun `POST /v1/responses` gövdeleri (yüzlerce mesaj, onlarca araç), sıkıştırma sırasında birden fazla bellek içi grafiği bellekte tutar. Çakışan yaklaşık 3 MiB / yaklaşık 750 bin token'lık iki istek, **12 GiB** old-space değerinde V8'i durdurmuş (`FATAL ERROR: Reached heap limit`) ve ayrıca 16 GiB'lık cgroup OOM sınırına ulaşmıştır. Bkz. [#7849](https://github.com/Ferhat-Yasinoglu/pusula/issues/7849).
 
 **cgroup `--memory` değerini heap'in üzerinde** boyutlandırın — yerel tamponlar, SQLite ve sıkıştırma ara verileri V8'in dışında bulunur.
 
-| İş yükü                                 | `OMNIROUTE_MEMORY_MB`     | Konteyner / cgroup           | Notlar                                                                                                                     |
+| İş yükü                                 | `PUSULA_MEMORY_MB`     | Konteyner / cgroup           | Notlar                                                                                                                     |
 | --------------------------------------- | ------------------------- | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | Pano, tek bir hafif sohbet              | `1024` (imaj varsayılanı) | ≥2 GiB                       |                                                                                                                            |
 | Bir kodlama aracısı (Claude/Codex/Grok) | `8192`                    | ≥10 GiB                      | Tipik tek oturumlu `/v1/responses`                                                                                         |
 | Eşzamanlı iki uzun `/v1/responses`      | `10240`–`12288`           | ≥12–16 GiB                   | Yaklaşık 12 GiB heap değerinde ölçülen V8 durması                                                                          |
 | Eşzamanlı üçten fazla uzun bağlam       | tek süreçte kullanmayın   | sıraya alın / daha fazla RAM | Varsayılan ağır iş kabulü, aynı anda yürütülen 1 işlemdir; RAM'i artırmadan bunu yükseltmek durmayı yeniden ortaya çıkarır |
 
-`OMNIROUTE_MEMORY_MB` **ayarlanmamışsa**, bare metal üzerinde `omniroute serve` RAM'in yaklaşık %35'ine göre kalibrasyon yapar (`[512, 4096]` aralığıyla sınırlandırılır). Docker her zaman `1024` değerini ayarladığı için bu kalibrasyon resmî imajda hiçbir zaman çalışmaz.
+`PUSULA_MEMORY_MB` **ayarlanmamışsa**, bare metal üzerinde `pusula serve` RAM'in yaklaşık %35'ine göre kalibrasyon yapar (`[512, 4096]` aralığıyla sınırlandırılır). Docker her zaman `1024` değerini ayarladığı için bu kalibrasyon resmî imajda hiçbir zaman çalışmaz.
 
 ```bash
-docker run -d --name omniroute --restart unless-stopped --stop-timeout 40 \
-  -e OMNIROUTE_MEMORY_MB=8192 --memory=10g \
-  -p 127.0.0.1:20128:20128 -v omniroute-data:/app/data diegosouzapw/omniroute:latest
+docker run -d --name pusula --restart unless-stopped --stop-timeout 40 \
+  -e PUSULA_MEMORY_MB=8192 --memory=10g \
+  -p 127.0.0.1:20128:20128 -v pusula-data:/app/data ferhat-yasinoglu/pusula:latest
 ```
 
 ## Kritik Ortam Değişkenleri
@@ -345,27 +345,27 @@ docker run -d --name omniroute --restart unless-stopped --stop-timeout 40 \
 
 | Değişken                      | Amaç                                                                                                                                                                                                                                                                                    | Varsayılan                   |
 | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
-| `OMNIROUTE_WS_BRIDGE_SECRET`  | WebSocket köprüsü için paylaşılan gizli anahtar. **Üretim ortamında zorunludur** — güçlü ve rastgele bir dize olarak ayarlayın.                                                                                                                                                         | ayarlanmamış (sağlanmalıdır) |
+| `PUSULA_WS_BRIDGE_SECRET`  | WebSocket köprüsü için paylaşılan gizli anahtar. **Üretim ortamında zorunludur** — güçlü ve rastgele bir dize olarak ayarlayın.                                                                                                                                                         | ayarlanmamış (sağlanmalıdır) |
 | `REDIS_URL`                   | Hız sınırlayıcı / önbellek arka ucu için bağlantı dizesi                                                                                                                                                                                                                                | `redis://redis:6379`         |
 | `REDIS_PORT`                  | Birlikte sunulan Redis konteyneri için ana makine tarafındaki port                                                                                                                                                                                                                      | `6379`                       |
 | `REDIS_BIND_HOST`             | Birlikte sunulan Redis portunun yayımlandığı ana makine arayüzü (AUTH eklemediğiniz sürece geri döngü)                                                                                                                                                                                  | `127.0.0.1`                  |
-| `AUTO_UPDATE_HOST_REPO_DIR`   | Kendi kendini güncelleme iş akışları için `cli` profilinde `/workspace/omniroute` konumuna bağlanan ana makine yolu                                                                                                                                                                     | `.` (geçerli dizin)          |
-| `OMNIROUTE_MEMORY_MB`         | Bağımsız Docker sunucusu için çalışma zamanı Node yığın belleği üst sınırı; yukarıdaki imaj varsayılanını geçersiz kılar. Kodlama ajanları: `8192`+ ([çalışma zamanı RAM'i](#runtime-ram-for-coding-agents) bölümüne bakın).                                                            | `1024`                       |
+| `AUTO_UPDATE_HOST_REPO_DIR`   | Kendi kendini güncelleme iş akışları için `cli` profilinde `/workspace/pusula` konumuna bağlanan ana makine yolu                                                                                                                                                                     | `.` (geçerli dizin)          |
+| `PUSULA_MEMORY_MB`         | Bağımsız Docker sunucusu için çalışma zamanı Node yığın belleği üst sınırı; yukarıdaki imaj varsayılanını geçersiz kılar. Kodlama ajanları: `8192`+ ([çalışma zamanı RAM'i](#runtime-ram-for-coding-agents) bölümüne bakın).                                                            | `1024`                       |
 | `DASHBOARD_PORT` / `API_PORT` | Kontrol paneli (20128) ve API (20129) için dışa açılan portları geçersiz kılar                                                                                                                                                                                                          | `20128` / `20129`            |
 | `APP_BIND_HOST`               | docker-compose'un kontrol paneli/API/canlı WS portlarını yayımladığı ana makine arayüzü. `REQUIRE_API_KEY=false` (varsayılan) olduğunda, `0.0.0.0` anonim `/v1` proxy'sini LAN'a açar — kapsamı yalnızca `REQUIRE_API_KEY=true` ile veya önüne bir ters proxy yerleştirerek genişletin. | `127.0.0.1`                  |
 | `CLIPROXY_BIND_HOST`          | docker-compose'un `cliproxyapi` yan konteynerini yayımladığı ana makine arayüzü — veri birimi sağlayıcı kimlik bilgilerini barındırır.                                                                                                                                                  | `127.0.0.1`                  |
-| `OMNIROUTE_PLUGINS_DIR`       | Çalışma zamanı eklenti tarayıcısının okuduğu ve kurulum yaptığı dizin. Eklentiler bağlama yoluyla monte edildiğinde bunu ayarlayın: varsayılan değer, bir imajın dışa aktarması gerekmeyen `HOME` değişkenini izler.                                                                    | `~/.omniroute/plugins`       |
-| `OMNIROUTE_BASE_PATH`         | Uygulama bir ters proxy arkasında yayımlandığında kullanılan URL alt yolu (ör. `/omniroute`)                                                                                                                                                                                            | _(boş = kök)_                |
-| `NEXT_PUBLIC_BASE_URL`        | Alt yolu içeren herkese açık tarayıcı kaynağı (ör. `https://host/omniroute`)                                                                                                                                                                                                            | ayarlanmamış                 |
+| `PUSULA_PLUGINS_DIR`       | Çalışma zamanı eklenti tarayıcısının okuduğu ve kurulum yaptığı dizin. Eklentiler bağlama yoluyla monte edildiğinde bunu ayarlayın: varsayılan değer, bir imajın dışa aktarması gerekmeyen `HOME` değişkenini izler.                                                                    | `~/.pusula/plugins`       |
+| `PUSULA_BASE_PATH`         | Uygulama bir ters proxy arkasında yayımlandığında kullanılan URL alt yolu (ör. `/pusula`)                                                                                                                                                                                            | _(boş = kök)_                |
+| `NEXT_PUBLIC_BASE_URL`        | Alt yolu içeren herkese açık tarayıcı kaynağı (ör. `https://host/pusula`)                                                                                                                                                                                                            | ayarlanmamış                 |
 | `PROD_DASHBOARD_PORT`         | `docker-compose.prod.yml` için ana makine tarafındaki kontrol paneli portu                                                                                                                                                                                                              | `20130`                      |
 | `CLIPROXYAPI_PORT`            | `cliproxyapi` yan konteyneri için ana makine tarafındaki port                                                                                                                                                                                                                           | `8317`                       |
 
 ## Alt Yolda Ters Proxy (Traefik / nginx)
 
-Next.js `basePath`, bağımsız pakete derlenir. OmniRoute, derleme sırasında belirlenen
+Next.js `basePath`, bağımsız pakete derlenir. Pusula, derleme sırasında belirlenen
 değeri uygulama kökündeki bir işaretçi dosyasına kaydeder (`npm run build` sırasında
 yazılır; `scripts/docker/ensure-docker-base-path.mjs` tarafından okunur) ve konteyner
-başlatıldığında bunu `OMNIROUTE_BASE_PATH` ile karşılaştırır. Değerler farklıysa ve imaj
+başlatıldığında bunu `PUSULA_BASE_PATH` ile karşılaştırır. Değerler farklıysa ve imaj
 etki alanı kökü için oluşturulmuşsa giriş noktası; bağımsız manifestleri, gömülü
 `basePath`/`assetPrefix` sabit değerlerini (Next 16, SSR varlık URL'lerini yalnızca
 `assetPrefix` üzerinden oluşturur — yama aracı alt yolu buna da yansıtır), derleme
@@ -380,42 +380,42 @@ ayarlayın, ardından yeniden derleyin:
 
 ```bash
 # .env
-OMNIROUTE_BASE_PATH=/omniroute
-NEXT_PUBLIC_BASE_URL=https://myhostname.example.com/omniroute
+PUSULA_BASE_PATH=/pusula
+NEXT_PUBLIC_BASE_URL=https://myhostname.example.com/pusula
 ```
 
 ```bash
 docker compose --profile base up -d --build
 ```
 
-`docker-compose.yml`, `OMNIROUTE_BASE_PATH` değerini hem Docker derleme argümanı hem de
+`docker-compose.yml`, `PUSULA_BASE_PATH` değerini hem Docker derleme argümanı hem de
 çalışma zamanı ortam değişkeni olarak iletir.
 
 ### Önceden oluşturulmuş kök imajı + çalışma zamanı alt yolu
 
-Yayımlanmış `diegosouzapw/omniroute:*` imajları etki alanı kökü için oluşturulmuştur.
-Yine de çalışma zamanında `OMNIROUTE_BASE_PATH` ayarlayabilirsiniz; konteyner, başlangıçta
+Yayımlanmış `ferhat-yasinoglu/pusula:*` imajları etki alanı kökü için oluşturulmuştur.
+Yine de çalışma zamanında `PUSULA_BASE_PATH` ayarlayabilirsiniz; konteyner, başlangıçta
 paketi bir kez yamalar. Bunu eşleşen genel kaynak adresiyle birlikte kullanın:
 
 ```yaml
 services:
-  omniroute:
-    image: diegosouzapw/omniroute:latest
+  pusula:
+    image: ferhat-yasinoglu/pusula:latest
     environment:
-      OMNIROUTE_BASE_PATH: /omniroute
-      NEXT_PUBLIC_BASE_URL: https://myhostname.example.com/omniroute
+      PUSULA_BASE_PATH: /pusula
+      NEXT_PUBLIC_BASE_URL: https://myhostname.example.com/pusula
 ```
 
 Ters proxy'yi **tam** harici yolu iletecek şekilde yapılandırın (öneki kaldırmayın).
-Traefik, `PathPrefix(`/omniroute`)` yolunu `StripPrefix` olmadan konteynere yönlendirmelidir;
-böylece Next.js `/omniroute/...` yolunu alır ve varlıkları
-`/omniroute/_next/...` üzerinden sunar.
+Traefik, `PathPrefix(`/pusula`)` yolunu `StripPrefix` olmadan konteynere yönlendirmelidir;
+böylece Next.js `/pusula/...` yolunu alır ve varlıkları
+`/pusula/_next/...` üzerinden sunar.
 
-Docker sistem durumu denetimi, etkin `OMNIROUTE_BASE_PATH` ile ön eklenmiş hafif
+Docker sistem durumu denetimi, etkin `PUSULA_BASE_PATH` ile ön eklenmiş hafif
 `/healthz` yaşam döngüsü uç noktasını yoklar. `/api/monitoring/health`, insan/pano
 tanılamaları için kullanılabilir olmaya devam eder; konteyner HEALTHCHECK denetimini
 yeniden bu uç noktaya yönlendirmek için (örneğin kapsamlı sistem durumu denetimini
-zorunlu kılmak amacıyla) `OMNIROUTE_HEALTHCHECK_PATH=/api/monitoring/health` ayarlayın.
+zorunlu kılmak amacıyla) `PUSULA_HEALTHCHECK_PATH=/api/monitoring/health` ayarlayın.
 Bu yol **kapsamlı** bir denetimdir (veritabanı + izleme özeti) — yeniden etkinleştirmeyi
 tercih ederseniz Docker'ın seyrek `HEALTHCHECK` denetimi için uygundur, ancak Kubernetes
 `livenessProbe` aralıkları için **uygun değildir**.
@@ -438,22 +438,22 @@ tercih edin. Tüm yoklama yönergeleri:
 
 ## Caddy ile Docker Compose (HTTPS Otomatik TLS)
 
-OmniRoute, Caddy'nin otomatik SSL sağlama özelliği kullanılarak güvenli bir şekilde dışarı açılabilir. Alan adınızın DNS A kaydının sunucunuzun IP adresini gösterdiğinden emin olun.
+Pusula, Caddy'nin otomatik SSL sağlama özelliği kullanılarak güvenli bir şekilde dışarı açılabilir. Alan adınızın DNS A kaydının sunucunuzun IP adresini gösterdiğinden emin olun.
 
 ```yaml
 services:
-  omniroute:
-    image: diegosouzapw/omniroute:latest
-    container_name: omniroute
+  pusula:
+    image: ferhat-yasinoglu/pusula:latest
+    container_name: pusula
     restart: unless-stopped
     volumes:
-      - omniroute-data:/app/data
+      - pusula-data:/app/data
     environment:
       - PORT=20128
       # OAuth geri çağrıları, pano bağlantıları ve oluşturulan herkese açık URL'ler için tarayıcıya yönelik kaynak.
       - NEXT_PUBLIC_BASE_URL=https://your-domain.com
       # Zamanlanmış işler / kendi kendine yapılan istekler için dahili sunucudan sunucuya URL.
-      - BASE_URL=http://omniroute:20128
+      - BASE_URL=http://pusula:20128
       - AUTH_COOKIE_SECURE=true
 
   caddy:
@@ -463,13 +463,13 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    command: caddy reverse-proxy --from https://your-domain.com --to http://omniroute:20128
+    command: caddy reverse-proxy --from https://your-domain.com --to http://pusula:20128
 
 volumes:
-  omniroute-data:
+  pusula-data:
 ```
 
-Caddy, yukarı akış kapsayıcısı için standart yönlendirme başlıklarını ayarlar. OmniRoute, OAuth geri çağrıları ve oluşturulan herkese açık bağlantılar için `NEXT_PUBLIC_BASE_URL` değerini kanonik genel kaynak olarak kullanır; kimliği doğrulanmış pano yazma işlemleri, oturuma bağlı CSRF korumasıyla birlikte aynı kaynaklı istekleri kullanır. `OMNIROUTE_TRUST_PROXY` seçeneğini yalnızca OmniRoute'un genel kaynağı açık yapılandırma yerine güvenilir yönlendirilmiş başlıklardan türetmesini bilinçli olarak istediğiniz gelişmiş dağıtımlarda etkinleştirin.
+Caddy, yukarı akış kapsayıcısı için standart yönlendirme başlıklarını ayarlar. Pusula, OAuth geri çağrıları ve oluşturulan herkese açık bağlantılar için `NEXT_PUBLIC_BASE_URL` değerini kanonik genel kaynak olarak kullanır; kimliği doğrulanmış pano yazma işlemleri, oturuma bağlı CSRF korumasıyla birlikte aynı kaynaklı istekleri kullanır. `PUSULA_TRUST_PROXY` seçeneğini yalnızca Pusula'un genel kaynağı açık yapılandırma yerine güvenilir yönlendirilmiş başlıklardan türetmesini bilinçli olarak istediğiniz gelişmiş dağıtımlarda etkinleştirin.
 
 ## Cloudflare Hızlı Tüneli
 
@@ -480,24 +480,24 @@ Uç nokta tüneli panelleri (Cloudflare, Tailscale, ngrok), etkin tünel durumu 
 ### Tünel Notları
 
 - Hızlı Tünel URL'leri geçicidir ve her yeniden başlatmadan sonra değişir.
-- Hızlı Tüneller, OmniRoute veya kapsayıcı yeniden başlatıldıktan sonra otomatik olarak geri yüklenmez. Gerektiğinde bunları panodan yeniden etkinleştirin.
+- Hızlı Tüneller, Pusula veya kapsayıcı yeniden başlatıldıktan sonra otomatik olarak geri yüklenmez. Gerektiğinde bunları panodan yeniden etkinleştirin.
 - Yönetilen kurulum şu anda `x64` / `arm64` üzerinde Linux, macOS ve Windows'u desteklemektedir.
 - Yönetilen Hızlı Tüneller, kısıtlı kapsayıcı ortamlarındaki gürültülü QUIC UDP arabellek uyarılarını önlemek için varsayılan olarak HTTP/2 aktarımını kullanır. Farklı bir aktarım istiyorsanız `CLOUDFLARED_PROTOCOL=quic` veya `auto` olarak ayarlayın.
 - Docker imajları, sistem CA köklerini içerir ve bunları yönetilen `cloudflared` sürecine iletir; bu sayede tünel kapsayıcı içinde başlatılırken TLS güven hataları önlenir.
-- OmniRoute'un bir dosyayı indirmek yerine mevcut bir ikili dosyayı kullanmasını istiyorsanız `CLOUDFLARED_BIN=/absolute/path/to/cloudflared` olarak ayarlayın.
+- Pusula'un bir dosyayı indirmek yerine mevcut bir ikili dosyayı kullanmasını istiyorsanız `CLOUDFLARED_BIN=/absolute/path/to/cloudflared` olarak ayarlayın.
 
 ## İmaj Etiketleri
 
 | İmaj                     | Etiket   | Boyut  | Açıklama                                                    |
 | ------------------------ | -------- | ------ | ----------------------------------------------------------- |
-| `diegosouzapw/omniroute` | `latest` | ~250MB | En yüksek **yayımlanmış** kararlı SemVer (git `main` değil) |
-| `diegosouzapw/omniroute` | `3.8.0`  | ~250MB | GitOps için bu etiket sınıfını sabitleyin                   |
+| `ferhat-yasinoglu/pusula` | `latest` | ~250MB | En yüksek **yayımlanmış** kararlı SemVer (git `main` değil) |
+| `ferhat-yasinoglu/pusula` | `3.8.0`  | ~250MB | GitOps için bu etiket sınıfını sabitleyin                   |
 
 Çok platformlu manifest: yerel `linux/amd64` + `linux/arm64` (Apple Silicon, AWS Graviton, Raspberry Pi). Docker, eşleşen mimariyi otomatik olarak seçer; ARM ana makinelerinde AMD64 emülasyonunu zorunlu kılmanız gerekiyorsa `--platform linux/amd64` parametresini geçin.
 
 ### Sürüm Kanalları
 
-OmniRoute; kararlı sürümler, etkin sürüm dalı testleri ve geliştirme derlemeleri için ayrı Docker kanalları yayımlar.
+Pusula; kararlı sürümler, etkin sürüm dalı testleri ve geliştirme derlemeleri için ayrı Docker kanalları yayımlar.
 
 | Kanal                           | Kaynak                                   | Değiştirilebilirlik                    | Önerilen kullanım                                                                                                                          |
 | ------------------------------- | ---------------------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -524,16 +524,16 @@ Bu sağlayıcıları kullanıyorsanız, zaten kullandığınız kanalın `-web` 
 `next` kanalı, geçerli varsayılan `release/v*` dalına yapılan her push işleminde yeniden derlenir ve hem AMD64 hem de ARM64 için yayımlanır. Daha eski bakım dalları bunun üzerine yazamaz. Bu kanal, bir sonraki kararlı etiket oluşturulmadan önce etkin sürüm dalına birleştirilmiş düzeltmeler için çekilebilir bir imaj sağlar.
 
 ```bash
-docker pull diegosouzapw/omniroute:next
-docker pull diegosouzapw/omniroute:next-web
+docker pull ferhat-yasinoglu/pusula:next
+docker pull ferhat-yasinoglu/pusula:next-web
 ```
 
 Docker Compose için seçilen profilin kullandığı imaj etiketini geçersiz kılın, ardından hizmeti çekip yeniden oluşturun:
 
 ```yaml
 services:
-  omniroute:
-    image: diegosouzapw/omniroute:next
+  pusula:
+    image: ferhat-yasinoglu/pusula:next
 ```
 
 ```bash
@@ -546,14 +546,14 @@ docker compose up -d
 `next`, değişken bir ön sürüm kanalıdır. Etkin sürüm dalına yapılan herhangi bir push işleminde değişebilir ve **üretim kullanımı için desteklenmez**. Belirli bir derlemeyi değerlendirirken imaj özetini sabitleyin:
 
 ```bash
-docker pull diegosouzapw/omniroute:next
-docker image inspect diegosouzapw/omniroute:next --format '{{index .RepoDigests 0}}'
+docker pull ferhat-yasinoglu/pusula:next
+docker image inspect ferhat-yasinoglu/pusula:next --format '{{index .RepoDigests 0}}'
 ```
 
-Testten önce OmniRoute veri birimini veya bağlama yoluyla eklenmiş veri dizinini yedekleyin. Geri almak için daha önce kullanılan kararlı sürümü veya özeti geri yükleyip kapsayıcıyı yeniden oluşturun:
+Testten önce Pusula veri birimini veya bağlama yoluyla eklenmiş veri dizinini yedekleyin. Geri almak için daha önce kullanılan kararlı sürümü veya özeti geri yükleyip kapsayıcıyı yeniden oluşturun:
 
 ```bash
-docker pull diegosouzapw/omniroute:<stable-version>
+docker pull ferhat-yasinoglu/pusula:<stable-version>
 docker compose up -d
 ```
 
@@ -570,12 +570,12 @@ Bir sürüm dalı derlemesi `latest` etiketini hiçbir zaman taşıyamaz; kararl
 
 ## Kullanılabilirlik: varsayılan SQLite tek replikalıdır
 
-Standart Docker / Kubernetes OmniRoute, **bir Node işlemi + bir SQLite yazıcısından** oluşur. Bu topolojide yüksek kullanılabilirlik **desteklenmez**.
+Standart Docker / Kubernetes Pusula, **bir Node işlemi + bir SQLite yazıcısından** oluşur. Bu topolojide yüksek kullanılabilirlik **desteklenmez**.
 
 | Kısıt                                                            | Sonuç                                                                                                                                                                                                                                                                                                                                                      |
 | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Tek yazıcı                                                       | Aynı SQLite dosyasına karşı birden fazla replika **çalıştırmayın**. Bu, veritabanını bozar.                                                                                                                                                                                                                                                                |
-| Yeniden oluşturma / yeniden başlatma / HEALTHCHECK sonlandırması | Devam eden SSE bağlantıları, pano oturumları ve bellek içi durum için **tam kesinti** oluşur. Bağlı tüm istemcilerin bağlantısı kesilir. Uç noktanın bulunmadığı zaman aralığındaki yeni istekler, OmniRoute JSON'u yerine ters proxy kaynaklı **`502 Bad Gateway: Unknown error`** alır — istemciler bunu bir sağlayıcı hatasından ayırt edemez (#11015). |
+| Yeniden oluşturma / yeniden başlatma / HEALTHCHECK sonlandırması | Devam eden SSE bağlantıları, pano oturumları ve bellek içi durum için **tam kesinti** oluşur. Bağlı tüm istemcilerin bağlantısı kesilir. Uç noktanın bulunmadığı zaman aralığındaki yeni istekler, Pusula JSON'u yerine ters proxy kaynaklı **`502 Bad Gateway: Unknown error`** alır — istemciler bunu bir sağlayıcı hatasından ayırt edemez (#11015). |
 | `/healthz` ile aynı olay döngüsü                                 | Yoğun bir katalog veya sıkıştırma çevrimi yoklamaları geciktirebilir; kısa bir zaman aşımı da **tek** replikayı yeniden başlatır.                                                                                                                                                                                                                          |
 
 **Yoklama matrisi** (ayrıca bkz. [Kubernetes yoklama önerileri](../ops/MONITORING_GUIDE.md#kubernetes-probe-recommendations)):
@@ -599,7 +599,7 @@ spec:
     spec:
       terminationGracePeriodSeconds: 90
       containers:
-        - name: omniroute
+        - name: pusula
           lifecycle:
             preStop:
               exec:
@@ -617,15 +617,15 @@ spec:
 
 `preStop` beklemesi, SIGTERM'den önce kube'un Service uç noktalarını kaldırmasına olanak tanır; böylece **yeni** trafik sonlandırılmakta olan işleme yönlendirilmez. Devam eden `/v1/responses` SSE bağlantıları, ağır kabul kiraları aracılığıyla `SHUTDOWN_TIMEOUT_MS` süresine (varsayılan 30 sn) kadar tahliye edilir (#11015). İşleme yine de ulaşan yeni istekler `503` + `Retry-After: 5` alır. Yeni işlem Ready olana kadar Recreate nedeniyle oluşan uç noktasız boşluk, tam bir kesinti olmaya devam eder — bu, bir yoklama yanlış yapılandırması değil, SQLite topolojisinin sonucudur.
 
-Harici Postgres / çok yazıcılı HA, belgelenmiş standart bir yol **değildir**. HA'ya ihtiyacınız varsa tek bir replika kullanmaya devam edin veya projenin ayrıca test edip belgelendirdiği bir topolojiyi çalıştırın. Postgres/MySQL çalışmaları [#8075](https://github.com/diegosouzapw/OmniRoute/issues/8075) kapsamında yürütülmektedir. Bu özellik yayımlanana kadar **büyük** `/v1/responses` kapasitesini artırmanın desteklenen tek yolu, tek bir birim üzerinde `replicas > 1` kullanmak değil, birbirinden bağımsız N işlem çalıştırmaktır (sonraki bölüm).
+Harici Postgres / çok yazıcılı HA, belgelenmiş standart bir yol **değildir**. HA'ya ihtiyacınız varsa tek bir replika kullanmaya devam edin veya projenin ayrıca test edip belgelendirdiği bir topolojiyi çalıştırın. Postgres/MySQL çalışmaları [#8075](https://github.com/Ferhat-Yasinoglu/pusula/issues/8075) kapsamında yürütülmektedir. Bu özellik yayımlanana kadar **büyük** `/v1/responses` kapasitesini artırmanın desteklenen tek yolu, tek bir birim üzerinde `replicas > 1` kullanmak değil, birbirinden bağımsız N işlem çalıştırmaktır (sonraki bölüm).
 
 ## Yatay ölçekleme: N bağımsız süreç
 
-Bir Node süreci **tek bir V8 heap’idir**. Birbiriyle çakışan yaklaşık 3 MiB / yaklaşık 750 bin token’lık iki kodlama aracısı `POST /v1/responses` isteği (RTK + Caveman), yaklaşık 12 Gi değerinde bu heap’in sonlandırılmasına (`FATAL ERROR: Reached heap limit`) ve 16 Gi boyutundaki bir cgroup’un OOM yaşamasına neden olabilir. Bkz. [#7849](https://github.com/diegosouzapw/OmniRoute/issues/7849). Bu ölçüm, eşzamanlı uzun `/v1/responses` istekleri için ürüne ait kesin bir üst sınır olan iki değerini değil, bir **bellek bütçesi** uyarısını ifade eder. Ağır sohbet kabulü, aynı V8/cgroup sınırından boyutlandırılan ve otomatik olarak türetilen bir alım bayt bütçesi (`OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES`, `src/shared/middleware/admissionBudget.ts`) tarafından kontrol edilir — zaten boyutlandırılmış bir süreçte bunu yukarı doğru geçersiz kılmak (veya eski `OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT` istek sayısı sınırını ayarlamak) sonlandırma sorununu yeniden ortaya çıkarır. Küçük sohbetler, `/healthz`, `/v1/models` ve MCP bu sınırın kapsamında **değildir**.
+Bir Node süreci **tek bir V8 heap’idir**. Birbiriyle çakışan yaklaşık 3 MiB / yaklaşık 750 bin token’lık iki kodlama aracısı `POST /v1/responses` isteği (RTK + Caveman), yaklaşık 12 Gi değerinde bu heap’in sonlandırılmasına (`FATAL ERROR: Reached heap limit`) ve 16 Gi boyutundaki bir cgroup’un OOM yaşamasına neden olabilir. Bkz. [#7849](https://github.com/Ferhat-Yasinoglu/pusula/issues/7849). Bu ölçüm, eşzamanlı uzun `/v1/responses` istekleri için ürüne ait kesin bir üst sınır olan iki değerini değil, bir **bellek bütçesi** uyarısını ifade eder. Ağır sohbet kabulü, aynı V8/cgroup sınırından boyutlandırılan ve otomatik olarak türetilen bir alım bayt bütçesi (`PUSULA_CHAT_MAX_INFLIGHT_BYTES`, `src/shared/middleware/admissionBudget.ts`) tarafından kontrol edilir — zaten boyutlandırılmış bir süreçte bunu yukarı doğru geçersiz kılmak (veya eski `PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT` istek sayısı sınırını ayarlamak) sonlandırma sorununu yeniden ortaya çıkarır. Küçük sohbetler, `/healthz`, `/v1/models` ve MCP bu sınırın kapsamında **değildir**.
 
 ### Tek süreç: ikiden fazla uzun `/v1/responses`
 
-**Sağlıklı** bir süreç (heap, varsayılan değeri `0.75` olan `OMNIROUTE_CHAT_ADMISSION_HEAP_SHED_RATIO` değerinin altında olduğunda), süreç genelindeki işlemdeki bayt bütçesinde (`OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES` / #10110) hâlâ yer varsa ikiden fazla eşzamanlı uzun `POST /v1/responses` isteği çalıştırabilir. `OMNIROUTE_CHAT_LARGE_BODY_BYTES` değerine (varsayılan 256 KiB) eşit veya bundan büyük gövdeler, yapı bakımından ağır isteklerle aynı ağır iş yükü kiralamasını alır ve aynı [#10437](https://github.com/diegosouzapw/OmniRoute/pull/10437) `tryAcquireHealthyHeadroom` kaçışını (`OMNIROUTE_CHAT_ADMISSION_HEALTHY_HEADROOM`) kullanır. Onlarca eşzamanlı uzun SSE istemcisi (operatörler genellikle 40–50 istemciye ihtiyaç duyar) bir **bellek bütçesi** meselesidir — heap + birincil/ek kapasite yuvaları + `OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES` değerlerini uygun şekilde boyutlandırın — kesin bir “en fazla 2” ürün sınırı değildir. Baskı altındaki bir heap, #7849 sorununun geri dönmemesi için yeniden denenebilir `503` yanıtlarıyla yük atmaya devam eder.
+**Sağlıklı** bir süreç (heap, varsayılan değeri `0.75` olan `PUSULA_CHAT_ADMISSION_HEAP_SHED_RATIO` değerinin altında olduğunda), süreç genelindeki işlemdeki bayt bütçesinde (`PUSULA_CHAT_MAX_INFLIGHT_BYTES` / #10110) hâlâ yer varsa ikiden fazla eşzamanlı uzun `POST /v1/responses` isteği çalıştırabilir. `PUSULA_CHAT_LARGE_BODY_BYTES` değerine (varsayılan 256 KiB) eşit veya bundan büyük gövdeler, yapı bakımından ağır isteklerle aynı ağır iş yükü kiralamasını alır ve aynı [#10437](https://github.com/Ferhat-Yasinoglu/pusula/pull/10437) `tryAcquireHealthyHeadroom` kaçışını (`PUSULA_CHAT_ADMISSION_HEALTHY_HEADROOM`) kullanır. Onlarca eşzamanlı uzun SSE istemcisi (operatörler genellikle 40–50 istemciye ihtiyaç duyar) bir **bellek bütçesi** meselesidir — heap + birincil/ek kapasite yuvaları + `PUSULA_CHAT_MAX_INFLIGHT_BYTES` değerlerini uygun şekilde boyutlandırın — kesin bir “en fazla 2” ürün sınırı değildir. Baskı altındaki bir heap, #7849 sorununun geri dönmemesi için yeniden denenebilir `503` yanıtlarıyla yük atmaya devam eder.
 
 **Heap sayısını artırmak** (bağımsız V8 old-space’leri) için **bugün**:
 
@@ -643,34 +643,34 @@ Compose taslağı (iki heap, iki birim — `deploy.replicas: 2` değil):
 
 ```yaml
 services:
-  omniroute-a:
-    image: diegosouzapw/omniroute:3.8.49
+  pusula-a:
+    image: ferhat-yasinoglu/pusula:3.8.49
     environment:
       DATA_DIR: /app/data
-      OMNIROUTE_MEMORY_MB: "12288"
+      PUSULA_MEMORY_MB: "12288"
       QUOTA_STORE_DRIVER: redis
       QUOTA_STORE_REDIS_URL: redis://redis:6379
-    volumes: [omniroute-a-data:/app/data]
+    volumes: [pusula-a-data:/app/data]
     ports: ["20128:20128"]
-  omniroute-b:
-    image: diegosouzapw/omniroute:3.8.49
+  pusula-b:
+    image: ferhat-yasinoglu/pusula:3.8.49
     environment:
       DATA_DIR: /app/data
-      OMNIROUTE_MEMORY_MB: "12288"
+      PUSULA_MEMORY_MB: "12288"
       QUOTA_STORE_DRIVER: redis
       QUOTA_STORE_REDIS_URL: redis://redis:6379
-    volumes: [omniroute-b-data:/app/data]
+    volumes: [pusula-b-data:/app/data]
     ports: ["20138:20128"]
 volumes:
-  omniroute-a-data:
-  omniroute-b-data:
+  pusula-a-data:
+  pusula-b-data:
 ```
 
-Süreç içi yoğunluk (HTTP isolate’ı dışında sıkıştırma) için bkz. [#11023](https://github.com/diegosouzapw/OmniRoute/issues/11023). Paylaşılan kalıcı durum üzerinde tek bir mantıksal küme için bkz. [#8075](https://github.com/diegosouzapw/OmniRoute/issues/8075).
+Süreç içi yoğunluk (HTTP isolate’ı dışında sıkıştırma) için bkz. [#11023](https://github.com/Ferhat-Yasinoglu/pusula/issues/11023). Paylaşılan kalıcı durum üzerinde tek bir mantıksal küme için bkz. [#8075](https://github.com/Ferhat-Yasinoglu/pusula/issues/8075).
 
 ## Önemli Notlar
 
-- **SQLite WAL Modu:** OmniRoute'un en son değişiklikleri `storage.sqlite` dosyasına checkpoint edebilmesi için `docker stop` işleminin tamamlanmasına izin verilmelidir. Birlikte sunulan Compose dosyalarında 40 saniyelik durdurma ek süresi zaten ayarlanmıştır. İmajı doğrudan çalıştırıyorsanız `--stop-timeout 40` ayarını koruyun.
+- **SQLite WAL Modu:** Pusula'un en son değişiklikleri `storage.sqlite` dosyasına checkpoint edebilmesi için `docker stop` işleminin tamamlanmasına izin verilmelidir. Birlikte sunulan Compose dosyalarında 40 saniyelik durdurma ek süresi zaten ayarlanmıştır. İmajı doğrudan çalıştırıyorsanız `--stop-timeout 40` ayarını koruyun.
 - **`DISABLE_SQLITE_AUTO_BACKUP`:** Rutin/yazma öncesi yedeklemeler harici olarak yönetiliyorsa `true` olarak ayarlayın. Mevcut veritabanı geçişleri yine de kendilerine ait kalıcı bir güvenlik anlık görüntüsü ve toplu geçiş koruması gerektirir.
 - **Veri Kalıcılığı:** Veritabanınızı, anahtarlarınızı ve yapılandırmalarınızı konteyner yeniden başlatmaları arasında korumak için her zaman `/app/data` konumuna bir volume bağlayın.
 - **Port Yapılandırması:** Varsayılan `20128` portunu değiştirmek için `PORT` ortam değişkenini geçersiz kılın.

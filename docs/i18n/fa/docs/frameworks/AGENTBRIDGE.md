@@ -4,7 +4,7 @@
 
 ---
 
-AgentBridge پراکسی MITM (مرد میانی) در OmniRoute است که ترافیک HTTPS عاملهای هوش مصنوعی IDE را رهگیری کرده و از طریق موتور مسیریابی یکپارچه OmniRoute بازهدایت میکند. این ابزار از **۱۰ عامل IDE** پشتیبانی میکند — Antigravity، Kiro، GitHub Copilot، GHE Copilot، OpenAI Codex، Cursor، Zed، Claude Code، Open Code و Trae (در دست بررسی) — و به این ترتیب AgentBridge را به پراکسی MITM با گستردهترین پوشش برای دستیارهای کدنویسی هوش مصنوعی در بازار تبدیل میکند.
+AgentBridge پراکسی MITM (مرد میانی) در Pusula است که ترافیک HTTPS عاملهای هوش مصنوعی IDE را رهگیری کرده و از طریق موتور مسیریابی یکپارچه Pusula بازهدایت میکند. این ابزار از **۱۰ عامل IDE** پشتیبانی میکند — Antigravity، Kiro، GitHub Copilot، GHE Copilot، OpenAI Codex، Cursor، Zed، Claude Code، Open Code و Trae (در دست بررسی) — و به این ترتیب AgentBridge را به پراکسی MITM با گستردهترین پوشش برای دستیارهای کدنویسی هوش مصنوعی در بازار تبدیل میکند.
 
 **محل داشبورد:** `/dashboard/tools/agent-bridge`
 **گروه نوار کناری:** ابزارها (پس از عاملهای ابری)
@@ -16,18 +16,18 @@ AgentBridge پراکسی MITM (مرد میانی) در OmniRoute است که ت�
 
 ### AgentBridge چیست؟
 
-هنگامی که یک عامل IDE (برای مثال GitHub Copilot، Cursor یا Claude Code) یک فراخوانی API انجام میدهد، مستقیماً به ارائهدهنده بالادستی هوش مصنوعی (OpenAI، Anthropic و غیره) متصل میشود. AgentBridge این اتصال را بهصورت شفاف در سطح TLS رهگیری میکند — بدون نیاز به هیچگونه تغییر در پیکربندی عامل — و درخواست را از طریق OmniRoute بازنویسی میکند.
+هنگامی که یک عامل IDE (برای مثال GitHub Copilot، Cursor یا Claude Code) یک فراخوانی API انجام میدهد، مستقیماً به ارائهدهنده بالادستی هوش مصنوعی (OpenAI، Anthropic و غیره) متصل میشود. AgentBridge این اتصال را بهصورت شفاف در سطح TLS رهگیری میکند — بدون نیاز به هیچگونه تغییر در پیکربندی عامل — و درخواست را از طریق Pusula بازنویسی میکند.
 
 این یعنی میتوانید:
 
-- **هر عاملی را به هر ارائهدهندهای بازهدایت کنید**: آیا Copilot با OpenAI ارتباط برقرار میکند؟ آن را به Anthropic Claude، Gemini یا هر یک از ۳۵۲ ارائهدهنده OmniRoute هدایت کنید.
+- **هر عاملی را به هر ارائهدهندهای بازهدایت کنید**: آیا Copilot با OpenAI ارتباط برقرار میکند؟ آن را به Anthropic Claude، Gemini یا هر یک از ۳۵۲ ارائهدهنده Pusula هدایت کنید.
 - **نگاشتهای مدل را اعمال کنید**: `gemini-3-flash` → `claude-sonnet-4.7` بهصورت شفاف در سطح کنترلکننده.
 - **تمام ترافیک عاملها را مشاهده کنید**: هر درخواست رهگیریشده در [بازرس ترافیک](./TRAFFIC_INSPECTOR.md) منتشر میشود.
-- **تابآوری OmniRoute را اعمال کنید**: مسیریابی ترکیبی، قطعکنندههای مدار، مسیرهای جایگزین و ردیابی هزینه برای ترافیک عاملهای IDE نیز کار میکنند.
+- **تابآوری Pusula را اعمال کنید**: مسیریابی ترکیبی، قطعکنندههای مدار، مسیرهای جایگزین و ردیابی هزینه برای ترافیک عاملهای IDE نیز کار میکنند.
 
 ### جایگاه در مقایسه با بازار
 
-| قابلیت                | 9router | anti-api | llm-interceptor | **OmniRoute AgentBridge** |
+| قابلیت                | 9router | anti-api | llm-interceptor | **Pusula AgentBridge** |
 | --------------------- | :-----: | :------: | :-------------: | :-----------------------: |
 | Antigravity           |    ✓    |    ✓     |        —        |             ✓             |
 | GitHub Copilot        |    ✓    |    ✓     |        —        |             ✓             |
@@ -40,7 +40,7 @@ AgentBridge پراکسی MITM (مرد میانی) در OmniRoute است که ت�
 | Trae                  |    —    |    —     |        —        |      🔍 در دست بررسی      |
 | رابط کاربری داشبورد   |    ✓    |    ✗     |        ✗        |             ✓             |
 | بازرس ترافیک          |    ✗    |    ✗     |        ✓        |             ✓             |
-| مسیریابی OmniRoute    |    ✗    |    ✗     |        ✗        |             ✓             |
+| مسیریابی Pusula    |    ✗    |    ✗     |        ✗        |             ✓             |
 | رابط کاربری نگاشت مدل |    ✗    |    ✗     |        ✗        |             ✓             |
 | فهرست عبور            |    ✗    |    ✗     |        ✓        |             ✓             |
 | گواهی CA بالادستی     |    ✗    |    ✗     |        ✓        |             ✓             |
@@ -62,7 +62,7 @@ src/mitm/server.cjs  (پورت 443، فرایند فرزند CJS)
     │  مقصد را بر اساس SNI سرآیند Host تفکیک میکند
     │  برای هر SNI یک گواهی TLS امضاشده توسط CA متعلق به AgentBridge تولید میکند
     ├── تطابق با فهرست دور زدن؟ → عبور مستقیم TCP (بدون رمزگشایی)
-    ├── تطابق با مقصد؟ → fetch → مسیریاب OmniRoute (پورت 20128)
+    ├── تطابق با مقصد؟ → fetch → مسیریاب Pusula (پورت 20128)
     │       └── handler.intercept() — TypeScript
     │               ├── maskSecrets() روی بدنه/سرآیندهای درخواست
     │               ├── TrafficBuffer.push() — انتشار در بازرس ترافیک
@@ -96,7 +96,7 @@ src/mitm/server.cjs  (پورت 443، فرایند فرزند CJS)
 > یک CA مورد اعتماد MITM که میتواند برای **هر** میزبانی گواهی leaf امضا کند،
 > عملاً بسیار قدرتمندتر از گواهی leaf قدیمی با SAN ثابت است؛ بنابراین این تغییر
 > برای نصبی که از قبل مورد اعتماد است، هرگز بیاطلاع انجام نمیشود). گواهی CA
-> در همان جایگاه `omniroute-mitm.crt` در مخزن اعتماد نصب میشود که گواهی leaf
+> در همان جایگاه `pusula-mitm.crt` در مخزن اعتماد نصب میشود که گواهی leaf
 > قدیمی از آن استفاده میکرد (`cert/install.ts::installCaCert`) — نیازی به
 > پاکسازی اعتماد دوگانه نیست.
 
@@ -207,20 +207,20 @@ AGENTBRIDGE_UPSTREAM_CA_CERT=/path/to/corporate-ca.pem
 **Linux (NSS — Chrome/Firefox):**
 
 ```bash
-certutil -A -d sql:$HOME/.pki/nssdb -n "OmniRoute AgentBridge" -t CT,, -i ~/.omniroute/mitm/ca.crt
+certutil -A -d sql:$HOME/.pki/nssdb -n "Pusula AgentBridge" -t CT,, -i ~/.pusula/mitm/ca.crt
 ```
 
 **macOS (Keychain):**
 
 ```bash
 sudo security add-trusted-cert -d -r trustRoot \
-  -k /Library/Keychains/System.keychain ~/.omniroute/mitm/ca.crt
+  -k /Library/Keychains/System.keychain ~/.pusula/mitm/ca.crt
 ```
 
 **Windows (certmgr):**
 
 ```powershell
-certutil -addstore -f Root $env:USERPROFILE\.omniroute\mitm\ca.crt
+certutil -addstore -f Root $env:USERPROFILE\.pusula\mitm\ca.crt
 ```
 
 یا از دکمه «اعتماد به گواهی» در داشبورد استفاده کنید (این دکمه فرمان مناسب سیستمعامل شما را اجرا میکند و در صورت نیاز، اعلان sudo را نمایش میدهد).
@@ -237,7 +237,7 @@ Node.js مخصوص خود را همراه دارند که برای درخواس�
 
 1. محیط اجرایی را بهطور صریح به CA هدایت کنید:
    ```bash
-   export NODE_EXTRA_CA_CERTS=/path/to/omniroute-agentbridge-ca.crt
+   export NODE_EXTRA_CA_CERTS=/path/to/pusula-agentbridge-ca.crt
    ```
 2. **IDE را از همان پوسته اجرا کنید.** اجرای آن از طریق نماد دسکتاپ / Dock / منوی Start
    متغیرهای exportشده پوسته را به ارث **نمیبرد** و `~/.config/environment.d/*.conf` تنها پس از
@@ -263,7 +263,7 @@ Node.js مخصوص خود را همراه دارند که برای درخواس�
 
 برای تعریف نگاشتهای مبدأ → مقصد، از جدول نگاشت مدل در کارت هر عامل استفاده کنید:
 
-| مدل مبدأ (بومی عامل) | مدل مقصد (OmniRoute) |
+| مدل مبدأ (بومی عامل) | مدل مقصد (Pusula) |
 | -------------------- | -------------------- |
 | `gpt-4o`             | `claude-sonnet-4.7`  |
 | `*` (نویسه عام)      | `claude-haiku-4.7`   |
@@ -279,7 +279,7 @@ Node.js مخصوص خود را همراه دارند که برای درخواس�
 
 ### 3.5 اطلاعیه خطر
 
-AgentBridge اطلاعات احراز هویت (توکنهای OAuth و کلیدهای API) را که IDE برای احراز هویت نزد ارائهدهندگان بالادستی استفاده میکند، رهگیری میکند. این اطلاعات **پیش از ثبت در گزارش پوشانده میشوند** (بخش §2.7 را ببینید)، اما برای لایه MITM متعلق به OmniRoute قابل مشاهدهاند. هنگام نخستین فعالسازی هر عامل، یک پنجره اطلاعیه خطر قابلبستن نمایش داده میشود.
+AgentBridge اطلاعات احراز هویت (توکنهای OAuth و کلیدهای API) را که IDE برای احراز هویت نزد ارائهدهندگان بالادستی استفاده میکند، رهگیری میکند. این اطلاعات **پیش از ثبت در گزارش پوشانده میشوند** (بخش §2.7 را ببینید)، اما برای لایه MITM متعلق به Pusula قابل مشاهدهاند. هنگام نخستین فعالسازی هر عامل، یک پنجره اطلاعیه خطر قابلبستن نمایش داده میشود.
 
 ### 3.6 نگهداری و عیبیابی
 
@@ -390,7 +390,7 @@ export async function detectAgent(agentId: AgentId): Promise<DetectionResult>;
 
 ### فهرست عبور مستقیم برای میزبانهای حساس
 
-فهرست عبور مستقیم تضمین میکند که مؤسسات مالی، ارائهدهندگان OAuth/SSO و دیگر میزبانهای حساس **هرگز رمزگشایی نشوند**. ترافیک TLS آنها بهصورت یک تونل شفاف TCP عبور میکند — OmniRoute هرگز متن ساده را نمیبیند.
+فهرست عبور مستقیم تضمین میکند که مؤسسات مالی، ارائهدهندگان OAuth/SSO و دیگر میزبانهای حساس **هرگز رمزگشایی نشوند**. ترافیک TLS آنها بهصورت یک تونل شفاف TCP عبور میکند — Pusula هرگز متن ساده را نمیبیند.
 
 الگوهای پیشفرض عبور مستقیم شامل موارد زیر هستند:
 
@@ -441,7 +441,7 @@ sudo fuser -k 443/tcp  # خاتمه اجباری فرایند (با احتیاط
 
 اگر IDE پس از راهاندازی AgentBridge خطاهای TLS نشان میدهد:
 
-1. بررسی کنید که گواهی نصب شده باشد: `security find-certificate -c "OmniRoute AgentBridge"` (macOS) یا `certutil -L -d sql:$HOME/.pki/nssdb` (Linux/NSS)
+1. بررسی کنید که گواهی نصب شده باشد: `security find-certificate -c "Pusula AgentBridge"` (macOS) یا `certutil -L -d sql:$HOME/.pki/nssdb` (Linux/NSS)
 2. برخی برنامهها مخزن اعتماد خود را نگه میدارند (Firefox و Chrome در Linux). دوباره «Trust Cert» را اجرا و مخزن گواهی مخصوص NSS/Firefox را بررسی کنید.
 3. پس از مورد اعتماد قرار دادن گواهی، IDE را مجدداً راهاندازی کنید — نشستهای TLS در حال اجرا از وضعیت اعتماد قبلی استفاده میکنند.
 
@@ -466,7 +466,7 @@ sudo fuser -k 443/tcp  # خاتمه اجباری فرایند (با احتیاط
 بررسی کنید که `/etc/hosts` بهروزرسانی شده باشد:
 
 ```bash
-grep "omniroute\|127.0.0.1.*github\|127.0.0.1.*cursor" /etc/hosts
+grep "pusula\|127.0.0.1.*github\|127.0.0.1.*cursor" /etc/hosts
 ```
 
 حافظه نهان DNS را پاک کنید:
@@ -492,8 +492,8 @@ ipconfig /flushdns
 اگر AgentBridge درخواستها را رهگیری میکند اما همه آنها ناموفق هستند:
 
 1. بررسی کنید که دستکم یک ارائهدهنده در `/dashboard/providers` متصل باشد
-2. گزارشهای سرور OmniRoute را بررسی کنید: `APP_LOG_LEVEL=debug` در `.env`
-3. بررسی کنید که `OMNIROUTE_BASE_URL` به نقطه پایانی صحیح مسیریاب اشاره کند (پیشفرض: `http://127.0.0.1:20128`)
+2. گزارشهای سرور Pusula را بررسی کنید: `APP_LOG_LEVEL=debug` در `.env`
+3. بررسی کنید که `PUSULA_BASE_URL` به نقطه پایانی صحیح مسیریاب اشاره کند (پیشفرض: `http://127.0.0.1:20128`)
 
 ---
 

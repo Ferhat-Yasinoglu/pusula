@@ -134,13 +134,13 @@ test("the WAL size guard rejects sub-1MB values that would floor to a 0-byte gua
   assert.match(
     body,
     /parsed >= 1/,
-    "OMNIROUTE_WAL_GUARD_MAX_MB=0.5 would Math.floor to 0 bytes and warn on every tick"
+    "PUSULA_WAL_GUARD_MAX_MB=0.5 would Math.floor to 0 bytes and warn on every tick"
   );
 });
 
 test("the new env vars are documented", () => {
   const docs = readSource("docs/reference/ENVIRONMENT.md");
-  assert.match(docs, /OMNIROUTE_WAL_PASSIVE_INTERVAL_MS/);
-  assert.match(docs, /OMNIROUTE_WAL_GUARD_MAX_MB/);
-  assert.match(docs, /OMNIROUTE_PRESSURE_SELF_RESTART/);
+  assert.match(docs, /PUSULA_WAL_PASSIVE_INTERVAL_MS/);
+  assert.match(docs, /PUSULA_WAL_GUARD_MAX_MB/);
+  assert.match(docs, /PUSULA_PRESSURE_SELF_RESTART/);
 });

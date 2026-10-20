@@ -17,11 +17,11 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-13354-keyless-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-13354-keyless-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = process.env.API_KEY_SECRET || "test-secret-13354";
 delete process.env.INITIAL_PASSWORD;
-delete process.env.OMNIROUTE_PEER_STAMP_TOKEN;
+delete process.env.PUSULA_PEER_STAMP_TOKEN;
 // Give the catalog builder generous headroom under a contended shared runner —
 // the default 8s bound (CATALOG_BUILD_TIMEOUT_MS_DEFAULT) is tuned for a real
 // deployment, not a loaded CI/dev box; this test only cares about the auth
@@ -103,18 +103,18 @@ test("#13354: keyless install with one API key created — anonymous loopback GE
 // TRUSTED loopback peer. A keyless install exposed on the network (public IP,
 // LAN, or a Docker bridge gateway — which is NOT loopback, see #14296) must keep
 // requiring a credential for the model catalog. These cases model the real
-// runtime: a stamping server is in front (OMNIROUTE_PEER_STAMP_TOKEN set) and the
+// runtime: a stamping server is in front (PUSULA_PEER_STAMP_TOKEN set) and the
 // authz pipeline hands the route handler its re-stamped locality verdict.
 const { AUTHZ_HEADER_PEER_LOCALITY } = await import("../../src/server/authz/headers.ts");
 
 async function withStampingServer<T>(fn: () => Promise<T>): Promise<T> {
-  const previous = process.env.OMNIROUTE_PEER_STAMP_TOKEN;
-  process.env.OMNIROUTE_PEER_STAMP_TOKEN = "test-stamp-token-13354";
+  const previous = process.env.PUSULA_PEER_STAMP_TOKEN;
+  process.env.PUSULA_PEER_STAMP_TOKEN = "test-stamp-token-13354";
   try {
     return await fn();
   } finally {
-    if (previous === undefined) delete process.env.OMNIROUTE_PEER_STAMP_TOKEN;
-    else process.env.OMNIROUTE_PEER_STAMP_TOKEN = previous;
+    if (previous === undefined) delete process.env.PUSULA_PEER_STAMP_TOKEN;
+    else process.env.PUSULA_PEER_STAMP_TOKEN = previous;
   }
 }
 

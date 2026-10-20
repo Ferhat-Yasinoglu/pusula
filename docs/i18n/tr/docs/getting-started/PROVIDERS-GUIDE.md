@@ -1,16 +1,16 @@
-# Providers Guide: Connect AI Models to OmniRoute (Türkçe)
+# Providers Guide: Connect AI Models to Pusula (Türkçe)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../getting-started/PROVIDERS-GUIDE.md) · 🇪🇹 [am](../../../am/docs/getting-started/PROVIDERS-GUIDE.md) · 🇸🇦 [ar](../../../ar/docs/getting-started/PROVIDERS-GUIDE.md) · 🇦🇿 [az](../../../az/docs/getting-started/PROVIDERS-GUIDE.md) · 🇧🇬 [bg](../../../bg/docs/getting-started/PROVIDERS-GUIDE.md) · 🇧🇩 [bn](../../../bn/docs/getting-started/PROVIDERS-GUIDE.md) · 🇧🇦 [bs](../../../bs/docs/getting-started/PROVIDERS-GUIDE.md) · 🇨🇿 [cs](../../../cs/docs/getting-started/PROVIDERS-GUIDE.md) · 🇩🇰 [da](../../../da/docs/getting-started/PROVIDERS-GUIDE.md) · 🇩🇪 [de](../../../de/docs/getting-started/PROVIDERS-GUIDE.md) · 🇬🇷 [el](../../../el/docs/getting-started/PROVIDERS-GUIDE.md) · 🇪🇸 [es](../../../es/docs/getting-started/PROVIDERS-GUIDE.md) · 🇪🇪 [et](../../../et/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇷 [fa](../../../fa/docs/getting-started/PROVIDERS-GUIDE.md) · 🇫🇮 [fi](../../../fi/docs/getting-started/PROVIDERS-GUIDE.md) · 🇫🇷 [fr](../../../fr/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇪 [ga](../../../ga/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [gu](../../../gu/docs/getting-started/PROVIDERS-GUIDE.md) · 🇳🇬 [ha](../../../ha/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇱 [he](../../../he/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [hi](../../../hi/docs/getting-started/PROVIDERS-GUIDE.md) · 🇭🇷 [hr](../../../hr/docs/getting-started/PROVIDERS-GUIDE.md) · 🇭🇺 [hu](../../../hu/docs/getting-started/PROVIDERS-GUIDE.md) · 🇦🇲 [hy](../../../hy/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇩 [id](../../../id/docs/getting-started/PROVIDERS-GUIDE.md) · 🇳🇬 [ig](../../../ig/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇹 [it](../../../it/docs/getting-started/PROVIDERS-GUIDE.md) · 🇯🇵 [ja](../../../ja/docs/getting-started/PROVIDERS-GUIDE.md) · 🇬🇪 [ka](../../../ka/docs/getting-started/PROVIDERS-GUIDE.md) · 🇰🇭 [km](../../../km/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [kn](../../../kn/docs/getting-started/PROVIDERS-GUIDE.md) · 🇰🇷 [ko](../../../ko/docs/getting-started/PROVIDERS-GUIDE.md) · 🇱🇹 [lt](../../../lt/docs/getting-started/PROVIDERS-GUIDE.md) · 🇱🇻 [lv](../../../lv/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [ml](../../../ml/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [mr](../../../mr/docs/getting-started/PROVIDERS-GUIDE.md) · 🇲🇾 [ms](../../../ms/docs/getting-started/PROVIDERS-GUIDE.md) · 🇲🇹 [mt](../../../mt/docs/getting-started/PROVIDERS-GUIDE.md) · 🇲🇲 [my](../../../my/docs/getting-started/PROVIDERS-GUIDE.md) · 🇳🇵 [ne](../../../ne/docs/getting-started/PROVIDERS-GUIDE.md) · 🇳🇱 [nl](../../../nl/docs/getting-started/PROVIDERS-GUIDE.md) · 🇳🇴 [no](../../../no/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [or](../../../or/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [pa](../../../pa/docs/getting-started/PROVIDERS-GUIDE.md) · 🇵🇭 [phi](../../../phi/docs/getting-started/PROVIDERS-GUIDE.md) · 🇵🇱 [pl](../../../pl/docs/getting-started/PROVIDERS-GUIDE.md) · 🇵🇹 [pt](../../../pt/docs/getting-started/PROVIDERS-GUIDE.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/getting-started/PROVIDERS-GUIDE.md) · 🇷🇴 [ro](../../../ro/docs/getting-started/PROVIDERS-GUIDE.md) · 🇷🇺 [ru](../../../ru/docs/getting-started/PROVIDERS-GUIDE.md) · 🇱🇰 [si](../../../si/docs/getting-started/PROVIDERS-GUIDE.md) · 🇸🇰 [sk](../../../sk/docs/getting-started/PROVIDERS-GUIDE.md) · 🇸🇮 [sl](../../../sl/docs/getting-started/PROVIDERS-GUIDE.md) · 🇷🇸 [sr](../../../sr/docs/getting-started/PROVIDERS-GUIDE.md) · 🇸🇪 [sv](../../../sv/docs/getting-started/PROVIDERS-GUIDE.md) · 🇰🇪 [sw](../../../sw/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [ta](../../../ta/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [te](../../../te/docs/getting-started/PROVIDERS-GUIDE.md) · 🇹🇭 [th](../../../th/docs/getting-started/PROVIDERS-GUIDE.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/getting-started/PROVIDERS-GUIDE.md) · 🇵🇰 [ur](../../../ur/docs/getting-started/PROVIDERS-GUIDE.md) · 🇺🇿 [uz](../../../uz/docs/getting-started/PROVIDERS-GUIDE.md) · 🇻🇳 [vi](../../../vi/docs/getting-started/PROVIDERS-GUIDE.md) · 🇳🇬 [yo](../../../yo/docs/getting-started/PROVIDERS-GUIDE.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/getting-started/PROVIDERS-GUIDE.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/getting-started/PROVIDERS-GUIDE.md)
 
 ---
 
-> **Kısaca**: Sağlayıcı, bir yapay zekâ hizmetine (OpenAI, Anthropic, Google gibi) bağlantıdır. OmniRoute'u kullanmak için en az bir sağlayıcıya ihtiyacınız vardır.
+> **Kısaca**: Sağlayıcı, bir yapay zekâ hizmetine (OpenAI, Anthropic, Google gibi) bağlantıdır. Pusula'u kullanmak için en az bir sağlayıcıya ihtiyacınız vardır.
 
 ---
 
 ## Sağlayıcı Nedir?
 
-Sağlayıcıyı bir **telefon operatörü** gibi düşünün. Arama yapmak için bir telefon operatörüne ihtiyaç duyduğunuz gibi, yapay zekâ modellerini kullanmak için de bir yapay zekâ sağlayıcısına ihtiyacınız vardır. OmniRoute, **tüm operatörlerle** çalışan bir telefon gibidir; sağlayıcılar arasında otomatik olarak geçiş yapabilirsiniz.
+Sağlayıcıyı bir **telefon operatörü** gibi düşünün. Arama yapmak için bir telefon operatörüne ihtiyaç duyduğunuz gibi, yapay zekâ modellerini kullanmak için de bir yapay zekâ sağlayıcısına ihtiyacınız vardır. Pusula, **tüm operatörlerle** çalışan bir telefon gibidir; sağlayıcılar arasında otomatik olarak geçiş yapabilirsiniz.
 
 ### Sağlayıcı Türleri
 
@@ -31,8 +31,8 @@ Genel kurulum talimatları, sınırlamalar, sorun giderme ve sağlayıcıya öze
 ### İsteğe bağlı ilk çalıştırma ücretsiz sağlayıcı kurulumu
 
 İlk çalıştırma sihirbazı, açıkça belirtilmiş bir **Ücretsiz sağlayıcıları ayarla** kartı sunar. Mevcut
-uygun listeyi OmniRoute'un kimlik doğrulaması gerektirmeyen sağlayıcı kayıt defterinden oluşturur ve ardından onaylamadan önce her
-sağlayıcıyı gözden geçirip seçimini kaldırmanıza olanak tanır. OmniRoute, sağlayıcının uyarı bildirimini ve sitesine yönlendiren bir bağlantıyı
+uygun listeyi Pusula'un kimlik doğrulaması gerektirmeyen sağlayıcı kayıt defterinden oluşturur ve ardından onaylamadan önce her
+sağlayıcıyı gözden geçirip seçimini kaldırmanıza olanak tanır. Pusula, sağlayıcının uyarı bildirimini ve sitesine yönlendiren bir bağlantıyı
 gösterir; böylece önce üçüncü taraf koşullarını, gizlilik politikasını, kullanılabilirliği ve hız sınırlarını inceleyebilirsiniz.
 
 Bu işlem isteğe bağlıdır: sihirbazı tamamlamak hiçbir zaman sessizce ücretsiz sağlayıcı bağlantıları oluşturmaz.
@@ -81,7 +81,7 @@ yalnızca başarısız olanları güvenle yeniden deneyebilirsiniz.
 
 ### Seçenek D: Yerel MLX Modelleri (Apple Silicon)
 
-Birleşik belleğe sahip Apple Silicon Mac'lerde OmniRoute, `mlx-lm.server` aracılığıyla çalışan yerel MLX modellerine standart OpenAI uyumlu yerel sağlayıcılar olarak bağlanmayı destekler.
+Birleşik belleğe sahip Apple Silicon Mac'lerde Pusula, `mlx-lm.server` aracılığıyla çalışan yerel MLX modellerine standart OpenAI uyumlu yerel sağlayıcılar olarak bağlanmayı destekler.
 
 #### Ön Koşullar
 
@@ -111,16 +111,16 @@ Birleşik belleğe sahip Apple Silicon Mac'lerde OmniRoute, `mlx-lm.server` arac
    uv run mlx_lm.server --model maglun/Qwen3.8-27B-MLX-Mixed-3.80bpw --port 11436 --host 127.0.0.1
    ```
 
-3. **OmniRoute Panosu'nda bağlanın**:
+3. **Pusula Panosu'nda bağlanın**:
    - **Sağlayıcılar** → **Sağlayıcı Ekle** bölümüne gidin
    - **MLX Gemma 26B** veya **MLX Qwen 3.8 27B** seçeneğini belirleyin
    - **Bağlan** seçeneğine tıklayın (API anahtarı gerekmez)
 
 4. **OpenCode ile kullanın**:
    ```bash
-   # OpenCode'u OmniRoute'u kullanacak şekilde yapılandırın
+   # OpenCode'u Pusula'u kullanacak şekilde yapılandırın
    opencode config set api.base_url http://localhost:20128/v1
-   opencode config set api.key <omniroute-api-anahtarınız>
+   opencode config set api.key <pusula-api-anahtarınız>
 
    # MLX modellerini kullanın
    opencode run --model mlx-gemma/gemma-4-26b
@@ -140,7 +140,7 @@ Bunu manuel olarak yönetmeniz gerekir:
 - Her ikisini ayrı makinelerde çalıştırın ya da
 - Diğerini başlatmadan önce birini durdurun
 
-OmniRoute, MLX sunucu süreçlerini otomatik olarak yönetmez; yalnızca istekleri yapılandırdığınız OpenAI uyumlu uç noktalara yönlendirir.
+Pusula, MLX sunucu süreçlerini otomatik olarak yönetmez; yalnızca istekleri yapılandırdığınız OpenAI uyumlu uç noktalara yönlendirir.
 
 #### Araç Çağırma Desteği
 
@@ -165,7 +165,7 @@ curl -X POST http://localhost:20128/v1/chat/completions \
 | Bellek yetersiz        | Yalnızca bir modelin çalıştığından emin olun; diğer uygulamaları kapatın; Etkinlik Monitörü'nü kontrol edin |
 | Bağlantı reddedildi    | Sunucunun doğru portta (11435/11436) çalıştığını doğrulayın                                                 |
 | Yanıtlar yavaş         | İlk istek modeli belleğe yükler (~30-60 sn.); sonraki istekler hızlıdır                                     |
-| Araç çağırma başarısız | Modelin araçları desteklediğinden emin olun; çeviri hataları için OmniRoute günlüklerini kontrol edin       |
+| Araç çağırma başarısız | Modelin araçları desteklediğinden emin olun; çeviri hataları için Pusula günlüklerini kontrol edin       |
 
 ---
 
@@ -239,12 +239,12 @@ Sağlayıcınız artık bağlıdır. `model: "auto"` ile kullanabilir veya sağl
 
 ## Birden Fazla Sağlayıcı Kullanma
 
-OmniRoute, **birden fazla sağlayıcıyla** en iyi şekilde çalışır. Bu size şunları sağlar:
+Pusula, **birden fazla sağlayıcıyla** en iyi şekilde çalışır. Bu size şunları sağlar:
 
-- **Otomatik yedekleme** — Bir sağlayıcı başarısız olursa OmniRoute sıradakini dener
-- **Maliyet optimizasyonu** — OmniRoute her istek için en ucuz sağlayıcıyı seçer
-- **Hız optimizasyonu** — OmniRoute her istek için en hızlı sağlayıcıyı seçer
-- **Kalite optimizasyonu** — OmniRoute her görev için en iyi sağlayıcıyı seçer
+- **Otomatik yedekleme** — Bir sağlayıcı başarısız olursa Pusula sıradakini dener
+- **Maliyet optimizasyonu** — Pusula her istek için en ucuz sağlayıcıyı seçer
+- **Hız optimizasyonu** — Pusula her istek için en hızlı sağlayıcıyı seçer
+- **Kalite optimizasyonu** — Pusula her görev için en iyi sağlayıcıyı seçer
 
 ### Önerilen Kurulum
 
@@ -254,7 +254,7 @@ En iyi deneyim için en az **3 sağlayıcı** bağlayın:
 2. **Bir hızlı sağlayıcı** (Groq, Cerebras) — Hızlı yanıtlar için
 3. **Bir yüksek kaliteli sağlayıcı** (OpenAI, Anthropic, Google) — Karmaşık görevler için
 
-Ardından `model: "auto"` kullanın; OmniRoute her istek için en uygun sağlayıcıyı otomatik olarak seçer.
+Ardından `model: "auto"` kullanın; Pusula her istek için en uygun sağlayıcıyı otomatik olarak seçer.
 
 ---
 
@@ -263,40 +263,40 @@ Ardından `model: "auto"` kullanın; OmniRoute her istek için en uygun sağlay�
 ### OpenAI
 
 1. API anahtarı alın: https://platform.openai.com/api-keys
-2. OmniRoute'ta: Sağlayıcılar → Sağlayıcı Ekle → OpenAI
+2. Pusula'ta: Sağlayıcılar → Sağlayıcı Ekle → OpenAI
 3. API anahtarını yapıştırın → Bağlan
 
 ### Anthropic
 
 1. API anahtarı alın: https://console.anthropic.com/
-2. OmniRoute'ta: Sağlayıcılar → Sağlayıcı Ekle → Anthropic
+2. Pusula'ta: Sağlayıcılar → Sağlayıcı Ekle → Anthropic
 3. API anahtarını yapıştırın → Bağlan
 
 ### Google (Gemini)
 
 1. API anahtarı alın: https://aistudio.google.com/apikey
-2. OmniRoute'ta: Sağlayıcılar → Sağlayıcı Ekle → Gemini
+2. Pusula'ta: Sağlayıcılar → Sağlayıcı Ekle → Gemini
 3. API anahtarını yapıştırın → Bağlan
 
 ### DeepSeek
 
 1. API anahtarı alın: https://platform.deepseek.com/
-2. OmniRoute'ta: Sağlayıcılar → Sağlayıcı Ekle → DeepSeek
+2. Pusula'ta: Sağlayıcılar → Sağlayıcı Ekle → DeepSeek
 3. API anahtarını yapıştırın → Bağlan
 
 ### Groq
 
 1. API anahtarı alın: https://console.groq.com/
-2. OmniRoute'ta: Sağlayıcılar → Sağlayıcı Ekle → Groq
+2. Pusula'ta: Sağlayıcılar → Sağlayıcı Ekle → Groq
 3. API anahtarını yapıştırın → Bağlan
 
 ---
 
 ## Sık Sorulan Sorular
 
-### "OmniRoute'u kullanmak için ödeme yapmam gerekiyor mu?"
+### "Pusula'u kullanmak için ödeme yapmam gerekiyor mu?"
 
-**Hayır!** OmniRoute ücretsiz ve açık kaynaklıdır. Hiçbir ödeme yapmadan ücretsiz sağlayıcıları (Kiro, OpenCode Free, Pollinations) kullanabilirsiniz. Yalnızca ücretli sağlayıcıları kullanmayı tercih ederseniz ödeme yaparsınız.
+**Hayır!** Pusula ücretsiz ve açık kaynaklıdır. Hiçbir ödeme yapmadan ücretsiz sağlayıcıları (Kiro, OpenCode Free, Pollinations) kullanabilirsiniz. Yalnızca ücretli sağlayıcıları kullanmayı tercih ederseniz ödeme yaparsınız.
 
 ### "Hangi sağlayıcıyla başlamalıyım?"
 
@@ -304,11 +304,11 @@ Ardından `model: "auto"` kullanın; OmniRoute her istek için en uygun sağlay�
 
 ### "Aynı anda birden fazla sağlayıcı kullanabilir miyim?"
 
-**Evet!** OmniRoute'un temel amacı tam olarak budur. Birden fazla sağlayıcı bağlayın ve OmniRoute'un her istek için en iyisini seçmesini sağlamak üzere `model: "auto"` kullanın.
+**Evet!** Pusula'un temel amacı tam olarak budur. Birden fazla sağlayıcı bağlayın ve Pusula'un her istek için en iyisini seçmesini sağlamak üzere `model: "auto"` kullanın.
 
 ### "Bir sağlayıcı devre dışı kalırsa ne olur?"
 
-OmniRoute, başarısız olan sağlayıcıları otomatik olarak atlar ve bir sonrakini dener. Hiçbir şey yapmanız gerekmez.
+Pusula, başarısız olan sağlayıcıları otomatik olarak atlar ve bir sonrakini dener. Hiçbir şey yapmanız gerekmez.
 
 ### "Bir sağlayıcının bağlantısını nasıl keserim?"
 
@@ -316,13 +316,13 @@ Sağlayıcılar'a gidin → sağlayıcıya tıklayın → **Bağlantıyı Kes** 
 
 ### "Mevcut API anahtarlarımı kullanabilir miyim?"
 
-**Evet!** OpenAI, Anthropic, Google vb. için zaten API anahtarlarınız varsa bunları OmniRoute'ta kullanabilirsiniz. Sağlayıcıya bağlanırken anahtarları yapıştırmanız yeterlidir.
+**Evet!** OpenAI, Anthropic, Google vb. için zaten API anahtarlarınız varsa bunları Pusula'ta kullanabilirsiniz. Sağlayıcıya bağlanırken anahtarları yapıştırmanız yeterlidir.
 
 ---
 
 ## Sırada Ne Var?
 
-- **[Otomatik Kombinasyon Kılavuzu](./AUTO-COMBO-GUIDE.md)** — OmniRoute'un sizin için en iyi yapay zekâyı seçmesini sağlayın
+- **[Otomatik Kombinasyon Kılavuzu](./AUTO-COMBO-GUIDE.md)** — Pusula'un sizin için en iyi yapay zekâyı seçmesini sağlayın
 - **[Ücretsiz Katmanlar Kılavuzu](./FREE-TIERS-GUIDE.md)** — Kredi kartı olmadan ücretsiz yapay zekâ kullanın
 - **[Sorun Giderme](../guides/TROUBLESHOOTING.md)** — Yaygın sorunları giderin
 - **[Sağlayıcı Referansı](../reference/PROVIDER_REFERENCE.md)** — 226 sağlayıcının tam listesi

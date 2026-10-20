@@ -10,7 +10,7 @@ import path from "node:path";
 // connection, then it parks, so a revoked key still converges. Flag off (default):
 // every bare Mistral 401 parks the connection as before.
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-13609-mistral-401-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-13609-mistral-401-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const FLAG = "MISTRAL_AMBIGUOUS_401_SOFT_LOCKOUT";

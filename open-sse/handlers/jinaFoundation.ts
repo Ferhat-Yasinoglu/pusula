@@ -7,7 +7,7 @@
 
 import { CORS_HEADERS } from "../utils/cors.ts";
 import { errorResponse } from "../utils/error.ts";
-import { attachOmniRouteMetaHeaders } from "@/domain/omnirouteResponseMeta";
+import { attachPusulaMetaHeaders } from "@/domain/pusulaResponseMeta";
 import { generateRequestId } from "@/shared/utils/requestId";
 import { saveCallLog } from "@/lib/usageDb";
 
@@ -86,7 +86,7 @@ export async function handleJinaFoundationProxy(
     }
 
     const headers = new Headers({ ...CORS_HEADERS, "Content-Type": "application/json" });
-    attachOmniRouteMetaHeaders(headers, {
+    attachPusulaMetaHeaders(headers, {
       provider,
       model: options.model || provider,
       costUsd: 0,

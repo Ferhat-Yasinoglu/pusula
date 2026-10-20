@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 const { claudeToOpenAIRequest } =
   await import("../../open-sse/translator/request/claude-to-openai.ts");
 
-const APPEND_ENV = "OMNIROUTE_SYSTEM_INSTRUCTION_APPEND";
+const APPEND_ENV = "PUSULA_SYSTEM_INSTRUCTION_APPEND";
 const DIRECTIVE = "TEST-DIRECTIVE-ABC";
 
 function baseBody(withSystem: boolean) {

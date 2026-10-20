@@ -6,10 +6,10 @@
 
 ## Güvenlik Açıklarını Bildirme
 
-OmniRoute'ta bir güvenlik açığı keşfederseniz, lütfen sorumlu bir şekilde bildirin:
+Pusula'ta bir güvenlik açığı keşfederseniz, lütfen sorumlu bir şekilde bildirin:
 
 1. **KESİNLİKLE** herkese açık bir GitHub issue'su açmayın
-2. [GitHub Security Advisories](https://github.com/diegosouzapw/OmniRoute/security/advisories/new) kullanın
+2. [GitHub Security Advisories](https://github.com/Ferhat-Yasinoglu/pusula/security/advisories/new) kullanın
 3. Şunları ekleyin: açıklama, yeniden oluşturma adımları ve olası etki
 
 ## Yanıt Zaman Çizelgesi
@@ -32,7 +32,7 @@ OmniRoute'ta bir güvenlik açığı keşfederseniz, lütfen sorumlu bir şekild
 
 ## Güvenlik Mimarisi
 
-OmniRoute çok katmanlı bir güvenlik modeli uygular:
+Pusula çok katmanlı bir güvenlik modeli uygular:
 
 ```
 Request → CORS → Authz pipeline (classify → policies → enforce)
@@ -69,7 +69,7 @@ STORAGE_ENCRYPTION_KEY=$(openssl rand -hex 32)
 
 ### 🛡️ Güvenlik Önlemleri Çerçevesi (Guardrails Framework)
 
-OmniRoute, öncelik sırasına göre sıralanmış 3 yerleşik güvenlik önlemi içeren, çalışırken yeniden yüklenebilir bir **güvenlik önlemleri kayıt defteri** (`src/lib/guardrails/`) ile gelir:
+Pusula, öncelik sırasına göre sıralanmış 3 yerleşik güvenlik önlemi içeren, çalışırken yeniden yüklenebilir bir **güvenlik önlemleri kayıt defteri** (`src/lib/guardrails/`) ile gelir:
 
 | Güvenlik Önlemi    | Öncelik | Amaç                                                                                                          |
 | ------------------ | ------- | ------------------------------------------------------------------------------------------------------------- |
@@ -77,7 +77,7 @@ OmniRoute, öncelik sırasına göre sıralanmış 3 yerleşik güvenlik önlemi
 | `pii-masker`       | 10      | Çağrı öncesi ve sonrası PII (kişisel veri) maskeleme (e-posta, telefon, CPF, CNPJ, kredi kartı, SSN)          |
 | `prompt-injection` | 20      | Geçersiz kılma / rol ele geçirme / jailbreak / sızıntı kalıplarını algılar                                    |
 
-Özel güvenlik önlemleri `registerGuardrail(new MyGuardrail())` aracılığıyla kaydedilir. Model hata durumunda açıktır (fail-open; istisnalar trafiği asla engellemez). İstek başına devre dışı bırakma `x-omniroute-disabled-guardrails` başlığı ile yapılır. → Bkz. [`docs/security/GUARDRAILS.md`](docs/security/GUARDRAILS.md).
+Özel güvenlik önlemleri `registerGuardrail(new MyGuardrail())` aracılığıyla kaydedilir. Model hata durumunda açıktır (fail-open; istisnalar trafiği asla engellemez). İstek başına devre dışı bırakma `x-pusula-disabled-guardrails` başlığı ile yapılır. → Bkz. [`docs/security/GUARDRAILS.md`](docs/security/GUARDRAILS.md).
 
 ### 🧠 İstem Enjeksiyonu Koruması (Prompt Injection Guard)
 
@@ -182,15 +182,15 @@ Sunucu `changeme`, `secret` veya `password` gibi bilinen zayıf değerleri açı
 
 ```bash
 docker run -d \
-  --name omniroute \
+  --name pusula \
   --restart unless-stopped \
   --read-only \
   -p 20128:20128 \
-  -v omniroute-data:/app/data \
+  -v pusula-data:/app/data \
   -e JWT_SECRET="$(openssl rand -base64 48)" \
   -e API_KEY_SECRET="$(openssl rand -hex 32)" \
   -e STORAGE_ENCRYPTION_KEY="$(openssl rand -hex 32)" \
-  diegosouzapw/omniroute:latest
+  ferhat-yasinoglu/pusula:latest
 ```
 
 ---
@@ -224,7 +224,7 @@ Bu kurallar araçlar ve inceleyiciler tarafından zorunlu kılınmıştır:
 
 > **Kapsam notu:** Depo kökündeki `socket.yml`, yalnızca yayımlanan npm yapıtının Socket.dev tarafından kayıt defteri tarafında gerçekleştirilen yayımlama sonrası taraması için `projectIgnorePaths` ayarını şekillendirir — zorunlu bir CI/PR birleştirme geçidi değildir. `.github/workflows` içindeki hiçbir iş akışı, hiçbir `package.json` betiği ve hiçbir `Makefile` hedefi Socket.dev'i çağırmaz.
 
-Yayımlanan `omniroute` npm yapıtı, Next.js `output: "standalone"`
+Yayımlanan `pusula` npm yapıtı, Next.js `output: "standalone"`
 derlemesini paketler; bu da belgelenmiş ayrıcalıklı özellikler (MITM, Zed içe aktarma, Cloud Sync, yerleşik hizmet yöneticisi) dahil olmak üzere her rota işleyicisinin
 `.next/server/*.js` küçültülmüş parçalarında yer alması anlamına gelir. Sezgisel tedarik zinciri tarayıcıları
 bu parçaları sıklıkla kötü amaçlı yazılım imzalarıyla kalıp eşleştirmesine tabi tutar.
@@ -247,7 +247,7 @@ Her bulgu kategorisi için bulgu başına bir bakımcı beyanı tutuyoruz:
   aynı belgeye geri yönlendirir.
 
 İşlem hattı uyarıyı gevşetemeyen kullanıcılar şununla derleme yapabilir:
-`OMNIROUTE_BUILD_PROFILE=minimal npm run build`. Bu, dört
+`PUSULA_BUILD_PROFILE=minimal npm run build`. Bu, dört
 hassas modülü çalışma zamanında HTTP 503 `feature-disabled` döndüren
 taslaklarla değiştirir; böylece ayrıcalıklı kod yolları paket içinde fiziksel olarak bulunmaz.
 Yayımlama tarifi için [`docs/security/SOCKET_DEV_FINDINGS.md`](docs/security/SOCKET_DEV_FINDINGS.md)

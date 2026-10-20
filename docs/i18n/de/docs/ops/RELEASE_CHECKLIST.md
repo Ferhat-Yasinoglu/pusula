@@ -44,8 +44,8 @@ Dies ist der von npm vorgesehene Ersatz, da Tokens, die 2FA umgehen, eingestellt
 dadurch wird der vollständig automatische Ablauf wiederhergestellt, den das Projekt bis v3.8.48 hatte, während die
 WS1.3-Garantie erhalten bleibt (ein geleaktes Token kann nicht allein veröffentlichen — es gibt kein Token).
 
-**Einmalige Einrichtung (Eigentümer):** npmjs.com → Paket `omniroute` → Settings → _Trusted
-Publisher_ → GitHub: Eigentümer `diegosouzapw`, Repository `OmniRoute`, Workflow `npm-publish.yml`
+**Einmalige Einrichtung (Eigentümer):** npmjs.com → Paket `pusula` → Settings → _Trusted
+Publisher_ → GitHub: Eigentümer `diegosouzapw`, Repository `Pusula`, Workflow `npm-publish.yml`
 (Umgebung: keine). Solange dies nicht eingerichtet ist, schlägt der automatische Schritt mit `ENEEDAUTH` fehl:
 erneut mit `publish_mode=staged` (siehe unten) oder `direct` auslösen.
 
@@ -58,7 +58,7 @@ hinter den Nachweis verschoben, nicht davor.
 
 **Ablauf für den Eigentümer, nachdem der Workflow grün ist:**
 
-1. `npm stage list omniroute` — die Stage-ID ermitteln (sie wird auch in der Workflow-Zusammenfassung ausgegeben).
+1. `npm stage list pusula` — die Stage-ID ermitteln (sie wird auch in der Workflow-Zusammenfassung ausgegeben).
 2. Die gestuften Bytes überprüfen (empfohlen): `npm stage download <id>` und anschließend den
    heruntergeladenen Tarball in ein temporäres Präfix installieren und starten (`npm run check:pack-boot` automatisiert
    dieselbe Packen→Installieren→Starten-Prüfung in CI).
@@ -70,10 +70,10 @@ hinter den Nachweis verschoben, nicht davor.
 bisherige sofortige Ausführung von `npm publish` wieder her (nur verwenden, wenn das Staging selbst fehlerhaft ist; Grund dokumentieren).
 
 **Einmalige Absicherung (Eigentümer, npmjs.com):** Den Trusted Publisher für
-`omniroute` im reinen Staging-Modus konfigurieren, sodass ein geleaktes langlebiges Token
+`pusula` im reinen Staging-Modus konfigurieren, sodass ein geleaktes langlebiges Token
 nicht von einem beliebigen Ort aus direkt `npm publish` ausführen kann — CI kann nur stufen; nur die 2FA des Eigentümers gibt die Veröffentlichung frei.
 
-**Vorgehensweise bei fehlerhaften Artefakten (unverändert):** `npm deprecate omniroute@<bad> "<reason> — use <fixed>"`
+**Vorgehensweise bei fehlerhaften Artefakten (unverändert):** `npm deprecate pusula@<bad> "<reason> — use <fixed>"`
 als Standardreaktion verwenden (innerhalb von Minuten möglich, reversibel); `npm unpublish` nur innerhalb des 72-Stunden-/Keine-Abhängigen-
 Fensters und niemals als erste Maßnahme. Docker: Ein Versions-Tag niemals überschreiben — ein Rollback bedeutet,
 `latest` wieder auf den letzten funktionierenden Digest zu verweisen.
@@ -192,7 +192,7 @@ Breaking Changes: `BREAKING CHANGE:`-Footer oder `!` nach dem Scope hinzufügen 
 - [ ] `npm run i18n:check` wird mit 0 beendet — der Übersetzungsstatus (`.i18n-state.json`) ist mit den Quelldokumenten synchron (im strikten Modus keine abweichenden Quellen; Hinweise im Warnmodus sind für kurzfristige Dokumentationskorrekturen akzeptabel, vor dem Tagging sollte das Ergebnis jedoch 0 sein)
 - [ ] `npm run i18n:check-ui-coverage` wird mit 0 beendet — jede UI-Locale erreicht mindestens die Abdeckungsgrenze von 80 %
 - [ ] `npm run i18n:sync-ui:dry` meldet 0 fehlende Schlüssel in allen 42 Locales
-- [ ] Falls englische Quelldokumente geändert wurden, vor dem Tagging `npm run i18n:run` ausführen (erfordert `OMNIROUTE_TRANSLATION_API_KEY` in `.env`)
+- [ ] Falls englische Quelldokumente geändert wurden, vor dem Tagging `npm run i18n:run` ausführen (erfordert `PUSULA_TRANSLATION_API_KEY` in `.env`)
 - [ ] Übersetzungsbeiträge können bei geringfügigen Änderungen auf die nächste Veröffentlichung verschoben werden (im CHANGELOG nachverfolgen)
 
 ### Datenbankmigrationen
@@ -201,7 +201,7 @@ Breaking Changes: `BREAKING CHANGE:`-Footer oder `!` nach dem Scope hinzufügen 
   - [ ] Jede Migration ist idempotent (`CREATE TABLE IF NOT EXISTS` usw.)
   - [ ] Migrationen sind in Transaktionen eingeschlossen
   - [ ] Korrekt nummeriert (keine Lücken in der Reihenfolge)
-- [ ] Mit einer Neuinstallation testen: `~/.omniroute/omniroute.db` löschen und `npm run dev` ausführen
+- [ ] Mit einer Neuinstallation testen: `~/.pusula/pusula.db` löschen und `npm run dev` ausführen
 - [ ] Mit einer bestehenden Installation testen: Datenbank sichern, Migration ausführen und Schema überprüfen
 - [ ] WAL-Dateien (`-wal`, `-shm`) werden korrekt behandelt, falls die Migration Tabellen neu schreibt
 
@@ -236,7 +236,7 @@ Das Repository verwendet drei unterschiedliche Ausgabeverzeichnisse — diese d�
 | `.build/`   | Build-Zwischenergebnisse — Ausgabe von `next build` (`distDir`) | Nein (von Git ignoriert) |
 | `dist/`     | Auslieferbares npm-Paket — erstellt durch `assembleStandalone`  | Nein (von Git ignoriert) |
 
-> **Hinweis für den Betrieb:** Das Image-Verzeichnis auf dem entfernten VPS bleibt `/usr/lib/node_modules/omniroute/app/`.
+> **Hinweis für den Betrieb:** Das Image-Verzeichnis auf dem entfernten VPS bleibt `/usr/lib/node_modules/pusula/app/`.
 > Nur die Build-Ausgabe **im Repository** wurde verschoben (`app/` → `dist/`). Die Deployment-Skills übertragen
 > den Inhalt von `dist/` per rsync in das entfernte Verzeichnis `app/` — Änderungen an VPS-Pfaden sind nicht erforderlich.
 
@@ -356,12 +356,12 @@ Vor der Veröffentlichung eines Releases, das Änderungen an eingebetteten Diens
 
 Vor der Veröffentlichung eines v3.8.x-Releases diese zusätzlichen Punkte überprüfen:
 
-- [ ] `omniroute --tray` startet unter macOS (systray2 wurde in `~/.omniroute/runtime/` installiert)
-- [ ] `omniroute --tray` startet unter Linux (erfordert DISPLAY; verständliche Fehlermeldung, falls nicht gesetzt)
-- [ ] `omniroute --tray` startet unter Windows (PowerShell NotifyIcon, keine zusätzlichen Binärdateien)
-- [ ] `omniroute config tray enable` erstellt einen Autostart-Eintrag; das Deaktivieren entfernt ihn
-- [ ] `npm install -g omniroute@<this-version>` führt postinstall ohne fatalen Abbruch aus
-- [ ] Beim Aktualisieren bleiben optionale Abhängigkeiten erhalten: `omniroute update --apply` und der Auto-Updater
+- [ ] `pusula --tray` startet unter macOS (systray2 wurde in `~/.pusula/runtime/` installiert)
+- [ ] `pusula --tray` startet unter Linux (erfordert DISPLAY; verständliche Fehlermeldung, falls nicht gesetzt)
+- [ ] `pusula --tray` startet unter Windows (PowerShell NotifyIcon, keine zusätzlichen Binärdateien)
+- [ ] `pusula config tray enable` erstellt einen Autostart-Eintrag; das Deaktivieren entfernt ihn
+- [ ] `npm install -g pusula@<this-version>` führt postinstall ohne fatalen Abbruch aus
+- [ ] Beim Aktualisieren bleiben optionale Abhängigkeiten erhalten: `pusula update --apply` und der Auto-Updater
       führen `npm install -g … --include=optional` aus, sodass `optionalDependencies` (better-sqlite3,
       keytar, tls-client und der llmlingua-SLM-Stack: `@atjsh/llmlingua-2@2.0.5`,
       `js-tiktoken`) eine Aktualisierung überstehen. Die ultra-`modelPath`-SLM-Stufe benötigt außerdem das
@@ -371,13 +371,13 @@ Vor der Veröffentlichung eines v3.8.x-Releases diese zusätzlichen Punkte über
       auflöst — der eigenständige Trace bündelt nur transformers, nicht die dynamisch importierten
       optionalen Abhängigkeiten. Ohne diesen Schritt würde der Worker llmlingua-2 mit transformers aus dem Stammverzeichnis laden
       und die SLM-Stufe würde unbemerkt im Fail-Open-Modus ausfallen.
-- [ ] `omniroute status` funktioniert ohne `.env` (CLI-Token-Pfad, nur Loopback)
+- [ ] `pusula status` funktioniert ohne `.env` (CLI-Token-Pfad, nur Loopback)
 - [ ] `curl http://localhost:20128/api/shutdown` gibt den Status 401 zurück (immer geschützte Route)
 - [ ] `curl -H "host: evil.com" http://localhost:20128/api/mcp/sse` gibt den Status 401 zurück (Loopback-Schutz)
 - [ ] Die SQLite-Laufzeitumgebung wird beim ersten Start zu `bundled` aufgelöst (gebündelte Binärdatei ist für die Plattform gültig)
 - [ ] Die SQLite-Laufzeitumgebung fällt auf `runtime` zurück, wenn `node_modules/better-sqlite3` gelöscht wird
 - [ ] Der intelligente MCP-Filter komprimiert die reale Ausgabe von `playwright-mcp browser_snapshot` (Reduzierung um ≥50 %)
-- [ ] Alle 10 Dateien unter `skills/omniroute*/SKILL.md` sind öffentlich über eine rohe GitHub-URL abrufbar
+- [ ] Alle 10 Dateien unter `skills/pusula*/SKILL.md` sind öffentlich über eine rohe GitHub-URL abrufbar
 - [ ] Der Onboarding-Assistent zeigt bei einer neuen Einrichtung den Stufenüberblick „How It Works“ an
 - [ ] Das Widget zur Stufenabdeckung im Start-Dashboard zeigt die Anzahl konfigurierter/aktiver Stufen an
 

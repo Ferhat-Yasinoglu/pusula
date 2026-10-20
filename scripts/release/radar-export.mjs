@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-// Gera o export estável do catálogo OmniRoute consumido pelo OmniRoute Radar
-// (`RADAR_EXPORT_URL` → `${DATA_DIR}/export-omniroute.json` no servidor privado).
+// Gera o export estável do catálogo Pusula consumido pelo Pusula Radar
+// (`RADAR_EXPORT_URL` → `${DATA_DIR}/export-pusula.json` no servidor privado).
 //
 // Por que existe: o servidor Radar (1 GB RAM na Akamai) NUNCA clona nem instala
-// o OmniRoute; ele só baixa este JSON de uma URL estável. Antes o export vinha
+// o Pusula; ele só baixa este JSON de uma URL estável. Antes o export vinha
 // do snapshot gravado no deploy, preso à máquina do operador. Este script roda
-// no CI do OmniRoute (que tem os módulos de catálogo + tsx), emite o export com
+// no CI do Pusula (que tem os módulos de catálogo + tsx), emite o export com
 // PROVENIÊNCIA e o workflow o publica como asset de release de URL fixa.
 //
 // Contrato do consumidor (`src/feed/exportSource.ts` no radar-server): exige
@@ -21,8 +21,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const DIR = path.dirname(fileURLToPath(import.meta.url));
-const REPO = path.resolve(DIR, "../.."); // …/OmniRoute
-const SAIDA = process.argv[2] || path.join(REPO, "export-omniroute.json");
+const REPO = path.resolve(DIR, "../.."); // …/Pusula
+const SAIDA = process.argv[2] || path.join(REPO, "export-pusula.json");
 
 const { FREE_MODEL_BUDGETS } = await import(
   path.join(REPO, "open-sse/config/freeModelCatalog.data.ts")

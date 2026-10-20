@@ -6,7 +6,7 @@
 
 ## Zusammenfassung
 
-OmniRoute unterstützt jetzt drei Relay-Modi für `/api/v1/relay/chat/completions`:
+Pusula unterstützt jetzt drei Relay-Modi für `/api/v1/relay/chat/completions`:
 
 - `ts`: Verwendet das TypeScript-Relay innerhalb des Prozesses.
 - `bifrost`: Erzwingt die Verwendung des Bifrost-Gateways.
@@ -40,17 +40,17 @@ Bei einer hohen Anfragerate (große Anzahl von Tokens pro Tag, nahezu konstanter
 Wenn Sie derzeit 9router und CLIPROXYAPI vergleichen:
 
 - Belassen Sie die Anfragesignierung, Allowlist-Prüfungen und DB-Richtlinienprüfungen vor der Übergabe in der API-Route.
-- Wenn ein Workflow ein striktes Sidecar-Verhalten und eine geringere Varianz pro Anfrage erfordert, verwenden Sie `OMNIROUTE_RELAY_BACKEND=bifrost`.
-- Wenn Sie Sidecar-Resilienz mit kontrollierter Leistungsreduzierung unter Störungsbedingungen benötigen, verwenden Sie `OMNIROUTE_RELAY_BACKEND=auto`.
+- Wenn ein Workflow ein striktes Sidecar-Verhalten und eine geringere Varianz pro Anfrage erfordert, verwenden Sie `PUSULA_RELAY_BACKEND=bifrost`.
+- Wenn Sie Sidecar-Resilienz mit kontrollierter Leistungsreduzierung unter Störungsbedingungen benötigen, verwenden Sie `PUSULA_RELAY_BACKEND=auto`.
 
 ## Vertrag der Backend-Grenze
 
-Die stabile Produktgrenze ist die OmniRoute-Relay-API, nicht die Dashboard-Implementierung. Das Next.js-Dashboard kann lokale Dienste installieren, konfigurieren und überwachen, aber das Anfrage-Routing sollte über die Relay-API erfolgen und hinter dieser Grenze übergeben werden.
+Die stabile Produktgrenze ist die Pusula-Relay-API, nicht die Dashboard-Implementierung. Das Next.js-Dashboard kann lokale Dienste installieren, konfigurieren und überwachen, aber das Anfrage-Routing sollte über die Relay-API erfolgen und hinter dieser Grenze übergeben werden.
 
 Langfristige Backend-Optionen:
 
 - Behalten Sie das TypeScript-Relay als prozessinternen Richtlinien- und Fallback-Pfad bei. Authentifizierung, Allowlists, Anfragenormalisierung, Abrechnung und Sicherheitsprüfungen verbleiben hier, bevor eine Übergabe an ein Backend erfolgt.
-- Verwenden Sie Bifrost als bevorzugten Tier-1-Sidecar mit hohem Durchsatz, wenn die Bereitstellung eine geringere Routing-Varianz, eine zentralisierte Provider-Rotation oder eine horizontale Skalierung über mehrere OmniRoute-Replikate hinweg erfordert.
+- Verwenden Sie Bifrost als bevorzugten Tier-1-Sidecar mit hohem Durchsatz, wenn die Bereitstellung eine geringere Routing-Varianz, eine zentralisierte Provider-Rotation oder eine horizontale Skalierung über mehrere Pusula-Replikate hinweg erfordert.
 - Behalten Sie 9router und CLIPROXYAPI als eingebettete Kompatibilitätsdienste bei. Sie werden als überwachte lokale Prozesse ausgeführt und sind sinnvoll, wenn ihr Provider-/CLI-Verhalten dem gewünschten Adapter entspricht. Sie sollten jedoch nicht zur standardmäßigen Tier-1-Routing-Engine werden.
 - Lassen Sie das Dashboard keine beliebigen Service-URLs an den Hauptpfad übergeben. Von der Benutzeroberfläche bereitgestellte URLs sind Konfigurationseingaben. Der Routing-Code sollte registrierte, zustandsgeprüfte Backends anhand serverseitiger Einstellungen und des Supervisor-Status auflösen.
 - Bevorzugen Sie derzeit Loopback-HTTP für überwachte Dienste, da die verwalteten Prozesse bereits HTTP-kompatible APIs bereitstellen, der Route-Guard die Grenze prüfen kann und das Fehler-/Fallback-Verhalten in den Anfragelogs sichtbar ist. Ein zukünftiger SDK- oder Socket-Transport lohnt sich nur, wenn er die p99-Routing-Latenz messbar reduziert, ohne die Isolation oder die Fallback-Semantik zu schwächen.
@@ -69,7 +69,7 @@ Für dauerhaft hohe RPM/RPS und ein striktes Erfolgs-SLO:
 
 ## Empfohlene Basiskonfiguration
 
-- `OMNIROUTE_RELAY_BACKEND=auto`
+- `PUSULA_RELAY_BACKEND=auto`
 - `BIFROST_ENABLED=1`
 - Lassen Sie API-Schlüssel-, Allowlist-, Sanitizer- und Ratenbegrenzungsprüfungen in den Route-Handlern aktiviert; sie werden immer vor der Weiterleitung an nachgelagerte Systeme ausgeführt.
 - Exportieren Sie Fallback-Metriken aus Ihrem Reverse-Proxy und den Anfragelogs, damit Sidecar-Ausfälle innerhalb einer Minute sichtbar werden.

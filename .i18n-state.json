@@ -422,7 +422,7 @@
         }
       }
     },
-    "docs/OMNIROUTE_ALLOCATION_HANDOFF.md": {
+    "docs/PUSULA_ALLOCATION_HANDOFF.md": {
       "source_hash": "8cd564ba6ac1124ffeb9d814aca1f48474abfb4769831d34f6669dc6297f2ee7",
       "locales": {
         "de": {
@@ -451,7 +451,7 @@
         }
       }
     },
-    "docs/OMNIROUTE_PROVIDER_FAILOVER.md": {
+    "docs/PUSULA_PROVIDER_FAILOVER.md": {
       "source_hash": "6fa6e3b466b9a682ef9e9591d03cf4e6c6affc2c02da5d7b7569a142d55a0b43",
       "locales": {
         "de": {
@@ -480,7 +480,7 @@
         }
       }
     },
-    "docs/OMNIROUTE_QUOTA_TELEMETRY.md": {
+    "docs/PUSULA_QUOTA_TELEMETRY.md": {
       "source_hash": "6a4983441e4d0f21d61de35841d265d96668153938f633650fbf6bee96d473a4",
       "locales": {
         "de": {
@@ -512,7 +512,7 @@
         }
       }
     },
-    "docs/OMNIROUTE_ROUTING_POLICY.md": {
+    "docs/PUSULA_ROUTING_POLICY.md": {
       "source_hash": "0415e6018749665e40b55a5374340126a793e616c1df2b35a3e9c13464014feb",
       "locales": {
         "de": {
@@ -1241,7 +1241,7 @@
         }
       }
     },
-    "docs/comparison/OMNIROUTE_VS_ALTERNATIVES.md": {
+    "docs/comparison/PUSULA_VS_ALTERNATIVES.md": {
       "source_hash": "aae288a51e3df2b8a5386bb53711148e0e8783dfdf93ce4e105c87b282e10bc8",
       "locales": {
         "de": {

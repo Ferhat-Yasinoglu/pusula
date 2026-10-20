@@ -8,7 +8,7 @@ import { generateKeyPair, exportJWK, SignJWT } from "jose";
 // NOTE: Dynamic imports below are used (with comment) solely because the modules read process.env at evaluation time.
 // The specifiers are literals. This is the established pattern in this repo's auth tests for env-controlled DB setup.
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-oidc-callback-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-oidc-callback-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.JWT_SECRET = "test-jwt-secret-for-oidc-callback";
 

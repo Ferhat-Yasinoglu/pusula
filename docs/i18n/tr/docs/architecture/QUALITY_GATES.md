@@ -4,7 +4,7 @@
 
 ---
 
-Bu belge, OmniRoute'taki tüm CI kalite kapıları için yetkili referanstır.
+Bu belge, Pusula'taki tüm CI kalite kapıları için yetkili referanstır.
 Her kapıyı, neyi doğruladığını, hangi CI işinde çalıştığını, bir ratchet temel çizgisi mi
 yoksa geçti/kaldı politikası mı kullandığını ve derlemeyi engelleyip engellemediğini ya da yalnızca danışman niteliğinde olup olmadığını açıklar.
 
@@ -28,7 +28,7 @@ danışma amaçlı üretim derlemesi sinyaliyle sürdürür:
 
 | İş                                               | Kapsam                                                                                                                                                                                                                           | Engelleyici                                                                                                       |
 | ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `Build (advisory)`                               | Taslak olmayan kod PR'ları ve Mergify kuyruk dalları; Node 24, `npm-ci-retry`, `check:node-runtime`, `OMNIROUTE_USE_TURBOPACK=1` ile `npm run build`; aşağı akıştaki hiçbir kalite işi kullanmadığından yapıt yüklemesi yapılmaz | **Danışma amaçlı** (`continue-on-error: true`; bir haftalık kararlı sürüm PR'ı çalıştırmalarından sonra kaldırın) |
+| `Build (advisory)`                               | Taslak olmayan kod PR'ları ve Mergify kuyruk dalları; Node 24, `npm-ci-retry`, `check:node-runtime`, `PUSULA_USE_TURBOPACK=1` ile `npm run build`; aşağı akıştaki hiçbir kalite işi kullanmadığından yapıt yüklemesi yapılmaz | **Danışma amaçlı** (`continue-on-error: true`; bir haftalık kararlı sürüm PR'ı çalıştırmalarından sonra kaldırın) |
 | `Docs Gates (fast-path)`                         | Belge/kod PR'ları; API belgeleri referansları ve docs-all                                                                                                                                                                        | Evet                                                                                                              |
 | `Fast Quality Gates`                             | Kod PR'ları; statik denetimler, tür denetimi, gösterge paneli tür denetimi, etkilenen birim testleri                                                                                                                             | Evet                                                                                                              |
 | `Forgotten sibling tests`                        | Kod PR'ları; değiştirilen modüllerden statik tüketicilere ve aday kardeş testlere izleme; varil ve dinamik içe aktarma yolları, başvurulan izin listesi istisnalarıyla birlikte danışma amaçlı tanılamalar olarak raporlanır     | **Danışma amaçlı**                                                                                                |
@@ -231,7 +231,7 @@ Bunlar bir cron zamanlamasıyla (ve `workflow_dispatch` ile) çalışır, PR'lar
 | `nightly-property`     | rastgele tohum ve yüksek çalıştırma sayısıyla fast-check özellik testleri                                                                                                            | **Tavsiye niteliğinde** |
 | `nightly-resilience`   | yığın büyümesi geçidi, kaos hata enjeksiyonu, k6 yük/uzun süreli yük testi                                                                                                           | **Tavsiye niteliğinde** |
 | `nightly-llm-security` | promptfoo enjeksiyon koruması (engelleme modu) + garak probları (sağlayıcı gizli anahtarı olmadan atlanır)                                                                           | **Tavsiye niteliğinde** |
-| `nightly-schemathesis` | `docs/openapi.yaml` kullanarak canlı bir OmniRoute'a karşı OpenAPI sözleşme fuzz testi (schemathesis) — spesifikasyon ihlallerini / işlenmemiş 500'leri ortaya çıkarır (Aşama 8 B.4) | **Tavsiye niteliğinde** |
+| `nightly-schemathesis` | `docs/openapi.yaml` kullanarak canlı bir Pusula'a karşı OpenAPI sözleşme fuzz testi (schemathesis) — spesifikasyon ihlallerini / işlenmemiş 500'leri ortaya çıkarır (Aşama 8 B.4) | **Tavsiye niteliğinde** |
 | `nightly-mutation`     | hızlı birim hattında Stryker mutasyon testi puanı — hayatta kalan mutantlar zayıf assert'leri ortaya çıkarır                                                                         | **Tavsiye niteliğinde** |
 | `nightly-compat`       | desteklenen `engines.node` aralıkları genelinde Node motoru uyumluluk matrisi                                                                                                        | **Tavsiye niteliğinde** |
 
@@ -332,7 +332,7 @@ uygulama bekleniyor).
 ### CodeQL ratchet: yenileme sıklığı ve manuel tetikleme
 
 `check:codeql-ratchet`, **her PR için değil, bir zamanlamaya göre yenilenen depo durumunu okur.**
-`gh api repos/diegosouzapw/OmniRoute/code-scanning/default-setup`, `state: configured`,
+`gh api repos/Ferhat-Yasinoglu/pusula/code-scanning/default-setup`, `state: configured`,
 `schedule: weekly` bildirir: bu, gönderim başına analiz değil, GitHub'ın varsayılan kurulum
 taramasıdır. Sonuç olarak: uyarıları DÜZELTEN bir PR birleştirildikten sonra ratchet, bir sonraki
 zamanlanmış tarama çalışana kadar eski ve daha yüksek sayıyı okumaya devam eder; dolayısıyla tarama
@@ -485,7 +485,7 @@ izin listesine sahip yeşil bir geçit, sahte bir kalite algısı yaratır.
 
 ## Ajan araçları: Döngü içinde LSP (isteğe bağlı)
 
-CI geçitlerine ek olarak OmniRoute, **isteğe bağlı** bir `agent-lsp` iskeleti
+CI geçitlerine ek olarak Pusula, **isteğe bağlı** bir `agent-lsp` iskeleti
 (proje düzeyinde bir `.mcp.json`, Aşama 7 Görev 15) sunar. Kodlama ajanlarına bir TypeScript dil sunucusu
 sağlamak için `.mcp.json` oluşturun; böylece ajanlar kod yazmadan **önce** sembolleri /
 tanılamaları çözümler — bu, `typecheck:core` için derle-önce-iddia-et yaklaşımını destekleyen
@@ -587,7 +587,7 @@ daha sonra sürüm ucunda herkes için başarısız oldu (pt-BR %3,2 > %2,5 + %0
 çeviri olarak değerlendirilir. Kırmızı durumu
 `node scripts/i18n/sync-ui-keys.mjs --locale=<codes> --translate-markers --batch-size=40` ile veya
 `npm run i18n:translate-new-keys` (`scripts/i18n/translate-new-keys.sh`, bağlantıdan bağımsız çalışabilir,
-`OMNIROUTE_TRANSLATION_*` ortam değişkenleri olmadan başlamayı reddeder) kullanarak tüm yerel ayarlarda
+`PUSULA_TRANSLATION_*` ortam değişkenleri olmadan başlamayı reddeder) kullanarak tüm yerel ayarlarda
 paralel biçimde düzeltin. İngilizce kalması gereken bir anahtar (sabitlenmiş ürün/motor/bayrak adı),
 hiçbir zaman bir işaretçinin arkasında değil, `scripts/i18n/untranslatable-keys.json` içinde yer almalıdır.
 `vi`, işaretçileri tamamen yasaklar (`tests/unit/i18n-vi-completeness.test.ts`).

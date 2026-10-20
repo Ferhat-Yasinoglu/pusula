@@ -81,10 +81,10 @@ jobs:
       # heavier still under Node 26. Use the documented webpack fallback here: it still
       # validates that the app *builds* on Node 26 (the point of this compat job) at a
       # much lower memory peak. Turbopack-on-Node-24 stays covered by ci.yml's build
-      # job. See docs/reference/ENVIRONMENT.md (OMNIROUTE_USE_TURBOPACK) and #6409.
+      # job. See docs/reference/ENVIRONMENT.md (PUSULA_USE_TURBOPACK) and #6409.
       - run: npm run build
         env:
-          OMNIROUTE_USE_TURBOPACK: "0"
+          PUSULA_USE_TURBOPACK: "0"
 
   compat-tests:
     name: Node ${{ matrix.node }} Compat Tests (${{ matrix.shard }}/4)

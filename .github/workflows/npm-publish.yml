@@ -138,17 +138,17 @@ jobs:
           #    `npm view` — it suppresses stdout and breaks the grep, which
           #    caused old releases (3.2.8) to be re-published and steal
           #    dist-tag `latest`. See incident notes in CHANGELOG.
-          PUBLISHED="$(npm view "omniroute@${VERSION}" version 2>/dev/null || true)"
+          PUBLISHED="$(npm view "pusula@${VERSION}" version 2>/dev/null || true)"
           SKIP="false"
           if [ "$PUBLISHED" = "$VERSION" ]; then
-            echo "⚠️ omniroute@${VERSION} is already on npm — skipping publish."
+            echo "⚠️ pusula@${VERSION} is already on npm — skipping publish."
             SKIP="true"
           fi
 
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "tag=$TAG"          >> "$GITHUB_OUTPUT"
           echo "skip=$SKIP"        >> "$GITHUB_OUTPUT"
-          echo "📦 Resolved omniroute@$VERSION dist-tag=$TAG skip=$SKIP"
+          echo "📦 Resolved pusula@$VERSION dist-tag=$TAG skip=$SKIP"
 
       - name: Sync package.json version
         if: steps.resolve.outputs.skip != 'true'
@@ -237,16 +237,16 @@ jobs:
       # `build:cli` assembles dist/ but does NOT write dist/BUILD_SHA — only
       # `build:release` does, by calling write-build-sha.mjs. The #10427 provenance
       # guard inside check:pack-artifact rejects an artifact with no SHA (and rejects
-      # it even under OMNIROUTE_ALLOW_CANARY_BUILD=1: what cannot be identified cannot
+      # it even under PUSULA_ALLOW_CANARY_BUILD=1: what cannot be identified cannot
       # be vouched for). Without this step the build+validate pair in this job is
       # structurally incompatible and fails 100% of the time — the same gap that was
       # fixed in ci.yml's Package Artifact job.
       - name: Stamp dist/BUILD_SHA for the provenance guard (#10427)
         if: steps.resolve.outputs.skip != 'true'
         env:
-          OMNIROUTE_BUILD_SHA: ${{ github.sha }}
+          PUSULA_BUILD_SHA: ${{ github.sha }}
         run: |
-          export OMNIROUTE_BUILD_SHA="${OMNIROUTE_BUILD_SHA:0:7}"
+          export PUSULA_BUILD_SHA="${PUSULA_BUILD_SHA:0:7}"
           node scripts/build/write-build-sha.mjs
 
       # The guard checks ancestry against origin/main by default, which is correct
@@ -346,7 +346,7 @@ jobs:
           # --ignore-scripts: prepublishOnly would re-run build:cli-api && build:cli,
           # rebuilding bytes this job has already built, validated and boot-smoked.
           npm pack --ignore-scripts
-          TARBALL="omniroute-${VERSION}.tgz"
+          TARBALL="pusula-${VERSION}.tgz"
           test -f "$TARBALL" || { echo "expected $TARBALL to exist after npm pack" >&2; ls -la ./*.tgz || true; exit 1; }
           echo "packed $TARBALL ($(du -h "$TARBALL" | cut -f1))"
 
@@ -355,7 +355,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: npm-tarball
-          path: omniroute-${{ steps.resolve.outputs.version }}.tgz
+          path: pusula-${{ steps.resolve.outputs.version }}.tgz
           retention-days: 1
           if-no-files-found: error
 
@@ -369,9 +369,9 @@ jobs:
           set -euo pipefail
           echo "Configuring for GitHub Packages..."
           echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > .npmrc
-          npm pkg set name="@diegosouzapw/omniroute"
+          npm pkg set name="@ferhat-yasinoglu/pusula"
           npm publish --registry=https://npm.pkg.github.com --tag "$TAG" \
-            || echo "⚠️ omniroute@${VERSION} might already be published on GitHub Packages."
+            || echo "⚠️ pusula@${VERSION} might already be published on GitHub Packages."
           echo "✅ Action finished for GitHub Packages"
 
   # npm REFUSES `--provenance` from a self-hosted runner:
@@ -421,7 +421,7 @@ jobs:
       # GitHub's id-token — no NPM_TOKEN secret, no 2FA prompt, provenance included, and
       # it is the bypass npm sanctions now that tokens which skip 2FA are being retired
       # (gh.io/npm-gat-bypass2fa-deprecation). Requires the package's Trusted Publisher to
-      # be configured on npmjs.com (owner: diegosouzapw/OmniRoute, workflow
+      # be configured on npmjs.com (owner: Ferhat-Yasinoglu/pusula, workflow
       # npm-publish.yml) and a github-hosted runner — which is why this job exists.
       # Without that configuration `npm publish` fails with ENEEDAUTH: re-dispatch with
       # publish_mode=staged or direct. Automatic publishing was the flow up to v3.8.48;
@@ -434,13 +434,13 @@ jobs:
           TAG: ${{ needs.publish.outputs.tag }}
         run: |
           set -euo pipefail
-          TARBALL="omniroute-${VERSION}.tgz"
+          TARBALL="pusula-${VERSION}.tgz"
           test -f "$TARBALL" || { echo "tarball $TARBALL did not arrive from the publish job" >&2; ls -la; exit 1; }
           # Deliberately NO NODE_AUTH_TOKEN in this step: npm >= 11.5 detects the GitHub
           # OIDC token itself. Always pass --tag explicitly (defense in depth: an older
           # VERSION can never claim `@latest`).
           npm publish "$TARBALL" --provenance --access public --tag "$TAG" --ignore-scripts
-          echo "✅ Published omniroute@$VERSION (dist-tag=$TAG) via Trusted Publishing"
+          echo "✅ Published pusula@$VERSION (dist-tag=$TAG) via Trusted Publishing"
 
       - name: Publish to npm (staged — owner approves with 2FA)
         # Only on an explicit request now: Trusted Publishing below is the default.
@@ -451,7 +451,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           set -euo pipefail
-          TARBALL="omniroute-${VERSION}.tgz"
+          TARBALL="pusula-${VERSION}.tgz"
           test -f "$TARBALL" || { echo "tarball $TARBALL did not arrive from the publish job" >&2; ls -la; exit 1; }
           # Always pass --tag explicitly. Defense in depth: even if VERSION is
           # accidentally an older release, the historic tag will NOT claim `@latest`.
@@ -459,18 +459,18 @@ jobs:
           # prepublishOnly (build:cli-api && build:cli) on this small runner.
           npm stage publish "$TARBALL" --provenance --access public --tag "$TAG" --ignore-scripts
           {
-            echo "## 📦 omniroute@$VERSION STAGED (not yet installable)"
+            echo "## 📦 pusula@$VERSION STAGED (not yet installable)"
             echo ""
             echo "The exact bytes are parked on the registry. To release them:"
             echo '```'
-            echo "npm stage list omniroute            # find the stage id"
+            echo "npm stage list pusula            # find the stage id"
             echo "npm stage approve <id>              # owner 2FA — THE publish"
             echo '```'
             echo "To verify the staged bytes first: npm stage download <id> → run"
             echo "scripts/check/check-pack-boot.mjs against them (see RELEASE_CHECKLIST)."
             echo "To discard: npm stage reject <id>."
           } >> "$GITHUB_STEP_SUMMARY"
-          echo "✅ Staged omniroute@$VERSION (dist-tag=$TAG) — awaiting owner 'npm stage approve'"
+          echo "✅ Staged pusula@$VERSION (dist-tag=$TAG) — awaiting owner 'npm stage approve'"
 
       - name: Publish to npm (DIRECT — emergency fallback)
         if: github.event_name == 'workflow_dispatch' && inputs.publish_mode == 'direct'
@@ -480,10 +480,10 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           set -euo pipefail
-          TARBALL="omniroute-${VERSION}.tgz"
+          TARBALL="pusula-${VERSION}.tgz"
           test -f "$TARBALL" || { echo "tarball $TARBALL did not arrive from the publish job" >&2; ls -la; exit 1; }
           npm publish "$TARBALL" --provenance --access public --tag "$TAG" --ignore-scripts
-          echo "✅ Published omniroute@$VERSION (dist-tag=$TAG) [DIRECT mode]"
+          echo "✅ Published pusula@$VERSION (dist-tag=$TAG) [DIRECT mode]"
 
   publish-opencode-plugin:
     runs-on: ubuntu-latest
@@ -506,7 +506,7 @@ jobs:
 
       - name: Auto-bump plugin version if plugin changed since last release
         id: bump
-        working-directory: "@omniroute/opencode-plugin"
+        working-directory: "@pusula/opencode-plugin"
         env:
           CURRENT_TAG: ${{ github.ref_name }}
         run: |
@@ -533,7 +533,7 @@ jobs:
           fi
 
           # 3) Check if plugin dir actually changed since that tag
-          if git diff --quiet "$PREV_TAG" -- "@omniroute/opencode-plugin/"; then
+          if git diff --quiet "$PREV_TAG" -- "@pusula/opencode-plugin/"; then
             echo "⏭️ No plugin changes since $PREV_TAG — nothing to publish."
             echo "bumped=false" >> "$GITHUB_OUTPUT"
             exit 0
@@ -546,19 +546,19 @@ jobs:
           echo "📦 Auto-bumped ${PKG_NAME} from ${PKG_VERSION} to ${NEW_VERSION}"
 
       - name: Install plugin dependencies
-        working-directory: "@omniroute/opencode-plugin"
+        working-directory: "@pusula/opencode-plugin"
         run: npm install --no-audit --no-fund
 
       - name: Build plugin
-        working-directory: "@omniroute/opencode-plugin"
+        working-directory: "@pusula/opencode-plugin"
         run: npm run clean && npm run build
 
       - name: Test plugin
-        working-directory: "@omniroute/opencode-plugin"
+        working-directory: "@pusula/opencode-plugin"
         run: npm test
 
-      - name: Publish @omniroute/opencode-plugin to npm
-        working-directory: "@omniroute/opencode-plugin"
+      - name: Publish @pusula/opencode-plugin to npm
+        working-directory: "@pusula/opencode-plugin"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
@@ -595,7 +595,7 @@ jobs:
 
       - name: Auto-bump plugin-v2 version if plugin-v2 changed since last release
         id: bump
-        working-directory: "@omniroute/opencode-plugin-v2"
+        working-directory: "@pusula/opencode-plugin-v2"
         env:
           CURRENT_TAG: ${{ github.ref_name }}
         run: |
@@ -622,7 +622,7 @@ jobs:
           fi
 
           # 3) Check if plugin-v2 dir actually changed since that tag
-          if git diff --quiet "$PREV_TAG" -- "@omniroute/opencode-plugin-v2/"; then
+          if git diff --quiet "$PREV_TAG" -- "@pusula/opencode-plugin-v2/"; then
             echo "⏭️ No plugin-v2 changes since $PREV_TAG — nothing to publish."
             echo "bumped=false" >> "$GITHUB_OUTPUT"
             exit 0
@@ -635,19 +635,19 @@ jobs:
           echo "📦 Auto-bumped ${PKG_NAME} from ${PKG_VERSION} to ${NEW_VERSION}"
 
       - name: Install plugin-v2 dependencies
-        working-directory: "@omniroute/opencode-plugin-v2"
+        working-directory: "@pusula/opencode-plugin-v2"
         run: npm install --no-audit --no-fund
 
       - name: Build plugin-v2
-        working-directory: "@omniroute/opencode-plugin-v2"
+        working-directory: "@pusula/opencode-plugin-v2"
         run: npm run clean && npm run build
 
       - name: Test plugin-v2
-        working-directory: "@omniroute/opencode-plugin-v2"
+        working-directory: "@pusula/opencode-plugin-v2"
         run: npm test
 
-      - name: Publish @omniroute/opencode-plugin-v2 to npm
-        working-directory: "@omniroute/opencode-plugin-v2"
+      - name: Publish @pusula/opencode-plugin-v2 to npm
+        working-directory: "@pusula/opencode-plugin-v2"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |

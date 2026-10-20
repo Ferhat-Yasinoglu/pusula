@@ -312,7 +312,7 @@ const CLI_TOOLS: Record<string, any> = {
     },
   },
   // Config path reconciled with bin/cli/commands/setup-crush.mjs::resolveCrushTarget's
-  // default (~/.config/crush/crush.json) so the dashboard and `omniroute setup-crush`
+  // default (~/.config/crush/crush.json) so the dashboard and `pusula setup-crush`
   // agree on one canonical config location.
   crush: {
     defaultCommand: "crush",
@@ -341,7 +341,7 @@ const CLI_TOOLS: Record<string, any> = {
 
 /**
  * 5dive's state dir. 5dive itself reads `STATE_DIR` (default /var/lib/5dive);
- * that name is too generic to consume from OmniRoute's environment, so we take
+ * that name is too generic to consume from Pusula's environment, so we take
  * an explicit override and otherwise use the same default.
  */
 export const getFivediveStateDir = (): string =>
@@ -1094,7 +1094,7 @@ export const ensureCliConfigWriteAllowed = (
     return "CLI config writes are disabled (CLI_ALLOW_CONFIG_WRITES=false)";
   }
   if (!targetPath) return null;
-  if (parseBoolean(process.env.OMNIROUTE_ALLOW_CONTAINER_CONFIG_WRITE, false)) return null;
+  if (parseBoolean(process.env.PUSULA_ALLOW_CONTAINER_CONFIG_WRITE, false)) return null;
   if (!describeContainerTarget(targetPath, options.containerDeps).ephemeral) return null;
   return buildContainerWriteRefusal(targetPath, {
     toolLabel: options.toolLabel,

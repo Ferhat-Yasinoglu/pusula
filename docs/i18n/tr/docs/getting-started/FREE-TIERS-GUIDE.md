@@ -4,7 +4,7 @@
 
 ---
 
-> **Kısaca**: OmniRoute, **`hasFree` olarak işaretlenmiş 152 sağlayıcı kataloğu girdisiyle** 357 sağlayıcı kimliği kaydeder. Daha sıkı şekilde denetlenmiş ücretsiz model kataloğu, **35 yinelenen havuz anahtarını / 482 girdiyi** (475 etkin + 7 kullanımdan kaldırılmış) kapsar. Daha geniş yedek kapasitesi için uygun birkaç sağlayıcıyı bağlayın; tüm kota, onay kuralı, gizlilik politikası ve ücretli kota aşımı koşulları geçerliliğini korur.
+> **Kısaca**: Pusula, **`hasFree` olarak işaretlenmiş 152 sağlayıcı kataloğu girdisiyle** 357 sağlayıcı kimliği kaydeder. Daha sıkı şekilde denetlenmiş ücretsiz model kataloğu, **35 yinelenen havuz anahtarını / 482 girdiyi** (475 etkin + 7 kullanımdan kaldırılmış) kapsar. Daha geniş yedek kapasitesi için uygun birkaç sağlayıcıyı bağlayın; tüm kota, onay kuralı, gizlilik politikası ve ücretli kota aşımı koşulları geçerliliğini korur.
 
 ---
 
@@ -15,7 +15,7 @@ kimlik doğrulaması gerektirmeyen bir uç nokta, yinelenen kota, hız sınırla
 manuel onay veya geçici bir promosyon anlamına gelebilir. Bazı seçenekler hesap, API anahtarı,
 kredi kartı, KYC veya sağlayıcıya özgü koşulların kabulünü gerektirir.
 
-OmniRoute, bu ücretsiz katmanları tek bir uç noktada **bir araya getirir**. 10 farklı hizmete ayrı ayrı kaydolmak yerine hepsini OmniRoute'a bağlayabilir ve her istek için en iyi ücretsiz seçeneğin otomatik olarak belirlenmesi amacıyla `model: "auto"` kullanabilirsiniz.
+Pusula, bu ücretsiz katmanları tek bir uç noktada **bir araya getirir**. 10 farklı hizmete ayrı ayrı kaydolmak yerine hepsini Pusula'a bağlayabilir ve her istek için en iyi ücretsiz seçeneğin otomatik olarak belirlenmesi amacıyla `model: "auto"` kullanabilirsiniz.
 
 ---
 
@@ -61,7 +61,7 @@ Bu sağlayıcılar, belirli sınırlara sahip **ücretsiz katmanlar** sunar:
 
 ## Ücretsiz Katmanlar Nasıl Birleştirilir?
 
-OmniRoute'un sihri, **ücretsiz katmanları birleştirmesinde** yatar. Tek bir sağlayıcıya bağlı kalmak yerine birden fazla ücretsiz sağlayıcı bağlar ve OmniRoute'un her istek için en uygun olanı otomatik olarak seçmesini sağlarsınız.
+Pusula'un sihri, **ücretsiz katmanları birleştirmesinde** yatar. Tek bir sağlayıcıya bağlı kalmak yerine birden fazla ücretsiz sağlayıcı bağlar ve Pusula'un her istek için en uygun olanı otomatik olarak seçmesini sağlarsınız.
 
 ### Örnek: Daha Geniş Ücretsiz Katman Kapsamı
 
@@ -72,7 +72,7 @@ Tek bir kotaya bağımlılığı azaltmak için birkaç sağlayıcı bağlayın:
 3. **Pollinations** — anahtarsız, hız sınırlamalı erişim
 4. **LongCat** — tek seferlik kayıt hibesi (KYC gerektirir)
 
-Ardından `model: "auto"` kullanın; OmniRoute şunları yapar:
+Ardından `model: "auto"` kullanın; Pusula şunları yapar:
 
 - Önce en yüksek sıralamaya sahip uygun bağlantıyı dener
 - Bağlantının kotası tükenmişse veya durum denetimi başarısız olursa → yapılandırılmış bir sonraki sağlayıcıyı dener
@@ -117,7 +117,7 @@ Koşulları ve gizlilik modeli kullanım senaryonuza uygun olan birkaç sağlay�
 
 ## Katalog Nasıl Doğru Okunur?
 
-- `NOAUTH`, OmniRoute'un sizden sağlayıcı kimlik bilgisi istemediği anlamına gelir; çalışma süresini,
+- `NOAUTH`, Pusula'un sizden sağlayıcı kimlik bilgisi istemediği anlamına gelir; çalışma süresini,
   gizliliği veya sınırsız kapasiteyi garanti etmez.
 - `hasFree`, keşif meta verisidir. Yinelenen bir kotayı, anahtarsız erişimi,
   kayıt kredisini, onay programını veya promosyonu temsil edebilir.
@@ -130,15 +130,15 @@ Koşulları ve gizlilik modeli kullanım senaryonuza uygun olan birkaç sağlay�
 
 ---
 
-## OmniRoute Ücretsiz Katmanları Nasıl Daha İyi Hâle Getirir?
+## Pusula Ücretsiz Katmanları Nasıl Daha İyi Hâle Getirir?
 
 ### 1. Otomatik Geri Dönüş
 
-Bir ücretsiz sağlayıcı meşgulse veya çalışmıyorsa OmniRoute otomatik olarak bir sonrakini dener. Herhangi bir işlem yapmanız gerekmez.
+Bir ücretsiz sağlayıcı meşgulse veya çalışmıyorsa Pusula otomatik olarak bir sonrakini dener. Herhangi bir işlem yapmanız gerekmez.
 
 ### 2. Akıllı Yönlendirme
 
-OmniRoute, her istek için **en iyi ücretsiz sağlayıcıyı** şunlara göre seçer:
+Pusula, her istek için **en iyi ücretsiz sağlayıcıyı** şunlara göre seçer:
 
 - Hız — Şu anda en hızlı sağlayıcı hangisi?
 - Kalite — Bu görev için en iyi sağlayıcı hangisi?
@@ -146,13 +146,13 @@ OmniRoute, her istek için **en iyi ücretsiz sağlayıcıyı** şunlara göre s
 
 ### 3. Token Tasarrufu
 
-OmniRoute'un sıkıştırma işlem hattı, uygun istem ve araç çıktısı tokenlarının sayısını azaltabilir. Gerçek
+Pusula'un sıkıştırma işlem hattı, uygun istem ve araç çıktısı tokenlarının sayısını azaltabilir. Gerçek
 tasarruf; içeriğe, seçilen motorlara, sağlayıcının hesaplama yöntemine ve aslına uygunluk
 ayarlarına bağlıdır; sıkıştırma, her sağlayıcının kotasını sabit bir katsayıyla artırmaz.
 
 ### 4. Çoklu Hesap Desteği
 
-Sağlayıcı koşulları birden fazla hesaba veya kimlik bilgisine izin veriyorsa OmniRoute her
+Sağlayıcı koşulları birden fazla hesaba veya kimlik bilgisine izin veriyorsa Pusula her
 bağlantıyı ayrı bir yönlendirme adayı olarak değerlendirebilir. Bir sağlayıcının kotasını veya
 erişim politikasını aşmak amacıyla ek hesaplar oluşturmayın.
 
@@ -197,7 +197,7 @@ gereksinimlerinizi karşılıyorsa. Kritik iş yükleri izlenen ve sözleşme a�
 
 Ödünler arasında katı sınırlar, bekleme listeleri, KYC, kredi kartı doğrulaması, istemlerin eğitim için
 kullanılması, daha zayıf gizlilik, SLA olmaması, model değişkenliği, coğrafi kısıtlamalar, ücretli kota aşımı veya
-hesap politikası riski yer alabilir. OmniRoute kullanılabilir meta verileri gösterir; neyi etkinleştireceğinize siz karar verirsiniz.
+hesap politikası riski yer alabilir. Pusula kullanılabilir meta verileri gösterir; neyi etkinleştireceğinize siz karar verirsiniz.
 
 ### "Daha fazla ücretsiz kotayı nasıl edinebilirim?"
 
@@ -216,7 +216,7 @@ erişim sağlar ancak sınırlar, gecikme, gizlilik, güvenilirlik ve model sür
 
 ## Sırada Ne Var?
 
-- **[Otomatik Kombinasyon Kılavuzu](./AUTO-COMBO-GUIDE.md)** — OmniRoute'un sizin için en iyi yapay zekâyı seçmesine izin verin
+- **[Otomatik Kombinasyon Kılavuzu](./AUTO-COMBO-GUIDE.md)** — Pusula'un sizin için en iyi yapay zekâyı seçmesine izin verin
 - **[Sağlayıcılar Kılavuzu](./PROVIDERS-GUIDE.md)** — Daha fazla sağlayıcı bağlayın
 - **[Sorun Giderme](../guides/TROUBLESHOOTING.md)** — Yaygın sorunları düzeltin
 - **[Ücretsiz Katmanlar Referansı](../reference/FREE_TIERS.md)** — Ücretsiz katmanların tam listesi

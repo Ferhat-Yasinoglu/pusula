@@ -4,7 +4,7 @@
 
 ---
 
-فشردهسازی RTK موتور فشردهسازی آگاه از فرمان OmniRoute برای خروجی ترمینال و ابزارها است. این موتور
+فشردهسازی RTK موتور فشردهسازی آگاه از فرمان Pusula برای خروجی ترمینال و ابزارها است. این موتور
 برای نشستهای عامل کدنویسی طراحی شده است؛ نشستهایی که در آنها بیشتر رشد زمینه ناشی از گزارشهای تست، خروجی ساخت،
 نویز مدیر بسته، رونوشتهای پوسته، خروجی Docker، خروجی git و ردگیریهای پشته است.
 
@@ -17,7 +17,7 @@ rtk -> caveman
 این ترتیب ابتدا خروجی ماشینی پرنویز را فشرده میکند، سپس به Caveman اجازه میدهد نثر باقیمانده را خلاصه کند.
 
 RTK بالادستی صرفهجویی `60-90%` در خروجی فرمان را گزارش میکند. نشست نمونه در README آن از
-`~118,000` توکن استاندارد به `~23,900` توکن RTK کاهش مییابد که برابر با `79.7%` صرفهجویی (`~80%`) است. OmniRoute از
+`~118,000` توکن استاندارد به `~23,900` توکن RTK کاهش مییابد که برابر با `79.7%` صرفهجویی (`~80%`) است. Pusula از
 این میانگین بالادستی برای محاسبه صرفهجویی پشتهای همراه با فشردهسازی ورودی Caveman استفاده میکند:
 
 ```txt
@@ -54,7 +54,7 @@ RTK فیلترها را به ترتیب زیر بارگذاری میکند:
 2. فیلترهای سراسری از `DATA_DIR/rtk/filters.toml` و `DATA_DIR/rtk/filters.json`.
 3. فیلترهای داخلی از `open-sse/services/compression/engines/rtk/filters/`.
 
-در یک دامنه یکسان، فیلترهای schema v1 مربوط به RTK TOML بر فیلترهای JSON مربوط به OmniRoute اولویت دارند. عبارتهای TOML
+در یک دامنه یکسان، فیلترهای schema v1 مربوط به RTK TOML بر فیلترهای JSON مربوط به Pusula اولویت دارند. عبارتهای TOML
 `match_command` پیش از تطبیق نوع فرمان بررسی میشوند تا یک فیلتر واردشده مختص فرمان بتواند فیلتر گستردهتری را در همان دامنه
 بازنویسی کند. دامنه پروژه، صرفنظر از قالب فایل، همچنان بر دامنه سراسری اولویت دارد.
 
@@ -62,7 +62,7 @@ RTK فیلترها را به ترتیب زیر بارگذاری میکند:
 به عاملها را تغییر دهند. فایل فیلتر پروژه زمانی پذیرفته میشود که یکی از شرایط زیر برقرار باشد:
 
 - `rtkConfig.trustProjectFilters` برابر با `true` باشد.
-- `OMNIROUTE_RTK_TRUST_PROJECT_FILTERS=1` تنظیم شده باشد.
+- `PUSULA_RTK_TRUST_PROJECT_FILTERS=1` تنظیم شده باشد.
 - `.rtk/trust.json` شامل هش SHA-256 منطبق با فایل فیلتر پروژه باشد.
 
 نمونه فایل اعتماد:
@@ -83,7 +83,7 @@ RTK فیلترها را به ترتیب زیر بارگذاری میکند:
 
 ## سازگاری با طرحواره RTK TOML نسخه 1
 
-OmniRoute میتواند فایلهای فیلتر اعلانی را با استفاده از طرحواره RTK TOML نسخه 1 تجزیه، اعتبارسنجی، آزمایش و نصب کند.
+Pusula میتواند فایلهای فیلتر اعلانی را با استفاده از طرحواره RTK TOML نسخه 1 تجزیه، اعتبارسنجی، آزمایش و نصب کند.
 فیلدهای پشتیبانیشده عبارتاند از `description`، `match_command`، `strip_ansi`، `filter_stderr`،
 `strip_lines_matching`، `keep_lines_matching`، `replace`، `match_output`، `truncate_lines_at`،
 `head_lines`، `tail_lines`، `max_lines`، `on_empty` و تستهای درونخطی `[[tests.<filter>]]`.
@@ -92,7 +92,7 @@ OmniRoute میتواند فایلهای فیلتر اعلانی را با است
 قابل اعتبارسنجی است، اما نمیتوان آن را نصب یا بارگذاری کرد. شکست در بارگذاری فایل سفارشی همچنان
 بهصورت fail-open مدیریت میشود: فایل نامعتبر نادیده گرفته میشود و سایر فیلترها به کار خود ادامه میدهند.
 
-OmniRoute خروجی ابزار را پس از آن دریافت میکند که کلاینت آن را ثبت کرده است؛ بنابراین `filter_stderr = true`
+Pusula خروجی ابزار را پس از آن دریافت میکند که کلاینت آن را ثبت کرده است؛ بنابراین `filter_stderr = true`
 نمیتواند نحوه ثبت خروجی فرایند را تغییر دهد. این فیلد بهعنوان یک عملیات بیاثر پذیرفته میشود و اعتبارسنجی یک هشدار برمیگرداند.
 این قابلیت عمداً با عنوان **سازگاری با طرحواره RTK TOML نسخه 1** توصیف میشود، نه سازگاری کامل
 با فایل اجرایی RTK، هوکهای پوسته، پیادهسازیهای فرمان Rust یا چیدمان trust-store آن.
@@ -437,12 +437,12 @@ config.intensity === "aggressive" ? 16 : 24,
 
 **بهصورت برنامهنویسی**:
 
-`rtkEngine` (`@omniroute/open-sse/services/compression/engines/rtk`) یک
+`rtkEngine` (`@pusula/open-sse/services/compression/engines/rtk`) یک
 `CompressionEngine` است و متد `updateConfig` ندارد. در عوض، پیکربندی موتور را
 از طریق تابع کمکی registry بهروزرسانی کنید:
 
 ```ts
-import { updateEngineConfig } from "@omniroute/open-sse/services/compression/engines/registry";
+import { updateEngineConfig } from "@pusula/open-sse/services/compression/engines/registry";
 
 updateEngineConfig("rtk", { intensity: "aggressive" });
 ```
@@ -452,7 +452,7 @@ updateEngineConfig("rtk", { intensity: "aggressive" });
 برای اطمینان از ایمنبودن فیلتر در شدت انتخابی، از **دروازه تأیید** (پایین را ببینید) استفاده کنید:
 
 ```ts
-import { runRtkFilterTests } from "omniroute/compression/engines/rtk/verify";
+import { runRtkFilterTests } from "pusula/compression/engines/rtk/verify";
 
 const result = runRtkFilterTests({ intensity: "aggressive" });
 if (!result.passed) {
@@ -566,20 +566,20 @@ if (!result.passed) {
 فایل را در یکی از مکانهای شناختهشده قرار دهید:
 
 ```
-~/.omniroute/rtk/filters/my-filter.json     # سطح کاربر
+~/.pusula/rtk/filters/my-filter.json     # سطح کاربر
 <project>/.rtk/filters/my-filter.json      # سطح پروژه
 ```
 
 فیلترها هنگام راهاندازی، بهطور خودکار از طریق `loadRtkFilters()` در `open-sse/services/compression/engines/rtk/filterLoader.ts` بارگذاری میشوند. بارگذار، فیلترها را از مکانهای زیر پیدا میکند:
 
 - کاتالوگ داخلی: `open-sse/services/compression/engines/rtk/filters/`
-- دایرکتوری کاربر: `~/.omniroute/rtk/filters/`
+- دایرکتوری کاربر: `~/.pusula/rtk/filters/`
 - دایرکتوری پروژه: `<project>/.rtk/filters/`
 
 برای بارگذاری برنامهنویسیشدهٔ فیلترها:
 
 ```ts
-import { loadRtkFilters } from "@omniroute/open-sse/services/compression/engines/rtk/filterLoader";
+import { loadRtkFilters } from "@pusula/open-sse/services/compression/engines/rtk/filterLoader";
 
 // گزینهها: customFiltersEnabled (بارگذاری فیلترهای کاربر/پروژه، بهصورت پیشفرض فعال)،
 // trustProjectFilters، refresh.
@@ -658,7 +658,7 @@ RTK_FILTER_LOADER: filter "my-filter" failed validation:
 ### بازیابی نسخهٔ اصلی
 
 ```ts
-import { readRtkRawOutput } from "omniroute/compression/engines/rtk/rawOutput";
+import { readRtkRawOutput } from "pusula/compression/engines/rtk/rawOutput";
 
 const raw = readRtkRawOutput(pointerId); // pointerId از آمار فشردهسازی
 if (raw) {

@@ -15,12 +15,12 @@ const { parseDsmlToolCalls } = await import("../../open-sse/utils/dsmlToolCalls.
 const FW = "\u{FF5C}"; // full-width vertical line ｜
 
 test("parseDsmlToolCalls: complete <｜DSML｜:Tool>...</｜DSML｜:Tool> becomes a tool call", () => {
-  const content = `<${FW}DSML${FW}:Read>\n<path>images/omniroute.png</path>\n</${FW}DSML${FW}:Read>`;
+  const content = `<${FW}DSML${FW}:Read>\n<path>images/pusula.png</path>\n</${FW}DSML${FW}:Read>`;
   const result = parseDsmlToolCalls(content);
   assert.equal(result.toolCalls.length, 1, "one tool call extracted");
   assert.equal(result.toolCalls[0].function.name, "Read");
   assert.deepEqual(JSON.parse(result.toolCalls[0].function.arguments), {
-    path: "images/omniroute.png",
+    path: "images/pusula.png",
   });
   assert.equal(result.content.trim(), "", "no residual DSML in content");
 });

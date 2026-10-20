@@ -25,7 +25,7 @@ const { claudeToOpenAIRequest } =
 // The bilingual system-append feature rewrites/unshifts the index-0 system
 // message; blank it so role/content assertions are deterministic regardless
 // of the operator environment running the suite.
-delete process.env.OMNIROUTE_SYSTEM_INSTRUCTION_APPEND;
+delete process.env.PUSULA_SYSTEM_INSTRUCTION_APPEND;
 
 test("mid-conversation system roles are demoted to user with content preserved", () => {
   const body = {

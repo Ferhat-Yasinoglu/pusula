@@ -19,7 +19,7 @@
 import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
 
-process.env.OMNIROUTE_DISABLE_BACKGROUND_SERVICES = "1";
+process.env.PUSULA_DISABLE_BACKGROUND_SERVICES = "1";
 
 let startCleanupScheduler: () => void;
 let stopCleanupScheduler: () => void;

@@ -17,7 +17,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-terminal-cleanup-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-terminal-cleanup-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../src/lib/db/core.ts");
@@ -131,7 +131,7 @@ describe("deleteTerminalBatchesOlderThan", () => {
     assert.ok(getBatch(batch.id), "a non-terminal batch must never be swept, no matter how old");
   });
 
-  it("cleanupOldBatches() wraps the same behavior with the OMNIROUTE_BATCH_RETENTION_DAYS default, when BATCH_AND_FILE_AUTO_CLEANUP_ENABLED=true", async () => {
+  it("cleanupOldBatches() wraps the same behavior with the PUSULA_BATCH_RETENTION_DAYS default, when BATCH_AND_FILE_AUTO_CLEANUP_ENABLED=true", async () => {
     seedBatchWithCheckpoint({ column: "completed_at", ageDays: 40, status: "completed" });
 
     process.env.BATCH_AND_FILE_AUTO_CLEANUP_ENABLED = "true";

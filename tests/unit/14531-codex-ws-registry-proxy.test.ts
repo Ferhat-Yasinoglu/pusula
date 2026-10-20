@@ -19,10 +19,10 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-ws-registry-proxy-"));
+const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-ws-registry-proxy-"));
 process.env.DATA_DIR = dataDir;
 process.env.APP_LOG_TO_FILE = "false";
-process.env.OMNIROUTE_WS_BRIDGE_SECRET = "test-14531-bridge";
+process.env.PUSULA_WS_BRIDGE_SECRET = "test-14531-bridge";
 // Keep the env-var fallback out of the way so assertions see only stored config.
 delete process.env.HTTPS_PROXY;
 delete process.env.HTTP_PROXY;
@@ -56,15 +56,15 @@ test.after(() => {
 
 async function prepareProxyField(): Promise<string | undefined> {
   const result = await POST(
-    new Request("http://omniroute.local/api/internal/codex-responses-ws", {
+    new Request("http://pusula.local/api/internal/codex-responses-ws", {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "x-omniroute-ws-bridge-secret": "test-14531-bridge",
+        "x-pusula-ws-bridge-secret": "test-14531-bridge",
       },
       body: JSON.stringify({
         action: "prepare",
-        requestUrl: "http://omniroute.local/v1/responses",
+        requestUrl: "http://pusula.local/v1/responses",
         headers: {},
         response: { model: "codex/gpt-5.5", input: "hello" },
       }),
@@ -74,11 +74,11 @@ async function prepareProxyField(): Promise<string | undefined> {
   assert.equal(result.status, 200, JSON.stringify(body));
   // Release the per-account WS lease so the next prepare() is not starved.
   await POST(
-    new Request("http://omniroute.local/api/internal/codex-responses-ws", {
+    new Request("http://pusula.local/api/internal/codex-responses-ws", {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "x-omniroute-ws-bridge-secret": "test-14531-bridge",
+        "x-pusula-ws-bridge-secret": "test-14531-bridge",
       },
       body: JSON.stringify({ action: "release", leaseId: body.leaseId }),
     })

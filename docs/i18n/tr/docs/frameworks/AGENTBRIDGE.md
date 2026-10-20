@@ -4,7 +4,7 @@
 
 ---
 
-AgentBridge, IDE AI ajanlarından gelen HTTPS trafiğini yakalayan ve OmniRoute'un birleşik yönlendirme motoru üzerinden yeniden yönlendiren OmniRoute'un MITM (Ortadaki Adam) proxy'sidir. **10 IDE ajanını** destekler — Antigravity, Kiro, GitHub Copilot, GHE Copilot, OpenAI Codex, Cursor, Zed, Claude Code, Open Code ve Trae (araştırılıyor) — böylece OmniRoute, piyasadaki AI kodlama asistanları için en geniş kapsama sahip MITM proxy'si olur.
+AgentBridge, IDE AI ajanlarından gelen HTTPS trafiğini yakalayan ve Pusula'un birleşik yönlendirme motoru üzerinden yeniden yönlendiren Pusula'un MITM (Ortadaki Adam) proxy'sidir. **10 IDE ajanını** destekler — Antigravity, Kiro, GitHub Copilot, GHE Copilot, OpenAI Codex, Cursor, Zed, Claude Code, Open Code ve Trae (araştırılıyor) — böylece Pusula, piyasadaki AI kodlama asistanları için en geniş kapsama sahip MITM proxy'si olur.
 
 **Pano konumu:** `/dashboard/tools/agent-bridge`
 **Kenar çubuğu grubu:** Araçlar (Cloud Agents'tan sonra)
@@ -16,18 +16,18 @@ AgentBridge, IDE AI ajanlarından gelen HTTPS trafiğini yakalayan ve OmniRoute'
 
 ### AgentBridge nedir?
 
-Bir IDE ajanı (ör. GitHub Copilot, Cursor, Claude Code) API çağrısı yaptığında doğrudan üst akış AI sağlayıcısına (OpenAI, Anthropic vb.) bağlanır. AgentBridge, herhangi bir ajan yapılandırma değişikliği gerektirmeden bu bağlantıyı TLS düzeyinde şeffaf bir şekilde yakalar ve isteği OmniRoute üzerinden yeniden yazar.
+Bir IDE ajanı (ör. GitHub Copilot, Cursor, Claude Code) API çağrısı yaptığında doğrudan üst akış AI sağlayıcısına (OpenAI, Anthropic vb.) bağlanır. AgentBridge, herhangi bir ajan yapılandırma değişikliği gerektirmeden bu bağlantıyı TLS düzeyinde şeffaf bir şekilde yakalar ve isteği Pusula üzerinden yeniden yazar.
 
 Bu sayede şunları yapabilirsiniz:
 
-- **Herhangi bir ajanı herhangi bir sağlayıcıya yeniden yönlendirin**: Copilot, OpenAI ile mi iletişim kuruyor? Onu Anthropic Claude, Gemini veya OmniRoute'un 352 sağlayıcısından herhangi birine yönlendirin.
+- **Herhangi bir ajanı herhangi bir sağlayıcıya yeniden yönlendirin**: Copilot, OpenAI ile mi iletişim kuruyor? Onu Anthropic Claude, Gemini veya Pusula'un 352 sağlayıcısından herhangi birine yönlendirin.
 - **Model eşlemeleri uygulayın**: `gemini-3-flash` → `claude-sonnet-4.7` eşlemesini işleyici düzeyinde şeffaf olarak uygulayın.
 - **Tüm ajan trafiğini gözlemleyin**: Yakalanan her istek [Trafik Denetleyicisi](./TRAFFIC_INSPECTOR.md) aracına yayımlanır.
-- **OmniRoute dayanıklılığını uygulayın**: Birleşik yönlendirme, devre kesiciler, geri dönüşler ve maliyet takibi IDE ajan trafiği için de çalışır.
+- **Pusula dayanıklılığını uygulayın**: Birleşik yönlendirme, devre kesiciler, geri dönüşler ve maliyet takibi IDE ajan trafiği için de çalışır.
 
 ### Pazardaki konumlandırma
 
-| Özellik                 | 9router | anti-api | llm-interceptor | **OmniRoute AgentBridge** |
+| Özellik                 | 9router | anti-api | llm-interceptor | **Pusula AgentBridge** |
 | ----------------------- | :-----: | :------: | :-------------: | :-----------------------: |
 | Antigravity             |    ✓    |    ✓     |        —        |             ✓             |
 | GitHub Copilot          |    ✓    |    ✓     |        —        |             ✓             |
@@ -40,7 +40,7 @@ Bu sayede şunları yapabilirsiniz:
 | Trae                    |    —    |    —     |        —        |     🔍 Araştırılıyor      |
 | Pano arayüzü            |    ✓    |    ✗     |        ✗        |             ✓             |
 | Trafik Denetleyicisi    |    ✗    |    ✗     |        ✓        |             ✓             |
-| OmniRoute yönlendirmesi |    ✗    |    ✗     |        ✗        |             ✓             |
+| Pusula yönlendirmesi |    ✗    |    ✗     |        ✗        |             ✓             |
 | Model eşleme arayüzü    |    ✗    |    ✗     |        ✗        |             ✓             |
 | Atlatma listesi         |    ✗    |    ✗     |        ✓        |             ✓             |
 | Üst akış CA sertifikası |    ✗    |    ✗     |        ✓        |             ✓             |
@@ -62,7 +62,7 @@ src/mitm/server.cjs  (443 numaralı bağlantı noktası, CJS alt süreci)
     │  hedefi Host üstbilgisi SNI değerine göre çözümler
     │  AgentBridge CA tarafından imzalanmış, SNI başına TLS sertifikası oluşturur
     ├── Atlatma listesiyle eşleşme? → TCP doğrudan geçişi (şifre çözme yok)
-    ├── Hedefle eşleşme? → fetch → OmniRoute yönlendiricisi (20128 numaralı bağlantı noktası)
+    ├── Hedefle eşleşme? → fetch → Pusula yönlendiricisi (20128 numaralı bağlantı noktası)
     │       └── handler.intercept() — TypeScript
     │               ├── istek gövdesinde/üstbilgilerinde maskSecrets()
     │               ├── TrafficBuffer.push() — Trafik İnceleyicisi'nde yayımlar
@@ -95,7 +95,7 @@ Temel MITM sunucusu, mevcut CJS kod tabanını yeniden yazmaktan kaçınmak içi
 > işlevidir — **herhangi bir** ana makine için yaprak sertifika imzalayabilen güvenilir bir
 > MITM CA, eski sabit SAN'lı yapraktan önemli ölçüde daha güçlüdür; bu nedenle zaten
 > güvenilen bir kurulumda geçiş hiçbir zaman sessizce yapılmaz). CA sertifikası, eski yaprağın
-> kullandığı aynı `omniroute-mitm.crt` güven deposu yuvasına kurulur
+> kullandığı aynı `pusula-mitm.crt` güven deposu yuvasına kurulur
 > (`cert/install.ts::installCaCert`) — çift güven temizliği gerekmez.
 
 ### 2.3 İşleyici tabanı (`src/mitm/handlers/base.ts`)
@@ -205,20 +205,20 @@ IDE'lerin MITM bağlantısını kabul edebilmesi için işletim sisteminin Agent
 **Linux (NSS — Chrome/Firefox):**
 
 ```bash
-certutil -A -d sql:$HOME/.pki/nssdb -n "OmniRoute AgentBridge" -t CT,, -i ~/.omniroute/mitm/ca.crt
+certutil -A -d sql:$HOME/.pki/nssdb -n "Pusula AgentBridge" -t CT,, -i ~/.pusula/mitm/ca.crt
 ```
 
 **macOS (Anahtar Zinciri):**
 
 ```bash
 sudo security add-trusted-cert -d -r trustRoot \
-  -k /Library/Keychains/System.keychain ~/.omniroute/mitm/ca.crt
+  -k /Library/Keychains/System.keychain ~/.pusula/mitm/ca.crt
 ```
 
 **Windows (certmgr):**
 
 ```powershell
-certutil -addstore -f Root $env:USERPROFILE\.omniroute\mitm\ca.crt
+certutil -addstore -f Root $env:USERPROFILE\.pusula\mitm\ca.crt
 ```
 
 Alternatif olarak panodaki "Sertifikaya Güven" düğmesini kullanın (işletim sisteminize uygun komutu çalıştırır ve gerekirse sudo istemini gösterir).
@@ -235,7 +235,7 @@ döndürdüğünü gösterse bile bu durum uygulamada _oturum kapatılmış_ ola
 
 1. Çalışma zamanını açıkça CA'ya yönlendirin:
    ```bash
-   export NODE_EXTRA_CA_CERTS=/path/to/omniroute-agentbridge-ca.crt
+   export NODE_EXTRA_CA_CERTS=/path/to/pusula-agentbridge-ca.crt
    ```
 2. **IDE'yi bu kabuktan başlatın.** Masaüstü simgesinden / Dock'tan / Başlat menüsünden
    başlatıldığında kabuk dışa aktarımları **devralınmaz** ve `~/.config/environment.d/*.conf`
@@ -263,7 +263,7 @@ GitHub Copilot için örnek `/etc/hosts` girdileri:
 
 Kaynak → hedef eşlemelerini tanımlamak için her aracı kartındaki Model Eşleme Tablosunu kullanın:
 
-| Kaynak model (aracının yerel modeli) | Hedef model (OmniRoute) |
+| Kaynak model (aracının yerel modeli) | Hedef model (Pusula) |
 | ------------------------------------ | ----------------------- |
 | `gpt-4o`                             | `claude-sonnet-4.7`     |
 | `*` (joker karakter)                 | `claude-haiku-4.7`      |
@@ -280,7 +280,7 @@ Kaynak → hedef eşlemelerini tanımlamak için her aracı kartındaki Model E�
 
 ### 3.5 Risk bildirimi
 
-AgentBridge, IDE'nin yukarı akış sağlayıcılarıyla kimlik doğrulamak için kullandığı kimlik bilgilerine (OAuth belirteçleri, API anahtarları) müdahale eder. Bunlar **günlüğe kaydedilmeden önce maskelenir** (bkz. §2.7), ancak OmniRoute'un MITM katmanı tarafından görülebilir. Her aracının ilk kez etkinleştirilmesi sırasında kapatılabilir bir risk bildirimi penceresi gösterilir.
+AgentBridge, IDE'nin yukarı akış sağlayıcılarıyla kimlik doğrulamak için kullandığı kimlik bilgilerine (OAuth belirteçleri, API anahtarları) müdahale eder. Bunlar **günlüğe kaydedilmeden önce maskelenir** (bkz. §2.7), ancak Pusula'un MITM katmanı tarafından görülebilir. Her aracının ilk kez etkinleştirilmesi sırasında kapatılabilir bir risk bildirimi penceresi gösterilir.
 
 ### 3.6 Bakım ve Tanılama
 
@@ -392,7 +392,7 @@ Algılama, işletim sistemine özgü yolları ve ikili dosya kontrollerini kulla
 
 ### Hassas ana makineler için atlama listesi
 
-Atlama listesi; finans kuruluşlarının, OAuth/SSO sağlayıcılarının ve diğer hassas ana makinelerin şifrelerinin **asla çözülmemesini** sağlar. Bunların TLS trafiği, şeffaf bir TCP tüneli üzerinden geçer — OmniRoute düz metni hiçbir zaman görmez.
+Atlama listesi; finans kuruluşlarının, OAuth/SSO sağlayıcılarının ve diğer hassas ana makinelerin şifrelerinin **asla çözülmemesini** sağlar. Bunların TLS trafiği, şeffaf bir TCP tüneli üzerinden geçer — Pusula düz metni hiçbir zaman görmez.
 
 Varsayılan atlama kalıpları şunları içerir:
 
@@ -443,7 +443,7 @@ Alternatif olarak, AgentBridge ayarlarında ayrıcalıksız bir port yapılandı
 
 AgentBridge başlatıldıktan sonra IDE TLS hataları gösteriyorsa:
 
-1. Sertifikanın yüklendiğini doğrulayın: `security find-certificate -c "OmniRoute AgentBridge"` (macOS) veya `certutil -L -d sql:$HOME/.pki/nssdb` (Linux/NSS)
+1. Sertifikanın yüklendiğini doğrulayın: `security find-certificate -c "Pusula AgentBridge"` (macOS) veya `certutil -L -d sql:$HOME/.pki/nssdb` (Linux/NSS)
 2. Bazı uygulamalar kendi güven depolarını kullanır (Firefox, Linux'ta Chrome). "Trust Cert" işlemini yeniden çalıştırın ve NSS/Firefox'a özgü sertifika deposunu kontrol edin.
 3. Güven sağladıktan sonra IDE'yi yeniden başlatın — devam eden TLS oturumları eski güven durumunu kullanır.
 
@@ -468,7 +468,7 @@ varyantının aynı kurulum altında başarısız olduğu açık bir upstream ra
 `/etc/hosts` dosyasının güncellendiğini kontrol edin:
 
 ```bash
-grep "omniroute\|127.0.0.1.*github\|127.0.0.1.*cursor" /etc/hosts
+grep "pusula\|127.0.0.1.*github\|127.0.0.1.*cursor" /etc/hosts
 ```
 
 DNS önbelleğini temizleyin:
@@ -494,8 +494,8 @@ Otomatik algılama, yaygın kurulum yollarını kullanır. Algılama başarısı
 AgentBridge istekleri yakalıyor ancak tüm istekler başarısız oluyorsa:
 
 1. `/dashboard/providers` konumunda en az bir sağlayıcının bağlı olduğunu doğrulayın
-2. OmniRoute sunucu günlüklerini kontrol edin: `.env` içinde `APP_LOG_LEVEL=debug`
-3. `OMNIROUTE_BASE_URL` değişkeninin doğru yönlendirici uç noktasını gösterdiğini doğrulayın (varsayılan: `http://127.0.0.1:20128`)
+2. Pusula sunucu günlüklerini kontrol edin: `.env` içinde `APP_LOG_LEVEL=debug`
+3. `PUSULA_BASE_URL` değişkeninin doğru yönlendirici uç noktasını gösterdiğini doğrulayın (varsayılan: `http://127.0.0.1:20128`)
 
 ---
 

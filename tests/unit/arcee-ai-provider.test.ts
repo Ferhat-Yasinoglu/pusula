@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-arcee-provider-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-arcee-provider-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const { PROVIDERS } = await import("../../open-sse/config/constants.ts");

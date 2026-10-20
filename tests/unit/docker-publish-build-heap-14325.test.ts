@@ -1,8 +1,8 @@
 // Regression coverage for #14325 — the `:next` Docker channel got stuck at the
 // 2026-09-17 image because every `docker/build-push-action` step in
-// docker-publish.yml runs `npm run build` (webpack, OMNIROUTE_USE_TURBOPACK=0)
+// docker-publish.yml runs `npm run build` (webpack, PUSULA_USE_TURBOPACK=0)
 // with the Dockerfile's default 6144 MB V8 heap ceiling
-// (`ARG OMNIROUTE_BUILD_MEMORY_MB=6144`), instead of the 12288 MB ceiling that
+// (`ARG PUSULA_BUILD_MEMORY_MB=6144`), instead of the 12288 MB ceiling that
 // the equivalent native `npm run build` invocations already use in
 // build.yml/quality.yml on the very same runner class. The build then dies with
 // "FATAL ERROR: Ineffective mark-compacts near heap limit ... JavaScript heap
@@ -36,7 +36,7 @@ const buildYml = readFileSync(
 // fits a 12288 MB webpack heap for this exact `npm run build`/`build:release`
 // invocation.
 test("build.yml's known-good heap budget is 12288 MB", () => {
-  assert.match(buildYml, /OMNIROUTE_BUILD_MEMORY_MB:\s*"12288"/);
+  assert.match(buildYml, /PUSULA_BUILD_MEMORY_MB:\s*"12288"/);
 });
 
 test("every docker-publish.yml build-push-action step raises the V8 heap ceiling past the Dockerfile's 6144 MB default", () => {
@@ -51,7 +51,7 @@ test("every docker-publish.yml build-push-action step raises the V8 heap ceiling
 
   const missing: number[] = [];
   buildArgBlocks.forEach((block, i) => {
-    if (!/OMNIROUTE_BUILD_MEMORY_MB=\d+/.test(block)) {
+    if (!/PUSULA_BUILD_MEMORY_MB=\d+/.test(block)) {
       missing.push(i);
     }
   });
@@ -59,9 +59,9 @@ test("every docker-publish.yml build-push-action step raises the V8 heap ceiling
   assert.deepEqual(
     missing,
     [],
-    `build-args block(s) at index ${JSON.stringify(missing)} never override OMNIROUTE_BUILD_MEMORY_MB, ` +
+    `build-args block(s) at index ${JSON.stringify(missing)} never override PUSULA_BUILD_MEMORY_MB, ` +
       `so those docker/build-push-action steps build with the Dockerfile's default ` +
-      `ARG OMNIROUTE_BUILD_MEMORY_MB=6144 heap ceiling instead of the 12288 MB that build.yml already ` +
+      `ARG PUSULA_BUILD_MEMORY_MB=6144 heap ceiling instead of the 12288 MB that build.yml already ` +
       `proves fits the same runner class — this is why every Docker publish on release/v3.8.51 since ` +
       `2026-09-18 16:58 UTC has died with "JavaScript heap out of memory" inside the webpack production pass`
   );

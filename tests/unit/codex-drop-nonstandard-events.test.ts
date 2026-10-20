@@ -35,7 +35,7 @@ async function readAll(res: Response): Promise<string> {
 }
 
 describe("codexDropNonstandardEvents (#11014)", () => {
-  const KEY = "OMNIROUTE_CODEX_DROP_NONSTANDARD_EVENTS";
+  const KEY = "PUSULA_CODEX_DROP_NONSTANDARD_EVENTS";
   let saved: string | undefined;
 
   beforeEach(() => {

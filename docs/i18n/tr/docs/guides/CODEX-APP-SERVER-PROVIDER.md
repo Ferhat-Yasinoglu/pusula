@@ -4,12 +4,12 @@
 
 ---
 
-OmniRoute, OpenAI Codex'i kullanmak için **iki** yöntem sunar:
+Pusula, OpenAI Codex'i kullanmak için **iki** yöntem sunar:
 
 | Sağlayıcı              | OpenAI ile nasıl iletişim kurar                                                                                                                                                                                     | Kullanım uyarısı                                                     |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
 | **`codex`**            | ChatGPT/OpenAI OAuth token'ınızı doğrudan Responses API'ye yeniden gönderir                                                                                                                                         | **Evet** — resmi oturumun proxy/router kullanımı için yetkisi yoktur |
-| **`codex-app-server`** | **Codex CLI'ın kendi `codex app-server`** sürecini JSON-RPC/WebSocket üzerinden çalıştırır; CLI, OAuth'unu (`~/.codex/auth.json`) etkileşimli bir `codex` oturumunda olduğu gibi yönetir ve otomatik olarak yeniler | **Hayır** — OmniRoute hiçbir zaman API'ye token göndermez            |
+| **`codex-app-server`** | **Codex CLI'ın kendi `codex app-server`** sürecini JSON-RPC/WebSocket üzerinden çalıştırır; CLI, OAuth'unu (`~/.codex/auth.json`) etkileşimli bir `codex` oturumunda olduğu gibi yönetir ve otomatik olarak yeniler | **Hayır** — Pusula hiçbir zaman API'ye token göndermez            |
 
 `codex-app-server` hiçbir zaman token'ı yeniden göndermediğinden, oturumu yeniden
 göndermeye ilişkin kullanım uyarısı onun için geçerli değildir. Ancak
@@ -21,7 +21,7 @@ ve bu CLI'da **oturum açılmış** olmalıdır.
 ## 1. Mimari
 
 ```
-┌─ OmniRoute uygulaması ───────────┐        ┌─ codex-app-server yardımcı konteyneri ┐
+┌─ Pusula uygulaması ───────────┐        ┌─ codex-app-server yardımcı konteyneri ┐
 │  CodexAppServerExecutor          │  WS    │  codex app-server                     │
 │  ws://codex-app-server:1456 ─────┼───────▶│  --listen ws://0.0.0.0:1456           │
 │  (+ yetenek token'ı)             │  JSON  │  --ws-auth capability-token           │
@@ -37,7 +37,7 @@ ve bu CLI'da **oturum açılmış** olmalıdır.
 - Yardımcı konteyner, bir yetenek token'ının arkasında **yalnızca** dahili compose
   ağını (`ws://codex-app-server:1456`) dinler. Ana makineye veya internete
   **hiçbir zaman** yayımlanmaz.
-- Codex CLI, `omniroute:base` imajına dahil edilmiştir; dolayısıyla yardımcı
+- Codex CLI, `pusula:base` imajına dahil edilmiştir; dolayısıyla yardımcı
   konteyneri çalıştırdığınızda ana makineye veya kullanıcının cihazına codex
   kurulması gerekmez.
 
@@ -51,7 +51,7 @@ docker compose --profile base --profile codex-app-server up -d
 
 Yardımcı konteyner, ilk açılışta WS yetenek token'ını oluşturur (paylaşılan
 `codex-appserver-token` birimine yazar) ve uygulama aynı token'ı
-`OMNIROUTE_CODEX_APPSERVER_WS_TOKEN_FILE` aracılığıyla okur. Token'ın manuel
+`PUSULA_CODEX_APPSERVER_WS_TOKEN_FILE` aracılığıyla okur. Token'ın manuel
 olarak bağlanması gerekmez.
 
 ## 3. Bağlanma + oturum açma
@@ -82,8 +82,8 @@ alınır).
 - **Herkese açık kullanıcı, yerel olarak codex kurulu değil** — önemli değildir:
   CLI yardımcı konteynerde bulunur. Kullanıcı yalnızca dashboard üzerinden kimlik
   doğrulaması yapar.
-- **Bare-metal OmniRoute (yardımcı konteyner yok, ana makinede codex var)** —
-  `OMNIROUTE_CODEX_APPSERVER_WS` değişkenini kendi `codex app-server` örneğinize
+- **Bare-metal Pusula (yardımcı konteyner yok, ana makinede codex var)** —
+  `PUSULA_CODEX_APPSERVER_WS` değişkenini kendi `codex app-server` örneğinize
   yönlendirin ve ana makinedeki codex'te oturum açıldığından emin olun; binary
   eksikse "codex kurulu değil" ipucu görüntülenir.
 

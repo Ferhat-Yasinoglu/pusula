@@ -60,7 +60,7 @@ beforeEach(() => {
             roles: {
               default: {
                 model: "openai/gpt-4o",
-                provider: "omniroute",
+                provider: "pusula",
                 base_url: "http://localhost:20128",
               },
             },

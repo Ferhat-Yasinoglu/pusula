@@ -1,5 +1,5 @@
 // Gemini carries an `id` on functionCall / functionResponse parts only when the client sets
-// one, and OmniRoute's own Gemini-format responses never emit it. A call without an id got a
+// one, and Pusula's own Gemini-format responses never emit it. A call without an id got a
 // generated one while its response fell back to the function *name* as tool_call_id, so the
 // two never matched: the tool-call normalization in translateRequest then inserted an empty
 // result for the call and dropped the real output as an orphan. #11365 fixed the half where

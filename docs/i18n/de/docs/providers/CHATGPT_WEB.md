@@ -39,11 +39,11 @@ an den Turn gebundene lokale Tool-Funktion verwenden, wenn Tunnel und Connector 
 1. Öffnen Sie den Provider **ChatGPT Web (Codex)** und fügen Sie eine Verbindung hinzu.
 2. Fügen Sie den vollständigen ChatGPT-Cookie-Header, die Tunnel-ID, den Laufzeitschlüssel und den Namen des benutzerdefinierten Connectors
    ein. Neue Setups mit Tool-Unterstützung müssen einen neu erstellten Connector verwenden, der exakt
-   `OmniRoute Codex v2` heißt, wobei die Authentifizierung auf „Keine“ und die Berechtigungen auf „Alle
+   `Pusula Codex v2` heißt, wobei die Authentifizierung auf „Keine“ und die Berechtigungen auf „Alle
    Aktionen zulassen“ eingestellt sein müssen.
-3. Führen Sie die Verbindungsprüfung aus. OmniRoute öffnet einen browsergestützten temporären Chat und erkennt,
+3. Führen Sie die Verbindungsprüfung aus. Pusula öffnet einen browsergestützten temporären Chat und erkennt,
    ob Sol und Pro für das Konto verfügbar sind.
-4. Speichern Sie die Verbindung. OmniRoute ersetzt das eingefügte Cookie durch den verifizierten
+4. Speichern Sie die Verbindung. Pusula ersetzt das eingefügte Cookie durch den verifizierten
    Playwright-Speicherstatus und speichert diesen zusammen mit dem Laufzeitschlüssel über die verschlüsselte
    Anmeldedatenabstraktion.
 
@@ -76,10 +76,10 @@ High bereit, und Pro-fähige Konten bieten zusätzlich Extra High und Pro. Jede 
 festes Backend-Modell und einen festen Reasoning-Aufwand; ein widersprüchlicher expliziter Responses-Aufwand wird
 abgewiesen, anstatt den ausgewählten Browsermodus stillschweigend zu ändern.
 
-Benennen Sie einen älteren Connector namens `Codex Native` oder `OmniRoute Codex` nicht um und verwenden Sie ihn nicht erneut. ChatGPT
+Benennen Sie einen älteren Connector namens `Codex Native` oder `Pusula Codex` nicht um und verwenden Sie ihn nicht erneut. ChatGPT
 speichert den öffentlichen MCP-Vertrag anhand der Connector-Identität zwischen, während die aktualisierte Bridge einen
 neuen direkten Turn-Token-Vertrag verwendet. Die Laufzeitumgebung weist diese Legacy-Identitäten zurück und erfordert
-einen neuen Connector namens `OmniRoute Codex v2`.
+einen neuen Connector namens `Pusula Codex v2`.
 
 ## Sicherheitsmodell
 
@@ -99,19 +99,19 @@ einen neuen Connector namens `OmniRoute Codex v2`.
 
 ## VPS ohne Display und Docker
 
-Bei npm-, systemd- und PM2-Installationen erkennt OmniRoute gängige Chrome- und Chromium-Pfade.
+Bei npm-, systemd- und PM2-Installationen erkennt Pusula gängige Chrome- und Chromium-Pfade.
 Alternativ kann `CHATGPT_WEB_CODEX_CHROME_PATH` gesetzt werden. Laufzeit-Turns verwenden bewusst Chrome
-mit grafischer Oberfläche, da ChatGPT die echte Headless-Browser-Konfiguration ablehnt. Auf einem Host ohne Display muss OmniRoute daher
+mit grafischer Oberfläche, da ChatGPT die echte Headless-Browser-Konfiguration ablehnt. Auf einem Host ohne Display muss Pusula daher
 mit einem privaten Xvfb-Display ausgeführt werden; allein das Setzen des Chrome-Pfads stellt keines bereit.
 
 Das Docker-Profil `web` startet `chatgpt-web-codex-browser` im internen Compose-
 Netzwerk. Der Sidecar führt Chrome mit grafischer Oberfläche innerhalb von Xvfb aus, sodass kein physisches Display erforderlich ist. Sein CDP-
 Port wird nicht auf dem Host veröffentlicht. Das geschützte Browserprofil-Volume ist vom
-OmniRoute-Daten-Volume getrennt, und der Browser erhält ausreichend gemeinsam genutzten Speicher. Der interne CDP-Proxy
+Pusula-Daten-Volume getrennt, und der Browser erhält ausreichend gemeinsam genutzten Speicher. Der interne CDP-Proxy
 lauscht nur auf Port `9223` innerhalb des Compose-Netzwerks; Chrome bleibt im
 Sidecar an die Loopback-Schnittstelle gebunden.
 
-Eine Supervisor-Lease unter `DATA_DIR` verhindert, dass mehrere OmniRoute-Prozesse denselben
+Eine Supervisor-Lease unter `DATA_DIR` verhindert, dass mehrere Pusula-Prozesse denselben
 Tunnel- und Broker-Status verwalten. Ein Konflikt wird vom Doctor gemeldet.
 
 ## Interaktive Wiederherstellung

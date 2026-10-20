@@ -112,7 +112,7 @@ Playwright testi veya belgelenmiş manuel kontrol gerekir.
 - CLI katalogları ayrı olarak `bin/cli/locales/` altında bulunur.
 - ICU yer tutucularını ve etiketlerini birebir koruyun. Ürün/sağlayıcı/model adlarını,
   protokol ve başlık adlarını, komutları, kod/JSON tanımlayıcılarını, URL'leri, ortam değişkenlerini veya
-  `OmniRoute`, `OAuth`, `MCP` ve `A2A` gibi korunan terimleri çevirmeyin. Geçerli kaynak listesi
+  `Pusula`, `OAuth`, `MCP` ve `A2A` gibi korunan terimleri çevirmeyin. Geçerli kaynak listesi
   `scripts/i18n/glossary/protected-terms.json` dosyasındadır.
 
 **Odaklı döngü**

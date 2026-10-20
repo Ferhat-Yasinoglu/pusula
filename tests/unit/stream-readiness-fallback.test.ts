@@ -10,7 +10,7 @@ import path from "node:path";
 
 const FLAG = "STREAM_READINESS_STALL_RETRY";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-readiness-fallback-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-readiness-fallback-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.STREAM_READINESS_TIMEOUT_MS = "300";
 process.env.STREAM_READINESS_MAX_TIMEOUT_MS = "600";

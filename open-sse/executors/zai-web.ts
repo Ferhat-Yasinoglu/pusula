@@ -475,7 +475,7 @@ export class ZaiWebExecutor extends BaseExecutor {
       }),
       auditHeaders: {
         Authorization: "Bearer [REDACTED]",
-        "X-OmniRoute-Transport": "browser",
+        "X-Pusula-Transport": "browser",
       },
       auditBody: buildZaiBrowserAuditBody({
         messages: input.messages,

@@ -8,7 +8,7 @@ import {
 import { resetDbInstance } from "../../src/lib/db/core.ts";
 
 after(() => {
-  removeFeatureFlagOverride("OMNIROUTE_DISABLE_THINKING_LEVEL_VARIANTS");
+  removeFeatureFlagOverride("PUSULA_DISABLE_THINKING_LEVEL_VARIANTS");
   resetDbInstance();
 });
 
@@ -35,7 +35,7 @@ test("catalog advertises claude effort variants by default", async () => {
 });
 
 test("catalog filters claude effort variants when the flag is set", async () => {
-  setFeatureFlagOverride("OMNIROUTE_DISABLE_THINKING_LEVEL_VARIANTS", "true");
+  setFeatureFlagOverride("PUSULA_DISABLE_THINKING_LEVEL_VARIANTS", "true");
   const out = await applyCatalogPostFilters(
     new Request("http://localhost/v1/models"),
     [
@@ -51,7 +51,7 @@ test("catalog filters claude effort variants when the flag is set", async () => 
 });
 
 test("catalog advertises claude effort variants when the flag is explicitly unset", async () => {
-  setFeatureFlagOverride("OMNIROUTE_DISABLE_THINKING_LEVEL_VARIANTS", "false");
+  setFeatureFlagOverride("PUSULA_DISABLE_THINKING_LEVEL_VARIANTS", "false");
   const out = await applyCatalogPostFilters(
     new Request("http://localhost/v1/models"),
     [

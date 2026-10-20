@@ -4,7 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-layout-settings-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-layout-settings-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const ORIGINAL_INITIAL_PASSWORD = process.env.INITIAL_PASSWORD;
@@ -64,7 +64,7 @@ test("root layout settings reader does not initialize the database", async () =>
   process.env.INITIAL_PASSWORD = "must-not-trigger-startup";
 
   assert.deepEqual(await getRootLayoutSettings(), {
-    instanceName: "OmniRoute",
+    instanceName: "Pusula",
     customFaviconUrl: "",
     customFaviconBase64: "",
   });
@@ -97,7 +97,7 @@ test("root layout settings reader is read-only and falls back safely", async () 
   ).run("not-json");
 
   assert.deepEqual(await getRootLayoutSettings(), {
-    instanceName: "OmniRoute",
+    instanceName: "Pusula",
     customFaviconUrl: "",
     customFaviconBase64: "",
   });

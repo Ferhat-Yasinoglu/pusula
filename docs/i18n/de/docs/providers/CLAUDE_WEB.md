@@ -70,7 +70,7 @@ Browseranfragen erfassen stattdessen die Anfrage der authentifizierten Benutzero
 
 Der Standardpfad ist `sendClaudeWebDirect()`, das `tlsFetchClaude()` mit dem konfigurierten Chrome-146-Profil und dem bereitgestellten Cookie aufruft (`open-sse/services/claudeTlsClient.ts:23`). Es startet keinen Solver und erzeugt kein Ersatz-Cookie.
 
-Setzen Sie `WEB_COOKIE_USE_BROWSER` auf `1`, `true` oder `on`, um den kontobezogenen Browseradapter zum primären Transport zu machen. Setzen Sie `OMNIROUTE_BROWSER_POOL` auf einen der gleichen Werte, damit bei einer erkannten Cloudflare-403-Challenge vom direkten Transport auf den Browseradapter zurückgegriffen werden kann (`open-sse/executors/claude-web.ts:195`). Andere HTTP-Fehler lösen diesen Rückgriff nicht aus.
+Setzen Sie `WEB_COOKIE_USE_BROWSER` auf `1`, `true` oder `on`, um den kontobezogenen Browseradapter zum primären Transport zu machen. Setzen Sie `PUSULA_BROWSER_POOL` auf einen der gleichen Werte, damit bei einer erkannten Cloudflare-403-Challenge vom direkten Transport auf den Browseradapter zurückgegriffen werden kann (`open-sse/executors/claude-web.ts:195`). Andere HTTP-Fehler lösen diesen Rückgriff nicht aus.
 
 Der Browseradapter speichert Cookies innerhalb desselben gepoolten Playwright-Kontexts, verwendet den oben beschriebenen bereichsspezifischen Hash-Schlüssel und sendet die Vervollständigung aus diesem Kontext (`open-sse/executors/claude-web/browserTransport.ts:444`). Er exportiert niemals ein vom Browser erhaltenes Cookie in den direkten TLS-Client. Browser-Wiederholungsversuche erfordern eine nicht abgelaufene UI-Vorlage, die an denselben tatsächlichen Playwright-Kontext gebunden ist (`open-sse/executors/claude-web/browserTransport.ts:467`). Browserantworten werden inkrementell auf der authentifizierten Seite gelesen, berücksichtigen den Abbruch von Anfragen und brechen den vorgelagerten Antworttext ab, sobald er 16 MiB überschreitet (`open-sse/executors/claude-web/browserTransport.ts:259`).
 
@@ -79,7 +79,7 @@ Der Executor übergibt eine bereinigte Audit-Projektion an den gemeinsamen Anfra
 
 ### SSE-Verhalten
 
-`createClaudeWebResponse()` verarbeitet die Zeilenrahmung mit LF oder CRLF sowie mehrzeilige `data:`-Felder. Die Funktion ordnet Text-Deltas `content`, Denk-Deltas `reasoning_content` und bekannte Metadatenereignisse der Antworterweiterung `claude_web` zu. Jedes Metadatenereignis wird anhand seiner eigenen Feld-Positivliste projiziert (`open-sse/executors/claude-web/stream.ts:37`). Die Metadaten zu Konversation, übergeordneter Nachricht, Assistentennachricht und Operation werden außerdem in `X-OmniRoute-Claude-Web-*`-Headern zurückgegeben (`open-sse/executors/claude-web/stream.ts:364`).
+`createClaudeWebResponse()` verarbeitet die Zeilenrahmung mit LF oder CRLF sowie mehrzeilige `data:`-Felder. Die Funktion ordnet Text-Deltas `content`, Denk-Deltas `reasoning_content` und bekannte Metadatenereignisse der Antworterweiterung `claude_web` zu. Jedes Metadatenereignis wird anhand seiner eigenen Feld-Positivliste projiziert (`open-sse/executors/claude-web/stream.ts:37`). Die Metadaten zu Konversation, übergeordneter Nachricht, Assistentennachricht und Operation werden außerdem in `X-Pusula-Claude-Web-*`-Headern zurückgegeben (`open-sse/executors/claude-web/stream.ts:364`).
 
 Der Parser bricht bei fehlerhaftem JSON, vorgelagerten `error`-Ereignissen, unbekannten Ereignistypen, ungültiger Reihenfolge, nicht übereinstimmenden Inhaltsblöcken oder EOF vor `message_stop` sicher mit einem Fehler ab. Die Streaming-Ausgabe gibt einen Abschluss-Chunk und einmal `[DONE]` aus; die gepufferte Ausgabe verwendet denselben Parser. Der Parser behandelt `message_stop` sofort als terminal, bricht nachfolgende vorgelagerte Daten ab und leitet nachgelagerte Abbrüche an den vorgelagerten Reader weiter (`open-sse/executors/claude-web/stream.ts:461`,
 `open-sse/executors/claude-web/stream.ts:563`). Nicht abgeschlossene SSE-Zeilen und angesammelte Ereignisse sind auf 1 MiB begrenzt (`open-sse/executors/claude-web/stream.ts:17`,
@@ -111,7 +111,7 @@ Die von Playwright abhängigen Fälle in `tests/unit/claude-web-auto-refresh.tes
 
 ### Einrichtung
 
-1. Starten Sie OmniRoute mit `npm run dev` oder über eine erstellte Installation.
+1. Starten Sie Pusula mit `npm run dev` oder über eine erstellte Installation.
 2. Öffnen Sie Dashboard → Anbieter → Anbieter hinzufügen.
 3. Wählen Sie die Kategorie Web-Cookie und Claude Web aus.
 4. Fügen Sie den vollständigen Cookie-Header ein, der aus einer authentifizierten `claude.ai`-Anfrage kopiert wurde.

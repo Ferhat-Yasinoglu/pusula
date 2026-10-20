@@ -6,7 +6,7 @@
 
 Dashboard → Anbieter → **Aus Datei importieren** erstellt API-Schlüssel-Verbindungen aus einer CSV- oder JSON-Liste. Jede Zeile kann auf einen anderen Anbieter verweisen. Teilweise Fehler sind ausdrücklich vorgesehen: Gültige Zeilen werden auch dann importiert, wenn andere fehlschlagen, und das Modal zeigt an, warum die fehlgeschlagenen Zeilen abgelehnt wurden.
 
-Dieser Import erstellt **keine** neuen OpenAI-/Anthropic-kompatiblen Endpunktknoten. Erstellen Sie diese zuerst (Dashboard → Anbieter → OpenAI-kompatiblen Anbieter hinzufügen oder `omniroute nodes add`) und importieren Sie anschließend Zeilen, deren Spalte `provider` die ID dieses Knotens enthält. Ein zeilenspezifischer Wert für `baseUrl` kann die URL des Knotens weiterhin überschreiben.
+Dieser Import erstellt **keine** neuen OpenAI-/Anthropic-kompatiblen Endpunktknoten. Erstellen Sie diese zuerst (Dashboard → Anbieter → OpenAI-kompatiblen Anbieter hinzufügen oder `pusula nodes add`) und importieren Sie anschließend Zeilen, deren Spalte `provider` die ID dieses Knotens enthält. Ein zeilenspezifischer Wert für `baseUrl` kann die URL des Knotens weiterhin überschreiben.
 
 ## CSV (positionsbasiert)
 
@@ -25,7 +25,7 @@ Eine erste Zeile, deren erste Spalte das exakte Wort `provider` enthält (Groß-
 Laden Sie über das Import-Modal eine Ausgangsdatei herunter (**CSV-Vorlage herunterladen**). Beispiel:
 
 ```csv
-# OmniRoute-Anbieterimport (positionsbasierte Spalten)
+# Pusula-Anbieterimport (positionsbasierte Spalten)
 provider,name,apiKey,baseUrl,priority
 openai,Prod OpenAI,sk-your-openai-key,,1
 ```

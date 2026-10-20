@@ -4,7 +4,7 @@
 
 ---
 
-> **Özet**: `open-sse/`, OmniRoute'taki her LLM isteğine güç veren temel akış motorudur. İstek işlem hattını, yürütücüleri, servisleri, MCP sunucusunu ve çeviri katmanını uygulayan yaklaşık 1.400 dosya içerir. Bu kılavuz, parçaların nasıl bir araya geldiğini açıklar.
+> **Özet**: `open-sse/`, Pusula'taki her LLM isteğine güç veren temel akış motorudur. İstek işlem hattını, yürütücüleri, servisleri, MCP sunucusunu ve çeviri katmanını uygulayan yaklaşık 1.400 dosya içerir. Bu kılavuz, parçaların nasıl bir araya geldiğini açıklar.
 
 **Kaynak:** `open-sse/` (çalışma alanı paketi, yaklaşık 1.440 test dışı `.ts` dosyası)
 
@@ -12,10 +12,10 @@
 
 ## Neden Ayrı Bir Çalışma Alanı Paketi?
 
-`open-sse/`, çeşitli nedenlerle OmniRoute monorepo'sunda **bağımsız bir çalışma alanıdır**:
+`open-sse/`, çeşitli nedenlerle Pusula monorepo'sunda **bağımsız bir çalışma alanıdır**:
 
-1. **Yeniden kullanılabilirlik** — `open-sse`, npm üzerinde `@omniroute/open-sse` olarak yayımlanır; böylece diğer projeler onu bağımsız olarak kullanabilir
-2. **Net sınırlar** — akış motoru, OmniRoute'a özgü UI/DB katmanından ayrıştırılmıştır
+1. **Yeniden kullanılabilirlik** — `open-sse`, npm üzerinde `@pusula/open-sse` olarak yayımlanır; böylece diğer projeler onu bağımsız olarak kullanabilir
+2. **Net sınırlar** — akış motoru, Pusula'a özgü UI/DB katmanından ayrıştırılmıştır
 3. **Performans** — motorun Next.js bağımlılığı yoktur; bu da CLI/sunucusuz bağlamlarda daha hızlı soğuk başlatmalar sağlar
 4. **Sürümleme** — `open-sse` kendi yayın takvimine göre sürüm çıkarabilir
 
@@ -32,7 +32,7 @@
 open-sse/
 ├── index.ts              # Genel kullanıma açık giriş noktası
 ├── types.d.ts            # Genel kullanıma açık tür dışa aktarımları
-├── package.json          # @omniroute/open-sse
+├── package.json          # @pusula/open-sse
 ├── config/               # Sağlayıcı yapılandırmaları, sabitler, kayıtlar
 ├── executors/            # Sağlayıcı başına HTTP yürütücüleri (67 + base.ts/index.ts)
 ├── handlers/             # İstek işleyicileri (chatCore, responses vb.)
@@ -357,7 +357,7 @@ export default {
 `executors/index.ts`, `getExecutor(providerId)` fonksiyonunu dışa aktarır:
 
 ```ts
-import { getExecutor } from "@omniroute/open-sse/executors";
+import { getExecutor } from "@pusula/open-sse/executors";
 
 const executor = getExecutor("anthropic");
 const result = await executor.execute({
@@ -377,7 +377,7 @@ Yeni Responses API'nin yanı sıra **3 format** arasında çeviri yapar: OpenAI,
 ### Çevirinin Gerçekleştiği Durumlar
 
 ```ts
-import { needsTranslation, translateRequest } from "@omniroute/open-sse/translator";
+import { needsTranslation, translateRequest } from "@pusula/open-sse/translator";
 
 if (needsTranslation(sourceFormat, targetFormat)) {
   body = translateRequest(body, sourceFormat, targetFormat);
@@ -416,7 +416,7 @@ Araçlar, `open-sse/mcp-server/tools/` içinde bağımsız dosyalar olarak kayde
 // open-sse/mcp-server/tools/getHealth.ts
 import { z } from "zod";
 export default {
-  name: "omniroute_get_health",
+  name: "pusula_get_health",
   description: "Sistem durumu anlık görüntüsünü al",
   scope: "read:health",
   inputSchema: z.object({}),
@@ -457,7 +457,7 @@ if (!hasScope(apiKey, "providers:read")) {
 
 ### Neden Ayrı Bir Dönüştürücü Var?
 
-Responses API, OpenAI'ın **durum bilgisi tutan konuşmalar** (`previous_response_id`) içeren yeni formatıdır. Bir istemci Responses isteği gönderdiğinde OmniRoute:
+Responses API, OpenAI'ın **durum bilgisi tutan konuşmalar** (`previous_response_id`) içeren yeni formatıdır. Bir istemci Responses isteği gönderdiğinde Pusula:
 
 1. Responses formatını dahili olarak Chat Completions formatına dönüştürür
 2. İsteği sağlayıcıya gönderir (Chat Completions destekleyen herhangi bir sağlayıcı)

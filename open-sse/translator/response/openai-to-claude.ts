@@ -275,7 +275,7 @@ export function openaiToClaudeResponse(chunk, state) {
   // block — including prompt_tokens_details.cached_tokens — on a trailing
   // usage-only chunk shaped `{"choices":[],"usage":{...}}`. Returning early on
   // that chunk discarded the real numbers and left downstream accounting on
-  // OmniRoute's own tokenizer estimate (#11817).
+  // Pusula's own tokenizer estimate (#11817).
   //
   // Harvesting alone is not enough: if the finish_reason chunk arrives BEFORE
   // this trailing usage chunk (the normal order for these upstreams), the
@@ -392,12 +392,12 @@ export function openaiToClaudeResponse(chunk, state) {
     const strippedContent = stripInternalReasoningPlaceholder(delta.content);
     if (strippedContent) {
       // #reasoning-bilingual response side: DeepSeek-V4 and similar models echo the
-      // OMNIROUTE_SYSTEM_INSTRUCTION_APPEND directive (appended to the system tail by
+      // PUSULA_SYSTEM_INSTRUCTION_APPEND directive (appended to the system tail by
       // claude-to-openai.ts) verbatim at the START of their reply — the "system message
       // leak" the operator reports. When the directive is configured, run the stream's
       // first text chunk(s) through a preamble stripper so a leading reproduction is
       // dropped before it reaches the client.
-      const directive = process.env.OMNIROUTE_SYSTEM_INSTRUCTION_APPEND?.trim();
+      const directive = process.env.PUSULA_SYSTEM_INSTRUCTION_APPEND?.trim();
       if (directive) {
         state._directiveStripper ??= createDirectivePreambleStripper(directive);
       }
@@ -406,15 +406,15 @@ export function openaiToClaudeResponse(chunk, state) {
       // <analysis>/<system-reminder>/<summary> blocks or prose reproductions of the
       // superpowers skill section. Chained after the exact-directive stripper.
       //
-      // OPT-IN (OMNIROUTE_STRIP_SYSTEM_PREAMBLE=1), mirroring the directive
+      // OPT-IN (PUSULA_STRIP_SYSTEM_PREAMBLE=1), mirroring the directive
       // stripper right above, which only runs when the operator configured
-      // OMNIROUTE_SYSTEM_INSTRUCTION_APPEND. Unlike the exact-directive match,
+      // PUSULA_SYSTEM_INSTRUCTION_APPEND. Unlike the exact-directive match,
       // this one recognises constructs by English-prose heuristics, so leaving it
       // default-on would mutate the payload of EVERY openai→claude stream and can
       // delete a legitimate section (a reply that genuinely opens with
       // "# Skill usage: ..." loses it). Operators who hit the system-echo leak
       // turn it on explicitly.
-      if (process.env.OMNIROUTE_STRIP_SYSTEM_PREAMBLE === "1") {
+      if (process.env.PUSULA_STRIP_SYSTEM_PREAMBLE === "1") {
         state._systemPreambleStripper ??= createSystemPreambleStripper();
       }
       let scrubbedContent = state._directiveStripper

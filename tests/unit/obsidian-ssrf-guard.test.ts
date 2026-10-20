@@ -13,7 +13,7 @@ import os from "node:os";
 import path from "node:path";
 import { makeManagementSessionRequest } from "../helpers/managementSession.ts";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-obsidian-ssrf-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-obsidian-ssrf-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const { createObsidianClient } = await import("../../src/lib/obsidian/api.ts");

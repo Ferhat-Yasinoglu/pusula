@@ -9,7 +9,7 @@ import path from "node:path";
 // wiped a playground preset's params and reset a proxy's address family. A partial update
 // must only change what the client sent.
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-update-omitted-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-update-omitted-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = "test-secret";
 

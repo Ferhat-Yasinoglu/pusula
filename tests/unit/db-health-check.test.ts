@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-db-health-check-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-db-health-check-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = process.env.API_KEY_SECRET || "task-303-api-key-secret";
 
@@ -293,8 +293,8 @@ test("getDbInstance runs the startup health check synchronously by default (DB_H
     warnings.push(args.map(String).join(" "));
   };
 
-  const previousForce = process.env.OMNIROUTE_FORCE_DB_HEALTHCHECK;
-  process.env.OMNIROUTE_FORCE_DB_HEALTHCHECK = "1";
+  const previousForce = process.env.PUSULA_FORCE_DB_HEALTHCHECK;
+  process.env.PUSULA_FORCE_DB_HEALTHCHECK = "1";
   try {
     // DB_HEALTHCHECK_STARTUP_DEFERRED_ENABLED is off (default, #13717): the
     // startup health check (and its backup-gated abort) has already run
@@ -307,9 +307,9 @@ test("getDbInstance runs the startup health check synchronously by default (DB_H
   } finally {
     console.warn = originalWarn;
     if (previousForce === undefined) {
-      delete process.env.OMNIROUTE_FORCE_DB_HEALTHCHECK;
+      delete process.env.PUSULA_FORCE_DB_HEALTHCHECK;
     } else {
-      process.env.OMNIROUTE_FORCE_DB_HEALTHCHECK = previousForce;
+      process.env.PUSULA_FORCE_DB_HEALTHCHECK = previousForce;
     }
   }
 

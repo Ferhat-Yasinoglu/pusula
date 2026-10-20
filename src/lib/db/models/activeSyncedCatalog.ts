@@ -1,6 +1,6 @@
-import { providerUsesAuthoritativeLiveCatalog } from "@omniroute/open-sse/config/providerRegistry";
-import { getSearchProvider } from "@omniroute/open-sse/config/searchRegistry.ts";
-import { PROVIDER_ID_TO_ALIAS } from "@omniroute/open-sse/config/providerModels.ts";
+import { providerUsesAuthoritativeLiveCatalog } from "@pusula/open-sse/config/providerRegistry";
+import { getSearchProvider } from "@pusula/open-sse/config/searchRegistry.ts";
+import { PROVIDER_ID_TO_ALIAS } from "@pusula/open-sse/config/providerModels.ts";
 import { ensureCursorAutoCatalogEntry } from "@/lib/providerModels/cursorAutoCatalog";
 import {
   getCustomModels,
@@ -54,7 +54,7 @@ type ProviderConnectionRef = {
 const DEFAULT_SYNCED_CATALOG_STALE_AFTER_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
 
 function getSyncedCatalogStaleAfterMs(): number {
-  const raw = process.env.OMNIROUTE_SYNCED_CATALOG_STALE_AFTER_MS;
+  const raw = process.env.PUSULA_SYNCED_CATALOG_STALE_AFTER_MS;
   const parsed = raw !== undefined ? Number(raw) : NaN;
   return Number.isFinite(parsed) && parsed > 0 ? parsed : DEFAULT_SYNCED_CATALOG_STALE_AFTER_MS;
 }

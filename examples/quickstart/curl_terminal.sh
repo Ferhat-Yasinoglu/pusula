@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# OmniRoute Quickstart — cURL (Bash / Terminal)
+# Pusula Quickstart — cURL (Bash / Terminal)
 # ==============================================
 # Run:  chmod +x curl_terminal.sh && ./curl_terminal.sh
 # Requires: curl (pre-installed on Mac/Linux; use Git Bash on Windows)
 
-# Your local OmniRoute server — started with: npx omniroute
+# Your local Pusula server — started with: npx pusula
 API_URL="http://localhost:20128/v1/chat/completions"
 
 curl "$API_URL" \

@@ -9,7 +9,7 @@ import { promisify } from "util";
 import { isValidationFailure, validateBody } from "@/shared/validation/helpers";
 import { cliAuthOnlyConfigSchema } from "@/shared/validation/schemas/cli";
 import { requireCliToolsAuth } from "@/lib/api/requireCliToolsAuth";
-import { sanitizeErrorMessage } from "@omniroute/open-sse/utils/error";
+import { sanitizeErrorMessage } from "@pusula/open-sse/utils/error";
 
 const execAsync = promisify(exec);
 
@@ -19,7 +19,7 @@ const getSettingsPath = () => path.join(getLettaDir(), "settings.json");
 const getLocalBackendDir = () => path.join(getLettaDir(), "lc-local-backend");
 const getProviderAuthPath = () => path.join(getLocalBackendDir(), "providers", "auth.json");
 const getBackupPath = () =>
-  path.join(getLocalBackendDir(), "providers", "auth.json.omniroute-backup");
+  path.join(getLocalBackendDir(), "providers", "auth.json.pusula-backup");
 
 // ── Provider name in auth.json ─────────────────────────────────────────
 // "lmstudio" provider type has localModelDiscovery: "openai-compatible"
@@ -71,24 +71,24 @@ const readAuthFile = async () => {
   }
 };
 
-// ── Check if a base_url points to OmniRoute ──────────────────────────────
-const isOmniRouteUrl = (baseUrl) => {
+// ── Check if a base_url points to Pusula ──────────────────────────────
+const isPusulaUrl = (baseUrl) => {
   if (!baseUrl) return false;
   const port = process.env.PORT || process.env.DASHBOARD_PORT;
   return (
     baseUrl.includes(":20128") ||
     baseUrl.includes(":3000") ||
     (!!port && baseUrl.includes(`:${port}`)) ||
-    baseUrl.includes("omniroute")
+    baseUrl.includes("pusula")
   );
 };
 
-// ── Check if OmniRoute is configured ─────────────────────────────────────
-const hasOmniRouteConfig = (authFile) => {
+// ── Check if Pusula is configured ─────────────────────────────────────
+const hasPusulaConfig = (authFile) => {
   if (!authFile?.providers) return false;
   const provider = authFile.providers[PROVIDER_NAME];
   if (!provider) return false;
-  return isOmniRouteUrl(provider.base_url);
+  return isPusulaUrl(provider.base_url);
 };
 
 // ── GET - Check Letta CLI and read current settings ────────────────────
@@ -110,16 +110,16 @@ export async function GET(request: Request) {
     const authFile = await readAuthFile();
     const provider = authFile?.providers?.[PROVIDER_NAME];
 
-    // Detect if lmstudio is already configured for a non-OmniRoute endpoint
+    // Detect if lmstudio is already configured for a non-Pusula endpoint
     let lmstudioConflict = false;
-    if (provider && !isOmniRouteUrl(provider.base_url)) {
+    if (provider && !isPusulaUrl(provider.base_url)) {
       lmstudioConflict = true;
     }
 
     return NextResponse.json({
       installed: true,
       config: authFile,
-      hasOmniRoute: hasOmniRouteConfig(authFile),
+      hasPusula: hasPusulaConfig(authFile),
       lmstudioConflict,
       configPath: getProviderAuthPath(),
       letta: {
@@ -132,11 +132,11 @@ export async function GET(request: Request) {
   }
 }
 
-// ── POST - Apply OmniRoute as LM Studio provider + switch to local mode ──
+// ── POST - Apply Pusula as LM Studio provider + switch to local mode ──
 /**
  * Steps 1-2 of POST: read the existing Letta auth.json, refuse to clobber a real
  * LM Studio configuration unless `overwrite` is set (409 with conflict info), and back
- * up a non-OmniRoute provider before it is overwritten. Extracted to keep POST under
+ * up a non-Pusula provider before it is overwritten. Extracted to keep POST under
  * the complexity gate.
  */
 async function prepareLettaAuthFile(
@@ -158,7 +158,7 @@ async function prepareLettaAuthFile(
   }
 
   const existingProvider = authFile.providers?.[PROVIDER_NAME];
-  if (existingProvider && !isOmniRouteUrl(existingProvider.base_url) && !overwrite) {
+  if (existingProvider && !isPusulaUrl(existingProvider.base_url) && !overwrite) {
     // User has lmstudio configured for actual LM Studio — refuse to overwrite
     return {
       conflictResponse: NextResponse.json(
@@ -173,7 +173,7 @@ async function prepareLettaAuthFile(
   }
 
   // Back up existing lmstudio provider before overwriting
-  if (existingProvider && !isOmniRouteUrl(existingProvider.base_url)) {
+  if (existingProvider && !isPusulaUrl(existingProvider.base_url)) {
     const backupPath = getBackupPath();
     await fs.writeFile(backupPath, JSON.stringify(existingProvider, null, 2));
   }
@@ -200,7 +200,7 @@ export async function POST(request: Request) {
 
     const normalizedBaseUrl = baseUrl.endsWith("/v1") ? baseUrl : `${baseUrl}/v1`;
 
-    // ── 1-2. Read auth.json, guard non-OmniRoute conflicts, back up before overwrite ──
+    // ── 1-2. Read auth.json, guard non-Pusula conflicts, back up before overwrite ──
     const prepared = await prepareLettaAuthFile(overwrite);
     if ("conflictResponse" in prepared) {
       return prepared.conflictResponse;
@@ -224,9 +224,9 @@ export async function POST(request: Request) {
     await fs.writeFile(settingsPath, JSON.stringify(settings, null, 2));
 
     // ── 4. Write lmstudio provider to auth.json ──
-    // Clean up legacy lc-omniroute provider if present
-    if (authFile.providers?.["lc-omniroute"]) {
-      delete authFile.providers["lc-omniroute"];
+    // Clean up legacy lc-pusula provider if present
+    if (authFile.providers?.["lc-pusula"]) {
+      delete authFile.providers["lc-pusula"];
     }
 
     // Create or update lmstudio provider
@@ -245,7 +245,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      message: "Settings applied. Restart Letta CLI, then use /model to select a OmniRoute model.",
+      message: "Settings applied. Restart Letta CLI, then use /model to select a Pusula model.",
       needsRestart: true,
     });
   } catch (error) {
@@ -253,7 +253,7 @@ export async function POST(request: Request) {
   }
 }
 
-// ── DELETE - Remove OmniRoute configuration ──────────────────────────────
+// ── DELETE - Remove Pusula configuration ──────────────────────────────
 export async function DELETE(request: Request) {
   const authError = await requireCliToolsAuth(request);
   if (authError) return authError;
@@ -288,9 +288,9 @@ export async function DELETE(request: Request) {
       changed = true;
     }
 
-    // Clean up legacy lc-omniroute provider if present
-    if (authFile.providers?.["lc-omniroute"]) {
-      delete authFile.providers["lc-omniroute"];
+    // Clean up legacy lc-pusula provider if present
+    if (authFile.providers?.["lc-pusula"]) {
+      delete authFile.providers["lc-pusula"];
       changed = true;
     }
 
@@ -312,8 +312,8 @@ export async function DELETE(request: Request) {
     }
 
     const message = restored
-      ? "OmniRoute config removed. Your original LM Studio provider has been restored. Restart Letta CLI to take effect."
-      : "OmniRoute config removed. Restart Letta CLI to take effect.";
+      ? "Pusula config removed. Your original LM Studio provider has been restored. Restart Letta CLI to take effect."
+      : "Pusula config removed. Restart Letta CLI to take effect.";
 
     return NextResponse.json({
       success: true,

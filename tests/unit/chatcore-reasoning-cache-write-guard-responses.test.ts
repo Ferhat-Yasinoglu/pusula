@@ -19,7 +19,7 @@ import os from "node:os";
 import path from "node:path";
 
 const TEST_DATA_DIR = fs.mkdtempSync(
-  path.join(os.tmpdir(), "omniroute-chatcore-reasoning-cache-write-guard-responses-")
+  path.join(os.tmpdir(), "pusula-chatcore-reasoning-cache-write-guard-responses-")
 );
 process.env.DATA_DIR = TEST_DATA_DIR;
 
@@ -165,7 +165,7 @@ async function drain(result: { success?: boolean; response?: Response }) {
 
 /**
  * Runs one client turn through the real handleChatCore against a mocked upstream and
- * returns the JSON body OmniRoute sent upstream.
+ * returns the JSON body Pusula sent upstream.
  */
 async function runTurn(
   session: string,

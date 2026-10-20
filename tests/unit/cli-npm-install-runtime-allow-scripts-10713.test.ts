@@ -12,7 +12,7 @@ import { npmInstallRuntime } from "../../bin/cli/runtime/nativeDeps.mjs";
 // field in the runtime package.json, which every npm version that
 // recognizes install-script restrictions at all honors.
 test("issue #10713 / #14355: npmInstallRuntime grants better-sqlite3 script permission via the runtime package.json, not a rejected CLI flag", () => {
-  const fakeBinDir = mkdtempSync(join(tmpdir(), "omniroute-fakenpm-"));
+  const fakeBinDir = mkdtempSync(join(tmpdir(), "pusula-fakenpm-"));
   const argvLog = join(fakeBinDir, "argv.log");
   const npmScript = join(fakeBinDir, "npm");
   writeFileSync(npmScript, `#!/usr/bin/env bash\nprintf '%s\\n' "$@" > "${argvLog}"\nexit 0\n`);
@@ -20,7 +20,7 @@ test("issue #10713 / #14355: npmInstallRuntime grants better-sqlite3 script perm
 
   const originalPath = process.env.PATH;
   const originalDataDir = process.env.DATA_DIR;
-  const fakeDataDir = mkdtempSync(join(tmpdir(), "omniroute-fakedata-"));
+  const fakeDataDir = mkdtempSync(join(tmpdir(), "pusula-fakedata-"));
   try {
     process.env.PATH = `${fakeBinDir}:${originalPath}`;
     process.env.DATA_DIR = fakeDataDir;
@@ -59,19 +59,19 @@ test("issue #10713 / #14355: npmInstallRuntime grants better-sqlite3 script perm
 });
 
 test("#14355: an existing runtime package.json without allowScripts is retrofitted on the next install", () => {
-  const fakeBinDir = mkdtempSync(join(tmpdir(), "omniroute-fakenpm-retrofit-"));
+  const fakeBinDir = mkdtempSync(join(tmpdir(), "pusula-fakenpm-retrofit-"));
   const npmScript = join(fakeBinDir, "npm");
   writeFileSync(npmScript, `#!/usr/bin/env bash\nexit 0\n`);
   chmodSync(npmScript, 0o755);
 
   const originalPath = process.env.PATH;
   const originalDataDir = process.env.DATA_DIR;
-  const fakeDataDir = mkdtempSync(join(tmpdir(), "omniroute-fakedata-retrofit-"));
+  const fakeDataDir = mkdtempSync(join(tmpdir(), "pusula-fakedata-retrofit-"));
   try {
     process.env.PATH = `${fakeBinDir}:${originalPath}`;
     process.env.DATA_DIR = fakeDataDir;
 
-    // Simulate a runtime dir created by an older OmniRoute version, before
+    // Simulate a runtime dir created by an older Pusula version, before
     // this fix existed — no allowScripts field at all.
     const runtimeDir = join(fakeDataDir, "runtime");
     mkdirSync(runtimeDir, { recursive: true });
@@ -79,7 +79,7 @@ test("#14355: an existing runtime package.json without allowScripts is retrofitt
     writeFileSync(
       runtimePkgPath,
       JSON.stringify(
-        { name: "omniroute-runtime", version: "1.0.0", private: true },
+        { name: "pusula-runtime", version: "1.0.0", private: true },
         null,
         2
       )

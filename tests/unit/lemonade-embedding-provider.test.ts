@@ -4,7 +4,7 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-const TEST_DATA_DIR = mkdtempSync(join(tmpdir(), "omniroute-lemonade-embedding-"));
+const TEST_DATA_DIR = mkdtempSync(join(tmpdir(), "pusula-lemonade-embedding-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const { getEmbeddingProvider, parseEmbeddingModel, getEmbeddingDimension } =

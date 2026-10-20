@@ -187,9 +187,9 @@ describe("cgroup_high throttle proof", () => {
   });
 
   it("disables the PSI safety net when the operator ignores PSI pressure", () => {
-    const previous = process.env.OMNIROUTE_PRESSURE_PSI_DISABLED;
+    const previous = process.env.PUSULA_PRESSURE_PSI_DISABLED;
     try {
-      process.env.OMNIROUTE_PRESSURE_PSI_DISABLED = "1";
+      process.env.PUSULA_PRESSURE_PSI_DISABLED = "1";
       const signals = overHighWithoutProof();
       signals.psi = {
         someAvg10: 5,
@@ -202,8 +202,8 @@ describe("cgroup_high throttle proof", () => {
       };
       assert.equal(hasKernelThrottleProof(signals, { high: 0, max: 0 }), false);
     } finally {
-      if (previous === undefined) delete process.env.OMNIROUTE_PRESSURE_PSI_DISABLED;
-      else process.env.OMNIROUTE_PRESSURE_PSI_DISABLED = previous;
+      if (previous === undefined) delete process.env.PUSULA_PRESSURE_PSI_DISABLED;
+      else process.env.PUSULA_PRESSURE_PSI_DISABLED = previous;
     }
   });
 });

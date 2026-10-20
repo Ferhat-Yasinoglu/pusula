@@ -1,7 +1,7 @@
 [
   {
-    "name": "CLI entry (omniroute.mjs)",
-    "path": "bin/omniroute.mjs",
+    "name": "CLI entry (pusula.mjs)",
+    "path": "bin/pusula.mjs",
     "limit": "15 KB"
   },
   {

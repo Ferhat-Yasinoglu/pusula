@@ -127,7 +127,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { mkdirSync } from "node:fs";
 
-const tmpDir = join(tmpdir(), `omniroute-test-${Date.now()}`);
+const tmpDir = join(tmpdir(), `pusula-test-${Date.now()}`);
 mkdirSync(tmpDir, { recursive: true });
 process.env["DATA_DIR"] = tmpDir;
 

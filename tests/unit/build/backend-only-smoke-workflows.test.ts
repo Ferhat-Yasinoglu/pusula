@@ -1,5 +1,5 @@
 // Regression guard for #7226: API-only smoke/nightly workflows must build with
-// OMNIROUTE_BUILD_BACKEND_ONLY=1 so `npm run build:cli`'s fallback full build
+// PUSULA_BUILD_BACKEND_ONLY=1 so `npm run build:cli`'s fallback full build
 // (scripts/build/prepublish.ts -> build-next-isolated.mjs) skips the ~126-leaf-page
 // dashboard UI graph these workflows never exercise. Without this env var, the
 // "Build CLI bundle" step silently runs a full Next.js production build inline,
@@ -40,11 +40,11 @@ function loadWorkflow(fileName: string): WorkflowDoc {
 
 function isBackendOnly(step: WorkflowStep): boolean {
   const env = step.env || {};
-  return env.OMNIROUTE_BUILD_BACKEND_ONLY === "1" || env.OMNIROUTE_BUILD_PROFILE === "backend";
+  return env.PUSULA_BUILD_BACKEND_ONLY === "1" || env.PUSULA_BUILD_PROFILE === "backend";
 }
 
 test("contributor build profile enables backend-only mode", () => {
-  assert.equal(isBackendOnlyBuild({ OMNIROUTE_BUILD_PROFILE: "contributor" }), true);
+  assert.equal(isBackendOnlyBuild({ PUSULA_BUILD_PROFILE: "contributor" }), true);
 });
 
 test("full build remains the default when no backend-only profile is set", () => {
@@ -68,7 +68,7 @@ const TARGETS: Target[] = [
 ];
 
 for (const { file, jobName, stepName } of TARGETS) {
-  test(`${file} :: ${jobName} '${stepName}' step sets OMNIROUTE_BUILD_BACKEND_ONLY=1 (skips dashboard UI build the API-only smoke job never exercises)`, () => {
+  test(`${file} :: ${jobName} '${stepName}' step sets PUSULA_BUILD_BACKEND_ONLY=1 (skips dashboard UI build the API-only smoke job never exercises)`, () => {
     const doc = loadWorkflow(file);
     const job = doc.jobs[jobName];
     assert.ok(job, `${file} must have a '${jobName}' job`);
@@ -77,7 +77,7 @@ for (const { file, jobName, stepName } of TARGETS) {
     assert.equal(
       isBackendOnly(step),
       true,
-      `${file}'s '${jobName}' -> '${stepName}' step must set OMNIROUTE_BUILD_BACKEND_ONLY=1 or OMNIROUTE_BUILD_PROFILE=backend`
+      `${file}'s '${jobName}' -> '${stepName}' step must set PUSULA_BUILD_BACKEND_ONLY=1 or PUSULA_BUILD_PROFILE=backend`
     );
   });
 }

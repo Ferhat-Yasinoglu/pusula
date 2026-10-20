@@ -1,4 +1,4 @@
-# OmniRoute MCP Server Documentation (Türkçe)
+# Pusula MCP Server Documentation (Türkçe)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../frameworks/MCP-SERVER.md) · 🇪🇹 [am](../../../am/docs/frameworks/MCP-SERVER.md) · 🇸🇦 [ar](../../../ar/docs/frameworks/MCP-SERVER.md) · 🇦🇿 [az](../../../az/docs/frameworks/MCP-SERVER.md) · 🇧🇬 [bg](../../../bg/docs/frameworks/MCP-SERVER.md) · 🇧🇩 [bn](../../../bn/docs/frameworks/MCP-SERVER.md) · 🇧🇦 [bs](../../../bs/docs/frameworks/MCP-SERVER.md) · 🇨🇿 [cs](../../../cs/docs/frameworks/MCP-SERVER.md) · 🇩🇰 [da](../../../da/docs/frameworks/MCP-SERVER.md) · 🇩🇪 [de](../../../de/docs/frameworks/MCP-SERVER.md) · 🇬🇷 [el](../../../el/docs/frameworks/MCP-SERVER.md) · 🇪🇸 [es](../../../es/docs/frameworks/MCP-SERVER.md) · 🇪🇪 [et](../../../et/docs/frameworks/MCP-SERVER.md) · 🇮🇷 [fa](../../../fa/docs/frameworks/MCP-SERVER.md) · 🇫🇮 [fi](../../../fi/docs/frameworks/MCP-SERVER.md) · 🇫🇷 [fr](../../../fr/docs/frameworks/MCP-SERVER.md) · 🇮🇪 [ga](../../../ga/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [gu](../../../gu/docs/frameworks/MCP-SERVER.md) · 🇳🇬 [ha](../../../ha/docs/frameworks/MCP-SERVER.md) · 🇮🇱 [he](../../../he/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [hi](../../../hi/docs/frameworks/MCP-SERVER.md) · 🇭🇷 [hr](../../../hr/docs/frameworks/MCP-SERVER.md) · 🇭🇺 [hu](../../../hu/docs/frameworks/MCP-SERVER.md) · 🇦🇲 [hy](../../../hy/docs/frameworks/MCP-SERVER.md) · 🇮🇩 [id](../../../id/docs/frameworks/MCP-SERVER.md) · 🇳🇬 [ig](../../../ig/docs/frameworks/MCP-SERVER.md) · 🇮🇹 [it](../../../it/docs/frameworks/MCP-SERVER.md) · 🇯🇵 [ja](../../../ja/docs/frameworks/MCP-SERVER.md) · 🇬🇪 [ka](../../../ka/docs/frameworks/MCP-SERVER.md) · 🇰🇭 [km](../../../km/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [kn](../../../kn/docs/frameworks/MCP-SERVER.md) · 🇰🇷 [ko](../../../ko/docs/frameworks/MCP-SERVER.md) · 🇱🇹 [lt](../../../lt/docs/frameworks/MCP-SERVER.md) · 🇱🇻 [lv](../../../lv/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [ml](../../../ml/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [mr](../../../mr/docs/frameworks/MCP-SERVER.md) · 🇲🇾 [ms](../../../ms/docs/frameworks/MCP-SERVER.md) · 🇲🇹 [mt](../../../mt/docs/frameworks/MCP-SERVER.md) · 🇲🇲 [my](../../../my/docs/frameworks/MCP-SERVER.md) · 🇳🇵 [ne](../../../ne/docs/frameworks/MCP-SERVER.md) · 🇳🇱 [nl](../../../nl/docs/frameworks/MCP-SERVER.md) · 🇳🇴 [no](../../../no/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [or](../../../or/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [pa](../../../pa/docs/frameworks/MCP-SERVER.md) · 🇵🇭 [phi](../../../phi/docs/frameworks/MCP-SERVER.md) · 🇵🇱 [pl](../../../pl/docs/frameworks/MCP-SERVER.md) · 🇵🇹 [pt](../../../pt/docs/frameworks/MCP-SERVER.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/frameworks/MCP-SERVER.md) · 🇷🇴 [ro](../../../ro/docs/frameworks/MCP-SERVER.md) · 🇷🇺 [ru](../../../ru/docs/frameworks/MCP-SERVER.md) · 🇱🇰 [si](../../../si/docs/frameworks/MCP-SERVER.md) · 🇸🇰 [sk](../../../sk/docs/frameworks/MCP-SERVER.md) · 🇸🇮 [sl](../../../sl/docs/frameworks/MCP-SERVER.md) · 🇷🇸 [sr](../../../sr/docs/frameworks/MCP-SERVER.md) · 🇸🇪 [sv](../../../sv/docs/frameworks/MCP-SERVER.md) · 🇰🇪 [sw](../../../sw/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [ta](../../../ta/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [te](../../../te/docs/frameworks/MCP-SERVER.md) · 🇹🇭 [th](../../../th/docs/frameworks/MCP-SERVER.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/frameworks/MCP-SERVER.md) · 🇵🇰 [ur](../../../ur/docs/frameworks/MCP-SERVER.md) · 🇺🇿 [uz](../../../uz/docs/frameworks/MCP-SERVER.md) · 🇻🇳 [vi](../../../vi/docs/frameworks/MCP-SERVER.md) · 🇳🇬 [yo](../../../yo/docs/frameworks/MCP-SERVER.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/frameworks/MCP-SERVER.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/frameworks/MCP-SERVER.md)
 
@@ -6,21 +6,21 @@
 
 > Yönlendirme, önbellek, sıkıştırma, bellek, beceriler, proxy, havuz, Radar ve bağlam kaynağı işlemlerini kapsayan 110 araca sahip Model Context Protocol sunucusu.
 >
-> Doğruluk kaynağı: `open-sse/mcp-server/server.ts`, `countUniqueMcpTools()` ile **110 benzersiz araç** hesaplar: 45 standart tanım (altı CCR yaşam döngüsü aracı, agent-skills üçlüsü, `omniroute_radar_catalog` ve `omniroute_x_search` dâhil); ayrıca bellek (3), beceriler (4), GitHub becerileri (3), havuz (6), oyunlaştırma (8), eklentiler (8), Notion (6), Obsidian (22), yerel derlem (3) ve yalnızca RTK'ye özgü iki sıkıştırma aracı.
+> Doğruluk kaynağı: `open-sse/mcp-server/server.ts`, `countUniqueMcpTools()` ile **110 benzersiz araç** hesaplar: 45 standart tanım (altı CCR yaşam döngüsü aracı, agent-skills üçlüsü, `pusula_radar_catalog` ve `pusula_x_search` dâhil); ayrıca bellek (3), beceriler (4), GitHub becerileri (3), havuz (6), oyunlaştırma (8), eklentiler (8), Notion (6), Obsidian (22), yerel derlem (3) ve yalnızca RTK'ye özgü iki sıkıştırma aracı.
 
 ## Kurulum
 
-OmniRoute MCP yerleşik olarak gelir. Şu komutla başlatın:
+Pusula MCP yerleşik olarak gelir. Şu komutla başlatın:
 
 ```bash
-omniroute --mcp
+pusula --mcp
 ```
 
 Ya da open-sse aktarımı üzerinden:
 
 ```bash
 # HTTP üzerinden akışa uygun aktarım (port 20130)
-omniroute --dev  # MCP, /mcp uç noktasında otomatik olarak başlar
+pusula --dev  # MCP, /mcp uç noktasında otomatik olarak başlar
 ```
 
 HTTP aktarımları (`sse` / `streamable-http`, pano sunucusu tarafından aynı süreç içinde sunulur)
@@ -28,10 +28,10 @@ varsayılan olarak kapalıdır ve önceden yalnızca `/dashboard/mcp` sayfasınd
 itibarıyla CLI da aynı özelliklere sahiptir:
 
 ```bash
-omniroute mcp status                                  # etkin/çevrimiçi, aktarım, araç sayısı
-omniroute mcp enable [--transport stdio|sse|streamable-http]
-omniroute mcp disable
-omniroute mcp restart                                 # etkin sse/streamable-http oturumlarını sıfırlar
+pusula mcp status                                  # etkin/çevrimiçi, aktarım, araç sayısı
+pusula mcp enable [--transport stdio|sse|streamable-http]
+pusula mcp disable
+pusula mcp restart                                 # etkin sse/streamable-http oturumlarını sıfırlar
 ```
 
 `mcp enable`/`mcp disable`, panonun `/api/settings` üzerinden değiştirdiği aynı `mcpEnabled`
@@ -82,61 +82,61 @@ Claude Desktop, Cursor, Cline ve uyumlu MCP istemcilerinin kurulumu için [MCP �
 
 | Araç                            | Kapsamlar             | Açıklama                                                                                                                                       |
 | :------------------------------ | :-------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------- |
-| `omniroute_get_health`          | `read:health`         | Çalışma süresi, bellek, devre kesiciler, hız sınırları, önbellek istatistikleri                                                                |
-| `omniroute_list_combos`         | `read:combos`         | Stratejileriyle birlikte yapılandırılmış tüm kombinasyonlar (isteğe bağlı metrikler)                                                           |
-| `omniroute_get_combo_metrics`   | `read:combos`         | Belirli bir kombinasyona ait performans metrikleri                                                                                             |
-| `omniroute_switch_combo`        | `write:combos`        | Bir kombinasyonu etkinleştirme veya devre dışı bırakma                                                                                         |
-| `omniroute_create_combo`        | `write:combos`        | Mevcut kombinasyon API'si üzerinden doğrulanmış bir kombinasyon oluşturma                                                                      |
-| `omniroute_check_quota`         | `read:quota`          | Kullanılan/toplam kota, kalan yüzde, sıfırlanma zamanı, belirteç durumu                                                                        |
-| `omniroute_route_request`       | `execute:completions` | OmniRoute yönlendirmesi üzerinden sohbet tamamlama isteği gönderme                                                                             |
-| `omniroute_cost_report`         | `read:usage`          | Döneme göre maliyet raporu (oturum/gün/hafta/ay)                                                                                               |
-| `omniroute_list_models_catalog` | `read:models`         | Yetenekler, durum ve fiyatlandırmayla birlikte eksiksiz model kataloğu                                                                         |
-| `omniroute_radar_catalog`       | `read:radar`          | Yerel olarak imzalanmış Radar kataloğu; isteğe bağlı sağlayıcı/aile filtreleri                                                                 |
-| `omniroute_tool_search`         | `read:tools`          | Kayıtlı MCP kataloğundaki araçları keşfetme                                                                                                    |
-| `omniroute_web_search`          | `execute:search`      | Yapılandırılmış arama sağlayıcıları üzerinden web araması. X/Twitter değildir.                                                                 |
-| `omniroute_x_search`            | `execute:search`      | xAI/SuperGrok üzerinden X'te arama yapma veya Xquik API sonuçları için `xquik-search` seçme. Seçilen arka uç için kimlik bilgileri gerektirir. |
-| `omniroute_web_fetch`           | `execute:search`      | Yapılandırılmış getirme sağlayıcıları üzerinden web içeriğini alma                                                                             |
+| `pusula_get_health`          | `read:health`         | Çalışma süresi, bellek, devre kesiciler, hız sınırları, önbellek istatistikleri                                                                |
+| `pusula_list_combos`         | `read:combos`         | Stratejileriyle birlikte yapılandırılmış tüm kombinasyonlar (isteğe bağlı metrikler)                                                           |
+| `pusula_get_combo_metrics`   | `read:combos`         | Belirli bir kombinasyona ait performans metrikleri                                                                                             |
+| `pusula_switch_combo`        | `write:combos`        | Bir kombinasyonu etkinleştirme veya devre dışı bırakma                                                                                         |
+| `pusula_create_combo`        | `write:combos`        | Mevcut kombinasyon API'si üzerinden doğrulanmış bir kombinasyon oluşturma                                                                      |
+| `pusula_check_quota`         | `read:quota`          | Kullanılan/toplam kota, kalan yüzde, sıfırlanma zamanı, belirteç durumu                                                                        |
+| `pusula_route_request`       | `execute:completions` | Pusula yönlendirmesi üzerinden sohbet tamamlama isteği gönderme                                                                             |
+| `pusula_cost_report`         | `read:usage`          | Döneme göre maliyet raporu (oturum/gün/hafta/ay)                                                                                               |
+| `pusula_list_models_catalog` | `read:models`         | Yetenekler, durum ve fiyatlandırmayla birlikte eksiksiz model kataloğu                                                                         |
+| `pusula_radar_catalog`       | `read:radar`          | Yerel olarak imzalanmış Radar kataloğu; isteğe bağlı sağlayıcı/aile filtreleri                                                                 |
+| `pusula_tool_search`         | `read:tools`          | Kayıtlı MCP kataloğundaki araçları keşfetme                                                                                                    |
+| `pusula_web_search`          | `execute:search`      | Yapılandırılmış arama sağlayıcıları üzerinden web araması. X/Twitter değildir.                                                                 |
+| `pusula_x_search`            | `execute:search`      | xAI/SuperGrok üzerinden X'te arama yapma veya Xquik API sonuçları için `xquik-search` seçme. Seçilen arka uç için kimlik bilgileri gerektirir. |
+| `pusula_web_fetch`           | `execute:search`      | Yapılandırılmış getirme sağlayıcıları üzerinden web içeriğini alma                                                                             |
 
 ## Gelişmiş Araçlar (11) — Aşama 2
 
 | Araç                               | Kapsamlar                            | Açıklama                                                                                                                          |
 | :--------------------------------- | :----------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
-| `omniroute_simulate_route`         | `read:health`, `read:combos`         | Yedek yönlendirme ağacıyla deneme amaçlı yönlendirme simülasyonu                                                                  |
-| `omniroute_set_budget_guard`       | `write:budget`                       | Kalite düşürme/engelleme/uyarı eylemlerine sahip oturum bütçesi                                                                   |
-| `omniroute_set_routing_strategy`   | `write:combos`                       | Çalışma zamanında kombinasyon stratejisini güncelleme (öncelikli/ağırlıklı/otomatik/vb.)                                          |
-| `omniroute_set_resilience_profile` | `write:resilience`                   | `aggressive` / `balanced` / `conservative` dayanıklılık ön ayarını uygulama                                                       |
-| `omniroute_test_combo`             | `execute:completions`, `read:combos` | Gerçek bir yukarı akış çağrısı kullanarak kombinasyondaki her sağlayıcıyı canlı olarak test etme                                  |
-| `omniroute_get_provider_metrics`   | `read:health`                        | p50/p95/p99 gecikme süreleri ve devre kesici durumuyla sağlayıcı başına metrikler                                                 |
-| `omniroute_best_combo_for_task`    | `read:combos`, `read:health`         | Bütçe/gecikme kısıtlarıyla görev türüne göre kombinasyon önerme                                                                   |
-| `omniroute_explain_route`          | `read:health`, `read:usage`          | Bir isteğin neden belirli bir sağlayıcıya yönlendirildiğini açıklama (puanlama etkenleri + yedekler)                              |
-| `omniroute_get_session_snapshot`   | `read:usage`                         | Tam oturum anlık görüntüsü: maliyet, belirteçler, başlıca modeller/sağlayıcılar, hatalar, bütçe koruması                          |
-| `omniroute_db_health_check`        | `read:health`, `write:resilience`    | Bozuk kombinasyon referansları/yetim satırlar gibi veritabanı tutarsızlıklarını tanılama (ve isteğe bağlı olarak otomatik onarma) |
-| `omniroute_sync_pricing`           | `pricing:write`                      | Fiyatlandırma verilerini harici kaynaklardan (LiteLLM) eşitleme; `dryRun` destekler                                               |
+| `pusula_simulate_route`         | `read:health`, `read:combos`         | Yedek yönlendirme ağacıyla deneme amaçlı yönlendirme simülasyonu                                                                  |
+| `pusula_set_budget_guard`       | `write:budget`                       | Kalite düşürme/engelleme/uyarı eylemlerine sahip oturum bütçesi                                                                   |
+| `pusula_set_routing_strategy`   | `write:combos`                       | Çalışma zamanında kombinasyon stratejisini güncelleme (öncelikli/ağırlıklı/otomatik/vb.)                                          |
+| `pusula_set_resilience_profile` | `write:resilience`                   | `aggressive` / `balanced` / `conservative` dayanıklılık ön ayarını uygulama                                                       |
+| `pusula_test_combo`             | `execute:completions`, `read:combos` | Gerçek bir yukarı akış çağrısı kullanarak kombinasyondaki her sağlayıcıyı canlı olarak test etme                                  |
+| `pusula_get_provider_metrics`   | `read:health`                        | p50/p95/p99 gecikme süreleri ve devre kesici durumuyla sağlayıcı başına metrikler                                                 |
+| `pusula_best_combo_for_task`    | `read:combos`, `read:health`         | Bütçe/gecikme kısıtlarıyla görev türüne göre kombinasyon önerme                                                                   |
+| `pusula_explain_route`          | `read:health`, `read:usage`          | Bir isteğin neden belirli bir sağlayıcıya yönlendirildiğini açıklama (puanlama etkenleri + yedekler)                              |
+| `pusula_get_session_snapshot`   | `read:usage`                         | Tam oturum anlık görüntüsü: maliyet, belirteçler, başlıca modeller/sağlayıcılar, hatalar, bütçe koruması                          |
+| `pusula_db_health_check`        | `read:health`, `write:resilience`    | Bozuk kombinasyon referansları/yetim satırlar gibi veritabanı tutarsızlıklarını tanılama (ve isteğe bağlı olarak otomatik onarma) |
+| `pusula_sync_pricing`           | `pricing:write`                      | Fiyatlandırma verilerini harici kaynaklardan (LiteLLM) eşitleme; `dryRun` destekler                                               |
 
 ## Önbellek Araçları (2)
 
 | Araç                    | Kapsamlar     | Açıklama                                                        |
 | :---------------------- | :------------ | :-------------------------------------------------------------- |
-| `omniroute_cache_stats` | `read:cache`  | Anlamsal önbellek, istem önbelleği ve eşgüçlülük istatistikleri |
-| `omniroute_cache_flush` | `write:cache` | Önbelleği genel olarak veya imza/modele göre temizleme          |
+| `pusula_cache_stats` | `read:cache`  | Anlamsal önbellek, istem önbelleği ve eşgüçlülük istatistikleri |
+| `pusula_cache_flush` | `write:cache` | Önbelleği genel olarak veya imza/modele göre temizleme          |
 
 ## Sıkıştırma Araçları (13)
 
 | Araç                                | Kapsamlar           | Açıklama                                                                                                                        |
 | :---------------------------------- | :------------------ | :------------------------------------------------------------------------------------------------------------------------------ |
-| `omniroute_compression_status`      | `read:compression`  | Sıkıştırma ayarları, analiz özeti ve önbellek duyarlı istatistikler (`analytics.mcpDescriptionCompression` meta verileri dâhil) |
-| `omniroute_compression_configure`   | `write:compression` | Sıkıştırma modunu, eşiğini, hedef oranını, sistem istemi korumasını ve MCP açıklama sıkıştırma seçeneğini yapılandırma          |
-| `omniroute_set_compression_engine`  | `write:compression` | Etkin motoru (off/caveman/rtk/stacked) ve Caveman/RTK yoğunluğunu seçme                                                         |
-| `omniroute_list_compression_combos` | `read:compression`  | Adlandırılmış sıkıştırma kombinasyonlarını ve motor işlem hatlarını listeleme                                                   |
-| `omniroute_compression_combo_stats` | `read:compression`  | Sıkıştırma kombinasyonu ve motoruna göre gruplandırılmış analizler                                                              |
-| `omniroute_ccr_store`               | `write:compression` | Çağıranı yalıtılmış içeriği sınırlı bellek içi CCR deposunda saklama ve bir işaretçiyle birlikte `ccr://` referansı döndürme    |
-| `omniroute_ccr_retrieve`            | `read:compression`  | CCR içeriğini tam olarak veya baş, son, satırlar, grep ve istatistik modlarıyla alma                                            |
-| `omniroute_ccr_inspect`             | `read:compression`  | İçeriği döndürmeden çağırana ait CCR meta verilerini inceleme                                                                   |
-| `omniroute_ccr_list`                | `read:compression`  | Çağırana ait CCR bloklarının sayfalandırılmış meta verilerini listeleme                                                         |
-| `omniroute_ccr_delete`              | `write:compression` | Çağırana ait bir CCR bloğunu silme                                                                                              |
-| `omniroute_ccr_stats`               | `read:compression`  | Çağıran kapsamındaki bellek kullanımını, yaşam döngüsü sayaçlarını ve depo sınırlarını raporlama                                |
-| `omniroute_rtk_discover`            | `read:compression`  | İsteğe bağlı RTK çıktı örneklerinde yinelenen gürültüyü keşfetme                                                                |
-| `omniroute_rtk_learn`               | `read:compression`  | İsteğe bağlı örneklerden incelenebilir bir RTK filtresi taslağı oluşturma                                                       |
+| `pusula_compression_status`      | `read:compression`  | Sıkıştırma ayarları, analiz özeti ve önbellek duyarlı istatistikler (`analytics.mcpDescriptionCompression` meta verileri dâhil) |
+| `pusula_compression_configure`   | `write:compression` | Sıkıştırma modunu, eşiğini, hedef oranını, sistem istemi korumasını ve MCP açıklama sıkıştırma seçeneğini yapılandırma          |
+| `pusula_set_compression_engine`  | `write:compression` | Etkin motoru (off/caveman/rtk/stacked) ve Caveman/RTK yoğunluğunu seçme                                                         |
+| `pusula_list_compression_combos` | `read:compression`  | Adlandırılmış sıkıştırma kombinasyonlarını ve motor işlem hatlarını listeleme                                                   |
+| `pusula_compression_combo_stats` | `read:compression`  | Sıkıştırma kombinasyonu ve motoruna göre gruplandırılmış analizler                                                              |
+| `pusula_ccr_store`               | `write:compression` | Çağıranı yalıtılmış içeriği sınırlı bellek içi CCR deposunda saklama ve bir işaretçiyle birlikte `ccr://` referansı döndürme    |
+| `pusula_ccr_retrieve`            | `read:compression`  | CCR içeriğini tam olarak veya baş, son, satırlar, grep ve istatistik modlarıyla alma                                            |
+| `pusula_ccr_inspect`             | `read:compression`  | İçeriği döndürmeden çağırana ait CCR meta verilerini inceleme                                                                   |
+| `pusula_ccr_list`                | `read:compression`  | Çağırana ait CCR bloklarının sayfalandırılmış meta verilerini listeleme                                                         |
+| `pusula_ccr_delete`              | `write:compression` | Çağırana ait bir CCR bloğunu silme                                                                                              |
+| `pusula_ccr_stats`               | `read:compression`  | Çağıran kapsamındaki bellek kullanımını, yaşam döngüsü sayaçlarını ve depo sınırlarını raporlama                                |
+| `pusula_rtk_discover`            | `read:compression`  | İsteğe bağlı RTK çıktı örneklerinde yinelenen gürültüyü keşfetme                                                                |
+| `pusula_rtk_learn`               | `read:compression`  | İsteğe bağlı örneklerden incelenebilir bir RTK filtresi taslağı oluşturma                                                       |
 
 CCR girdileri yalnızca bellekte tutulur ve yeniden başlatma sırasında kaybolur. Her blok 2 MiB, her
 asıl öğe 16 MiB ve genel depo 64 MiB ile sınırlıdır. Girdiler varsayılan olarak 24 saatlik bir TTL'ye
@@ -145,7 +145,7 @@ modları üzerinden erişilebilir. Depolama, alma, listeleme, inceleme, silme ve
 doğrulanmış API anahtarı asıl öğesine göre yalıtılır. Denetim kayıtları hiçbir zaman içerik barındırmaz;
 yalnızca karmaları ve boyut meta verilerini içerir.
 
-`omniroute_compression_status`, MCP açıklama sıkıştırmasını
+`pusula_compression_status`, MCP açıklama sıkıştırmasını
 `analytics.mcpDescriptionCompression` altında ayrı olarak raporlar. Bu değerler, listelenebilir MCP
 açıklamalarına (`tools`, `prompts`, `resources` ve `resourceTemplates`) yönelik meta veri boyutu
 tahminleridir; sağlayıcı kullanım makbuzları değildir ve `source: "mcp_metadata_estimate"` ile
@@ -153,7 +153,7 @@ işaretlenir.
 
 ### MCP Erişilebilirlik Ağacı Filtresi (v3.8.0)
 
-Yukarıdaki sıkıştırma araçlarından ayrı olarak OmniRoute, MCP tarayıcı/erişilebilirlik araçlarının
+Yukarıdaki sıkıştırma araçlarından ayrı olarak Pusula, MCP tarayıcı/erişilebilirlik araçlarının
 **araç sonuçlarını** ajana döndürülmeden önce sıkıştıran bir yürütme sonrası filtresi içerir. Bu filtre
 kendi başına bir araç değildir — ayrıntılı erişilebilirlik ağacı veya tarayıcı anlık görüntüsü metni
 (≥2000 karakter) içeren tüm araç sonuçlarında şeffaf biçimde çalışır.
@@ -175,9 +175,9 @@ Bu araçların arkasındaki çalışma zamanı sıkıştırma modeli için [Sık
 
 | Araç                        | Kapsamlar      | Açıklama                                                                                    |
 | :-------------------------- | :------------- | :------------------------------------------------------------------------------------------ |
-| `omniroute_oneproxy_fetch`  | `read:proxies` | 1proxy pazarından ücretsiz proxy'leri getirir (protokol/ülke/kalite/limit filtreleri)       |
-| `omniroute_oneproxy_rotate` | `read:proxies` | Stratejiye göre sıradaki kullanılabilir proxy'yi alır (`random` / `quality` / `sequential`) |
-| `omniroute_oneproxy_stats`  | `read:proxies` | Havuz istatistikleri, senkronizasyon durumu ve protokol ile ülkeye göre dağılım             |
+| `pusula_oneproxy_fetch`  | `read:proxies` | 1proxy pazarından ücretsiz proxy'leri getirir (protokol/ülke/kalite/limit filtreleri)       |
+| `pusula_oneproxy_rotate` | `read:proxies` | Stratejiye göre sıradaki kullanılabilir proxy'yi alır (`random` / `quality` / `sequential`) |
+| `pusula_oneproxy_stats`  | `read:proxies` | Havuz istatistikleri, senkronizasyon durumu ve protokol ile ülkeye göre dağılım             |
 
 ## Bellek Araçları (3)
 
@@ -185,9 +185,9 @@ Bu araçların arkasındaki çalışma zamanı sıkıştırma modeli için [Sık
 
 | Araç                      | Kapsamlar      | Açıklama                                                                                                                         |
 | :------------------------ | :------------- | :------------------------------------------------------------------------------------------------------------------------------- |
-| `omniroute_memory_search` | `read:memory`  | Token bütçesi uygulamasıyla sorguya / türe / API anahtarına göre bellek kayıtlarını arar                                         |
-| `omniroute_memory_add`    | `write:memory` | Yeni bir bellek girdisi ekler (`factual` / `episodic` / `procedural` / `semantic`)                                               |
-| `omniroute_memory_clear`  | `write:memory` | Bir API anahtarına ait bellek kayıtlarını, isteğe bağlı olarak türe veya `olderThan` zaman damgasına göre filtreleyerek temizler |
+| `pusula_memory_search` | `read:memory`  | Token bütçesi uygulamasıyla sorguya / türe / API anahtarına göre bellek kayıtlarını arar                                         |
+| `pusula_memory_add`    | `write:memory` | Yeni bir bellek girdisi ekler (`factual` / `episodic` / `procedural` / `semantic`)                                               |
+| `pusula_memory_clear`  | `write:memory` | Bir API anahtarına ait bellek kayıtlarını, isteğe bağlı olarak türe veya `olderThan` zaman damgasına göre filtreleyerek temizler |
 
 ## Beceri Araçları (4)
 
@@ -195,10 +195,10 @@ Bu araçların arkasındaki çalışma zamanı sıkıştırma modeli için [Sık
 
 | Araç                          | Kapsamlar        | Açıklama                                                                                            |
 | :---------------------------- | :--------------- | :-------------------------------------------------------------------------------------------------- |
-| `omniroute_skills_list`       | `read:skills`    | Kayıtlı becerileri API anahtarı, ad veya etkinlik durumuna göre isteğe bağlı filtrelemeyle listeler |
-| `omniroute_skills_enable`     | `write:skills`   | Belirli bir beceriyi kimliğine göre etkinleştirir veya devre dışı bırakır                           |
-| `omniroute_skills_execute`    | `execute:skills` | Sağlanan girdiyi kullanarak bir beceriyi yürütür ve yürütme kaydını döndürür                        |
-| `omniroute_skills_executions` | `read:skills`    | Son beceri yürütmelerinin geçmişini listeler                                                        |
+| `pusula_skills_list`       | `read:skills`    | Kayıtlı becerileri API anahtarı, ad veya etkinlik durumuna göre isteğe bağlı filtrelemeyle listeler |
+| `pusula_skills_enable`     | `write:skills`   | Belirli bir beceriyi kimliğine göre etkinleştirir veya devre dışı bırakır                           |
+| `pusula_skills_execute`    | `execute:skills` | Sağlanan girdiyi kullanarak bir beceriyi yürütür ve yürütme kaydını döndürür                        |
+| `pusula_skills_executions` | `read:skills`    | Son beceri yürütmelerinin geçmişini listeler                                                        |
 
 ## Notion Bağlam Kaynağı (6)
 
@@ -234,9 +234,9 @@ curl -X DELETE http://localhost:20128/api/settings/notion
 
 | Araç                              | Kapsamlar      | Açıklama                                                                                                                                                       |
 | :-------------------------------- | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `omniroute_agent_skills_list`     | `read:catalog` | İsteğe bağlı `category` (api\|cli) ve `area` filtreleriyle 45 agent yeteneğinin tümünü listeler; meta verileri + kapsamı döndürür                              |
-| `omniroute_agent_skills_get`      | `read:catalog` | Kanonik `id` değerine göre tek bir yeteneğin tüm meta verilerini + SKILL.md içeriğini getirir                                                                  |
-| `omniroute_agent_skills_coverage` | `read:catalog` | Kapsam istatistikleri: 23 API, 21 CLI ve 1 yapılandırma yeteneğinden kaçının dosya sisteminde SKILL.md dosyası bulunduğunu katalog toplamlarıyla karşılaştırır |
+| `pusula_agent_skills_list`     | `read:catalog` | İsteğe bağlı `category` (api\|cli) ve `area` filtreleriyle 45 agent yeteneğinin tümünü listeler; meta verileri + kapsamı döndürür                              |
+| `pusula_agent_skills_get`      | `read:catalog` | Kanonik `id` değerine göre tek bir yeteneğin tüm meta verilerini + SKILL.md içeriğini getirir                                                                  |
+| `pusula_agent_skills_coverage` | `read:catalog` | Kapsam istatistikleri: 23 API, 21 CLI ve 1 yapılandırma yeteneğinden kaçının dosya sisteminde SKILL.md dosyası bulunduğunu katalog toplamlarıyla karşılaştırır |
 
 Kataloğun tamamı ve harici agent'ların bunu nasıl kullandığı için [AGENT-SKILLS.md](./AGENT-SKILLS.md) belgesine bakın.
 
@@ -246,7 +246,7 @@ Yukarıdaki MCP araç envanteri (`countUniqueMcpTools()` tarafından hesaplanan 
 
 ### Cloud Agents
 
-Cloud Agents, LLM sağlayıcıları için kullanılan aynı bağlantı modeli üzerinden OmniRoute'a bağlanan, işlem dışı AI kodlama agent'larıdır (codex-cloud, cursor-cloud, devin, jules). Kendi REST yüzeyleri (`/api/v1/agents/*`) üzerinden sunulurlar ve MCP araç kataloğunun parçası **değildirler** — bir Cloud Agent çağırmak herhangi bir MCP kapsamını tüketmez.
+Cloud Agents, LLM sağlayıcıları için kullanılan aynı bağlantı modeli üzerinden Pusula'a bağlanan, işlem dışı AI kodlama agent'larıdır (codex-cloud, cursor-cloud, devin, jules). Kendi REST yüzeyleri (`/api/v1/agents/*`) üzerinden sunulurlar ve MCP araç kataloğunun parçası **değildirler** — bir Cloud Agent çağırmak herhangi bir MCP kapsamını tüketmez.
 
 - Uygulama: `src/lib/cloudAgent/` (`registry.ts`, `agents/codex.ts`, `agents/cursor.ts`, `agents/devin.ts`, `agents/jules.ts`).
 - Yaşam döngüsü: `createTask`, `getStatus`, `approvePlan`, `sendMessage`, `listSources`.
@@ -292,7 +292,7 @@ Bir API anahtarındaki `manage`, bir MCP aracındaki `read:compression` ve bir `
 | :-------------------- | :------------------------------------------------------------------------- | :------------------------- | :-------------------------------------------------- |
 | API anahtarı yönetimi | `api_keys.scopes`                                                          | `hasManageScope`           | O Bearer anahtarı için Yönetim REST                 |
 | API anahtarı ekleme   | aynı dizi, bir tam dize                                                    | aşağıda adı geçen yardımcı | Yalnızca o tek yetenek                              |
-| MCP araç kapsamları   | aynı dizi, aksi takdirde MCP `_meta`, aksi takdirde `OMNIROUTE_MCP_SCOPES` | `scopeMatches`             | O araç, zorlama açıldığında                         |
+| MCP araç kapsamları   | aynı dizi, aksi takdirde MCP `_meta`, aksi takdirde `PUSULA_MCP_SCOPES` | `scopeMatches`             | O araç, zorlama açıldığında                         |
 | Erişim belirteci      | `oma_live_…`                                                               | `scopeSatisfies`           | Yöntemi ve yolu o rütbeyi gerektiren yönetim rotası |
 
 Her kimlik bilgisinin oluşturulması [Yönetim Kimlik Doğrulaması](../guides/MANAGEMENT-AUTH.md) bölümünde ele alınmıştır.
@@ -324,7 +324,7 @@ Katalog, [MCP araç kapsamları](#mcp-tool-scopes) altındaki tablodur. `src/sha
 
 Kapsamları `["manage"]` olan bir anahtar, `read:compression` için `scopeMatches`'i geçemez. Aynı çağrı, yalnızca `admin`, `mcp:connect`, `read` ve `write` verilen dizeler olduğunda başarısız olur. Sondaki `*` dışında MCP araç kapsamları arasında bir hiyerarşi yoktur.
 
-Zorlama, `OMNIROUTE_MCP_ENFORCE_SCOPES=true` (varsayılan `false`) olmadığı sürece kapalıdır. Kapalıyken, `evaluateToolScopes` çağrıya izin verir ve kataloğu atlar. Açıkken, HTTP, Bearer anahtarının `api_keys.scopes`'ini `authInfo` olarak kullanır ([Anahtar başına HTTP kapsam bağlama](#per-key-http-scope-binding-7895) bölümüne bakın). Anahtar kapsamları çözümlenmediğinde, verilen küme MCP `_meta`'ya, ardından `OMNIROUTE_MCP_SCOPES`'e düşer.
+Zorlama, `PUSULA_MCP_ENFORCE_SCOPES=true` (varsayılan `false`) olmadığı sürece kapalıdır. Kapalıyken, `evaluateToolScopes` çağrıya izin verir ve kataloğu atlar. Açıkken, HTTP, Bearer anahtarının `api_keys.scopes`'ini `authInfo` olarak kullanır ([Anahtar başına HTTP kapsam bağlama](#per-key-http-scope-binding-7895) bölümüne bakın). Anahtar kapsamları çözümlenmediğinde, verilen küme MCP `_meta`'ya, ardından `PUSULA_MCP_SCOPES`'e düşer.
 
 #### Erişim belirteci kapsamları
 
@@ -379,8 +379,8 @@ Her araç belirli kapsamlar gerektirir:
 | `write:skills`        | `skills_enable`                                                                                                                                                               |
 | `execute:skills`      | `skills_execute`                                                                                                                                                              |
 | `read:catalog`        | `agent_skills_list`, `agent_skills_get`, `agent_skills_coverage`                                                                                                              |
-| `read:tools`          | `omniroute_tool_search`                                                                                                                                                       |
-| `read:radar`          | `omniroute_radar_catalog`                                                                                                                                                     |
+| `read:tools`          | `pusula_tool_search`                                                                                                                                                       |
+| `read:radar`          | `pusula_radar_catalog`                                                                                                                                                     |
 | `read:gamification`   | `gamification_profile`, `gamification_rank`, `gamification_leaderboard`, `gamification_badges`, `gamification_servers`, `gamification_anomalies`                              |
 | `write:gamification`  | `gamification_invite`, `gamification_transfer`                                                                                                                                |
 | `read:plugins`        | `plugin_list`, `plugin_executions`                                                                                                                                            |
@@ -404,7 +404,7 @@ HTTP/SSE üzerinden, `open-sse/mcp-server/httpTransport.ts` şimdi arayanın ger
 `api_keys.scopes` değerini `resolveMcpCallerAuthInfo()` (`open-sse/mcp-server/httpAuthContext.ts`) aracılığıyla çözer
 ve bunu MCP SDK'sının `transport.handleRequest(req, { authInfo })` öğesine iletir, böylece
 her araç çağrısına ulaşan `extra.authInfo.scopes`, Bearer anahtarının kendi kapsamlarını yansıtır.
-`scopeEnforcement.ts`'nin `resolveCallerScopeContext()` öğesi zaten `authInfo`'yu `_meta` ve `OMNIROUTE_MCP_SCOPES` ortam yedeklemesinden öncelikli hale getiriyordu — bu yalnızca daha önce HTTP üzerinden beslenmeyen bu ilk, en yüksek öncelikli kaynağı doldurur. Hiçbir API anahtarı çözülmediğinde (başlık yok, geçersiz anahtar), `authInfo` `undefined` kalır ve çözümleme mevcut `meta`/ortam zincirine değişmeden düşer. Bu, `OMNIROUTE_MCP_ENFORCE_SCOPES`'un varsayılanını DEĞİŞTİRMEZ — uygulama hala açıkça etkinleştirilmelidir; bu değişiklik yalnızca etkinleştirildiğinde anahtar başına yolun öncelik almasını sağlar. stdio'nun arayan başına kimliği yoktur (bkz. `mcpCallerIdentity.ts`) ve etkilenmez — `_meta`/ortam yedekleme zincirinde kalır.
+`scopeEnforcement.ts`'nin `resolveCallerScopeContext()` öğesi zaten `authInfo`'yu `_meta` ve `PUSULA_MCP_SCOPES` ortam yedeklemesinden öncelikli hale getiriyordu — bu yalnızca daha önce HTTP üzerinden beslenmeyen bu ilk, en yüksek öncelikli kaynağı doldurur. Hiçbir API anahtarı çözülmediğinde (başlık yok, geçersiz anahtar), `authInfo` `undefined` kalır ve çözümleme mevcut `meta`/ortam zincirine değişmeden düşer. Bu, `PUSULA_MCP_ENFORCE_SCOPES`'un varsayılanını DEĞİŞTİRMEZ — uygulama hala açıkça etkinleştirilmelidir; bu değişiklik yalnızca etkinleştirildiğinde anahtar başına yolun öncelik almasını sağlar. stdio'nun arayan başına kimliği yoktur (bkz. `mcpCallerIdentity.ts`) ve etkilenmez — `_meta`/ortam yedekleme zincirinde kalır.
 
 ---
 
@@ -412,17 +412,17 @@ her araç çağrısına ulaşan `extra.authInfo.scopes`, Bearer anahtarının ke
 
 | Değişken                                | Varsayılan                                | Amaç                                                                                                                                              |
 | :-------------------------------------- | :---------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `OMNIROUTE_BASE_URL`                    | `http://localhost:20128`                  | MCP sunucusunun OmniRoute dahili API'lerini çağırırken kullandığı temel URL                                                                       |
-| `OMNIROUTE_API_KEY`                     | (boş)                                     | Dahili API çağrılarına `Authorization: Bearer` olarak iletilen API anahtarı                                                                       |
-| `OMNIROUTE_MCP_ENFORCE_SCOPES`          | `false` (yalnızca `"true"` etkinleştirir) | Etkinleştirildiğinde, eksik kapsamlar araç çağrılarını reddeder ve denetim günlüğüne `scope_denied:<reason>` kaydını ekler                        |
-| `OMNIROUTE_MCP_SCOPES`                  | (boş)                                     | Varsayılan olarak "kullanılabilir" kabul edilen kapsamların virgülle ayrılmış izin listesi (çağıran kendi kapsamlarını sağlamadığında kullanılır) |
-| `OMNIROUTE_MCP_COMPRESS_DESCRIPTIONS`   | (ayarlanmamış = açık)                     | `0/false/off/no` olarak ayarlandığında, kayıt sırasında MCP açıklama sıkıştırmasını devre dışı bırakır                                            |
-| `OMNIROUTE_MCP_DESCRIPTION_COMPRESSION` | (ayarlanmamış = açık)                     | Yukarıdaki ayarla aynı işlevi gören alternatif takma ad                                                                                           |
-| `OMNIROUTE_MCP_FETCH_TIMEOUT_MS`        | `10000`                                   | Dahili yönetim okumaları (sağlık, dayanıklılık, kombinasyonlar, kota, kullanım) için iptal zaman sınırı                                           |
-| `OMNIROUTE_MCP_UPSTREAM_TIMEOUT_MS`     | `60000`                                   | Bir sağlayıcıyı bekleyen geçişler (`route_request`, `web_search`, `web_fetch`) için iptal zaman sınırı                                            |
+| `PUSULA_BASE_URL`                    | `http://localhost:20128`                  | MCP sunucusunun Pusula dahili API'lerini çağırırken kullandığı temel URL                                                                       |
+| `PUSULA_API_KEY`                     | (boş)                                     | Dahili API çağrılarına `Authorization: Bearer` olarak iletilen API anahtarı                                                                       |
+| `PUSULA_MCP_ENFORCE_SCOPES`          | `false` (yalnızca `"true"` etkinleştirir) | Etkinleştirildiğinde, eksik kapsamlar araç çağrılarını reddeder ve denetim günlüğüne `scope_denied:<reason>` kaydını ekler                        |
+| `PUSULA_MCP_SCOPES`                  | (boş)                                     | Varsayılan olarak "kullanılabilir" kabul edilen kapsamların virgülle ayrılmış izin listesi (çağıran kendi kapsamlarını sağlamadığında kullanılır) |
+| `PUSULA_MCP_COMPRESS_DESCRIPTIONS`   | (ayarlanmamış = açık)                     | `0/false/off/no` olarak ayarlandığında, kayıt sırasında MCP açıklama sıkıştırmasını devre dışı bırakır                                            |
+| `PUSULA_MCP_DESCRIPTION_COMPRESSION` | (ayarlanmamış = açık)                     | Yukarıdaki ayarla aynı işlevi gören alternatif takma ad                                                                                           |
+| `PUSULA_MCP_FETCH_TIMEOUT_MS`        | `10000`                                   | Dahili yönetim okumaları (sağlık, dayanıklılık, kombinasyonlar, kota, kullanım) için iptal zaman sınırı                                           |
+| `PUSULA_MCP_UPSTREAM_TIMEOUT_MS`     | `60000`                                   | Bir sağlayıcıyı bekleyen geçişler (`route_request`, `web_search`, `web_fetch`) için iptal zaman sınırı                                            |
 | `MCP_TOOL_DENY`                         | (ayarlanmamış = filtre yok)               | `tools/list` listesinden çıkarılacak, virgülle ayrılmış araç adları (araç sayısını azaltma — aşağıya bakın)                                       |
 | `MCP_TOOL_ALLOW`                        | (ayarlanmamış = filtre yok)               | Yalnızca tutulacak, virgülle ayrılmış araç adları (izin listesi modu — aşağıya bakın)                                                             |
-| `DATA_DIR`                              | `~/.omniroute`                            | Sinyal dosyası `${DATA_DIR}/runtime/mcp-heartbeat.json` konumuna yazılır                                                                          |
+| `DATA_DIR`                              | `~/.pusula`                            | Sinyal dosyası `${DATA_DIR}/runtime/mcp-heartbeat.json` konumuna yazılır                                                                          |
 
 ---
 
@@ -432,8 +432,8 @@ MCP araç, istem ve kaynak kayıtları, istemcilere sunulan meta veri miktarın�
 
 - Sıkıştırma, yapısal içeriğin değiştirilmemesi için korunan blok çıkarımıyla (kod parçaları, çitli bloklar vb.) birlikte Caveman kural kümesini (`getRulesForContext("all", "full")`) kullanarak açıklama metni üzerinde çalışır.
 - Dağıtım başına, `key_value` ayarlar tablosundaki `compression.mcpDescriptionCompressionEnabled` değeri aracılığıyla açılıp kapatılabilir (varsayılan: etkin) — kullanıcı arayüzünde **Analiz → MCP açıklama sıkıştırması** olarak sunulur.
-- İşlem genelinde `OMNIROUTE_MCP_COMPRESS_DESCRIPTIONS=false` veya `OMNIROUTE_MCP_DESCRIPTION_COMPRESSION=false` aracılığıyla açılıp kapatılabilir.
-- Gerçek zamanlı istatistikler, `analytics.mcpDescriptionCompression` altında `omniroute_compression_status` aracılığıyla sunulur ve gerçek sağlayıcı kullanım makbuzlarından ayırt edilmesi için `source: "mcp_metadata_estimate"` etiketiyle işaretlenir.
+- İşlem genelinde `PUSULA_MCP_COMPRESS_DESCRIPTIONS=false` veya `PUSULA_MCP_DESCRIPTION_COMPRESSION=false` aracılığıyla açılıp kapatılabilir.
+- Gerçek zamanlı istatistikler, `analytics.mcpDescriptionCompression` altında `pusula_compression_status` aracılığıyla sunulur ve gerçek sağlayıcı kullanım makbuzlarından ayırt edilmesi için `source: "mcp_metadata_estimate"` etiketiyle işaretlenir.
 
 ---
 
@@ -452,10 +452,10 @@ Açıklama sıkıştırması her aracın meta verisini küçültür; **araç say
 
 ```bash
 # Katalogdan iki aracı çıkar
-MCP_TOOL_DENY="omniroute_get_health,omniroute_list_combos" omniroute --mcp
+MCP_TOOL_DENY="pusula_get_health,pusula_list_combos" pusula --mcp
 
 # Yalnızca yönlendirme + kota araçlarını duyur (izin listesi modu)
-MCP_TOOL_ALLOW="omniroute_route_request,omniroute_check_quota" omniroute --mcp
+MCP_TOOL_ALLOW="pusula_route_request,pusula_check_quota" pusula --mcp
 ```
 
 **Filtrelenen araçlar nasıl kaldırılır:** kayıt işlemi her zaman başarıyla tamamlanır; profilin reddettiği bir araç daha sonra MCP SDK tanıtıcısında `.disable()` ile devre dışı bırakılır. Böylece araç `tools/list` içinde hiçbir zaman görünmez, ancak bağlantılar sağlam kalır (temiz etkinleştirme/devre dışı bırakma, yeniden kayıt yoktur). Profil ayrıştırıcısı `readMcpToolProfileFromEnv(process.env)` şeklindedir ve her iki değişken de boş olduğunda `null` (filtreleme yok) döndürür.

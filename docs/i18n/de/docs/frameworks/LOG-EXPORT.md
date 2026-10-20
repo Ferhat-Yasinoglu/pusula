@@ -4,7 +4,7 @@
 
 ---
 
-Kontinuierlicher, inkrementeller Export von OmniRoute-Aufrufprotokollen in einen externen Analysespeicher.
+Kontinuierlicher, inkrementeller Export von Pusula-Aufrufprotokollen in einen externen Analysespeicher.
 
 Die Registerkarte „Logs“ im Dashboard speichert den Anfrageverlauf in SQLite (`call_logs`), wobei dessen Umfang durch Rotation und Aufbewahrung begrenzt ist. Der Protokollexport überträgt denselben Datensatz nach einem Zeitplan, damit er die lokale Datenbank überdauern und mit anderen Daten verknüpft werden kann. BigQuery ist das erste Ziel; die Pipeline ist als Registry aufgebaut, sodass weitere Ziele ergänzend hinzugefügt werden können.
 
@@ -20,7 +20,7 @@ call_logs (SQLite)
         → advanceLogExportCursor(id, lastRowId, count)
 ```
 
-- **Zeitplan** — ein `JobRegistry`-Cronjob namens `log_export`, standardmäßig mit `0 * * * *` (stündlich, UTC). Registriert in `src/lib/initCloudSync.ts`; kann mit `OMNIROUTE_LOG_EXPORT_CRON` überschrieben werden. Bei jeder Ausführung werden alle **aktivierten** Ziele nacheinander vollständig abgearbeitet.
+- **Zeitplan** — ein `JobRegistry`-Cronjob namens `log_export`, standardmäßig mit `0 * * * *` (stündlich, UTC). Registriert in `src/lib/initCloudSync.ts`; kann mit `PUSULA_LOG_EXPORT_CRON` überschrieben werden. Bei jeder Ausführung werden alle **aktivierten** Ziele nacheinander vollständig abgearbeitet.
 - **Cursor** — das implizite `call_logs.rowid` von SQLite, das pro Ziel in `log_export_destinations.cursor_row_id` persistiert wird. `timestamp` wird bewusst nicht als Cursor verwendet: Aufrufer können einen eigenen Wert angeben, sodass eine langsame Anfrage nach einer schnelleren Anfrage geschrieben werden kann, die später gestartet wurde; ein Zeitstempel-Cursor würde sie überspringen.
 - **Batchverarbeitung** — `batch_size` Zeilen pro Anfrage (Standardwert 500), `max_rows_per_run` Zeilen pro Ausführung (Standardwert 10000), damit ein großer Rückstand über mehrere Ausführungen hinweg abgearbeitet wird, anstatt eine einzelne zu blockieren.
 - **Zustellung** — der Cursor wird erst weiterbewegt, nachdem `send()` erfolgreich abgeschlossen wurde. Bei einem fehlgeschlagenen Batch bleibt der Cursor unverändert, sodass dieselben Zeilen bei der nächsten Ausführung erneut versucht werden. Die Garantie besteht aus mindestens einmaliger Zustellung plus zielseitiger Deduplizierung, nicht aus echter Genau-einmal-Zustellung: BigQuery versieht jede Zeile anhand der Aufrufprotokoll-ID mit einem Schlüssel, den es innerhalb seines eigenen Deduplizierungsfensters nach dem Best-Effort-Prinzip berücksichtigt.

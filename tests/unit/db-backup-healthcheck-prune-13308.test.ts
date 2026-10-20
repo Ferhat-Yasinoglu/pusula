@@ -18,7 +18,7 @@ import {
 const serial = { concurrency: false };
 
 function makeBackupDir() {
-  return fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-backup-prune-"));
+  return fs.mkdtempSync(path.join(os.tmpdir(), "pusula-backup-prune-"));
 }
 
 function seedFamilies(dir: string, count: number) {

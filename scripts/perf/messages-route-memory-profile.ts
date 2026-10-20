@@ -9,7 +9,7 @@
  *
  * Usage:
  *   node --import tsx/esm scripts/perf/messages-route-memory-profile.ts \
- *     --output-dir /tmp/omniroute-JON-562
+ *     --output-dir /tmp/pusula-JON-562
  *
  * Defaults: 100k, 300k and 600k token-equivalents; six sequential requests per fresh process;
  * concurrency=1; stream=true; cancellation=none. Context size is the only changing factor.
@@ -394,7 +394,7 @@ async function runWorker(): Promise<void> {
     ): Promise<number> => {
       const { body, targetWireBytes } = buildClaudeContextPayload(tokens);
       const serialized = JSON.stringify(body);
-      const request = new Request("http://omniroute.invalid/v1/messages", {
+      const request = new Request("http://pusula.invalid/v1/messages", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -858,7 +858,7 @@ async function runDriver(): Promise<void> {
   process.umask(0o077);
   const outputDir = path.resolve(
     argValue("--output-dir") ??
-      path.join(os.tmpdir(), `omniroute-JON-562-${new Date().toISOString().replace(/[:.]/g, "-")}`)
+      path.join(os.tmpdir(), `pusula-JON-562-${new Date().toISOString().replace(/[:.]/g, "-")}`)
   );
   const iterations = positiveIntArg("--iterations", 6);
   const tokenCases = (argValue("--tokens") ?? DEFAULT_TOKEN_EQUIVALENTS.join(","))
@@ -958,7 +958,7 @@ async function runDriver(): Promise<void> {
     provenance,
     harnessSha256: harnessHash(),
     baseBranch: "release/v3.8.51",
-    inheritedBaseRed: "diegosouzapw/OmniRoute#12732",
+    inheritedBaseRed: "Ferhat-Yasinoglu/pusula#12732",
     variedFactor: "serialized context bytes only",
     fixedConditions: {
       concurrency: 1,

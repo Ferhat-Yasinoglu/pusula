@@ -15,11 +15,11 @@
  *
  * interface HermesAgentRoleSelection {
  *   role: 'default' | 'delegation' | 'vision' | 'compression' | 'skills_hub' | 'approval' | ...;
- *   model: string;                    // the model name the user chose from OmniRoute
+ *   model: string;                    // the model name the user chose from Pusula
  * }
  *
  * interface HermesAgentConfigPayload {
- *   baseUrl: string;                  // usually the OmniRoute base URL
+ *   baseUrl: string;                  // usually the Pusula base URL
  *   keyId?: string | null;            // preferred: reference to a stored key
  *   apiKey?: string | null;           // fallback plaintext key
  *   selections: HermesAgentRoleSelection[];
@@ -101,10 +101,10 @@ function normalizeBaseUrl(base: string): string {
   return b;
 }
 
-/** Remove legacy per-role endpoint credentials once a role uses the shared OmniRoute provider. */
-export function sanitizeOmniRouteRoleCredentials(config: any): void {
+/** Remove legacy per-role endpoint credentials once a role uses the shared Pusula provider. */
+export function sanitizePusulaRoleCredentials(config: any): void {
   const scrub = (block: any) => {
-    if (!block || typeof block !== "object" || block.provider !== "omniroute") return;
+    if (!block || typeof block !== "object" || block.provider !== "pusula") return;
     delete block.base_url;
     delete block.api_key;
   };
@@ -145,39 +145,39 @@ export async function generateHermesAgentConfig(
         (provider: unknown) =>
           provider &&
           typeof provider === "object" &&
-          (provider as { name?: unknown }).name !== "omniroute"
+          (provider as { name?: unknown }).name !== "pusula"
       )
     : [];
-  const existingOmniRoute = Array.isArray(existing.custom_providers)
+  const existingPusula = Array.isArray(existing.custom_providers)
     ? existing.custom_providers.find(
         (provider: unknown) =>
           provider &&
           typeof provider === "object" &&
-          (provider as { name?: unknown }).name === "omniroute"
+          (provider as { name?: unknown }).name === "pusula"
       )
     : undefined;
   const selectedModels = Object.fromEntries(
     selections.filter((selection) => selection.model).map((selection) => [selection.model, {}])
   );
-  const omnirouteProvider = {
-    ...(existingOmniRoute || {}),
-    name: "omniroute",
+  const pusulaProvider = {
+    ...(existingPusula || {}),
+    name: "pusula",
     base_url: `${normalizedBase}/v1`,
-    key_env: "OMNIROUTE_API_KEY",
+    key_env: "PUSULA_API_KEY",
     models: {
-      ...((existingOmniRoute as { models?: Record<string, unknown> } | undefined)?.models || {}),
+      ...((existingPusula as { models?: Record<string, unknown> } | undefined)?.models || {}),
       ...selectedModels,
     },
   };
-  delete (omnirouteProvider as { api_key?: string }).api_key;
+  delete (pusulaProvider as { api_key?: string }).api_key;
 
   // Start from existing or empty
   const next: any = {
     ...existing,
-    custom_providers: [...customProviders, omnirouteProvider],
+    custom_providers: [...customProviders, pusulaProvider],
   };
-  if (next.providers?.omniroute) {
-    delete next.providers.omniroute;
+  if (next.providers?.pusula) {
+    delete next.providers.pusula;
     if (Object.keys(next.providers).length === 0) delete next.providers;
   }
 
@@ -189,26 +189,26 @@ export async function generateHermesAgentConfig(
       next.model = {
         ...(existing.model || {}),
         default: model,
-        provider: "omniroute",
+        provider: "pusula",
       };
     } else if (role === "delegation") {
       next.delegation = {
         ...(existing.delegation || {}),
         model,
-        provider: "omniroute",
+        provider: "pusula",
       };
     } else {
       // auxiliary.* roles
       if (!next.auxiliary) next.auxiliary = {};
       next.auxiliary[role] = {
         ...(existing.auxiliary?.[role] || {}),
-        provider: "omniroute",
+        provider: "pusula",
         model,
       };
     }
   }
 
-  sanitizeOmniRouteRoleCredentials(next);
+  sanitizePusulaRoleCredentials(next);
 
   const outputYaml = yaml.dump(next, { lineWidth: -1, noRefs: true });
   return { yaml: outputYaml };

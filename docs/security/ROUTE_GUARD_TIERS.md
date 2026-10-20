@@ -6,7 +6,7 @@ title: "Route Guard Tiers"
 
 ## Overview
 
-All OmniRoute management API routes are classified into one of three protection
+All Pusula management API routes are classified into one of three protection
 tiers. Classification is static, defined in `src/server/authz/routeGuard.ts`,
 and evaluated before any other auth branch runs.
 
@@ -27,9 +27,9 @@ class ([GHSA-fhh6-4qxv-rpqj](https://github.com/advisories/GHSA-fhh6-4qxv-rpqj))
 **What GHSA-fhh6-4qxv-rpqj is (the attack class):** a management/agent server
 exposes an endpoint that launches a subprocess (`npm install`, `node`, a browser,
 a proxy, `git`, `tar`, …). If that endpoint is reachable from off-host — because
-the operator put OmniRoute behind an nginx/Cloudflare/Tailscale tunnel and a JWT
+the operator put Pusula behind an nginx/Cloudflare/Tailscale tunnel and a JWT
 leaked, or auth was misconfigured — the attacker turns "call an API" into "run a
-command on the host" (remote code execution). OmniRoute closes this by enforcing a
+command on the host" (remote code execution). Pusula closes this by enforcing a
 **loopback host check unconditionally, before any auth check**, on every
 spawn-capable route: a leaked token over a tunnel still can't reach the spawn.
 
@@ -118,7 +118,7 @@ for remote MCP-only callers who should not need broad management access.
 
 #### Operator guidance & auditing
 
-If you run OmniRoute behind a reverse proxy or tunnel (nginx, Caddy, Cloudflare
+If you run Pusula behind a reverse proxy or tunnel (nginx, Caddy, Cloudflare
 Tunnel, Tailscale, Ngrok), the loopback check still protects the spawn-capable
 routes above — a request whose client address is non-loopback is rejected with
 `403 LOCAL_ONLY` **before auth runs**, so a leaked JWT can't reach a spawn. Two
@@ -149,7 +149,7 @@ operator responsibilities remain:
 - Grep your reverse-proxy / access logs for the prefixes above paired with a
   non-loopback client address. Any such hit that returned `200` instead of
   `403 LOCAL_ONLY` means the proxy is masking the real client IP — fix the proxy.
-- A `403 LOCAL_ONLY` in OmniRoute's logs for one of these paths is the guard
+- A `403 LOCAL_ONLY` in Pusula's logs for one of these paths is the guard
   working as intended, not an error to suppress.
 
 ### Tier 2 — ALWAYS_PROTECTED
@@ -187,7 +187,7 @@ With no management password configured (and no `INITIAL_PASSWORD`), `isAuthRequi
 Loopback is decided from the trusted peer signals, in order: the token-stamped real TCP peer
 (`PEER_IP_HEADER` + `VIA_PROXY_HEADER`, what the policy sees), the pipeline's own
 `AUTHZ_HEADER_PEER_LOCALITY` verdict (what route handlers see, trusted only while
-`OMNIROUTE_PEER_STAMP_TOKEN` is set), or a real socket peer for direct callers. `Host` /
+`PUSULA_PEER_STAMP_TOKEN` is set), or a real socket peer for direct callers. `Host` /
 `nextUrl.hostname` are never consulted, and the first-password write
 (`POST /api/settings/require-login`) is under the same constraint rather than open to every
 network peer (GHSA-7pq4-8pvv-rx7r). `managementPolicy` passes its own `peerContext` verdict

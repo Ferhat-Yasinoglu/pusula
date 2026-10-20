@@ -89,7 +89,7 @@ test("fresh tool-bearing turn buffers planner then streams executor with native 
   const handle: HandleSingleModel = async (body, model) => {
     calls.push({ model, body });
     return model === "p/planner"
-      ? responseText("OMNIROUTE_ROUTE: TOOLS\nRead the two files in parallel.")
+      ? responseText("PUSULA_ROUTE: TOOLS\nRead the two files in parallel.")
       : responseText("executor-response");
   };
 
@@ -121,7 +121,7 @@ test("tool-result continuation returns to planner and planner owns the streamed 
   const handle: HandleSingleModel = async (body, model) => {
     calls.push({ model, body });
     return calls.length === 1
-      ? responseText("OMNIROUTE_ROUTE: FINAL\nThe file is valid.")
+      ? responseText("PUSULA_ROUTE: FINAL\nThe file is valid.")
       : responseText("final-from-planner");
   };
 
@@ -152,7 +152,7 @@ test("planner may request another sequential tool round after reviewing results"
   const handle: HandleSingleModel = async (_body, model) => {
     seen.push(model);
     return model === "p/planner"
-      ? responseText("OMNIROUTE_ROUTE: TOOLS\nNow run the test suite.")
+      ? responseText("PUSULA_ROUTE: TOOLS\nNow run the test suite.")
       : responseText("next-tool-call");
   };
 
@@ -173,7 +173,7 @@ test("tool-round limit overrides a planner TOOLS decision and forces planner fin
   const calls: Array<{ model: string; body: Body }> = [];
   const handle: HandleSingleModel = async (body, model) => {
     calls.push({ model, body });
-    return responseText("OMNIROUTE_ROUTE: TOOLS\nCall another tool.");
+    return responseText("PUSULA_ROUTE: TOOLS\nCall another tool.");
   };
 
   await handleAgenticPipelineChat({
@@ -259,7 +259,7 @@ test("pipeline dispatch wiring selects agentic mode when enabled", async () => {
     handleSingleModel: async (_body, model) => {
       seen.push(model);
       return model === "p/planner"
-        ? responseText("OMNIROUTE_ROUTE: TOOLS\nRead it.")
+        ? responseText("PUSULA_ROUTE: TOOLS\nRead it.")
         : responseText("tool-call");
     },
     log,

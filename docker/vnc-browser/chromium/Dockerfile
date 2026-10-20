@@ -1,4 +1,4 @@
-# OmniRoute persistent VNC login browser.
+# Pusula persistent VNC login browser.
 #
 # Extends linuxserver/chromium, which ships Chromium + a noVNC-style web UI on
 # port 3000 (Selkies) and a persistent profile dir at /config. We add:
@@ -6,7 +6,7 @@
 #   - a small in-container TCP bridge (cdp-bridge.py) that republishes
 #     Chromium's loopback CDP (127.0.0.1:9222) onto 0.0.0.0:9223, because
 #     Chrome 150 ignores --remote-debugging-address and binds loopback only.
-#     The OmniRoute server harvests cookies over the host-mapped 9223.
+#     The Pusula server harvests cookies over the host-mapped 9223.
 #
 # SECURITY (#12571): 9223 is gated by a per-session shared secret
 # (CDP_BRIDGE_TOKEN, injected via `-e` by src/lib/vncSession/service.ts) that

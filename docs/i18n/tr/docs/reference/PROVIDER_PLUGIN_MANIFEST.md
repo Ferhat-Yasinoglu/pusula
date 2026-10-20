@@ -14,10 +14,10 @@ veya süreç ortamı durumunu içe aktarmadan manifesti kullanabilir.
 Aynı manifest, süreç dışında çalışan yan süreçler için HTTP üzerinden
 `GET /api/v1/provider-plugin-manifest` adresinde de kullanılabilir.
 
-OmniRoute, bu URL'yi Bifrost ve CLIProxyAPI'ye
-`X-OmniRoute-Provider-Manifest-Url` istek başlığı aracılığıyla bildirir. Yan süreç,
+Pusula, bu URL'yi Bifrost ve CLIProxyAPI'ye
+`X-Pusula-Provider-Manifest-Url` istek başlığı aracılığıyla bildirir. Yan süreç,
 yerel istek kaynağı yerine genel veya konteyner ağına ait bir URL'ye ihtiyaç duyduğunda
-`OMNIROUTE_PROVIDER_MANIFEST_URL` değerini ayarlayın.
+`PUSULA_PROVIDER_MANIFEST_URL` değerini ayarlayın.
 
 ## Manifesti Yenileme
 
@@ -32,7 +32,7 @@ etmek yerine koşulsuz bir istek göndermelidir.
 
 Sağlayıcı meta verilerini bir eklenti sözleşmesine doğru taşıyarak yoğun istek yolunun
 ileride daha düşük gecikmeli bir yan süreç tarafından yönetilebilmesini sağlarken,
-OmniRoute'un TypeScript rotasını ilke kapısı ve geri dönüş mekanizması olarak
+Pusula'un TypeScript rotasını ilke kapısı ve geri dönüş mekanizması olarak
 korumasını sağlamak. Manifest eklemelidir: istek yönlendirmesini kendi başına
 değiştirmez.
 
@@ -76,7 +76,7 @@ sorusunun makine tarafından okunabilir yanıtı olarak ele almalıdır.
 | `usage-fetch`        | Yapılandırılmış bir kullanım veya kota getiricisine (`getUsageForProvider`) sahiptir. |
 | `usage-supported`    | Kullanım API'si bu sağlayıcıyı kabul eder (`isSupportedUsageConnection`).             |
 
-`usage-fetch` yalnızca keşif amaçlıdır. OmniRoute'un sağlayıcı için kullanımı nasıl okuyacağını
+`usage-fetch` yalnızca keşif amaçlıdır. Pusula'un sağlayıcı için kullanımı nasıl okuyacağını
 bildiğini belirtir; getirmeyi etkinleştirmez, kota anlamlarını değiştirmez veya
 sağlayıcı için Dashboard kota bileşeninin etkin olduğunu ima etmez — bu bileşen ayrıca
 `USAGE_SUPPORTED_PROVIDERS` tarafından denetlenir. Doğruluk kaynağı,
@@ -108,7 +108,7 @@ Sidecar'lar `sidecar.eligible` değerini koşulsuz bir yönlendirme kararı olar
 
 1. Sağlayıcı eklenti manifestini TS kayıt defterinden oluşturun ve doğrulayın.
 2. Bifrost veya CLIProxyAPI'ye API anahtarı/statik sağlayıcılar için manifesti içe aktarmayı öğretin.
-3. TS geri dönüşünü etkin tutarken uygun sağlayıcıları `OMNIROUTE_RELAY_BACKEND` arkasındaki sidecar üzerinden yönlendirin.
+3. TS geri dönüşünü etkin tutarken uygun sağlayıcıları `PUSULA_RELAY_BACKEND` arkasındaki sidecar üzerinden yönlendirin.
 4. Sağlayıcıları yalnızca başarı oranı, p99 gecikmesi, akış davranışı ve desteklenmeyen parametrelerin işlenmesi TS yoluyla eşleştiğinde yükseltin.
 5. Özel yürütücüler için her seferinde bir sağlayıcı ailesi olacak şekilde sidecar'a özgü eklentiler ekleyin.
 

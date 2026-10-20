@@ -10,7 +10,7 @@ import type { AddressInfo } from "node:net";
 // returned. Real codes (incl. 429/500 from the wire) land on the journal line;
 // locally synthesized codes (transport/timeout, envelope errors) stay null.
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-search-upstream-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-search-upstream-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = process.env.API_KEY_SECRET || "search-upstream-test-secret";
 process.env.DISABLE_SQLITE_AUTO_BACKUP = "true";

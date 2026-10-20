@@ -4,7 +4,7 @@
 
 ---
 
-> **TL;DR**: OmniRoute wird mit integrierter Zustandsüberwachung, Provider-Autopilot, Kontingentverfolgung und Observability-Hooks ausgeliefert. Dieser Leitfaden behandelt das Dashboard, Warnmeldungen und die Fehlerbehebung.
+> **TL;DR**: Pusula wird mit integrierter Zustandsüberwachung, Provider-Autopilot, Kontingentverfolgung und Observability-Hooks ausgeliefert. Dieser Leitfaden behandelt das Dashboard, Warnmeldungen und die Fehlerbehebung.
 
 **Quellen:**
 
@@ -20,7 +20,7 @@
 
 ## Übersicht
 
-OmniRoute verfügt über **3 Überwachungsebenen**:
+Pusula verfügt über **3 Überwachungsebenen**:
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
@@ -37,7 +37,7 @@ OmniRoute verfügt über **3 Überwachungsebenen**:
 │  Ebene 3: Live-Observability (Laufzeit-Momentaufnahmen)        │
 │  ├─ observability.ts — Circuit Breaker, Sitzungen, Kontingent │
 │  ├─ tokenHealthCheck.ts — Zustand der OAuth-Token-Aktualisierung │
-│  └─ MCP-Tools: omniroute_get_health, omniroute_get_session_snapshot │
+│  └─ MCP-Tools: pusula_get_health, pusula_get_session_snapshot │
 └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -101,7 +101,7 @@ Pro Combo:
 
 ## Health-Check-API
 
-OmniRoute stellt **zwei** HTTP-Endpunkte für Zustandsprüfungen bereit. Für Orchestratoren sind sie nicht austauschbar.
+Pusula stellt **zwei** HTTP-Endpunkte für Zustandsprüfungen bereit. Für Orchestratoren sind sie nicht austauschbar.
 
 | Pfad                         | Zweck                                                                          | Aufwand                                      | Verwendung für                                                               |
 | ---------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------- | ---------------------------------------------------------------------------- |
@@ -180,7 +180,7 @@ Lösen Sie beim Abrufen dieses Endpunkts keine Warnung ausschließlich aufgrund 
 
 ### Empfehlungen für Kubernetes-Probes
 
-OmniRoute ist ein **einzelner Node-Prozess** (eine Ereignisschleife). Der standardmäßige Docker-`HEALTHCHECK` verwendet den leichtgewichtigen Endpunkt `/healthz`. `/api/monitoring/health` ist für Liveness-Intervalle des kubelet **zu aufwendig**.
+Pusula ist ein **einzelner Node-Prozess** (eine Ereignisschleife). Der standardmäßige Docker-`HEALTHCHECK` verwendet den leichtgewichtigen Endpunkt `/healthz`. `/api/monitoring/health` ist für Liveness-Intervalle des kubelet **zu aufwendig**.
 
 | Prüfung                            | Empfohlenes Ziel                                                                    | Hinweise                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | ---------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -223,7 +223,7 @@ livenessProbe:
 
 Richten Sie die kubelet-**Lebendigkeitsprüfung nicht** auf `/api/monitoring/health`. Dieser Pfad führt tatsächliche Datenbank-/Überwachungsarbeit aus und erzeugt unter Last falsch positive Ergebnisse.
 
-Siehe auch: [#10052](https://github.com/diegosouzapw/OmniRoute/issues/10052) (Prüfungen, während die Ereignisschleife beschäftigt ist), [#9685](https://github.com/diegosouzapw/OmniRoute/issues/9685) / [#10055](https://github.com/diegosouzapw/OmniRoute/pull/10055) (Katalogpreisberechnung beansprucht zu viele Ressourcen), [#10117](https://github.com/diegosouzapw/OmniRoute/issues/10117) (Tokenzählung für die Komprimierung beansprucht zu viele Ressourcen).
+Siehe auch: [#10052](https://github.com/Ferhat-Yasinoglu/pusula/issues/10052) (Prüfungen, während die Ereignisschleife beschäftigt ist), [#9685](https://github.com/Ferhat-Yasinoglu/pusula/issues/9685) / [#10055](https://github.com/Ferhat-Yasinoglu/pusula/pull/10055) (Katalogpreisberechnung beansprucht zu viele Ressourcen), [#10117](https://github.com/Ferhat-Yasinoglu/pusula/issues/10117) (Tokenzählung für die Komprimierung beansprucht zu viele Ressourcen).
 
 ### Optionale Verarbeitung im Anfragepfad (Speicher, Skills, Token-Aktualisierung)
 
@@ -412,7 +412,7 @@ Die Konfiguration der Token-Zustandsprüfung wird intern von `tokenHealthCheck.t
 
 ### Integrierte Kanäle
 
-OmniRoute unterstützt **3 Benachrichtigungskanäle**:
+Pusula unterstützt **3 Benachrichtigungskanäle**:
 
 | Kanal            | Einrichtung       | Anwendungsfall                       |
 | ---------------- | ----------------- | ------------------------------------ |
@@ -493,7 +493,7 @@ Rufen Sie vorerst `/api/monitoring/health` mit einem beliebigen HTTP-basierten �
 
 ### Status-Dashboard anpassen
 
-Erstellen Sie eine Datei unter `~/.omniroute/dashboard.json`:
+Erstellen Sie eine Datei unter `~/.pusula/dashboard.json`:
 
 ```json
 {
@@ -528,7 +528,7 @@ Erstellen Sie eine Datei unter `~/.omniroute/dashboard.json`:
 ### „Kontingent wird als unproblematisch angezeigt, aber ich erhalte 429-Fehler“
 
 - 429 bedeutet, dass Sie laut Anbieter Ihr Kontingent aufgebraucht haben
-- Die Kontingentverfolgung von OmniRoute kann **veraltet** sein — maßgeblich sind die Upstream-Daten des Anbieters
+- Die Kontingentverfolgung von Pusula kann **veraltet** sein — maßgeblich sind die Upstream-Daten des Anbieters
 - Kontingentdaten werden automatisch über den internen Kontingentmonitor aktualisiert
 
 ### „Kombination schlägt fehl, aber alle Ziele werden als fehlerfrei angezeigt“
@@ -539,9 +539,9 @@ Erstellen Sie eine Datei unter `~/.omniroute/dashboard.json`:
 
 ### „Datenbank-Statusprüfung schlägt fehl“
 
-- Führen Sie `sqlite3 ~/.omniroute/storage.sqlite "PRAGMA integrity_check;"` aus
+- Führen Sie `sqlite3 ~/.pusula/storage.sqlite "PRAGMA integrity_check;"` aus
 - Falls „ok“ ausgegeben wird — Fehlalarm, die Statusprüfung ist zu streng
-- Bei jeder anderen Ausgabe — **stoppen Sie OmniRoute** und befolgen Sie den [Leitfaden zur Notfallwiederherstellung](./DATABASE_GUIDE.md#disaster-recovery)
+- Bei jeder anderen Ausgabe — **stoppen Sie Pusula** und befolgen Sie den [Leitfaden zur Notfallwiederherstellung](./DATABASE_GUIDE.md#disaster-recovery)
 
 ### „Speicherdruck im Heap ist kritisch“
 

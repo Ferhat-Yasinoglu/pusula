@@ -3,9 +3,9 @@ import assert from "node:assert/strict";
 import {
   DEFAULT_COMPRESSION_CONFIG,
   type CompressionConfig,
-} from "@omniroute/open-sse/services/compression/types.ts";
-import { selectCompressionPlan } from "@omniroute/open-sse/services/compression/strategySelector.ts";
-import { deriveEffectivePreviewPlan } from "@omniroute/open-sse/services/compression/deriveEffectivePreviewPlan.ts";
+} from "@pusula/open-sse/services/compression/types.ts";
+import { selectCompressionPlan } from "@pusula/open-sse/services/compression/strategySelector.ts";
+import { deriveEffectivePreviewPlan } from "@pusula/open-sse/services/compression/deriveEffectivePreviewPlan.ts";
 
 // Issue #12063: the dashboard shows an "active profile" selected (e.g. "Standard Savings",
 // pipeline rtk:standard -> caveman:full on /dashboard/context/combos), but the Settings-page

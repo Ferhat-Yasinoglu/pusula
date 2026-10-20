@@ -59,7 +59,7 @@ export function isPidRunning(pid) {
   }
 }
 
-// A port that is already owned must be reported, not spawned into. `omniroute
+// A port that is already owned must be reported, not spawned into. `pusula
 // serve` used to hand the conflict to the child, which died with EADDRINUSE
 // twice on the supervisor's restart budget and printed three raw Node stack
 // traces without ever saying another instance owned the port. It did that
@@ -159,7 +159,7 @@ const MIN_PROBE_TIMEOUT_MS = 250;
 // #2460: Default raised from 15s to 60s so Windows users (slower Next.js
 // cold start due to filesystem watchers, antivirus, etc.) get a working
 // "server ready" signal instead of a phantom timeout while the server is
-// still booting. #13369: Made configurable via OMNIROUTE_READY_TIMEOUT_MS
+// still booting. #13369: Made configurable via PUSULA_READY_TIMEOUT_MS
 // so operators on slow cold starts (e.g. 6+ min Windows boots) can raise
 // the budget instead of hitting the warning on every start.
 //
@@ -176,7 +176,7 @@ export function resolveReadyTimeoutMs(overrides = {}) {
   if (typeof overrides.timeoutMs === "number" && overrides.timeoutMs > 0) {
     return overrides.timeoutMs;
   }
-  const envValue = Number.parseInt(process.env.OMNIROUTE_READY_TIMEOUT_MS || "", 10);
+  const envValue = Number.parseInt(process.env.PUSULA_READY_TIMEOUT_MS || "", 10);
   return Number.isFinite(envValue) && envValue > 0 ? envValue : DEFAULT_READY_TIMEOUT_MS;
 }
 

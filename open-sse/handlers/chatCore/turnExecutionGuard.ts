@@ -29,7 +29,7 @@ export function createTurnInProgressResult(retryCount: number) {
         headers: {
           "Content-Type": "application/json",
           "Retry-After": "1",
-          "X-OmniRoute-Turn-Retry": String(retryCount),
+          "X-Pusula-Turn-Retry": String(retryCount),
         },
       }),
     },

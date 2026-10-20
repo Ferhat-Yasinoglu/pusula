@@ -12,8 +12,8 @@
  */
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { encodeGeneric } from "@omniroute/open-sse/services/compression/engines/headroom/gcf/generic.ts";
-import { decodeGeneric } from "@omniroute/open-sse/services/compression/engines/headroom/gcf/decode_generic.ts";
+import { encodeGeneric } from "@pusula/open-sse/services/compression/engines/headroom/gcf/generic.ts";
+import { decodeGeneric } from "@pusula/open-sse/services/compression/engines/headroom/gcf/decode_generic.ts";
 
 test("surplus rows beyond the declared root-array count throw count_mismatch (SPEC 13)", () => {
   const rows = [

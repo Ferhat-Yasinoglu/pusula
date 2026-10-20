@@ -1,1 +1,1 @@
-- **fix(opencode-plugin):** honor `features.combos: false` in the OpenCode config shim, and keep first-class `cc/...-low` catalog ids on openai-compatible `/v1` instead of Anthropic Messages ([#14088](https://github.com/diegosouzapw/OmniRoute/pull/14088)) — thanks @RaviTharuma
+- **fix(opencode-plugin):** honor `features.combos: false` in the OpenCode config shim, and keep first-class `cc/...-low` catalog ids on openai-compatible `/v1` instead of Anthropic Messages ([#14088](https://github.com/Ferhat-Yasinoglu/pusula/pull/14088)) — thanks @RaviTharuma

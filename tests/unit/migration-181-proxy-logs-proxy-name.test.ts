@@ -15,22 +15,22 @@ const repoMigrations = path.join(
   path.dirname(fileURLToPath(import.meta.url)),
   "../../src/lib/db/migrations"
 );
-const migrationsDir = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-migration-181-"));
+const migrationsDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-migration-181-"));
 for (const file of [
   "179_proxy_logs_upstream_status.sql",
   "181_proxy_logs_proxy_name.sql",
 ]) {
   fs.copyFileSync(path.join(repoMigrations, file), path.join(migrationsDir, file));
 }
-const originalMigrationsDir = process.env.OMNIROUTE_MIGRATIONS_DIR;
-process.env.OMNIROUTE_MIGRATIONS_DIR = migrationsDir;
+const originalMigrationsDir = process.env.PUSULA_MIGRATIONS_DIR;
+process.env.PUSULA_MIGRATIONS_DIR = migrationsDir;
 
 const { runMigrations } = await import("../../src/lib/db/migrationRunner.ts");
 
 test.after(() => {
   fs.rmSync(migrationsDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
-  if (originalMigrationsDir === undefined) delete process.env.OMNIROUTE_MIGRATIONS_DIR;
-  else process.env.OMNIROUTE_MIGRATIONS_DIR = originalMigrationsDir;
+  if (originalMigrationsDir === undefined) delete process.env.PUSULA_MIGRATIONS_DIR;
+  else process.env.PUSULA_MIGRATIONS_DIR = originalMigrationsDir;
 });
 
 function columns(db: Database.Database, table: string): string[] {
@@ -40,7 +40,7 @@ function columns(db: Database.Database, table: string): string[] {
 }
 
 function ledger(db: Database.Database) {
-  return db.prepare("SELECT version, name FROM _omniroute_migrations ORDER BY version").all();
+  return db.prepare("SELECT version, name FROM _pusula_migrations ORDER BY version").all();
 }
 
 function legacyDb(withProxyName: boolean): Database.Database {

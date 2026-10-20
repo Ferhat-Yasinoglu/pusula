@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "identity": {
-    "repository": "diegosouzapw/OmniRoute",
+    "repository": "Ferhat-Yasinoglu/pusula",
     "run_id": "1",
     "run_attempt": 1,
     "workflow": "release-acceptance.yml",
@@ -84,6 +84,6 @@
   "artifact": {
     "algorithm": "sha256",
     "digest": "7f227db1653b6b723b07c8f2f6eb488f1f09e2f083ca7a3f5e02bbb274f5ff2e",
-    "identity": "omniroute.tgz"
+    "identity": "pusula.tgz"
   }
 }

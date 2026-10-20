@@ -81,7 +81,7 @@ const EXPECTED_PROVIDER_KEYS = [
 
 const browserUrl = "http://localhost:20128/callback";
 const publicBaseEnv = {
-  NEXT_PUBLIC_BASE_URL: "https://omniroute.example.com",
+  NEXT_PUBLIC_BASE_URL: "https://pusula.example.com",
   ANTIGRAVITY_OAUTH_CLIENT_ID: "custom-antigravity.apps.googleusercontent.com",
   ANTIGRAVITY_OAUTH_CLIENT_SECRET: "custom-antigravity-secret",
 };
@@ -392,17 +392,17 @@ test("gitlab-duo buildAuthUrl returns null (not throw) when client_id is unconfi
 test("custom Google OAuth credentials switch Antigravity remote callbacks to NEXT_PUBLIC_BASE_URL", () => {
   const redirectUri = resolveBrowserOAuthRedirectUri("antigravity", browserUrl, publicBaseEnv);
 
-  assert.equal(redirectUri, "https://omniroute.example.com/callback");
+  assert.equal(redirectUri, "https://pusula.example.com/callback");
 });
 
 test("custom Google OAuth callbacks preserve the requested callback path and query", () => {
   const redirectUri = resolveBrowserOAuthRedirectUri(
     "antigravity",
     "http://127.0.0.1:20128/auth/callback?source=popup",
-    { ...publicBaseEnv, NEXT_PUBLIC_BASE_URL: "https://omniroute.example.com/base" }
+    { ...publicBaseEnv, NEXT_PUBLIC_BASE_URL: "https://pusula.example.com/base" }
   );
 
-  assert.equal(redirectUri, "https://omniroute.example.com/base/auth/callback?source=popup");
+  assert.equal(redirectUri, "https://pusula.example.com/base/auth/callback?source=popup");
 });
 
 test("custom Google OAuth credentials switch IPv6 loopback callbacks to public base URL", () => {
@@ -412,7 +412,7 @@ test("custom Google OAuth credentials switch IPv6 loopback callbacks to public b
     publicBaseEnv
   );
 
-  assert.equal(redirectUri, "https://omniroute.example.com/callback");
+  assert.equal(redirectUri, "https://pusula.example.com/callback");
 });
 
 test("custom Google OAuth callbacks default root loopback paths to callback path", () => {
@@ -422,7 +422,7 @@ test("custom Google OAuth callbacks default root loopback paths to callback path
     publicBaseEnv
   );
 
-  assert.equal(redirectUri, "https://omniroute.example.com/callback");
+  assert.equal(redirectUri, "https://pusula.example.com/callback");
 });
 
 test("Google OAuth callbacks stay on loopback when custom credentials are incomplete", () => {
@@ -430,7 +430,7 @@ test("Google OAuth callbacks stay on loopback when custom credentials are incomp
     "antigravity",
     "http://127.0.0.1:20128/callback",
     {
-      NEXT_PUBLIC_BASE_URL: "https://omniroute.example.com",
+      NEXT_PUBLIC_BASE_URL: "https://pusula.example.com",
       ANTIGRAVITY_OAUTH_CLIENT_ID: "custom-antigravity.apps.googleusercontent.com",
     }
   );
@@ -443,7 +443,7 @@ test("Google OAuth callbacks stay on localhost when no custom credentials are co
     "antigravity",
     "http://localhost:20128/callback",
     {
-      NEXT_PUBLIC_BASE_URL: "https://omniroute.example.com",
+      NEXT_PUBLIC_BASE_URL: "https://pusula.example.com",
     }
   );
 

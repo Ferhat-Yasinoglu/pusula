@@ -16,10 +16,10 @@
  * @module domain/quotaCache
  */
 
-import { getUsageForProvider } from "@omniroute/open-sse/services/usage.ts";
+import { getUsageForProvider } from "@pusula/open-sse/services/usage.ts";
 import { getCachedProviderConnectionById } from "@/lib/db/readCache";
 import { resolveProxyForConnection } from "@/lib/db/settings";
-import { runWithProxyContext } from "@omniroute/open-sse/utils/proxyFetch.ts";
+import { runWithProxyContext } from "@pusula/open-sse/utils/proxyFetch.ts";
 import { safePercentage } from "@/shared/utils/formatting";
 import {
   saveQuotaSnapshot,
@@ -31,14 +31,14 @@ import {
   CODEX_SPARK_QUOTA_SESSION,
   CODEX_SPARK_QUOTA_WEEKLY,
   getCodexQuotaWindowFilterForModel,
-} from "@omniroute/open-sse/config/codexQuotaScopes.ts";
+} from "@pusula/open-sse/config/codexQuotaScopes.ts";
 import {
   createCodexAccountPool,
   getCodexChildQuotaHydration,
   resolveCodexAccount,
   type CodexPersistedQuotaState,
-} from "@omniroute/open-sse/services/codexAccount/index.ts";
-import { selectAntigravityQuotaWindowNames } from "@omniroute/open-sse/services/antigravityQuotaFamily.ts";
+} from "@pusula/open-sse/services/codexAccount/index.ts";
+import { selectAntigravityQuotaWindowNames } from "@pusula/open-sse/services/antigravityQuotaFamily.ts";
 import { isClaudeExtraUsageAllowed } from "@/lib/providers/claudeExtraUsage";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
@@ -115,12 +115,12 @@ interface QuotaCacheState {
 }
 
 declare global {
-  var __omnirouteQuotaCacheState: QuotaCacheState | undefined;
+  var __pusulaQuotaCacheState: QuotaCacheState | undefined;
 }
 
 function getState(): QuotaCacheState {
-  if (!globalThis.__omnirouteQuotaCacheState) {
-    globalThis.__omnirouteQuotaCacheState = {
+  if (!globalThis.__pusulaQuotaCacheState) {
+    globalThis.__pusulaQuotaCacheState = {
       cache: new Map(),
       refreshingSet: new Set(),
       healthyUntil: new Map(),
@@ -128,7 +128,7 @@ function getState(): QuotaCacheState {
       tickRunning: false,
     };
   }
-  return globalThis.__omnirouteQuotaCacheState;
+  return globalThis.__pusulaQuotaCacheState;
 }
 
 const MAX_CONCURRENT_REFRESHES = 5;

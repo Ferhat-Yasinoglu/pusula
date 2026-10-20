@@ -1,0 +1,3 @@
+# Pusula persistent data (SQLite DB, logs, backups)
+[Volume]
+Label=pusula

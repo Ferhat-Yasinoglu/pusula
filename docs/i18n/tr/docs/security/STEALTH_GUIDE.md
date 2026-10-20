@@ -8,11 +8,11 @@
 > **Son güncelleme:** 2026-09-02 — v3.8.51
 > **Hedef kitle:** Sağlayıcıya özgü gizlilik entegrasyonlarının bakımını yapan mühendisler.
 
-OmniRoute, uç noktaları resmî olmayan istemcilerin aktif olarak parmak izini çıkaran sağlayıcılarla (TLS JA3/JA4, başlık sıralaması, JSON gövde yapısı, bütünlük belirteçleri) entegre olur. Bu sayfa, OmniRoute'un sunduğu gizlilik yüzeylerini ve bunların nerede uygulandığını açıklar.
+Pusula, uç noktaları resmî olmayan istemcilerin aktif olarak parmak izini çıkaran sağlayıcılarla (TLS JA3/JA4, başlık sıralaması, JSON gövde yapısı, bütünlük belirteçleri) entegre olur. Bu sayfa, Pusula'un sunduğu gizlilik yüzeylerini ve bunların nerede uygulandığını açıklar.
 
 ## Yasal ve Etik Bildirim
 
-Gizlilik özellikleri, OmniRoute'un kullanıcıların sahip olduğu resmî hesaplar (Claude Code CLI, Codex, Antigravity, Cursor vb.) ile OmniRoute'un birleşik API'si arasında bir uyumluluk katmanı olarak çalışabilmesi için mevcuttur. Bunlar dolandırıcılık tespitinden kaçınmak, kimlik bilgilerini paylaşmak veya sağlayıcının Hizmet Şartları'nı ihlal etmek için **değildir**. Bakımı yapanlar, operatörlerin hesap oluştururken kabul ettikleri üst sağlayıcı Hizmet Şartları'na uymasını bekler.
+Gizlilik özellikleri, Pusula'un kullanıcıların sahip olduğu resmî hesaplar (Claude Code CLI, Codex, Antigravity, Cursor vb.) ile Pusula'un birleşik API'si arasında bir uyumluluk katmanı olarak çalışabilmesi için mevcuttur. Bunlar dolandırıcılık tespitinden kaçınmak, kimlik bilgilerini paylaşmak veya sağlayıcının Hizmet Şartları'nı ihlal etmek için **değildir**. Bakımı yapanlar, operatörlerin hesap oluştururken kabul ettikleri üst sağlayıcı Hizmet Şartları'na uymasını bekler.
 
 ---
 
@@ -83,7 +83,7 @@ izi değişikliklerini açıkça yetkilendirilmiş canlı bir hesapla doğrulay�
 
 ## Claude Code Gizlilik Paketi
 
-`cliCompatMode` açık olduğunda OmniRoute, giden Claude isteklerini `claude-cli` trafiğinden ayırt edilemeyecek şekilde yeniden biçimlendirir. Üç modül birlikte çalışır:
+`cliCompatMode` açık olduğunda Pusula, giden Claude isteklerini `claude-cli` trafiğinden ayırt edilemeyecek şekilde yeniden biçimlendirir. Üç modül birlikte çalışır:
 
 ### `claudeCodeFingerprint.ts`
 
@@ -99,7 +99,7 @@ SHA256(SALT + msg[4] + msg[7] + msg[20] + version)[:3]
 
 ### `claudeCodeCCH.ts` (İstemci İçerik Karması)
 
-Resmî Claude Code CLI'ın Bun/Zig aracılığıyla hesapladığı sunucu taraflı bütünlük denetimidir. OmniRoute bunu `xxhash-wasm` ile yeniden uygular:
+Resmî Claude Code CLI'ın Bun/Zig aracılığıyla hesapladığı sunucu taraflı bütünlük denetimidir. Pusula bunu `xxhash-wasm` ile yeniden uygular:
 
 1. Gövdeyi `cch=00000;` yer tutucusuyla serileştirin
 2. `xxhash64(bytes, seed) & 0xFFFFF`
@@ -145,7 +145,7 @@ Aynı paketteki kardeş modüller:
 
 ## Antigravity Gizliliği
 
-Antigravity istekleri, çağıranın metnini bayt bayt korur. OmniRoute, istemlere sıfır genişlikli karakterler eklemez veya bir IDE istemcisini taklit etmek için araçları yeniden adlandırmaz/eklemez.
+Antigravity istekleri, çağıranın metnini bayt bayt korur. Pusula, istemlere sıfır genişlikli karakterler eklemez veya bir IDE istemcisini taklit etmek için araçları yeniden adlandırmaz/eklemez.
 
 ### `antigravityHeaderScrub.ts`
 
@@ -155,13 +155,13 @@ Antigravity istekleri, çağıranın metnini bayt bayt korur. OmniRoute, istemle
 
 `ANTIGRAVITY_CREDITS=always` (`open-sse/executors/antigravity.ts` tarafından kullanılır), Google'ın ücretsiz katman kotasının istekleri sınırlamasına izin vermek yerine **her** isteği Antigravity AI Credit Overage (ücretli Google kredileri) üzerinden yönlendirir. Bu bir özellik olarak belgelenmiştir ancak **gördüğümüz en yaygın Hizmet Şartları ihlali bildiriminin açık ara birinci nedenidir** — birden fazla Google Ultra hesabı, `=always` ile birkaç saat çalıştırıldıktan sonra `403 / "service disabled for ToS violation" / insufficient_quota` hatasıyla yasaklanmıştır.
 
-Üst sistem uygulaması **Google tarafındadır** ve OmniRoute'un önleyebileceği bir şey değildir. Ortam değişkeninin adı ve mevcut belgeler, bunun güvenle açılabilecek bir ayar olduğu izlenimini verir; ancak öyle değildir.
+Üst sistem uygulaması **Google tarafındadır** ve Pusula'un önleyebileceği bir şey değildir. Ortam değişkeninin adı ve mevcut belgeler, bunun güvenle açılabilecek bir ayar olduğu izlenimini verir; ancak öyle değildir.
 
 **Bunun kötüye kullanım tespitini yalnızca ücretsiz katman kullanımından daha agresif biçimde tetiklemesinin nedenleri:**
 
 - Tek bir Google hesabındaki sürekli otomatik harcama, ücretsiz katmanda kotaya ulaşıp durmaktan farklı şekilde işaretlenir.
 - Kredi aşımı kullanımında hız üst sınırı yoktur; bu nedenle yanlış yapılandırılmış bir istemci dakikalar içinde birkaç yüz USD tüketebilir ve API anahtarı satışı veya bot trafiği gibi görünebilir.
-- Aynı harici IP'den paralel olarak kredi aşımı kullanan birden fazla OmniRoute kullanıcısı sinyali güçlendirir.
+- Aynı harici IP'den paralel olarak kredi aşımı kullanan birden fazla Pusula kullanıcısı sinyali güçlendirir.
 
 **Önerilen yaklaşım:**
 
@@ -177,7 +177,7 @@ Temas noktaları:
 
 - `open-sse/executors/antigravity.ts` — `process.env.ANTIGRAVITY_CREDITS` değerini okur
 - `src/lib/oauth/providers/antigravity.ts` — kimlik bilgisi altyapısı
-- İlk olay bildirimi: Tartışma [#1183](https://github.com/diegosouzapw/OmniRoute/discussions/1183)
+- İlk olay bildirimi: Tartışma [#1183](https://github.com/Ferhat-Yasinoglu/pusula/discussions/1183)
 
 ---
 
@@ -200,7 +200,7 @@ Ortam değişkeni aracılığıyla sağlayıcı bazında açılıp kapatılabili
 
 ## MITM Proxy (Antigravity, Linux/macOS/Windows)
 
-İkili dosyaları `OPENAI_BASE_URL` aracılığıyla yeniden yönlendirilemeyen CLI'lar için OmniRoute, TLS sonlandırması yapan yerel bir proxy çalıştırır. Uç noktalar `src/app/api/cli-tools/antigravity-mitm/` altında bulunur.
+İkili dosyaları `OPENAI_BASE_URL` aracılığıyla yeniden yönlendirilemeyen CLI'lar için Pusula, TLS sonlandırması yapan yerel bir proxy çalıştırır. Uç noktalar `src/app/api/cli-tools/antigravity-mitm/` altında bulunur.
 
 | Yöntem | Uç nokta                                | Amaç                                                   |
 | ------ | --------------------------------------- | ------------------------------------------------------ |
@@ -231,9 +231,9 @@ Hedef olarak yakalanan ana makine: **`daily-cloudcode-pa.googleapis.com`** (Anti
 | Fedora / RHEL / CentOS   | `/etc/pki/ca-trust/source/anchors`          | `update-ca-trust`        |
 | openSUSE                 | `/etc/pki/trust/anchors`                    | `update-ca-certificates` |
 
-Sertifika dosya adı: `omniroute-mitm.crt`. Parmak izi eşleştirmesi `getCertFingerprint()` aracılığıyla yapılır (DER'in SHA-1 özeti).
+Sertifika dosya adı: `pusula-mitm.crt`. Parmak izi eşleştirmesi `getCertFingerprint()` aracılığıyla yapılır (DER'in SHA-1 özeti).
 
-Ayrıca `updateNssDatabases()`, `certutil` kullanılabildiğinde kullanıcı başına NSS veritabanlarına yükleme yapar: `~/.pki/nssdb`, `~/snap/chromium/.../nssdb` ve tüm Firefox profilleri (snap dâhil). Kullanılan takma ad: **`OmniRoute MITM Root CA`**.
+Ayrıca `updateNssDatabases()`, `certutil` kullanılabildiğinde kullanıcı başına NSS veritabanlarına yükleme yapar: `~/.pki/nssdb`, `~/snap/chromium/.../nssdb` ve tüm Firefox profilleri (snap dâhil). Kullanılan takma ad: **`Pusula MITM Root CA`**.
 
 ### macOS / Windows
 
@@ -281,7 +281,7 @@ Sağlayıcı IP'si **her zaman korunur** — anahtar yalnızca isteğin ağ üze
 
 ## Gelen Üstbilgilerin Temizlenmesi
 
-OmniRoute, Cursor'dan gelen bir isteğin Claude üst hizmetine `User-Agent: Cursor/X.Y.Z` bilgisini sızdırmaması için iletmeden önce gelen istemci üstbilgilerini temizler. Zod şemaları ve birim testleriyle eş zamanlı tutulan engelleme listesi için `src/shared/constants/upstreamHeaders.ts` dosyasına bakın.
+Pusula, Cursor'dan gelen bir isteğin Claude üst hizmetine `User-Agent: Cursor/X.Y.Z` bilgisini sızdırmaması için iletmeden önce gelen istemci üstbilgilerini temizler. Zod şemaları ve birim testleriyle eş zamanlı tutulan engelleme listesi için `src/shared/constants/upstreamHeaders.ts` dosyasına bakın.
 
 ---
 

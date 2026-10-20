@@ -3,24 +3,24 @@ import { getProviderOutboundGuard } from "@/shared/network/outboundUrlGuardPolic
 import {
   getAntigravityModelsDiscoveryUrls,
   getAntigravityFetchAvailableModelsUrls,
-} from "@omniroute/open-sse/config/antigravityUpstream.ts";
-import { getAntigravityContentHeaders } from "@omniroute/open-sse/services/antigravityHeaders.ts";
-import { resolveAntigravityClientVersion } from "@omniroute/open-sse/services/antigravityClientProfile.ts";
+} from "@pusula/open-sse/config/antigravityUpstream.ts";
+import { getAntigravityContentHeaders } from "@pusula/open-sse/services/antigravityHeaders.ts";
+import { resolveAntigravityClientVersion } from "@pusula/open-sse/services/antigravityClientProfile.ts";
 import {
   getClientVisibleAntigravityModelName,
   isDiscoverableAntigravityModelId,
   toClientAntigravityModelId,
-} from "@omniroute/open-sse/config/antigravityModelAliases.ts";
+} from "@pusula/open-sse/config/antigravityModelAliases.ts";
 import {
   getClientVisibleAgyModelName,
   isDiscoverableAgyModelId,
-} from "@omniroute/open-sse/config/agyModels.ts";
+} from "@pusula/open-sse/config/agyModels.ts";
 import { normalizeAntigravityClientProfile } from "@/shared/constants/antigravityClientProfile";
 import {
   ensureAntigravityProjectAssigned,
   isUsableAntigravityProjectId,
-} from "@omniroute/open-sse/services/antigravityProjectBootstrap.ts";
-import { persistDiscoveredAntigravityProjectId } from "@omniroute/open-sse/services/antigravityProjectPersist.ts";
+} from "@pusula/open-sse/services/antigravityProjectBootstrap.ts";
+import { persistDiscoveredAntigravityProjectId } from "@pusula/open-sse/services/antigravityProjectPersist.ts";
 import { asRecord, toNonEmptyString } from "./helpers";
 
 const antigravityDiscoveryInflight = new Map<

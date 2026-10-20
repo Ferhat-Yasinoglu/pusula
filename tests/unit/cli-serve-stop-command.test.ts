@@ -8,12 +8,12 @@ const ORIGINAL_DATA_DIR = process.env.DATA_DIR;
 const ORIGINAL_FETCH = globalThis.fetch;
 
 function createTempDataDir() {
-  return fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-cli-stop-"));
+  return fs.mkdtempSync(path.join(os.tmpdir(), "pusula-cli-stop-"));
 }
 
 // With no PID file, stop falls back to the port. Without stubs that path runs the real
 // `lsof` and the real process.kill against port 20128, killing whatever holds that port on
-// the developer's machine (a running OmniRoute, a dashboard browser tab, a Docker/VM port
+// the developer's machine (a running Pusula, a dashboard browser tab, a Docker/VM port
 // forward). The stubs report no listener and record every signal attempt; terminatePids
 // swallows errors from kill(), so tests assert on `kills` instead of relying on a throw.
 function isolatedPortDeps() {

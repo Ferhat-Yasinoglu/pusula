@@ -4,13 +4,13 @@
 
 ---
 
-> **Özet**: ACP, OmniRoute'un HTTP API'lerini kullanmak yerine CLI ajanlarını (Claude Code, Codex gibi) alt süreçler olarak başlatmasını sağlar. Bu, size "arka uç olarak CLI" aktarımı sunar.
+> **Özet**: ACP, Pusula'un HTTP API'lerini kullanmak yerine CLI ajanlarını (Claude Code, Codex gibi) alt süreçler olarak başlatmasını sağlar. Bu, size "arka uç olarak CLI" aktarımı sunar.
 
 ---
 
 ## ACP Nedir?
 
-ACP (Agent Client Protocol), OmniRoute için bir **"arka uç olarak CLI" aktarımıdır**. ACP, yapay zekâ sağlayıcılarına yapılan HTTP API çağrılarını yakalamak yerine **CLI ajanlarını alt süreçler olarak başlatır** ve istemleri bu ajanların yerel arayüzleri üzerinden iletir.
+ACP (Agent Client Protocol), Pusula için bir **"arka uç olarak CLI" aktarımıdır**. ACP, yapay zekâ sağlayıcılarına yapılan HTTP API çağrılarını yakalamak yerine **CLI ajanlarını alt süreçler olarak başlatır** ve istemleri bu ajanların yerel arayüzleri üzerinden iletir.
 
 ### Neden ACP Kullanılmalı?
 
@@ -71,7 +71,7 @@ ACP, sisteminizde yüklü CLI ajanlarını otomatik olarak algılar. Herhangi bi
 
 ### 3. Adım: ACP Aktarımını Kullanın
 
-ACP algılandıktan sonra, desteklenen herhangi bir sağlayıcı için aktarım olarak kullanılabilir. OmniRoute, CLI kullanılabilir olduğunda ACP'yi otomatik olarak kullanır.
+ACP algılandıktan sonra, desteklenen herhangi bir sağlayıcı için aktarım olarak kullanılabilir. Pusula, CLI kullanılabilir olduğunda ACP'yi otomatik olarak kullanır.
 
 ---
 
@@ -81,7 +81,7 @@ ACP algılandıktan sonra, desteklenen herhangi bir sağlayıcı için aktarım 
 
 ```
 ┌─────────────────┐
-│  OmniRoute      │
+│  Pusula      │
 │  (HTTP Proxy)   │
 └────────┬────────┘
          │
@@ -136,7 +136,7 @@ interface CliAgentInfo {
   versionCommand: string; // Sürüm algılama komutu
   version: string | null; // Algılanan sürüm (yüklü değilse null)
   installed: boolean; // Ajanın yüklü olup olmadığı
-  providerAlias: string; // OmniRoute içindeki sağlayıcı kimliği
+  providerAlias: string; // Pusula içindeki sağlayıcı kimliği
   spawnArgs: string[]; // Başlatma sırasında geçirilecek argümanlar
   protocol: "stdio" | "http"; // İletişim protokolü
   isCustom?: boolean; // Bunun kullanıcı tanımlı özel bir ajan olup olmadığı
@@ -460,7 +460,7 @@ await acpManager.sendPrompt(sessionId, prompt, 300000); // 5 dakika
 **Çözümler**:
 
 1. **Dosya izinlerini kontrol edin**: `chmod +x /usr/local/bin/claude`
-2. **Sahipliği kontrol edin**: OmniRoute'un okuma/çalıştırma izinlerine sahip olduğundan emin olun
+2. **Sahipliği kontrol edin**: Pusula'un okuma/çalıştırma izinlerine sahip olduğundan emin olun
 3. **SELinux/AppArmor'u kontrol edin**: Süreç başlatmayı engelliyor olabilir
 
 ---

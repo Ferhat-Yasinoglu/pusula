@@ -13,7 +13,7 @@ import os from "node:os";
 import path from "node:path";
 import { cleanupTempDataDir } from "../_setup/tempDataDir.ts";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-ab-bypass-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-ab-bypass-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.DISABLE_SQLITE_AUTO_BACKUP = "true";
 

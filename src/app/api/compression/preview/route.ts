@@ -5,23 +5,23 @@ import { compressionPreviewConfigSchema } from "@/shared/validation/compressionC
 import {
   applyCompression,
   applyCompressionAsync,
-} from "@omniroute/open-sse/services/compression/strategySelector";
+} from "@pusula/open-sse/services/compression/strategySelector";
 import type {
   CompressionConfig,
   CompressionMode,
-} from "@omniroute/open-sse/services/compression/types";
+} from "@pusula/open-sse/services/compression/types";
 import {
   buildCompressionPreviewDiff,
   type HeatmapMode,
-} from "@omniroute/open-sse/services/compression/diffHelper";
-import { sanitizeErrorMessage } from "@omniroute/open-sse/utils/error";
+} from "@pusula/open-sse/services/compression/diffHelper";
+import { sanitizeErrorMessage } from "@pusula/open-sse/utils/error";
 import { countTextTokens } from "@/shared/utils/tiktokenCounter";
 import {
   ensureEngineBreakdown,
   reconcileSingleEngineTokens,
-} from "@omniroute/open-sse/services/compression/engineBreakdown";
-import { summarizeEncoderCandidates } from "@omniroute/open-sse/services/compression/engines/headroom/encoderComparison";
-import { DEFAULT_MIN_ROWS } from "@omniroute/open-sse/services/compression/engines/headroom/smartcrusher";
+} from "@pusula/open-sse/services/compression/engineBreakdown";
+import { summarizeEncoderCandidates } from "@pusula/open-sse/services/compression/engines/headroom/encoderComparison";
+import { DEFAULT_MIN_ROWS } from "@pusula/open-sse/services/compression/engines/headroom/smartcrusher";
 
 export const PreviewCompressionConfigSchema = compressionPreviewConfigSchema;
 

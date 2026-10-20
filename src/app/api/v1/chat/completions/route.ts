@@ -4,21 +4,21 @@ import { callCloudWithMachineId } from "@/shared/utils/cloud";
 import { handleChat } from "@/sse/handlers/chat";
 import { generateRequestId } from "@/shared/utils/requestId";
 import { resolveIncomingCorrelationId } from "@/shared/utils/correlationPreserve.ts";
-import { errorResponse } from "@omniroute/open-sse/utils/error.ts";
+import { errorResponse } from "@pusula/open-sse/utils/error.ts";
 import {
   handleSelfHostedCompletions,
   isSelfHostedEntryConfigured,
-} from "@omniroute/open-sse/services/selfHostedEntry.ts";
-import { initTranslators } from "@omniroute/open-sse/translator/index.ts";
+} from "@pusula/open-sse/services/selfHostedEntry.ts";
+import { initTranslators } from "@pusula/open-sse/translator/index.ts";
 import { createInjectionGuard } from "@/middleware/promptInjectionGuard";
-import { acceptHeaderForcesStream } from "@omniroute/open-sse/utils/aiSdkCompat.ts";
+import { acceptHeaderForcesStream } from "@pusula/open-sse/utils/aiSdkCompat.ts";
 import {
   OPENAI_CHAT_ERROR_FRAME,
   OPENAI_KEEPALIVE_FRAME,
   OPENAI_STARTUP_FRAME,
   withEarlyStreamKeepalive,
-} from "@omniroute/open-sse/utils/earlyStreamKeepalive";
-import { resolveKeepaliveThreshold } from "@omniroute/open-sse/utils/keepaliveThreshold";
+} from "@pusula/open-sse/utils/earlyStreamKeepalive";
+import { resolveKeepaliveThreshold } from "@pusula/open-sse/utils/keepaliveThreshold";
 import {
   admitChatRequest,
   admitChatStructure,
@@ -133,8 +133,8 @@ export async function POST(request) {
   try {
     // One-line marker for diagnosing 413 / Server-Action interceptions.
     // Logs only when Content-Length is present so debug noise stays low for
-    // typical chat payloads. Opt-in via OMNIROUTE_LOG_REQUEST_SHAPE=1.
-    if (process.env.OMNIROUTE_LOG_REQUEST_SHAPE === "1") {
+    // typical chat payloads. Opt-in via PUSULA_LOG_REQUEST_SHAPE=1.
+    if (process.env.PUSULA_LOG_REQUEST_SHAPE === "1") {
       const ct = contentType;
       const cl = requestContentLengthHeader;
       if (cl && Number(cl) > 256 * 1024) {
@@ -174,7 +174,7 @@ export async function POST(request) {
           // #14485: the divert must still run the same key-policy enforcement as
           // the normal cloud pipeline (enforceApiKeyPolicy, called deep inside
           // handleChat() on that path) — otherwise a disabled/rate-limited/
-          // schedule-restricted OmniRoute API key reaches the self-hosted upstream
+          // schedule-restricted Pusula API key reaches the self-hosted upstream
           // unchecked. Run it ONLY when the divert is configured (it then answers
           // every request): the cloud path already runs it once in handleChat(),
           // and a second run would consume the rate-limit window twice, apply

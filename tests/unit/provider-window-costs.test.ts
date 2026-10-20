@@ -5,7 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import { cleanupTempDataDir } from "../_setup/tempDataDir.ts";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-provider-costs-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-provider-costs-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.DISABLE_SQLITE_AUTO_BACKUP = "true";
 process.env.API_KEY_SECRET = "provider-window-costs-test-secret";

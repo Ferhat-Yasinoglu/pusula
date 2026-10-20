@@ -351,14 +351,14 @@ test("#7307 quality.yml keeps the advisory production build (disabled: hosted 7 
   assert.match(buildJob[0], /fallocate -l 10G \/mnt\/swapfile/);
   assert.match(buildJob[0], /swapon \/mnt\/swapfile/);
   assert.match(buildJob[0], /NODE_OPTIONS: "--max-old-space-size=12288"/);
-  assert.match(buildJob[0], /OMNIROUTE_BUILD_MEMORY_MB: "12288"/);
+  assert.match(buildJob[0], /PUSULA_BUILD_MEMORY_MB: "12288"/);
   assert.match(buildJob[0], /continue-on-error: true/);
   assert.match(buildJob[0], /uses: actions\/checkout@[0-9a-f]{40} # v7/);
   assert.match(buildJob[0], /uses: actions\/setup-node@[0-9a-f]{40} # v7/);
   assert.match(buildJob[0], /uses: \.\/\.github\/actions\/npm-ci-retry/);
   assert.match(buildJob[0], /npm run check:node-runtime/);
   assert.match(buildJob[0], /npm run build/);
-  assert.match(buildJob[0], /OMNIROUTE_USE_TURBOPACK: "1"/);
+  assert.match(buildJob[0], /PUSULA_USE_TURBOPACK: "1"/);
   assert.doesNotMatch(buildJob[0], /actions\/upload-artifact/);
   assert.match(
     buildJob[0],

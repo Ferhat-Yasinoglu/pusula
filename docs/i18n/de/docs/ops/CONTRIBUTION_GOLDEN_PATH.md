@@ -113,7 +113,7 @@ beziehungsweise eine für die Änderung angemessene dokumentierte manuelle Prüf
 - CLI-Kataloge befinden sich separat unter `bin/cli/locales/`.
 - Behalten Sie ICU-Platzhalter und -Tags exakt bei. Übersetzen Sie keine Produkt-/Provider-/Modellnamen,
   Protokoll- und Header-Namen, Befehle, Code-/JSON-Bezeichner, URLs, Umgebungsvariablen oder
-  geschützten Begriffe wie `OmniRoute`, `OAuth`, `MCP` und `A2A`. Die aktuelle Quellliste befindet sich unter
+  geschützten Begriffe wie `Pusula`, `OAuth`, `MCP` und `A2A`. Die aktuelle Quellliste befindet sich unter
   `scripts/i18n/glossary/protected-terms.json`.
 
 **Gezielte Schleife**

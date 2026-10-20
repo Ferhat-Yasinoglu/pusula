@@ -7,8 +7,8 @@
 > **Hinweis zum Geltungsbereich:** `socket.yml` konfiguriert den Registry-seitigen Post-Publish-Scan des npm-Artefakts durch Socket.dev (Ignorierpfade für nicht ausgelieferte Inhalte wie `tests/`, `docs/` und Build-Berichte). Die Datei richtet keine CI-/PR-Merge-Sperre ein — weder ein Workflow in `.github/workflows` noch ein `package.json`-Skript oder ein `Makefile`-Target ruft Socket.dev auf.
 
 Dieses Dokument ist die von den Maintainern verfasste Bestätigung zu den sechs
-für `omniroute@3.8.5` gemeldeten Funden der Kategorie `KI-erkanntes potenzielles Schadprogramm`
-und zu den in `omniroute@3.8.6` angewandten Abhilfemaßnahmen. Es dient folgenden Zwecken:
+für `pusula@3.8.5` gemeldeten Funden der Kategorie `KI-erkanntes potenzielles Schadprogramm`
+und zu den in `pusula@3.8.6` angewandten Abhilfemaßnahmen. Es dient folgenden Zwecken:
 
 1. Betreiber von Sicherheitspipelines erhalten eine zentrale Referenz, auf die
    sie sich bei der Bewertung der Funde anhand des tatsächlichen Quellcodes berufen können.
@@ -51,7 +51,7 @@ einen Tunnel offengelegtes JWT kann diesen Codepfad **nicht** auslösen.
 | Linux+Firefox/Chromium | Aktualisierung der NSS-Datenbank pro Profil über `certutil -d sql:<profile>`                                      |
 
 Dies sind dieselben Befehle, die von `mitmproxy`, Charles Proxy, Fiddler und
-Caddy verwendet werden. Dass sie in OmniRoute vorhanden sind, ist unter
+Caddy verwendet werden. Dass sie in Pusula vorhanden sind, ist unter
 `docs/security/STEALTH_GUIDE.md` dokumentiert.
 
 **Abhilfemaßnahme in v3.8.6**:
@@ -104,13 +104,13 @@ Funktionsumfang der Agent-Bridge beeinträchtigen.
    Token seit der Ermittlung geändert hat, stimmt der Fingerabdruck nicht mehr
    überein und die Anmeldedaten werden übersprungen.
 
-Ein Umgebungs-Flag `OMNIROUTE_ZED_IMPORT_LEGACY_ONE_STEP=true` behält das
+Ein Umgebungs-Flag `PUSULA_ZED_IMPORT_LEGACY_ONE_STEP=true` behält das
 Verhalten von v3.8.5 für Betreiber bei, die ihre Automatisierung noch nicht
 aktualisiert haben. Es wird in v3.9 entfernt.
 
 **Warum wir dies beibehalten**: Der Zed-Import ist der benutzerfreundlichste
 Onboarding-Pfad für Benutzer, die Zed bereits verwenden und ihre
-Provider-Schlüssel in OmniRoute spiegeln möchten, ohne sie erneut einzufügen.
+Provider-Schlüssel in Pusula spiegeln möchten, ohne sie erneut einzufügen.
 
 ---
 
@@ -121,7 +121,7 @@ Provider-Schlüssel in OmniRoute spiegeln möchten, ohne sie erneut einzufügen.
 **Grund für die Beanstandung**: Der Chunk exportiert `execFileWithPassword`,
 `runElevatedPowerShell` und den gemeinsam verwendeten Helfer `quotePowerShell`
 erneut. Der KI-Klassifikator von Socket.dev erkennt sie als generisches
-„Toolkit für Host-Ausführung und Rechteerhöhung“. Innerhalb von OmniRoute
+„Toolkit für Host-Ausführung und Rechteerhöhung“. Innerhalb von Pusula
 werden sie ausschließlich vom MITM-Zertifikatinstallationspfad (§1) sowie von
 `execFileWithPassword` für die Ausführung von `sudo`-Befehlen verwendet.
 
@@ -168,7 +168,7 @@ lokalen Dashboard auf „Install“ / „Start“.
   Benutzer die Protokollierung nicht im Dashboard aktiviert.
 
 **Schutzmaßnahme in v3.8.6**: keine funktionale Änderung. Das minimale
-Build-Profil (`OMNIROUTE_BUILD_PROFILE=minimal`) ersetzt
+Build-Profil (`PUSULA_BUILD_PROFILE=minimal`) ersetzt
 `src/lib/services/installers/ninerouter.ts` durch einen Stub für Benutzer, die
 die privilegierten Pfade physisch aus dem Bundle entfernen möchten.
 
@@ -178,7 +178,7 @@ ausdrückliche Aktivierung ist zwingend erforderlich.
 
 ---
 
-## §5 — Zurückschreiben von OmniRoute-Cloud-Sync-Anmeldedaten (`api/keys/[id]/route.js`)
+## §5 — Zurückschreiben von Pusula-Cloud-Sync-Anmeldedaten (`api/keys/[id]/route.js`)
 
 **Quelldateien**:
 
@@ -199,19 +199,19 @@ OAuth-Token des Providers unbemerkt austauschen.
 **Gegenmaßnahmen in v3.8.6**:
 
 1. **HMAC-Verifizierung**: `verifyCloudSignature(rawBody, sigHeader)` prüft
-   den Header `X-Cloud-Sig` (`HMAC-SHA256(OMNIROUTE_CLOUD_SYNC_SECRET,
+   den Header `X-Cloud-Sig` (`HMAC-SHA256(PUSULA_CLOUD_SYNC_SECRET,
 rawBody)`), bevor das JSON geparst wird. Wenn das Secret gesetzt ist, ist
    die Signatur erforderlich. Andernfalls (Legacy-Modus) wird eine Warnung
    protokolliert und die Antwort akzeptiert — ab v3.9 ist das Secret
    erforderlich.
 2. **Explizite Aktivierung geheimer Felder**: `accessToken` / `refreshToken` /
    `providerSpecificData` werden **nur** überschrieben, wenn
-   `OMNIROUTE_CLOUD_SYNC_SECRETS=true` gesetzt ist. Im Standardmodus werden nur
+   `PUSULA_CLOUD_SYNC_SECRETS=true` gesetzt ist. Im Standardmodus werden nur
    Metadaten synchronisiert, die keine Anmeldedaten enthalten (`expiresAt`, `status`, `lastError*`,
    `rateLimitedUntil`, `updatedAt`). Dies ist eine **inkompatible Änderung** für Benutzer,
    die sich auf die Remote-Synchronisierung von Token verlassen haben — sie müssen diese explizit aktivieren.
 
-**Warum wir diese Funktion beibehalten**: Cloud Sync ist die einzige Möglichkeit für einen OmniRoute-Cloud-Mandanten,
+**Warum wir diese Funktion beibehalten**: Cloud Sync ist die einzige Möglichkeit für einen Pusula-Cloud-Mandanten,
 Team-Anmeldedaten zentral zu verwalten. Die Korrektur bildet das Bedrohungsmodell ehrlich ab:
 „Der Server signiert, der Client verifiziert, der Betreiber stimmt zu.“
 
@@ -222,7 +222,7 @@ Team-Anmeldedaten zentral zu verwalten. Die Korrektur bildet das Bedrohungsmodel
 Benutzer, die ein Socket-freundliches Artefakt benötigen, können es wie folgt erstellen:
 
 ```bash
-OMNIROUTE_BUILD_PROFILE=minimal npm run build
+PUSULA_BUILD_PROFILE=minimal npm run build
 ```
 
 Das webpack-Plugin `NormalModuleReplacementPlugin` ersetzt vier Module durch Stubs:
@@ -239,7 +239,7 @@ Jeder Stub exportiert dieselbe Schnittstelle, aber jede Funktion löst zur Laufz
 Modul abhängen, geben HTTP 503 mit einer eindeutigen Meldung zurück, anstatt den
 sensiblen Codepfad zu aktivieren.
 
-Das resultierende Bundle ist für die Veröffentlichung als `omniroute-secure` vorgesehen. Das
+Das resultierende Bundle ist für die Veröffentlichung als `pusula-secure` vorgesehen. Das
 Veröffentlichungsverfahren ist unter `docs/ops/PUBLISHING_SECURE.md` beschrieben.
 
 ---

@@ -33,18 +33,18 @@ test("normalizeProviderSpecificData keeps only boolean preserveEncryptedReasonin
 test("buildOpenAIStoreSessionId normalizes external and generated session ids", () => {
   assert.equal(
     buildOpenAIStoreSessionId("ext:client session/abc"),
-    "omniroute-session-client-session-abc"
+    "pusula-session-client-session-abc"
   );
   assert.equal(
     buildOpenAIStoreSessionId(" internal:session "),
-    "omniroute-session-internal:session"
+    "pusula-session-internal:session"
   );
   assert.equal(buildOpenAIStoreSessionId(""), undefined);
 });
 
 test("ensureOpenAIStoreSessionFallback injects session_id only when no stable cache key exists", () => {
   const injected = ensureOpenAIStoreSessionFallback({ model: "gpt-5.3-codex" }, "ext:session-1");
-  assert.equal(injected.session_id, "omniroute-session-session-1");
+  assert.equal(injected.session_id, "pusula-session-session-1");
 
   const withPromptCacheKey = ensureOpenAIStoreSessionFallback(
     { model: "gpt-5.3-codex", prompt_cache_key: "cache-123" },

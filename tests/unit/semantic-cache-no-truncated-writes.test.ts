@@ -2,9 +2,9 @@
 // written to the semantic cache. A partial completion cached under a temperature:0
 // signature is served to every subsequent identical request, permanently returning
 // a mid-sentence answer that no retry can clear (only a cache flush).
-// Observed live on OmniRoute against github/gemini-3.5-flash: temperature:0 returned
+// Observed live on Pusula against github/gemini-3.5-flash: temperature:0 returned
 // finish_reason "length" at 93 completion tokens on every call, while the same request
-// with x-omniroute-no-cache:true returned a complete 239-token response.
+// with x-pusula-no-cache:true returned a complete 239-token response.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 

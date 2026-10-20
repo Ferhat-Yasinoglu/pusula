@@ -18,7 +18,7 @@ import { getStaticModelsForProvider } from "../../src/lib/providers/staticModels
 // module mocking — proving both that the fallback is invoked and that it wires
 // the api key through the same env var the executor relies on.
 function writeFakeDevinCli(expectedKey: string, exitCode: number): string {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-fake-devin-cli-"));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-fake-devin-cli-"));
   const scriptPath = path.join(dir, "devin");
   fs.writeFileSync(
     scriptPath,

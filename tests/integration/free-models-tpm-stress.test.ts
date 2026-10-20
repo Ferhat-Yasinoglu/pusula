@@ -17,8 +17,8 @@
  * fails the test.
  *
  * Environment:
- *   OMNIROUTE_API_KEY  — required (else test skips)
- *   OMNIROUTE_URL      — defaults to http://localhost:3000
+ *   PUSULA_API_KEY  — required (else test skips)
+ *   PUSULA_URL      — defaults to http://localhost:3000
  */
 import test from "node:test";
 import assert from "node:assert/strict";

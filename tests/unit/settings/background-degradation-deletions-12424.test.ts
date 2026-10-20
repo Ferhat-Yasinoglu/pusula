@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-bgdeg-12424-"));
+process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-bgdeg-12424-"));
 
 const { applyRuntimeSettings, resetRuntimeSettingsStateForTests } = await import(
   "../../../src/lib/config/runtimeSettings.ts"

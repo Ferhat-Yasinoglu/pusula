@@ -1,4 +1,4 @@
-# Windows helpers — run OmniRoute from a source checkout
+# Windows helpers — run Pusula from a source checkout
 
 Two double-clickable `.bat` files for Windows users who cloned the repo instead of
 installing the npm package. Both resolve the repo root from their own location, so they
@@ -6,16 +6,16 @@ work from any checkout path.
 
 | File                  | What it does                                                                       |
 | --------------------- | ---------------------------------------------------------------------------------- |
-| `start-omniroute.bat` | `npm run dev` — dev server + dashboard on `http://localhost:20128`                 |
-| `launch-claude.bat`   | `node bin\omniroute.mjs launch` — opens Claude Code pointed at the local OmniRoute |
+| `start-pusula.bat` | `npm run dev` — dev server + dashboard on `http://localhost:20128`                 |
+| `launch-claude.bat`   | `node bin\pusula.mjs launch` — opens Claude Code pointed at the local Pusula |
 
 Usage:
 
 1. `npm install` once (see the note below if you are on npm ≥ 11).
-2. Double-click `start-omniroute.bat` and wait for `dev server listening on http://0.0.0.0:20128`.
+2. Double-click `start-pusula.bat` and wait for `dev server listening on http://0.0.0.0:20128`.
 3. Open the dashboard, connect a provider, copy an API key from **Endpoints**.
 4. Double-click `launch-claude.bat`. Extra arguments are forwarded, e.g.
-   `launch-claude.bat --profile glm52` after `node bin\omniroute.mjs setup-claude`.
+   `launch-claude.bat --profile glm52` after `node bin\pusula.mjs setup-claude`.
 
 ## npm ≥ 11 skips `better-sqlite3` on Windows
 

@@ -4,7 +4,7 @@
 
 ---
 
-> **Kurzfassung**: Die Komprimierungs-Engine von OmniRoute ist **erweiterbar** — Sie können benutzerdefinierte Engines registrieren, Sprachpakete für neue Sprachen bereitstellen und gestapelte Pipelines zusammenstellen. Dieser Leitfaden zeigt, wie das geht.
+> **Kurzfassung**: Die Komprimierungs-Engine von Pusula ist **erweiterbar** — Sie können benutzerdefinierte Engines registrieren, Sprachpakete für neue Sprachen bereitstellen und gestapelte Pipelines zusammenstellen. Dieser Leitfaden zeigt, wie das geht.
 
 **Verwandte Leitfäden:**
 
@@ -84,8 +84,8 @@ interface CompressionEngine {
 Die einfachste mögliche Engine — entfernt überflüssige Leerzeichen aus Nachrichten.
 
 ````ts
-import type { CompressionEngine } from "omniroute/compression/engines/types";
-import { registerCompressionEngine } from "omniroute/compression/engines/registry";
+import type { CompressionEngine } from "pusula/compression/engines/types";
+import { registerCompressionEngine } from "pusula/compression/engines/registry";
 
 function preserveCodeBlocks(text: string): string {
   // An Codeblock-Markierungen aufteilen und Leerraum innerhalb dieser Blöcke beibehalten
@@ -196,7 +196,7 @@ registerCompressionEngine(whitespaceEngine);
 ### Speicherort für benutzerdefinierte Engines
 
 ```
-~/.omniroute/compression/engines/my-engine.ts    # Benutzerebene
+~/.pusula/compression/engines/my-engine.ts    # Benutzerebene
 <project>/compression-engines/my-engine.ts        # Projektebene (wird beim Start geladen)
 ```
 
@@ -207,7 +207,7 @@ Oder programmgesteuert aus einem Plugin laden:
 import {
   registerCompressionEngine,
   unregisterCompressionEngine,
-} from "@omniroute/open-sse/services/compression/engines/registry";
+} from "@pusula/open-sse/services/compression/engines/registry";
 import { myEngine } from "./engines/my-engine";
 
 export default definePlugin({
@@ -233,7 +233,7 @@ Registrieren Sie Ihre Engine in einem Plugin oder einer Startfunktion. Nach der 
 
 ## Sprachpakete erstellen
 
-Die Komprimierung im Caveman-Stil verwendet **sprachspezifische Regelpakete**, um Füllwörter, abschwächende Formulierungen und weitschweifige Ausdrucksmuster in jeder natürlichen Sprache zu verarbeiten. OmniRoute wird mit **6 Sprachpaketen** ausgeliefert: `en`, `es`, `fr`, `de`, `ja`, `pt-BR`.
+Die Komprimierung im Caveman-Stil verwendet **sprachspezifische Regelpakete**, um Füllwörter, abschwächende Formulierungen und weitschweifige Ausdrucksmuster in jeder natürlichen Sprache zu verarbeiten. Pusula wird mit **6 Sprachpaketen** ausgeliefert: `en`, `es`, `fr`, `de`, `ja`, `pt-BR`.
 
 ### Paketstruktur
 
@@ -325,7 +325,7 @@ Die Validierung wird automatisch ausgeführt, wenn ein Paket geladen wird (anhan
 ### Ein benutzerdefiniertes Sprachpaket laden
 
 ```ts
-import { loadRulePack } from "omniroute/compression/ruleLoader";
+import { loadRulePack } from "pusula/compression/ruleLoader";
 
 await loadRulePack("./my-custom-rules/hi/filler.json");
 ```
@@ -333,7 +333,7 @@ await loadRulePack("./my-custom-rules/hi/filler.json");
 Oder legen Sie es an einem erkannten Speicherort ab:
 
 ```
-~/.omniroute/compression/rules/hi/filler.json  # Benutzerebene
+~/.pusula/compression/rules/hi/filler.json  # Benutzerebene
 <project>/.compression/rules/hi/filler.json   # Projektebene
 ```
 
@@ -390,7 +390,7 @@ Die Ausgabe von Engine N wird zur Eingabe von Engine N+1.
 
 ### Komprimierungsmodi
 
-OmniRoute wählt anhand der Konfiguration, der Schwellenwerte für die automatische Auslösung und der Combo-Überschreibungen **EINEN Modus pro Anfrage** aus.
+Pusula wählt anhand der Konfiguration, der Schwellenwerte für die automatische Auslösung und der Combo-Überschreibungen **EINEN Modus pro Anfrage** aus.
 Die verfügbaren Modi sind in `open-sse/services/compression/types.ts` definiert (Typ `CompressionMode`):
 
 | Modus        | Engines                     | Anwendungsfall                                                                                                                                                                                                                            |
@@ -478,10 +478,10 @@ Stapelung ist nicht immer besser:
 
 Es gibt keine Registry für benannte Pipelines. Eine gestapelte Pipeline ist lediglich ein **Inline-Array
 von Schritten**, das an `applyStackedCompression()` übergeben wird (exportiert aus
-`@omniroute/open-sse/services/compression/strategySelector`):
+`@pusula/open-sse/services/compression/strategySelector`):
 
 ```ts
-import { applyStackedCompression } from "@omniroute/open-sse/services/compression/strategySelector";
+import { applyStackedCompression } from "@pusula/open-sse/services/compression/strategySelector";
 
 const result = applyStackedCompression(body, [
   { engine: "rtk", intensity: "aggressive" },
@@ -510,10 +510,10 @@ Um sie über die Konfiguration zu steuern, setzen Sie `mode: "stacked"` und gebe
 
 ## Richtlinie zur Upstream-Synchronisierung
 
-Die Komprimierungs-Engines von OmniRoute nennen im README mehrere Upstream-Projekte
+Die Komprimierungs-Engines von Pusula nennen im README mehrere Upstream-Projekte
 („inspired by RTK, Caveman, LLMLingua-2, Troglodita“). Eine häufige Frage von
 Mitwirkenden lautet: **Wie gelangt ein neuer Tool-Filter aus Upstream-RTK oder ein
-neues Regelpaket von Caveman in OmniRoute?** Dieser Abschnitt enthält die verbindliche Antwort.
+neues Regelpaket von Caveman in Pusula?** Dieser Abschnitt enthält die verbindliche Antwort.
 
 ### Eingebundene Kopien vs. unabhängige Implementierungen
 
@@ -534,7 +534,7 @@ Upstream-Kopie, aus der man mittels `git pull` Änderungen übernehmen könnte �
 Es gibt **keine automatisierte Nachverfolgung von Upstream-Releases und kein `compression-sync`-
 Label** — und das ist beabsichtigt. Da es sich bei den Engines um Neuimplementierungen handelt, wird ein Upstream-RTK-
 Filter oder ein Caveman-Regelpaket nicht als Code integriert, sondern **als neue
-Regel bzw. neuer Filter in OmniRoutes eigenem Format neu ausgedrückt** (siehe
+Regel bzw. neuer Filter in Pusulas eigenem Format neu ausgedrückt** (siehe
 [COMPRESSION_RULES_FORMAT.md](./COMPRESSION_RULES_FORMAT.md)) und bei Bedarf über
 einen normalen PR eingereicht. Die oben genannten Erweiterungspunkte (benutzerdefinierte Engine, Sprachpaket, RTK-Filter)
 sind die vorgesehenen Möglichkeiten, einen solchen Beitrag einzureichen.
@@ -548,14 +548,14 @@ Aktuelle Beispiele für genau diesen Ablauf:
 ### Headroom (Proxy zur Eingabekomprimierung)
 
 Headroom ist **vollständig intern** — ein eingebundener, auf eine bestimmte Version festgelegter `gcf`-Codec-Snapshot sowie
-OmniRoutes eigene `smartcrusher`- / `toon`- / `tabular`-Schichten. Abgesehen von der eingebundenen Kopie gibt es keinen aktiven
+Pusulas eigene `smartcrusher`- / `toon`- / `tabular`-Schichten. Abgesehen von der eingebundenen Kopie gibt es keinen aktiven
 Upstream, der nachverfolgt werden müsste; Aktualisierungen von `gcf` werden bei Änderungen am Codec
 manuell übernommen und erneut anhand der Prüfung des Komprimierungsbudgets
 (`check:compression-budget`) validiert.
 
 ### Vorschlagen einer von einem Upstream-Projekt inspirierten Verbesserung
 
-1. **Nicht einbinden** — die Upstream-Regel bzw. den Upstream-Filter in OmniRoutes Format neu ausdrücken.
+1. **Nicht einbinden** — die Upstream-Regel bzw. den Upstream-Filter in Pusulas Format neu ausdrücken.
 2. Über den passenden Erweiterungspunkt unten hinzufügen (Sprachpaket, RTK-Filter oder
    benutzerdefinierte Engine).
 3. Das Upstream-Projekt in der PR-Beschreibung nennen (Attribution), anstatt

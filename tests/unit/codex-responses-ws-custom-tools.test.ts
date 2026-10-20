@@ -6,10 +6,10 @@ import path from "node:path";
 import http from "node:http";
 import { once } from "node:events";
 
-const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-ws-custom-tools-"));
+const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-ws-custom-tools-"));
 process.env.DATA_DIR = dataDir;
 process.env.APP_LOG_TO_FILE = "false";
-process.env.OMNIROUTE_WS_BRIDGE_SECRET = "test-custom-tools-bridge";
+process.env.PUSULA_WS_BRIDGE_SECRET = "test-custom-tools-bridge";
 
 const core = await import("../../src/lib/db/core.ts");
 const { createProviderConnection } = await import("../../src/lib/db/providers.ts");
@@ -42,15 +42,15 @@ test.after(() => {
 
 async function prepare(response: Record<string, unknown>) {
   const result = await POST(
-    new Request("http://omniroute.local/api/internal/codex-responses-ws", {
+    new Request("http://pusula.local/api/internal/codex-responses-ws", {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "x-omniroute-ws-bridge-secret": "test-custom-tools-bridge",
+        "x-pusula-ws-bridge-secret": "test-custom-tools-bridge",
       },
       body: JSON.stringify({
         action: "prepare",
-        requestUrl: "http://omniroute.local/v1/responses",
+        requestUrl: "http://pusula.local/v1/responses",
         headers: {},
         response: { model: "codex/gpt-5.5", ...response },
       }),
@@ -64,11 +64,11 @@ async function prepare(response: Record<string, unknown>) {
   // single default slot until released. Release it here so each independent
   // `prepare()` call in this file does not starve the next one.
   await POST(
-    new Request("http://omniroute.local/api/internal/codex-responses-ws", {
+    new Request("http://pusula.local/api/internal/codex-responses-ws", {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "x-omniroute-ws-bridge-secret": "test-custom-tools-bridge",
+        "x-pusula-ws-bridge-secret": "test-custom-tools-bridge",
       },
       body: JSON.stringify({ action: "release", leaseId: body.leaseId }),
     })
@@ -189,7 +189,7 @@ test("a reused WebSocket preserves a custom tool through call, result and final 
   assert.ok(address && typeof address === "object");
   const proxyOptions = {
     baseUrl: `http://127.0.0.1:${address.port}`,
-    bridgeSecret: process.env.OMNIROUTE_WS_BRIDGE_SECRET,
+    bridgeSecret: process.env.PUSULA_WS_BRIDGE_SECRET,
     // Exercise real auth/preparation and the executor; provider responses and
     // unrelated asynchronous history persistence are deterministic test doubles.
     fetchImpl: (url: Parameters<typeof fetch>[0], init?: RequestInit) => {

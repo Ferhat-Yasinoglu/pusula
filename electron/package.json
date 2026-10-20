@@ -1,14 +1,14 @@
 {
-  "name": "omniroute-desktop",
+  "name": "pusula-desktop",
   "version": "3.8.51",
-  "description": "OmniRoute Desktop Application",
+  "description": "Pusula Desktop Application",
   "main": "main.js",
   "author": {
-    "name": "OmniRoute Team",
-    "email": "support@omniroute.online"
+    "name": "Pusula Team",
+    "email": "support@pusula.online"
   },
   "license": "MIT",
-  "homepage": "https://omniroute.online",
+  "homepage": "https://github.com/Ferhat-Yasinoglu/pusula",
   "engines": {
     "node": ">=22.22.2 <23 || >=24.0.0 <27"
   },
@@ -40,9 +40,9 @@
     "undici": "^7.29.0"
   },
   "build": {
-    "appId": "online.omniroute.desktop",
-    "productName": "OmniRoute",
-    "copyright": "Copyright © 2025 OmniRoute",
+    "appId": "online.pusula.desktop",
+    "productName": "Pusula",
+    "copyright": "Copyright © 2025 Pusula",
     "buildDependenciesFromSource": false,
     "npmRebuild": false,
     "afterPack": "../scripts/build/afterpack-copy-node-modules.mjs",
@@ -53,7 +53,7 @@
     "publish": {
       "provider": "github",
       "owner": "diegosouzapw",
-      "repo": "OmniRoute"
+      "repo": "Pusula"
     },
     "files": [
       "main.js",

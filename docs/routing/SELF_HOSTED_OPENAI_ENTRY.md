@@ -4,7 +4,7 @@ title: "Self-Hosted OpenAI-Compatible Entry"
 
 # Self-hosted unified OpenAI-compatible entry
 
-When enabled, OmniRoute's existing `/v1/chat/completions` (and the OpenAI-compatible
+When enabled, Pusula's existing `/v1/chat/completions` (and the OpenAI-compatible
 contract it serves) becomes a **self-hosted gateway**: one OpenAI-compatible request
 in, auto-routed to the provider of your choice through the provider adapters, with a
 standard OpenAI error shape out. Client code does not change.
@@ -17,8 +17,8 @@ vendored catalog.
 
 Set either env var (see `.env.example` for both):
 
-- `OMNIROUTE_SELF_HOSTED_PROVIDERS` — inline YAML document (runtime-only, not logged).
-- `OMNIROUTE_SELF_HOSTED_PROVIDERS_FILE` — path to a YAML file.
+- `PUSULA_SELF_HOSTED_PROVIDERS` — inline YAML document (runtime-only, not logged).
+- `PUSULA_SELF_HOSTED_PROVIDERS_FILE` — path to a YAML file.
 
 ```yaml
 # providers.yaml
@@ -43,7 +43,7 @@ exactly as before.
 
 Precedence (deterministic, no predictive model):
 
-1. `x-omniroute-provider: <id>` header — exact provider id.
+1. `x-pusula-provider: <id>` header — exact provider id.
 2. `model` prefix: `provider/model` (slash) or `provider::model` (double colon).
 3. First configured provider.
 
@@ -53,7 +53,7 @@ The routing prefix is stripped before forwarding — upstream receives the bare 
 ```bash
 # via header
 curl http://localhost:20128/v1/chat/completions \
-  -H "x-omniroute-provider: claude" \
+  -H "x-pusula-provider: claude" \
   -H "content-type: application/json" \
   -d '{"model":"claude-sonnet","messages":[{"role":"user","content":"hi"}]}'
 
@@ -63,9 +63,9 @@ curl ... -d '{"model":"claude/claude-sonnet","messages":[...]}'
 
 ## Auth scaffold (D5 reserved)
 
-Optional `OMNIROUTE_SELF_HOSTED_API_KEY`. When set, requests must carry
+Optional `PUSULA_SELF_HOSTED_API_KEY`. When set, requests must carry
 `Authorization: Bearer <key>`. Unset = open route (loopback / trusted network),
-mirroring how OmniRoute's existing local providers work. The D5 quota/quota-自治
+mirroring how Pusula's existing local providers work. The D5 quota/quota-自治
 key system is expected to take over this header.
 
 ## Failure contract

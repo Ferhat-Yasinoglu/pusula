@@ -229,11 +229,11 @@ test("does NOT mark transientRateLimited on 429 when isTokenLimitBreach is true"
   assert.equal(s.exhaustedProviders.has("test-dedup-provider"), false);
 });
 
-test("does NOT mark anything for circuit-open (X-OmniRoute-Provider-Breaker header)", () => {
+test("does NOT mark anything for circuit-open (X-Pusula-Provider-Breaker header)", () => {
   const s = sets();
   const exhausted = applyComboTargetExhaustion(target(), {
     ...baseOpts,
-    result: { status: 503, headers: new Map([["x-omniroute-provider-breaker", "open"]]) },
+    result: { status: 503, headers: new Map([["x-pusula-provider-breaker", "open"]]) },
     fallbackResult: {},
     errorText: "",
     sets: s,
@@ -401,7 +401,7 @@ test("generic upstream 504 without combo_target_timeout still exhausts the conne
   assert.equal(s.exhaustedProviders.size, 0);
 });
 
-test("OmniRoute combo_target_timeout 504 does NOT exhaust connection or provider", () => {
+test("Pusula combo_target_timeout 504 does NOT exhaust connection or provider", () => {
   const s = sets();
   const exhausted = applyComboTargetExhaustion(target(), {
     ...baseOpts,

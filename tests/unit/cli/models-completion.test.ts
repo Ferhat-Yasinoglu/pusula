@@ -24,9 +24,9 @@ async function invoke(args: string[], dataDir: string) {
         ...process.env,
         DATA_DIR: dataDir,
         HOME: dataDir,
-        OMNIROUTE_CLI_TOKEN: "fixture",
-        OMNIROUTE_API_KEY: "ambient-not-used",
-        OMNIROUTE_BASE_URL: "http://127.0.0.1:1",
+        PUSULA_CLI_TOKEN: "fixture",
+        PUSULA_API_KEY: "ambient-not-used",
+        PUSULA_BASE_URL: "http://127.0.0.1:1",
       },
     }
   );
@@ -47,7 +47,7 @@ async function invoke(args: string[], dataDir: string) {
 
 for (const status of [200, 401])
   test(`model completion refresh preserves catalog/auth semantics (${status})`, async () => {
-    const dataDir = mkdtempSync(join(tmpdir(), "omniroute-model-completion-"));
+    const dataDir = mkdtempSync(join(tmpdir(), "pusula-model-completion-"));
     const cache = join(dataDir, "completion-cache.json");
     const previous = JSON.stringify({ models: ["keep-on-failure"], ts: 123 });
     writeFileSync(cache, previous);
@@ -85,7 +85,7 @@ for (const status of [200, 401])
   });
 
 test("all shell completion scripts advertise manual model commands", async () => {
-  const dataDir = mkdtempSync(join(tmpdir(), "omniroute-model-shell-"));
+  const dataDir = mkdtempSync(join(tmpdir(), "pusula-model-shell-"));
   try {
     for (const shell of ["bash", "zsh", "fish"]) {
       const result = await invoke(["completion", shell], dataDir);
@@ -102,7 +102,7 @@ test("all shell completion scripts advertise manual model commands", async () =>
         const output = execFileSync("/bin/bash", ["--noprofile", "--norc"], {
           input:
             result.out +
-            '\nCOMP_WORDS=(omniroute models "")\nCOMP_CWORD=2\n_omniroute\nprintf "%s\\n" "${COMPREPLY[@]}"\n',
+            '\nCOMP_WORDS=(pusula models "")\nCOMP_CWORD=2\n_pusula\nprintf "%s\\n" "${COMPREPLY[@]}"\n',
           encoding: "utf8",
           timeout: 5000,
           env: { PATH: "/usr/bin:/bin" },
@@ -116,11 +116,11 @@ test("all shell completion scripts advertise manual model commands", async () =>
 });
 
 test("installed completion includes models registered after completion", async () => {
-  const dataDir = mkdtempSync(join(tmpdir(), "omniroute-model-install-"));
+  const dataDir = mkdtempSync(join(tmpdir(), "pusula-model-install-"));
   try {
     const result = await invoke(["completion", "install", "bash"], dataDir);
     assert.equal(result.code, 0, result.err);
-    const script = readFileSync(join(dataDir, ".bash_completion.d", "omniroute"), "utf8");
+    const script = readFileSync(join(dataDir, ".bash_completion.d", "pusula"), "utf8");
     assert.match(script, /manual add edit remove/);
   } finally {
     rmSync(dataDir, { recursive: true, force: true });

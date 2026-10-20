@@ -1,12 +1,12 @@
-import { handleModeration } from "@omniroute/open-sse/handlers/moderations.ts";
+import { handleModeration } from "@pusula/open-sse/handlers/moderations.ts";
 import {
   getProviderCredentialsWithQuotaPreflight,
   clearRecoveredProviderState,
 } from "@/sse/services/auth";
 import { withInjectionGuard } from "@/middleware/promptInjectionGuard";
-import { parseModerationModel } from "@omniroute/open-sse/config/moderationRegistry.ts";
-import { errorResponse } from "@omniroute/open-sse/utils/error.ts";
-import { HTTP_STATUS } from "@omniroute/open-sse/config/constants.ts";
+import { parseModerationModel } from "@pusula/open-sse/config/moderationRegistry.ts";
+import { errorResponse } from "@pusula/open-sse/utils/error.ts";
+import { HTTP_STATUS } from "@pusula/open-sse/config/constants.ts";
 import { enforceApiKeyPolicy } from "@/shared/utils/apiKeyPolicy";
 import { v1ModerationSchema } from "@/shared/validation/schemas";
 import { isValidationFailure, validateBody } from "@/shared/validation/helpers";

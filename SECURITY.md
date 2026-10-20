@@ -2,10 +2,10 @@
 
 ## Reporting Vulnerabilities
 
-If you discover a security vulnerability in OmniRoute, please report it responsibly:
+If you discover a security vulnerability in Pusula, please report it responsibly:
 
 1. **DO NOT** open a public GitHub issue
-2. Use [GitHub Security Advisories](https://github.com/diegosouzapw/OmniRoute/security/advisories/new)
+2. Use [GitHub Security Advisories](https://github.com/Ferhat-Yasinoglu/pusula/security/advisories/new)
 3. Include: description, reproduction steps, and potential impact
 
 ## Response Timeline
@@ -28,7 +28,7 @@ If you discover a security vulnerability in OmniRoute, please report it responsi
 
 ## Security Architecture
 
-OmniRoute implements a multi-layered security model:
+Pusula implements a multi-layered security model:
 
 ```
 Request → CORS → Authz pipeline (classify → policies → enforce)
@@ -65,7 +65,7 @@ STORAGE_ENCRYPTION_KEY=$(openssl rand -hex 32)
 
 ### 🛡️ Guardrails Framework
 
-OmniRoute ships a hot-reloadable **guardrails registry** (`src/lib/guardrails/`) with 3 built-in guardrails ordered by priority:
+Pusula ships a hot-reloadable **guardrails registry** (`src/lib/guardrails/`) with 3 built-in guardrails ordered by priority:
 
 | Guardrail          | Priority | Purpose                                                                                 |
 | ------------------ | -------- | --------------------------------------------------------------------------------------- |
@@ -73,7 +73,7 @@ OmniRoute ships a hot-reloadable **guardrails registry** (`src/lib/guardrails/`)
 | `pii-masker`       | 10       | Pre+post call PII redaction (emails, phone, CPF, CNPJ, credit cards, SSN)               |
 | `prompt-injection` | 20       | Detects override/role-hijack/jailbreak/leak patterns                                    |
 
-Custom guardrails register via `registerGuardrail(new MyGuardrail())`. The model is fail-open (exceptions never block traffic). Per-request opt-out via `x-omniroute-disabled-guardrails` header. → See [`docs/security/GUARDRAILS.md`](docs/security/GUARDRAILS.md).
+Custom guardrails register via `registerGuardrail(new MyGuardrail())`. The model is fail-open (exceptions never block traffic). Per-request opt-out via `x-pusula-disabled-guardrails` header. → See [`docs/security/GUARDRAILS.md`](docs/security/GUARDRAILS.md).
 
 ### 🧠 Prompt Injection Guard
 
@@ -178,15 +178,15 @@ The server actively rejects known-weak values like `changeme`, `secret`, or `pas
 
 ```bash
 docker run -d \
-  --name omniroute \
+  --name pusula \
   --restart unless-stopped \
   --read-only \
   -p 20128:20128 \
-  -v omniroute-data:/app/data \
+  -v pusula-data:/app/data \
   -e JWT_SECRET="$(openssl rand -base64 48)" \
   -e API_KEY_SECRET="$(openssl rand -hex 32)" \
   -e STORAGE_ENCRYPTION_KEY="$(openssl rand -hex 32)" \
-  diegosouzapw/omniroute:latest
+  ferhat-yasinoglu/pusula:latest
 ```
 
 ---
@@ -220,7 +220,7 @@ These rules are enforced by tooling and reviewers:
 
 > **Scope note:** `socket.yml` at the repository root only shapes `projectIgnorePaths` for Socket.dev's registry-side post-publish scan of the published npm artifact — it is not an enforced CI/PR merge gate. No workflow in `.github/workflows`, no `package.json` script, and no `Makefile` target invokes Socket.dev.
 
-The published `omniroute` npm artifact bundles the Next.js `output: "standalone"`
+The published `pusula` npm artifact bundles the Next.js `output: "standalone"`
 build, which means every route handler — including documented privileged
 features (MITM, Zed import, Cloud Sync, embedded service supervisor) — ends
 up in `.next/server/*.js` minified chunks. Heuristic supply-chain scanners
@@ -243,7 +243,7 @@ For each finding category we maintain a per-finding maintainer attestation:
   back to the same document.
 
 For users whose pipeline cannot relax the alert: build with
-`OMNIROUTE_BUILD_PROFILE=minimal npm run build`. That replaces the four
+`PUSULA_BUILD_PROFILE=minimal npm run build`. That replaces the four
 sensitive modules with stubs that return HTTP 503 `feature-disabled` at
 runtime, so the privileged code paths are physically absent from the bundle.
 See [`docs/security/SOCKET_DEV_FINDINGS.md`](docs/security/SOCKET_DEV_FINDINGS.md)

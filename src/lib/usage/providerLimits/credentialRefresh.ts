@@ -1,9 +1,9 @@
 import { updateProviderConnection } from "@/lib/db/providers";
-import type { BaseExecutor } from "@omniroute/open-sse/executors/base";
+import type { BaseExecutor } from "@pusula/open-sse/executors/base";
 import {
   rotationGroupFor,
   serializeRefresh,
-} from "@omniroute/open-sse/services/refreshSerializer.ts";
+} from "@pusula/open-sse/services/refreshSerializer.ts";
 
 type JsonRecord = Record<string, unknown>;
 

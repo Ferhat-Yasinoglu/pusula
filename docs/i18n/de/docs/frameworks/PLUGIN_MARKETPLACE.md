@@ -9,7 +9,7 @@
 > `src/app/(dashboard)/dashboard/plugins/`
 > **Zuletzt aktualisiert:** 2026-06-28 — v3.8.40
 
-OmniRoute enthält ein Plugin-System nach dem Vorbild von WordPress. Plugins sind eigenständige
+Pusula enthält ein Plugin-System nach dem Vorbild von WordPress. Plugins sind eigenständige
 Verzeichnisse — jeweils mit einem `plugin.json`-Manifest und einer Einstiegsdatei —, die sich
 in die Anfrage-Pipeline (`onRequest` / `onResponse` / `onError`) und in
 Lebenszyklusereignisse (`onInstall` / `onActivate` / `onDeactivate` / `onUninstall`) einklinken.
@@ -153,10 +153,10 @@ im Schema enthalten sind, werden zugelassen.
 
 ### Plugin-Verzeichnis
 
-Plugins befinden sich im OmniRoute-Datenverzeichnis:
+Plugins befinden sich im Pusula-Datenverzeichnis:
 
 ```
-~/.omniroute/plugins/<plugin-name>/
+~/.pusula/plugins/<plugin-name>/
   ├─ plugin.json
   └─ index.js          # (oder worauf manifest.main verweist)
 ```
@@ -164,17 +164,17 @@ Plugins befinden sich im OmniRoute-Datenverzeichnis:
 `getDefaultPluginDir()` (`src/lib/plugins/scanner.ts`) ermittelt dieses Verzeichnis
 in drei Schritten:
 
-1. **`OMNIROUTE_PLUGINS_DIR`**, sofern gesetzt — wird unabhängig vom Wert von `HOME`
+1. **`PUSULA_PLUGINS_DIR`**, sofern gesetzt — wird unabhängig vom Wert von `HOME`
    unverändert verwendet. Dies ist die explizite Option für Docker/K8s, wo der
    Plugin-Verzeichnisbaum per Bind-Mount unter einem Pfad eingebunden ist, der
    üblicherweise nichts mit dem Home-Verzeichnis des Containers zu tun hat (#11827).
-2. `<home>/.omniroute/plugins`, wobei `<home>` aus den Umgebungsvariablen `HOME` /
+2. `<home>/.pusula/plugins`, wobei `<home>` aus den Umgebungsvariablen `HOME` /
    `USERPROFILE` stammt.
-3. `/tmp/.omniroute/plugins`, wenn der Prozess überhaupt kein Home-Verzeichnis
+3. `/tmp/.pusula/plugins`, wenn der Prozess überhaupt kein Home-Verzeichnis
    exportiert.
 
 Das ermittelte Verzeichnis wird beim Start einmal als `scanner.dir_resolved`
-protokolliert, einschließlich der maßgeblichen Eingabe (`OMNIROUTE_PLUGINS_DIR`,
+protokolliert, einschließlich der maßgeblichen Eingabe (`PUSULA_PLUGINS_DIR`,
 `home` oder `no-home-fallback`) — dadurch meldet ein Image, das unbemerkt bei
 Schritt 3 landet, diesen Umstand, anstatt lediglich eine leere Plugin-Liste
 auszugeben. `POST /api/plugins/scan` erkennt dort jedes Unterverzeichnis, das
@@ -182,9 +182,9 @@ eine gültige `plugin.json` enthält, und registriert es; dasselbe Verzeichnis i
 das Stammverzeichnis, in das `pluginManager.install()` Plugins kopiert, sodass
 eine Überschreibung Erkennung und Installation gemeinsam verschiebt.
 
-> **`OMNIROUTE_PLUGINS_DIR` ist nicht `OMNIROUTE_PLUGIN_PATH`.** Letzteres wird nur
+> **`PUSULA_PLUGINS_DIR` ist nicht `PUSULA_PLUGIN_PATH`.** Letzteres wird nur
 > vom CLI-Loader für Befehls-Plugins (`bin/cli/plugins.mjs`) gelesen, um
-> `omniroute-cmd-*`-npm-Pakete zu finden, die `omniroute`-Unterbefehle hinzufügen —
+> `pusula-cmd-*`-npm-Pakete zu finden, die `pusula`-Unterbefehle hinzufügen —
 > es hat keine Auswirkungen auf den hier beschriebenen Laufzeit-Scanner. Siehe
 > [PLUGINS.md](./PLUGINS.md) für diese Variante.
 
@@ -290,7 +290,7 @@ Validiert durch `PluginManifestSchema` (`src/lib/plugins/manifest.ts`):
 | `main`             | string?   | Einstiegsdatei; Standardwert ist `index.js`                                |
 | `source`           | enum?     | `local` \| `marketplace` (Standardwert ist `local`)                        |
 | `tags`             | string[]? | Such-Tags                                                                  |
-| `requires`         | object?   | `{ omniroute?, permissions[] }`                                            |
+| `requires`         | object?   | `{ pusula?, permissions[] }`                                            |
 | `hooks`            | object?   | Boolesche Angaben dazu, welche Hooks das Plugin implementiert              |
 | `skills`           | object[]? | Optionale Skill-Definitionen                                               |
 | `enabledByDefault` | boolean?  | Bei der Installation automatisch aktivieren                                |
@@ -305,7 +305,7 @@ Berechtigungen stammen aus der Enumeration
 ```
 install (POST /api/plugins, Pfad)
   → Manifest scannen/validieren → in Staging kopieren → sicherstellen, dass main innerhalb des Verzeichnisses liegt
-  → atomar nach ~/.omniroute/plugins/<name> umbenennen → DB-Zeile einfügen
+  → atomar nach ~/.pusula/plugins/<name> umbenennen → DB-Zeile einfügen
   → onInstall auslösen → falls enabledByDefault: aktivieren
 
 activate (POST /api/plugins/{name}/activate)

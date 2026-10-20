@@ -71,14 +71,14 @@ test("allowlist preserves the local ZCode handshake client ID without weakening 
   // 335 newlines puts the statement on line 336, which is where it lives in
   // zcodeProtocol.ts today. The allowlist key carries the line number, so this
   // literal has to be kept in step with the source (it moved 302 -> 313 -> 336).
-  const src = `${"\n".repeat(335)}clientId: \`omniroute-\${process.pid}\`,`;
+  const src = `${"\n".repeat(335)}clientId: \`pusula-\${process.pid}\`,`;
   assert.deepEqual(
     findLiteralCreds(src, KNOWN_LITERAL_CREDS, "open-sse/executors/zcodeProtocol.ts"),
     []
   );
   assert.equal(
     findLiteralCreds(
-      src.replace("omniroute-", "upstream-client-"),
+      src.replace("pusula-", "upstream-client-"),
       KNOWN_LITERAL_CREDS,
       "open-sse/executors/zcodeProtocol.ts"
     ).length,

@@ -5,7 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import { cleanupTempDataDir } from "../_setup/tempDataDir.ts";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-reasoning-routing-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-reasoning-routing-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = process.env.API_KEY_SECRET || "test-reasoning-routing-secret";
 
@@ -156,7 +156,7 @@ test("default does not override a budget-only signal and force replaces discrete
     reasoning_effort: "low",
     reasoning: { effort: "low", summary: "auto" },
     thinking: { type: "enabled", budget_tokens: 2048 },
-    _omnirouteReasoningRule: {
+    _pusulaReasoningRule: {
       id: "force-high",
       effortMode: "force",
       targetEffort: "high",
@@ -168,7 +168,7 @@ test("default does not override a budget-only signal and force replaces discrete
   assert.equal(forced.effort, undefined);
   assert.deepEqual(forced.reasoning, { summary: "auto", effort: "high" });
   assert.deepEqual(forced.thinking, { type: "enabled", budget_tokens: 2048 });
-  assert.equal(forced._omnirouteReasoningRule, undefined);
+  assert.equal(forced._pusulaReasoningRule, undefined);
 
   const untouched = { model: "openai/gpt-4o", messages: [] };
   assert.equal(policy.applyReasoningRuleDirective(untouched), untouched);
@@ -304,7 +304,7 @@ test("static registry vocabulary outranks the operator override so the gate matc
   const { setModelCapabilityOverride } =
     await import("../../src/lib/db/modelCapabilityOverrides.ts");
   const { getProviderModels, PROVIDER_ID_TO_ALIAS } =
-    await import("@omniroute/open-sse/config/providerModels.ts");
+    await import("@pusula/open-sse/config/providerModels.ts");
 
   // Case 1: registry-declared model, operator override WIDENS. The
   // dispatch-time sanitizer ignores DB overrides for registry-declared

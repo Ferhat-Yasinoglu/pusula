@@ -1,4 +1,4 @@
-# OmniRoute MCP Server Documentation (Deutsch)
+# Pusula MCP Server Documentation (Deutsch)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../frameworks/MCP-SERVER.md) · 🇪🇹 [am](../../../am/docs/frameworks/MCP-SERVER.md) · 🇸🇦 [ar](../../../ar/docs/frameworks/MCP-SERVER.md) · 🇦🇿 [az](../../../az/docs/frameworks/MCP-SERVER.md) · 🇧🇬 [bg](../../../bg/docs/frameworks/MCP-SERVER.md) · 🇧🇩 [bn](../../../bn/docs/frameworks/MCP-SERVER.md) · 🇧🇦 [bs](../../../bs/docs/frameworks/MCP-SERVER.md) · 🇨🇿 [cs](../../../cs/docs/frameworks/MCP-SERVER.md) · 🇩🇰 [da](../../../da/docs/frameworks/MCP-SERVER.md) · 🇬🇷 [el](../../../el/docs/frameworks/MCP-SERVER.md) · 🇪🇸 [es](../../../es/docs/frameworks/MCP-SERVER.md) · 🇪🇪 [et](../../../et/docs/frameworks/MCP-SERVER.md) · 🇮🇷 [fa](../../../fa/docs/frameworks/MCP-SERVER.md) · 🇫🇮 [fi](../../../fi/docs/frameworks/MCP-SERVER.md) · 🇫🇷 [fr](../../../fr/docs/frameworks/MCP-SERVER.md) · 🇮🇪 [ga](../../../ga/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [gu](../../../gu/docs/frameworks/MCP-SERVER.md) · 🇳🇬 [ha](../../../ha/docs/frameworks/MCP-SERVER.md) · 🇮🇱 [he](../../../he/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [hi](../../../hi/docs/frameworks/MCP-SERVER.md) · 🇭🇷 [hr](../../../hr/docs/frameworks/MCP-SERVER.md) · 🇭🇺 [hu](../../../hu/docs/frameworks/MCP-SERVER.md) · 🇦🇲 [hy](../../../hy/docs/frameworks/MCP-SERVER.md) · 🇮🇩 [id](../../../id/docs/frameworks/MCP-SERVER.md) · 🇳🇬 [ig](../../../ig/docs/frameworks/MCP-SERVER.md) · 🇮🇹 [it](../../../it/docs/frameworks/MCP-SERVER.md) · 🇯🇵 [ja](../../../ja/docs/frameworks/MCP-SERVER.md) · 🇬🇪 [ka](../../../ka/docs/frameworks/MCP-SERVER.md) · 🇰🇭 [km](../../../km/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [kn](../../../kn/docs/frameworks/MCP-SERVER.md) · 🇰🇷 [ko](../../../ko/docs/frameworks/MCP-SERVER.md) · 🇱🇹 [lt](../../../lt/docs/frameworks/MCP-SERVER.md) · 🇱🇻 [lv](../../../lv/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [ml](../../../ml/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [mr](../../../mr/docs/frameworks/MCP-SERVER.md) · 🇲🇾 [ms](../../../ms/docs/frameworks/MCP-SERVER.md) · 🇲🇹 [mt](../../../mt/docs/frameworks/MCP-SERVER.md) · 🇲🇲 [my](../../../my/docs/frameworks/MCP-SERVER.md) · 🇳🇵 [ne](../../../ne/docs/frameworks/MCP-SERVER.md) · 🇳🇱 [nl](../../../nl/docs/frameworks/MCP-SERVER.md) · 🇳🇴 [no](../../../no/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [or](../../../or/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [pa](../../../pa/docs/frameworks/MCP-SERVER.md) · 🇵🇭 [phi](../../../phi/docs/frameworks/MCP-SERVER.md) · 🇵🇱 [pl](../../../pl/docs/frameworks/MCP-SERVER.md) · 🇵🇹 [pt](../../../pt/docs/frameworks/MCP-SERVER.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/frameworks/MCP-SERVER.md) · 🇷🇴 [ro](../../../ro/docs/frameworks/MCP-SERVER.md) · 🇷🇺 [ru](../../../ru/docs/frameworks/MCP-SERVER.md) · 🇱🇰 [si](../../../si/docs/frameworks/MCP-SERVER.md) · 🇸🇰 [sk](../../../sk/docs/frameworks/MCP-SERVER.md) · 🇸🇮 [sl](../../../sl/docs/frameworks/MCP-SERVER.md) · 🇷🇸 [sr](../../../sr/docs/frameworks/MCP-SERVER.md) · 🇸🇪 [sv](../../../sv/docs/frameworks/MCP-SERVER.md) · 🇰🇪 [sw](../../../sw/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [ta](../../../ta/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [te](../../../te/docs/frameworks/MCP-SERVER.md) · 🇹🇭 [th](../../../th/docs/frameworks/MCP-SERVER.md) · 🇹🇷 [tr](../../../tr/docs/frameworks/MCP-SERVER.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/frameworks/MCP-SERVER.md) · 🇵🇰 [ur](../../../ur/docs/frameworks/MCP-SERVER.md) · 🇺🇿 [uz](../../../uz/docs/frameworks/MCP-SERVER.md) · 🇻🇳 [vi](../../../vi/docs/frameworks/MCP-SERVER.md) · 🇳🇬 [yo](../../../yo/docs/frameworks/MCP-SERVER.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/frameworks/MCP-SERVER.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/frameworks/MCP-SERVER.md)
 
@@ -6,21 +6,21 @@
 
 > Model-Context-Protocol-Server mit 110 Tools für Routing-, Cache-, Komprimierungs-, Speicher-, Skill-, Proxy-, Pool-, Radar- und Kontextquellenoperationen.
 >
-> Maßgebliche Quelle: `open-sse/mcp-server/server.ts` berechnet mit `countUniqueMcpTools()` **110 eindeutige Tools**: 45 kanonische Definitionen (einschließlich der sechs CCR-Lifecycle-Tools, des Agent-Skills-Trios, `omniroute_radar_catalog` und `omniroute_x_search`), plus Speicher (3), Skills (4), GitHub-Skills (3), Pool (6), Gamification (8), Plugins (8), Notion (6), Obsidian (22), lokaler Korpus (3) und zwei ausschließlich für RTK verfügbare Komprimierungstools.
+> Maßgebliche Quelle: `open-sse/mcp-server/server.ts` berechnet mit `countUniqueMcpTools()` **110 eindeutige Tools**: 45 kanonische Definitionen (einschließlich der sechs CCR-Lifecycle-Tools, des Agent-Skills-Trios, `pusula_radar_catalog` und `pusula_x_search`), plus Speicher (3), Skills (4), GitHub-Skills (3), Pool (6), Gamification (8), Plugins (8), Notion (6), Obsidian (22), lokaler Korpus (3) und zwei ausschließlich für RTK verfügbare Komprimierungstools.
 
 ## Installation
 
-OmniRoute MCP ist integriert. Starten Sie es mit:
+Pusula MCP ist integriert. Starten Sie es mit:
 
 ```bash
-omniroute --mcp
+pusula --mcp
 ```
 
 Oder über den open-sse-Transport:
 
 ```bash
 # HTTP-Stream-Transport (Port 20130)
-omniroute --dev  # MCP startet automatisch am /mcp-Endpunkt
+pusula --dev  # MCP startet automatisch am /mcp-Endpunkt
 ```
 
 Die HTTP-Transporte (`sse` / `streamable-http`, die prozessintern vom Dashboard-Server bereitgestellt werden) sind
@@ -28,10 +28,10 @@ standardmäßig deaktiviert und konnten zuvor nur über die Seite `/dashboard/mc
 bietet die CLI dieselben Funktionen:
 
 ```bash
-omniroute mcp status                                  # aktiviert/online, Transport, Tool-Anzahl
-omniroute mcp enable [--transport stdio|sse|streamable-http]
-omniroute mcp disable
-omniroute mcp restart                                 # setzt aktive sse-/streamable-http-Sitzungen zurück
+pusula mcp status                                  # aktiviert/online, Transport, Tool-Anzahl
+pusula mcp enable [--transport stdio|sse|streamable-http]
+pusula mcp disable
+pusula mcp restart                                 # setzt aktive sse-/streamable-http-Sitzungen zurück
 ```
 
 `mcp enable`/`mcp disable` führen einen PATCH auf dieselbe Einstellung `mcpEnabled` (und optional `mcpTransport`) aus,
@@ -83,61 +83,61 @@ Cursor, Cline und kompatiblen MCP-Clients.
 
 | Tool                            | Berechtigungsbereiche | Beschreibung                                                                                                                              |
 | :------------------------------ | :-------------------- | :---------------------------------------------------------------------------------------------------------------------------------------- |
-| `omniroute_get_health`          | `read:health`         | Betriebszeit, Arbeitsspeicher, Schutzschalter, Ratenbegrenzungen, Cache-Statistiken                                                       |
-| `omniroute_list_combos`         | `read:combos`         | Alle konfigurierten Kombinationen mit Strategien (optionale Metriken)                                                                     |
-| `omniroute_get_combo_metrics`   | `read:combos`         | Leistungsmetriken für eine bestimmte Kombination                                                                                          |
-| `omniroute_switch_combo`        | `write:combos`        | Eine Kombination aktivieren oder deaktivieren                                                                                             |
-| `omniroute_create_combo`        | `write:combos`        | Eine validierte Kombination über die bestehende Kombinations-API erstellen                                                                |
-| `omniroute_check_quota`         | `read:quota`          | Verbrauchtes/gesamtes Kontingent, verbleibender Prozentsatz, Rücksetzzeitpunkt, Token-Status                                              |
-| `omniroute_route_request`       | `execute:completions` | Eine Chat-Vervollständigung über das OmniRoute-Routing senden                                                                             |
-| `omniroute_cost_report`         | `read:usage`          | Kostenbericht nach Zeitraum (Sitzung/Tag/Woche/Monat)                                                                                     |
-| `omniroute_list_models_catalog` | `read:models`         | Vollständiger Modellkatalog mit Funktionen, Status und Preisen                                                                            |
-| `omniroute_radar_catalog`       | `read:radar`          | Lokaler signierter Radar-Katalog; optionale Filter nach Anbieter/Familie                                                                  |
-| `omniroute_tool_search`         | `read:tools`          | Tools aus dem registrierten MCP-Katalog finden                                                                                            |
-| `omniroute_web_search`          | `execute:search`      | Websuche über die konfigurierten Suchanbieter. Nicht für X/Twitter.                                                                       |
-| `omniroute_x_search`            | `execute:search`      | X über xAI/SuperGrok durchsuchen oder `xquik-search` für Xquik-API-Ergebnisse wählen. Erfordert Anmeldedaten für das ausgewählte Backend. |
-| `omniroute_web_fetch`           | `execute:search`      | Webinhalte über die konfigurierten Abrufanbieter abrufen                                                                                  |
+| `pusula_get_health`          | `read:health`         | Betriebszeit, Arbeitsspeicher, Schutzschalter, Ratenbegrenzungen, Cache-Statistiken                                                       |
+| `pusula_list_combos`         | `read:combos`         | Alle konfigurierten Kombinationen mit Strategien (optionale Metriken)                                                                     |
+| `pusula_get_combo_metrics`   | `read:combos`         | Leistungsmetriken für eine bestimmte Kombination                                                                                          |
+| `pusula_switch_combo`        | `write:combos`        | Eine Kombination aktivieren oder deaktivieren                                                                                             |
+| `pusula_create_combo`        | `write:combos`        | Eine validierte Kombination über die bestehende Kombinations-API erstellen                                                                |
+| `pusula_check_quota`         | `read:quota`          | Verbrauchtes/gesamtes Kontingent, verbleibender Prozentsatz, Rücksetzzeitpunkt, Token-Status                                              |
+| `pusula_route_request`       | `execute:completions` | Eine Chat-Vervollständigung über das Pusula-Routing senden                                                                             |
+| `pusula_cost_report`         | `read:usage`          | Kostenbericht nach Zeitraum (Sitzung/Tag/Woche/Monat)                                                                                     |
+| `pusula_list_models_catalog` | `read:models`         | Vollständiger Modellkatalog mit Funktionen, Status und Preisen                                                                            |
+| `pusula_radar_catalog`       | `read:radar`          | Lokaler signierter Radar-Katalog; optionale Filter nach Anbieter/Familie                                                                  |
+| `pusula_tool_search`         | `read:tools`          | Tools aus dem registrierten MCP-Katalog finden                                                                                            |
+| `pusula_web_search`          | `execute:search`      | Websuche über die konfigurierten Suchanbieter. Nicht für X/Twitter.                                                                       |
+| `pusula_x_search`            | `execute:search`      | X über xAI/SuperGrok durchsuchen oder `xquik-search` für Xquik-API-Ergebnisse wählen. Erfordert Anmeldedaten für das ausgewählte Backend. |
+| `pusula_web_fetch`           | `execute:search`      | Webinhalte über die konfigurierten Abrufanbieter abrufen                                                                                  |
 
 ## Erweiterte Tools (11) — Phase 2
 
 | Tool                               | Berechtigungen                       | Beschreibung                                                                                                  |
 | :--------------------------------- | :----------------------------------- | :------------------------------------------------------------------------------------------------------------ |
-| `omniroute_simulate_route`         | `read:health`, `read:combos`         | Dry-Run-Routing-Simulation mit Fallback-Baum                                                                  |
-| `omniroute_set_budget_guard`       | `write:budget`                       | Sitzungsbudget mit Aktion zum Herabstufen, Blockieren oder Warnen                                             |
-| `omniroute_set_routing_strategy`   | `write:combos`                       | Combo-Strategie zur Laufzeit aktualisieren (Priorität/gewichtet/automatisch usw.)                             |
-| `omniroute_set_resilience_profile` | `write:resilience`                   | Resilienz-Voreinstellung `aggressive` / `balanced` / `conservative` anwenden                                  |
-| `omniroute_test_combo`             | `execute:completions`, `read:combos` | Live-Test jedes Providers in einer Combo mithilfe eines echten Upstream-Aufrufs                               |
-| `omniroute_get_provider_metrics`   | `read:health`                        | Metriken pro Provider mit p50-/p95-/p99-Latenz und Circuit-Breaker-Status                                     |
-| `omniroute_best_combo_for_task`    | `read:combos`, `read:health`         | Combo anhand des Aufgabentyps unter Berücksichtigung von Budget- und Latenzbeschränkungen empfehlen           |
-| `omniroute_explain_route`          | `read:health`, `read:usage`          | Erklären, warum eine Anfrage an einen Provider weitergeleitet wurde (Bewertungsfaktoren + Fallbacks)          |
-| `omniroute_get_session_snapshot`   | `read:usage`                         | Vollständige Sitzungsmomentaufnahme: Kosten, Token, Top-Modelle/-Provider, Fehler, Budgetüberwachung          |
-| `omniroute_db_health_check`        | `read:health`, `write:resilience`    | Datenbankabweichungen wie defekte Combo-Referenzen/verwaiste Zeilen diagnostizieren (und optional reparieren) |
-| `omniroute_sync_pricing`           | `pricing:write`                      | Preisdaten aus externen Quellen (LiteLLM) synchronisieren; unterstützt `dryRun`                               |
+| `pusula_simulate_route`         | `read:health`, `read:combos`         | Dry-Run-Routing-Simulation mit Fallback-Baum                                                                  |
+| `pusula_set_budget_guard`       | `write:budget`                       | Sitzungsbudget mit Aktion zum Herabstufen, Blockieren oder Warnen                                             |
+| `pusula_set_routing_strategy`   | `write:combos`                       | Combo-Strategie zur Laufzeit aktualisieren (Priorität/gewichtet/automatisch usw.)                             |
+| `pusula_set_resilience_profile` | `write:resilience`                   | Resilienz-Voreinstellung `aggressive` / `balanced` / `conservative` anwenden                                  |
+| `pusula_test_combo`             | `execute:completions`, `read:combos` | Live-Test jedes Providers in einer Combo mithilfe eines echten Upstream-Aufrufs                               |
+| `pusula_get_provider_metrics`   | `read:health`                        | Metriken pro Provider mit p50-/p95-/p99-Latenz und Circuit-Breaker-Status                                     |
+| `pusula_best_combo_for_task`    | `read:combos`, `read:health`         | Combo anhand des Aufgabentyps unter Berücksichtigung von Budget- und Latenzbeschränkungen empfehlen           |
+| `pusula_explain_route`          | `read:health`, `read:usage`          | Erklären, warum eine Anfrage an einen Provider weitergeleitet wurde (Bewertungsfaktoren + Fallbacks)          |
+| `pusula_get_session_snapshot`   | `read:usage`                         | Vollständige Sitzungsmomentaufnahme: Kosten, Token, Top-Modelle/-Provider, Fehler, Budgetüberwachung          |
+| `pusula_db_health_check`        | `read:health`, `write:resilience`    | Datenbankabweichungen wie defekte Combo-Referenzen/verwaiste Zeilen diagnostizieren (und optional reparieren) |
+| `pusula_sync_pricing`           | `pricing:write`                      | Preisdaten aus externen Quellen (LiteLLM) synchronisieren; unterstützt `dryRun`                               |
 
 ## Cache-Tools (2)
 
 | Tool                    | Berechtigungen | Beschreibung                                                   |
 | :---------------------- | :------------- | :------------------------------------------------------------- |
-| `omniroute_cache_stats` | `read:cache`   | Statistiken zu semantischem Cache, Prompt-Cache und Idempotenz |
-| `omniroute_cache_flush` | `write:cache`  | Cache global oder nach Signatur/Modell leeren                  |
+| `pusula_cache_stats` | `read:cache`   | Statistiken zu semantischem Cache, Prompt-Cache und Idempotenz |
+| `pusula_cache_flush` | `write:cache`  | Cache global oder nach Signatur/Modell leeren                  |
 
 ## Komprimierungs-Tools (13)
 
 | Tool                                | Berechtigungen      | Beschreibung                                                                                                                                         |
 | :---------------------------------- | :------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `omniroute_compression_status`      | `read:compression`  | Komprimierungseinstellungen, Analyseübersicht und Cache-bezogene Statistiken (einschließlich `analytics.mcpDescriptionCompression`-Metadaten)        |
-| `omniroute_compression_configure`   | `write:compression` | Komprimierungsmodus, Schwellenwert, Zielverhältnis, Beibehaltung des System-Prompts und Umschaltung der MCP-Beschreibungskomprimierung konfigurieren |
-| `omniroute_set_compression_engine`  | `write:compression` | Aktive Engine (off/caveman/rtk/stacked) sowie Caveman-/RTK-Intensität auswählen                                                                      |
-| `omniroute_list_compression_combos` | `read:compression`  | Benannte Komprimierungs-Combos und deren Engine-Pipelines auflisten                                                                                  |
-| `omniroute_compression_combo_stats` | `read:compression`  | Nach Komprimierungs-Combo und Engine gruppierte Analysen                                                                                             |
-| `omniroute_ccr_store`               | `write:compression` | Aufruferisolierte Inhalte im begrenzten In-Memory-CCR-Speicher ablegen und eine Markierung sowie eine `ccr://`-Referenz zurückgeben                  |
-| `omniroute_ccr_retrieve`            | `read:compression`  | CCR-Inhalte vollständig oder im Kopf-, Ende-, Zeilen-, grep- und Statistikmodus abrufen                                                              |
-| `omniroute_ccr_inspect`             | `read:compression`  | Aufrufereigene CCR-Metadaten prüfen, ohne Inhalte zurückzugeben                                                                                      |
-| `omniroute_ccr_list`                | `read:compression`  | Paginierte Metadaten für aufrufereigene CCR-Blöcke auflisten                                                                                         |
-| `omniroute_ccr_delete`              | `write:compression` | Einen aufrufereigenen CCR-Block löschen                                                                                                              |
-| `omniroute_ccr_stats`               | `read:compression`  | Auf den Aufrufer bezogene Speichernutzung, Lebenszykluszähler und Speicherlimits melden                                                              |
-| `omniroute_rtk_discover`            | `read:compression`  | Wiederkehrendes Rauschen in freiwillig bereitgestellten RTK-Ausgabebeispielen erkennen                                                               |
-| `omniroute_rtk_learn`               | `read:compression`  | Einen überprüfbaren RTK-Filterentwurf aus freiwillig bereitgestellten Beispielen erzeugen                                                            |
+| `pusula_compression_status`      | `read:compression`  | Komprimierungseinstellungen, Analyseübersicht und Cache-bezogene Statistiken (einschließlich `analytics.mcpDescriptionCompression`-Metadaten)        |
+| `pusula_compression_configure`   | `write:compression` | Komprimierungsmodus, Schwellenwert, Zielverhältnis, Beibehaltung des System-Prompts und Umschaltung der MCP-Beschreibungskomprimierung konfigurieren |
+| `pusula_set_compression_engine`  | `write:compression` | Aktive Engine (off/caveman/rtk/stacked) sowie Caveman-/RTK-Intensität auswählen                                                                      |
+| `pusula_list_compression_combos` | `read:compression`  | Benannte Komprimierungs-Combos und deren Engine-Pipelines auflisten                                                                                  |
+| `pusula_compression_combo_stats` | `read:compression`  | Nach Komprimierungs-Combo und Engine gruppierte Analysen                                                                                             |
+| `pusula_ccr_store`               | `write:compression` | Aufruferisolierte Inhalte im begrenzten In-Memory-CCR-Speicher ablegen und eine Markierung sowie eine `ccr://`-Referenz zurückgeben                  |
+| `pusula_ccr_retrieve`            | `read:compression`  | CCR-Inhalte vollständig oder im Kopf-, Ende-, Zeilen-, grep- und Statistikmodus abrufen                                                              |
+| `pusula_ccr_inspect`             | `read:compression`  | Aufrufereigene CCR-Metadaten prüfen, ohne Inhalte zurückzugeben                                                                                      |
+| `pusula_ccr_list`                | `read:compression`  | Paginierte Metadaten für aufrufereigene CCR-Blöcke auflisten                                                                                         |
+| `pusula_ccr_delete`              | `write:compression` | Einen aufrufereigenen CCR-Block löschen                                                                                                              |
+| `pusula_ccr_stats`               | `read:compression`  | Auf den Aufrufer bezogene Speichernutzung, Lebenszykluszähler und Speicherlimits melden                                                              |
+| `pusula_rtk_discover`            | `read:compression`  | Wiederkehrendes Rauschen in freiwillig bereitgestellten RTK-Ausgabebeispielen erkennen                                                               |
+| `pusula_rtk_learn`               | `read:compression`  | Einen überprüfbaren RTK-Filterentwurf aus freiwillig bereitgestellten Beispielen erzeugen                                                            |
 
 CCR-Einträge werden ausschließlich im Arbeitsspeicher vorgehalten und gehen bei einem Neustart verloren. Jeder Block ist auf 2 MiB, jeder
 Principal auf 16 MiB und der globale Speicher auf 64 MiB begrenzt. Einträge haben standardmäßig eine TTL von 24 Stunden (maximal
@@ -145,14 +145,14 @@ sieben Tage). Der vollständige MCP-Abruf ist auf 256 KiB begrenzt; größere Bl
 Bereichs- und grep-Modi verfügbar. Speicherung, Abruf, Auflistung, Prüfung, Löschung und Statistiken sind nach
 dem authentifizierten API-Key-Principal isoliert. Audit-Datensätze enthalten Hashes und Größenmetadaten, niemals Inhalte.
 
-`omniroute_compression_status` meldet die Komprimierung von MCP-Beschreibungen separat unter
+`pusula_compression_status` meldet die Komprimierung von MCP-Beschreibungen separat unter
 `analytics.mcpDescriptionCompression`. Diese Werte sind Schätzungen der Metadatengröße für auflistbare
 MCP-Beschreibungen (`tools`, `prompts`, `resources` und `resourceTemplates`); sie sind keine Nutzungsbelege
 des Providers und mit `source: "mcp_metadata_estimate"` gekennzeichnet.
 
 ### MCP-Accessibility-Tree-Filter (v3.8.0)
 
-Unabhängig von den oben genannten Komprimierungstools enthält OmniRoute einen Filter zur Nachbearbeitung,
+Unabhängig von den oben genannten Komprimierungstools enthält Pusula einen Filter zur Nachbearbeitung,
 der die **Tool-Ergebnisse** von MCP-Browser-/Accessibility-Tools komprimiert, bevor sie an den
 Agenten zurückgegeben werden. Dieser Filter ist selbst kein Tool – er wird transparent auf jedes Tool-Ergebnis
 angewendet, das ausführlichen Accessibility-Tree- oder Browser-Snapshot-Text enthält (≥2000 Zeichen).
@@ -174,9 +174,9 @@ Weitere Informationen zum Laufzeit-Komprimierungsmodell hinter diesen Tools find
 
 | Tool                        | Berechtigungen | Beschreibung                                                                                 |
 | :-------------------------- | :------------- | :------------------------------------------------------------------------------------------- |
-| `omniroute_oneproxy_fetch`  | `read:proxies` | Kostenlose Proxys vom 1proxy-Marktplatz abrufen (Filter für Protokoll/Land/Qualität/Anzahl)  |
-| `omniroute_oneproxy_rotate` | `read:proxies` | Den nächsten verfügbaren Proxy gemäß Strategie (`random` / `quality` / `sequential`) abrufen |
-| `omniroute_oneproxy_stats`  | `read:proxies` | Pool-Statistiken, Synchronisierungsstatus sowie Verteilung nach Protokoll und Land           |
+| `pusula_oneproxy_fetch`  | `read:proxies` | Kostenlose Proxys vom 1proxy-Marktplatz abrufen (Filter für Protokoll/Land/Qualität/Anzahl)  |
+| `pusula_oneproxy_rotate` | `read:proxies` | Den nächsten verfügbaren Proxy gemäß Strategie (`random` / `quality` / `sequential`) abrufen |
+| `pusula_oneproxy_stats`  | `read:proxies` | Pool-Statistiken, Synchronisierungsstatus sowie Verteilung nach Protokoll und Land           |
 
 ## Speicher-Tools (3)
 
@@ -184,9 +184,9 @@ Definiert in `open-sse/mcp-server/tools/memoryTools.ts`. Authentifizierung und B
 
 | Tool                      | Berechtigungen | Beschreibung                                                                                              |
 | :------------------------ | :------------- | :-------------------------------------------------------------------------------------------------------- |
-| `omniroute_memory_search` | `read:memory`  | Speicherinhalte nach Abfrage / Typ / API-Schlüssel unter Einhaltung des Token-Budgets durchsuchen         |
-| `omniroute_memory_add`    | `write:memory` | Einen neuen Speichereintrag hinzufügen (`factual` / `episodic` / `procedural` / `semantic`)               |
-| `omniroute_memory_clear`  | `write:memory` | Speicherinhalte für einen API-Schlüssel löschen, optional nach Typ oder `olderThan`-Zeitstempel gefiltert |
+| `pusula_memory_search` | `read:memory`  | Speicherinhalte nach Abfrage / Typ / API-Schlüssel unter Einhaltung des Token-Budgets durchsuchen         |
+| `pusula_memory_add`    | `write:memory` | Einen neuen Speichereintrag hinzufügen (`factual` / `episodic` / `procedural` / `semantic`)               |
+| `pusula_memory_clear`  | `write:memory` | Speicherinhalte für einen API-Schlüssel löschen, optional nach Typ oder `olderThan`-Zeitstempel gefiltert |
 
 ## Skill-Tools (4)
 
@@ -194,10 +194,10 @@ Definiert in `open-sse/mcp-server/tools/skillTools.ts`. Unterstützt durch `src/
 
 | Tool                          | Berechtigungen   | Beschreibung                                                                                            |
 | :---------------------------- | :--------------- | :------------------------------------------------------------------------------------------------------ |
-| `omniroute_skills_list`       | `read:skills`    | Registrierte Skills mit optionaler Filterung nach API-Schlüssel, Name oder Aktivierungsstatus auflisten |
-| `omniroute_skills_enable`     | `write:skills`   | Einen bestimmten Skill anhand seiner ID aktivieren oder deaktivieren                                    |
-| `omniroute_skills_execute`    | `execute:skills` | Einen Skill mit der bereitgestellten Eingabe ausführen und den Ausführungsdatensatz zurückgeben         |
-| `omniroute_skills_executions` | `read:skills`    | Den Verlauf der letzten Skill-Ausführungen auflisten                                                    |
+| `pusula_skills_list`       | `read:skills`    | Registrierte Skills mit optionaler Filterung nach API-Schlüssel, Name oder Aktivierungsstatus auflisten |
+| `pusula_skills_enable`     | `write:skills`   | Einen bestimmten Skill anhand seiner ID aktivieren oder deaktivieren                                    |
+| `pusula_skills_execute`    | `execute:skills` | Einen Skill mit der bereitgestellten Eingabe ausführen und den Ausführungsdatensatz zurückgeben         |
+| `pusula_skills_executions` | `read:skills`    | Den Verlauf der letzten Skill-Ausführungen auflisten                                                    |
 
 ## Notion-Kontextquelle (6)
 
@@ -233,9 +233,9 @@ Definiert in `open-sse/mcp-server/tools/agentSkillTools.ts`. Unterstützt durch 
 
 | Tool                              | Berechtigungsumfänge | Beschreibung                                                                                                                                                          |
 | :-------------------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `omniroute_agent_skills_list`     | `read:catalog`       | Listet alle 45 Agent Skills mit optionalen Filtern für `category` (api\|cli) und `area` auf; gibt Metadaten und Abdeckung zurück                                      |
-| `omniroute_agent_skills_get`      | `read:catalog`       | Ruft anhand der kanonischen `id` die vollständigen Metadaten und den Inhalt von SKILL.md für einen einzelnen Skill ab                                                 |
-| `omniroute_agent_skills_coverage` | `read:catalog`       | Abdeckungsstatistik: Wie viele der 23 API-, 21 CLI- und 1 Konfigurations-Skills über SKILL.md-Dateien im Dateisystem verfügen, verglichen mit den Kataloggesamtzahlen |
+| `pusula_agent_skills_list`     | `read:catalog`       | Listet alle 45 Agent Skills mit optionalen Filtern für `category` (api\|cli) und `area` auf; gibt Metadaten und Abdeckung zurück                                      |
+| `pusula_agent_skills_get`      | `read:catalog`       | Ruft anhand der kanonischen `id` die vollständigen Metadaten und den Inhalt von SKILL.md für einen einzelnen Skill ab                                                 |
+| `pusula_agent_skills_coverage` | `read:catalog`       | Abdeckungsstatistik: Wie viele der 23 API-, 21 CLI- und 1 Konfigurations-Skills über SKILL.md-Dateien im Dateisystem verfügen, verglichen mit den Kataloggesamtzahlen |
 
 Den vollständigen Katalog und Informationen dazu, wie externe Agenten ihn nutzen, finden Sie unter [AGENT-SKILLS.md](./AGENT-SKILLS.md).
 
@@ -248,7 +248,7 @@ Frameworks werden in v3.8.0 zusammen mit dem MCP-Server ausgeliefert und separat
 ### Cloud-Agenten
 
 Cloud-Agenten sind prozessexterne KI-Coding-Agenten (codex-cloud, cursor-cloud, devin, jules), die über
-dasselbe Verbindungsmodell, das auch für LLM-Anbieter verwendet wird, in OmniRoute eingebunden sind. Sie werden über
+dasselbe Verbindungsmodell, das auch für LLM-Anbieter verwendet wird, in Pusula eingebunden sind. Sie werden über
 ihre eigene REST-Oberfläche (`/api/v1/agents/*`) bereitgestellt und sind **nicht** Teil des MCP-Tool-Katalogs
 — der Aufruf eines Cloud-Agenten beansprucht keinen MCP-Berechtigungsumfang.
 
@@ -308,7 +308,7 @@ Matcher berücksichtigt diesen Rang ebenfalls nicht.
 | :---------------------------- | :-------------------------------------------------------------------------- | :------------------------ | :----------------------------------------------------------------- |
 | API-Schlüsselverwaltung       | `api_keys.scopes`                                                           | `hasManageScope`          | Verwaltungs-REST für diesen Bearer-Schlüssel                       |
 | Additive API-Schlüssel-Scopes | dasselbe Array, eine exakte Zeichenfolge                                    | der unten genannte Helper | Nur diese eine Fähigkeit                                           |
-| MCP-Tool-Scopes               | dasselbe Array, andernfalls MCP `_meta`, andernfalls `OMNIROUTE_MCP_SCOPES` | `scopeMatches`            | Dieses Tool, sobald die Durchsetzung aktiviert ist                 |
+| MCP-Tool-Scopes               | dasselbe Array, andernfalls MCP `_meta`, andernfalls `PUSULA_MCP_SCOPES` | `scopeMatches`            | Dieses Tool, sobald die Durchsetzung aktiviert ist                 |
 | Zugriffstoken                 | `oma_live_…`                                                                | `scopeSatisfies`          | Die Verwaltungsroute, deren Methode und Pfad diesen Rang erfordern |
 
 Das Ausstellen der einzelnen Anmeldedaten wird unter
@@ -354,12 +354,12 @@ Derselbe Aufruf schlägt auch bei `admin`, `mcp:connect`, `read` und `write` feh
 die einzigen gewährten Zeichenfolgen sind. Abgesehen vom abschließenden `*` gibt es
 keine Hierarchie zwischen MCP-Tool-Scopes.
 
-Die Durchsetzung ist deaktiviert, sofern nicht `OMNIROUTE_MCP_ENFORCE_SCOPES=true` gesetzt ist (Standardwert:
+Die Durchsetzung ist deaktiviert, sofern nicht `PUSULA_MCP_ENFORCE_SCOPES=true` gesetzt ist (Standardwert:
 `false`). Solange sie deaktiviert ist, erlaubt `evaluateToolScopes` den Aufruf und überspringt den
 Katalog. Wenn sie aktiviert ist, verwendet HTTP die `api_keys.scopes` des Bearer-Schlüssels als
 `authInfo` (siehe [HTTP-Scope-Bindung pro Schlüssel](#per-key-http-scope-binding-7895)).
 Wenn keine Schlüssel-Scopes aufgelöst werden können, greift die gewährte Menge zunächst auf MCP `_meta` und danach auf
-`OMNIROUTE_MCP_SCOPES` zurück.
+`PUSULA_MCP_SCOPES` zurück.
 
 #### Zugriffstoken-Scopes
 
@@ -419,8 +419,8 @@ Jedes Tool erfordert bestimmte Scopes:
 | `write:skills`        | `skills_enable`                                                                                                                                                                 |
 | `execute:skills`      | `skills_execute`                                                                                                                                                                |
 | `read:catalog`        | `agent_skills_list`, `agent_skills_get`, `agent_skills_coverage`                                                                                                                |
-| `read:tools`          | `omniroute_tool_search`                                                                                                                                                         |
-| `read:radar`          | `omniroute_radar_catalog`                                                                                                                                                       |
+| `read:tools`          | `pusula_tool_search`                                                                                                                                                         |
+| `read:radar`          | `pusula_radar_catalog`                                                                                                                                                       |
 | `read:gamification`   | `gamification_profile`, `gamification_rank`, `gamification_leaderboard`, `gamification_badges`, `gamification_servers`, `gamification_anomalies`                                |
 | `write:gamification`  | `gamification_invite`, `gamification_transfer`                                                                                                                                  |
 | `read:plugins`        | `plugin_list`, `plugin_executions`                                                                                                                                              |
@@ -451,10 +451,10 @@ entfernte Aufrufer, die ausschließlich MCP verwenden, und wird über `hasMcpCon
 und übergibt sie an `transport.handleRequest(req, { authInfo })` des MCP-SDK, sodass
 `extra.authInfo.scopes`, das jeden Werkzeugaufruf erreicht, die eigenen Berechtigungsbereiche des Bearer-Schlüssels widerspiegelt.
 `resolveCallerScopeContext()` aus `scopeEnforcement.ts` priorisierte `authInfo` bereits gegenüber
-`_meta` und dem Env-Fallback `OMNIROUTE_MCP_SCOPES` — dadurch wird lediglich diese erste Quelle
+`_meta` und dem Env-Fallback `PUSULA_MCP_SCOPES` — dadurch wird lediglich diese erste Quelle
 mit der höchsten Priorität befüllt, die zuvor über HTTP keine Daten erhielt. Wenn kein API-Schlüssel ermittelt wird
 (kein Header, ungültiger Schlüssel), bleibt `authInfo` auf `undefined`, und die Auflösung greift unverändert auf die
-bestehende `meta`-/Env-Kette zurück. Dadurch wird der Standardwert von `OMNIROUTE_MCP_ENFORCE_SCOPES`
+bestehende `meta`-/Env-Kette zurück. Dadurch wird der Standardwert von `PUSULA_MCP_ENFORCE_SCOPES`
 NICHT geändert — die Durchsetzung muss weiterhin explizit aktiviert werden; diese Änderung sorgt lediglich dafür, dass der
 schlüsselspezifische Pfad Vorrang erhält, sobald sie aktiviert ist. stdio verfügt über keine aufruferspezifische Identität (siehe
 `mcpCallerIdentity.ts`) und ist nicht betroffen — es verbleibt bei der `_meta`-/Env-Fallback-Kette.
@@ -465,17 +465,17 @@ schlüsselspezifische Pfad Vorrang erhält, sobald sie aktiviert ist. stdio verf
 
 | Variable                                | Standardwert                        | Zweck                                                                                                                                             |
 | :-------------------------------------- | :---------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `OMNIROUTE_BASE_URL`                    | `http://localhost:20128`            | Basis-URL, die der MCP-Server beim Aufruf interner OmniRoute-APIs verwendet                                                                       |
-| `OMNIROUTE_API_KEY`                     | (leer)                              | API-Schlüssel, der als `Authorization: Bearer` an interne API-Aufrufe weitergeleitet wird                                                         |
-| `OMNIROUTE_MCP_ENFORCE_SCOPES`          | `false` (nur `"true"` aktiviert es) | Wenn aktiviert, führen fehlende Scopes zur Ablehnung von Tool-Aufrufen und protokollieren `scope_denied:<reason>` im Audit-Protokoll              |
-| `OMNIROUTE_MCP_SCOPES`                  | (leer)                              | Kommagetrennte Positivliste der standardmäßig als „verfügbar“ betrachteten Scopes (wird verwendet, wenn der Aufrufer keine eigenen Scopes angibt) |
-| `OMNIROUTE_MCP_COMPRESS_DESCRIPTIONS`   | (nicht gesetzt = ein)               | Wenn auf `0/false/off/no` gesetzt, wird die Komprimierung von MCP-Beschreibungen zum Registrierungszeitpunkt deaktiviert                          |
-| `OMNIROUTE_MCP_DESCRIPTION_COMPRESSION` | (nicht gesetzt = ein)               | Alternativer Alias für denselben Schalter wie oben                                                                                                |
-| `OMNIROUTE_MCP_FETCH_TIMEOUT_MS`        | `10000`                             | Zeitlimit bis zum Abbruch für interne Verwaltungslesevorgänge (Systemzustand, Resilienz, Kombinationen, Kontingent, Nutzung)                      |
-| `OMNIROUTE_MCP_UPSTREAM_TIMEOUT_MS`     | `60000`                             | Zeitlimit bis zum Abbruch für Schritte, die auf einen Anbieter warten (`route_request`, `web_search`, `web_fetch`)                                |
+| `PUSULA_BASE_URL`                    | `http://localhost:20128`            | Basis-URL, die der MCP-Server beim Aufruf interner Pusula-APIs verwendet                                                                       |
+| `PUSULA_API_KEY`                     | (leer)                              | API-Schlüssel, der als `Authorization: Bearer` an interne API-Aufrufe weitergeleitet wird                                                         |
+| `PUSULA_MCP_ENFORCE_SCOPES`          | `false` (nur `"true"` aktiviert es) | Wenn aktiviert, führen fehlende Scopes zur Ablehnung von Tool-Aufrufen und protokollieren `scope_denied:<reason>` im Audit-Protokoll              |
+| `PUSULA_MCP_SCOPES`                  | (leer)                              | Kommagetrennte Positivliste der standardmäßig als „verfügbar“ betrachteten Scopes (wird verwendet, wenn der Aufrufer keine eigenen Scopes angibt) |
+| `PUSULA_MCP_COMPRESS_DESCRIPTIONS`   | (nicht gesetzt = ein)               | Wenn auf `0/false/off/no` gesetzt, wird die Komprimierung von MCP-Beschreibungen zum Registrierungszeitpunkt deaktiviert                          |
+| `PUSULA_MCP_DESCRIPTION_COMPRESSION` | (nicht gesetzt = ein)               | Alternativer Alias für denselben Schalter wie oben                                                                                                |
+| `PUSULA_MCP_FETCH_TIMEOUT_MS`        | `10000`                             | Zeitlimit bis zum Abbruch für interne Verwaltungslesevorgänge (Systemzustand, Resilienz, Kombinationen, Kontingent, Nutzung)                      |
+| `PUSULA_MCP_UPSTREAM_TIMEOUT_MS`     | `60000`                             | Zeitlimit bis zum Abbruch für Schritte, die auf einen Anbieter warten (`route_request`, `web_search`, `web_fetch`)                                |
 | `MCP_TOOL_DENY`                         | (nicht gesetzt = kein Filter)       | Kommagetrennte Tool-Namen, die aus `tools/list` entfernt werden sollen (Reduzierung der Tool-Kardinalität — siehe unten)                          |
 | `MCP_TOOL_ALLOW`                        | (nicht gesetzt = kein Filter)       | Kommagetrennte Tool-Namen, die ausschließlich beibehalten werden sollen (Positivlistenmodus — siehe unten)                                        |
-| `DATA_DIR`                              | `~/.omniroute`                      | Die Heartbeat-Datei wird nach `${DATA_DIR}/runtime/mcp-heartbeat.json` geschrieben                                                                |
+| `DATA_DIR`                              | `~/.pusula`                      | Die Heartbeat-Datei wird nach `${DATA_DIR}/runtime/mcp-heartbeat.json` geschrieben                                                                |
 
 ---
 
@@ -485,8 +485,8 @@ MCP-Tool-, Prompt- und Ressourcenregistrierungen können Beschreibungen zum Regi
 
 - Die Komprimierung wird mithilfe des Caveman-Regelwerks (`getRulesForContext("all", "full")`) auf den Beschreibungstext angewendet. Dabei werden geschützte Blöcke extrahiert (Code-Spannen, abgegrenzte Blöcke usw.), sodass strukturelle Inhalte nicht verändert werden.
 - Die Einstellung kann pro Bereitstellung über den Wert `compression.mcpDescriptionCompressionEnabled` in der Einstellungstabelle `key_value` umgeschaltet werden (Standard: aktiviert) — in der Benutzeroberfläche verfügbar als **Analysen → MCP-Beschreibungskomprimierung**.
-- Prozessweit kann die Einstellung über `OMNIROUTE_MCP_COMPRESS_DESCRIPTIONS=false` oder `OMNIROUTE_MCP_DESCRIPTION_COMPRESSION=false` umgeschaltet werden.
-- Echtzeitstatistiken werden über `omniroute_compression_status` unter `analytics.mcpDescriptionCompression` bereitgestellt und mit `source: "mcp_metadata_estimate"` gekennzeichnet, um sie von tatsächlichen Nutzungsbelegen der Anbieter zu unterscheiden.
+- Prozessweit kann die Einstellung über `PUSULA_MCP_COMPRESS_DESCRIPTIONS=false` oder `PUSULA_MCP_DESCRIPTION_COMPRESSION=false` umgeschaltet werden.
+- Echtzeitstatistiken werden über `pusula_compression_status` unter `analytics.mcpDescriptionCompression` bereitgestellt und mit `source: "mcp_metadata_estimate"` gekennzeichnet, um sie von tatsächlichen Nutzungsbelegen der Anbieter zu unterscheiden.
 
 ---
 
@@ -505,10 +505,10 @@ Die Beschreibungskomprimierung verkleinert die Metadaten jedes Tools; die **Redu
 
 ```bash
 # Zwei Tools aus dem Katalog entfernen
-MCP_TOOL_DENY="omniroute_get_health,omniroute_list_combos" omniroute --mcp
+MCP_TOOL_DENY="pusula_get_health,pusula_list_combos" pusula --mcp
 
 # Nur die Routing- und Kontingent-Tools ankündigen (Positivlistenmodus)
-MCP_TOOL_ALLOW="omniroute_route_request,omniroute_check_quota" omniroute --mcp
+MCP_TOOL_ALLOW="pusula_route_request,pusula_check_quota" pusula --mcp
 ```
 
 **So werden gefilterte Tools entfernt:** Die Registrierung ist immer erfolgreich; ein vom Profil abgelehntes Tool wird anschließend über `.disable()` am MCP-SDK-Handle deaktiviert. Dadurch erscheint es nie in `tools/list`, während die Verkabelung intakt bleibt (sauberes Aktivieren/Deaktivieren, keine erneute Registrierung). Der Profil-Parser ist `readMcpToolProfileFromEnv(process.env)` und gibt `null` zurück (keine Filterung), wenn beide Variablen leer sind.

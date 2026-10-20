@@ -6,7 +6,7 @@
 
 ## Übersicht
 
-Redis ist eine **optionale, nicht zwingende Abhängigkeit** in OmniRoute — die Anwendung arbeitet bei nicht verfügbarem Redis mit eingeschränkter Funktionalität weiter (In-Memory-
+Redis ist eine **optionale, nicht zwingende Abhängigkeit** in Pusula — die Anwendung arbeitet bei nicht verfügbarem Redis mit eingeschränkter Funktionalität weiter (In-Memory-
 Fallbacks). In Produktionsumgebungen reduziert die Optimierung von Redis die Latenz für vier unterschiedliche
 Workloads:
 
@@ -17,7 +17,7 @@ Workloads:
 | Kontingentspeicher                | `redisQuotaStore.ts`          | Separates `getRedisClient(url)`-Singleton                          | `<prefix>quota:*` pro Instanz konfigurierbar                   |
 | Circuit Breaker für das Aufwärmen | `redisCircuitBreakerStore.ts` | Separater Client in `circuitBreakerFactory.ts`                     | `<prefix>warmup:cb:<connectionId>`                             |
 
-Alle vier Workloads verwenden dasselbe Namespace-Präfix, damit OmniRoute zusammen mit anderen Anwendungen auf einer
+Alle vier Workloads verwenden dasselbe Namespace-Präfix, damit Pusula zusammen mit anderen Anwendungen auf einer
 einzelnen Redis-Instanz betrieben werden kann (z. B. `127.0.0.1:6379`). Siehe [Schlüssel-Namespaces](#key-namespacing).
 
 ---
@@ -27,7 +27,7 @@ einzelnen Redis-Instanz betrieben werden kann (z. B. `127.0.0.1:6379`). Siehe [S
 | Einstellung                               | Wert                                                                   | Fundstelle                                                                            |
 | ----------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
 | Umgebungsvariable `REDIS_URL`             | `redis://redis:6379` (Compose), optional                               | `rateLimiter.ts:5`, `.env.example`                                                    |
-| Umgebungsvariable `REDIS_KEY_PREFIX`      | `omniroute:` (Standardwert)                                            | `rateLimiter.ts`, `redisQuotaStore.ts`, `redisCircuitBreakerStore.ts`, `.env.example` |
+| Umgebungsvariable `REDIS_KEY_PREFIX`      | `pusula:` (Standardwert)                                            | `rateLimiter.ts`, `redisQuotaStore.ts`, `redisCircuitBreakerStore.ts`, `.env.example` |
 | Umgebungsvariable `QUOTA_STORE_REDIS_URL` | separat, kann von `REDIS_URL` abweichen                                | `quota/storeFactory.ts`                                                               |
 | `QUOTA_STORE_DRIVER`                      | `"sqlite"` (Standardwert), `"redis"` optional                          | `quota/storeFactory.ts`                                                               |
 | ioredis `maxRetriesPerRequest`            | `3`                                                                    | Client-Erstellung in `rateLimiter.ts`                                                 |
@@ -41,18 +41,18 @@ einzelnen Redis-Instanz betrieben werden kann (z. B. `127.0.0.1:6379`). Siehe [S
 
 ## Schlüssel-Namespaces
 
-OmniRoute verwendet eine Redis-Instanz gemeinsam mit allen anderen Anwendungen, die auf dem Host ausgeführt werden. Ohne einen Namespace
+Pusula verwendet eine Redis-Instanz gemeinsam mit allen anderen Anwendungen, die auf dem Host ausgeführt werden. Ohne einen Namespace
 könnten Schlüssel wie `auth:api_key:<sha256>` oder `rl:*` mit Schlüsseln anderer Anwendungen kollidieren,
 die dasselbe Redis verwenden (diese Instanz führt Redis auf `127.0.0.1:6379` zusammen mit anderen Diensten aus).
 
-Setzen Sie `REDIS_KEY_PREFIX` auf eine nicht leere Zeichenfolge, um **jedem** OmniRoute-Schlüssel ein Präfix voranzustellen:
+Setzen Sie `REDIS_KEY_PREFIX` auf eine nicht leere Zeichenfolge, um **jedem** Pusula-Schlüssel ein Präfix voranzustellen:
 
 ```bash
-# .env — alle OmniRoute-Schlüssel werden zu omniroute:rl:*, omniroute:auth:*, omniroute:quota:*, omniroute:warmup:cb:*
-REDIS_KEY_PREFIX=omniroute:
+# .env — alle Pusula-Schlüssel werden zu pusula:rl:*, pusula:auth:*, pusula:quota:*, pusula:warmup:cb:*
+REDIS_KEY_PREFIX=pusula:
 ```
 
-- **Standardwert:** `omniroute:` (wird angewendet, wenn `REDIS_KEY_PREFIX` nicht gesetzt oder leer ist).
+- **Standardwert:** `pusula:` (wird angewendet, wenn `REDIS_KEY_PREFIX` nicht gesetzt oder leer ist).
 - **Angewendet auf:** Ratenbegrenzer + Authentifizierungs-Cache (gemeinsam genutzter `ioredis`-Client über `keyPrefix`), den
   Kontingentspeicher (`KEY_PREFIX = "${REDIS_KEY_PREFIX}quota"`) und den Circuit Breaker für das Aufwärmen
   (`KEY_PREFIX = "${REDIS_KEY_PREFIX}warmup:cb:"`).
@@ -98,7 +98,7 @@ const redis = new Redis(REDIS_URL, {
 maxmemory 80%                        # Platz für den Seiten-Cache des Betriebssystems lassen
 maxmemory-policy allkeys-lru         # veraltete Auth-Cache-Einträge bei Speicherdruck entfernen
 
-# Persistenz (optional — OmniRoute ist auch ohne sie absturzsicher)
+# Persistenz (optional — Pusula ist auch ohne sie absturzsicher)
 save 300 1                           # mindestens alle 5 Minuten einen Snapshot erstellen, wenn sich ≥1 Schlüssel geändert hat
 appendonly no                        # AOF nicht erforderlich; Daten können neu erzeugt werden
 appendfsync no                       # kein fsync-Mehraufwand (RDB ist ausreichend)

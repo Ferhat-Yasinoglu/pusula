@@ -384,8 +384,8 @@ export async function executeTargetAttempt(opts: {
     // Success — validate response quality before returning
     if (result.ok) {
       const selectedConnectionId =
-        result.headers?.get("X-OmniRoute-Selected-Connection-Id") ||
-        result.headers?.get("x-omniroute-selected-connection-id") ||
+        result.headers?.get("X-Pusula-Selected-Connection-Id") ||
+        result.headers?.get("x-pusula-selected-connection-id") ||
         undefined;
       const effectiveConnectionId = selectedConnectionId || target.connectionId || "";
 
@@ -893,8 +893,8 @@ export async function executeTargetAttempt(opts: {
     // but the operator cap still bounds them.
     const lockoutHintVerified = retryHintBypassesMaxCooldownMs(fallbackResult.retryHintSource);
     const selectedConnectionId =
-      result.headers?.get("X-OmniRoute-Selected-Connection-Id") ||
-      result.headers?.get("x-omniroute-selected-connection-id") ||
+      result.headers?.get("X-Pusula-Selected-Connection-Id") ||
+      result.headers?.get("x-pusula-selected-connection-id") ||
       undefined;
     const targetWithConnection = selectedConnectionId
       ? { ...target, connectionId: selectedConnectionId }

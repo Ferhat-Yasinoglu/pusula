@@ -7,7 +7,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-estimated-usage-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-estimated-usage-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../src/lib/db/core.ts");
@@ -104,9 +104,9 @@ async function spend(apiKeyId: string): Promise<number> {
 }
 
 function usageEstimatedMeta(entry: unknown): unknown {
-  const responseBody = (entry as { responseBody?: { _omniroute?: Record<string, unknown> } })
+  const responseBody = (entry as { responseBody?: { _pusula?: Record<string, unknown> } })
     ?.responseBody;
-  return responseBody?._omniroute?.usageEstimated;
+  return responseBody?._pusula?.usageEstimated;
 }
 
 test("extraction keeps an internal estimated marker that never serializes or spreads", () => {

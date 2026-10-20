@@ -23,7 +23,7 @@ import path from "node:path";
 // a loaded machine is enough, and the failover assertions would then observe the
 // keepalive wrapper instead of the failover.
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-early-eof-failover-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-early-eof-failover-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.REQUIRE_API_KEY = "false";
 process.env.DASHBOARD_PASSWORD = "";
@@ -222,7 +222,7 @@ test("flag off (default): early EOF stays terminal after the same-connection ret
   const first = firstAuth === authOf(connA) ? connA : connB;
   assert.equal(response.status, 502, `expected 502, got ${response.status}: ${bodyText}`);
   assert.equal(errorCodeOf(bodyText), "STREAM_EARLY_EOF");
-  assert.equal(response.headers.get("X-OmniRoute-Selected-Connection-Id"), first.id);
+  assert.equal(response.headers.get("X-Pusula-Selected-Connection-Id"), first.id);
   await assertNotMarked(connA, "first");
   await assertNotMarked(connB, "sibling");
 });
@@ -246,7 +246,7 @@ test("flag on: fails over to the sibling after the bounded retry, without markin
   assert.equal(dispatches[2], authOf(sibling), "the spent retry must hop to the sibling");
   assert.equal(response.status, 200, `expected 200, got ${response.status}: ${bodyText}`);
   assert.equal(
-    response.headers.get("X-OmniRoute-Selected-Connection-Id"),
+    response.headers.get("X-Pusula-Selected-Connection-Id"),
     sibling.id,
     "the response must carry the sibling as the selected connection"
   );
@@ -282,7 +282,7 @@ test("flag on: bounds the failover to exactly one sibling hop per request", asyn
   assert.ok(sibling, "the hop must reach a seeded sibling");
   assert.equal(response.status, 502, `expected 502, got ${response.status}: ${bodyText}`);
   assert.equal(errorCodeOf(bodyText), "STREAM_EARLY_EOF", "the terminal body keeps its code");
-  assert.equal(response.headers.get("X-OmniRoute-Selected-Connection-Id"), sibling.id);
+  assert.equal(response.headers.get("X-Pusula-Selected-Connection-Id"), sibling.id);
   for (const conn of conns) await assertNotMarked(conn, conn.id);
 });
 
@@ -302,7 +302,7 @@ test("flag on: a singleton pool surfaces the original STREAM_EARLY_EOF 502", asy
     "STREAM_EARLY_EOF",
     `the original early-EOF body must survive an empty sibling pool: ${bodyText}`
   );
-  assert.equal(response.headers.get("X-OmniRoute-Selected-Connection-Id"), conn.id);
+  assert.equal(response.headers.get("X-Pusula-Selected-Connection-Id"), conn.id);
   await assertNotMarked(conn, "singleton");
 });
 
@@ -324,7 +324,7 @@ test("flag on: a sibling that fails for another reason surfaces the original ear
   assert.equal(dispatches[2], authOf(sibling));
   assert.equal(response.status, 502, `expected 502, got ${response.status}: ${bodyText}`);
   assert.equal(errorCodeOf(bodyText), "STREAM_EARLY_EOF", `unexpected body: ${bodyText}`);
-  assert.equal(response.headers.get("X-OmniRoute-Selected-Connection-Id"), first.id);
+  assert.equal(response.headers.get("X-Pusula-Selected-Connection-Id"), first.id);
   await assertNotMarked(first, "first");
 });
 
@@ -335,7 +335,7 @@ test("flag on: a forced connection never hops to a sibling", async () => {
   const dispatches: string[] = [];
   stubFetch(dispatches, () => pingOnlyStreamResponse());
 
-  const response = await handleChat(streamRequest({ "x-omniroute-connection": connA.id }));
+  const response = await handleChat(streamRequest({ "x-pusula-connection": connA.id }));
   const bodyText = await response.text();
 
   // A forced pin skips the same-connection retry and must never rotate.

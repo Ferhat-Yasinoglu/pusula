@@ -4,14 +4,14 @@
 
 ---
 
-`@omniroute/opencode-plugin-v2`, modeller, kombinasyonlar ve otomatik kombinasyonlar dahil olmak üzere tüm OmniRoute kataloğunuzu görünen adlar, fiyatlandırma ve ücretsiz kullanım katmanı limitleriyle OpenCode v2'nin model seçicisine ekler.
+`@pusula/opencode-plugin-v2`, modeller, kombinasyonlar ve otomatik kombinasyonlar dahil olmak üzere tüm Pusula kataloğunuzu görünen adlar, fiyatlandırma ve ücretsiz kullanım katmanı limitleriyle OpenCode v2'nin model seçicisine ekler.
 
-OpenCode v1 ve v2 eklentileri farklı sözleşmeler üzerinden yüklediği için bu paket, `@omniroute/opencode-plugin` paketinden ayrıdır. OpenCode ana sürümünüzle eşleşeni seçin; aralarında hiçbir şey paylaşılmadığından birini yükseltmek diğerini yükseltmenizi gerektirmez.
+OpenCode v1 ve v2 eklentileri farklı sözleşmeler üzerinden yüklediği için bu paket, `@pusula/opencode-plugin` paketinden ayrıdır. OpenCode ana sürümünüzle eşleşeni seçin; aralarında hiçbir şey paylaşılmadığından birini yükseltmek diğerini yükseltmenizi gerektirmez.
 
 ## Gereksinimler
 
 - OpenCode v2.
-- Erişilebilir bir OmniRoute ağ geçidi (varsayılan olarak `http://localhost:20128`).
+- Erişilebilir bir Pusula ağ geçidi (varsayılan olarak `http://localhost:20128`).
 - Node.js 22 veya 24.
 
 ## Kurulum
@@ -22,9 +22,9 @@ Eklentiyi `opencode.json` dosyasına ekleyin:
 {
   "plugins": [
     {
-      "package": "@omniroute/opencode-plugin-v2",
+      "package": "@pusula/opencode-plugin-v2",
       "options": {
-        "providerId": "omniroute",
+        "providerId": "pusula",
         "baseURL": "http://localhost:20128"
       }
     }
@@ -32,7 +32,7 @@ Eklentiyi `opencode.json` dosyasına ekleyin:
 }
 ```
 
-Modeller daha sonra `omniroute/<provider>/<model>` biçiminde görünür; `providerId`, bu öneki ve OpenCode'un kimlik bilgisini altında sakladığı entegrasyon kimliğini belirler.
+Modeller daha sonra `pusula/<provider>/<model>` biçiminde görünür; `providerId`, bu öneki ve OpenCode'un kimlik bilgisini altında sakladığı entegrasyon kimliğini belirler.
 
 ## Kimlik Bilgileri
 
@@ -40,7 +40,7 @@ Eklenti, ağ geçidi anahtarını sırasıyla şu üç yerde arar:
 
 1. **OpenCode'da bağladığınız kimlik bilgisi.** Eklenti bir entegrasyon kaydeder; böylece OpenCode'un kendi kimlik doğrulama akışı anahtarı saklayabilir. `opencode.json` dosyasına hiçbir şey yazılmaz — bunu tercih edin.
 2. Proje bazında geçersiz kılma için eklenti seçeneklerindeki `apiKey`. Bu, anahtarı sürüm kontrolüne gönderebileceğiniz bir dosyaya koyar.
-3. Ortamdaki `OMNIROUTE_API_KEY`.
+3. Ortamdaki `PUSULA_API_KEY`.
 
 Bu üçünün hiçbiri yoksa katalog boş olur ve eklenti, sizi sessizce boş bir seçiciyle bırakmak yerine başlangıçta bunu bir kez bildirir.
 
@@ -61,11 +61,11 @@ Kombinasyonlar, sağlayıcı durumu ve zenginleştirme bilgileri (görünen adla
 
 | Anahtar                          | Varsayılan                                         | Notlar                                                                                                                     |
 | -------------------------------- | -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `providerId`                     | `"omniroute"`                                      | Sağlayıcı kimliği, entegrasyon kimliği ve modellerin altında göründüğü önek                                                |
+| `providerId`                     | `"pusula"`                                      | Sağlayıcı kimliği, entegrasyon kimliği ve modellerin altında göründüğü önek                                                |
 | `baseURL`                        | zorunlu                                            | Ağ geçidi kökü, yalnızca `http(s)`; gerektiğinde `/v1` son eki eklenir                                                     |
-| `apiKey`                         | bağlı kimlik bilgisi, ardından `OMNIROUTE_API_KEY` | `/v1/*` için sohbet anahtarı                                                                                               |
+| `apiKey`                         | bağlı kimlik bilgisi, ardından `PUSULA_API_KEY` | `/v1/*` için sohbet anahtarı                                                                                               |
 | `managementReadToken`            | `apiKey` değerine geri döner                       | `/api/*` için anahtar — genellikle aynı anahtar **değildir**                                                               |
-| `displayName`                    | `"OmniRoute"`                                      | Seçicideki sağlayıcı adı                                                                                                   |
+| `displayName`                    | `"Pusula"`                                      | Seçicideki sağlayıcı adı                                                                                                   |
 | `timeoutMs`                      | `10000`                                            | Uç nokta başına getirme zaman aşımı (otomatik kombinasyonlar 5 sn kullanır)                                                |
 | `modelCacheTtlMs`                | `300000`                                           | Katalog önbelleği TTL değeri; diskteki bir anlık görüntü soğuk başlatmaları hızlandırır                                    |
 | `timeouts`                       | `timeoutMs` değerine geri döner                    | Ms cinsinden uç nokta bazında süre sınırları: `models`, `combos`, `autoCombos`, `enrichment`                               |
@@ -95,7 +95,7 @@ Bunu kapatmak için `"geminiSanitization": false` ayarını kullanın.
 
 | Belirti                                                       | Neden                                                                                                                        |
 | ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Seçicide hiçbir OmniRoute modeli görünmüyor                   | Hiçbir anahtar çözümlenemedi (başlangıç uyarısını kontrol edin) veya ağ geçidine erişilemiyor                                |
+| Seçicide hiçbir Pusula modeli görünmüyor                   | Hiçbir anahtar çözümlenemedi (başlangıç uyarısını kontrol edin) veya ağ geçidine erişilemiyor                                |
 | Ham model kimlikleri var; kombinasyonlar ve fiyatlandırma yok | Yönetim uç noktaları belirteci reddetti — `managementReadToken` değerini ayarlayın                                           |
 | Bir oturum `opencode-<id>/…` konumuna sabitlenmiş             | v1 eklentisi `opencode-<id>` yayımlıyordu; v2 ise yalnızca `<id>` yayımlar, bu nedenle modeli `<id>/…` altında yeniden seçin |
 

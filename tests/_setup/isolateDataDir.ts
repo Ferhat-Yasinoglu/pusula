@@ -4,11 +4,11 @@
 // invocations (package.json test scripts, stryker.conf.json tap.nodeArgs, the
 // quality.yml TIA step, and the CI test jobs) — NEVER from production. It MUST stay
 // out of open-sse/utils/setupPolyfill.ts, which is also imported by production
-// (bin/omniroute.mjs, proxyFetch.ts, proxyDispatcher.ts) where redirecting DATA_DIR
+// (bin/pusula.mjs, proxyFetch.ts, proxyDispatcher.ts) where redirecting DATA_DIR
 // would point the live SQLite DB at a throwaway temp dir.
 //
 // Why: node:test spawns a process per test file and Stryker spawns one per sandbox,
-// but every process resolves DATA_DIR to the SAME default (~/.omniroute) when the env
+// but every process resolves DATA_DIR to the SAME default (~/.pusula) when the env
 // var is unset (see src/lib/dataPaths.ts::resolveDataDir). Concurrent processes then
 // open the SAME on-disk storage.sqlite, causing cross-file state races: SQLite lock
 // contention that hangs `test:unit` under high `--test-concurrency`, and the
@@ -27,7 +27,7 @@ import path from "node:path";
 process.env.APP_LOG_TO_FILE ||= "false";
 
 if (!process.env.DATA_DIR) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-test-"));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-test-"));
   process.env.DATA_DIR = dir;
 
   // Best-effort cleanup so a long suite run does not leak hundreds of temp DBs.
@@ -45,7 +45,7 @@ if (!process.env.DATA_DIR) {
 // 105-byte PEM into /usr/local/share/ca-certificates and update-ca-certificates
 // baked it into the bundle, breaking ALL system TLS on the VM (2026-07-05).
 // installCert/uninstallCert/installTproxyCa/uninstallTproxyCa no-op under this.
-process.env.OMNIROUTE_SKIP_SYSTEM_TRUST = "1";
+process.env.PUSULA_SKIP_SYSTEM_TRUST = "1";
 
 // Browser-spawn guard: the Adobe Firefly session warm (adobeFireflySession.ts)
 // spawns the SYSTEM Chrome with --remote-debugging-port whenever a test reaches it
@@ -57,4 +57,4 @@ process.env.ADOBE_FIREFLY_BROWSER_REFRESH ||= "0";
 
 // DNS-write guard: the suite must NEVER mutate /etc/hosts. Tests that exercise
 // the real MITM path call addDNSEntries(); this env var makes it a no-op.
-process.env.OMNIROUTE_SKIP_DNS_WRITE = "1";
+process.env.PUSULA_SKIP_DNS_WRITE = "1";

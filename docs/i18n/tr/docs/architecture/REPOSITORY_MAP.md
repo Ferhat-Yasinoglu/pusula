@@ -5,14 +5,14 @@
 ---
 
 > **Her dizin ve kök dosya için tek satırlık açıklama.**
-> Son güncelleme: 2026-06-28 — OmniRoute v3.8.40
+> Son güncelleme: 2026-06-28 — Pusula v3.8.40
 >
 > Kod tabanında hızlıca gezinmek için bu haritayı kullanın. Ayrıntılı incelemeler için özel dokümanların bağlantılarını takip edin.
 
 ## Üst düzey dizin ağacı
 
 ```
-OmniRoute/
+Pusula/
 ├── src/                  # Next.js 16 uygulaması (UI + API rotaları + kütüphaneler + etki alanı + sunucu)
 ├── open-sse/             # Akış motoru çalışma alanı (işleyiciler, yürütücüler, çevirici, MCP sunucusu)
 ├── electron/             # Masaüstü sarmalayıcısı (Electron 41 + electron-builder 26.10)
@@ -23,9 +23,9 @@ OmniRoute/
 ├── public/               # Next.js statik varlıkları, PWA bildirimi, service worker, simgeler
 ├── config/               # Statik yapılandırma + kalite kapısı durumu (i18n, payloadRules, quality/)
 ├── images/               # Pazarlama / README görsel varlıkları
-├── @omniroute/           # Yayımlanabilir yardımcı paketler (opencode-plugin, opencode-provider)
+├── @pusula/           # Yayımlanabilir yardımcı paketler (opencode-plugin, opencode-provider)
 ├── skills/               # CLI/ajan beceri paketleri (cli-* + omni-* + config-codex-cli)
-├── examples/             # Örnek eklentiler + omniroute-cmd-hello başlangıç şablonu
+├── examples/             # Örnek eklentiler + pusula-cmd-hello başlangıç şablonu
 ├── contrib/              # Topluluk katkıları (podman/)
 ├── .source/              # Fumadocs kaynak yapılandırması (source.config.mjs + server/browser/dynamic)
 ├── .github/              # GitHub Actions iş akışları + sorun şablonları + PR şablonu
@@ -257,7 +257,7 @@ src/
 
 ## `open-sse/` — Akış Motoru Çalışma Alanı
 
-Ayrı npm çalışma alanı (`@omniroute/open-sse`). İstek işlemeyi ve sağlayıcı yürütmesini yönetir.
+Ayrı npm çalışma alanı (`@pusula/open-sse`). İstek işlemeyi ve sağlayıcı yürütmesini yönetir.
 
 ```
 open-sse/
@@ -299,7 +299,7 @@ open-sse/
 | Dosya            | Amaç                                                                                              |
 | ---------------- | ------------------------------------------------------------------------------------------------- |
 | `main.js`        | Electron ana süreci (BrowserWindow, gömülü Next.js sunucusu, sistem tepsisi, otomatik güncelleme) |
-| `preload.js`     | IPC köprüsü (contextBridge → `window.omniroute`)                                                  |
+| `preload.js`     | IPC köprüsü (contextBridge → `window.pusula`)                                                  |
 | `package.json`   | electron-builder yapılandırması + Electron 41 + electron-builder 26.10 bağımlılıkları             |
 | `assets/`        | Uygulama simgeleri (Windows .ico, macOS .icns, Linux .png)                                        |
 | `dist-electron/` | Derleme çıktısı (git tarafından yok sayılır)                                                      |
@@ -312,7 +312,7 @@ open-sse/
 
 | Dosya                                                                                                       | Amaç                                                                                                                            |
 | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `omniroute.mjs`                                                                                             | Ana CLI giriş noktası — `omniroute serve`, `omniroute setup`, `omniroute doctor`, `omniroute providers`, `omniroute combos` vb. |
+| `pusula.mjs`                                                                                             | Ana CLI giriş noktası — `pusula serve`, `pusula setup`, `pusula doctor`, `pusula providers`, `pusula combos` vb. |
 | `reset-password.mjs`                                                                                        | Bağımsız parola sıfırlama CLI'si                                                                                                |
 | `cli/commands/setup.mjs`                                                                                    | Etkileşimli + etkileşimsiz kurulum sihirbazı                                                                                    |
 | `cli/commands/doctor.mjs`                                                                                   | Sistem sağlığı tanılamaları (8+ kontrol)                                                                                        |
@@ -332,7 +332,7 @@ open-sse/
 
 | Dosya                        | Amaç                                                                                    |
 | ---------------------------- | --------------------------------------------------------------------------------------- |
-| `skills/omniroute*/SKILL.md` | Harici AI agentları (Claude Desktop, ChatGPT, Cursor, Cline) için 10 beceri manifestosu |
+| `skills/pusula*/SKILL.md` | Harici AI agentları (Claude Desktop, ChatGPT, Cursor, Cline) için 10 beceri manifestosu |
 
 ---
 
@@ -393,7 +393,7 @@ open-sse/
 | `RELEASE_CHECKLIST.md`      | Eksiksiz sürüm süreci (beceriler, husky, conventional commits, dağıtım)                                         |
 | `COVERAGE_PLAN.md`          | Kapsama hedefleri ve mevcut durum                                                                               |
 | `FREE_TIERS.md`             | Özenle seçilmiş ücretsiz katman sağlayıcıları (48+ ücretsiz + 11 OAuth)                                         |
-| `CLI-TOOLS.md`              | Harici CLI entegrasyonları + dahili OmniRoute CLI                                                               |
+| `CLI-TOOLS.md`              | Harici CLI entegrasyonları + dahili Pusula CLI                                                               |
 | `I18N.md`                   | i18n mimarisi, dil ekleme, 42 yerel ayar                                                                        |
 | `UNINSTALL.md`              | Temiz kaldırma adımları                                                                                         |
 | `PROVIDER_REFERENCE.md`     | 355 sağlayıcıdan oluşan **otomatik oluşturulmuş** katalog (yeniden oluşturma: `npm run gen:provider-reference`) |
@@ -545,7 +545,7 @@ Dağıtılan yapılandırma şablonları ve commit edilmiş kalite geçidi refer
 Alt çizgiyle başlayan bu dizinler, dağıtıma dahil edilmeyen içerikleri barındırır:
 
 - **`_ideia/`** — tasarım notları (defer / notfit / viable kategorileri)
-- **`_mono_repo/`** — geçmiş alt projeler (omnirouteCloud, omnirouteSite, vscode-extension)
+- **`_mono_repo/`** — geçmiş alt projeler (pusulaCloud, pusulaSite, vscode-extension)
 - **`_references/`** — geliştirme sırasında çapraz referans için ilgili OSS projelerinin salt okunur klonları (LiteLLM, 9router, ClawRouter, CLIProxyAPI, modelrelay, new-api vb.)
 - **`_tasks/`** — sürüm başına görev takip dosyaları (gayriresmî)
 

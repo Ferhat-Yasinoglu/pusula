@@ -1,4 +1,4 @@
-# OmniRoute — Dashboard Features Gallery (فارسی)
+# Pusula — Dashboard Features Gallery (فارسی)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../guides/FEATURES.md) · 🇪🇹 [am](../../../am/docs/guides/FEATURES.md) · 🇸🇦 [ar](../../../ar/docs/guides/FEATURES.md) · 🇦🇿 [az](../../../az/docs/guides/FEATURES.md) · 🇧🇬 [bg](../../../bg/docs/guides/FEATURES.md) · 🇧🇩 [bn](../../../bn/docs/guides/FEATURES.md) · 🇧🇦 [bs](../../../bs/docs/guides/FEATURES.md) · 🇨🇿 [cs](../../../cs/docs/guides/FEATURES.md) · 🇩🇰 [da](../../../da/docs/guides/FEATURES.md) · 🇩🇪 [de](../../../de/docs/guides/FEATURES.md) · 🇬🇷 [el](../../../el/docs/guides/FEATURES.md) · 🇪🇸 [es](../../../es/docs/guides/FEATURES.md) · 🇪🇪 [et](../../../et/docs/guides/FEATURES.md) · 🇫🇮 [fi](../../../fi/docs/guides/FEATURES.md) · 🇫🇷 [fr](../../../fr/docs/guides/FEATURES.md) · 🇮🇪 [ga](../../../ga/docs/guides/FEATURES.md) · 🇮🇳 [gu](../../../gu/docs/guides/FEATURES.md) · 🇳🇬 [ha](../../../ha/docs/guides/FEATURES.md) · 🇮🇱 [he](../../../he/docs/guides/FEATURES.md) · 🇮🇳 [hi](../../../hi/docs/guides/FEATURES.md) · 🇭🇷 [hr](../../../hr/docs/guides/FEATURES.md) · 🇭🇺 [hu](../../../hu/docs/guides/FEATURES.md) · 🇦🇲 [hy](../../../hy/docs/guides/FEATURES.md) · 🇮🇩 [id](../../../id/docs/guides/FEATURES.md) · 🇳🇬 [ig](../../../ig/docs/guides/FEATURES.md) · 🇮🇹 [it](../../../it/docs/guides/FEATURES.md) · 🇯🇵 [ja](../../../ja/docs/guides/FEATURES.md) · 🇬🇪 [ka](../../../ka/docs/guides/FEATURES.md) · 🇰🇭 [km](../../../km/docs/guides/FEATURES.md) · 🇮🇳 [kn](../../../kn/docs/guides/FEATURES.md) · 🇰🇷 [ko](../../../ko/docs/guides/FEATURES.md) · 🇱🇹 [lt](../../../lt/docs/guides/FEATURES.md) · 🇱🇻 [lv](../../../lv/docs/guides/FEATURES.md) · 🇮🇳 [ml](../../../ml/docs/guides/FEATURES.md) · 🇮🇳 [mr](../../../mr/docs/guides/FEATURES.md) · 🇲🇾 [ms](../../../ms/docs/guides/FEATURES.md) · 🇲🇹 [mt](../../../mt/docs/guides/FEATURES.md) · 🇲🇲 [my](../../../my/docs/guides/FEATURES.md) · 🇳🇵 [ne](../../../ne/docs/guides/FEATURES.md) · 🇳🇱 [nl](../../../nl/docs/guides/FEATURES.md) · 🇳🇴 [no](../../../no/docs/guides/FEATURES.md) · 🇮🇳 [or](../../../or/docs/guides/FEATURES.md) · 🇮🇳 [pa](../../../pa/docs/guides/FEATURES.md) · 🇵🇭 [phi](../../../phi/docs/guides/FEATURES.md) · 🇵🇱 [pl](../../../pl/docs/guides/FEATURES.md) · 🇵🇹 [pt](../../../pt/docs/guides/FEATURES.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/guides/FEATURES.md) · 🇷🇴 [ro](../../../ro/docs/guides/FEATURES.md) · 🇷🇺 [ru](../../../ru/docs/guides/FEATURES.md) · 🇱🇰 [si](../../../si/docs/guides/FEATURES.md) · 🇸🇰 [sk](../../../sk/docs/guides/FEATURES.md) · 🇸🇮 [sl](../../../sl/docs/guides/FEATURES.md) · 🇷🇸 [sr](../../../sr/docs/guides/FEATURES.md) · 🇸🇪 [sv](../../../sv/docs/guides/FEATURES.md) · 🇰🇪 [sw](../../../sw/docs/guides/FEATURES.md) · 🇮🇳 [ta](../../../ta/docs/guides/FEATURES.md) · 🇮🇳 [te](../../../te/docs/guides/FEATURES.md) · 🇹🇭 [th](../../../th/docs/guides/FEATURES.md) · 🇹🇷 [tr](../../../tr/docs/guides/FEATURES.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/guides/FEATURES.md) · 🇵🇰 [ur](../../../ur/docs/guides/FEATURES.md) · 🇺🇿 [uz](../../../uz/docs/guides/FEATURES.md) · 🇻🇳 [vi](../../../vi/docs/guides/FEATURES.md) · 🇳🇬 [yo](../../../yo/docs/guides/FEATURES.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/guides/FEATURES.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/guides/FEATURES.md)
 
@@ -6,7 +6,7 @@
 
 🌐 **Languages:** 🇺🇸 [English](../../../../guides/FEATURES.md) · 🇪🇹 [am](../../../am/docs/guides/FEATURES.md) · 🇸🇦 [ar](../../../ar/docs/guides/FEATURES.md) · 🇦🇿 [az](../../../az/docs/guides/FEATURES.md) · 🇧🇬 [bg](../../../bg/docs/guides/FEATURES.md) · 🇧🇩 [bn](../../../bn/docs/guides/FEATURES.md) · 🇧🇦 [bs](../../../bs/docs/guides/FEATURES.md) · 🇨🇿 [cs](../../../cs/docs/guides/FEATURES.md) · 🇩🇰 [da](../../../da/docs/guides/FEATURES.md) · 🇩🇪 [de](../../../de/docs/guides/FEATURES.md) · 🇬🇷 [el](../../../el/docs/guides/FEATURES.md) · 🇪🇸 [es](../../../es/docs/guides/FEATURES.md) · 🇪🇪 [et](../../../et/docs/guides/FEATURES.md) · 🇫🇮 [fi](../../../fi/docs/guides/FEATURES.md) · 🇫🇷 [fr](../../../fr/docs/guides/FEATURES.md) · 🇮🇪 [ga](../../../ga/docs/guides/FEATURES.md) · 🇮🇳 [gu](../../../gu/docs/guides/FEATURES.md) · 🇳🇬 [ha](../../../ha/docs/guides/FEATURES.md) · 🇮🇱 [he](../../../he/docs/guides/FEATURES.md) · 🇮🇳 [hi](../../../hi/docs/guides/FEATURES.md) · 🇭🇷 [hr](../../../hr/docs/guides/FEATURES.md) · 🇭🇺 [hu](../../../hu/docs/guides/FEATURES.md) · 🇦🇲 [hy](../../../hy/docs/guides/FEATURES.md) · 🇮🇩 [id](../../../id/docs/guides/FEATURES.md) · 🇳🇬 [ig](../../../ig/docs/guides/FEATURES.md) · 🇮🇹 [it](../../../it/docs/guides/FEATURES.md) · 🇯🇵 [ja](../../../ja/docs/guides/FEATURES.md) · 🇬🇪 [ka](../../../ka/docs/guides/FEATURES.md) · 🇰🇭 [km](../../../km/docs/guides/FEATURES.md) · 🇮🇳 [kn](../../../kn/docs/guides/FEATURES.md) · 🇰🇷 [ko](../../../ko/docs/guides/FEATURES.md) · 🇱🇹 [lt](../../../lt/docs/guides/FEATURES.md) · 🇱🇻 [lv](../../../lv/docs/guides/FEATURES.md) · 🇮🇳 [ml](../../../ml/docs/guides/FEATURES.md) · 🇮🇳 [mr](../../../mr/docs/guides/FEATURES.md) · 🇲🇾 [ms](../../../ms/docs/guides/FEATURES.md) · 🇲🇹 [mt](../../../mt/docs/guides/FEATURES.md) · 🇲🇲 [my](../../../my/docs/guides/FEATURES.md) · 🇳🇵 [ne](../../../ne/docs/guides/FEATURES.md) · 🇳🇱 [nl](../../../nl/docs/guides/FEATURES.md) · 🇳🇴 [no](../../../no/docs/guides/FEATURES.md) · 🇮🇳 [or](../../../or/docs/guides/FEATURES.md) · 🇮🇳 [pa](../../../pa/docs/guides/FEATURES.md) · 🇵🇭 [phi](../../../phi/docs/guides/FEATURES.md) · 🇵🇱 [pl](../../../pl/docs/guides/FEATURES.md) · 🇵🇹 [pt](../../../pt/docs/guides/FEATURES.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/guides/FEATURES.md) · 🇷🇴 [ro](../../../ro/docs/guides/FEATURES.md) · 🇷🇺 [ru](../../../ru/docs/guides/FEATURES.md) · 🇱🇰 [si](../../../si/docs/guides/FEATURES.md) · 🇸🇰 [sk](../../../sk/docs/guides/FEATURES.md) · 🇸🇮 [sl](../../../sl/docs/guides/FEATURES.md) · 🇷🇸 [sr](../../../sr/docs/guides/FEATURES.md) · 🇸🇪 [sv](../../../sv/docs/guides/FEATURES.md) · 🇰🇪 [sw](../../../sw/docs/guides/FEATURES.md) · 🇮🇳 [ta](../../../ta/docs/guides/FEATURES.md) · 🇮🇳 [te](../../../te/docs/guides/FEATURES.md) · 🇹🇭 [th](../../../th/docs/guides/FEATURES.md) · 🇹🇷 [tr](../../../tr/docs/guides/FEATURES.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/guides/FEATURES.md) · 🇵🇰 [ur](../../../ur/docs/guides/FEATURES.md) · 🇺🇿 [uz](../../../uz/docs/guides/FEATURES.md) · 🇻🇳 [vi](../../../vi/docs/guides/FEATURES.md) · 🇳🇬 [yo](../../../yo/docs/guides/FEATURES.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/guides/FEATURES.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/guides/FEATURES.md)
 
-راهنمای تصویری تمام بخشهای داشبورد OmniRoute.
+راهنمای تصویری تمام بخشهای داشبورد Pusula.
 
 > 📅 **آخرین بهروزرسانی:** 2026-06-28 — **v3.8.40**
 
@@ -36,7 +36,7 @@
 - 🚦 **طبقهبندی 429 بهازای هر ارائهدهنده** + گزینه `useUpstream429BreakerHints` — رفتار دقیقتر مدارشکن با استفاده از نشانههای محدودیت نرخ سرویس بالادستی
 - 🩺 **داشبورد دورههای انتظار مدل** — قفلشدنهای هر مدل را مشاهده و آنها را بهصورت دستی از رابط کاربری دوباره فعال کنید
 - 🔒 **تشخیص پویای گواهی MITM در Linux** — در Debian/Ubuntu، Fedora/RHEL، Arch و سایر توزیعها کار میکند
-- 💻 **مجموعه بهبودهای CLI** — بیش از ۲۰ فرمان، از جمله `omniroute providers`، `omniroute combos`، `omniroute doctor`، `omniroute setup`
+- 💻 **مجموعه بهبودهای CLI** — بیش از ۲۰ فرمان، از جمله `pusula providers`، `pusula combos`، `pusula doctor`، `pusula setup`
 - 🔍 **کشف مدل تعبیهسازی Qdrant** — بررسی خودکار مدل مخزن برداری
 - 🔑 **کلیدهای API / کلیدهای Bearer با دامنه `manage`** — عملیات مدیریتی را بهصورت برنامهنویسیشده از طریق API انجام دهید
 - 🏥 **تحلیل سلامت مقصدهای ترکیب** + **سازنده ساختیافته ترکیب** — سلامت هر مقصد و سازنده رابط کاربری برای ایجاد مراحل `(provider, model, connection)`
@@ -51,7 +51,7 @@
 
 اتصالهای ارائهدهندگان هوش مصنوعی را مدیریت کنید: ارائهدهندگان OAuth‏ (Claude Code، Codex)، ارائهدهندگان کلید API‏ (Groq، DeepSeek، OpenRouter) و ارائهدهندگان رایگان (Qoder، Kiro). حسابهای Kiro شامل قابلیت پیگیری اعتبار هستند — اعتبار باقیمانده، سقف کل اعتبار و تاریخ تمدید در Dashboard → Usage قابل مشاهدهاند.
 
-اتصالهای OpenRouter میتوانند برای هر اتصال، یک `preset` را در Advanced Settings ذخیره کنند. در صورت تنظیم، OmniRoute آن را بهعنوان فیلد سطحبالای درخواست OpenRouter ارسال میکند؛ برای مثال `"preset": "email-copywriter"`، مگر آنکه درخواست کلاینت از قبل `preset` خود را ارائه کرده باشد.
+اتصالهای OpenRouter میتوانند برای هر اتصال، یک `preset` را در Advanced Settings ذخیره کنند. در صورت تنظیم، Pusula آن را بهعنوان فیلد سطحبالای درخواست OpenRouter ارسال میکند؛ برای مثال `"preset": "email-copywriter"`، مگر آنکه درخواست کلاینت از قبل `preset` خود را ارائه کرده باشد.
 
 ![داشبورد ارائهدهندگان](../screenshots/01-providers.png)
 
@@ -157,7 +157,7 @@
 
 ## 🔗 انتقال زمینه _(v3.5.5+)_
 
-یک راهبرد ترکیبی که هنگام جابهجایی حساب در میانهٔ مکالمه، پیوستگی نشست را حفظ میکند. پیش از اتمام سهمیهٔ حساب فعال، OmniRoute در پسزمینه یک خلاصهٔ ساختاریافته برای تحویل ایجاد میکند. پس از آنکه درخواست بعدی به حساب دیگری هدایت شد، خلاصه بهعنوان پیام سیستمی تزریق میشود تا حساب جدید با زمینهٔ کامل ادامه دهد.
+یک راهبرد ترکیبی که هنگام جابهجایی حساب در میانهٔ مکالمه، پیوستگی نشست را حفظ میکند. پیش از اتمام سهمیهٔ حساب فعال، Pusula در پسزمینه یک خلاصهٔ ساختاریافته برای تحویل ایجاد میکند. پس از آنکه درخواست بعدی به حساب دیگری هدایت شد، خلاصه بهعنوان پیام سیستمی تزریق میشود تا حساب جدید با زمینهٔ کامل ادامه دهد.
 
 قابل پیکربندی از طریق تنظیمات سطح ترکیب یا تنظیمات سراسری:
 
@@ -226,7 +226,7 @@
 
 | فرمان                    | عملیات                                                                                             |
 | ------------------------ | -------------------------------------------------------------------------------------------------- |
-| `npm run uninstall`      | برنامه سیستمی را حذف میکند، اما **پایگاه داده و پیکربندیهای شما را** در `~/.omniroute` نگه میدارد. |
+| `npm run uninstall`      | برنامه سیستمی را حذف میکند، اما **پایگاه داده و پیکربندیهای شما را** در `~/.pusula` نگه میدارد. |
 | `npm run uninstall:full` | برنامه را حذف میکند و **همه پیکربندیها، کلیدها و پایگاههای داده را** برای همیشه پاک میکند.         |
 
 ---
@@ -267,7 +267,7 @@
 
 ## 🖥️ برنامه دسکتاپ
 
-برنامه دسکتاپ بومی Electron برای Windows، macOS و Linux. OmniRoute را بهعنوان یک برنامه مستقل با یکپارچهسازی سینی سیستم، پشتیبانی آفلاین، بهروزرسانی خودکار و نصب یککلیکی اجرا کنید.
+برنامه دسکتاپ بومی Electron برای Windows، macOS و Linux. Pusula را بهعنوان یک برنامه مستقل با یکپارچهسازی سینی سیستم، پشتیبانی آفلاین، بهروزرسانی خودکار و نصب یککلیکی اجرا کنید.
 
 ویژگیهای کلیدی:
 
@@ -286,7 +286,7 @@
 
 ## 🌐 پل WebSocket نسخه V1 _(v3.6.6+)_
 
-OmniRoute اکنون از طریق نقطه پایانی ارتقای `/v1/ws` از **کلاینتهای WebSocket سازگار با OpenAI** پشتیبانی میکند. سرور سفارشی `scripts/dev/v1-ws-bridge.mjs`، Next.js را دربر میگیرد و اتصالهای WS را به نشستهای استریم دوطرفه کامل ارتقا میدهد. احراز هویت از همان کلید API یا کوکی نشست مورد استفاده در درخواستهای HTTP استفاده میکند.
+Pusula اکنون از طریق نقطه پایانی ارتقای `/v1/ws` از **کلاینتهای WebSocket سازگار با OpenAI** پشتیبانی میکند. سرور سفارشی `scripts/dev/v1-ws-bridge.mjs`، Next.js را دربر میگیرد و اتصالهای WS را به نشستهای استریم دوطرفه کامل ارتقا میدهد. احراز هویت از همان کلید API یا کوکی نشست مورد استفاده در درخواستهای HTTP استفاده میکند.
 
 رفتارهای کلیدی:
 
@@ -312,7 +312,7 @@ OmniRoute اکنون از طریق نقطه پایانی ارتقای `/v1/ws` �
 
 **GLM Thinking (`glmt`)** اکنون بهعنوان یک ارائهدهنده رسمی درجهیک ثبت شده است: حداکثر 65 536 توکن خروجی، بودجه تفکر 24 576، زمانانتظار پیشفرض 900 ثانیه، قالب API سازگار با Claude و همگامسازی مشترک میزان استفاده با خانواده GLM.
 
-**شمارش ترکیبی توکنها** نیز در v3.6.6 ارائه شده است: هنگامی که یک ارائهدهنده سازگار با Claude، نقطه پایانی `/messages/count_tokens` را در دسترس قرار دهد، OmniRoute پیش از درخواستهای بزرگ آن را فراخوانی میکند و در صورت عدم موفقیت، بهصورت روان به برآورد تقریبی بازمیگردد.
+**شمارش ترکیبی توکنها** نیز در v3.6.6 ارائه شده است: هنگامی که یک ارائهدهنده سازگار با Claude، نقطه پایانی `/messages/count_tokens` را در دسترس قرار دهد، Pusula پیش از درخواستهای بزرگ آن را فراخوانی میکند و در صورت عدم موفقیت، بهصورت روان به برآورد تقریبی بازمیگردد.
 
 ---
 

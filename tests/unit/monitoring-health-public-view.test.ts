@@ -61,8 +61,8 @@ test("a stamped local-CLI caller receives the full payload including version", a
   const res = await route.GET(
     new Request("http://localhost/api/monitoring/health", {
       headers: {
-        "x-omniroute-auth-kind": "management_key",
-        "x-omniroute-auth-label": "local-cli-token",
+        "x-pusula-auth-kind": "management_key",
+        "x-pusula-auth-label": "local-cli-token",
       },
     }) as never
   );

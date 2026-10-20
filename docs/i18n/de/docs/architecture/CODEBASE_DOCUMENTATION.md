@@ -1,4 +1,4 @@
-# OmniRoute Codebase Documentation (Deutsch)
+# Pusula Codebase Documentation (Deutsch)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../architecture/CODEBASE_DOCUMENTATION.md) · 🇪🇹 [am](../../../am/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇸🇦 [ar](../../../ar/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇦🇿 [az](../../../az/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇧🇬 [bg](../../../bg/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇧🇩 [bn](../../../bn/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇧🇦 [bs](../../../bs/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇨🇿 [cs](../../../cs/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇩🇰 [da](../../../da/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇬🇷 [el](../../../el/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇪🇸 [es](../../../es/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇪🇪 [et](../../../et/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇷 [fa](../../../fa/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇫🇮 [fi](../../../fi/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇫🇷 [fr](../../../fr/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇪 [ga](../../../ga/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [gu](../../../gu/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇳🇬 [ha](../../../ha/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇱 [he](../../../he/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [hi](../../../hi/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇭🇷 [hr](../../../hr/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇭🇺 [hu](../../../hu/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇦🇲 [hy](../../../hy/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇩 [id](../../../id/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇳🇬 [ig](../../../ig/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇹 [it](../../../it/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇯🇵 [ja](../../../ja/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇬🇪 [ka](../../../ka/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇰🇭 [km](../../../km/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [kn](../../../kn/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇰🇷 [ko](../../../ko/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇱🇹 [lt](../../../lt/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇱🇻 [lv](../../../lv/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [ml](../../../ml/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [mr](../../../mr/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇲🇾 [ms](../../../ms/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇲🇹 [mt](../../../mt/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇲🇲 [my](../../../my/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇳🇵 [ne](../../../ne/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇳🇱 [nl](../../../nl/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇳🇴 [no](../../../no/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [or](../../../or/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [pa](../../../pa/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇵🇭 [phi](../../../phi/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇵🇱 [pl](../../../pl/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇵🇹 [pt](../../../pt/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇷🇴 [ro](../../../ro/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇷🇺 [ru](../../../ru/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇱🇰 [si](../../../si/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇸🇰 [sk](../../../sk/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇸🇮 [sl](../../../sl/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇷🇸 [sr](../../../sr/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇸🇪 [sv](../../../sv/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇰🇪 [sw](../../../sw/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [ta](../../../ta/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [te](../../../te/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇹🇭 [th](../../../th/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇹🇷 [tr](../../../tr/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇵🇰 [ur](../../../ur/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇺🇿 [uz](../../../uz/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇻🇳 [vi](../../../vi/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇳🇬 [yo](../../../yo/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/architecture/CODEBASE_DOCUMENTATION.md)
 
@@ -6,7 +6,7 @@
 
 > **Version:** v3.8.51
 > **Zuletzt aktualisiert:** 2026-06-28
-> **Zielgruppe:** Entwickler, die zu OmniRoute beitragen oder darauf aufbauende Integrationen erstellen.
+> **Zielgruppe:** Entwickler, die zu Pusula beitragen oder darauf aufbauende Integrationen erstellen.
 >
 > Übergeordnete Architekturdiagramme und die Begründung hinter jedem Subsystem finden Sie in
 > [ARCHITECTURE.md](./ARCHITECTURE.md). Ausführliche Erläuterungen zu einzelnen Subsystemen
@@ -37,23 +37,23 @@ hinzugefügt werden muss, ohne neue Module zu erfinden.
 Pfadaliase (`tsconfig.json`):
 
 - `@/*` → `src/*`
-- `@omniroute/open-sse` → `open-sse/index.ts`
-- `@omniroute/open-sse/*` → `open-sse/*`
+- `@pusula/open-sse` → `open-sse/index.ts`
+- `@pusula/open-sse/*` → `open-sse/*`
 
 Standardmäßiger HTTP-Port: **`20128`** (API und Dashboard nutzen denselben Prozess). Das
 Datenverzeichnis wird durch die Umgebungsvariable `DATA_DIR` festgelegt und verwendet standardmäßig
-`~/.omniroute/`.
+`~/.pusula/`.
 
 ---
 
 ## 2. Repository-Struktur
 
 ```
-OmniRoute/
+Pusula/
 ├── src/                  Next.js-Anwendung (App Router, Bibliotheken, Domäne, Server, gemeinsam genutzter Code)
-├── open-sse/             Workspace der Streaming-Engine (@omniroute/open-sse)
+├── open-sse/             Workspace der Streaming-Engine (@pusula/open-sse)
 ├── electron/             Desktop-Wrapper (Electron-41-Hauptprozess + Preload)
-├── bin/                  CLI-Einstiegspunkte (omniroute, reset-password)
+├── bin/                  CLI-Einstiegspunkte (pusula, reset-password)
 ├── tests/                Unit-, Integrations-, e2e-, protocols-e2e-, Übersetzer- und Sicherheitstests sowie Fixtures
 ├── scripts/              Hilfsskripte für Build, Synchronisierung, Prüfung, Migration und Laufzeit
 ├── docs/                 Öffentliche Dokumentation (dieses Verzeichnis)
@@ -299,7 +299,7 @@ Tabelle gruppiert die tatsächlichen Verzeichnisse und erwähnenswerte Dateien a
 | `runtime/`        | Erkennung von Laufzeitfunktionen                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | `search/`         | `executeWebSearch.ts`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `services/`       | Framework für eingebettete Dienste: `ServiceSupervisor.ts` (generischer Supervisor für untergeordnete Prozesse mit Operationssperre, Ringpuffer und Zustandsprüfung), `bootstrap.ts` (Registrierung auf Prozessebene und automatischer Start), `registry.ts` (Zuordnung von Tool → Supervisor), `apiKey.ts` (AES-256-GCM-Schlüsselspeicher), `modelSync.ts` (periodische Modellsynchronisierung), `ringBuffer.ts` (zirkulärer 5-MB-Protokollpuffer), `healthCheck.ts` (HTTP-Zustandsprüfung), `types.ts`, `embedWsProxy.ts` (WebSocket-Proxy), `installers/{ninerouter,cliproxy}.ts`. Siehe `docs/frameworks/EMBEDDED-SERVICES.md`                                                                        |
-| `agentSkills/`    | Agent-Skills-Katalog + Generator: `catalog.ts` (getCatalog/getSkillById/filterCatalog/computeCoverage), `generator.ts` (generateAgentSkills → schreibt `skills/{id}/SKILL.md`), `openapiParser.ts` (extrahiert REST-Endpunkte aus der OpenAPI-Spezifikation), `cliRegistryParser.ts` (extrahiert CLI-Unterbefehle aus bin/cli-registry), `schemas.ts` (Zod: AgentSkillSchema, SkillCoverageSchema, ListQuerySchema, GenerateBodySchema), `types.ts` (AgentSkill, SkillCoverage, SkillMarkdown, GeneratorReport). Verwendet von REST-Routen (`/api/agent-skills/*`), MCP-Tools (`omniroute_agent_skills_*`) und dem A2A-Skill `list-capabilities`. Siehe [AGENT-SKILLS.md](../frameworks/AGENT-SKILLS.md). |
+| `agentSkills/`    | Agent-Skills-Katalog + Generator: `catalog.ts` (getCatalog/getSkillById/filterCatalog/computeCoverage), `generator.ts` (generateAgentSkills → schreibt `skills/{id}/SKILL.md`), `openapiParser.ts` (extrahiert REST-Endpunkte aus der OpenAPI-Spezifikation), `cliRegistryParser.ts` (extrahiert CLI-Unterbefehle aus bin/cli-registry), `schemas.ts` (Zod: AgentSkillSchema, SkillCoverageSchema, ListQuerySchema, GenerateBodySchema), `types.ts` (AgentSkill, SkillCoverage, SkillMarkdown, GeneratorReport). Verwendet von REST-Routen (`/api/agent-skills/*`), MCP-Tools (`pusula_agent_skills_*`) und dem A2A-Skill `list-capabilities`. Siehe [AGENT-SKILLS.md](../frameworks/AGENT-SKILLS.md). |
 | `skills/`         | Skill-Framework: `registry.ts`, `executor.ts`, `interception.ts`, `injection.ts`, `sandbox.ts`, `custom.ts`, `hybrid.ts`, `builtins.ts`, `a2a.ts`, `providerSettings.ts`, `schemas.ts`, `skillssh.ts`, `types.ts`, plus `builtin/browser.ts`                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | `spend/`          | `batchWriter.ts` (Write-behind-Puffer)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | `sync/`           | `bundle.ts`, `tokens.ts` (Cloud-Synchronisierung)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
@@ -385,7 +385,7 @@ Reine Geschäftslogik ohne I/O. Wird von Routen und Handlern importiert.
 | `degradation.ts`                           | Übergänge in den eingeschränkten Betriebsmodus   |
 | `providerExpiration.ts`                    | Erkennung abgelaufener Konten/Schlüssel          |
 | `quotaCache.ts`                            | Zwischengespeicherte Kontingententscheidungen    |
-| `responses.ts`, `omnirouteResponseMeta.ts` | Hilfsfunktionen für Antwortstrukturen            |
+| `responses.ts`, `pusulaResponseMeta.ts` | Hilfsfunktionen für Antwortstrukturen            |
 | `configAudit.ts`                           | Prüfung von Konfigurationsänderungen             |
 | `assessment/`                              | Modellbewertung (gemäß RFC, teilweise umgesetzt) |
 | `types.ts`                                 | Gemeinsam genutzte Domänentypen                  |
@@ -437,7 +437,7 @@ In zweckgebundene Unterverzeichnisse aufgeteilt:
 
 ## 4. `open-sse/` — Workspace für die Streaming-Engine
 
-Separater npm-Workspace, der als `@omniroute/open-sse` veröffentlicht wird. Zuständig für die Verarbeitung von Anfragen, Executoren, Übersetzer, Dienste, den Transformer und den MCP-Server.
+Separater npm-Workspace, der als `@pusula/open-sse` veröffentlicht wird. Zuständig für die Verarbeitung von Anfragen, Executoren, Übersetzer, Dienste, den Transformer und den MCP-Server.
 
 ```
 open-sse/
@@ -599,7 +599,7 @@ Fünf npm-Skripte im Workspace-Stammverzeichnis: `electron:dev`, `electron:build
 
 ```
 bin/
-├── omniroute.mjs           Haupt-Einstiegspunkt der CLI (Node ESM)
+├── pusula.mjs           Haupt-Einstiegspunkt der CLI (Node ESM)
 ├── reset-password.mjs      Verwaltungskennwort über die CLI zurücksetzen
 ├── mcp-server.mjs          MCP-Server-Starter (stdio)
 ├── nodeRuntimeSupport.mjs  Prüfung der Node-Version
@@ -622,8 +622,8 @@ bin/
 
 In `package.json` → `bin` werden zwei Binärdateien bereitgestellt:
 
-- `omniroute` → `bin/omniroute.mjs`
-- `omniroute-reset-password` → `bin/reset-password.mjs`
+- `pusula` → `bin/pusula.mjs`
+- `pusula-reset-password` → `bin/reset-password.mjs`
 
 ---
 
@@ -779,7 +779,7 @@ Siehe [A2A-SERVER.md § Hinzufügen eines neuen Skills](../frameworks/A2A-SERVER
 
 - **Codestil**: Einrückung mit 2 Leerzeichen, doppelte Anführungszeichen, Zeilenbreite von 100 Zeichen, Semikolons,
   nachgestellte Kommas gemäß `es5` — durch Prettier über `lint-staged` erzwungen.
-- **Importe**: extern → intern (`@/`, `@omniroute/open-sse`) → relativ.
+- **Importe**: extern → intern (`@/`, `@pusula/open-sse`) → relativ.
 - **Benennung**: Dateien in `camelCase` oder `kebab-case`, Komponenten in `PascalCase`,
   Konstanten in `UPPER_SNAKE`.
 - **ESLint**: `no-eval`, `no-implied-eval`, `no-new-func` = überall `error`;

@@ -13,7 +13,7 @@
  * the 400 body no longer leaks the path/stack.
  *
  * Self-isolating: DATA_DIR points at a fresh temp dir BEFORE any `@/lib/db/*`
- * module loads, so this file never touches ~/.omniroute.
+ * module loads, so this file never touches ~/.pusula.
  *
  * Run with:
  *   node --import tsx/esm --test tests/unit/14089-batches-route-error-sanitization.test.ts

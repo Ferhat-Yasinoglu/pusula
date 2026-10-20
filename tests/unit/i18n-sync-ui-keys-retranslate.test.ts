@@ -7,12 +7,12 @@ import { markIdenticalAsMissing } from "../../scripts/i18n/sync-ui-keys.mjs";
 // a `__MISSING__:` placeholder so `--translate-markers` retranslates it.
 
 test("markIdenticalAsMissing flags English leaves as placeholders and skips the allowlist", () => {
-  const source = { common: { save: "Save", brand: "OmniRoute" }, x: { y: "Delete" } };
-  const merged = { common: { save: "Save", brand: "OmniRoute" }, x: { y: "Excluir" } };
+  const source = { common: { save: "Save", brand: "Pusula" }, x: { y: "Delete" } };
+  const merged = { common: { save: "Save", brand: "Pusula" }, x: { y: "Excluir" } };
   const n = markIdenticalAsMissing(merged, source, new Set(["common.brand"]));
   assert.equal(n, 1);
   assert.deepEqual(merged, {
-    common: { save: "__MISSING__:Save", brand: "OmniRoute" },
+    common: { save: "__MISSING__:Save", brand: "Pusula" },
     x: { y: "Excluir" },
   });
 });

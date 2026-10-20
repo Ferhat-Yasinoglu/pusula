@@ -5,7 +5,7 @@
  *
  *  (a) `createSystemPreambleStripper()` was wired DEFAULT-ON and unconditional
  *      in openai-to-claude.ts, unlike the directive stripper right above it
- *      (gated on OMNIROUTE_SYSTEM_INSTRUCTION_APPEND). Its openers are English
+ *      (gated on PUSULA_SYSTEM_INSTRUCTION_APPEND). Its openers are English
  *      prose heuristics, so a legitimate reply that opens with "# Skill usage:
  *      ..." had that whole section deleted from every openai→claude stream.
  *
@@ -54,20 +54,20 @@ function finishChunk(): Record<string, unknown> {
 }
 
 function withEnv(value: string | undefined, fn: () => void): void {
-  const previous = process.env.OMNIROUTE_STRIP_SYSTEM_PREAMBLE;
-  if (value === undefined) delete process.env.OMNIROUTE_STRIP_SYSTEM_PREAMBLE;
-  else process.env.OMNIROUTE_STRIP_SYSTEM_PREAMBLE = value;
+  const previous = process.env.PUSULA_STRIP_SYSTEM_PREAMBLE;
+  if (value === undefined) delete process.env.PUSULA_STRIP_SYSTEM_PREAMBLE;
+  else process.env.PUSULA_STRIP_SYSTEM_PREAMBLE = value;
   try {
     fn();
   } finally {
-    if (previous === undefined) delete process.env.OMNIROUTE_STRIP_SYSTEM_PREAMBLE;
-    else process.env.OMNIROUTE_STRIP_SYSTEM_PREAMBLE = previous;
+    if (previous === undefined) delete process.env.PUSULA_STRIP_SYSTEM_PREAMBLE;
+    else process.env.PUSULA_STRIP_SYSTEM_PREAMBLE = previous;
   }
 }
 
 // ── (a) opt-in gate ────────────────────────────────────────────────────────────
 
-test("(a) GATE: with OMNIROUTE_STRIP_SYSTEM_PREAMBLE unset, a legitimate reply opening with a prose head is relayed VERBATIM", () => {
+test("(a) GATE: with PUSULA_STRIP_SYSTEM_PREAMBLE unset, a legitimate reply opening with a prose head is relayed VERBATIM", () => {
   withEnv(undefined, () => {
     const state = createState();
     const reply = "# Skill usage: how to write one\n\nHere is the guide.\n\n# Next";
@@ -83,7 +83,7 @@ test("(a) GATE: with OMNIROUTE_STRIP_SYSTEM_PREAMBLE unset, a legitimate reply o
   });
 });
 
-test("(a) GATE: with OMNIROUTE_STRIP_SYSTEM_PREAMBLE=1 the operator opts in and the echo block IS stripped", () => {
+test("(a) GATE: with PUSULA_STRIP_SYSTEM_PREAMBLE=1 the operator opts in and the echo block IS stripped", () => {
   withEnv("1", () => {
     const state = createState();
     const echo = "<analysis>\nchronological analysis\n</analysis>\n\nReal answer body.";

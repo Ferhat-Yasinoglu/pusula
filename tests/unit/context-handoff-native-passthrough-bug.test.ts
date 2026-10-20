@@ -29,8 +29,8 @@ test("internal chat-shaped handoff body is no longer treated as native Responses
     stream: false,
     max_tokens: 800,
     temperature: 0.1,
-    _omnirouteSkipContextRelay: true,
-    _omnirouteInternalRequest: "context-handoff",
+    _pusulaSkipContextRelay: true,
+    _pusulaInternalRequest: "context-handoff",
   };
 
   const { sourceFormat, endpointPath } = resolveChatCoreRequestFormat({

@@ -4,7 +4,7 @@
 
 ---
 
-Traffic Inspector, OmniRoute'un yerleşik HTTPS trafik hata ayıklayıcısıdır — Charles Proxy / mitmweb / HTTP Toolkit benzeri, **LLM farkındalığına** ve **agent farkındalığına** sahip bir araçtır. `/dashboard/tools/traffic-inspector` adresinde bulunur ve aynı anda en fazla 5 yakalama kaynağından canlı trafik alır.
+Traffic Inspector, Pusula'un yerleşik HTTPS trafik hata ayıklayıcısıdır — Charles Proxy / mitmweb / HTTP Toolkit benzeri, **LLM farkındalığına** ve **agent farkındalığına** sahip bir araçtır. `/dashboard/tools/traffic-inspector` adresinde bulunur ve aynı anda en fazla 5 yakalama kaynağından canlı trafik alır.
 
 **Dashboard konumu:** `/dashboard/tools/traffic-inspector`
 **Kenar çubuğu grubu:** Araçlar (AgentBridge'den sonra)
@@ -16,7 +16,7 @@ Traffic Inspector, OmniRoute'un yerleşik HTTPS trafik hata ayıklayıcısıdır
 
 ### Traffic Inspector'ı benzersiz kılan özellikler
 
-| Özellik                                                                                  | mitmweb | Charles | Fiddler | **OmniRoute Traffic Inspector** |
+| Özellik                                                                                  | mitmweb | Charles | Fiddler | **Pusula Traffic Inspector** |
 | ---------------------------------------------------------------------------------------- | :-----: | :-----: | :-----: | :-----------------------------: |
 | Web tabanlı                                                                              |    ✓    |    ✗    |    ✗    |                ✓                |
 | Açık kaynaklı                                                                            |    ✓    |    ✗    | kısmen  |                ✓                |
@@ -24,7 +24,7 @@ Traffic Inspector, OmniRoute'un yerleşik HTTPS trafik hata ayıklayıcısıdır
 | **LLM farkındalığı** (OpenAI/Anthropic/Gemini biçimini, token'ları ve modeli ayrıştırır) |    ✗    |    ✗    |    ✗    |                ✓                |
 | **Model eşlemesi görünür** (gemini-3-flash → claude-sonnet-4.7)                          |    ✗    |    ✗    |    ✗    |                ✓                |
 | **Proxy/yukarı akış gecikme ayrımı**                                                     | kısmen  |    ✗    |    ✗    |                ✓                |
-| **OmniRoute ile entegre** yönlendirme, geri dönüş ve maliyet                             |    ✗    |    ✗    |    ✗    |                ✓                |
+| **Pusula ile entegre** yönlendirme, geri dönüş ve maliyet                             |    ✗    |    ✗    |    ✗    |                ✓                |
 | **Sistem genelinde proxy hata ayıklama** (makinedeki herhangi bir uygulama)              |    ✓    |    ✓    |    ✓    |                ✓                |
 | **Özel ana makine yakalama** (ana makine başına DNS yönlendirmesi)                       |    ✓    |    ✓    |    ✓    |                ✓                |
 | **HTTP_PROXY ortam modu**                                                                |    ✓    |    ✓    |    ✓    |                ✓                |
@@ -262,8 +262,8 @@ interface LlmMetadata {
   tokensIn: number | null; // usage.prompt_tokens / usage.input_tokens
   tokensOut: number | null; // usage.completion_tokens / usage.output_tokens
   streamed: boolean; // SSE yanıtıysa true
-  mappedTo: string | null; // x-omniroute-mapped üst bilgisi
-  costEstimateUsd: number | null; // OmniRoute fiyatlandırmasına dayalı tahmini maliyet
+  mappedTo: string | null; // x-pusula-mapped üst bilgisi
+  costEstimateUsd: number | null; // Pusula fiyatlandırmasına dayalı tahmini maliyet
 }
 ```
 
@@ -395,7 +395,7 @@ INSPECTOR_HTTP_PROXY_PORT=8888
 
 ### Sistem proxy'sinin geri alınmaması
 
-OmniRoute, sistem genelinde proxy modu etkinken çökerse:
+Pusula, sistem genelinde proxy modu etkinken çökerse:
 
 **macOS:**
 
@@ -440,7 +440,7 @@ Temel yol: `/api/tools/traffic-inspector/`
 | GET    | `/requests`                 | İstekleri listeler (filtrelenebilir: `?profile=llm&host=&agent=&status=&source=&sessionId=`) |
 | GET    | `/requests/{id}`            | Tek bir isteğin ayrıntıları                                                                  |
 | DELETE | `/requests`                 | Bellek içi arabelleği temizler                                                               |
-| POST   | `/requests/{id}/replay`     | Aynı isteği OmniRoute yönlendiricisi üzerinden yeniden yürütür                               |
+| POST   | `/requests/{id}/replay`     | Aynı isteği Pusula yönlendiricisi üzerinden yeniden yürütür                               |
 | PUT    | `/requests/{id}/annotation` | Bir istek üzerindeki notu kaydeder veya günceller                                            |
 
 ### WebSocket

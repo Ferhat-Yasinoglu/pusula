@@ -12,7 +12,7 @@
 
 ## Was es ist
 
-Local Corpus ermöglicht es einem Betreiber, ein ausdrücklich genehmigtes Verzeichnis mit Textdateien für den MCP-Server von OmniRoute bereitzustellen. Die Dateien verbleiben in ihrem ursprünglichen Verzeichnis: OmniRoute speichert lediglich den kanonischen Stammpfad in SQLite und verwaltet einen Suchindex im Arbeitsspeicher. Korpusinhalte werden weder in das Repository noch in die Datenbank kopiert.
+Local Corpus ermöglicht es einem Betreiber, ein ausdrücklich genehmigtes Verzeichnis mit Textdateien für den MCP-Server von Pusula bereitzustellen. Die Dateien verbleiben in ihrem ursprünglichen Verzeichnis: Pusula speichert lediglich den kanonischen Stammpfad in SQLite und verwaltet einen Suchindex im Arbeitsspeicher. Korpusinhalte werden weder in das Repository noch in die Datenbank kopiert.
 
 Der Index wird inkrementell aktualisiert. Unveränderte Dateien werden anhand ihrer Größe und Änderungszeit wiederverwendet, geänderte Dateien werden erneut eingelesen und mit SHA-256 gehasht, und gelöschte Dateien werden entfernt. Bei einer Suche wird ein Index aktualisiert, der älter als 30 Sekunden ist; Aufrufer können außerdem eine sofortige Aktualisierung anfordern.
 
@@ -61,7 +61,7 @@ Beispiele für MCP-Eingaben:
 - Symbolische Links werden übersprungen. Lesepfade werden kanonisiert und müssen innerhalb des
   konfigurierten Stammverzeichnisses verbleiben; absolute Pfade und Traversierungsversuche werden abgelehnt.
 - Vertrauliche und generierte Verzeichnisnamen werden ausgeschlossen: `.build`, `.codex`, `.env`,
-  `.git`, `.next`, `.omniroute`, `.ssh`, `coverage`, `dist`, `node_modules` und
+  `.git`, `.next`, `.pusula`, `.ssh`, `coverage`, `dist`, `node_modules` und
   `secrets`.
 - Die standardmäßigen Grenzwerte betragen 5.000 Dateien, 1 MiB pro Datei, insgesamt 64 MiB indizierte Inhalte,
   ungefähr 4.000 Zeichen pro Suchabschnitt und 400 Zeilen pro Lesevorgang.

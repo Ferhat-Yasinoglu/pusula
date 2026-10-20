@@ -5,12 +5,12 @@ import os from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-cloud-sync-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-cloud-sync-"));
 const ORIGINAL_DATA_DIR = process.env.DATA_DIR;
 const ORIGINAL_CLOUD_URL = process.env.CLOUD_URL;
 const ORIGINAL_PUBLIC_CLOUD_URL = process.env.NEXT_PUBLIC_CLOUD_URL;
 const ORIGINAL_TIMEOUT = process.env.CLOUD_SYNC_TIMEOUT_MS;
-const ORIGINAL_CLOUD_SECRETS = process.env.OMNIROUTE_CLOUD_SYNC_SECRETS;
+const ORIGINAL_CLOUD_SECRETS = process.env.PUSULA_CLOUD_SYNC_SECRETS;
 const ORIGINAL_FETCH = globalThis.fetch;
 const cloudSyncModuleUrl = pathToFileURL(path.join(process.cwd(), "src/lib/cloudSync.ts")).href;
 
@@ -43,7 +43,7 @@ async function resetStorage() {
   delete process.env.CLOUD_URL;
   delete process.env.NEXT_PUBLIC_CLOUD_URL;
   delete process.env.CLOUD_SYNC_TIMEOUT_MS;
-  delete process.env.OMNIROUTE_CLOUD_SYNC_SECRETS;
+  delete process.env.PUSULA_CLOUD_SYNC_SECRETS;
 }
 
 test.beforeEach(async () => {
@@ -76,9 +76,9 @@ test.after(() => {
     process.env.CLOUD_SYNC_TIMEOUT_MS = ORIGINAL_TIMEOUT;
   }
   if (ORIGINAL_CLOUD_SECRETS === undefined) {
-    delete process.env.OMNIROUTE_CLOUD_SYNC_SECRETS;
+    delete process.env.PUSULA_CLOUD_SYNC_SECRETS;
   } else {
-    process.env.OMNIROUTE_CLOUD_SYNC_SECRETS = ORIGINAL_CLOUD_SECRETS;
+    process.env.PUSULA_CLOUD_SYNC_SECRETS = ORIGINAL_CLOUD_SECRETS;
   }
 });
 
@@ -154,7 +154,7 @@ test("cloudSync returns a generic error when the API responds with a non-OK stat
 
 test("cloudSync syncs data upstream and refreshes only locally stale provider tokens", async () => {
   process.env.NEXT_PUBLIC_CLOUD_URL = "https://cloud.example";
-  process.env.OMNIROUTE_CLOUD_SYNC_SECRETS = "true";
+  process.env.PUSULA_CLOUD_SYNC_SECRETS = "true";
 
   const stale = await providersDb.createProviderConnection({
     provider: "openai",

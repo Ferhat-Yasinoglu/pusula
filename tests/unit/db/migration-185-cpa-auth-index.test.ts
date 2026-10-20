@@ -13,20 +13,20 @@ const repoMigrations = path.join(
   path.dirname(fileURLToPath(import.meta.url)),
   "../../../src/lib/db/migrations"
 );
-const migrationsDir = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-migration-185-"));
+const migrationsDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-migration-185-"));
 fs.copyFileSync(
   path.join(repoMigrations, "185_usage_history_cpa_auth_index.sql"),
   path.join(migrationsDir, "185_usage_history_cpa_auth_index.sql")
 );
-const originalMigrationsDir = process.env.OMNIROUTE_MIGRATIONS_DIR;
-process.env.OMNIROUTE_MIGRATIONS_DIR = migrationsDir;
+const originalMigrationsDir = process.env.PUSULA_MIGRATIONS_DIR;
+process.env.PUSULA_MIGRATIONS_DIR = migrationsDir;
 
 const { runMigrations } = await import("../../../src/lib/db/migrationRunner.ts");
 
 test.after(() => {
   fs.rmSync(migrationsDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
-  if (originalMigrationsDir === undefined) delete process.env.OMNIROUTE_MIGRATIONS_DIR;
-  else process.env.OMNIROUTE_MIGRATIONS_DIR = originalMigrationsDir;
+  if (originalMigrationsDir === undefined) delete process.env.PUSULA_MIGRATIONS_DIR;
+  else process.env.PUSULA_MIGRATIONS_DIR = originalMigrationsDir;
 });
 
 function columns(db: Database.Database): string[] {
@@ -51,7 +51,7 @@ test("an older usage_history gains cpa_auth_index and a second run is a no-op", 
     assert.equal(runMigrations(db, { isNewDb: true }), 1);
     assert.ok(columns(db).includes("cpa_auth_index"));
     assert.equal(runMigrations(db, { isNewDb: true }), 0);
-    assert.deepEqual(db.prepare("SELECT version, name FROM _omniroute_migrations").all(), [
+    assert.deepEqual(db.prepare("SELECT version, name FROM _pusula_migrations").all(), [
       { version: "185", name: "usage_history_cpa_auth_index" },
     ]);
   } finally {
@@ -64,7 +64,7 @@ test("a database that already has cpa_auth_index still records migration 185", (
   try {
     assert.equal(runMigrations(db, { isNewDb: true }), 1);
     assert.equal(columns(db).filter((name) => name === "cpa_auth_index").length, 1);
-    assert.deepEqual(db.prepare("SELECT version, name FROM _omniroute_migrations").all(), [
+    assert.deepEqual(db.prepare("SELECT version, name FROM _pusula_migrations").all(), [
       { version: "185", name: "usage_history_cpa_auth_index" },
     ]);
   } finally {

@@ -13,15 +13,15 @@ Gemessen am 2026-08-28 (Postmortem zu v3.8.50, Teil III):
 | Swap       | 15 GB                                                                                                            | Die Veröffentlichung von v3.8.50 gelang nur unter starker Swap-Nutzung; der Speicherdruck ist in `/proc/pressure/memory` sichtbar                                                       |
 | `/tmp`     | **12 GB tmpfs = RAM**                                                                                            | Alles, was dort abgelegt wird, belegt Arbeitsspeicher; Überreste werden nach 3 h bereinigt                                                                                              |
 | Festplatte | 188 GB                                                                                                           | `_work`-Checkouts von 8 Runnern erreichen ohne Begrenzung ~70 GB                                                                                                                        |
-| Runner     | **6 Listener**: 4 OmniRoute (1 `omni-build` + 1 nur für `omni-release` + 2 `omni-light`) + OmniHeuris + OmniMind | Alle teilen sich den oben genannten Arbeitsspeicher; `omniroute-113-3/-4/-7/-8` sind deaktiviert (`systemctl enable --now` reaktiviert jeweils einen)                                   |
+| Runner     | **6 Listener**: 4 Pusula (1 `omni-build` + 1 nur für `omni-release` + 2 `omni-light`) + OmniHeuris + OmniMind | Alle teilen sich den oben genannten Arbeitsspeicher; `pusula-113-3/-4/-7/-8` sind deaktiviert (`systemctl enable --now` reaktiviert jeweils einen)                                   |
 
 ## Janitor installieren (einmalig auf dem Server)
 
 ```bash
-scp scripts/ops/runner-janitor.sh root@192.168.0.113:/opt/omniroute-ops/runner-janitor.sh
-ssh root@192.168.0.113 'chmod +x /opt/omniroute-ops/runner-janitor.sh; apt-get install -y lsof'
+scp scripts/ops/runner-janitor.sh root@192.168.0.113:/opt/pusula-ops/runner-janitor.sh
+ssh root@192.168.0.113 'chmod +x /opt/pusula-ops/runner-janitor.sh; apt-get install -y lsof'
 # cron (root): alle 30 Minuten, Protokollierung nach /var/log/runner-janitor.log
-*/30 * * * * MAX_ACTIVE_RUNNERS=6 /opt/omniroute-ops/runner-janitor.sh >> /var/log/runner-janitor.log 2>&1
+*/30 * * * * MAX_ACTIVE_RUNNERS=6 /opt/pusula-ops/runner-janitor.sh >> /var/log/runner-janitor.log 2>&1
 ```
 
 `lsof` ist erforderlich: Der Janitor weist anhand einer Momentaufnahme der geöffneten
@@ -30,7 +30,7 @@ entfernt er nichts und meldet dies entsprechend (Exit-Code 1). Jede Änderung zu
 mit `--dry-run` testen — dabei wird exakt ausgegeben, was ausgeführt würde, ohne
 irgendetwas zu verändern.
 
-Was bei jedem Lauf geschieht: Eigene Überreste (`runner-*`, `omniroute-*`,
+Was bei jedem Lauf geschieht: Eigene Überreste (`runner-*`, `pusula-*`,
 `next-build*`, `e2e-build.tar.gz`) werden nach **3 h auf tmpfs** und nach 24 h im
 Verzeichnis `_work/_temp` auf der Festplatte bereinigt; ein `next-build`, der älter
 als 75 Minuten ist, wird beendet (kein Job läuft so lange — am 2026-08-27 lief einer
@@ -39,15 +39,15 @@ eingestuft hatte); 48 h alte Checkouts von Runnern, deren Unit **gestoppt** ist,
 werden entfernt; Warnungen werden bei einer Festplattenbelegung ≥ 85 %, einem
 Speicher-PSI-Wert `full/avg60` ≥ 10 % sowie bei mehr Listenern als
 `MAX_ACTIVE_RUNNERS` ausgegeben (einschließlich einer Aufschlüsselung nach
-omniroute/sonstigen Listenern). Exit-Code 1 = Eingreifen erforderlich; das Protokoll
+pusula/sonstigen Listenern). Exit-Code 1 = Eingreifen erforderlich; das Protokoll
 prüfen.
 
 ## Runner-Units: KillMode
 
 Das standardmäßige `KillMode=process` des Runners lässt `Runner.Worker → npm → next-build`
 weiterlaufen, wenn eine Unit gestoppt oder neu gestartet wird — ein verwaister Build verbraucht
-weiterhin RAM und CPU, ohne dass ihm ein Job zugeordnet ist. Jede OmniRoute-Unit verfügt über ein Drop-in
-(`/etc/systemd/system/actions.runner.diegosouzapw-OmniRoute.<name>.service.d/10-killmode.conf`)
+weiterhin RAM und CPU, ohne dass ihm ein Job zugeordnet ist. Jede Pusula-Unit verfügt über ein Drop-in
+(`/etc/systemd/system/actions.runner.diegosouzapw-Pusula.<name>.service.d/10-killmode.conf`)
 mit `KillMode=mixed`: zuerst SIGTERM an den Listener, dann bei
 `TimeoutStop` SIGKILL an die gesamte cgroup. Es wird beim nächsten Neustart der Unit wirksam — starten Sie
 **jeweils nur einen Runner und nur im Leerlauf** neu, wobei sich die Leerlaufprüfung und der Neustart
@@ -57,7 +57,7 @@ im selben Befehl befinden müssen.
 
 - **Obergrenze für umfangreiche Builds: EINER gleichzeitig — per Label durchgesetzt (seit 2026-08-29).** Jeder Job,
   der einen vollständigen `next build` ausführt, zielt auf `[self-hosted, omni-build]`, und nur
-  **`omniroute-113-5`** trägt dieses Label (über die Runners-API hinzugefügt — keine
+  **`pusula-113-5`** trägt dieses Label (über die Runners-API hinzugefügt — keine
   erneute Registrierung): `ci.yml` `Build`, `npm-publish.yml` `publish`, beide
   `nightly-release-green`-Validierungen und `docker-publish.yml` **amd64** (beim gehosteten
   Runner mit 7 GB trat für diesen Tree ResourceExhausted auf — #11976). Der arm64-Docker-Zweig bleibt
@@ -67,19 +67,19 @@ there must be a path to a root`, Lauf 33253576569), selbst mit 31 GB; der arm64-
   desselben Trees war auf gehostetem ARM erfolgreich. `docker-publish` amd64
   teilt sich die Concurrency-Gruppe `heavy-build-main` mit `ci.yml` `Build`
   (`cancel-in-progress: false`), sodass der Job auf den einzigen Slot wartet. Docker Engine
-  muss auf `omniroute-113-5` vorhanden sein (`docker info` ist der erste Schritt des Publish-Jobs).
+  muss auf `pusula-113-5` vorhanden sein (`docker info` ist der erste Schritt des Publish-Jobs).
   Zwei war die vorherige Obergrenze, und sie war für 31 GB falsch: Am
   2026-08-29 um 17:26 UTC reduzierten zwei gleichzeitig laufende `next-build`s (15,4 GB + 17,2 GB RSS)
   den freien Speicher der Maschine auf 5 GB, während 4 GB Swap belegt waren, woraufhin der Kernel
   einen der Prozesse per OOM-Kill beendete — systemd verbuchte den Kill bei der Unit des _anderen_
   Runners, `runsvc.sh` beendete diesen Listener per SIGKILL, und der dort ausgeführte Job brach mit
   „The runner has received a shutdown signal“ ab (derselbe Text wie bei einem OOM auf einem
-  gehosteten Runner). `omniroute-113-6` behält ausschließlich `omni-release`. Umfangreiche Builds aus
+  gehosteten Runner). `pusula-113-6` behält ausschließlich `omni-release`. Umfangreiche Builds aus
   `main`-Merges, PRs und dem nächtlichen Lauf werden nun über einen einzigen Slot serialisiert; die
   Warteschlange ist der Preis dafür. Der zweite Slot kehrt zurück, sobald die Proxmox-VM mehr RAM
   erhält (48–64 GB):
-  `gh api -X POST repos/<repo>/actions/runners/<id of omniroute-113-6>/labels -f 'labels[]=omni-build'`.
-- **Pool für leichte Jobs: `omni-light` (2026-08-29, #11965).** `omniroute-113` und `omniroute-113-2` tragen
+  `gh api -X POST repos/<repo>/actions/runners/<id of pusula-113-6>/labels -f 'labels[]=omni-build'`.
+- **Pool für leichte Jobs: `omni-light` (2026-08-29, #11965).** `pusula-113` und `pusula-113-2` tragen
   `omni-light` für Jobs, die nur einen backendseitigen `next build` (~5–6 GB), aber keinen vollständigen
   Build benötigen: die nächtlichen Schemathesis-, promptfoo-, garak- und axe-a11y-Jobs. Sie liefen auf dem
   gehosteten Runner mit 7 GB und brachen auf `release/v3.8.51` ab, ohne dass jemand es bemerkte. Im
@@ -87,7 +87,7 @@ there must be a path to a root`, Lauf 33253576569), selbst mit 31 GB; der arm64-
   die 31 GB RAM, aber innerhalb der 16 GB Swap; die eigentliche Lösung für mehr Reserve ist zusätzlicher
   RAM für die Proxmox-VM (`tomni-proxmox-113`), wodurch sich die Label-Obergrenzen auf 3 umfangreiche +
   2 leichte Builds erhöhen.
-- **Bewusst weniger Listener.** Vier OmniRoute-Units wurden am 2026-08-29 deaktiviert — da nur
+- **Bewusst weniger Listener.** Vier Pusula-Units wurden am 2026-08-29 deaktiviert — da nur
   `ci.yml` `Build` und die nächtlichen Läufe die Maschine verwenden, waren 8 Listener im Leerlauf, und
   jeder weitere ist ein potenzieller Verbraucher von 14 GB. Die Obergrenze des Janitors beträgt 6
   (`MAX_ACTIVE_RUNNERS=6` in cron): Er zählt jeden `Runner.Listener` auf der Maschine, und OmniHeuris +

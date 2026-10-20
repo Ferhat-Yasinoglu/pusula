@@ -7,29 +7,29 @@
 > **Maßgebliche Quelle:** `src/lib/skills/` und `src/app/api/skills/`
 > **Zuletzt aktualisiert:** 2026-06-28 — v3.8.40
 
-OmniRoute stellt ein erweiterbares Skills-Framework bereit, mit dem Sprachmodelle (und Operatoren) wiederverwendbare Fähigkeiten kombinieren können — vom Lesen aus dem Dateisystem und HTTP-Anfragen bis hin zur Sandbox-Codeausführung und kuratierten Marketplace-Skills.
+Pusula stellt ein erweiterbares Skills-Framework bereit, mit dem Sprachmodelle (und Operatoren) wiederverwendbare Fähigkeiten kombinieren können — vom Lesen aus dem Dateisystem und HTTP-Anfragen bis hin zur Sandbox-Codeausführung und kuratierten Marketplace-Skills.
 
-Ein Skill ist eine versionierte, schemadefinierte Arbeitseinheit. OmniRoute kann Skills als Tool-Definitionen in ausgehende Anfragen einfügen, vom Modell zurückkommende Tool-Aufrufe abfangen, den passenden Handler ausführen und das Ergebnis an das Modell zurückgeben, damit die Konversation fortgesetzt werden kann. Das Modell sieht niemals die Implementierung — nur die Tool-Schnittstelle.
+Ein Skill ist eine versionierte, schemadefinierte Arbeitseinheit. Pusula kann Skills als Tool-Definitionen in ausgehende Anfragen einfügen, vom Modell zurückkommende Tool-Aufrufe abfangen, den passenden Handler ausführen und das Ergebnis an das Modell zurückgeben, damit die Konversation fortgesetzt werden kann. Das Modell sieht niemals die Implementierung — nur die Tool-Schnittstelle.
 
 ---
 
 ## Agent Skills im Vergleich zu Omni Skills
 
-OmniRoute verfügt über zwei eigenständige, aber einander ergänzende Skill-Systeme:
+Pusula verfügt über zwei eigenständige, aber einander ergänzende Skill-Systeme:
 
 | Dimension          | **Omni Skills** (dieses Dokument)                                       | **Agent Skills**                                                                            |
 | :----------------- | :---------------------------------------------------------------------- | :------------------------------------------------------------------------------------------ |
 | Zweck              | LLM-Tool-Injektion + Sandbox-Ausführung                                 | SKILL.md-Katalog zur Ermittlung und Nutzung durch externe Agenten                           |
 | Maßgebliche Quelle | `src/lib/skills/` + Marketplace                                         | `src/lib/agentSkills/` + Verzeichnis `skills/`                                              |
 | Laufzeitmodus      | In ausgehende Anfragen eingefügt, bei Tool-Aufrufereignissen ausgeführt | Statischer Markdown-Katalog + REST-/MCP-/A2A-Discovery-Endpunkte                            |
-| Verwendet von      | OmniRoute selbst (Combo-Routing, eingehende LLM-Aufrufe)                | Externen Agenten, MCP-Clients, A2A-Orchestratoren                                           |
+| Verwendet von      | Pusula selbst (Combo-Routing, eingehende LLM-Aufrufe)                | Externen Agenten, MCP-Clients, A2A-Orchestratoren                                           |
 | Anzahl             | Variabel (Marketplace-gesteuert)                                        | 45 Katalogeinträge (23 API + 21 CLI + 1 Konfiguration)                                      |
 | Format             | `SkillDefinition` mit Tool-Schema + Handler                             | `SKILL.md`-Frontmatter + Markdown-Inhalt                                                    |
-| Ermittlung         | `/api/skills/*` REST + `omniroute_skills_*` MCP-Tools                   | `/api/agent-skills/*` REST + `omniroute_agent_skills_*` MCP-Tools + A2A `list-capabilities` |
+| Ermittlung         | `/api/skills/*` REST + `pusula_skills_*` MCP-Tools                   | `/api/agent-skills/*` REST + `pusula_agent_skills_*` MCP-Tools + A2A `list-capabilities` |
 
-**Omni Skills** sind die Ausführungs-Engine — sie definieren, was OmniRoute _tun kann_, wenn ein LLM ein Tool aufruft.
+**Omni Skills** sind die Ausführungs-Engine — sie definieren, was Pusula _tun kann_, wenn ein LLM ein Tool aufruft.
 
-**Agent Skills** sind der Dokumentationskatalog — sie erklären externen Agenten _wie_ die REST-API und CLI von OmniRoute verwendet werden, und zwar mithilfe strukturierter SKILL.md-Dateien, die direkt in Agent-Prompts eingespeist werden können.
+**Agent Skills** sind der Dokumentationskatalog — sie erklären externen Agenten _wie_ die REST-API und CLI von Pusula verwendet werden, und zwar mithilfe strukturierter SKILL.md-Dateien, die direkt in Agent-Prompts eingespeist werden können.
 
 Weitere Informationen zum Agent-Skills-Katalog, Generator, zu den MCP-Tools und zum A2A-Skill finden Sie unter [docs/frameworks/AGENT-SKILLS.md](./AGENT-SKILLS.md).
 
@@ -41,14 +41,14 @@ Weitere Informationen zum Agent-Skills-Katalog, Generator, zu den MCP-Tools und 
 
 Drei Skill-Quellen existieren gemeinsam in derselben Registry:
 
-1. **Integrierte Skills** (`src/lib/skills/builtins.ts`) — werden mit OmniRoute ausgeliefert. Sie decken die gängigen Anwendungsfälle ab:
+1. **Integrierte Skills** (`src/lib/skills/builtins.ts`) — werden mit Pusula ausgeliefert. Sie decken die gängigen Anwendungsfälle ab:
    - `file_read`, `file_write` — Sandbox-Arbeitsbereich pro API-Schlüssel unter `<DATA_DIR>/skills/workspaces/<hashed-key>/`
    - `http_request` — ausgehendes HTTP über `safeOutboundFetch` mit `guard: "public-only"`
    - `web_search` — austauschbarer Suchanbieter mit Caching (`executeWebSearch`)
    - `eval_code` — Docker-isolierte Ausführung von `node` oder `python`
    - `execute_command` — Docker-isolierter Shell-Befehl
    - `browser` — Playwright-basiertes Grundgerüst, standardmäßig deaktiviert (`builtin/browser.ts`)
-2. **SkillsMP** (der OmniRoute Marketplace) — wird von `https://skillsmp.com/api/v1/skills/search` abgerufen. Erfordert `skillsmpApiKey` in den Einstellungen.
+2. **SkillsMP** (der Pusula Marketplace) — wird von `https://skillsmp.com/api/v1/skills/search` abgerufen. Erfordert `skillsmpApiKey` in den Einstellungen.
 3. **SkillsSH** (`skills.sh`-Community-Katalog) — wird von `https://skills.sh/api/search` abgerufen. Keine Authentifizierung erforderlich; SKILL.md-Inhalte werden direkt aus GitHub Raw geladen.
 
 Ein einzelner „aktiver Anbieter“ steuert, aus welchem Katalog das Dashboard installiert (`src/lib/skills/providerSettings.ts`). Wechseln Sie ihn unter **Einstellungen → Speicher & Skills**. Standard: `skillsmp`.
@@ -118,7 +118,7 @@ Die besten `AUTO_MAX_SKILLS = 5` Skills mit `score >= AUTO_MIN_SCORE = 3` werden
 `handleToolCallExecution()` in `src/lib/skills/interception.ts` wird vom Chat-Handler aufgerufen, nachdem der vorgelagerte Dienst eine Antwort mit einem Tool-Aufruf zurückgegeben hat:
 
 1. `extractToolCalls()` liest anbieterspezifische Strukturen aus (OpenAI `tool_calls` / Responses `function_call`, Anthropic `tool_use`, Gemini `functionCalls`).
-2. Integrierte Tool-Aliasse (z. B. `omniroute_web_search` → `web_search`) werden zuerst aufgelöst. Integrierte Handler werden inline ausgeführt.
+2. Integrierte Tool-Aliasse (z. B. `pusula_web_search` → `web_search`) werden zuerst aufgelöst. Integrierte Handler werden inline ausgeführt.
 3. Alles andere wird über `skillExecutor.execute(name@version, args, { apiKeyId, sessionId })` weitergeleitet.
 4. Die Ergebnisse werden wieder in die Antwort eingefügt — je nach Bedarf als `tool_results`, `function_call_output`-Elemente oder Anthropic-`tool_result`-Blöcke.
 
@@ -170,7 +170,7 @@ Standardmäßig zulässige Images: `alpine:3.20`, `node:22-alpine`, `python:3.12
 
 ### Workspace-Isolierung
 
-`file_read` und `file_write` lösen jeden Pfad relativ zu einem API-Schlüssel-spezifischen Workspace unter `<DATA_DIR>/skills/workspaces/<sha256(apiKeyId).slice(0,24)>/` auf. Pfadtraversierung (`..`) und unzulässige Segmente (`.env`, `.git`, `.ssh`, `.omniroute`, `.codex`, `secrets`) werden vor jeglichem Festplattenzugriff abgelehnt.
+`file_read` und `file_write` lösen jeden Pfad relativ zu einem API-Schlüssel-spezifischen Workspace unter `<DATA_DIR>/skills/workspaces/<sha256(apiKeyId).slice(0,24)>/` auf. Pfadtraversierung (`..`) und unzulässige Segmente (`.env`, `.git`, `.ssh`, `.pusula`, `.codex`, `secrets`) werden vor jeglichem Festplattenzugriff abgelehnt.
 
 ### HTTP-Härtung
 
@@ -224,7 +224,7 @@ Der Endpunkt `POST /api/skills/executions` gibt HTTP `503` mit `{ error: "Skills
 
 ```bash
 curl -X POST http://localhost:20128/api/skills/install \
-  -H "Authorization: Bearer $OMNIROUTE_MGMT_TOKEN" \
+  -H "Authorization: Bearer $PUSULA_MGMT_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "name": "reverse-text",
@@ -249,10 +249,10 @@ Vier MCP-Tools kapseln die Skill-Oberfläche (`open-sse/mcp-server/tools/skillTo
 
 | Tool                          | Beschreibung                                                      |
 | ----------------------------- | ----------------------------------------------------------------- |
-| `omniroute_skills_list`       | Skills auflisten, optionale Filter: `apiKeyId`, `name`, `enabled` |
-| `omniroute_skills_enable`     | Einen Skill über `skillId` aktivieren/deaktivieren                |
-| `omniroute_skills_execute`    | Einen Skill mit einer Eingabenutzlast ausführen                   |
-| `omniroute_skills_executions` | Letzte Ausführungshistorie (Standard: 50, Maximum: 100)           |
+| `pusula_skills_list`       | Skills auflisten, optionale Filter: `apiKeyId`, `name`, `enabled` |
+| `pusula_skills_enable`     | Einen Skill über `skillId` aktivieren/deaktivieren                |
+| `pusula_skills_execute`    | Einen Skill mit einer Eingabenutzlast ausführen                   |
+| `pusula_skills_executions` | Letzte Ausführungshistorie (Standard: 50, Maximum: 100)           |
 
 Informationen zur Transporteinrichtung und zu Bereichszuweisungen finden Sie unter [MCP-SERVER.md](./MCP-SERVER.md).
 
@@ -292,7 +292,7 @@ Informationen zur Transporteinrichtung und zu Bereichszuweisungen finden Sie unt
 - **Hauptschalter:** `settings.skillsEnabled = false` blockiert alle Ausführungen und gibt für `/api/skills/executions` HTTP `503` zurück. Die Registry wird weiterhin geladen.
 - **Ausgehenden Datenverkehr sperren:** Lassen Sie `SKILLS_SANDBOX_NETWORK_ENABLED` für vollständig vom Netzwerk isolierte Sandboxen nicht gesetzt (Standard). `networkEnabled: true` pro Aufruf erfordert weiterhin die Freigabe durch den Hauptschalter.
 - **Bestimmte Images zulassen:** Setzen Sie `SKILLS_ALLOWED_SANDBOX_IMAGES="myorg/sandbox:1.0,node:22-alpine"`, um die Zulassungsliste zu erweitern.
-- **Ausführungen prüfen:** `/dashboard/skills/executions` und `omniroute_skills_executions` fragen beide `skill_executions` ab. Erfolgreiche Ausführungen enthalten `durationMs`; fehlgeschlagene enthalten `errorMessage`.
+- **Ausführungen prüfen:** `/dashboard/skills/executions` und `pusula_skills_executions` fragen beide `skill_executions` ab. Erfolgreiche Ausführungen enthalten `durationMs`; fehlgeschlagene enthalten `errorMessage`.
 - **Cache-Invalidierung:** Rufen Sie nach manuellen DB-Änderungen `skillRegistry.invalidateCache()` auf; andernfalls warten Sie 60 s.
 - **Anonymer Arbeitsbereich:** Wenn `apiKeyId` leer ist, werden alle Aufrufe demselben Arbeitsbereich `"anonymous"` zugeordnet — Code, der gemeinsame Nutzung berücksichtigt, sollte immer einen echten Schlüssel übergeben.
 
@@ -356,7 +356,7 @@ enum SkillStatus {
 ### Ausführungen untersuchen
 
 ```ts
-import { skillExecutor } from "omniroute/skills/executor";
+import { skillExecutor } from "pusula/skills/executor";
 
 // Eine bestimmte Ausführung anhand ihrer ID abrufen
 const exec = skillExecutor.getExecution("exec-uuid-123");
@@ -442,7 +442,7 @@ es gibt weder einen Fließkomma-Schwellenwert im Stil von `0.6` noch eine Bewert
 
 ## Katalog integrierter Skills
 
-OmniRoute enthält eine kuratierte Auswahl integrierter Skills in `src/lib/skills/builtin/`. Die gebräuchlichsten sind:
+Pusula enthält eine kuratierte Auswahl integrierter Skills in `src/lib/skills/builtin/`. Die gebräuchlichsten sind:
 
 ### Skill zur Browserautomatisierung
 

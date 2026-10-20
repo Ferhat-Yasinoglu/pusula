@@ -21,7 +21,7 @@
  *
  * Opt-in: pool only launches Chromium when an executor explicitly asks
  * for a context, so users who never use the browser-backed path pay zero
- * startup cost. Set OMNIROUTE_BROWSER_POOL=off to fully disable.
+ * startup cost. Set PUSULA_BROWSER_POOL=off to fully disable.
  */
 
 import { Buffer } from "node:buffer";
@@ -116,7 +116,7 @@ async function resolveCloakLaunch(): Promise<((opts: unknown) => Promise<Browser
 }
 
 function isPoolEnabled(): boolean {
-  const flag = process.env.OMNIROUTE_BROWSER_POOL;
+  const flag = process.env.PUSULA_BROWSER_POOL;
   if (flag === undefined) return true;
   return flag !== "off" && flag !== "0" && flag !== "false";
 }
@@ -253,7 +253,7 @@ export async function acquireBrowserContext(
 ): Promise<PooledContext> {
   if (!isPoolEnabled()) {
     throw new Error(
-      "browserPool: OMNIROUTE_BROWSER_POOL=off — context requested but pool is disabled"
+      "browserPool: PUSULA_BROWSER_POOL=off — context requested but pool is disabled"
     );
   }
   const existing = state.contexts.get(key);
@@ -418,7 +418,7 @@ function getBrowserPoolStatus(): {
 /**
  * #3368 PR7 — browser-pool observability. Returns live status plus cumulative
  * lifecycle telemetry (launches, context create/reuse/evict/release counts,
- * failures, shutdowns). Surfaced via the omniroute_browser_pool_status MCP tool.
+ * failures, shutdowns). Surfaced via the pusula_browser_pool_status MCP tool.
  */
 export function getBrowserPoolMetrics(): {
   status: ReturnType<typeof getBrowserPoolStatus>;

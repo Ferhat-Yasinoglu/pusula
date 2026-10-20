@@ -7,29 +7,29 @@
 > **منبع حقیقت:** `src/lib/skills/` و `src/app/api/skills/`
 > **آخرین بهروزرسانی:** 2026-06-28 — v3.8.40
 
-OmniRoute یک چارچوب توسعهپذیر برای مهارتها ارائه میکند که به مدلهای زبانی (و اپراتورها) اجازه میدهد قابلیتهای قابلاستفادهٔ مجدد را ترکیب کنند — از خواندن فایلسیستم و درخواستهای HTTP گرفته تا اجرای کد در محیط ایزوله و مهارتهای منتخب بازارچه.
+Pusula یک چارچوب توسعهپذیر برای مهارتها ارائه میکند که به مدلهای زبانی (و اپراتورها) اجازه میدهد قابلیتهای قابلاستفادهٔ مجدد را ترکیب کنند — از خواندن فایلسیستم و درخواستهای HTTP گرفته تا اجرای کد در محیط ایزوله و مهارتهای منتخب بازارچه.
 
-هر مهارت، یک واحد کاری نسخهبندیشده و تعریفشده با schema است. OmniRoute میتواند مهارتها را بهصورت تعریف ابزار در درخواستهای خروجی تزریق کند، فراخوانیهای ابزار بازگشتی از مدل را رهگیری کند، handler متناظر را اجرا کند و نتیجه را دوباره به مدل بازگرداند تا مکالمه ادامه یابد. مدل هرگز پیادهسازی را نمیبیند — فقط رابط ابزار را مشاهده میکند.
+هر مهارت، یک واحد کاری نسخهبندیشده و تعریفشده با schema است. Pusula میتواند مهارتها را بهصورت تعریف ابزار در درخواستهای خروجی تزریق کند، فراخوانیهای ابزار بازگشتی از مدل را رهگیری کند، handler متناظر را اجرا کند و نتیجه را دوباره به مدل بازگرداند تا مکالمه ادامه یابد. مدل هرگز پیادهسازی را نمیبیند — فقط رابط ابزار را مشاهده میکند.
 
 ---
 
 ## مهارتهای عامل در برابر مهارتهای Omni
 
-OmniRoute دارای دو سیستم مهارت متمایز اما مکمل است:
+Pusula دارای دو سیستم مهارت متمایز اما مکمل است:
 
 | بُعد           | **مهارتهای Omni** (این سند)                                        | **مهارتهای عامل**                                                                                                     |
 | :------------- | :----------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- |
 | هدف            | تزریق ابزار LLM + اجرای ایزولهشده                                  | کاتالوگ SKILL.md برای کشف و استفاده توسط عاملهای خارجی                                                                |
 | منبع حقیقت     | `src/lib/skills/` + بازارچه                                        | `src/lib/agentSkills/` + دایرکتوری `skills/`                                                                          |
 | حالت زمان اجرا | تزریق در درخواستهای خروجی و اجرا هنگام رخدادهای فراخوانی ابزار     | کاتالوگ ایستای markdown + نقاط پایانی کشف REST/MCP/A2A                                                                |
-| استفادهکننده   | خود OmniRoute (مسیریابی ترکیبی، فراخوانیهای ورودی LLM)             | عاملهای خارجی، کلاینتهای MCP و هماهنگکنندههای A2A                                                                     |
+| استفادهکننده   | خود Pusula (مسیریابی ترکیبی، فراخوانیهای ورودی LLM)             | عاملهای خارجی، کلاینتهای MCP و هماهنگکنندههای A2A                                                                     |
 | تعداد          | متغیر (وابسته به بازارچه)                                          | 45 ورودی کاتالوگ (23 مورد API + 21 مورد CLI + 1 مورد پیکربندی)                                                        |
 | قالب           | `SkillDefinition` همراه با schema ابزار + handler                  | frontmatter در `SKILL.md` + بدنهٔ markdown                                                                            |
-| کشف            | REST در `/api/skills/*` + ابزارهای MCP با نام `omniroute_skills_*` | REST در `/api/agent-skills/*` + ابزارهای MCP با نام `omniroute_agent_skills_*` + فرمان A2A با نام `list-capabilities` |
+| کشف            | REST در `/api/skills/*` + ابزارهای MCP با نام `pusula_skills_*` | REST در `/api/agent-skills/*` + ابزارهای MCP با نام `pusula_agent_skills_*` + فرمان A2A با نام `list-capabilities` |
 
-**مهارتهای Omni** موتور اجرا هستند — آنها مشخص میکنند وقتی یک LLM ابزاری را فراخوانی میکند، OmniRoute _چه کارهایی میتواند انجام دهد_.
+**مهارتهای Omni** موتور اجرا هستند — آنها مشخص میکنند وقتی یک LLM ابزاری را فراخوانی میکند، Pusula _چه کارهایی میتواند انجام دهد_.
 
-**مهارتهای عامل** کاتالوگ مستندات هستند — آنها با استفاده از فایلهای ساختاریافتهٔ SKILL.md که میتوان مستقیماً در promptهای عامل قرار داد، برای عاملهای خارجی توضیح میدهند که _چگونه از_ REST API و CLI مربوط به OmniRoute استفاده کنند.
+**مهارتهای عامل** کاتالوگ مستندات هستند — آنها با استفاده از فایلهای ساختاریافتهٔ SKILL.md که میتوان مستقیماً در promptهای عامل قرار داد، برای عاملهای خارجی توضیح میدهند که _چگونه از_ REST API و CLI مربوط به Pusula استفاده کنند.
 
 برای اطلاعات مربوط به کاتالوگ مهارتهای عامل، مولد، ابزارهای MCP و مهارت A2A، به [docs/frameworks/AGENT-SKILLS.md](./AGENT-SKILLS.md) مراجعه کنید.
 
@@ -41,14 +41,14 @@ OmniRoute دارای دو سیستم مهارت متمایز اما مکمل ا�
 
 سه منبع مهارت در یک registry مشترک همزمان وجود دارند:
 
-1. **مهارتهای داخلی** (`src/lib/skills/builtins.ts`) — همراه با OmniRoute عرضه میشوند. موارد رایج را پوشش میدهند:
+1. **مهارتهای داخلی** (`src/lib/skills/builtins.ts`) — همراه با Pusula عرضه میشوند. موارد رایج را پوشش میدهند:
    - `file_read`، `file_write` — فضای کاری ایزوله بهازای هر کلید API در `<DATA_DIR>/skills/workspaces/<hashed-key>/`
    - `http_request` — درخواست HTTP خروجی از طریق `safeOutboundFetch` با `guard: "public-only"`
    - `web_search` — ارائهدهندهٔ جستوجوی قابلتعویض همراه با cache (`executeWebSearch`)
    - `eval_code` — اجرای `node` یا `python` در محیط ایزولهٔ Docker
    - `execute_command` — فرمان shell در محیط ایزولهٔ Docker
    - `browser` — زیرساخت مبتنی بر Playwright که بهطور پیشفرض غیرفعال است (`builtin/browser.ts`)
-2. **SkillsMP** (بازارچهٔ OmniRoute) — از `https://skillsmp.com/api/v1/skills/search` دریافت میشود. به `skillsmpApiKey` در تنظیمات نیاز دارد.
+2. **SkillsMP** (بازارچهٔ Pusula) — از `https://skillsmp.com/api/v1/skills/search` دریافت میشود. به `skillsmpApiKey` در تنظیمات نیاز دارد.
 3. **SkillsSH** (کاتالوگ انجمن `skills.sh`) — از `https://skills.sh/api/search` دریافت میشود. به احراز هویت نیاز ندارد؛ محتوای SKILL.md از GitHub raw دریافت میشود.
 
 یک «ارائهدهندهٔ فعال» واحد تعیین میکند داشبورد از کدام کاتالوگ نصب انجام دهد (`src/lib/skills/providerSettings.ts`). آن را از مسیر **تنظیمات ← حافظه و مهارتها** تغییر دهید. پیشفرض: `skillsmp`.
@@ -118,7 +118,7 @@ enum SkillStatus {
 `handleToolCallExecution()` در `src/lib/skills/interception.ts` پس از اینکه سرویس بالادستی پاسخی حاوی فراخوانی ابزار برمیگرداند، توسط کنترلکنندهٔ چت فراخوانی میشود:
 
 1. `extractToolCalls()` ساختارهای مختص هر ارائهدهنده را میخواند (OpenAI `tool_calls` / Responses `function_call`، Anthropic `tool_use`، Gemini `functionCalls`).
-2. نامهای مستعار ابزارهای داخلی (برای مثال `omniroute_web_search` → `web_search`) ابتدا تفکیک میشوند. کنترلکنندههای داخلی بهصورت درونخطی اجرا میشوند.
+2. نامهای مستعار ابزارهای داخلی (برای مثال `pusula_web_search` → `web_search`) ابتدا تفکیک میشوند. کنترلکنندههای داخلی بهصورت درونخطی اجرا میشوند.
 3. هر مورد دیگری از طریق `skillExecutor.execute(name@version, args, { apiKeyId, sessionId })` هدایت میشود.
 4. نتایج در مکان مناسب به پاسخ بازگردانده میشوند — آیتمهای `tool_results`، آیتمهای `function_call_output` یا بلوکهای `tool_result` متعلق به Anthropic.
 
@@ -170,7 +170,7 @@ enum SkillStatus {
 
 ### جداسازی فضای کاری
 
-`file_read` و `file_write` هر مسیر را نسبت به فضای کاری مختص هر کلید API در `<DATA_DIR>/skills/workspaces/<sha256(apiKeyId).slice(0,24)>/` تفکیک میکنند. پیمایش مسیر (`..`) و بخشهای ممنوع (`.env`، `.git`، `.ssh`، `.omniroute`، `.codex`، `secrets`) پیش از هرگونه ورودی/خروجی دیسک رد میشوند.
+`file_read` و `file_write` هر مسیر را نسبت به فضای کاری مختص هر کلید API در `<DATA_DIR>/skills/workspaces/<sha256(apiKeyId).slice(0,24)>/` تفکیک میکنند. پیمایش مسیر (`..`) و بخشهای ممنوع (`.env`، `.git`، `.ssh`، `.pusula`، `.codex`، `secrets`) پیش از هرگونه ورودی/خروجی دیسک رد میشوند.
 
 ### مقاومسازی HTTP
 
@@ -224,7 +224,7 @@ enum SkillStatus {
 
 ```bash
 curl -X POST http://localhost:20128/api/skills/install \
-  -H "Authorization: Bearer $OMNIROUTE_MGMT_TOKEN" \
+  -H "Authorization: Bearer $PUSULA_MGMT_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "name": "reverse-text",
@@ -249,10 +249,10 @@ curl -X POST http://localhost:20128/api/skills/install \
 
 | ابزار                         | توضیحات                                                        |
 | ----------------------------- | -------------------------------------------------------------- |
-| `omniroute_skills_list`       | فهرست مهارتها؛ فیلترهای اختیاری: `apiKeyId`، `name`، `enabled` |
-| `omniroute_skills_enable`     | فعال یا غیرفعالکردن یک مهارت با استفاده از `skillId`           |
-| `omniroute_skills_execute`    | اجرای یک مهارت با بار ورودی                                    |
-| `omniroute_skills_executions` | تاریخچه اجرای اخیر (پیشفرض 50، حداکثر 100)                     |
+| `pusula_skills_list`       | فهرست مهارتها؛ فیلترهای اختیاری: `apiKeyId`، `name`، `enabled` |
+| `pusula_skills_enable`     | فعال یا غیرفعالکردن یک مهارت با استفاده از `skillId`           |
+| `pusula_skills_execute`    | اجرای یک مهارت با بار ورودی                                    |
+| `pusula_skills_executions` | تاریخچه اجرای اخیر (پیشفرض 50، حداکثر 100)                     |
 
 برای تنظیم انتقال و تخصیص محدودهها، به [MCP-SERVER.md](./MCP-SERVER.md) مراجعه کنید.
 
@@ -292,7 +292,7 @@ curl -X POST http://localhost:20128/api/skills/install \
 - **کلید اصلی:** تنظیم `settings.skillsEnabled = false` تمام اجراها را مسدود میکند و در `/api/skills/executions` پاسخ HTTP `503` برمیگرداند. رجیستری همچنان بارگذاری میشود.
 - **محدودسازی خروجی شبکه:** برای ایزولهسازی کامل سندباکس از شبکه، `SKILLS_SANDBOX_NETWORK_ENABLED` را تنظیمنشده نگه دارید (حالت پیشفرض). مقدار `networkEnabled: true` در هر فراخوانی همچنان به فعالبودن دروازه اصلی نیاز دارد.
 - **مجازکردن ایمیجهای مشخص:** برای گسترش فهرست مجاز، `SKILLS_ALLOWED_SANDBOX_IMAGES="myorg/sandbox:1.0,node:22-alpine"` را تنظیم کنید.
-- **ممیزی اجراها:** هر دو مورد `/dashboard/skills/executions` و `omniroute_skills_executions` جدول `skill_executions` را واکشی میکنند. اجراهای موفق شامل `durationMs` و اجراهای ناموفق شامل `errorMessage` هستند.
+- **ممیزی اجراها:** هر دو مورد `/dashboard/skills/executions` و `pusula_skills_executions` جدول `skill_executions` را واکشی میکنند. اجراهای موفق شامل `durationMs` و اجراهای ناموفق شامل `errorMessage` هستند.
 - **بیاعتبارسازی کش:** پس از ویرایش دستی پایگاه داده، `skillRegistry.invalidateCache()` را فراخوانی کنید؛ در غیر این صورت 60 ثانیه منتظر بمانید.
 - **فضای کاری ناشناس:** وقتی `apiKeyId` خالی باشد، هش تمام فراخوانیها به فضای کاری یکسان `"anonymous"` نگاشت میشود — کدی که اشتراکگذاری را در نظر میگیرد باید همیشه یک کلید واقعی ارسال کند.
 
@@ -356,7 +356,7 @@ enum SkillStatus {
 ### بررسی اجراها
 
 ```ts
-import { skillExecutor } from "omniroute/skills/executor";
+import { skillExecutor } from "pusula/skills/executor";
 
 // دریافت یک اجرای مشخص بر اساس شناسه
 const exec = skillExecutor.getExecution("exec-uuid-123");
@@ -443,7 +443,7 @@ enum SkillMode {
 
 ## فهرست مهارتهای داخلی
 
-OmniRoute همراه با مجموعهای منتخب از مهارتهای داخلی در `src/lib/skills/builtin/` ارائه میشود. رایجترین آنها عبارتاند از:
+Pusula همراه با مجموعهای منتخب از مهارتهای داخلی در `src/lib/skills/builtin/` ارائه میشود. رایجترین آنها عبارتاند از:
 
 ### مهارت خودکارسازی مرورگر
 

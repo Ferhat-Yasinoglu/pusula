@@ -13,8 +13,8 @@
 ## Nedir?
 
 Local Corpus, bir operatörün açıkça onaylanmış tek bir metin dosyaları dizinini
-OmniRoute'un MCP sunucusuna sunmasına olanak tanır. Dosyalar özgün dizinlerinde kalır:
-OmniRoute, SQLite'ta yalnızca kanonik kök yolu depolar ve bellek içi bir arama dizini
+Pusula'un MCP sunucusuna sunmasına olanak tanır. Dosyalar özgün dizinlerinde kalır:
+Pusula, SQLite'ta yalnızca kanonik kök yolu depolar ve bellek içi bir arama dizini
 tutar. Corpus içeriğini depoya veya veritabanına kopyalamaz.
 
 Dizin yenileme işlemi artımlıdır. Değişmeyen dosyalar boyut ve değiştirilme zamanına
@@ -69,7 +69,7 @@ göstermez; yalnızca göreli yolları ve kök dizinin temel adını gösterir.
 - Sembolik bağlantılar atlanır. Okuma yolları kanonikleştirilir ve yapılandırılmış kök
   içinde kalmalıdır; mutlak yollar ve dizin geçişi girişimleri reddedilir.
 - Hassas ve oluşturulmuş dizin adları hariç tutulur: `.build`, `.codex`, `.env`,
-  `.git`, `.next`, `.omniroute`, `.ssh`, `coverage`, `dist`, `node_modules` ve
+  `.git`, `.next`, `.pusula`, `.ssh`, `coverage`, `dist`, `node_modules` ve
   `secrets`.
 - Varsayılan sınırlar 5.000 dosya, dosya başına 1 MiB, toplam 64 MiB dizine alınmış
   içerik, arama parçası başına yaklaşık 4.000 karakter ve okuma başına 400 satırdır.

@@ -4,7 +4,7 @@
 
 ---
 
-Web-Cookie-Provider ermöglichen OmniRoute, einen KI-Dienst über Ihre bestehende Browsersitzung statt über einen API-Schlüssel zu verwenden. Sie sind nützlich, wenn Sie bereits über die Website eines Dienstes Zugriff darauf haben und möchten, dass OmniRoute dieselbe authentifizierte Sitzung verwendet.
+Web-Cookie-Provider ermöglichen Pusula, einen KI-Dienst über Ihre bestehende Browsersitzung statt über einen API-Schlüssel zu verwenden. Sie sind nützlich, wenn Sie bereits über die Website eines Dienstes Zugriff darauf haben und möchten, dass Pusula dieselbe authentifizierte Sitzung verwendet.
 
 Im Gegensatz zu API-Schlüssel-Providern authentifizieren sich Web-Cookie-Provider mithilfe der Anmeldedaten, die Ihr Browser an die Website sendet.
 
@@ -49,7 +49,7 @@ Entwicklertools
 
 Der Anfrage-Header `Cookie` enthält genau die Authentifizierungsinformationen, die Ihr Browser erfolgreich verwendet hat.
 
-Bei den meisten Web-Cookie-Providern ist dies der Wert, der in OmniRoute eingefügt werden sollte.
+Bei den meisten Web-Cookie-Providern ist dies der Wert, der in Pusula eingefügt werden sollte.
 
 ---
 
@@ -63,7 +63,7 @@ Der Einrichtungsprozess ist bei den meisten Web-Cookie-Providern identisch.
 4. Aktualisieren Sie die Seite.
 5. Öffnen Sie eine authentifizierte Chat- oder Konversationsanfrage.
 6. Kopieren Sie die erforderlichen Authentifizierungsdaten.
-7. Öffnen Sie OmniRoute.
+7. Öffnen Sie Pusula.
 8. Navigieren Sie zu **Provider → Provider hinzufügen**.
 9. Wählen Sie Ihren Web-Cookie-Provider aus.
 10. Fügen Sie die Anmeldedaten ein.
@@ -148,7 +148,7 @@ Anwendung
 
 ---
 
-## Cookie funktioniert im Browser, aber nicht in OmniRoute
+## Cookie funktioniert im Browser, aber nicht in Pusula
 
 Einige Provider verwenden Cookies, die nur bei authentifizierten Anfragen gesendet werden.
 

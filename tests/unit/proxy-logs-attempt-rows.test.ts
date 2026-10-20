@@ -8,7 +8,7 @@ import path from "node:path";
 // 3rd attempt leaves 3 rows sharing one correlation id, the first two marked
 // abandoned and the last one served. The served row is written last. A request
 // with no journal keeps one row with null attempt columns.
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-proxy-attempt-rows-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-proxy-attempt-rows-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../src/lib/db/core.ts");

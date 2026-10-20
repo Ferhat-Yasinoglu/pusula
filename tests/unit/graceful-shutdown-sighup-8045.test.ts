@@ -15,15 +15,15 @@ const shutdownSignals = ["SIGTERM", "SIGINT", "SIGHUP"] as const;
 // so the "close the window" path never ran cleanup() (WAL checkpoint(TRUNCATE) +
 // closeDbInstance()), leaving storage.sqlite's WAL un-checkpointed for the next launch.
 test("graceful shutdown listeners remain process-singletons across HMR module instances", async () => {
-  const previousState = globalThis.__omnirouteShutdown;
-  const previousRequestShutdown = globalThis.__omnirouteRequestShutdown;
-  const previousCustomServerOwner = globalThis.__omnirouteCustomServerOwnsShutdown;
+  const previousState = globalThis.__pusulaShutdown;
+  const previousRequestShutdown = globalThis.__pusulaRequestShutdown;
+  const previousCustomServerOwner = globalThis.__pusulaCustomServerOwnsShutdown;
   const listenersBefore = new Map(
     shutdownSignals.map((signal) => [signal, process.listeners(signal)] as const)
   );
-  delete globalThis.__omnirouteShutdown;
-  delete globalThis.__omnirouteRequestShutdown;
-  delete globalThis.__omnirouteCustomServerOwnsShutdown;
+  delete globalThis.__pusulaShutdown;
+  delete globalThis.__pusulaRequestShutdown;
+  delete globalThis.__pusulaCustomServerOwnsShutdown;
 
   try {
     const first = (await import(
@@ -34,7 +34,7 @@ test("graceful shutdown listeners remain process-singletons across HMR module in
     )) as GracefulShutdownModule;
 
     first.initGracefulShutdown();
-    assert.equal(globalThis.__omnirouteRequestShutdown, first.requestGracefulShutdown);
+    assert.equal(globalThis.__pusulaRequestShutdown, first.requestGracefulShutdown);
     for (const signal of shutdownSignals) {
       assert.equal(process.listenerCount(signal), listenersBefore.get(signal)!.length + 1);
     }
@@ -55,29 +55,29 @@ test("graceful shutdown listeners remain process-singletons across HMR module in
       }
     }
 
-    if (previousState === undefined) delete globalThis.__omnirouteShutdown;
-    else globalThis.__omnirouteShutdown = previousState;
-    if (previousRequestShutdown === undefined) delete globalThis.__omnirouteRequestShutdown;
-    else globalThis.__omnirouteRequestShutdown = previousRequestShutdown;
+    if (previousState === undefined) delete globalThis.__pusulaShutdown;
+    else globalThis.__pusulaShutdown = previousState;
+    if (previousRequestShutdown === undefined) delete globalThis.__pusulaRequestShutdown;
+    else globalThis.__pusulaRequestShutdown = previousRequestShutdown;
     if (previousCustomServerOwner === undefined) {
-      delete globalThis.__omnirouteCustomServerOwnsShutdown;
+      delete globalThis.__pusulaCustomServerOwnsShutdown;
     } else {
-      globalThis.__omnirouteCustomServerOwnsShutdown = previousCustomServerOwner;
+      globalThis.__pusulaCustomServerOwnsShutdown = previousCustomServerOwner;
     }
   }
 });
 
 test("a custom server owner receives cleanup without duplicate process signal listeners", async () => {
-  const previousState = globalThis.__omnirouteShutdown;
-  const previousRequestShutdown = globalThis.__omnirouteRequestShutdown;
-  const previousCustomServerOwner = globalThis.__omnirouteCustomServerOwnsShutdown;
+  const previousState = globalThis.__pusulaShutdown;
+  const previousRequestShutdown = globalThis.__pusulaRequestShutdown;
+  const previousCustomServerOwner = globalThis.__pusulaCustomServerOwnsShutdown;
   const listenerCounts = new Map(
     shutdownSignals.map((signal) => [signal, process.listenerCount(signal)] as const)
   );
 
-  delete globalThis.__omnirouteShutdown;
-  delete globalThis.__omnirouteRequestShutdown;
-  globalThis.__omnirouteCustomServerOwnsShutdown = true;
+  delete globalThis.__pusulaShutdown;
+  delete globalThis.__pusulaRequestShutdown;
+  globalThis.__pusulaCustomServerOwnsShutdown = true;
 
   try {
     const shutdownModule = (await import(
@@ -85,19 +85,19 @@ test("a custom server owner receives cleanup without duplicate process signal li
     )) as GracefulShutdownModule;
     shutdownModule.initGracefulShutdown();
 
-    assert.equal(globalThis.__omnirouteRequestShutdown, shutdownModule.requestGracefulShutdown);
+    assert.equal(globalThis.__pusulaRequestShutdown, shutdownModule.requestGracefulShutdown);
     for (const signal of shutdownSignals) {
       assert.equal(process.listenerCount(signal), listenerCounts.get(signal));
     }
   } finally {
-    if (previousState === undefined) delete globalThis.__omnirouteShutdown;
-    else globalThis.__omnirouteShutdown = previousState;
-    if (previousRequestShutdown === undefined) delete globalThis.__omnirouteRequestShutdown;
-    else globalThis.__omnirouteRequestShutdown = previousRequestShutdown;
+    if (previousState === undefined) delete globalThis.__pusulaShutdown;
+    else globalThis.__pusulaShutdown = previousState;
+    if (previousRequestShutdown === undefined) delete globalThis.__pusulaRequestShutdown;
+    else globalThis.__pusulaRequestShutdown = previousRequestShutdown;
     if (previousCustomServerOwner === undefined) {
-      delete globalThis.__omnirouteCustomServerOwnsShutdown;
+      delete globalThis.__pusulaCustomServerOwnsShutdown;
     } else {
-      globalThis.__omnirouteCustomServerOwnsShutdown = previousCustomServerOwner;
+      globalThis.__pusulaCustomServerOwnsShutdown = previousCustomServerOwner;
     }
   }
 });

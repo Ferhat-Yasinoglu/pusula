@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-context-handoff-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-context-handoff-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../src/lib/db/core.ts");
@@ -254,8 +254,8 @@ test("maybeGenerateHandoff persists a structured handoff once the threshold is r
   assert.deepEqual(saved.keyDecisions, ["Use context-relay"]);
   assert.equal(calls.length, 1);
   assert.equal(calls[0].modelStr, "codex/gpt-5.6-sol");
-  assert.equal(calls[0].body._omnirouteSkipContextRelay, true);
-  assert.equal(calls[0].body._omnirouteInternalRequest, "context-handoff");
+  assert.equal(calls[0].body._pusulaSkipContextRelay, true);
+  assert.equal(calls[0].body._pusulaInternalRequest, "context-handoff");
 });
 
 test("maybeGenerateHandoff deduplicates concurrent in-flight generations for the same session", async () => {

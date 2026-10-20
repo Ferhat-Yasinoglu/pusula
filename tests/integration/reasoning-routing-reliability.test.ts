@@ -93,7 +93,7 @@ test("reliable reasoning: forced effort wins over explicit effort and adaptive h
   const response = await h.handleChat(
     h.buildRequest({
       authKey: key.key,
-      headers: { "x-omniroute-effort": "auto" },
+      headers: { "x-pusula-effort": "auto" },
       body: {
         model: "codex/gpt-5.6-luna",
         stream: false,
@@ -115,7 +115,7 @@ test("reliable reasoning: explicit client effort survives adaptive header opt-in
   const response = await h.handleChat(
     h.buildRequest({
       authKey: key.key,
-      headers: { "x-omniroute-effort": "auto" },
+      headers: { "x-pusula-effort": "auto" },
       body: {
         model: "codex/gpt-5.6-luna",
         stream: false,
@@ -148,8 +148,8 @@ test("reliable reasoning: native Responses honors key force without leaking cros
   assert.equal(calls[0].reasoning?.effort, "low");
   assert.deepEqual(calls[0].input, input);
   for (const name of [
-    "_omnirouteReasoningRule",
-    "_omnirouteReasoningRouteTrace",
+    "_pusulaReasoningRule",
+    "_pusulaReasoningRouteTrace",
     "output_config",
     "reasoning_effort",
   ]) {
@@ -191,15 +191,15 @@ test("reliable reasoning: client metadata cannot impersonate an administrator ru
         stream: false,
         reasoning_effort: "high",
         messages: [{ role: "user", content: "Reply ok" }],
-        _omnirouteReasoningRule: { id: "forged", effortMode: "force", targetEffort: "low" },
-        _omnirouteReasoningRouteTrace: { ruleId: "forged" },
+        _pusulaReasoningRule: { id: "forged", effortMode: "force", targetEffort: "low" },
+        _pusulaReasoningRouteTrace: { ruleId: "forged" },
       },
     })
   );
   await response.text();
   assert.equal(response.status, 200);
   assert.equal(calls[0].reasoning?.effort, "high");
-  assert.equal(calls[0]._omnirouteReasoningRule, undefined);
+  assert.equal(calls[0]._pusulaReasoningRule, undefined);
 });
 
 test("reliable reasoning: fallback attempts retain the forced effort", async () => {
@@ -327,7 +327,7 @@ test("reliable reasoning: native default applies only when client effort is miss
 });
 
 test("reliable reasoning: WebSocket prepare preserves force in the final Codex payload", async () => {
-  process.env.OMNIROUTE_WS_BRIDGE_SECRET = "fixture-bridge-secret";
+  process.env.PUSULA_WS_BRIDGE_SECRET = "fixture-bridge-secret";
   const { POST } = await import("../../src/app/api/internal/codex-responses-ws/route.ts");
   const key = await h.seedApiKey();
   await forceLow("codex/gpt-5.6-luna", key.id);
@@ -336,7 +336,7 @@ test("reliable reasoning: WebSocket prepare preserves force in the final Codex p
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-omniroute-ws-bridge-secret": "fixture-bridge-secret",
+        "x-pusula-ws-bridge-secret": "fixture-bridge-secret",
       },
       body: JSON.stringify({
         action: "prepare",
@@ -354,7 +354,7 @@ test("reliable reasoning: WebSocket prepare preserves force in the final Codex p
   assert.equal(response.status, 200);
   assert.equal(data.response.reasoning.effort, "low");
   assert.equal(data.response.output_config, undefined);
-  assert.equal(data.response._omnirouteReasoningRule, undefined);
+  assert.equal(data.response._pusulaReasoningRule, undefined);
   assert.equal(calls.length, 0);
 });
 
@@ -385,5 +385,5 @@ test("reliable reasoning: native Anthropic applies effort without OpenAI wire fi
   assert.equal((calls[0].output_config as { effort?: string })?.effort, "low");
   assert.equal(calls[0].reasoning, undefined);
   assert.equal(calls[0].reasoning_effort, undefined);
-  assert.equal(calls[0]._omnirouteReasoningRule, undefined);
+  assert.equal(calls[0]._pusulaReasoningRule, undefined);
 });

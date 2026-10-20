@@ -4,9 +4,9 @@
 
 ---
 
-> **Durum:** Kabul Edildi · **Bağlam:** [#5670](https://github.com/diegosouzapw/OmniRoute/issues/5670),
-> [#5603](https://github.com/diegosouzapw/OmniRoute/issues/5603) · **Sözleşme:** `domain/routing/routerBackends.ts`
-> (tür güvenli kayıt defteri — kod [#5868](https://github.com/diegosouzapw/OmniRoute/pull/5868) ile ekleniyor)
+> **Durum:** Kabul Edildi · **Bağlam:** [#5670](https://github.com/Ferhat-Yasinoglu/pusula/issues/5670),
+> [#5603](https://github.com/Ferhat-Yasinoglu/pusula/issues/5603) · **Sözleşme:** `domain/routing/routerBackends.ts`
+> (tür güvenli kayıt defteri — kod [#5868](https://github.com/Ferhat-Yasinoglu/pusula/pull/5868) ile ekleniyor)
 
 Bu ADR, katkıda bulunanların mimari açıdan farklı iki kavramı birbirine karıştırmasını önlemek amacıyla `ts` (yerel), `bifrost`, `cliproxy`, `9router` ve VibeProxy uyumlu motorların birbiriyle nasıl ilişkili olduğunu kesinleştirir. Router-backend-registry çalışmasıyla sunulan tür güvenli kayıt defterini bu model için tek doğruluk kaynağı olarak belgeler.
 
@@ -15,9 +15,9 @@ Bu ADR, katkıda bulunanların mimari açıdan farklı iki kavramı birbirine ka
 Bir motorun rolü, kayıt defterinin `RouterBackendDefinition` yapısında birlikte kodlanan **iki bağımsız eksenle** tanımlanır:
 
 1. **Yaşam döngüsü** (`RouterBackendLifecycle`) — _motorun nasıl çalıştığı_:
-   - `in-process` — OmniRoute Node işleminin içinde çalışır (yerel TS işlem hattı).
-   - `supervised` — OmniRoute'un `ServiceSupervisor` aracılığıyla kurduğu/başlattığı/durdurduğu/sağlık kontrolünü yaptığı ve ardından sağlayıcı bağlantısı olarak kullandığı yerel bir alt işlemdir.
-   - `external` — OmniRoute'un istek gönderdiği ancak **yönetmediği** bir HTTP uç noktasıdır
+   - `in-process` — Pusula Node işleminin içinde çalışır (yerel TS işlem hattı).
+   - `supervised` — Pusula'un `ServiceSupervisor` aracılığıyla kurduğu/başlattığı/durdurduğu/sağlık kontrolünü yaptığı ve ardından sağlayıcı bağlantısı olarak kullandığı yerel bir alt işlemdir.
+   - `external` — Pusula'un istek gönderdiği ancak **yönetmediği** bir HTTP uç noktasıdır
      (bir ortam değişkeni taban URL'siyle yapılandırılır).
    - `disabled` — kayıtlıdır ancak seçilemez.
 2. **Seçim ekseni** (aktarıcı yönlendirme arka ucu) — _aktarıcının ona istek gönderip göndermediği_:
@@ -28,7 +28,7 @@ Kaçınılması gereken hata: "gömülü hizmet" ile "yönlendirme arka ucunu" t
 
 ## Kayıt defteri — tek doğruluk kaynağı
 
-`domain/routing/routerBackends.ts` sözleşmesi (kod [#5868](https://github.com/diegosouzapw/OmniRoute/pull/5868) ile ekleniyor), her motoru yaşam döngüsü, yetenekleri, hizmet kimliği, varsayılan bağlantı noktası, sağlık yapılandırması ve telemetri desteğiyle birlikte bir kez tanımlar. Tüketiciler, her yardımcı işlemi ayrı ayrı özel durum olarak ele almak yerine motorları `getRouterBackend(id)`, `listRouterBackends()` ve `listRouterBackendsByCapability(cap)` aracılığıyla arar.
+`domain/routing/routerBackends.ts` sözleşmesi (kod [#5868](https://github.com/Ferhat-Yasinoglu/pusula/pull/5868) ile ekleniyor), her motoru yaşam döngüsü, yetenekleri, hizmet kimliği, varsayılan bağlantı noktası, sağlık yapılandırması ve telemetri desteğiyle birlikte bir kez tanımlar. Tüketiciler, her yardımcı işlemi ayrı ayrı özel durum olarak ele almak yerine motorları `getRouterBackend(id)`, `listRouterBackends()` ve `listRouterBackendsByCapability(cap)` aracılığıyla arar.
 
 | Arka uç     | Yaşam döngüsü | Hizmet (eksen A) | Aktarıcı arka ucu (eksen B) | Sağlık        | Varsayılan bağlantı noktası |
 | ----------- | ------------- | ---------------- | --------------------------- | ------------- | --------------------------- |
@@ -38,7 +38,7 @@ Kaçınılması gereken hata: "gömülü hizmet" ile "yönlendirme arka ucunu" t
 | `9router`   | `supervised`  | `9router`        | — (sağlayıcı)               | `/api/health` | 20130                       |
 | `vibeproxy` | `external`    | —                | — (sağlayıcı adaptörü)      | `/v1/models`  | —                           |
 
-¹ Bifrost'un (`/api/services/bifrost/` üzerinden kurulabilen/başlatılabilen) `supervised` bir gömülü hizmete yükseltilmesi [#5817](https://github.com/diegosouzapw/OmniRoute/pull/5817) kapsamında takip edilmektedir; bu değişiklik birleştirilene kadar Bifrost yalnızca `external` olarak kullanılabilir (yalnızca `BIFROST_BASE_URL` üzerinden erişilebilir).
+¹ Bifrost'un (`/api/services/bifrost/` üzerinden kurulabilen/başlatılabilen) `supervised` bir gömülü hizmete yükseltilmesi [#5817](https://github.com/Ferhat-Yasinoglu/pusula/pull/5817) kapsamında takip edilmektedir; bu değişiklik birleştirilene kadar Bifrost yalnızca `external` olarak kullanılabilir (yalnızca `BIFROST_BASE_URL` üzerinden erişilebilir).
 
 `capabilities` (`chat`, `responses`, `streaming`, `tools`, `vision`,
 `oauth-backed`, `dashboard-embed`, `model-sync`, `native-hot-path`), çağrı yapanların kimlik başına dalları sabit kodlamak yerine motorları gerçekten yapabildikleri işlemlere göre filtrelemesine olanak tanır.
@@ -95,7 +95,7 @@ seçer; ana `/api/v1/chat/completions` yüzeyi hiçbir zaman `routingBackend.ts`
 dosyasına başvurmaz.
 
 - **Seçim** (`resolveRelayRoutingBackend`): tek bir genel ortam değişkeni anahtarı —
-  `OMNIROUTE_RELAY_BACKEND` / `RELAY_ROUTING_BACKEND` ∈ {`ts`, `bifrost`, `auto`}.
+  `PUSULA_RELAY_BACKEND` / `RELAY_ROUTING_BACKEND` ∈ {`ts`, `bifrost`, `auto`}.
   Ayarlanmamışsa, Bifrost yapılandırılmış+etkin olduğunda `auto`, aksi takdirde `ts`.
 - **Davranış:**
   - `bifrost` (zorunlu): Bifrost hatası → kesin `502`, geri dönüş yok.
@@ -106,8 +106,8 @@ dosyasına başvurmaz.
 Seçim bugün **aktarma düzeyinde ya hep ya hiç şeklindedir** — `release/v3.8.43`
 sürümünde sağlayıcı veya istek başına motor değişimi yoktur. İstek başına geçit,
 yardımcı süreç manifesti çalışması kapsamında eklenmektedir
-([#5869](https://github.com/diegosouzapw/OmniRoute/pull/5869) manifest +
-[#5870](https://github.com/diegosouzapw/OmniRoute/pull/5870) `shouldTryBifrostForRequest`);
+([#5869](https://github.com/Ferhat-Yasinoglu/pusula/pull/5869) manifest +
+[#5870](https://github.com/Ferhat-Yasinoglu/pusula/pull/5870) `shouldTryBifrostForRequest`);
 bu sayede `auto`, yalnızca manifest açısından uygun sağlayıcıları Bifrost üzerinden
 yönlendirebilir.
 

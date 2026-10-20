@@ -8,7 +8,7 @@ import {
 } from "../../src/shared/constants/modelSpecs.ts";
 
 /**
- * #14181 — OpenCode Go now serves a GA `qwen3.8-max`, but OmniRoute's built-in
+ * #14181 — OpenCode Go now serves a GA `qwen3.8-max`, but Pusula's built-in
  * deprecation table (`qwen3.8-max` → `qwen3.8-max-preview`, written when the model
  * shipped only under the `-preview` id) rewrote the id before dispatch, and the
  * upstream rejects the preview id with `401 Model qwen3.8-max-preview is not

@@ -317,7 +317,7 @@ describe("cors/origins.STATIC_CORS_HEADERS", () => {
 
   it("allows the generic managed-lease control headers", () => {
     const allowedHeaders = STATIC_CORS_HEADERS["Access-Control-Allow-Headers"];
-    assert.match(allowedHeaders, /X-OmniRoute-Lease-Owner/i);
-    assert.match(allowedHeaders, /X-OmniRoute-Lease-Generation/i);
+    assert.match(allowedHeaders, /X-Pusula-Lease-Owner/i);
+    assert.match(allowedHeaders, /X-Pusula-Lease-Generation/i);
   });
 });

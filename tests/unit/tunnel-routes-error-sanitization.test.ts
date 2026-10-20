@@ -35,7 +35,7 @@ import path from "node:path";
 import test from "node:test";
 import type { NextRequest } from "next/server";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-tunnel-sanitize-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-tunnel-sanitize-"));
 const ORIGINAL_DATA_DIR = process.env.DATA_DIR;
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = process.env.API_KEY_SECRET || "tunnel-sanitize-test-secret";
@@ -60,7 +60,7 @@ const LEAKS = [
   {
     label: "config/state path (.json)",
     message:
-      "ENOENT: no such file or directory, open '/home/operator/.omniroute/data/tunnels.json'",
+      "ENOENT: no such file or directory, open '/home/operator/.pusula/data/tunnels.json'",
     secrets: ["/home/operator", "tunnels.json"],
     sharedSanitizerCovers: true,
   },
@@ -79,14 +79,14 @@ const LEAKS = [
   {
     label: "daemon state path",
     message:
-      "Command failed: /opt/omniroute/bin/tailscaled --state=/var/lib/tailscale/tailscaled.state",
-    secrets: ["/opt/omniroute/bin/tailscaled", "/var/lib/tailscale"],
+      "Command failed: /opt/pusula/bin/tailscaled --state=/var/lib/tailscale/tailscaled.state",
+    secrets: ["/opt/pusula/bin/tailscaled", "/var/lib/tailscale"],
     sharedSanitizerCovers: true,
   },
   {
     label: "windows config path",
     message:
-      "listen EADDRINUSE: address already in use 0.0.0.0:41641 (config C:\\Users\\operator\\AppData\\omniroute\\ngrok.yml)",
+      "listen EADDRINUSE: address already in use 0.0.0.0:41641 (config C:\\Users\\operator\\AppData\\pusula\\ngrok.yml)",
     secrets: ["C:\\Users\\operator", "ngrok.yml"],
     sharedSanitizerCovers: true,
   },
@@ -179,7 +179,7 @@ test("GET /api/tunnels/ngrok does not leak a host path in its 500 body", async (
   // getNgrokTunnelStatus() reads globalThis.__ngrokListener and then calls
   // getTunnelApiUrl(currentUrl) OUTSIDE its try/catch, so a listener whose url()
   // yields an object with a throwing `replace` reproduces a real 500 here.
-  const LEAK = "/home/operator/.omniroute/data/tunnels.json";
+  const LEAK = "/home/operator/.pusula/data/tunnels.json";
   const g = globalThis as unknown as { __ngrokListener?: unknown };
   const previous = g.__ngrokListener;
   g.__ngrokListener = {

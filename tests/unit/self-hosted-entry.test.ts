@@ -72,12 +72,12 @@ describe("selfHostedEntry selectSelfHostedProvider", () => {
   const baseUrl = "http://localhost/v1/chat/completions";
 
   it("header provider id wins", () => {
-    const req = new Request(baseUrl, { headers: { "x-omniroute-provider": "local" } });
+    const req = new Request(baseUrl, { headers: { "x-pusula-provider": "local" } });
     const selected = selectSelfHostedProvider(router, req, { model: "openai/gpt-4o" });
     assert.equal(selected.id, "local");
   });
   it("header with unknown id falls back to model prefix", () => {
-    const req = new Request(baseUrl, { headers: { "x-omniroute-provider": "nope" } });
+    const req = new Request(baseUrl, { headers: { "x-pusula-provider": "nope" } });
     const selected = selectSelfHostedProvider(router, req, { model: "openai/gpt-4o" });
     assert.equal(selected.id, "openai");
   });
@@ -171,7 +171,7 @@ describe("selfHostedEntry unified entry (HTTP contract)", () => {
       { providers: yamlFor(baseUrl) }
     );
     assert.equal(resp?.status, 200);
-    assert.equal(resp?.headers.get("x-omniroute-routed-by"), "self-hosted-openai-compat");
+    assert.equal(resp?.headers.get("x-pusula-routed-by"), "self-hosted-openai-compat");
     const parsed = JSON.parse(await resp!.text());
     assert.equal(parsed.choices[0].message.content, "pong");
     const call = calls.at(-1)!;
@@ -336,7 +336,7 @@ describe("selfHostedEntry unified entry (HTTP contract)", () => {
  *
  * Fault injection: the primary provider is DOWN (connection refused), so the
  * fallback chain must select the backup and the client receives a success —
- * plus an `x-omniroute-route-decision` header explaining the choice.
+ * plus an `x-pusula-route-decision` header explaining the choice.
  */
 describe("selfHostedEntry deterministic routing (fault injection)", () => {
   it("falls back to the backup when the primary provider is down", async () => {
@@ -392,7 +392,7 @@ strategy:
       const parsed = JSON.parse(await resp!.text());
       assert.equal(parsed.choices[0].message.content, "backup-pong");
       assert.equal(okCalls.length, 1);
-      assert.match(resp!.headers.get("x-omniroute-route-decision") ?? "", /dead.*backup/);
+      assert.match(resp!.headers.get("x-pusula-route-decision") ?? "", /dead.*backup/);
     } finally {
       okServer.close();
     }

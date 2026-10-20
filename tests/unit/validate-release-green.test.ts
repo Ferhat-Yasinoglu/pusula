@@ -104,7 +104,7 @@ test("isDrift flags only growth past the committed baseline (down-direction ratc
 
 test("firstFailureLine surfaces the meaningful failure, not boilerplate", () => {
   const out = [
-    "> omniroute@3.8.34 typecheck:core",
+    "> pusula@3.8.34 typecheck:core",
     "src/x.ts(10,5): error TS2322: Type 'string' is not assignable to 'number'.",
     "done",
   ].join("\n");
@@ -227,9 +227,9 @@ test("pre-flight --hermetic scrubs the live-test trigger vars (2026-07-05 false-
     new URL("../../scripts/quality/validate-release-green.mjs", import.meta.url),
     "utf8"
   );
-  // A dev machine with OMNIROUTE_API_KEY set runs 17+ live tests that CI skips —
+  // A dev machine with PUSULA_API_KEY set runs 17+ live tests that CI skips —
   // the pre-flight must be able to reproduce the CI env exactly.
-  assert.match(src, /HERMETIC_SCRUB\s*=\s*\["OMNIROUTE_API_KEY",\s*"OMNIROUTE_URL"\]/);
+  assert.match(src, /HERMETIC_SCRUB\s*=\s*\["PUSULA_API_KEY",\s*"PUSULA_URL"\]/);
   assert.match(src, /args\.has\("--hermetic"\)/, "--hermetic flag must be parsed");
   // Per-gate logs: a red must be diagnosable from _artifacts/release-green/<gate>.log
   // without re-running the gate.
@@ -297,7 +297,7 @@ test("pack gate builds, stamps dist/BUILD_SHA, then validates against the tree u
     /env: PACK_GATE_ENV/,
     "a release-branch tip is never an ancestor of origin/main mid-cycle"
   );
-  assert.match(src, /const PACK_GATE_ENV = \{ OMNIROUTE_RELEASE_REF: "HEAD" \}/);
+  assert.match(src, /const PACK_GATE_ENV = \{ PUSULA_RELEASE_REF: "HEAD" \}/);
   // Both entry points (the parallel wave and --with-build --quick) must use it.
   assert.equal(src.match(/runPackArtifactGate\b/g)?.length, 3);
   assert.doesNotMatch(src, /runAsync\(npmCmd, \["run", "check:pack-artifact"\]/);
@@ -417,7 +417,7 @@ test("firstFailureLine never blames a PASSING line whose test FILE NAME contains
   // i.e. a GREEN line, matched only because the unanchored /FAIL/i marker hit the
   // substring "fail" inside the file name. The real ✖ line was three lines below.
   const out = [
-    "> omniroute@3.8.50 test:unit",
+    "> pusula@3.8.50 test:unit",
     " ✓ tests/unit/runtime/fail-fast-concurrency-gate.test.ts (4 tests) 203ms",
     " ✓ tests/unit/router/failover-budget.test.ts (9 tests) 41ms",
     " ✖ tests/unit/router/pricing.test.ts > picks the cheapest candidate",

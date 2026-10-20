@@ -7,7 +7,7 @@
 > **منبع اصلی:** `src/server/authz/`, `src/shared/constants/publicApiRoutes.ts`, `src/lib/api/requireManagementAuth.ts`, `src/shared/utils/apiAuth.ts`
 > **آخرین بهروزرسانی:** 2026-09-22 — فضاهای نام دامنه به MCP-SERVER.md اشاره دارند
 
-OmniRoute دارای یک خط لوله احراز هویت آگاه به مسیر است که هر درخواست API را کنترل میکند. طبقهبندی **قطعی** و **بستهدرصورتخطا** است — هر چیزی که قابل طبقهبندی نباشد به عنوان `MANAGEMENT` در نظر گرفته میشود و به یک نشست یا توکن با سطح دسترسی مدیریت نیاز دارد. این صفحه مدل را برای مهندسانی که مسیرها را نگهداری میکنند یا نقاط پایانی جدید طراحی میکنند، توضیح میدهد.
+Pusula دارای یک خط لوله احراز هویت آگاه به مسیر است که هر درخواست API را کنترل میکند. طبقهبندی **قطعی** و **بستهدرصورتخطا** است — هر چیزی که قابل طبقهبندی نباشد به عنوان `MANAGEMENT` در نظر گرفته میشود و به یک نشست یا توکن با سطح دسترسی مدیریت نیاز دارد. این صفحه مدل را برای مهندسانی که مسیرها را نگهداری میکنند یا نقاط پایانی جدید طراحی میکنند، توضیح میدهد.
 
 ![خط لوله AuthZ (3 کلاس مسیر + ارزیابی سیاست)](../diagrams/exported/authz-pipeline.svg)
 
@@ -23,7 +23,7 @@ OmniRoute دارای یک خط لوله احراز هویت آگاه به مسی
 Authorization: Bearer <api-key>
 ```
 
-اعتبارسنجی توسط `isValidApiKey()` / `extractApiKey()` در `src/sse/services/auth.ts` انجام و از طریق `src/shared/utils/apiAuth.ts` مجدداً صادر میشود. اعتبارسنج همچنین متغیرهای محیطی `OMNIROUTE_API_KEY` / `ROUTER_API_KEY` را بهعنوان کلیدهای عبوری دائمی میپذیرد (issue #1350).
+اعتبارسنجی توسط `isValidApiKey()` / `extractApiKey()` در `src/sse/services/auth.ts` انجام و از طریق `src/shared/utils/apiAuth.ts` مجدداً صادر میشود. اعتبارسنج همچنین متغیرهای محیطی `PUSULA_API_KEY` / `ROUTER_API_KEY` را بهعنوان کلیدهای عبوری دائمی میپذیرد (issue #1350).
 
 ### 2. نشست داشبورد (کوکی auth_token)
 
@@ -38,7 +38,7 @@ Cookie: auth_token=<JWT signed with JWT_SECRET>
 مصرفکنندگان این کوکی (محافظ مسیر، نوسازی خط لولهٔ authz، دستدهی WebSocket، سرور
 زنده، `/api/settings/require-login`، `/api/auth/status`) از این helper عبور میکنند.
 JWTهای دیگری نیز که با `JWT_SECRET` امضا شدهاند وجود دارند — قابلیت عبور Cursor CLI برای
-دارندگان کلید، توکنهای `iss "omniroute" / aud "cursor-cli"` صادر میکند — و این توکنها هرگز
+دارندگان کلید، توکنهای `iss "pusula" / aud "cursor-cli"` صادر میکند — و این توکنها هرگز
 نشست محسوب نمیشوند (#13298).
 
 تأیید توسط `isDashboardSessionAuthenticated()` در `src/shared/utils/apiAuth.ts` انجام میشود. هنگامی که کمتر از ۷ روز از طول عمر ۳۰روزهٔ JWT باقی مانده باشد، خط لوله آن را بهطور خودکار نوسازی میکند.
@@ -85,7 +85,7 @@ JWTهای دیگری نیز که با `JWT_SECRET` امضا شدهاند وجو�
 ```
 درخواست ورودی → src/proxy.ts
   → runAuthzPipeline() در src/server/authz/pipeline.ts
-    1. حذف هدرهای داخلی مورداعتماد (x-omniroute-auth-*, x-omniroute-route-class)
+    1. حذف هدرهای داخلی مورداعتماد (x-pusula-auth-*, x-pusula-route-class)
     2. تولید شناسه درخواست و طبقهبندی مسیر از طریق classifyRoute()
     3. اگر pathname == "/" → هدایت به /dashboard
     4. اگر در حال تخلیه (خاموشسازی تدریجی) باشد و مسیر /api/* باشد → 503
@@ -93,11 +93,11 @@ JWTهای دیگری نیز که با `JWT_SECRET` امضا شدهاند وجو�
     6. اگر OPTIONS باشد → پیشدرخواست CORS با وضعیت 204
     7. اگر options.enforce == false باشد → عبور مستقیم همراه با هدرهای کلاس مسیر
     8. در غیر این صورت: POLICIES[routeClass].evaluate(ctx)
-       - مجاز  → درج x-omniroute-auth-{kind,id,label,scopes} → NextResponse.next()
+       - مجاز  → درج x-pusula-auth-{kind,id,label,scopes} → NextResponse.next()
        - رد → خطای JSON همراه با correlation_id (صفحات داشبورد → 302 /login)
 ```
 
-هدرهای داخلی مورداعتماد (تعریفشده در `src/server/authz/headers.ts`) پیش از طبقهبندی، **از درخواستهای ورودی حذف میشوند** — کلاینتها نمیتوانند برای جعل هویت یک موجودیت، `x-omniroute-auth-*` را از پیش مقداردهی کنند.
+هدرهای داخلی مورداعتماد (تعریفشده در `src/server/authz/headers.ts`) پیش از طبقهبندی، **از درخواستهای ورودی حذف میشوند** — کلاینتها نمیتوانند برای جعل هویت یک موجودیت، `x-pusula-auth-*` را از پیش مقداردهی کنند.
 
 ### قراردادهای سیاست
 
@@ -210,7 +210,7 @@ export async function POST(request: Request) {
 
 ### دامنههای ابزار MCP
 
-کاتالوگ و قوانین تطابق (رشته یکسان، یا دامنهای اعطا شده که به `*` ختم میشود): [دامنههای ابزار MCP](../frameworks/MCP-SERVER.md#mcp-tool-scopes). `MCP_SCOPE_LIST` در `src/shared/constants/mcpScopes.ts` زیرمجموعه تایپ شده اصلی است، نه آن کاتالوگ کامل. اعمال قوانین در `open-sse/mcp-server/scopeEnforcement.ts` پس از اینکه `resolveCallerScopeContext()` دامنهها را از اطلاعات احراز هویت MCP، فراداده درخواست، یا `OMNIROUTE_MCP_SCOPES` حل و فصل میکند، اجرا میشود. این قابلیت خاموش میماند مگر اینکه `OMNIROUTE_MCP_ENFORCE_SCOPES=true` باشد.
+کاتالوگ و قوانین تطابق (رشته یکسان، یا دامنهای اعطا شده که به `*` ختم میشود): [دامنههای ابزار MCP](../frameworks/MCP-SERVER.md#mcp-tool-scopes). `MCP_SCOPE_LIST` در `src/shared/constants/mcpScopes.ts` زیرمجموعه تایپ شده اصلی است، نه آن کاتالوگ کامل. اعمال قوانین در `open-sse/mcp-server/scopeEnforcement.ts` پس از اینکه `resolveCallerScopeContext()` دامنهها را از اطلاعات احراز هویت MCP، فراداده درخواست، یا `PUSULA_MCP_SCOPES` حل و فصل میکند، اجرا میشود. این قابلیت خاموش میماند مگر اینکه `PUSULA_MCP_ENFORCE_SCOPES=true` باشد.
 
 ### دامنههای توکن دسترسی
 
@@ -246,16 +246,16 @@ export async function POST(request: Request) {
 
 ```
 x-request-id:               <شناسه همبستگی، تکرارشده در بدنه خطاها>
-x-omniroute-route-class:    PUBLIC | CLIENT_API | MANAGEMENT
+x-pusula-route-class:    PUBLIC | CLIENT_API | MANAGEMENT
 ```
 
 برای درخواستهای احراز هویتشده، هدرهای درخواست بالادستی (سمت هندلر) نیز شامل موارد زیر هستند:
 
 ```
-x-omniroute-auth-kind:      client_api_key | dashboard_session | management_key | anonymous
-x-omniroute-auth-id:        key_<چهار نویسه آخر> | "dashboard" | "anonymous"
-x-omniroute-auth-label:     (اختیاری)
-x-omniroute-auth-scopes:    فهرست جداشده با ویرگول
+x-pusula-auth-kind:      client_api_key | dashboard_session | management_key | anonymous
+x-pusula-auth-id:        key_<چهار نویسه آخر> | "dashboard" | "anonymous"
+x-pusula-auth-label:     (اختیاری)
+x-pusula-auth-scopes:    فهرست جداشده با ویرگول
 ```
 
 درون هندلرها از `assertAuth(req, expectedClass)` استفاده کنید — اگر میانافزار دور زده شده باشد، این تابع خطای `AuthzAssertionError` را با کد `AUTHZ_NOT_INITIALIZED` ایجاد میکند (که برای شناسایی پسرفتهای پیکربندی در تستها مفید است).

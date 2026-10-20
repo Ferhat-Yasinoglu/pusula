@@ -4,7 +4,7 @@
 
 ---
 
-> **Özet**: OmniRoute, birincil veri deposu olarak **WAL günlüklemeli SQLite** kullanır ve hassas alanlarda duran veriler için **AES-256-GCM** şifrelemesi uygular. Bu kılavuz şemayı, geçişleri, yedekleme/kurtarma işlemlerini ve operasyonel çalışma kılavuzlarını kapsar.
+> **Özet**: Pusula, birincil veri deposu olarak **WAL günlüklemeli SQLite** kullanır ve hassas alanlarda duran veriler için **AES-256-GCM** şifrelemesi uygular. Bu kılavuz şemayı, geçişleri, yedekleme/kurtarma işlemlerini ve operasyonel çalışma kılavuzlarını kapsar.
 
 **Kaynaklar:**
 
@@ -19,7 +19,7 @@
 
 ## Neden SQLite?
 
-OmniRoute, çeşitli nedenlerle PostgreSQL/MySQL yerine SQLite'ı tercih etmiştir:
+Pusula, çeşitli nedenlerle PostgreSQL/MySQL yerine SQLite'ı tercih etmiştir:
 
 | Faktör             | SQLite                                  | PostgreSQL                                   |
 | ------------------ | --------------------------------------- | -------------------------------------------- |
@@ -30,7 +30,7 @@ OmniRoute, çeşitli nedenlerle PostgreSQL/MySQL yerine SQLite'ı tercih etmişt
 | **Yedekleme**      | Tek dosyalı kopya                       | `pg_dump` veya dosya sistemi anlık görüntüsü |
 | **Kullanım alanı** | Kullanıcı başına kurulum, gömülü        | Çok kiracılı SaaS                            |
 
-**Tek kullanıcılı, tek örnekli** dağıtımlarda (OmniRoute'un birincil kullanım alanı) SQLite daha basit ve daha hızlıdır.
+**Tek kullanıcılı, tek örnekli** dağıtımlarda (Pusula'un birincil kullanım alanı) SQLite daha basit ve daha hızlıdır.
 
 ### WAL Günlükleme
 
@@ -50,7 +50,7 @@ Varsayılan önbellek boyutu **65.536 KiB'dir (64 MiB)**. SQLite, negatif bir
 `cache_size` değerini KiB cinsinden yaklaşık bir üst sınır olarak yorumlar ve sayfaları gerektiğinde tahsis eder.
 **Ayarlar > Sistem ve Depolama > Önbellek Boyutu**, **1 ile
 1.000.000 KiB** arasındaki tam sayı değerlerini kabul eder; ayarın kaydedilmesi, değeri etkin veritabanı bağlantısına uygular
-ve OmniRoute, kalıcı değeri başlangıçta geri yükler.
+ve Pusula, kalıcı değeri başlangıçta geri yükler.
 
 ---
 
@@ -60,9 +60,9 @@ SQLite dosyası şurada saklanır:
 
 | İşletim Sistemi | Yol                                                            |
 | --------------- | -------------------------------------------------------------- |
-| Linux           | `~/.omniroute/storage.sqlite`                                  |
-| macOS           | `~/.omniroute/storage.sqlite`                                  |
-| Windows         | `%USERPROFILE%\.omniroute\storage.sqlite`                      |
+| Linux           | `~/.pusula/storage.sqlite`                                  |
+| macOS           | `~/.pusula/storage.sqlite`                                  |
+| Windows         | `%USERPROFILE%\.pusula\storage.sqlite`                      |
 | Docker          | `/app/data/storage.sqlite` (`DATA_DIR` ile yapılandırılabilir) |
 
 İlişkili dosyalar:
@@ -74,14 +74,14 @@ SQLite dosyası şurada saklanır:
 **Konumu geçersiz kılma:**
 
 ```bash
-DATA_DIR=/custom/path omniroute
+DATA_DIR=/custom/path pusula
 ```
 
 ---
 
 ## Alan Modülü Mimarisi
 
-OmniRoute'un veritabanında `src/lib/db/` altında **110 üst düzey TypeScript modülü** bulunur. Her alan modülü:
+Pusula'un veritabanında `src/lib/db/` altında **110 üst düzey TypeScript modülü** bulunur. Her alan modülü:
 
 - Bir veya daha fazla belirli tablonun sahibidir
 - Tür tanımlı CRUD işlevlerini dışa aktarır
@@ -90,7 +90,7 @@ OmniRoute'un veritabanında `src/lib/db/` altında **110 üst düzey TypeScript 
 
 ### 110 Üst Düzey Veritabanı Modülü
 
-OmniRoute'un `src/lib/db/` altında **110 üst düzey TypeScript dosyası** bulunur. Aşağıda temel modüllerden bir örneklem yer almaktadır; tam liste için dizin içeriğine bakın:
+Pusula'un `src/lib/db/` altında **110 üst düzey TypeScript dosyası** bulunur. Aşağıda temel modüllerden bir örneklem yer almaktadır; tam liste için dizin içeriğine bakın:
 
 | Modül                   | Tablolar                                                       | Sorumluluk                                                                       |
 | ----------------------- | -------------------------------------------------------------- | -------------------------------------------------------------------------------- |
@@ -186,7 +186,7 @@ Yaklaşık 30'dan fazla tablonun tam listesi `src/lib/db/migrations/` içindedir
 
 ## Geçişler
 
-OmniRoute, `src/lib/db/migrations/` dizininde **sürümlendirilmiş ve idempotent geçişler** kullanır. Her geçiş, `NNN_description.sql` olarak adlandırılan tek bir SQL dosyasıdır.
+Pusula, `src/lib/db/migrations/` dizininde **sürümlendirilmiş ve idempotent geçişler** kullanır. Her geçiş, `NNN_description.sql` olarak adlandırılan tek bir SQL dosyasıdır.
 
 ### Geçişlerin Adlandırılması
 
@@ -202,7 +202,7 @@ OmniRoute, `src/lib/db/migrations/` dizininde **sürümlendirilmiş ve idempoten
 
 Başlangıçta `migrationRunner.ts`:
 
-1. Mevcut değilse `_omniroute_migrations` tablosunu oluşturur
+1. Mevcut değilse `_pusula_migrations` tablosunu oluşturur
 2. Daha önce uygulanmış geçişleri sorgular
 3. Yeni geçişleri sırayla ve her birini ayrı bir işlem içinde uygular
 4. Uygulanan her geçişi zaman damgasıyla kaydeder
@@ -256,7 +256,7 @@ UPDATE combos SET priority = 100 WHERE priority IS NULL;
 CREATE INDEX IF NOT EXISTS idx_combos_priority ON combos(priority);
 ```
 
-> **Geriye dönük uyumsuz değişiklikler** (ör. sütunların kaldırılması) karmaşıktır. OmniRoute sürüm düşürmeyi DESTEKLEMEZ — bir geçiş uygulandıktan sonra şema değişikliği kalıcıdır. Planlamanızı buna göre yapın.
+> **Geriye dönük uyumsuz değişiklikler** (ör. sütunların kaldırılması) karmaşıktır. Pusula sürüm düşürmeyi DESTEKLEMEZ — bir geçiş uygulandıktan sonra şema değişikliği kalıcıdır. Planlamanızı buna göre yapın.
 
 ---
 
@@ -310,7 +310,7 @@ Performans nedenleriyle aşağıdakiler düz metin olarak saklanır:
 
 ## Şifrelemeyle İlgili Uyarılar (v3.8.16+)
 
-OmniRoute, iki şifreleme şemasını şeffaf biçimde işlemek için **`migrateLegacyEncryptedString()`** kullanır:
+Pusula, iki şifreleme şemasını şeffaf biçimde işlemek için **`migrateLegacyEncryptedString()`** kullanır:
 
 - **Eski** (v3.5.0 öncesi): XOR tabanlı "şifreleme" (gerçek kriptografi değildir)
 - **Güncel**: Uygun IV ve kimlik doğrulama etiketiyle AES-256-GCM
@@ -346,7 +346,7 @@ const fresh = await listProviders(); // Yavaş, veritabanına erişir
 
 ```bash
 # Yerel bir yedek oluşturmak için CLI'ı kullanın
-omniroute backup create --name pre-migration
+pusula backup create --name pre-migration
 
 # Veya API aracılığıyla
 curl -X PUT http://localhost:20128/api/db-backups \
@@ -366,7 +366,7 @@ Yedekleme dosyası şunları içerir:
 
 ```bash
 # CLI aracılığıyla
-omniroute restore pre-migration
+pusula restore pre-migration
 
 # API aracılığıyla
 curl -X POST http://localhost:20128/api/db-backups/restore \
@@ -381,24 +381,24 @@ curl -X POST http://localhost:20128/api/db-backups/restore \
 
 ```bash
 # CLI aracılığıyla otomatik günlük yedeklemeleri etkinleştirin
-omniroute backup auto enable --cron "0 2 * * *" --retention 7
+pusula backup auto enable --cron "0 2 * * *" --retention 7
 ```
 
 Zamanlama, varsayılan olarak her 30 saniyede bir tetiklenen ve cron ifadesini sunucunun yerel saatine göre değerlendiren bir arka plan görevi tarafından sunucu tarafında yürütülür.
 
 | Değişken                                    | Varsayılan | Açıklama                                                                                                                                       |
 | ------------------------------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `OMNIROUTE_BACKUP_SCHEDULE_JOB_INTERVAL_MS` | `30000`    | Milisaniye cinsinden tetikleme aralığı (en az `5000`). Eşleşen cron dakikasına güvenilir biçimde denk gelmek için 60 saniyeden kısa olmalıdır. |
+| `PUSULA_BACKUP_SCHEDULE_JOB_INTERVAL_MS` | `30000`    | Milisaniye cinsinden tetikleme aralığı (en az `5000`). Eşleşen cron dakikasına güvenilir biçimde denk gelmek için 60 saniyeden kısa olmalıdır. |
 
 ### SQLite Çalışırken Yedekleme
 
 Çalışan bir veritabanını kesinti olmadan yedeklemek için:
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite ".backup /backups/omniroute-hot.db"
+sqlite3 ~/.pusula/storage.sqlite ".backup /backups/pusula-hot.db"
 ```
 
-Bu komut, SQLite'ın çevrimiçi yedekleme API'sini kullanır — OmniRoute çalışırken güvenle yürütülebilir.
+Bu komut, SQLite'ın çevrimiçi yedekleme API'sini kullanır — Pusula çalışırken güvenle yürütülebilir.
 
 ---
 
@@ -441,10 +441,10 @@ PRAGMA mmap_size = 268435456;  -- 256MB
 
 ### Sıkıştırma
 
-Uzun süre çalışan OmniRoute örnekleri, ara sıra `VACUUM` çalıştırılmasından fayda sağlar:
+Uzun süre çalışan Pusula örnekleri, ara sıra `VACUUM` çalıştırılmasından fayda sağlar:
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite "VACUUM;"
+sqlite3 ~/.pusula/storage.sqlite "VACUUM;"
 ```
 
 Trafiğin düşük olduğu zaman aralıklarında ayda bir çalıştırın. (WAL modu ihtiyacı azaltır ancak tamamen ortadan kaldırmaz.)
@@ -494,12 +494,12 @@ Yanıt, `runDbHealthCheck()` tarafından üretilen `DbHealthCheckResult` değeri
 | `driver.name`     | Kontrol edilen veritabanına hizmet veren SQLite sürücüsü.                                                                                                                         |
 | `driver.degraded` | Yazmalar veritabanı dosyası tarafından kalıcı şekilde desteklenmediğinde `true` olur — `sql.js` WASM fallback'i (tüm dosyanın kalıcılaştırılması) veya bellek içi bir veritabanı. |
 
-Aynı yük, `omniroute_db_health_check` MCP aracı tarafından da döndürülür.
+Aynı yük, `pusula_db_health_check` MCP aracı tarafından da döndürülür.
 
 Bozulmayı tespit etmek için `PRAGMA integrity_check` çalıştırın:
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite "PRAGMA integrity_check;"
+sqlite3 ~/.pusula/storage.sqlite "PRAGMA integrity_check;"
 # Şunu yazdırmalıdır: ok
 ```
 
@@ -515,15 +515,15 @@ sqlite3 ~/.omniroute/storage.sqlite "PRAGMA integrity_check;"
 
 ```bash
 # Bir sonraki açılışta otomatik olarak kurtarılır
-omniroute
+pusula
 ```
 
 SQLite otomatik olarak kurtaramazsa:
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite ".recover" > recovered.sql
+sqlite3 ~/.pusula/storage.sqlite ".recover" > recovered.sql
 sqlite3 recovered.db < recovered.sql
-mv recovered.db ~/.omniroute/storage.sqlite
+mv recovered.db ~/.pusula/storage.sqlite
 ```
 
 ### Senaryo 2: Ana Veritabanı Dosyası Bozuldu
@@ -531,7 +531,7 @@ mv recovered.db ~/.omniroute/storage.sqlite
 Yedekten geri yükleyin:
 
 ```bash
-omniroute sync pull --merge   # veya: omniroute backup restore <backup-id>
+pusula sync pull --merge   # veya: pusula backup restore <backup-id>
 ```
 
 ### Senaryo 3: Şifreleme Anahtarı Kayboldu
@@ -546,7 +546,7 @@ SQLite, `SQLITE_FULL` hataları döndürür. Diskte yer açın, ardından:
 
 ```bash
 # Yer açmak için WAL denetim noktası oluşturun
-sqlite3 ~/.omniroute/storage.sqlite "PRAGMA wal_checkpoint(TRUNCATE);"
+sqlite3 ~/.pusula/storage.sqlite "PRAGMA wal_checkpoint(TRUNCATE);"
 ```
 
 ---
@@ -556,13 +556,13 @@ sqlite3 ~/.omniroute/storage.sqlite "PRAGMA wal_checkpoint(TRUNCATE);"
 ### Bir Tabloyu İnceleme
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite "SELECT * FROM api_keys LIMIT 5;"
+sqlite3 ~/.pusula/storage.sqlite "SELECT * FROM api_keys LIMIT 5;"
 ```
 
 ### Tüm Tablolardaki Satırları Sayma
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite <<EOF
+sqlite3 ~/.pusula/storage.sqlite <<EOF
 SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';
 EOF
 ```
@@ -570,14 +570,14 @@ EOF
 ### Tüm Verileri Sıfırlama (Silme)
 
 ```bash
-# Önce OmniRoute'u durdurun
-omniroute stop
+# Önce Pusula'u durdurun
+pusula stop
 
 # Veritabanı dosyasını silin
-rm ~/.omniroute/storage.sqlite*
+rm ~/.pusula/storage.sqlite*
 
 # Yeniden başlatın (boş veritabanı yeniden oluşturulur)
-omniroute
+pusula
 ```
 
 **Seçici** sıfırlama için (sağlayıcıları koruyup kullanım verilerini silme):
@@ -591,7 +591,7 @@ DELETE FROM proxy_logs WHERE timestamp < datetime('now', '-30 day');
 ### Tek Bir Tabloyu Dışa Aktarma
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite <<EOF
+sqlite3 ~/.pusula/storage.sqlite <<EOF
 .mode csv
 .output api_keys.csv
 SELECT * FROM api_keys;
@@ -608,7 +608,7 @@ Başka bir işlem, yazma kilidini tutuyor. Şunlardan birini yapın:
 
 - Diğer işlemin tamamlanmasını bekleyin (`lsof | grep storage.sqlite` ile kontrol edin)
 - Diğer işlemi sonlandırın
-- Sorun devam ederse OmniRoute'u yeniden başlatın
+- Sorun devam ederse Pusula'u yeniden başlatın
 
 ### "Yabancı anahtar kısıtlaması başarısız oldu"
 
@@ -638,10 +638,10 @@ PRAGMA mmap_size = 0;
 
 Geçiş bir işlem içinde çalıştırıldığı için geri alınmış olmalıdır. Alınmadıysa:
 
-1. **OmniRoute'u durdurun** (daha fazla denemeyi önleyin)
+1. **Pusula'u durdurun** (daha fazla denemeyi önleyin)
 2. `sqlite3` ile **veritabanı durumunu kontrol edin**
 3. Kısmi geçişi **manuel olarak düzeltin**
-4. OmniRoute'u **yeniden çalıştırın** (geçiş yeniden denenecektir)
+4. Pusula'u **yeniden çalıştırın** (geçiş yeniden denenecektir)
 
 Bunu önlemek için geçişleri her zaman önce bir kopya üzerinde test edin.
 

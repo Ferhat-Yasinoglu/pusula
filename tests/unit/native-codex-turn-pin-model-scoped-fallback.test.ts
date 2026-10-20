@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-turn-pin-repro-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-turn-pin-repro-"));
 const ORIGINAL_DATA_DIR = process.env.DATA_DIR;
 process.env.DATA_DIR = TEST_DATA_DIR;
 
@@ -139,7 +139,7 @@ describe("Native Codex Turn Pin model-scoped fallback", () => {
             status: 200,
             headers: {
               "content-type": "application/json",
-              "x-omniroute-selected-connection-id": conn1Id,
+              "x-pusula-selected-connection-id": conn1Id,
             },
           }
         );
@@ -183,7 +183,7 @@ describe("Native Codex Turn Pin model-scoped fallback", () => {
               status: 200,
               headers: {
                 "content-type": "application/json",
-                "x-omniroute-selected-connection-id": conn2Id,
+                "x-pusula-selected-connection-id": conn2Id,
               },
             }
           );
@@ -255,7 +255,7 @@ describe("Native Codex Turn Pin model-scoped fallback", () => {
               status: 200,
               headers: {
                 "content-type": "application/json",
-                "x-omniroute-selected-connection-id": conn1Id,
+                "x-pusula-selected-connection-id": conn1Id,
               },
             }
           );
@@ -306,7 +306,7 @@ describe("Native Codex Turn Pin model-scoped fallback", () => {
       handleSingleModel: async () =>
         new Response(JSON.stringify({ choices: [{ message: { content: "opus conn1" } }] }), {
           status: 200,
-          headers: { "x-omniroute-selected-connection-id": conn1Id },
+          headers: { "x-pusula-selected-connection-id": conn1Id },
         }),
       isModelAvailable: async () => true,
       log: createLog(),
@@ -326,7 +326,7 @@ describe("Native Codex Turn Pin model-scoped fallback", () => {
         attempted.push({ modelStr, connectionId: target?.connectionId ?? undefined });
         return new Response(JSON.stringify({ choices: [{ message: { content: "opus conn2" } }] }), {
           status: 200,
-          headers: { "x-omniroute-selected-connection-id": conn2Id },
+          headers: { "x-pusula-selected-connection-id": conn2Id },
         });
       },
       isModelAvailable: async () => true,
@@ -355,7 +355,7 @@ describe("Native Codex Turn Pin model-scoped fallback", () => {
       handleSingleModel: async () =>
         new Response(JSON.stringify({ choices: [{ message: { content: "opus" } }] }), {
           status: 200,
-          headers: { "x-omniroute-selected-connection-id": conn1.id },
+          headers: { "x-pusula-selected-connection-id": conn1.id },
         }),
       isModelAvailable: async () => true,
       log: createLog(),
@@ -409,7 +409,7 @@ describe("Native Codex Turn Pin model-scoped fallback", () => {
       handleSingleModel: async () =>
         new Response(JSON.stringify({ choices: [{ message: { content: "opus" } }] }), {
           status: 200,
-          headers: { "x-omniroute-selected-connection-id": conn1.id },
+          headers: { "x-pusula-selected-connection-id": conn1.id },
         }),
       isModelAvailable: async () => true,
       log: createLog(),
@@ -483,7 +483,7 @@ describe("Native Codex Turn Pin model-scoped fallback", () => {
             JSON.stringify({ choices: [{ message: { content: "codex output" } }] }),
             {
               status: 200,
-              headers: { "x-omniroute-selected-connection-id": codexConn.id },
+              headers: { "x-pusula-selected-connection-id": codexConn.id },
             }
           );
         }
@@ -518,7 +518,7 @@ describe("Native Codex Turn Pin model-scoped fallback", () => {
       handleSingleModel: async () =>
         new Response(JSON.stringify({ choices: [{ message: { content: "opus" } }] }), {
           status: 200,
-          headers: { "x-omniroute-selected-connection-id": conn1.id },
+          headers: { "x-pusula-selected-connection-id": conn1.id },
         }),
       isModelAvailable: async () => true,
       log: createLog(),
@@ -539,7 +539,7 @@ describe("Native Codex Turn Pin model-scoped fallback", () => {
           attempted.push(m);
           return new Response(
             JSON.stringify({ choices: [{ message: { content: "gemini retry" } }] }),
-            { status: 200, headers: { "x-omniroute-selected-connection-id": conn1.id } }
+            { status: 200, headers: { "x-pusula-selected-connection-id": conn1.id } }
           );
         },
         isModelAvailable: async () => true,
@@ -601,7 +601,7 @@ describe("Native Codex Turn Pin model-scoped fallback", () => {
             status: 200,
             headers: {
               "content-type": "application/json",
-              "x-omniroute-selected-connection-id": conn1Id,
+              "x-pusula-selected-connection-id": conn1Id,
             },
           }
         );
@@ -643,7 +643,7 @@ describe("Native Codex Turn Pin model-scoped fallback", () => {
               status: 200,
               headers: {
                 "content-type": "application/json",
-                "x-omniroute-selected-connection-id": conn2Id,
+                "x-pusula-selected-connection-id": conn2Id,
               },
             }
           );
@@ -655,7 +655,7 @@ describe("Native Codex Turn Pin model-scoped fallback", () => {
               status: 200,
               headers: {
                 "content-type": "application/json",
-                "x-omniroute-selected-connection-id": conn1Id,
+                "x-pusula-selected-connection-id": conn1Id,
               },
             }
           );
@@ -704,7 +704,7 @@ describe("Native Codex Turn Pin model-scoped fallback", () => {
           JSON.stringify({ choices: [{ message: { content: "gemini continued" } }] }),
           {
             status: 200,
-            headers: { "x-omniroute-selected-connection-id": conn2Id },
+            headers: { "x-pusula-selected-connection-id": conn2Id },
           }
         );
       },
@@ -739,7 +739,7 @@ describe("Native Codex Turn Pin model-scoped fallback", () => {
           JSON.stringify({ choices: [{ message: { content: "gemini new turn" } }] }),
           {
             status: 200,
-            headers: { "x-omniroute-selected-connection-id": conn2Id },
+            headers: { "x-pusula-selected-connection-id": conn2Id },
           }
         );
       },

@@ -98,10 +98,10 @@ test("an HTTP-date Retry-After becomes seconds from now, clamped to 3600", async
   assert.equal(far.retry_after_seconds, 3600);
 });
 
-test("falls back to x-omniroute-retry-after-seconds when Retry-After is absent", async () => {
+test("falls back to x-pusula-retry-after-seconds when Retry-After is absent", async () => {
   const frame = await responsesFrame(
     slow(errorBody("rate_limit_error", "rate_limit_exceeded"), 429, {
-      "x-omniroute-retry-after-seconds": "12",
+      "x-pusula-retry-after-seconds": "12",
     })
   );
   assert.equal(frame.retry_after_seconds, 12);

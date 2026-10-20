@@ -5,7 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import { cleanupTempDataDir } from "../_setup/tempDataDir.ts";
 
-const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-responses-parse-once-"));
+const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-responses-parse-once-"));
 process.env.DATA_DIR = dataDir;
 after(async () => await cleanupTempDataDir(dataDir));
 

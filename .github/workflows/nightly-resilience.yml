@@ -51,9 +51,9 @@ jobs:
       - name: Build CLI bundle
         env:
           JWT_SECRET: ci-build-secret-with-sufficient-length-for-validation
-          OMNIROUTE_BUILD_BACKEND_ONLY: "1"
+          PUSULA_BUILD_BACKEND_ONLY: "1"
         run: npm run build:cli
-      - name: Start OmniRoute (background)
+      - name: Start Pusula (background)
         env:
           JWT_SECRET: ci-build-secret-with-sufficient-length-for-validation
           PORT: "20128"
@@ -107,7 +107,7 @@ jobs:
       PORT: "21777"
       # Boot window: 15 min is not enough when both omni-light listeners are
       # already building concurrent jobs; 30 min covers the observed worst case.
-      OMNIROUTE_PLAYWRIGHT_WEB_SERVER_TIMEOUT: "1800000"
+      PUSULA_PLAYWRIGHT_WEB_SERVER_TIMEOUT: "1800000"
     steps:
       - uses: actions/checkout@v7
         with:

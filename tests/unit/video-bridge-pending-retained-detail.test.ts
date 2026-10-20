@@ -112,8 +112,8 @@ test("sensitive completion keeps omission markers when no response preview was s
   finalizePendingScope(scope, { status: 204 });
   const completed = getCompletedDetails().get(id);
   assert.ok(completed);
-  assert.deepEqual(completed.providerResponse, { _omniroute_omitted: "video-transcript" });
-  assert.deepEqual(completed.clientResponse, { _omniroute_omitted: "video-transcript" });
+  assert.deepEqual(completed.providerResponse, { _pusula_omitted: "video-transcript" });
+  assert.deepEqual(completed.clientResponse, { _pusula_omitted: "video-transcript" });
 });
 
 test("ordinary non-video pending details retain their existing payloads", () => {

@@ -1,4 +1,4 @@
-import { errorResponse } from "@omniroute/open-sse/utils/error.ts";
+import { errorResponse } from "@pusula/open-sse/utils/error.ts";
 
 import {
   assertCommonChatGptWebProviderAvailable,

@@ -29,7 +29,7 @@ import { join } from "node:path";
 
 // Configure file logging BEFORE importing the logger (the shared logger builds
 // its transports at import time).
-const dir = mkdtempSync(join(tmpdir(), "omniroute-auto-best-no-warn-"));
+const dir = mkdtempSync(join(tmpdir(), "pusula-auto-best-no-warn-"));
 const logFile = join(dir, "app.log");
 process.env.NODE_ENV = "production"; // JSON to file, simplest single-directory path
 process.env.APP_LOG_TO_FILE = "true";

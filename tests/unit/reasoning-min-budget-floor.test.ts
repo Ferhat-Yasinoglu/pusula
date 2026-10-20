@@ -1,5 +1,5 @@
 /**
- * Opt-in reasoning budget floor (`OMNIROUTE_REASONING_MIN_BUDGET`).
+ * Opt-in reasoning budget floor (`PUSULA_REASONING_MIN_BUDGET`).
  *
  * - Env unset/invalid: budgets pass through verbatim — #9507 no-enlargement
  *   contract unchanged.
@@ -16,7 +16,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-min-budget-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-min-budget-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../src/lib/db/core.ts");

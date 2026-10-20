@@ -122,7 +122,7 @@ test("installProcessCrashGuard does not throw on import and is idempotent", () =
   assert.doesNotThrow(() => installProcessCrashGuard(() => {}));
   assert.doesNotThrow(() => installProcessCrashGuard(() => {}));
 });
-test("isClientAbortError matches OmniRoute SSE AbortError shapes (#fix-crash-guard-logger-7)", () => {
+test("isClientAbortError matches Pusula SSE AbortError shapes (#fix-crash-guard-logger-7)", () => {
   // Exact production shape from the 2026-08-31 crash log:
   //   ⨯ unhandledRejection: Error [AbortError]: request_signal_aborted
   const sseAbort = Object.assign(new Error("request_signal_aborted"), { name: "AbortError" });
@@ -141,7 +141,7 @@ test("shouldSwallowUncaught absorbs SSE AbortError rejections", () => {
 });
 
 test("isClientAbortError absorbs combo abort reasons (exact 2026-08-31 hedge-cancelled crash shape)", () => {
-  // omniroute.log, 2026-08-31T23:47Z: the process died at this guard's own
+  // pusula.log, 2026-08-31T23:47Z: the process died at this guard's own
   // uncaughtException re-throw with
   //   Error [AbortError]: hedge-cancelled
   //       at ... AbortController.abort ... handleDisconnect

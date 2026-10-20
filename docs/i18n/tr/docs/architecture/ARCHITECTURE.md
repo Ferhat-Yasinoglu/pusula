@@ -1,4 +1,4 @@
-# OmniRoute Architecture (Türkçe)
+# Pusula Architecture (Türkçe)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../architecture/ARCHITECTURE.md) · 🇪🇹 [am](../../../am/docs/architecture/ARCHITECTURE.md) · 🇸🇦 [ar](../../../ar/docs/architecture/ARCHITECTURE.md) · 🇦🇿 [az](../../../az/docs/architecture/ARCHITECTURE.md) · 🇧🇬 [bg](../../../bg/docs/architecture/ARCHITECTURE.md) · 🇧🇩 [bn](../../../bn/docs/architecture/ARCHITECTURE.md) · 🇧🇦 [bs](../../../bs/docs/architecture/ARCHITECTURE.md) · 🇨🇿 [cs](../../../cs/docs/architecture/ARCHITECTURE.md) · 🇩🇰 [da](../../../da/docs/architecture/ARCHITECTURE.md) · 🇩🇪 [de](../../../de/docs/architecture/ARCHITECTURE.md) · 🇬🇷 [el](../../../el/docs/architecture/ARCHITECTURE.md) · 🇪🇸 [es](../../../es/docs/architecture/ARCHITECTURE.md) · 🇪🇪 [et](../../../et/docs/architecture/ARCHITECTURE.md) · 🇮🇷 [fa](../../../fa/docs/architecture/ARCHITECTURE.md) · 🇫🇮 [fi](../../../fi/docs/architecture/ARCHITECTURE.md) · 🇫🇷 [fr](../../../fr/docs/architecture/ARCHITECTURE.md) · 🇮🇪 [ga](../../../ga/docs/architecture/ARCHITECTURE.md) · 🇮🇳 [gu](../../../gu/docs/architecture/ARCHITECTURE.md) · 🇳🇬 [ha](../../../ha/docs/architecture/ARCHITECTURE.md) · 🇮🇱 [he](../../../he/docs/architecture/ARCHITECTURE.md) · 🇮🇳 [hi](../../../hi/docs/architecture/ARCHITECTURE.md) · 🇭🇷 [hr](../../../hr/docs/architecture/ARCHITECTURE.md) · 🇭🇺 [hu](../../../hu/docs/architecture/ARCHITECTURE.md) · 🇦🇲 [hy](../../../hy/docs/architecture/ARCHITECTURE.md) · 🇮🇩 [id](../../../id/docs/architecture/ARCHITECTURE.md) · 🇳🇬 [ig](../../../ig/docs/architecture/ARCHITECTURE.md) · 🇮🇹 [it](../../../it/docs/architecture/ARCHITECTURE.md) · 🇯🇵 [ja](../../../ja/docs/architecture/ARCHITECTURE.md) · 🇬🇪 [ka](../../../ka/docs/architecture/ARCHITECTURE.md) · 🇰🇭 [km](../../../km/docs/architecture/ARCHITECTURE.md) · 🇮🇳 [kn](../../../kn/docs/architecture/ARCHITECTURE.md) · 🇰🇷 [ko](../../../ko/docs/architecture/ARCHITECTURE.md) · 🇱🇹 [lt](../../../lt/docs/architecture/ARCHITECTURE.md) · 🇱🇻 [lv](../../../lv/docs/architecture/ARCHITECTURE.md) · 🇮🇳 [ml](../../../ml/docs/architecture/ARCHITECTURE.md) · 🇮🇳 [mr](../../../mr/docs/architecture/ARCHITECTURE.md) · 🇲🇾 [ms](../../../ms/docs/architecture/ARCHITECTURE.md) · 🇲🇹 [mt](../../../mt/docs/architecture/ARCHITECTURE.md) · 🇲🇲 [my](../../../my/docs/architecture/ARCHITECTURE.md) · 🇳🇵 [ne](../../../ne/docs/architecture/ARCHITECTURE.md) · 🇳🇱 [nl](../../../nl/docs/architecture/ARCHITECTURE.md) · 🇳🇴 [no](../../../no/docs/architecture/ARCHITECTURE.md) · 🇮🇳 [or](../../../or/docs/architecture/ARCHITECTURE.md) · 🇮🇳 [pa](../../../pa/docs/architecture/ARCHITECTURE.md) · 🇵🇭 [phi](../../../phi/docs/architecture/ARCHITECTURE.md) · 🇵🇱 [pl](../../../pl/docs/architecture/ARCHITECTURE.md) · 🇵🇹 [pt](../../../pt/docs/architecture/ARCHITECTURE.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/architecture/ARCHITECTURE.md) · 🇷🇴 [ro](../../../ro/docs/architecture/ARCHITECTURE.md) · 🇷🇺 [ru](../../../ru/docs/architecture/ARCHITECTURE.md) · 🇱🇰 [si](../../../si/docs/architecture/ARCHITECTURE.md) · 🇸🇰 [sk](../../../sk/docs/architecture/ARCHITECTURE.md) · 🇸🇮 [sl](../../../sl/docs/architecture/ARCHITECTURE.md) · 🇷🇸 [sr](../../../sr/docs/architecture/ARCHITECTURE.md) · 🇸🇪 [sv](../../../sv/docs/architecture/ARCHITECTURE.md) · 🇰🇪 [sw](../../../sw/docs/architecture/ARCHITECTURE.md) · 🇮🇳 [ta](../../../ta/docs/architecture/ARCHITECTURE.md) · 🇮🇳 [te](../../../te/docs/architecture/ARCHITECTURE.md) · 🇹🇭 [th](../../../th/docs/architecture/ARCHITECTURE.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/architecture/ARCHITECTURE.md) · 🇵🇰 [ur](../../../ur/docs/architecture/ARCHITECTURE.md) · 🇺🇿 [uz](../../../uz/docs/architecture/ARCHITECTURE.md) · 🇻🇳 [vi](../../../vi/docs/architecture/ARCHITECTURE.md) · 🇳🇬 [yo](../../../yo/docs/architecture/ARCHITECTURE.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/architecture/ARCHITECTURE.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/architecture/ARCHITECTURE.md)
 
@@ -10,7 +10,7 @@ _Son güncelleme: 2026-06-28_
 
 ## Yönetici Özeti
 
-OmniRoute, Next.js üzerine kurulmuş yerel bir yapay zekâ yönlendirme ağ geçidi ve kontrol panelidir.
+Pusula, Next.js üzerine kurulmuş yerel bir yapay zekâ yönlendirme ağ geçidi ve kontrol panelidir.
 Tek bir OpenAI uyumlu uç nokta (`/v1/*`) sağlar ve trafiği çeviri, yedek modele geçiş, token yenileme ve kullanım takibi özellikleriyle birden fazla üst sağlayıcı arasında yönlendirir.
 
 Temel yetenekler:
@@ -164,7 +164,7 @@ flowchart LR
         BROWSER[Tarayıcı Panosu]
     end
 
-    subgraph Router[OmniRoute Yerel Süreci]
+    subgraph Router[Pusula Yerel Süreci]
         API[V1 Uyumluluk API'si\n/v1/*]
         DASH[Pano + Yönetim API'si\n/api/*]
         CORE[SSE + Dönüştürme Çekirdeği\nopen-sse + src/sse]
@@ -327,7 +327,7 @@ OAuth sağlayıcı modülleri (`src/lib/oauth/providers/` altında 22 ayrı dosy
 
 ## 5) Gömülü Hizmetler (v3.8.4)
 
-OmniRoute, **gömülü hizmetler** olarak adlandırılan ve yerel olarak çalışan AI araç süreçlerini
+Pusula, **gömülü hizmetler** olarak adlandırılan ve yerel olarak çalışan AI araç süreçlerini
 kurabilir, denetleyebilir ve bunlara yönlendirme yapabilir. Beş hizmet birlikte sunulur: 9Router, CLIProxyAPI, Bifrost, Mux ve Dario.
 
 Mimari katmanlar:
@@ -436,7 +436,7 @@ kendilerinin bir araya getirmek zorunda kalmaması için ilke kararlarını merk
 - Kota önbelleği: `src/domain/quotaCache.ts`
 - Bozulma durumu: `src/domain/degradation.ts`
 - Yapılandırma denetimi: `src/domain/configAudit.ts`
-- OmniRoute yanıt meta verisi oluşturucusu: `src/domain/omnirouteResponseMeta.ts`
+- Pusula yanıt meta verisi oluşturucusu: `src/domain/pusulaResponseMeta.ts`
 - Değerlendirme alt sistemi: `src/domain/assessment/` — periyodik değerlendirme işleri
 
 ### E. Yetkilendirme İşlem Hattı
@@ -517,7 +517,7 @@ Birincil durum veritabanı (SQLite):
 
 - Temel altyapı: `src/lib/db/core.ts` (better-sqlite3, migrasyonlar, WAL)
 - Veritabanı erişimi: belirli `src/lib/db/*` modüllerini doğrudan içe aktarın (eski `localDb.ts` toplu dışa aktarım modülü kaldırıldı)
-- Dosya: `${DATA_DIR}/storage.sqlite` (ayarlandığında `$XDG_CONFIG_HOME/omniroute/storage.sqlite`, aksi takdirde `~/.omniroute/storage.sqlite`)
+- Dosya: `${DATA_DIR}/storage.sqlite` (ayarlandığında `$XDG_CONFIG_HOME/pusula/storage.sqlite`, aksi takdirde `~/.pusula/storage.sqlite`)
 - Varlıklar (tablolar + KV ad alanları): providerConnections, providerNodes, modelAliases, combos, apiKeys, settings, pricing, **customModels**, **proxyConfig**, **ipFilter**, **thinkingBudget**, **systemPrompt**
 
 Kullanım verilerinin kalıcılığı:
@@ -813,7 +813,7 @@ flowchart LR
         Browser[Dashboard Browser]
     end
 
-    subgraph ContainerOrProcess[OmniRoute Runtime]
+    subgraph ContainerOrProcess[Pusula Runtime]
         Next[Next.js Server\nPORT=20128]
         Core[SSE Core + Executors]
         MainDB[(storage.sqlite)]
@@ -931,7 +931,7 @@ Diğer tüm sağlayıcılar (özel uyumlu düğümler dahil) `DefaultExecutor` k
 
 ## Sağlayıcı Uyumluluk Matrisi
 
-> **Not:** Aşağıdaki matris, OmniRoute v3.8.0'da kayıtlı 351 sağlayıcıyı temsil eden bir örneklemdir.
+> **Not:** Aşağıdaki matris, Pusula v3.8.0'da kayıtlı 351 sağlayıcıyı temsil eden bir örneklemdir.
 > Standart ve sürekli güncellenen liste için [`docs/reference/PROVIDER_REFERENCE.md`](../reference/PROVIDER_REFERENCE.md)
 > (otomatik oluşturulur) belgesine veya yükleme sırasında Zod ile doğrulanan asıl kaynak olan
 > `src/shared/constants/providers.ts` dosyasına başvurun.
@@ -1113,7 +1113,7 @@ Ayrıntılı istek yükü yakalama, yönlendirilen çağrı başına en fazla d�
 - İstemciden alınan ham istek
 - Gerçekte üst sağlayıcıya gönderilen çevrilmiş istek
 - JSON olarak yeniden oluşturulan sağlayıcı yanıtı; akışlı yanıtlar, nihai özet ve akış meta verileri biçiminde sıkıştırılır
-- OmniRoute tarafından döndürülen nihai istemci yanıtı; akışlı yanıtlar aynı sıkıştırılmış özet biçiminde depolanır
+- Pusula tarafından döndürülen nihai istemci yanıtı; akışlı yanıtlar aynı sıkıştırılmış özet biçiminde depolanır
 
 ## Güvenlik Açısından Hassas Sınırlar
 
@@ -1139,11 +1139,11 @@ Kod tarafından etkin olarak kullanılan ortam değişkenleri:
 
 ## Bilinen Mimari Notlar
 
-1. `usageDb` ve `localDb`, eski dosya taşıma desteğiyle aynı temel dizin politikasını (`DATA_DIR` -> `XDG_CONFIG_HOME/omniroute` -> `~/.omniroute`) paylaşır.
+1. `usageDb` ve `localDb`, eski dosya taşıma desteğiyle aynı temel dizin politikasını (`DATA_DIR` -> `XDG_CONFIG_HOME/pusula` -> `~/.pusula`) paylaşır.
 2. `/api/v1/route.ts`, anlamsal sapmayı önlemek için `/api/v1/models` tarafından kullanılan aynı birleşik katalog oluşturucusuna (`src/app/api/v1/models/catalog.ts`) yetki devreder.
 3. İstek günlükleyicisi etkinleştirildiğinde tüm üst bilgileri/gövdeyi yazar; günlük dizinini hassas olarak değerlendirin.
 4. Bulut davranışı, `NEXT_PUBLIC_BASE_URL` değerinin doğruluğuna ve bulut uç noktasının erişilebilirliğine bağlıdır.
-5. `open-sse/` dizini, `@omniroute/open-sse` **npm çalışma alanı paketi** olarak yayımlanır. Kaynak kod, bunu `@omniroute/open-sse/...` aracılığıyla içe aktarır (Next.js `transpilePackages` tarafından çözümlenir). Bu belgedeki dosya yolları, tutarlılık için hâlâ `open-sse/` dizin adını kullanır.
+5. `open-sse/` dizini, `@pusula/open-sse` **npm çalışma alanı paketi** olarak yayımlanır. Kaynak kod, bunu `@pusula/open-sse/...` aracılığıyla içe aktarır (Next.js `transpilePackages` tarafından çözümlenir). Bu belgedeki dosya yolları, tutarlılık için hâlâ `open-sse/` dizin adını kullanır.
 6. Panodaki grafikler, erişilebilir ve etkileşimli analitik görselleştirmeler (model kullanım çubuk grafikleri, başarı oranlarını içeren sağlayıcı döküm tabloları) için **Recharts** (SVG tabanlı) kullanır.
 7. E2E testleri **Playwright** (`tests/e2e/`) kullanır ve `npm run test:e2e` aracılığıyla çalıştırılır. Birim testleri **Node.js test çalıştırıcısını** (`tests/unit/`) kullanır ve `npm run test:unit` aracılığıyla çalıştırılır. `src/` altındaki kaynak kod **TypeScript** (`.ts`/`.tsx`) kullanır; `open-sse/` çalışma alanı ise JavaScript (`.js`) olarak kalır.
 8. Ayarlar sayfası 7 sekme hâlinde düzenlenmiştir: Genel, Görünüm, Yapay Zekâ, Güvenlik, Yönlendirme, Dayanıklılık, Gelişmiş. Dayanıklılık sayfası yalnızca istek kuyruğunu, bağlantı bekleme süresini, sağlayıcı devre kesicisini ve bekleme süresinin dolmasını bekleme davranışını yapılandırır; canlı devre kesici çalışma zamanı durumu Sağlık sayfasında gösterilir.
@@ -1154,7 +1154,7 @@ Kod tarafından etkin olarak kullanılan ortam değişkenleri:
 ## Operasyonel Doğrulama Kontrol Listesi
 
 - Kaynak koddan derleyin: `npm run build`
-- Docker imajını oluşturun: `docker build -t omniroute .`
+- Docker imajını oluşturun: `docker build -t pusula .`
 - Hizmeti başlatın ve şunları doğrulayın:
 - `GET /api/settings`
 - `GET /api/v1/models`

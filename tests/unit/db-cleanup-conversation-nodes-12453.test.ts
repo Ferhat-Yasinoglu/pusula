@@ -16,7 +16,7 @@
  * DATA_DIR isolation is self-contained (mkdtempSync below), not dependent on
  * the test:unit harness's `--import ./tests/_setup/isolateDataDir.ts`: this
  * file runs real DELETEs through getDbInstance(), which resolves to the
- * developer's ~/.omniroute/storage.sqlite when DATA_DIR is unset. Do NOT
+ * developer's ~/.pusula/storage.sqlite when DATA_DIR is unset. Do NOT
  * remove the DATA_DIR override below.
  */
 
@@ -26,7 +26,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-12453-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-12453-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const { cleanupConversationTurnNodes, cleanupAgenticConversations, runAutoCleanup } =

@@ -4,10 +4,10 @@
  *
  * The runner sends every graded case down the ordinary chat path, so a case
  * picks up whatever that path injects: a selected output style is prepended as
- * a system message (gated on `x-omniroute-compression !== "off"` —
+ * a system message (gated on `x-pusula-compression !== "off"` —
  * open-sse/handlers/chatCore.ts) and, when the run carries an API key,
  * retrieved memory plus the built-in `memory_*` tools are added (gated on
- * `x-omniroute-no-memory`). Both are request-header opt-outs and the runner set
+ * `x-pusula-no-memory`). Both are request-header opt-outs and the runner set
  * neither, so an evaluation measured the operator's injected context instead of
  * the model.
  *
@@ -25,8 +25,8 @@ async function readBody(request: Request): Promise<Record<string, unknown>> {
 test("eval case requests opt out of output-style and memory injection (#13139)", () => {
   const request = buildEvalCaseRequest({ input: {} }, { type: "suite-default" }, null);
 
-  assert.equal(request.headers.get("x-omniroute-compression"), "off");
-  assert.equal(request.headers.get("x-omniroute-no-memory"), "true");
+  assert.equal(request.headers.get("x-pusula-compression"), "off");
+  assert.equal(request.headers.get("x-pusula-no-memory"), "true");
 });
 
 test("the opt-out survives a run that carries an API key", () => {
@@ -35,8 +35,8 @@ test("the opt-out survives a run that carries an API key", () => {
   // *worse*. Authorization must be added without dropping the opt-outs.
   const request = buildEvalCaseRequest({ input: {} }, { type: "model", id: "gpt-4o" }, "sk-test");
 
-  assert.equal(request.headers.get("x-omniroute-compression"), "off");
-  assert.equal(request.headers.get("x-omniroute-no-memory"), "true");
+  assert.equal(request.headers.get("x-pusula-compression"), "off");
+  assert.equal(request.headers.get("x-pusula-no-memory"), "true");
   assert.equal(request.headers.get("Authorization"), "Bearer sk-test");
   assert.equal(request.headers.get("Content-Type"), "application/json");
 });

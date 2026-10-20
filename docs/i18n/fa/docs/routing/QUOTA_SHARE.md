@@ -15,7 +15,7 @@
 ۵ ساعتهٔ Codex یا ۱۵۰۰ درخواست در ساعت Kimi) را بهصورت منصفانه میان چند کلید API که
 از اتصال یکسانی استفاده میکنند، توزیع میکند.
 
-**مشکلی که حل میکند:** OmniRoute درخواستهای بسیاری از کلیدهای API را به یک حساب
+**مشکلی که حل میکند:** Pusula درخواستهای بسیاری از کلیدهای API را به یک حساب
 ارائهدهندهٔ بالادستی یکسان پراکسی میکند. بدون منطق اشتراکگذاری، افزایش ناگهانی درخواستها از کلید A میتواند
 سهمیهٔ ارائهدهنده برای آن ساعت را تمام کند و کلیدهای B و C را تا زمان بازنشانی پنجره مسدود نگه دارد.
 موتور با روشهای زیر از این اتفاق جلوگیری میکند:
@@ -119,7 +119,7 @@ effective = prev × weight + curr
 
 - جدول: `quota_consumption` (به migrationهای `073_quota_pools.sql` / `074_quota_consumption.sql` مراجعه کنید).
 - مناسب برای استقرارهای تکنمونهای.
-- تمام دادههای ماندگار در DB موجود SQLite متعلق به OmniRoute ذخیره میشوند (`DATA_DIR/storage.sqlite`).
+- تمام دادههای ماندگار در DB موجود SQLite متعلق به Pusula ذخیره میشوند (`DATA_DIR/storage.sqlite`).
 
 ### Redis (اختیاری، چندنمونهای)
 
@@ -326,7 +326,7 @@ if (candidate.quotaSoftPenalty) {
 هنگامی که `/dashboard/costs/quota-share` برای اولین بار بارگذاری میشود، هوک `useLocalStoragePoolMigration`
 موارد زیر را بررسی میکند:
 
-1. `localStorage.getItem("omniroute:quota-share:pools")` خالی نباشد.
+1. `localStorage.getItem("pusula:quota-share:pools")` خالی نباشد.
 2. `GET /api/quota/pools` مقدار `[]` را برگرداند (DB خالی باشد).
 
 اگر هر دو شرط برقرار باشند، هر استخر قدیمی را بهصورت دستهای به `POST /api/quota/pools` ارسال میکند،

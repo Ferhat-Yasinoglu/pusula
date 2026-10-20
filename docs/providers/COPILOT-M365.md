@@ -41,7 +41,7 @@ The full URL has the form:
 wss://substrate.office.com/m365Copilot/Chathub/<oid>@<tenant>?...&access_token=<jwt>
 ```
 
-6. In OmniRoute, go to **Providers → Add Provider**, select **Microsoft 365 Copilot
+6. In Pusula, go to **Providers → Add Provider**, select **Microsoft 365 Copilot
    (BizChat)**, and paste the credential in the format:
 
 ```
@@ -58,9 +58,9 @@ file:
 1. Open **DevTools → Network**.
 2. Start or continue a BizChat conversation (this triggers the WebSocket connection).
 3. Right-click in the Network panel and select **Save all as HAR with content**.
-4. In OmniRoute, use the **Import .har file** button on the provider connection dialog.
+4. In Pusula, use the **Import .har file** button on the provider connection dialog.
 
-OmniRoute scans the HAR for the Chathub WebSocket URL, extracts the
+Pusula scans the HAR for the Chathub WebSocket URL, extracts the
 `access_token` and `chathubPath`, and populates the credential fields automatically. The
 HAR import decodes the JWT expiry and shows the remaining token lifetime.
 
@@ -83,7 +83,7 @@ To avoid manual re-capture, you can store a Microsoft refresh token in the conne
 | `tier`         | `individual` (default), `edu`, or `enterprise`                             |
 
 Obtain the refresh token from a Microsoft device-code or authorization-code flow
-scoped to `substrate.office.com/sydney`. With `refreshToken` set, OmniRoute
+scoped to `substrate.office.com/sydney`. With `refreshToken` set, Pusula
 pre-flight-refreshes the `access_token` before each request, so you do not need to
 re-capture after every ~75-minute expiry.
 
@@ -141,8 +141,8 @@ be hidden by default in some tiers.
 
 ## References
 
-- Issue: [#12779](https://github.com/diegosouzapw/OmniRoute/issues/12779)
-- Discussion: [#12756](https://github.com/diegosouzapw/OmniRoute/discussions/12756)
+- Issue: [#12779](https://github.com/Ferhat-Yasinoglu/pusula/issues/12779)
+- Discussion: [#12756](https://github.com/Ferhat-Yasinoglu/pusula/discussions/12756)
 - Source: `src/shared/constants/providers/web-cookie.ts` (provider definition)
 - HAR import: `src/shared/utils/m365HarImport.ts`
 - Credential fields: `src/shared/providers/webSessionCredentials.ts`

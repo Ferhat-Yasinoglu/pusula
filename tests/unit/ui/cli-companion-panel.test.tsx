@@ -29,14 +29,14 @@ afterEach(() => {
 describe("CLI companion copy-only flow", () => {
   it("shows server scope, unknown state and copies a safe context runbook without network calls", async () => {
     render(<CliCompanionPanel targets={targets} statuses={null} loading={false} error={false} />);
-    expect(screen.getByText(/Detection describes the OmniRoute server host/)).toBeTruthy();
+    expect(screen.getByText(/Detection describes the Pusula server host/)).toBeTruthy();
     expect(screen.getAllByText("Unknown")).toHaveLength(3);
     fireEvent.change(screen.getByLabelText("Existing context name (optional)"), {
       target: { value: "office" },
     });
     fireEvent.click(screen.getByRole("button", { name: "Copy: Preview the launch" }));
     await waitFor(() =>
-      expect(writeText).toHaveBeenCalledWith("omniroute run claude --context office --dry-run")
+      expect(writeText).toHaveBeenCalledWith("pusula run claude --context office --dry-run")
     );
     expect((await screen.findByText("Copied!")).getAttribute("role")).toBe("status");
     expect(fetch).not.toHaveBeenCalled();
@@ -47,7 +47,7 @@ describe("CLI companion copy-only flow", () => {
     fireEvent.change(screen.getByLabelText("CLI tool"), { target: { value: "qwen" } });
     expect(screen.queryByRole("button", { name: "Copy: Preview the launch" })).toBeNull();
     fireEvent.change(screen.getByLabelText("Model"), { target: { value: "provider/model" } });
-    expect(screen.getByText("omniroute run qwen --model provider/model --dry-run")).toBeTruthy();
+    expect(screen.getByText("pusula run qwen --model provider/model --dry-run")).toBeTruthy();
     fireEvent.change(screen.getByLabelText("Model"), { target: { value: "$(id)" } });
     expect(screen.queryByRole("button", { name: "Copy: Preview the launch" })).toBeNull();
     fireEvent.change(screen.getByLabelText("CLI tool"), { target: { value: "cline" } });

@@ -6,14 +6,14 @@ lastUpdated: "2026-09-21"
 
 # CLI model catalog and manual metadata
 
-`omniroute models` reads the selected server's public model catalog first, including
+`pusula models` reads the selected server's public model catalog first, including
 its custom and synchronized entries. `--output json` and `--output jsonl` return all
 matching rows, without a table truncation message. Interactive tables show at most
 50 rows. JSON preserves public context limits, modalities, capabilities, model source
 when supplied by the server, and API-format metadata; credentials and compatibility
 headers are not output. A legacy `/api/models` fallback is used only when the public
 endpoint returns HTTP 404, 405 or 501, never after an authentication failure.
-`omniroute completion refresh` uses that same catalog. A failed model-catalog request
+`pusula completion refresh` uses that same catalog. A failed model-catalog request
 returns a nonzero exit code and preserves the previous completion cache. Bash, Zsh
 and Fish completion scripts advertise the manual model subcommands.
 
@@ -26,14 +26,14 @@ model ID containing slashes is valid. Use a configured management context rather
 than putting credentials into command arguments.
 
 ```bash
-omniroute models openai --output json
-omniroute models manual openai
-omniroute models add openai my-model --name "My model" --context-window 32768 --dry-run
-omniroute models add openai my-model --name "My model" --context-window 32768
-omniroute models edit openai my-model --context-window 65536
-omniroute models edit openai my-model --clear-context-window
-omniroute models remove openai my-model --dry-run
-omniroute models remove openai my-model --yes
+pusula models openai --output json
+pusula models manual openai
+pusula models add openai my-model --name "My model" --context-window 32768 --dry-run
+pusula models add openai my-model --name "My model" --context-window 32768
+pusula models edit openai my-model --context-window 65536
+pusula models edit openai my-model --clear-context-window
+pusula models remove openai my-model --dry-run
+pusula models remove openai my-model --yes
 ```
 
 Examples describe syntax; replace provider/model IDs with entries belonging to your
@@ -64,7 +64,7 @@ exact provider connection produced all three proofs: generation, a nonce-bound
 synthetic tool call, and continuation after a synthetic tool result. No real tool
 execution is needed for those proofs.
 
-The existing `x-omniroute-connection` pin alone is insufficient as a proof receipt:
+The existing `x-pusula-connection` pin alone is insufficient as a proof receipt:
 credential selection can intentionally release a pin for cooldown, quota or
 excluded-account cases, and session affinity participates in selection. See
 `src/sse/services/auth.ts` and the `forcedConnectionId` handling in

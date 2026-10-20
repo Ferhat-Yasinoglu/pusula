@@ -27,10 +27,10 @@ import os from "node:os";
 import path from "node:path";
 
 const { checkAuggieCliVersion, initAuggieModels, resolveAuggieModel, __resetAuggieModels } =
-  await import("@omniroute/open-sse/executors/auggie");
+  await import("@pusula/open-sse/executors/auggie");
 
 const isWin32 = process.platform === "win32";
-const TMP_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-auggie-win32-test-"));
+const TMP_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-auggie-win32-test-"));
 
 /** Write a Windows batch stand-in for the auggie CLI. */
 function writeFakeCmd(name: string, body: string): string {

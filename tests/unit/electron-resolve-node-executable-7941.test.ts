@@ -5,8 +5,8 @@
  * run through the Helper binary (a background LSUIElement task) so no extra Dock icon
  * appears. resolveDarwinHelperExecutable() derives the Helper name from
  * path.basename(execPath) — electron-builder generates BOTH the main binary and the
- * Helper.app bundles from build.productName ("OmniRoute"). The old code used
- * app.getName() (package.json `name` = "omniroute-desktop"); the two diverged, so it
+ * Helper.app bundles from build.productName ("Pusula"). The old code used
+ * app.getName() (package.json `name` = "pusula-desktop"); the two diverged, so it
  * never matched a real Helper path and fell through to process.execPath — spawning the
  * main Electron binary and producing a second, inert Dock icon.
  */
@@ -18,18 +18,18 @@ import path from "node:path";
 const require = createRequire(import.meta.url);
 const { resolveDarwinHelperExecutable } = require("../../electron/lib/resolveNodeHelper.js");
 
-const EXEC = "/Applications/OmniRoute.app/Contents/MacOS/OmniRoute";
+const EXEC = "/Applications/Pusula.app/Contents/MacOS/Pusula";
 
 describe("#7941 — resolveDarwinHelperExecutable()", () => {
-  it("resolves the productName-derived framework Helper even though app.getName() would say 'omniroute-desktop'", () => {
+  it("resolves the productName-derived framework Helper even though app.getName() would say 'pusula-desktop'", () => {
     const frameworkHelper = path.join(
       path.dirname(EXEC),
       "..",
       "Frameworks",
-      "OmniRoute Helper.app",
+      "Pusula Helper.app",
       "Contents",
       "MacOS",
-      "OmniRoute Helper"
+      "Pusula Helper"
     );
     const result = resolveDarwinHelperExecutable({
       execPath: EXEC,
@@ -45,7 +45,7 @@ describe("#7941 — resolveDarwinHelperExecutable()", () => {
   });
 
   it("prefers the sibling (unsuffixed) Helper next to the main binary when present", () => {
-    const sibling = path.join(path.dirname(EXEC), "OmniRoute Helper");
+    const sibling = path.join(path.dirname(EXEC), "Pusula Helper");
     const result = resolveDarwinHelperExecutable({
       execPath: EXEC,
       existsSync: (p: string) => p === sibling,

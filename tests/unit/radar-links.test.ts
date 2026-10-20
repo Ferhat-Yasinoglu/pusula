@@ -23,9 +23,9 @@ test.after(() => {
   delete process.env.RADAR_SUPPORTER_PLANS_URL;
 });
 
-test("getContributorClaimUrl: defaults to the radar.omniroute.online GitHub OAuth entry point", async () => {
+test("getContributorClaimUrl: defaults to the radar.pusula.online GitHub OAuth entry point", async () => {
   const { getContributorClaimUrl } = await import("../../src/lib/radar/links.ts");
-  assert.equal(getContributorClaimUrl(), "https://radar.omniroute.online/auth/github");
+  assert.equal(getContributorClaimUrl(), "https://radar.pusula.online/auth/github");
 });
 
 test("getContributorClaimUrl: honors RADAR_CONTRIBUTOR_CLAIM_URL override", async () => {
@@ -34,9 +34,9 @@ test("getContributorClaimUrl: honors RADAR_CONTRIBUTOR_CLAIM_URL override", asyn
   assert.equal(getContributorClaimUrl(), "https://fork.example.com/auth/github");
 });
 
-test("getSupporterPlansUrl: defaults to the radar.omniroute.online plans page", async () => {
+test("getSupporterPlansUrl: defaults to the radar.pusula.online plans page", async () => {
   const { getSupporterPlansUrl } = await import("../../src/lib/radar/links.ts");
-  assert.equal(getSupporterPlansUrl(), "https://radar.omniroute.online/planos");
+  assert.equal(getSupporterPlansUrl(), "https://radar.pusula.online/planos");
 });
 
 test("getSupporterPlansUrl: honors RADAR_SUPPORTER_PLANS_URL override", async () => {
@@ -51,6 +51,6 @@ test("getContributorClaimUrl / getSupporterPlansUrl: empty-string env falls back
   const { getContributorClaimUrl, getSupporterPlansUrl } = await import(
     "../../src/lib/radar/links.ts"
   );
-  assert.equal(getContributorClaimUrl(), "https://radar.omniroute.online/auth/github");
-  assert.equal(getSupporterPlansUrl(), "https://radar.omniroute.online/planos");
+  assert.equal(getContributorClaimUrl(), "https://radar.pusula.online/auth/github");
+  assert.equal(getSupporterPlansUrl(), "https://radar.pusula.online/planos");
 });

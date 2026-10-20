@@ -45,22 +45,22 @@ test("tasks route uses the same constant-time contract as the shared A2A auth he
 });
 
 test("tokensMatch behaves like the helper in src/app/a2a/route.ts", () => {
-  assert.equal(tokensMatch("omniroute-a2a-test-key", "omniroute-a2a-test-key"), true);
+  assert.equal(tokensMatch("pusula-a2a-test-key", "pusula-a2a-test-key"), true);
   assert.equal(
-    tokensMatch("x".repeat("omniroute-a2a-test-key".length), "omniroute-a2a-test-key"),
+    tokensMatch("x".repeat("pusula-a2a-test-key".length), "pusula-a2a-test-key"),
     false,
     "same-length different token is rejected"
   );
-  assert.equal(tokensMatch("", "omniroute-a2a-test-key"), false, "empty token is rejected");
+  assert.equal(tokensMatch("", "pusula-a2a-test-key"), false, "empty token is rejected");
   assert.equal(
-    tokensMatch("short", "omniroute-a2a-test-key"),
+    tokensMatch("short", "pusula-a2a-test-key"),
     false,
     "different-length token is rejected without throwing"
   );
 });
 
 test("authenticateA2A preserves the documented semantics", () => {
-  const API_KEY = "omniroute-a2a-test-key";
+  const API_KEY = "pusula-a2a-test-key";
 
   function makeRequest(token?: string): Request {
     return {
@@ -73,14 +73,14 @@ test("authenticateA2A preserves the documented semantics", () => {
     } as unknown as Request;
   }
 
-  delete process.env.OMNIROUTE_API_KEY;
+  delete process.env.PUSULA_API_KEY;
   assert.equal(
     authenticateA2A(makeRequest()),
     true,
-    "when OMNIROUTE_API_KEY is not set the route is open"
+    "when PUSULA_API_KEY is not set the route is open"
   );
 
-  process.env.OMNIROUTE_API_KEY = API_KEY;
+  process.env.PUSULA_API_KEY = API_KEY;
   assert.equal(authenticateA2A(makeRequest(API_KEY)), true, "a valid bearer token passes auth");
   assert.equal(
     authenticateA2A(makeRequest("x".repeat(API_KEY.length))),
@@ -89,5 +89,5 @@ test("authenticateA2A preserves the documented semantics", () => {
   );
   assert.equal(authenticateA2A(makeRequest("")), false, "an empty bearer token is rejected");
 
-  delete process.env.OMNIROUTE_API_KEY;
+  delete process.env.PUSULA_API_KEY;
 });

@@ -6,7 +6,7 @@ import {
 } from "@/lib/compliance/providerAudit";
 import { getCachedProviderConnectionById } from "@/lib/db/readCache";
 import { updateProviderConnection } from "@/lib/db/providers";
-import { clearRequestRejectedStreak } from "@omniroute/open-sse/services/requestRejectedStreak.ts";
+import { clearRequestRejectedStreak } from "@pusula/open-sse/services/requestRejectedStreak.ts";
 import { deleteProviderConnection } from "@/lib/db/providers/deletion";
 import { isCloudEnabled } from "@/lib/db/settings";
 import { getConsistentMachineId } from "@/shared/utils/machineId";
@@ -188,7 +188,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
             finalizeValidatedChatGptWebCodexSecrets,
             decodeChatGptWebCodexSecrets,
             encodeChatGptWebCodexSecrets,
-          } = await import("@omniroute/open-sse/services/chatgptWebCodexAdmin.ts");
+          } = await import("@pusula/open-sse/services/chatgptWebCodexAdmin.ts");
           const incomingSecrets = decodeChatGptWebCodexSecrets(apiKey);
           const existingSecrets = decodeChatGptWebCodexSecrets(existing.apiKey || "");
           const encoded = encodeChatGptWebCodexSecrets({
@@ -412,7 +412,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
 }
 
 // PATCH /api/providers/[id] - Update connection (partial)
-// The OpenAPI spec and the CLI (`omniroute providers rotate`, generated
+// The OpenAPI spec and the CLI (`pusula providers rotate`, generated
 // api-commands) both use PATCH, but only PUT was implemented — PATCH requests
 // 405'd. PATCH and PUT share the same update semantics here (the schema only
 // applies provided fields), so delegate to the PUT handler.

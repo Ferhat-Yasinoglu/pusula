@@ -40,7 +40,7 @@ function extractNamedConstLiteral(source: string, name: string): string {
   assert.fail(`${name} literal is not closed`);
 }
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-flagship-0day-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-flagship-0day-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const { createProviderConnection } = await import("../../src/lib/db/providers.ts");

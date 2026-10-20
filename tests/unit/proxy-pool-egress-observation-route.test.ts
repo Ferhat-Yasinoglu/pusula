@@ -9,7 +9,7 @@ import { randomUUID } from "node:crypto";
 // GET /api/settings/proxies/pool. These tests pin its shape, its null-on-failure contract,
 // its opt-in flag (PROXY_POOL_EGRESS_OBSERVATION, default off) and its Zod parameter checks.
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-pool-egress-route-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-pool-egress-route-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = "test-secret";
 delete process.env.INITIAL_PASSWORD; // auth not required in this test env

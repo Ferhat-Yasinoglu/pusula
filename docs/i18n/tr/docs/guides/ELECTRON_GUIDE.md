@@ -7,7 +7,7 @@
 > **Doğruluk kaynağı:** `electron/` çalışma alanı
 > **Son güncelleme:** 2026-06-28 — v3.8.40
 
-OmniRoute, **Electron 41** + **electron-builder 26.10** üzerine kurulu, platformlar arası bir masaüstü uygulamasıyla (Windows / macOS / Linux) birlikte sunulur. Masaüstü uygulaması, Next.js bağımsız sunucusunu bir alt süreç olarak başlatır, bir `BrowserWindow` örneğini bu sunucuya yönlendirir ve sistem tepsisi, otomatik güncelleyici, IPC köprüsü ile sıfır yapılandırmalı gizli anahtar önyüklemesi ekler.
+Pusula, **Electron 41** + **electron-builder 26.10** üzerine kurulu, platformlar arası bir masaüstü uygulamasıyla (Windows / macOS / Linux) birlikte sunulur. Masaüstü uygulaması, Next.js bağımsız sunucusunu bir alt süreç olarak başlatır, bir `BrowserWindow` örneğini bu sunucuya yönlendirir ve sistem tepsisi, otomatik güncelleyici, IPC köprüsü ile sıfır yapılandırmalı gizli anahtar önyüklemesi ekler.
 
 ## Mimari
 
@@ -44,8 +44,8 @@ OmniRoute, **Electron 41** + **electron-builder 26.10** üzerine kurulu, platfor
 | `electron-updater` | `^6.8.9`                                                         |
 | `better-sqlite3`   | kök `^13.0.2` (Node-API ön derlemeleri — Electron derlemesi yok) |
 | Uygulama sürümü    | `3.8.0`                                                          |
-| Uygulama kimliği   | `online.omniroute.desktop`                                       |
-| Ürün adı           | `OmniRoute`                                                      |
+| Uygulama kimliği   | `online.pusula.desktop`                                       |
+| Ürün adı           | `Pusula`                                                      |
 
 ## Betikler (kök `package.json`)
 
@@ -162,28 +162,28 @@ spawn(process.execPath, [serverScript], {
 
 `<DATA_DIR>/server.env` dosyasına kaydedilir. `DATA_DIR` şu şekilde çözümlenir:
 
-- Windows: `%APPDATA%\omniroute`
-- Linux: `$XDG_CONFIG_HOME/omniroute` veya `~/.omniroute`
-- macOS: `~/.omniroute`
+- Windows: `%APPDATA%\pusula`
+- Linux: `$XDG_CONFIG_HOME/pusula` veya `~/.pusula`
+- macOS: `~/.pusula`
 
 ## Pencere ve Sistem Tepsisi
 
 - `BrowserWindow`: 1400×900 (minimum 1024×700), `backgroundColor: "#0a0a0a"`.
 - macOS: `titleBarStyle: "hiddenInset"`, pencere denetimleri `{ x: 16, y: 16 }` konumunda.
 - Windows/Linux: yerel başlık çubuğu.
-- Kapat düğmesi uygulamayı sistem tepsisine küçültür; sistem tepsisi menüsünde **OmniRoute'u Aç**, **Panoyu Aç** (harici tarayıcı), **Sunucu Bağlantı Noktası** alt menüsü, **Güncellemeleri Denetle** ve **Çıkış** seçenekleri bulunur.
+- Kapat düğmesi uygulamayı sistem tepsisine küçültür; sistem tepsisi menüsünde **Pusula'u Aç**, **Panoyu Aç** (harici tarayıcı), **Sunucu Bağlantı Noktası** alt menüsü, **Güncellemeleri Denetle** ve **Çıkış** seçenekleri bulunur.
 
 ## İçerik Güvenliği Politikası
 
 `session.defaultSession.webRequest.onHeadersReceived` aracılığıyla ayarlanır. Dikkate değer yönergeler:
 
 - `frame-ancestors 'none'`, `object-src 'none'`, `child-src 'none'`
-- `connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:* https://*.omniroute.online https://*.omniroute.dev`
+- `connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:* https://*.pusula.online https://*.pusula.dev`
 - Geliştirme modu yalnızca `script-src` yönergesine `'unsafe-eval'` ekler
 
 ## Otomatik Güncelleme
 
-GitHub sağlayıcısıyla (`diegosouzapw/OmniRoute`) `electron-updater` kullanır.
+GitHub sağlayıcısıyla (`Ferhat-Yasinoglu/pusula`) `electron-updater` kullanır.
 
 - `autoDownload = false`, `autoInstallOnAppQuit = true`
 - Olaylar, `update-status` IPC aracılığıyla işleyici sürecine iletilir:
@@ -255,11 +255,11 @@ AppImage imzalama isteğe bağlıdır — imzalamak için `LINUX_GPG_KEY` deği�
 
 Derleme çıktıları `electron/dist-electron/` dizininde oluşturulur:
 
-- `OmniRoute.Setup.X.Y.Z.exe`, `OmniRoute X.Y.Z.exe` (Windows)
-- `OmniRoute-X.Y.Z-mac.dmg`, `OmniRoute-X.Y.Z-arm64-mac.dmg` (macOS)
-- `OmniRoute-X.Y.Z.AppImage`, `omniroute-desktop_X.Y.Z_amd64.deb` (Linux)
+- `Pusula.Setup.X.Y.Z.exe`, `Pusula X.Y.Z.exe` (Windows)
+- `Pusula-X.Y.Z-mac.dmg`, `Pusula-X.Y.Z-arm64-mac.dmg` (macOS)
+- `Pusula-X.Y.Z.AppImage`, `pusula-desktop_X.Y.Z_amd64.deb` (Linux)
 
-Sürümler GitHub Releases (`diegosouzapw/OmniRoute`) üzerinde yayımlanır; `electron-updater` da yeni sürümleri burada kontrol eder.
+Sürümler GitHub Releases (`Ferhat-Yasinoglu/pusula`) üzerinde yayımlanır; `electron-updater` da yeni sürümleri burada kontrol eder.
 
 ## Sorun Giderme
 

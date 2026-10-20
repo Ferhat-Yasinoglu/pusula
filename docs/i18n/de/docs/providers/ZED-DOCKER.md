@@ -4,7 +4,7 @@
 
 ---
 
-Wenn OmniRoute innerhalb von Docker ausgeführt wird, schlägt der standardmäßige Ablauf „Aus Zed-Schlüsselbund importieren“ fehl,
+Wenn Pusula innerhalb von Docker ausgeführt wird, schlägt der standardmäßige Ablauf „Aus Zed-Schlüsselbund importieren“ fehl,
 da der Container nicht auf den Schlüsselbund-Daemon des Host-Betriebssystems zugreifen kann (`libsecret` unter Linux,
 Schlüsselbund unter macOS, Anmeldeinformationsverwaltung unter Windows) und die Zed-Konfigurationsverzeichnisse im
 Host-Dateisystem standardmäßig innerhalb des Containers nicht sichtbar sind.
@@ -20,7 +20,7 @@ Innerhalb eines Containers treten zwei blockierende Probleme auf:
    Modul `keytar` über einen Unix-Socket oder eine D-Bus-Sitzung mit dem Schlüsselbunddienst des Betriebssystems.
    Beide werden standardmäßig nicht an den Container weitergeleitet, sodass das Auslesen von Anmeldeinformationen immer fehlschlägt.
 
-OmniRoute erkennt die Docker-Umgebung anhand von zwei Heuristiken:
+Pusula erkennt die Docker-Umgebung anhand von zwei Heuristiken:
 
 - Vorhandensein von `/.dockerenv` (wird beim Start des Containers vom Docker-Daemon erstellt).
 - Die Zeichenfolge `docker` in `/proc/1/cgroup` (Linux cgroup v1).
@@ -32,7 +32,7 @@ Wenn eine der beiden Heuristiken zutrifft, gibt die Importroute HTTP 422 mit
 
 1. Öffnen Sie **Dashboard → Anbieter → Zed**.
 2. Der Bereich **Manueller Token-Import** wird unterhalb der Karte für den Schlüsselbundimport angezeigt. Wenn
-   OmniRoute Docker erkennt, wird dieser Bereich nach dem ersten fehlgeschlagenen
+   Pusula Docker erkennt, wird dieser Bereich nach dem ersten fehlgeschlagenen
    Schlüsselbundimport automatisch erweitert.
 3. Wählen Sie den Anbieter aus der Dropdown-Liste aus (OpenAI, Anthropic, Google, Mistral, xAI,
    OpenRouter oder DeepSeek).
@@ -79,8 +79,8 @@ nicht vertrauliche Zed-Konfigurationswerte lesen (z. B. Modellpräferenzen).
 ```yaml
 # Ausschnitt aus docker-compose.yml
 services:
-  omniroute:
-    image: omniroute:latest
+  pusula:
+    image: pusula:latest
     volumes:
       # Linux-Host
       - "${HOME}/.config/zed:/host-zed-config:ro"

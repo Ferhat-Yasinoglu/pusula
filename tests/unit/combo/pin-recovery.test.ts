@@ -139,8 +139,8 @@ test("buildAllTargetsCoolingDownResponse: 503 with Retry-After = earliest lapse 
   assert.ok(res);
   assert.equal(res.status, 503);
   assert.equal(res.headers.get("Retry-After"), "12");
-  assert.equal(res.headers.get("x-omniroute-retry-after-seconds"), "12");
-  assert.equal(res.headers.get("x-omniroute-combo-terminal-reason"), "all_targets_cooling_down");
+  assert.equal(res.headers.get("x-pusula-retry-after-seconds"), "12");
+  assert.equal(res.headers.get("x-pusula-combo-terminal-reason"), "all_targets_cooling_down");
   const body = (await res.json()) as {
     error: { code?: string };
     diagnostics: {

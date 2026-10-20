@@ -1,5 +1,5 @@
 /**
- * True for the 502 OmniRoute synthesizes when an upstream stream ends without a
+ * True for the 502 Pusula synthesizes when an upstream stream ends without a
  * content block — NOT a provider-reported 502. Keyed off the exact message
  * emitted by `emitClaudeEmptyStreamErrorAndAbort` (open-sse/utils/stream.ts).
  */

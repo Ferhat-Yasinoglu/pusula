@@ -6,7 +6,7 @@
 
 🌐 **Languages:** 🇺🇸 [English](../../../../reference/API_REFERENCE.md) · 🇪🇹 [am](../../../am/docs/reference/API_REFERENCE.md) · 🇸🇦 [ar](../../../ar/docs/reference/API_REFERENCE.md) · 🇦🇿 [az](../../../az/docs/reference/API_REFERENCE.md) · 🇧🇬 [bg](../../../bg/docs/reference/API_REFERENCE.md) · 🇧🇩 [bn](../../../bn/docs/reference/API_REFERENCE.md) · 🇧🇦 [bs](../../../bs/docs/reference/API_REFERENCE.md) · 🇨🇿 [cs](../../../cs/docs/reference/API_REFERENCE.md) · 🇩🇰 [da](../../../da/docs/reference/API_REFERENCE.md) · 🇩🇪 [de](../../../de/docs/reference/API_REFERENCE.md) · 🇬🇷 [el](../../../el/docs/reference/API_REFERENCE.md) · 🇪🇸 [es](../../../es/docs/reference/API_REFERENCE.md) · 🇪🇪 [et](../../../et/docs/reference/API_REFERENCE.md) · 🇮🇷 [fa](../../../fa/docs/reference/API_REFERENCE.md) · 🇫🇮 [fi](../../../fi/docs/reference/API_REFERENCE.md) · 🇫🇷 [fr](../../../fr/docs/reference/API_REFERENCE.md) · 🇮🇪 [ga](../../../ga/docs/reference/API_REFERENCE.md) · 🇮🇳 [gu](../../../gu/docs/reference/API_REFERENCE.md) · 🇳🇬 [ha](../../../ha/docs/reference/API_REFERENCE.md) · 🇮🇱 [he](../../../he/docs/reference/API_REFERENCE.md) · 🇮🇳 [hi](../../../hi/docs/reference/API_REFERENCE.md) · 🇭🇷 [hr](../../../hr/docs/reference/API_REFERENCE.md) · 🇭🇺 [hu](../../../hu/docs/reference/API_REFERENCE.md) · 🇦🇲 [hy](../../../hy/docs/reference/API_REFERENCE.md) · 🇮🇩 [id](../../../id/docs/reference/API_REFERENCE.md) · 🇳🇬 [ig](../../../ig/docs/reference/API_REFERENCE.md) · 🇮🇹 [it](../../../it/docs/reference/API_REFERENCE.md) · 🇯🇵 [ja](../../../ja/docs/reference/API_REFERENCE.md) · 🇬🇪 [ka](../../../ka/docs/reference/API_REFERENCE.md) · 🇰🇭 [km](../../../km/docs/reference/API_REFERENCE.md) · 🇮🇳 [kn](../../../kn/docs/reference/API_REFERENCE.md) · 🇰🇷 [ko](../../../ko/docs/reference/API_REFERENCE.md) · 🇱🇹 [lt](../../../lt/docs/reference/API_REFERENCE.md) · 🇱🇻 [lv](../../../lv/docs/reference/API_REFERENCE.md) · 🇮🇳 [ml](../../../ml/docs/reference/API_REFERENCE.md) · 🇮🇳 [mr](../../../mr/docs/reference/API_REFERENCE.md) · 🇲🇾 [ms](../../../ms/docs/reference/API_REFERENCE.md) · 🇲🇹 [mt](../../../mt/docs/reference/API_REFERENCE.md) · 🇲🇲 [my](../../../my/docs/reference/API_REFERENCE.md) · 🇳🇵 [ne](../../../ne/docs/reference/API_REFERENCE.md) · 🇳🇱 [nl](../../../nl/docs/reference/API_REFERENCE.md) · 🇳🇴 [no](../../../no/docs/reference/API_REFERENCE.md) · 🇮🇳 [or](../../../or/docs/reference/API_REFERENCE.md) · 🇮🇳 [pa](../../../pa/docs/reference/API_REFERENCE.md) · 🇵🇭 [phi](../../../phi/docs/reference/API_REFERENCE.md) · 🇵🇱 [pl](../../../pl/docs/reference/API_REFERENCE.md) · 🇵🇹 [pt](../../../pt/docs/reference/API_REFERENCE.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/reference/API_REFERENCE.md) · 🇷🇴 [ro](../../../ro/docs/reference/API_REFERENCE.md) · 🇷🇺 [ru](../../../ru/docs/reference/API_REFERENCE.md) · 🇱🇰 [si](../../../si/docs/reference/API_REFERENCE.md) · 🇸🇰 [sk](../../../sk/docs/reference/API_REFERENCE.md) · 🇸🇮 [sl](../../../sl/docs/reference/API_REFERENCE.md) · 🇷🇸 [sr](../../../sr/docs/reference/API_REFERENCE.md) · 🇸🇪 [sv](../../../sv/docs/reference/API_REFERENCE.md) · 🇰🇪 [sw](../../../sw/docs/reference/API_REFERENCE.md) · 🇮🇳 [ta](../../../ta/docs/reference/API_REFERENCE.md) · 🇮🇳 [te](../../../te/docs/reference/API_REFERENCE.md) · 🇹🇭 [th](../../../th/docs/reference/API_REFERENCE.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/reference/API_REFERENCE.md) · 🇵🇰 [ur](../../../ur/docs/reference/API_REFERENCE.md) · 🇺🇿 [uz](../../../uz/docs/reference/API_REFERENCE.md) · 🇻🇳 [vi](../../../vi/docs/reference/API_REFERENCE.md) · 🇳🇬 [yo](../../../yo/docs/reference/API_REFERENCE.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/reference/API_REFERENCE.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/reference/API_REFERENCE.md)
 
-OmniRoute API için temel başvuru kaynağı. Herkese açık `/v1` yüzeyini ve en sık kullanılan yönetim uç noktalarını kapsar; makine tarafından okunabilir [`docs/openapi.yaml`](../openapi.yaml) ile `src/app/api/` altındaki rota ağacı, kapsamlı kaynaklardır.
+Pusula API için temel başvuru kaynağı. Herkese açık `/v1` yüzeyini ve en sık kullanılan yönetim uç noktalarını kapsar; makine tarafından okunabilir [`docs/openapi.yaml`](../openapi.yaml) ile `src/app/api/` altındaki rota ağacı, kapsamlı kaynaklardır.
 
 ---
 
@@ -63,32 +63,32 @@ Content-Type: application/json
 
 | Üstbilgi                 | Yön   | Açıklama                                                                                                                                                                                                                                                  |
 | ------------------------ | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `X-OmniRoute-No-Cache`   | İstek | Önbelleği atlamak için `true` olarak ayarlayın                                                                                                                                                                                                            |
-| `x-omniroute-no-memory`  | İstek | Bu istek için bellek ve beceri eklemeyi atlamak üzere `true` olarak ayarlayın (önbelleksiz davranışı yansıtır; çağrı başına belirteç/maliyet ek yükünü önler)                                                                                             |
-| `X-OmniRoute-Progress`   | İstek | İlerleme olayları için `true` olarak ayarlayın                                                                                                                                                                                                            |
+| `X-Pusula-No-Cache`   | İstek | Önbelleği atlamak için `true` olarak ayarlayın                                                                                                                                                                                                            |
+| `x-pusula-no-memory`  | İstek | Bu istek için bellek ve beceri eklemeyi atlamak üzere `true` olarak ayarlayın (önbelleksiz davranışı yansıtır; çağrı başına belirteç/maliyet ek yükünü önler)                                                                                             |
+| `X-Pusula-Progress`   | İstek | İlerleme olayları için `true` olarak ayarlayın                                                                                                                                                                                                            |
 | `X-Session-Id`           | İstek | Harici oturum benzeşimi için kalıcı oturum anahtarı                                                                                                                                                                                                       |
 | `x_session_id`           | İstek | Alt çizgili değişken de kabul edilir (doğrudan HTTP)                                                                                                                                                                                                      |
-| `X-OmniRoute-Session-Id` | İstek | Çağıran tarafından sağlanan oturum/konuşma etiketi (belleği de besler). Mevcut olduğunda, oturum başına maliyet ilişkilendirmesi için `call_logs.session_tag` alanına olduğu gibi kalıcı olarak kaydedilir (#8249) — mevcut olmadığında asla oluşturulmaz |
+| `X-Pusula-Session-Id` | İstek | Çağıran tarafından sağlanan oturum/konuşma etiketi (belleği de besler). Mevcut olduğunda, oturum başına maliyet ilişkilendirmesi için `call_logs.session_tag` alanına olduğu gibi kalıcı olarak kaydedilir (#8249) — mevcut olmadığında asla oluşturulmaz |
 | `Idempotency-Key`        | İstek | Tekilleştirme anahtarı (5 saniyelik pencere)                                                                                                                                                                                                              |
 | `X-Request-Id`           | İstek | Alternatif tekilleştirme anahtarı                                                                                                                                                                                                                         |
-| `X-OmniRoute-Cache`      | Yanıt | `HIT` veya `MISS` (akışsız)                                                                                                                                                                                                                               |
-| `X-OmniRoute-Idempotent` | Yanıt | Tekilleştirildiyse `true`                                                                                                                                                                                                                                 |
-| `X-OmniRoute-Progress`   | Yanıt | İlerleme izleme açıksa `enabled`                                                                                                                                                                                                                          |
-| `X-OmniRoute-Session-Id` | Yanıt | OmniRoute tarafından kullanılan etkin oturum kimliği                                                                                                                                                                                                      |
-| `X-OmniRoute-Request-Id` | Yanıt | İstek korelasyon kimliği (biliniyorsa)                                                                                                                                                                                                                    |
-| `X-OmniRoute-Version`    | Yanıt | OmniRoute derleme sürümü (her zaman mevcut)                                                                                                                                                                                                               |
-| `X-OmniRoute-Cost-Saved` | Yanıt | Önbelleğin bir HIT durumunda kaçındığı USD tutarı (yalnızca önbellek isabetleri)                                                                                                                                                                          |
-| `X-OmniRoute-Decision`   | Yanıt | Yönlendirme izi: `strategy=<name>; provider=<alias>; latency_ms=<n>` (`<name>` kombinasyon stratejisidir veya kombinasyon dışı bir istek için `single` değeridir) — tamamlanma yanıtlarında her zaman bulunur                                             |
+| `X-Pusula-Cache`      | Yanıt | `HIT` veya `MISS` (akışsız)                                                                                                                                                                                                                               |
+| `X-Pusula-Idempotent` | Yanıt | Tekilleştirildiyse `true`                                                                                                                                                                                                                                 |
+| `X-Pusula-Progress`   | Yanıt | İlerleme izleme açıksa `enabled`                                                                                                                                                                                                                          |
+| `X-Pusula-Session-Id` | Yanıt | Pusula tarafından kullanılan etkin oturum kimliği                                                                                                                                                                                                      |
+| `X-Pusula-Request-Id` | Yanıt | İstek korelasyon kimliği (biliniyorsa)                                                                                                                                                                                                                    |
+| `X-Pusula-Version`    | Yanıt | Pusula derleme sürümü (her zaman mevcut)                                                                                                                                                                                                               |
+| `X-Pusula-Cost-Saved` | Yanıt | Önbelleğin bir HIT durumunda kaçındığı USD tutarı (yalnızca önbellek isabetleri)                                                                                                                                                                          |
+| `X-Pusula-Decision`   | Yanıt | Yönlendirme izi: `strategy=<name>; provider=<alias>; latency_ms=<n>` (`<name>` kombinasyon stratejisidir veya kombinasyon dışı bir istek için `single` değeridir) — tamamlanma yanıtlarında her zaman bulunur                                             |
 
 > Nginx notu: Alt çizgili üstbilgilere (örneğin `x_session_id`) güveniyorsanız `underscores_in_headers on;` ayarını etkinleştirin.
 
-> **Maliyet telemetrisi üstbilgileri:** akışsız başarılı yanıtlar ayrıca `X-OmniRoute-*` maliyet telemetrisi kümesini taşır: `X-OmniRoute-Response-Cost` (USD, sabit 10 ondalık basamak; ücretsiz/fiyatlandırılmamış olanlar için `0.0000000000`), `X-OmniRoute-Tokens-In` / `X-OmniRoute-Tokens-Out`, `X-OmniRoute-Model`, `X-OmniRoute-Provider`, `X-OmniRoute-Latency-Ms`, `X-OmniRoute-Cache-Hit` ve `X-OmniRoute-Fallback-Attempts` (yalnızca > 0 olduğunda); bunlara ek olarak `X-OmniRoute-Request-Id` ve `X-OmniRoute-Version`. Bunlar sohbet tamamlama işlemleri, `/v1/responses`, `/v1/messages` **ve medya uç noktaları** tarafından döndürülür: `/v1/embeddings`, `/v1/images/generations`, `/v1/audio/speech`, `/v1/audio/transcriptions`, `/v1/rerank`, `/v1/videos/generations`, `/v1/music/generations` ve `/v1/moderations` (maliyeti her zaman `0`). Medya maliyeti, fiyatlandırma mevcut olduğunda modalite başına (görsel başına, saniye başına, karakter başına, arama birimi başına) hesaplanır; aksi takdirde `0` olur (hata durumunda işleme devam edilir).
+> **Maliyet telemetrisi üstbilgileri:** akışsız başarılı yanıtlar ayrıca `X-Pusula-*` maliyet telemetrisi kümesini taşır: `X-Pusula-Response-Cost` (USD, sabit 10 ondalık basamak; ücretsiz/fiyatlandırılmamış olanlar için `0.0000000000`), `X-Pusula-Tokens-In` / `X-Pusula-Tokens-Out`, `X-Pusula-Model`, `X-Pusula-Provider`, `X-Pusula-Latency-Ms`, `X-Pusula-Cache-Hit` ve `X-Pusula-Fallback-Attempts` (yalnızca > 0 olduğunda); bunlara ek olarak `X-Pusula-Request-Id` ve `X-Pusula-Version`. Bunlar sohbet tamamlama işlemleri, `/v1/responses`, `/v1/messages` **ve medya uç noktaları** tarafından döndürülür: `/v1/embeddings`, `/v1/images/generations`, `/v1/audio/speech`, `/v1/audio/transcriptions`, `/v1/rerank`, `/v1/videos/generations`, `/v1/music/generations` ve `/v1/moderations` (maliyeti her zaman `0`). Medya maliyeti, fiyatlandırma mevcut olduğunda modalite başına (görsel başına, saniye başına, karakter başına, arama birimi başına) hesaplanır; aksi takdirde `0` olur (hata durumunda işleme devam edilir).
 
-> **Önbellek isabeti maliyet semantiği:** anlamsal önbellek İSABETİNDE (`X-OmniRoute-Cache-Hit: true`) üst sağlayıcıya çağrı yapılmaz; bu nedenle `X-OmniRoute-Response-Cost`, isabeti sunmanın **artımlı** maliyeti olan `0.0000000000` değerindedir. Özgün/gerçekleşmiş olacak maliyet, `X-OmniRoute-Cost-Saved` içinde ayrıca bildirilir. Faturalandırma tüketicileri `X-OmniRoute-Response-Cost` değerlerini toplamalıdır (isabetlerin maliyeti yoktur); önbellek analitiği ise `X-OmniRoute-Cost-Saved` değerlerini birleştirebilir.
+> **Önbellek isabeti maliyet semantiği:** anlamsal önbellek İSABETİNDE (`X-Pusula-Cache-Hit: true`) üst sağlayıcıya çağrı yapılmaz; bu nedenle `X-Pusula-Response-Cost`, isabeti sunmanın **artımlı** maliyeti olan `0.0000000000` değerindedir. Özgün/gerçekleşmiş olacak maliyet, `X-Pusula-Cost-Saved` içinde ayrıca bildirilir. Faturalandırma tüketicileri `X-Pusula-Response-Cost` değerlerini toplamalıdır (isabetlerin maliyeti yoktur); önbellek analitiği ise `X-Pusula-Cost-Saved` değerlerini birleştirebilir.
 
 ## Özel Yönetilen Oturum Kiralamaları
 
-Özel yönetilen oturum kiralaması, isteğe bağlı, istemci-nötr bir yönlendirme sözleşmesidir: bir aktif sahip, bir uygun OmniRoute bağlantısına sahiptir. Bir model kiralamaz, OAuth gerektirmez, belirli bir istemciyi tanımlamaz veya belirli bir sağlayıcı gerektirmez.
+Özel yönetilen oturum kiralaması, isteğe bağlı, istemci-nötr bir yönlendirme sözleşmesidir: bir aktif sahip, bir uygun Pusula bağlantısına sahiptir. Bir model kiralamaz, OAuth gerektirmez, belirli bir istemciyi tanımlamaz veya belirli bir sağlayıcı gerektirmez.
 
 Kimlik doğrulayan API anahtarı `lease:exclusive` kapsamına ve açık, boş olmayan bir `allowedConnections` listesine sahip olmalıdır. Veritabanı mutasyon sınırı, anahtar oluşturma ve kısmi güncellemelerde her iki alanı birlikte uygular.
 
@@ -96,7 +96,7 @@ Kimlik doğrulayan API anahtarı `lease:exclusive` kapsamına ve açık, boş ol
 POST /api/v1/session-leases
 Authorization: Bearer <managed-api-key>
 Content-Type: application/json
-X-OmniRoute-Lease-Owner: vlo_<43-base64url-characters>
+X-Pusula-Lease-Owner: vlo_<43-base64url-characters>
 
 {"action":"acquire","model":"glm/glm-4.6"}
 ```
@@ -131,7 +131,7 @@ Aktif bir kiralama sahibi, mevcut bağlaması için gizlilik açısından güven
 }
 ```
 
-Bu isteğe bağlı durum eylemi, tek bir veritabanı işleminde opak sahip, kimliği doğrulanmış yönetilen API anahtarı ve tam aktif generation tarafından korunur. `displayName` yalnızca kırpılmış yapılandırılmış bağlantı adıdır; güvenli yapılandırılmış bir ad yoksa `null` olur. OmniRoute asla bir e-posta veya oluşturulmuş hesap kimliği yerine geçmez. Sağlayıcı değeri hassas olmayan bir görüntü etiketidir ve asla oluşturulmuş uyumlu sağlayıcı tanımlayıcısı değildir. Kimlik bilgileri, belirteçler, çerezler, ham bağlantı veya API anahtarı kimlikleri, sahip karmaları, sınırlama sırları ve dahili yönlendirme verileri hariç tutulur.
+Bu isteğe bağlı durum eylemi, tek bir veritabanı işleminde opak sahip, kimliği doğrulanmış yönetilen API anahtarı ve tam aktif generation tarafından korunur. `displayName` yalnızca kırpılmış yapılandırılmış bağlantı adıdır; güvenli yapılandırılmış bir ad yoksa `null` olur. Pusula asla bir e-posta veya oluşturulmuş hesap kimliği yerine geçmez. Sağlayıcı değeri hassas olmayan bir görüntü etiketidir ve asla oluşturulmuş uyumlu sağlayıcı tanımlayıcısı değildir. Kimlik bilgileri, belirteçler, çerezler, ham bağlantı veya API anahtarı kimlikleri, sahip karmaları, sınırlama sırları ve dahili yönlendirme verileri hariç tutulur.
 
 Yanlış anahtar, yanlış sahip, eski generation, eksik, süresi dolmuş, serbest bırakılmış ve geçersiz kılınmış aramaların tümü, bağlantı meta verileri olmadan aynı `409 LEASE_FENCE_STALE` hatasını döndürür. Kapasite bekleme yanıtını alan bir istemcinin denetleyeceği aktif bir bağlaması yoktur. Yönlendirme aktif bir kiralamayı geçiş yaptığında, aynı generation geçerli kalır ve durum atomik olarak yeni bağlamayı döndürür, asla eskisini döndürmez. Mevcut istemciler değişmeden kalır çünkü edinme, yenileme, serbest bırakma ve bekleme yanıtları önceki şekillerini korur.
 
@@ -140,8 +140,8 @@ Bu sunucu sözleşmesi, standart OpenAI Codex `/status`'u değiştirmez. Standar
 Her yönetilen çıkarım isteği daha sonra her iki kontrol başlığını da sağlar:
 
 ```http
-X-OmniRoute-Lease-Owner: vlo_<43-base64url-characters>
-X-OmniRoute-Lease-Generation: 1
+X-Pusula-Lease-Owner: vlo_<43-base64url-characters>
+X-Pusula-Lease-Generation: 1
 ```
 
 Tam sahip, generation, aktif bağlantı ve kimliği doğrulanmış API anahtarı, desteklenen her yukarı akış denemesinden hemen önce korunur. Sahibi ve generation'ı başka bir anahtarla tekrar oynatmak, o anahtar aynı bağlantıya izin verse bile başarısız olur. Ham sahipler kalıcı hale getirilmez, günlüğe kaydedilmez, istek anlık görüntüsünde tutulmaz veya yukarı akışa iletilmez.
@@ -157,9 +157,9 @@ Geçici çekişme, `Retry-After` ile HTTP `429` döndürür ve:
 }
 ```
 
-Bu yanıt yalnızca, sıradan uygun kümenin boş olmadığını ve her boş adayın yabancı bir aktif kiralama tarafından tutulduğunu ifade eder. Desteklenmeyen modeller/sağlayıcılar, ilke uyuşmazlığı, bekleme süresi, kota, sağlık ve diğer sıradan uygunluk hataları mevcut OmniRoute yanıtlarını korur.
+Bu yanıt yalnızca, sıradan uygun kümenin boş olmadığını ve her boş adayın yabancı bir aktif kiralama tarafından tutulduğunu ifade eder. Desteklenmeyen modeller/sağlayıcılar, ilke uyuşmazlığı, bekleme süresi, kota, sağlık ve diğer sıradan uygunluk hataları mevcut Pusula yanıtlarını korur.
 
-### `x-omniroute-compression`
+### `x-pusula-compression`
 
 Sıkıştırma planının istek başına geçersiz kılınması. En yüksek öncelik — yönlendirme-birleşimi geçersiz kılmasını, aktif profili, otomatik tetikleyiciyi ve panel Varsayılanını yener. Değerler:
 
@@ -182,7 +182,7 @@ Notlar:
 Uygulanan plan yanıt başlığında geri yankılanır:
 
 ```
-X-OmniRoute-Compression: <mode>; source=<source>
+X-Pusula-Compression: <mode>; source=<source>
 ```
 
 burada `<source>`, `request-header`, `routing-override`, `active-profile`, `auto-trigger`, `default` veya `off` değerlerinden biridir.
@@ -231,7 +231,7 @@ EmbeddingsV5Request belgelerini de kabul eder ve bunları `https://api.jina.ai/v
 ```
 
 Yerel `{ image | audio | video | pdf }` değerleri herkese açık bir HTTPS URL'si, bir `data:` URI'si veya ham
-base64 olabilir. OmniRoute bu nesneleri dizeye dönüştürmez veya yerel görüntü URL'lerini getirmez — herkese açık
+base64 olabilir. Pusula bu nesneleri dizeye dönüştürmez veya yerel görüntü URL'lerini getirmez — herkese açık
 medyayı Jina kendisi alır. Ek Jina alanları (`task`, `normalized`, `truncate`, `embedding_type`)
 iletilir. Yalnızca metin destekleyen Jina SKU'ları, metin dışı belgeleri reddetmeye devam eder.
 
@@ -348,7 +348,7 @@ normalleştirilir; böylece istemci kodunun sağlayıcıya özel durumları ele 
 
 ### Vertex AI DeepSeek OCR kimlik doğrulaması ve uç nokta çözümlemesi
 
-`vertex-deepseek-ocr`, OmniRoute'un sohbet/görsel trafiği için zaten desteklediği aynı Vertex AI
+`vertex-deepseek-ocr`, Pusula'un sohbet/görsel trafiği için zaten desteklediği aynı Vertex AI
 kimlik doğrulamasını (`open-sse/executors/vertex.ts`) yeniden kullanır: bağlantının API anahtarı,
 JWT-bearer akışı aracılığıyla kısa ömürlü bir OAuth erişim belirteciyle değiştirilen bir Service
 Account JSON kimlik bilgisi veya olduğu gibi kullanılan, önceden oluşturulmuş bir OAuth erişim
@@ -393,10 +393,10 @@ Bir model seçici oluşturan istemciler `?prefix=alias` istemelidir — [OmniCop
 
 ### Düşünmesiz model varyantları
 
-Düşünme özelliğine sahip Claude modelleri için `/v1/models`, kimliğinin başına `claude-3-omniroute-no-thinking/` eklenmiş bir **düşünmesiz** varyantı da sunar:
+Düşünme özelliğine sahip Claude modelleri için `/v1/models`, kimliğinin başına `claude-3-pusula-no-thinking/` eklenmiş bir **düşünmesiz** varyantı da sunar:
 
 ```
-claude-3-omniroute-no-thinking/<provider>/<model>
+claude-3-pusula-no-thinking/<provider>/<model>
 ```
 
 Bu kimliğin seçilmesi (ör. her zaman bir `thinking` bloğu ekleyen Claude Code yapılandırmasında), akıl yürütme devre dışı bırakılarak gerçek `<provider>/<model>` modeline çözümlenir — `/v1/messages` yolunda `thinking:{type:"disabled"}` kullanılır veya `/v1/chat/completions` yolunda `reasoning`/`reasoning_effort` alanları kaldırılır. Bu varyant yalnızca düşünmeyi destekleyen **ve** `disabled` değerini kabul eden Claude ailesi modelleri için listelenir (dolayısıyla ör. `disabled` değerini reddeden yalnızca uyarlanabilir modeller hariç tutulur). Operatörler, `ModelSpec.noThinkingAlias` aracılığıyla bu varyantı model başına zorunlu olarak etkinleştirebilir veya devre dışı bırakabilir.
@@ -447,7 +447,7 @@ Bir sidecar süreç dışında çalıştığında ve `open-sse/config/providerPl
 
 Tüm POST rotaları aynı şekli izler: `Bearer your-api-key` + Zod tarafından doğrulanmış JSON gövdesi (`v1RerankSchema`, `v1ModerationSchema`, `v1AudioSpeechSchema`, vb., `src/shared/validation/schemas.ts` adresine bakın). Şema hatasında 4xx döndürülür.
 
-`Authorization: Bearer ...` ekleyemeyen istemciler için OmniRoute, API anahtarlarını URL'de sorgu dizesi uyumluluğu (`?token=...`, `?apiKey=...`, `?api_key=...`, `?key=...`) veya aşağıda belgelenen özel `/api/v1/vscode/{token}/...` uç noktaları aracılığıyla da kabul eder.
+`Authorization: Bearer ...` ekleyemeyen istemciler için Pusula, API anahtarlarını URL'de sorgu dizesi uyumluluğu (`?token=...`, `?apiKey=...`, `?api_key=...`, `?key=...`) veya aşağıda belgelenen özel `/api/v1/vscode/{token}/...` uç noktaları aracılığıyla da kabul eder.
 
 ```bash
 # Yeniden sıralama (bulut kayıt sağlayıcısı veya "<ön ek>/<model>" olarak bir OpenAI uyumlu sağlayıcı düğümü)
@@ -476,7 +476,7 @@ POST /v1/videos/generations { "model": "runway/gen-3", "prompt": "..." }
 POST /v1/music/generations  { "model": "kie/suno-v4.0",   "prompt": "..." }
 ```
 
-> **Yeniden sıralama sağlayıcı düğümleri:** `POST /v1/rerank` ayrıca `<düğüm-ön-eki>/<model>` olarak adreslenen OpenAI uyumlu sağlayıcı düğümlerine (oMLX, vLLM, Infinity, bir ağ geçidinin arkasındaki TEI, …) yönlendirir. Geri döngü düğümleri (`localhost`, `127.0.0.1`, `172.16.0.0/12`) her zaman uygundur. Başka bir ana bilgisayardaki — bir LAN kutusu veya Tailscale eşi — düğümler, yalnızca operatör `RERANK_REMOTE_PROVIDER_NODES` özellik bayrağını etkinleştirdiğinde **ve** düğümün temel URL'si sağlayıcı giden URL politikasını (`OMNIROUTE_ALLOW_LOCAL_PROVIDER_URLS` / `OMNIROUTE_ALLOW_PRIVATE_PROVIDER_URLS`) geçtiğinde uygundur; bulut meta veri ana bilgisayarlarına asla yönlendirme yapılmaz. Bellek motorunun yeniden sıralama adımı bu rotayı geri döngü üzerinden çağırır, bu nedenle aynı kural Bellek ayarlarındaki `rerankProviderModel`'i yönetir.
+> **Yeniden sıralama sağlayıcı düğümleri:** `POST /v1/rerank` ayrıca `<düğüm-ön-eki>/<model>` olarak adreslenen OpenAI uyumlu sağlayıcı düğümlerine (oMLX, vLLM, Infinity, bir ağ geçidinin arkasındaki TEI, …) yönlendirir. Geri döngü düğümleri (`localhost`, `127.0.0.1`, `172.16.0.0/12`) her zaman uygundur. Başka bir ana bilgisayardaki — bir LAN kutusu veya Tailscale eşi — düğümler, yalnızca operatör `RERANK_REMOTE_PROVIDER_NODES` özellik bayrağını etkinleştirdiğinde **ve** düğümün temel URL'si sağlayıcı giden URL politikasını (`PUSULA_ALLOW_LOCAL_PROVIDER_URLS` / `PUSULA_ALLOW_PRIVATE_PROVIDER_URLS`) geçtiğinde uygundur; bulut meta veri ana bilgisayarlarına asla yönlendirme yapılmaz. Bellek motorunun yeniden sıralama adımı bu rotayı geri döngü üzerinden çağırır, bu nedenle aynı kural Bellek ayarlarındaki `rerankProviderModel`'i yönetir.
 >
 > **Yerel sunucu şekilleri:** düğüm `<base>/v1/rerank` adresinde ve 404 durumunda `<base>/rerank` adresinde (Infinity, TEI) çağrılır. Yukarı akış gövdesi hem Cohere/OpenAI yazımını (`documents`, `return_documents`) hem de TEI yazımını (`texts`, `return_text`) taşır ve yukarı akış yanıtı Cohere zarfına normalleştirilir: TEI'nin çıplak `[{index, score, text}]`, ince ağ geçitlerinden gelen `{results: [{index, score}]}` ve Voyage tarzı `{data: [...]}` hepsi istemciye `{results: [{index, relevance_score, document?}]}` olarak geri döner, puana göre sıralanır ve `top_n` ile sınırlanır.
 
@@ -587,8 +587,8 @@ Bir WebSocket yükseltme el sıkışmasını doğrular ve kablo protokolü örne
 
 ```bash
 # HTTP API'siyle aynı ana makine:bağlantı noktası (varsayılan 20128); bağlantıyı yükseltin:
-wscat -c "ws://localhost:20128/v1/responses?api_key=<OMNIROUTE_API_KEY>"
-# (veya: -H "Authorization: Bearer <OMNIROUTE_API_KEY>")
+wscat -c "ws://localhost:20128/v1/responses?api_key=<PUSULA_API_KEY>"
+# (veya: -H "Authorization: Bearer <PUSULA_API_KEY>")
 
 # İlk çerçeve MUTLAKA response.create olmalıdır:
 { "type": "response.create", "model": "gpt-5.5", "input": [ { "role": "user", "content": "hi" } ] }
@@ -612,7 +612,7 @@ etkin giriş noktası olmalıdır (`app/server-ws.mjs` mevcut olduğunda varsay�
 OpenAI **Codex CLI**, `supports_websockets = true` olduğunda model adını istemci tarafında
 doğrular ve `codex/gpt-5.5` gibi **sağlayıcı önekli kimlikleri reddeder**
 (`The 'codex/gpt-5.5' model is not supported when using Codex with
-a ChatGPT account`). **Sade** kimliği gönderin (ör. `gpt-5.5`). OmniRoute'un köprüsü
+a ChatGPT account`). **Sade** kimliği gönderin (ör. `gpt-5.5`). Pusula'un köprüsü
 yalnızca codex içindir; bu nedenle sade bir kimliği, üst hizmete tünellemeden önce
 codex modeli olarak yeniden çözümler (`resolveCodexWsModelInfo`) — sade
 `gpt-5.5` aksi takdirde HTTP üzerinden başka bir sağlayıcıya yönlendirilecek olsa bile.
@@ -620,27 +620,27 @@ codex modeli olarak yeniden çözümler (`resolveCodexWsModelInfo`) — sade
 #### OpenAI Codex CLI'ı yapılandırma
 
 `~/.codex/config.toml` dosyasına WebSocket desteğine sahip özel bir sağlayıcı
-ekleyerek Codex CLI'ı OmniRoute'a yönlendirin (mevcut bir yapılandırmaya dokunmamak
+ekleyerek Codex CLI'ı Pusula'a yönlendirin (mevcut bir yapılandırmaya dokunmamak
 için ayrı bir `CODEX_HOME` kullanın):
 
 ```toml
 model = "gpt-5.5"                 # sade kimlik — "codex/gpt-5.5" DEĞİL
-model_provider = "omniroute"
+model_provider = "pusula"
 
-[model_providers.omniroute]
-name = "OmniRoute (WS)"
+[model_providers.pusula]
+name = "Pusula (WS)"
 base_url = "http://localhost:20128/v1"   # sonunda eğik çizgi yok; WS URL'si türetilir (üretimde https/wss kullanın)
 wire_api = "responses"                    # Şubat 2026'dan beri desteklenen tek değer
 supports_websockets = true                # Responses-over-WS aktarımını etkinleştirir
-env_key = "OMNIROUTE_API_KEY"             # OmniRoute API anahtarını içerir (Bearer)
+env_key = "PUSULA_API_KEY"             # Pusula API anahtarını içerir (Bearer)
 ```
 
 ```bash
-export OMNIROUTE_API_KEY=sk-...           # bir OmniRoute API anahtarı (REQUIRE_API_KEY=false ise herhangi bir anahtar)
+export PUSULA_API_KEY=sk-...           # bir Pusula API anahtarı (REQUIRE_API_KEY=false ise herhangi bir anahtar)
 codex exec "Responda apenas: PONG"
 ```
 
-CLI, `base_url + /responses` adresini bir WebSocket'e yükseltir ve OmniRoute bunu
+CLI, `base_url + /responses` adresini bir WebSocket'e yükseltir ve Pusula bunu
 seçilen codex OAuth bağlantısına tüneller. Yerel sunucuya karşı uçtan uca
 doğrulanmıştır: ChatGPT, `codex.rate_limits` + `response.created` döndürür ve
 tamamlamayı akış halinde iletir.
@@ -738,7 +738,7 @@ Yanıt örneği:
 
 ### Gecikme etkisi
 
-Bir semantik önbellek İSABETİ, yanıtı **üst sağlayıcı çağrısı yapmadan** önbellekten sunar; bu nedenle bildirilen `X-OmniRoute-Response-Latency`, orijinal üst sağlayıcı gecikmesinden bağımsız olarak sıfıra yakındır. Gecikmeye duyarlı istemciler (performans karşılaştırması, p50/p99 izleme) `X-OmniRoute-Cache-Latency` yanıt başlığını kontrol etmelidir:
+Bir semantik önbellek İSABETİ, yanıtı **üst sağlayıcı çağrısı yapmadan** önbellekten sunar; bu nedenle bildirilen `X-Pusula-Response-Latency`, orijinal üst sağlayıcı gecikmesinden bağımsız olarak sıfıra yakındır. Gecikmeye duyarlı istemciler (performans karşılaştırması, p50/p99 izleme) `X-Pusula-Cache-Latency` yanıt başlığını kontrol etmelidir:
 
 | Değer       | Anlamı                                                               |
 | ----------- | -------------------------------------------------------------------- |
@@ -765,7 +765,7 @@ Anahtar oluşturulurken (`POST /api/keys`) ayarlayın veya (`PATCH /api/keys/[id
 Herhangi bir istek, anahtar ayarlarından bağımsız olarak önbelleği atlayabilir:
 
 ```
-X-OmniRoute-No-Cache: true
+X-Pusula-No-Cache: true
 ```
 
 ---
@@ -986,7 +986,7 @@ Belirli bir sağlayıcı için eksik veya bozuk OAuth ortam değişkenlerini ona
 {
   "success": true,
   "repaired": ["CLAUDE_CODE_OAUTH_CLIENT_ID", "CLAUDE_CODE_OAUTH_CLIENT_SECRET"],
-  "backupPath": "/home/user/.omniroute/backups/env-repair-2026-04-11.bak"
+  "backupPath": "/home/user/.pusula/backups/env-repair-2026-04-11.bak"
 }
 ```
 
@@ -1079,7 +1079,7 @@ Notlar:
 
 - Token içeren takma adlar, `/v1/*` ve `/api/tags` ile aynı işleyicileri yeniden kullanır; yanıt yapıları aynı kalır.
 - İstemci özel başlıkları desteklediğinde `Authorization: Bearer ...` kullanımını tercih edin.
-- URL tabanlı token'lar ters proxy günlüklerinde, tarayıcı geçmişinde ve OmniRoute dışındaki telemetride görünebilir. Bunları varsayılan kimlik doğrulama modu olarak değil, bir uyumluluk seçeneği olarak değerlendirin.
+- URL tabanlı token'lar ters proxy günlüklerinde, tarayıcı geçmişinde ve Pusula dışındaki telemetride görünebilir. Bunları varsayılan kimlik doğrulama modu olarak değil, bir uyumluluk seçeneği olarak değerlendirin.
 
 ---
 
@@ -1187,7 +1187,7 @@ Daha üst düzey yönlendirme kombinasyonları (daha önce `/api/combos*` altın
 
 ## Webhook'lar
 
-OmniRoute olayları (istek tamamlanması, kotanın tükenmesi, anahtar rotasyonu vb.) için giden webhook abonelikleri.
+Pusula olayları (istek tamamlanması, kotanın tükenmesi, anahtar rotasyonu vb.) için giden webhook abonelikleri.
 
 | Yöntem | Yol                       | Açıklama                                                                  |
 | ------ | ------------------------- | ------------------------------------------------------------------------- |
@@ -1220,7 +1220,7 @@ Otomatik anahtar yönetimi alt sistemi tarafından, günlük/saatlik kotalarla b
 
 ## Ajanlar Protokolü
 
-OmniRoute kullanıcıları adına uzaktan yürütülen bulut ajanı görevleri (Claude Code, Codex Cloud, OpenHands vb.).
+Pusula kullanıcıları adına uzaktan yürütülen bulut ajanı görevleri (Claude Code, Codex Cloud, OpenHands vb.).
 
 | Yöntem | Yol                           | Açıklama                                                                                                                                                   |
 | ------ | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1266,7 +1266,7 @@ Sağlayıcılara, hesaplara veya genel olarak atanabilen giden HTTP(S)/SOCKS pro
 
 ## Dayanıklılık (genişletilmiş)
 
-OmniRoute, birbirinden bağımsız üç geçici hata mekanizması sunar; aşağıdaki yönetim uç noktaları, operatörlerin bunları okumasına ve geçersiz kılmasına olanak tanır:
+Pusula, birbirinden bağımsız üç geçici hata mekanizması sunar; aşağıdaki yönetim uç noktaları, operatörlerin bunları okumasına ve geçersiz kılmasına olanak tanır:
 
 | Kapsam                   | Durum depolama                                    | Okuma                                     | Sıfırlama / temizleme                                                     |
 | ------------------------ | ------------------------------------------------- | ----------------------------------------- | ------------------------------------------------------------------------- |
@@ -1295,7 +1295,7 @@ Kavramsal referansın tamamı ve devre kesici varsayılanları için [`CLAUDE.md
 
 ## Beceriler
 
-OmniRoute'u özel çalıştırılabilir işleyicilerle genişletmeye yönelik beceri çerçevesi ve pazar yeri entegrasyonları.
+Pusula'u özel çalıştırılabilir işleyicilerle genişletmeye yönelik beceri çerçevesi ve pazar yeri entegrasyonları.
 
 | Yöntem | Yol                               | Açıklama                                                                                                                             |
 | ------ | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
@@ -1332,7 +1332,7 @@ API anahtarı / oturum kapsamında kalıcı konuşma/olgusal bellek deposu.
 
 ## MCP Sunucusu
 
-OmniRoute, 3 aktarım (stdio, SSE, streamable-http) ve kapsamlı araçlar içeren yerleşik bir Model Context Protocol sunucusuyla birlikte gelir. Aşağıdaki pano uç noktaları durum/denetim verilerini okur ve HTTP aktarımlarına vekillik eder.
+Pusula, 3 aktarım (stdio, SSE, streamable-http) ve kapsamlı araçlar içeren yerleşik bir Model Context Protocol sunucusuyla birlikte gelir. Aşağıdaki pano uç noktaları durum/denetim verilerini okur ve HTTP aktarımlarına vekillik eder.
 
 | Yöntem | Yol | Açıklama |
 | ------ | ---------------------- | ------------------------------------------------------------------------------------------------ | -------------------- |
@@ -1354,13 +1354,13 @@ OmniRoute, 3 aktarım (stdio, SSE, streamable-http) ve kapsamlı araçlar içere
 
 ## A2A Sunucusu
 
-OmniRoute, inceleme/pano kullanımı için bir REST sarmalayıcısına ek olarak bir A2A (Agent-to-Agent) JSON-RPC 2.0 uç noktası sunar.
+Pusula, inceleme/pano kullanımı için bir REST sarmalayıcısına ek olarak bir A2A (Agent-to-Agent) JSON-RPC 2.0 uç noktası sunar.
 
 ### JSON-RPC
 
 ```bash
 POST /a2a
-Authorization: Bearer your-api-key   # OMNIROUTE_API_KEY ayarlanmadığı sürece isteğe bağlıdır
+Authorization: Bearer your-api-key   # PUSULA_API_KEY ayarlanmadığı sürece isteğe bağlıdır
 Content-Type: application/json
 
 {
@@ -1403,7 +1403,7 @@ Herkese açık A2A aracı kartını (ad, açıklama, yetenekler, beceri kataloğ
 | GET    | `/api/a2a/tasks/[id]`        | Tek bir görevi getirir                                                                                                  |
 | POST   | `/api/a2a/tasks/[id]/cancel` | Bir görevi iptal eder                                                                                                   |
 
-**Kimlik doğrulama:** REST yardımcıları yönetim kimlik doğrulaması olmadan çalışır (pano tarafından okunabilir); JSON-RPC `/a2a` rotası, yapılandırılmışsa Bearer `OMNIROUTE_API_KEY` kullanır.
+**Kimlik doğrulama:** REST yardımcıları yönetim kimlik doğrulaması olmadan çalışır (pano tarafından okunabilir); JSON-RPC `/a2a` rotası, yapılandırılmışsa Bearer `PUSULA_API_KEY` kullanır.
 
 ---
 
@@ -1583,7 +1583,7 @@ Operasyonel yönetim için yalnızca yöneticilere açık uç noktalar.
 
 ## CLI Araçları Yönetimi
 
-OmniRoute ile entegre olan CLI araçlarını (antigravity, commandCode,
+Pusula ile entegre olan CLI araçlarını (antigravity, commandCode,
 devin-cli vb.) yönetin. Tam liste için [Sağlayıcı Referansı](./PROVIDER_REFERENCE.md) sayfasına bakın.
 
 | Yöntem | Yol                                     | Açıklama                                                                                                                                                                                |
@@ -1694,7 +1694,7 @@ Tüm ayrıntılar için [Skills Çerçevesi](../frameworks/SKILLS.md) belgesine 
 
 ## Eklentiler
 
-OmniRoute eklentilerini (üçüncü taraf uzantıları) yönetin.
+Pusula eklentilerini (üçüncü taraf uzantıları) yönetin.
 
 | Yöntem | Yol                                | Açıklama                             |
 | ------ | ---------------------------------- | ------------------------------------ |
@@ -1720,7 +1720,7 @@ Sağlayıcıların gölge / A-B karşılaştırması **bağımsız bir REST yüz
 
 ## Koruma Mekanizmaları
 
-Çalışma zamanı koruma mekanizmalarını (PII algılama, istem enjeksiyonu algılama, görsel köprüleme) inceleyin. Koruma mekanizmaları her istekte çalışır; çağrı bazında devre dışı bırakma işlemi `x-omniroute-disabled-guardrails` istek başlığı aracılığıyla yapılır — kalıcı bir etkinleştirme/devre dışı bırakma yüzeyi yoktur.
+Çalışma zamanı koruma mekanizmalarını (PII algılama, istem enjeksiyonu algılama, görsel köprüleme) inceleyin. Koruma mekanizmaları her istekte çalışır; çağrı bazında devre dışı bırakma işlemi `x-pusula-disabled-guardrails` istek başlığı aracılığıyla yapılır — kalıcı bir etkinleştirme/devre dışı bırakma yüzeyi yoktur.
 
 | Yöntem | Yol                    | Açıklama                                                                                                             |
 | ------ | ---------------------- | -------------------------------------------------------------------------------------------------------------------- |

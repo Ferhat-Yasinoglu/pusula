@@ -15,11 +15,11 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-codex-ws-lease-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-codex-ws-lease-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = process.env.API_KEY_SECRET || "codex-ws-lease-api-key-secret";
-process.env.OMNIROUTE_WS_BRIDGE_SECRET = "codex-ws-lease-bridge-secret";
-process.env.OMNIROUTE_CODEX_WS_ENABLED = "true";
+process.env.PUSULA_WS_BRIDGE_SECRET = "codex-ws-lease-bridge-secret";
+process.env.PUSULA_CODEX_WS_ENABLED = "true";
 
 const coreDb = await import("../../src/lib/db/core.ts");
 const apiKeysDb = await import("../../src/lib/db/apiKeys.ts");
@@ -81,7 +81,7 @@ function buildBridgeRequest(body: BridgeBody): Request {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      "x-omniroute-ws-bridge-secret": process.env.OMNIROUTE_WS_BRIDGE_SECRET as string,
+      "x-pusula-ws-bridge-secret": process.env.PUSULA_WS_BRIDGE_SECRET as string,
     },
     body: JSON.stringify(body),
   });

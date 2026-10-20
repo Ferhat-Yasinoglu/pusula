@@ -5,11 +5,11 @@
 ---
 
 Bu belge,
-[Issue #7854](https://github.com/diegosouzapw/OmniRoute/issues/7854) için alınan uygulama kararını kaydeder. Herkese açık ürünler dört sağlayıcı ailesi olarak temsil edilir. Bölge, ayrı bir ürün değil, bağlantı verisidir.
+[Issue #7854](https://github.com/Ferhat-Yasinoglu/pusula/issues/7854) için alınan uygulama kararını kaydeder. Herkese açık ürünler dört sağlayıcı ailesi olarak temsil edilir. Bölge, ayrı bir ürün değil, bağlantı verisidir.
 
 ## Karar
 
-| Sağlayıcı ailesi                             | OmniRoute kimliği       | Global bölge | Çin bölgesi |
+| Sağlayıcı ailesi                             | Pusula kimliği       | Global bölge | Çin bölgesi |
 | -------------------------------------------- | ----------------------- | ------------ | ----------- |
 | Alibaba Cloud Model Studio (kullandıkça öde) | `alibaba`               | Singapur     | Pekin       |
 | Alibaba Cloud Token Planı                    | `bailian-coding-plan`   | Singapur     | Pekin       |

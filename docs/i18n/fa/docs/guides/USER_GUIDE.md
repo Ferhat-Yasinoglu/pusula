@@ -6,7 +6,7 @@
 
 🌐 **Languages:** 🇺🇸 [English](../../../../guides/USER_GUIDE.md) · 🇪🇹 [am](../../../am/docs/guides/USER_GUIDE.md) · 🇸🇦 [ar](../../../ar/docs/guides/USER_GUIDE.md) · 🇦🇿 [az](../../../az/docs/guides/USER_GUIDE.md) · 🇧🇬 [bg](../../../bg/docs/guides/USER_GUIDE.md) · 🇧🇩 [bn](../../../bn/docs/guides/USER_GUIDE.md) · 🇧🇦 [bs](../../../bs/docs/guides/USER_GUIDE.md) · 🇨🇿 [cs](../../../cs/docs/guides/USER_GUIDE.md) · 🇩🇰 [da](../../../da/docs/guides/USER_GUIDE.md) · 🇩🇪 [de](../../../de/docs/guides/USER_GUIDE.md) · 🇬🇷 [el](../../../el/docs/guides/USER_GUIDE.md) · 🇪🇸 [es](../../../es/docs/guides/USER_GUIDE.md) · 🇪🇪 [et](../../../et/docs/guides/USER_GUIDE.md) · 🇫🇮 [fi](../../../fi/docs/guides/USER_GUIDE.md) · 🇫🇷 [fr](../../../fr/docs/guides/USER_GUIDE.md) · 🇮🇪 [ga](../../../ga/docs/guides/USER_GUIDE.md) · 🇮🇳 [gu](../../../gu/docs/guides/USER_GUIDE.md) · 🇳🇬 [ha](../../../ha/docs/guides/USER_GUIDE.md) · 🇮🇱 [he](../../../he/docs/guides/USER_GUIDE.md) · 🇮🇳 [hi](../../../hi/docs/guides/USER_GUIDE.md) · 🇭🇷 [hr](../../../hr/docs/guides/USER_GUIDE.md) · 🇭🇺 [hu](../../../hu/docs/guides/USER_GUIDE.md) · 🇦🇲 [hy](../../../hy/docs/guides/USER_GUIDE.md) · 🇮🇩 [id](../../../id/docs/guides/USER_GUIDE.md) · 🇳🇬 [ig](../../../ig/docs/guides/USER_GUIDE.md) · 🇮🇹 [it](../../../it/docs/guides/USER_GUIDE.md) · 🇯🇵 [ja](../../../ja/docs/guides/USER_GUIDE.md) · 🇬🇪 [ka](../../../ka/docs/guides/USER_GUIDE.md) · 🇰🇭 [km](../../../km/docs/guides/USER_GUIDE.md) · 🇮🇳 [kn](../../../kn/docs/guides/USER_GUIDE.md) · 🇰🇷 [ko](../../../ko/docs/guides/USER_GUIDE.md) · 🇱🇹 [lt](../../../lt/docs/guides/USER_GUIDE.md) · 🇱🇻 [lv](../../../lv/docs/guides/USER_GUIDE.md) · 🇮🇳 [ml](../../../ml/docs/guides/USER_GUIDE.md) · 🇮🇳 [mr](../../../mr/docs/guides/USER_GUIDE.md) · 🇲🇾 [ms](../../../ms/docs/guides/USER_GUIDE.md) · 🇲🇹 [mt](../../../mt/docs/guides/USER_GUIDE.md) · 🇲🇲 [my](../../../my/docs/guides/USER_GUIDE.md) · 🇳🇵 [ne](../../../ne/docs/guides/USER_GUIDE.md) · 🇳🇱 [nl](../../../nl/docs/guides/USER_GUIDE.md) · 🇳🇴 [no](../../../no/docs/guides/USER_GUIDE.md) · 🇮🇳 [or](../../../or/docs/guides/USER_GUIDE.md) · 🇮🇳 [pa](../../../pa/docs/guides/USER_GUIDE.md) · 🇵🇭 [phi](../../../phi/docs/guides/USER_GUIDE.md) · 🇵🇱 [pl](../../../pl/docs/guides/USER_GUIDE.md) · 🇵🇹 [pt](../../../pt/docs/guides/USER_GUIDE.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/guides/USER_GUIDE.md) · 🇷🇴 [ro](../../../ro/docs/guides/USER_GUIDE.md) · 🇷🇺 [ru](../../../ru/docs/guides/USER_GUIDE.md) · 🇱🇰 [si](../../../si/docs/guides/USER_GUIDE.md) · 🇸🇰 [sk](../../../sk/docs/guides/USER_GUIDE.md) · 🇸🇮 [sl](../../../sl/docs/guides/USER_GUIDE.md) · 🇷🇸 [sr](../../../sr/docs/guides/USER_GUIDE.md) · 🇸🇪 [sv](../../../sv/docs/guides/USER_GUIDE.md) · 🇰🇪 [sw](../../../sw/docs/guides/USER_GUIDE.md) · 🇮🇳 [ta](../../../ta/docs/guides/USER_GUIDE.md) · 🇮🇳 [te](../../../te/docs/guides/USER_GUIDE.md) · 🇹🇭 [th](../../../th/docs/guides/USER_GUIDE.md) · 🇹🇷 [tr](../../../tr/docs/guides/USER_GUIDE.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/guides/USER_GUIDE.md) · 🇵🇰 [ur](../../../ur/docs/guides/USER_GUIDE.md) · 🇺🇿 [uz](../../../uz/docs/guides/USER_GUIDE.md) · 🇻🇳 [vi](../../../vi/docs/guides/USER_GUIDE.md) · 🇳🇬 [yo](../../../yo/docs/guides/USER_GUIDE.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/guides/USER_GUIDE.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/guides/USER_GUIDE.md)
 
-راهنمای کامل پیکربندی ارائهدهندگان، ایجاد ترکیبها، یکپارچهسازی ابزارهای CLI و استقرار OmniRoute.
+راهنمای کامل پیکربندی ارائهدهندگان، ایجاد ترکیبها، یکپارچهسازی ابزارهای CLI و استقرار Pusula.
 
 ---
 
@@ -137,9 +137,9 @@
   cc/claude-haiku-4-5-20251001
 ```
 
-**نکته حرفهای:** برای وظایف پیچیده از Opus و برای سرعت از Sonnet استفاده کنید. OmniRoute سهمیه را بهازای هر مدل پایش میکند!
+**نکته حرفهای:** برای وظایف پیچیده از Opus و برای سرعت از Sonnet استفاده کنید. Pusula سهمیه را بهازای هر مدل پایش میکند!
 
-مسیرهای سازگار با Claude و Claude Code، سطح تلاش تفکر `max` را برای مدلهای Opus و Sonnet حفظ میکنند. مدلهای Haiku سطح تلاش `max` را نمیپذیرند؛ بنابراین OmniRoute پیش از ارسال درخواست به سرویس بالادستی، آن را به بودجه تفکر بالا تنزل میدهد.
+مسیرهای سازگار با Claude و Claude Code، سطح تلاش تفکر `max` را برای مدلهای Opus و Sonnet حفظ میکنند. مدلهای Haiku سطح تلاش `max` را نمیپذیرند؛ بنابراین Pusula پیش از ارسال درخواست به سرویس بالادستی، آن را به بودجه تفکر بالا تنزل میدهد.
 
 #### OpenAI Codex (Plus/Pro)
 
@@ -189,7 +189,7 @@
 
 #### Kimi K2 (هزینه ثابت $9/ماه)
 
-1. اشتراک تهیه کنید: [Moonshot AI](https://platform.kimi.ai?aff=omniroute)
+1. اشتراک تهیه کنید: [Moonshot AI](https://platform.kimi.ai?aff=pusula)
 2. کلید API را دریافت کنید → داشبورد → افزودن کلید API
 
 **استفاده:** `kimi/kimi-k2.5` — **نکته حرفهای:** هزینه ثابت $9/ماه برای ۱۰ میلیون توکن، یعنی هزینه مؤثر $0.90/1M!
@@ -259,16 +259,16 @@
 
 ### Cursor IDE
 
-**استفاده از Cursor بهعنوان کلاینت OmniRoute** (هدایت گفتوگوی Cursor از طریق OmniRoute):
+**استفاده از Cursor بهعنوان کلاینت Pusula** (هدایت گفتوگوی Cursor از طریق Pusula):
 
 ```
 تنظیمات → مدلها → پیشرفته:
   نشانی پایهٔ OpenAI API: http://localhost:20128/v1
-  کلید OpenAI API: [از داشبورد omniroute]
+  کلید OpenAI API: [از داشبورد pusula]
   مدل: cc/claude-opus-4-7
 ```
 
-**استفاده از OmniRoute بهعنوان ارائهدهندهٔ Cursor** (OmniRoute سرویس بالادستی Cursor را فراخوانی میکند): ترجیحاً از
+**استفاده از Pusula بهعنوان ارائهدهندهٔ Cursor** (Pusula سرویس بالادستی Cursor را فراخوانی میکند): ترجیحاً از
 **داشبورد → ارائهدهندگان → Cursor → ورود با Cursor** استفاده کنید. در Docker، به
 [`docs/providers/CURSOR-DOCKER.md`](../providers/CURSOR-DOCKER.md) مراجعه کنید.
 
@@ -280,7 +280,7 @@
 {
   "env": {
     "ANTHROPIC_BASE_URL": "http://localhost:20128",
-    "ANTHROPIC_AUTH_TOKEN": "your-omniroute-api-key"
+    "ANTHROPIC_AUTH_TOKEN": "your-pusula-api-key"
   }
 }
 ```
@@ -291,7 +291,7 @@
 
 ```bash
 export OPENAI_BASE_URL="http://localhost:20128"
-export OPENAI_API_KEY="your-omniroute-api-key"
+export OPENAI_API_KEY="your-pusula-api-key"
 codex "your prompt"
 ```
 
@@ -303,14 +303,14 @@ codex "your prompt"
 {
   "agents": {
     "defaults": {
-      "model": { "primary": "omniroute/if/kimi-k2.7-code" }
+      "model": { "primary": "pusula/if/kimi-k2.7-code" }
     }
   },
   "models": {
     "providers": {
-      "omniroute": {
+      "pusula": {
         "baseUrl": "http://localhost:20128/v1",
-        "apiKey": "your-omniroute-api-key",
+        "apiKey": "your-pusula-api-key",
         "api": "openai-completions",
         "models": [{ "id": "if/kimi-k2.7-code", "name": "Kimi K2.7 Code" }]
       }
@@ -337,28 +337,28 @@ codex "your prompt"
 ### نصب سراسری npm (توصیهشده)
 
 ```bash
-npm install -g omniroute
+npm install -g pusula
 
 # ایجاد پوشهٔ پیکربندی
-mkdir -p ~/.omniroute
+mkdir -p ~/.pusula
 
 # ایجاد فایل .env (به .env.example مراجعه کنید)
-cp .env.example ~/.omniroute/.env
+cp .env.example ~/.pusula/.env
 
 # راهاندازی سرور
-omniroute
+pusula
 # یا با درگاه سفارشی:
-omniroute --port 3000
+pusula --port 3000
 ```
 
-CLI بهطور خودکار `.env` را از `~/.omniroute/.env` یا `./.env` بارگذاری میکند.
+CLI بهطور خودکار `.env` را از `~/.pusula/.env` یا `./.env` بارگذاری میکند.
 
 ### حالت سینی سیستم
 
-OmniRoute را در سینی سیستم اجرا کنید:
+Pusula را در سینی سیستم اجرا کنید:
 
 ```bash
-omniroute serve --tray
+pusula serve --tray
 ```
 
 پس از آمادهشدن سرور و سینی سیستم، فرمان خاتمه مییابد.
@@ -372,7 +372,7 @@ omniroute serve --tray
 - بازکردن داشبورد.
 - بازکردن `/dashboard/logs`.
 - تغییر راهاندازی خودکار.
-- توقف OmniRoute.
+- توقف Pusula.
 
 از `--tray` همراه با گزینههای زیر استفاده نکنید:
 
@@ -385,7 +385,7 @@ omniroute serve --tray
 راهاندازی در ورود بعدی به سیستم را فعال کنید:
 
 ```bash
-omniroute autostart enable
+pusula autostart enable
 ```
 
 راهاندازی خودکار در macOS، Windows و نشستهای گرافیکی Linux از حالت سینی سیستم استفاده میکند. Linux بدون رابط گرافیکی از سرویس کاربری systemd موجود استفاده میکند.
@@ -393,29 +393,29 @@ omniroute autostart enable
 راهاندازی در هنگام ورود را غیرفعال کنید:
 
 ```bash
-omniroute autostart disable
+pusula autostart disable
 ```
 
 ### حذف نصب
 
-هنگامی که دیگر به OmniRoute نیاز ندارید، دو اسکریپت سریع برای حذف کامل ارائه میکنیم:
+هنگامی که دیگر به Pusula نیاز ندارید، دو اسکریپت سریع برای حذف کامل ارائه میکنیم:
 
 | فرمان                    | عملکرد                                                                                             |
 | ------------------------ | -------------------------------------------------------------------------------------------------- |
-| `npm run uninstall`      | برنامهٔ سیستم را حذف میکند، اما **پایگاه داده و پیکربندیهای شما** را در `~/.omniroute` نگه میدارد. |
+| `npm run uninstall`      | برنامهٔ سیستم را حذف میکند، اما **پایگاه داده و پیکربندیهای شما** را در `~/.pusula` نگه میدارد. |
 | `npm run uninstall:full` | برنامه را حذف میکند و همچنین **تمام پیکربندیها، کلیدها و پایگاههای داده را برای همیشه پاک میکند**. |
 
-> نکته: برای اجرای این فرمانها، به پوشهٔ پروژهٔ OmniRoute بروید (اگر آن را کلون کردهاید) و فرمانها را اجرا کنید. در غیر این صورت، اگر بهصورت سراسری نصب شده است، میتوانید بهسادگی `npm uninstall -g omniroute` را اجرا کنید.
+> نکته: برای اجرای این فرمانها، به پوشهٔ پروژهٔ Pusula بروید (اگر آن را کلون کردهاید) و فرمانها را اجرا کنید. در غیر این صورت، اگر بهصورت سراسری نصب شده است، میتوانید بهسادگی `npm uninstall -g pusula` را اجرا کنید.
 
 ### استقرار روی VPS
 
 ```bash
-git clone https://github.com/diegosouzapw/OmniRoute.git
-cd OmniRoute && npm install && npm run build
+git clone https://github.com/Ferhat-Yasinoglu/pusula.git
+cd Pusula && npm install && npm run build
 
 export JWT_SECRET="your-secure-secret-change-this"
 export INITIAL_PASSWORD="your-password"
-export DATA_DIR="/var/lib/omniroute"
+export DATA_DIR="/var/lib/pusula"
 export PORT="20128"
 export HOSTNAME="0.0.0.0"
 export NODE_ENV="production"
@@ -423,7 +423,7 @@ export NEXT_PUBLIC_BASE_URL="http://localhost:20128"
 export API_KEY_SECRET="endpoint-proxy-api-key-secret"
 
 npm run start
-# یا: pm2 start npm --name omniroute -- start
+# یا: pm2 start npm --name pusula -- start
 ```
 
 ### استقرار با PM2 (حافظهٔ کم)
@@ -432,10 +432,10 @@ npm run start
 
 ```bash
 # با محدودیت 512MB (پیشفرض)
-pm2 start npm --name omniroute -- start
+pm2 start npm --name pusula -- start
 
 # یا با محدودیت حافظهٔ سفارشی
-OMNIROUTE_MEMORY_MB=512 pm2 start npm --name omniroute -- start
+PUSULA_MEMORY_MB=512 pm2 start npm --name pusula -- start
 
 # یا با استفاده از ecosystem.config.js
 pm2 start ecosystem.config.js
@@ -447,12 +447,12 @@ pm2 start ecosystem.config.js
 module.exports = {
   apps: [
     {
-      name: "omniroute",
+      name: "pusula",
       script: "npm",
       args: "start",
       env: {
         NODE_ENV: "production",
-        OMNIROUTE_MEMORY_MB: "512",
+        PUSULA_MEMORY_MB: "512",
         JWT_SECRET: "your-secret",
         INITIAL_PASSWORD: "your-password",
       },
@@ -467,24 +467,24 @@ module.exports = {
 
 ```bash
 # ساخت ایمیج (پیشفرض = runner-cli با codex/claude/droid ازپیشنصبشده)
-docker build -t omniroute:cli .
+docker build -t pusula:cli .
 
 # حالت قابلحمل (توصیهشده)
-docker run -d --name omniroute -p 20128:20128 --env-file ./.env -v omniroute-data:/app/data omniroute:cli
+docker run -d --name pusula -p 20128:20128 --env-file ./.env -v pusula-data:/app/data pusula:cli
 ```
 
 برای حالت یکپارچه با میزبان و دارای فایلهای اجرایی CLI، به بخش Docker در مستندات اصلی مراجعه کنید.
 
 ### Void Linux (xbps-src)
 
-کاربران Void Linux میتوانند OmniRoute را با استفاده از چارچوب کامپایل متقابل `xbps-src` بهصورت بومی بستهبندی و نصب کنند. این چارچوب، ساخت مستقل Node.js را همراه با بایندینگهای بومی موردنیاز `better-sqlite3` خودکار میکند.
+کاربران Void Linux میتوانند Pusula را با استفاده از چارچوب کامپایل متقابل `xbps-src` بهصورت بومی بستهبندی و نصب کنند. این چارچوب، ساخت مستقل Node.js را همراه با بایندینگهای بومی موردنیاز `better-sqlite3` خودکار میکند.
 
 <details>
 <summary><b>مشاهده قالب xbps-src</b></summary>
 
 ```bash
-# فایل قالب برای 'omniroute'
-pkgname=omniroute
+# فایل قالب برای 'pusula'
+pkgname=pusula
 version=3.8.0
 revision=1
 hostmakedepends="nodejs python3 make"
@@ -492,11 +492,11 @@ depends="openssl"
 short_desc="Universal AI gateway with smart routing for multiple LLM providers"
 maintainer="zenobit <zenobit@disroot.org>"
 license="MIT"
-homepage="https://github.com/diegosouzapw/OmniRoute"
-distfiles="https://github.com/diegosouzapw/OmniRoute/archive/refs/tags/v${version}.tar.gz"
+homepage="https://github.com/Ferhat-Yasinoglu/pusula"
+distfiles="https://github.com/Ferhat-Yasinoglu/pusula/archive/refs/tags/v${version}.tar.gz"
 checksum=009400afee90a9f32599d8fe734145cfd84098140b7287990183dde45ae2245b
-system_accounts="_omniroute"
-omniroute_homedir="/var/lib/omniroute"
+system_accounts="_pusula"
+pusula_homedir="/var/lib/pusula"
 export NODE_ENV=production
 export npm_config_engine_strict=false
 export npm_config_loglevel=error
@@ -546,26 +546,26 @@ do_check() {
 }
 
 do_install() {
-	vmkdir usr/lib/omniroute/.next
-	vcopy .next/standalone/. usr/lib/omniroute/.next/standalone
+	vmkdir usr/lib/pusula/.next
+	vcopy .next/standalone/. usr/lib/pusula/.next/standalone
 
 	# جلوگیری از حذف دایرکتوریهای خالی مسیریاب برنامه Next.js توسط هوک پس از نصب
 	for _d in \
 		.next/standalone/.next/server/app/dashboard \
 		.next/standalone/.next/server/app/dashboard/settings \
 		.next/standalone/.next/server/app/dashboard/providers; do
-		touch "${DESTDIR}/usr/lib/omniroute/${_d}/.keep"
+		touch "${DESTDIR}/usr/lib/pusula/${_d}/.keep"
 	done
 
-	cat > "${WRKDIR}/omniroute" <<'EOF'
+	cat > "${WRKDIR}/pusula" <<'EOF'
 #!/bin/sh
 export PORT="${PORT:-20128}"
-export DATA_DIR="${DATA_DIR:-${XDG_DATA_HOME:-${HOME}/.local/share}/omniroute}"
+export DATA_DIR="${DATA_DIR:-${XDG_DATA_HOME:-${HOME}/.local/share}/pusula}"
 export APP_LOG_TO_FILE="${APP_LOG_TO_FILE:-false}"
 mkdir -p "${DATA_DIR}"
-exec node /usr/lib/omniroute/.next/standalone/server.js "$@"
+exec node /usr/lib/pusula/.next/standalone/server.js "$@"
 EOF
-	vbin "${WRKDIR}/omniroute"
+	vbin "${WRKDIR}/pusula"
 }
 
 post_install() {
@@ -579,14 +579,14 @@ post_install() {
 
 | متغیر                                   | مقدار پیشفرض                         | توضیحات                                                                                                                                  |
 | --------------------------------------- | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| `JWT_SECRET`                            | `omniroute-default-secret-change-me` | کلید محرمانه امضای JWT (**در محیط عملیاتی تغییر دهید**)                                                                                  |
+| `JWT_SECRET`                            | `pusula-default-secret-change-me` | کلید محرمانه امضای JWT (**در محیط عملیاتی تغییر دهید**)                                                                                  |
 | `INITIAL_PASSWORD`                      | `CHANGEME`                           | رمز عبور اولین ورود                                                                                                                      |
-| `DATA_DIR`                              | `~/.omniroute`                       | دایرکتوری دادهها (پایگاه داده، میزان استفاده، گزارشها)                                                                                   |
+| `DATA_DIR`                              | `~/.pusula`                       | دایرکتوری دادهها (پایگاه داده، میزان استفاده، گزارشها)                                                                                   |
 | `PORT`                                  | پیشفرض چارچوب                        | درگاه سرویس (`20128` در مثالها)                                                                                                          |
 | `HOSTNAME`                              | پیشفرض چارچوب                        | میزبان اتصال (مقدار پیشفرض Docker برابر با `0.0.0.0` است)                                                                                |
 | `NODE_ENV`                              | پیشفرض زمان اجرا                     | برای استقرار روی `production` تنظیم کنید                                                                                                 |
 | `NEXT_PUBLIC_BASE_URL`                  | `http://localhost:20128`             | URL پایه عمومی که در داشبورد نمایش داده شده و در اختیار سرور قرار میگیرد (جایگزین `BASE_URL` قدیمی)                                      |
-| `NEXT_PUBLIC_CLOUD_URL`                 | `https://omniroute.dev`              | URL پایه نقطه پایانی همگامسازی ابری (جایگزین `CLOUD_URL` قدیمی)                                                                          |
+| `NEXT_PUBLIC_CLOUD_URL`                 | `https://pusula.dev`              | URL پایه نقطه پایانی همگامسازی ابری (جایگزین `CLOUD_URL` قدیمی)                                                                          |
 | `API_KEY_SECRET`                        | `endpoint-proxy-api-key-secret`      | کلید محرمانه HMAC برای کلیدهای API تولیدشده                                                                                              |
 | `REQUIRE_API_KEY`                       | `false`                              | الزام کلید API از نوع Bearer برای `/v1/*`                                                                                                |
 | `ALLOW_API_KEY_REVEAL`                  | `false`                              | اجازه به کاربران احراز هویتشده داشبورد برای نمایش مقادیر کامل کلیدهای API ذخیرهشده در صورت درخواست                                       |
@@ -596,7 +596,7 @@ post_install() {
 | `AUTH_COOKIE_SECURE`                    | `false`                              | اجبار ویژگی `Secure` برای کوکی احراز هویت (پشت پراکسی معکوس HTTPS)                                                                       |
 | `CLOUDFLARED_BIN`                       | تنظیمنشده                            | استفاده از باینری موجود `cloudflared` بهجای دانلود مدیریتشده                                                                             |
 | `CLOUDFLARED_PROTOCOL`                  | `http2`                              | روش انتقال برای Quick Tunnels مدیریتشده (`http2`، `quic` یا `auto`)                                                                      |
-| `OMNIROUTE_MEMORY_MB`                   | `512`                                | محدودیت حافظه heap در Node.js بر حسب MB                                                                                                  |
+| `PUSULA_MEMORY_MB`                   | `512`                                | محدودیت حافظه heap در Node.js بر حسب MB                                                                                                  |
 | `PROMPT_CACHE_MAX_SIZE`                 | `50`                                 | حداکثر تعداد ورودیهای کش پرامپت                                                                                                          |
 | `SEMANTIC_CACHE_MAX_SIZE`               | `100`                                | حداکثر تعداد ورودیهای کش معنایی                                                                                                          |
 
@@ -657,7 +657,7 @@ post_install() {
 
 **سایر ارائهدهندگان سازگار** (منتخب): `cohere`، `databricks`، `snowflake`، `together`، `vertex`، `alibaba`، `alibaba-cn`، `bedrock` (از طریق `aws-bedrock`)، `azure-ai`، `openrouter` (کاتالوگ عبوری)، `siliconflow`، `hyperbolic`، `huggingface`، `featherless-ai`، `cloudflare-ai`، `scaleway`، `deepinfra`، `vercel-ai-gateway`، `bazaarlink`، `friendliai`، `nous-research`، `reka`، `volcengine`، `ai21`، `gigachat`. هرکدام فهرست مدلهای خود را در `providerRegistry.ts` نگهداری میکنند و هنگامی که ارائهدهنده یک نقطه پایانی `/models` ارائه دهد، امکان همگامسازی خودکار وجود دارد.
 
-**نکته درباره شناسههای مدل:** OmniRoute از شناسههای بومی ارائهدهنده (`claude-opus-4-8`، `gpt-5.5`، `glm-5.1`، `MiniMax-M2.7`، `kimi-k2.5`، `grok-4.20-0309-reasoning`) استفاده میکند. برخی شناسهها شامل نسخههای نقطهدار هستند، زیرا API بالادستی آنها را به همین شکل انتظار دارد. اگر مدلی در بالا فهرست نشده است، برای تأیید دسترسپذیری `omniroute models --search <term>` را اجرا کنید یا `GET /api/models/catalog` را فراخوانی کنید.
+**نکته درباره شناسههای مدل:** Pusula از شناسههای بومی ارائهدهنده (`claude-opus-4-8`، `gpt-5.5`، `glm-5.1`، `MiniMax-M2.7`، `kimi-k2.5`، `grok-4.20-0309-reasoning`) استفاده میکند. برخی شناسهها شامل نسخههای نقطهدار هستند، زیرا API بالادستی آنها را به همین شکل انتظار دارد. اگر مدلی در بالا فهرست نشده است، برای تأیید دسترسپذیری `pusula models --search <term>` را اجرا کنید یا `GET /api/models/catalog` را فراخوانی کنید.
 
 </details>
 
@@ -686,29 +686,29 @@ curl -X POST http://localhost:20128/api/provider-models \
 - ارائهدهندگان OpenRouter و سازگار با OpenAI/Anthropic فقط از طریق **Available Models** مدیریت میشوند. افزودن دستی، درونریزی و همگامسازی خودکار، همگی در یک فهرست واحد از مدلهای موجود قرار میگیرند؛ بنابراین برای این ارائهدهندگان بخش جداگانهای با عنوان Custom Models وجود ندارد.
 - بخش **Custom Models** برای ارائهدهندگانی در نظر گرفته شده است که امکان درونریزی مدیریتشدهٔ مدلهای موجود را ارائه نمیکنند.
 
-### زنجیرهسازی همتایان OmniRoute
+### زنجیرهسازی همتایان Pusula
 
-میتوان درگاه OmniRoute دیگری را بهعنوان یک ارائهدهندهٔ **سفارشیِ سازگار با OpenAI** اضافه کرد. از URL پایهٔ `/v1` همتا و یک کلید API اختصاصی با حداقل سطح دسترسی که توسط همان همتا صادر شده است، استفاده کنید.
+میتوان درگاه Pusula دیگری را بهعنوان یک ارائهدهندهٔ **سفارشیِ سازگار با OpenAI** اضافه کرد. از URL پایهٔ `/v1` همتا و یک کلید API اختصاصی با حداقل سطح دسترسی که توسط همان همتا صادر شده است، استفاده کنید.
 
 برای زنجیرههای دوسویه یا چندمرحلهای، محافظ حلقهٔ اختیاری را در همهٔ درگاهها فعال کنید:
 
 ```bash
 # gateway-a
-OMNIROUTE_INSTANCE_ID=gateway-a
-OMNIROUTE_PEER_URLS=http://gateway-b:20128/v1
-OMNIROUTE_PEER_MAX_HOPS=4
+PUSULA_INSTANCE_ID=gateway-a
+PUSULA_PEER_URLS=http://gateway-b:20128/v1
+PUSULA_PEER_MAX_HOPS=4
 ```
 
 ```bash
 # gateway-b
-OMNIROUTE_INSTANCE_ID=gateway-b
-OMNIROUTE_PEER_URLS=http://gateway-a:20128/v1
-OMNIROUTE_PEER_MAX_HOPS=4
+PUSULA_INSTANCE_ID=gateway-b
+PUSULA_PEER_URLS=http://gateway-a:20128/v1
+PUSULA_PEER_MAX_HOPS=4
 ```
 
-فقط درخواستهایی که به URL همتایی ارسال میشوند که صراحتاً در فهرست مجاز قرار دارد، سربرگ `X-OmniRoute-Peer-Trace` را دریافت میکنند. درگاه، شناسهٔ تکراری نمونه یا تمامشدن بودجهٔ تعداد گامها را با HTTP `508 Loop Detected` رد میکند؛ ارائهدهندگان بالادستی معمولی هیچ فرادادهای دربارهٔ همتا دریافت نمیکنند.
+فقط درخواستهایی که به URL همتایی ارسال میشوند که صراحتاً در فهرست مجاز قرار دارد، سربرگ `X-Pusula-Peer-Trace` را دریافت میکنند. درگاه، شناسهٔ تکراری نمونه یا تمامشدن بودجهٔ تعداد گامها را با HTTP `508 Loop Detected` رد میکند؛ ارائهدهندگان بالادستی معمولی هیچ فرادادهای دربارهٔ همتا دریافت نمیکنند.
 
-زنجیرهسازی همتاها بهمعنای تکثیر پایگاهداده یا جایگزینی میزبان هنگام خرابی نیست. هر درگاه، وضعیت SQLite، حافظههای نهان، شمارندههای نرخ و نشستهای مستقل خود را نگه میدارد. برای دسترسپذیری فعال/غیرفعال یا فعال/فعال، از پراکسی معکوس دارای بررسی سلامت یا سازوکار جایگزینی سمت کلاینت استفاده کنید و هرگز یک پایگاهدادهٔ SQLite را همزمان در چند نمونهٔ در حال اجرای OmniRoute متصل نکنید.
+زنجیرهسازی همتاها بهمعنای تکثیر پایگاهداده یا جایگزینی میزبان هنگام خرابی نیست. هر درگاه، وضعیت SQLite، حافظههای نهان، شمارندههای نرخ و نشستهای مستقل خود را نگه میدارد. برای دسترسپذیری فعال/غیرفعال یا فعال/فعال، از پراکسی معکوس دارای بررسی سلامت یا سازوکار جایگزینی سمت کلاینت استفاده کنید و هرگز یک پایگاهدادهٔ SQLite را همزمان در چند نمونهٔ در حال اجرای Pusula متصل نکنید.
 
 ### مسیرهای اختصاصی ارائهدهنده
 
@@ -759,7 +759,7 @@ curl http://localhost:20128/api/models/catalog
 - برای Docker و سایر استقرارهای خودمیزبان در **Dashboard → Endpoints** در دسترس است
 - یک URL موقت `https://*.trycloudflare.com` ایجاد میکند که درخواستها را به نقطهٔ پایانی فعلی و سازگار با OpenAI شما در `/v1` هدایت میکند
 - در اولین فعالسازی، `cloudflared` فقط در صورت نیاز نصب میشود؛ راهاندازیهای مجدد بعدی از همان فایل اجرایی مدیریتشده استفاده میکنند
-- تونلهای سریع پس از راهاندازی مجدد OmniRoute یا کانتینر، بهطور خودکار بازیابی نمیشوند؛ در صورت نیاز، آنها را دوباره از داشبورد فعال کنید
+- تونلهای سریع پس از راهاندازی مجدد Pusula یا کانتینر، بهطور خودکار بازیابی نمیشوند؛ در صورت نیاز، آنها را دوباره از داشبورد فعال کنید
 - URLهای تونل موقتی هستند و هر بار که تونل را متوقف و دوباره راهاندازی میکنید، تغییر میکنند
 - تونلهای سریع مدیریتشده بهطور پیشفرض از انتقال HTTP/2 استفاده میکنند تا از هشدارهای پرشمار مربوط به بافر UDP در QUIC در کانتینرهای دارای محدودیت جلوگیری شود
 - اگر میخواهید انتخاب انتقال مدیریتشده را بازنویسی کنید، `CLOUDFLARED_PROTOCOL=quic` یا `auto` را تنظیم کنید
@@ -768,15 +768,15 @@ curl http://localhost:20128/api/models/catalog
 
 ### هوشمندی درگاه LLM (مرحلهٔ 9)
 
-- **حافظهٔ نهان معنایی** — پاسخهای غیرجریانی با temperature=0 را بهطور خودکار در حافظهٔ نهان ذخیره میکند (برای دورزدن آن از `X-OmniRoute-No-Cache: true` استفاده کنید)
+- **حافظهٔ نهان معنایی** — پاسخهای غیرجریانی با temperature=0 را بهطور خودکار در حافظهٔ نهان ذخیره میکند (برای دورزدن آن از `X-Pusula-No-Cache: true` استفاده کنید)
 - **تکرارناپذیری درخواست** — درخواستها را در بازهٔ 5s با استفاده از سربرگ `Idempotency-Key` یا `X-Request-Id` حذف تکراری میکند
-- **ردیابی پیشرفت** — رویدادهای اختیاری SSE از نوع `event: progress` را از طریق سربرگ `X-OmniRoute-Progress: true` ارائه میدهد
+- **ردیابی پیشرفت** — رویدادهای اختیاری SSE از نوع `event: progress` را از طریق سربرگ `X-Pusula-Progress: true` ارائه میدهد
 
 ---
 
 ### محیط آزمایشی مترجم
 
-از طریق **Dashboard → Translator** به آن دسترسی پیدا کنید. نحوهٔ ترجمهٔ درخواستهای API بین ارائهدهندگان توسط OmniRoute را اشکالزدایی و مصورسازی کنید.
+از طریق **Dashboard → Translator** به آن دسترسی پیدا کنید. نحوهٔ ترجمهٔ درخواستهای API بین ارائهدهندگان توسط Pusula را اشکالزدایی و مصورسازی کنید.
 
 | حالت             | هدف                                                                                         |
 | ---------------- | ------------------------------------------------------------------------------------------- |
@@ -829,7 +829,7 @@ curl http://localhost:20128/api/models/catalog
 X-Session-Id: your-session-key
 ```
 
-OmniRoute همچنین `x_session_id` را میپذیرد و کلید مؤثر نشست را در `X-OmniRoute-Session-Id` برمیگرداند.
+Pusula همچنین `x_session_id` را میپذیرد و کلید مؤثر نشست را در `X-Pusula-Session-Id` برمیگرداند.
 
 اگر از Nginx استفاده میکنید و سرآیندهایی با قالب زیرخط ارسال میکنید، این گزینه را فعال کنید:
 
@@ -865,7 +865,7 @@ underscores_in_headers on;
 
 از مسیر **داشبورد → تنظیمات → تابآوری** پیکربندی کنید.
 
-OmniRoute تابآوری در سطح ارائهدهنده را با پنج مؤلفه پیادهسازی میکند:
+Pusula تابآوری در سطح ارائهدهنده را با پنج مؤلفه پیادهسازی میکند:
 
 1. **صف درخواست و تنظیم آهنگ** — شکلدهی درخواست در سطح سیستم:
    - **درخواست در دقیقه (RPM)** — حداکثر تعداد درخواست در دقیقه برای هر حساب
@@ -890,7 +890,7 @@ OmniRoute تابآوری در سطح ارائهدهنده را با پنج مؤ�
 
    وضعیت زمان اجرای قطعکننده ارائهدهنده فقط در **داشبورد → سلامت** نمایش داده میشود.
 
-4. **انتظار برای پایان دوره انتظار** — اگر همه اتصالهای کاندید از قبل در دوره انتظار باشند، OmniRoute میتواند تا پایان نزدیکترین دوره انتظار صبر کند و همان درخواست کلاینت را بهطور خودکار دوباره امتحان کند.
+4. **انتظار برای پایان دوره انتظار** — اگر همه اتصالهای کاندید از قبل در دوره انتظار باشند، Pusula میتواند تا پایان نزدیکترین دوره انتظار صبر کند و همان درخواست کلاینت را بهطور خودکار دوباره امتحان کند.
 
 5. **تشخیص خودکار محدودیت نرخ** — وقتی ارائهدهندگان بالادستی بازههای انتظار صریحی برمیگردانند، در صورت فعال بودن این تنظیم، آن راهنماها دوره انتظار محلی اتصال را لغو و جایگزین میکنند.
 
@@ -924,7 +924,7 @@ curl -X POST http://localhost:20128/api/db-backups/import \
 
 **موارد استفاده:**
 
-- انتقال OmniRoute بین دستگاهها
+- انتقال Pusula بین دستگاهها
 - ایجاد نسخههای پشتیبان خارجی برای بازیابی پس از بحران
 - اشتراکگذاری پیکربندیها بین اعضای تیم (خروجی گرفتن از همهچیز ← اشتراکگذاری آرشیو)
 
@@ -976,7 +976,7 @@ curl http://localhost:20128/api/usage/budget
 
 ### رونویسی صوتی
 
-OmniRoute از رونویسی صوتی از طریق نقطه پایانی سازگار با OpenAI پشتیبانی میکند:
+Pusula از رونویسی صوتی از طریق نقطه پایانی سازگار با OpenAI پشتیبانی میکند:
 
 ```bash
 POST /v1/audio/transcriptions
@@ -1052,7 +1052,7 @@ TTFT یا فشردهسازی درخواستهای جایگزین جلوگیری 
 `max_tokens` / `maxOutputTokens` نیاز دارند، **بافر توکنهای استدلال** را غیرفعال کنید. در صورت فعال بودن، مسیریابی ترکیبی فقط برای مدلهای استدلالی
 که سقف خروجی مشخصی دارند، فضای اضافه در نظر میگیرد و وقتی مقدار امنِ بافرشده از آن سقف
 فراتر رود، محدودیت توکن کلاینت را بدون تغییر باقی میگذارد. اگر محدودیت کلاینت از قبل بالاتر از یک سقف مشخص باشد،
-OmniRoute پیش از ارسال درخواست بالادستی، آن را تا همان سقف کاهش میدهد.
+Pusula پیش از ارسال درخواست بالادستی، آن را تا همان سقف کاهش میدهد.
 
 ---
 
@@ -1075,7 +1075,7 @@ OmniRoute پیش از ارسال درخواست بالادستی، آن را ت�
 
 ## 🤖 مسیریابی خودکار (بدون نیاز به پیکربندی)
 
-OmniRoute همراه با یک **مسیریاب خودکار مبتنی بر امتیازدهی** عرضه میشود که برای هر درخواست، بهترین مدل را از میان تمام ارائهدهندگان متصل انتخاب میکند — بدون نیاز به نگهداری هیچ ترکیبی. کافی است درخواست را با یکی از پیشوندهای `auto/*` ارسال کنید؛ OmniRoute در لحظه یک ترکیب مجازی میسازد و گزینهها را بر اساس تأخیر، هزینه، نرخ موفقیت، تناسب پنجره زمینه، مناسببودن مدل برای وظیفه، خطاهای اخیر، سهمیه و وضعیت قطعکننده مدار امتیازدهی میکند.
+Pusula همراه با یک **مسیریاب خودکار مبتنی بر امتیازدهی** عرضه میشود که برای هر درخواست، بهترین مدل را از میان تمام ارائهدهندگان متصل انتخاب میکند — بدون نیاز به نگهداری هیچ ترکیبی. کافی است درخواست را با یکی از پیشوندهای `auto/*` ارسال کنید؛ Pusula در لحظه یک ترکیب مجازی میسازد و گزینهها را بر اساس تأخیر، هزینه، نرخ موفقیت، تناسب پنجره زمینه، مناسببودن مدل برای وظیفه، خطاهای اخیر، سهمیه و وضعیت قطعکننده مدار امتیازدهی میکند.
 
 | پیشوند         | معیار بهینهسازی                                                                                                   |
 | -------------- | ----------------------------------------------------------------------------------------------------------------- |
@@ -1091,7 +1091,7 @@ OmniRoute همراه با یک **مسیریاب خودکار مبتنی بر ا�
 
 ```bash
 curl -X POST http://localhost:20128/v1/chat/completions \
-  -H "Authorization: Bearer $OMNIROUTE_KEY" \
+  -H "Authorization: Bearer $PUSULA_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "auto/coding",
@@ -1106,13 +1106,13 @@ curl -X POST http://localhost:20128/v1/chat/completions \
 
 ## 🔌 یکپارچهسازی MCP و A2A
 
-OmniRoute هم یک **سرور MCP** (پروتکل زمینه مدل) و هم یک **سرور A2A** (JSON-RPC 2.0 عاملبهعامل) است. هر محیط توسعه یا میزبان عامل سازگار با MCP میتواند ابزارهای OmniRoute را مستقیماً فراخوانی کند — بدون نیاز به هیچ پوشش اضافی.
+Pusula هم یک **سرور MCP** (پروتکل زمینه مدل) و هم یک **سرور A2A** (JSON-RPC 2.0 عاملبهعامل) است. هر محیط توسعه یا میزبان عامل سازگار با MCP میتواند ابزارهای Pusula را مستقیماً فراخوانی کند — بدون نیاز به هیچ پوشش اضافی.
 
 ### روشهای انتقال MCP
 
 - **SSE**: `http://localhost:20128/api/mcp/sse`
 - **HTTP قابلجریان**: `http://localhost:20128/api/mcp/stream`
-- **stdio**: `omniroute --mcp` (برای افزونههای محیط توسعه که stdio را ترجیح میدهند)
+- **stdio**: `pusula --mcp` (برای افزونههای محیط توسعه که stdio را ترجیح میدهند)
 
 ### اتصال Claude Desktop
 
@@ -1121,8 +1121,8 @@ OmniRoute هم یک **سرور MCP** (پروتکل زمینه مدل) و هم ی
 ```json
 {
   "mcpServers": {
-    "omniroute": {
-      "command": "omniroute",
+    "pusula": {
+      "command": "pusula",
       "args": ["--mcp"]
     }
   }
@@ -1141,7 +1141,7 @@ MCP در حال حاضر 32 دامنه نامگذاریشده تعریف میک�
 
 ## 🧠 سیستم مهارتها
 
-OmniRoute یک **چارچوب مهارت** توسعهپذیر (`src/lib/skills/`) ارائه میدهد تا عاملها و نقطه پایانی A2A بتوانند روالهای مختص دامنه را اجرا کنند (برای مثال `code-review`، `summarize`، `extract-facts` و `web-research`).
+Pusula یک **چارچوب مهارت** توسعهپذیر (`src/lib/skills/`) ارائه میدهد تا عاملها و نقطه پایانی A2A بتوانند روالهای مختص دامنه را اجرا کنند (برای مثال `code-review`، `summarize`، `extract-facts` و `web-research`).
 
 - **رابط کاربری بازارچه** — مهارتها را از مسیر **داشبورد ← مهارتها** مرور و نصب کنید
 - **دامنههای اختصاصی هر کلید** — مشخص کنید کدام کلیدهای API میتوانند کدام مهارتها را فراخوانی کنند
@@ -1153,7 +1153,7 @@ OmniRoute یک **چارچوب مهارت** توسعهپذیر (`src/lib/skills/`
 
 ## 💾 سیستم حافظه
 
-OmniRoute **حافظه مکالمهای بلندمدت** را با بازیابی ترکیبی ذخیره میکند:
+Pusula **حافظه مکالمهای بلندمدت** را با بازیابی ترکیبی ذخیره میکند:
 
 - **SQLite FTS5** برای جستوجوی کلیدواژهای در نوبتهای مکالمه گذشته
 - **ذخیرهساز برداری Qdrant** (اختیاری) برای یادآوری معنایی
@@ -1166,11 +1166,11 @@ OmniRoute **حافظه مکالمهای بلندمدت** را با بازیاب�
 
 ## 🔔 وبهوکها
 
-برای پایش و خودکارسازی بلادرنگ، در رویدادهای OmniRoute مشترک شوید.
+برای پایش و خودکارسازی بلادرنگ، در رویدادهای Pusula مشترک شوید.
 
 - در مسیر **داشبورد ← وبهوکها** یک وبهوک با URL مقصد و کلید محرمانه امضای HMAC ایجاد کنید
 - رویدادهای موجود: `request.completed`، `request.failed`، `provider.unavailable`، `budget.exceeded`، `combo.switched`، `circuit_breaker.opened`، `circuit_breaker.closed`
-- هر بار ارسالی برای اعتبارسنجی شامل `X-OmniRoute-Signature` (HMAC-SHA256) است
+- هر بار ارسالی برای اعتبارسنجی شامل `X-Pusula-Signature` (HMAC-SHA256) است
 - تلاشهای مجدد: 3 تلاش با تأخیر تصاعدی، سپس انتقال به صف نامههای مرده
 
 طرحواره کامل در [WEBHOOKS.md](../frameworks/WEBHOOKS.md).
@@ -1179,11 +1179,11 @@ OmniRoute **حافظه مکالمهای بلندمدت** را با بازیاب�
 
 ## ☁️ عاملهای ابری
 
-OmniRoute با عاملهای کدنویسی ابری (**OpenAI Codex Cloud**، **Devin**، **Jules** و **Antigravity**) یکپارچه میشود تا بتوانید وظایف طولانیمدت را از همان داشبوردی که مسیریابی محلی شما را مدیریت میکند، ارسال کنید.
+Pusula با عاملهای کدنویسی ابری (**OpenAI Codex Cloud**، **Devin**، **Jules** و **Antigravity**) یکپارچه میشود تا بتوانید وظایف طولانیمدت را از همان داشبوردی که مسیریابی محلی شما را مدیریت میکند، ارسال کنید.
 
 - وظایف را در **داشبورد ← عاملهای ابری** یا از طریق `POST /api/v1/agents/tasks` ایجاد کنید
 - وضعیت، گزارشها و مصنوعات هر وظیفه را پیگیری کنید
-- برای هر ارائهدهنده از کلید API خودتان استفاده کنید — اطلاعات ورود هرگز از نمونه OmniRoute خارج نمیشوند
+- برای هر ارائهدهنده از کلید API خودتان استفاده کنید — اطلاعات ورود هرگز از نمونه Pusula خارج نمیشوند
 
 مرجع کامل: [CLOUD_AGENT.md](../frameworks/CLOUD_AGENT.md).
 
@@ -1191,30 +1191,30 @@ OmniRoute با عاملهای کدنویسی ابری (**OpenAI Codex Cloud**، 
 
 ## 🛠️ مدیریت برنامهنویسیشده
 
-میتوانید تمام منابع OmniRoute (ارائهدهندگان، ترکیبها، کلیدها و تنظیمات) را از طریق HTTP و با استفاده از یک **کلید Bearer دارای دامنه `manage`** مدیریت کنید.
+میتوانید تمام منابع Pusula (ارائهدهندگان، ترکیبها، کلیدها و تنظیمات) را از طریق HTTP و با استفاده از یک **کلید Bearer دارای دامنه `manage`** مدیریت کنید.
 
 کلید را در مسیر **داشبورد ← کلیدهای API ← کلید جدید ← دامنه: manage** ایجاد کنید، سپس:
 
 ```bash
 # فهرست ارائهدهندگان
 curl http://localhost:20128/api/providers \
-  -H "Authorization: Bearer $OMNIROUTE_MANAGE_KEY"
+  -H "Authorization: Bearer $PUSULA_MANAGE_KEY"
 
 # افزودن اتصال ارائهدهنده
 curl -X POST http://localhost:20128/api/providers \
-  -H "Authorization: Bearer $OMNIROUTE_MANAGE_KEY" \
+  -H "Authorization: Bearer $PUSULA_MANAGE_KEY" \
   -H "Content-Type: application/json" \
   -d '{ "provider": "openai", "apiKey": "sk-...", "name": "main" }'
 
 # ایجاد یک ترکیب
 curl -X POST http://localhost:20128/api/combos \
-  -H "Authorization: Bearer $OMNIROUTE_MANAGE_KEY" \
+  -H "Authorization: Bearer $PUSULA_MANAGE_KEY" \
   -H "Content-Type: application/json" \
   -d '{ "name": "premium", "strategy": "priority", "models": [{ "model": "cc/claude-opus-4-7" }, { "model": "glm/glm-5.1" }] }'
 
 # فهرستکردن/ایجاد کلیدهای API
-curl http://localhost:20128/api/keys -H "Authorization: Bearer $OMNIROUTE_MANAGE_KEY"
-curl -X POST http://localhost:20128/api/keys -H "Authorization: Bearer $OMNIROUTE_MANAGE_KEY" \
+curl http://localhost:20128/api/keys -H "Authorization: Bearer $PUSULA_MANAGE_KEY"
+curl -X POST http://localhost:20128/api/keys -H "Authorization: Bearer $PUSULA_MANAGE_KEY" \
   -d '{ "name": "ci-bot", "scopes": ["chat"] }'
 ```
 
@@ -1224,38 +1224,38 @@ curl -X POST http://localhost:20128/api/keys -H "Authorization: Bearer $OMNIROUT
 
 ## 💻 CLI داخلی
 
-OmniRoute یک CLI داخلی (`omniroute …`) برای راهاندازی، عیبیابی و کنترل زمان اجرا ارائه میکند. این ابزار **از صفحه «ابزارهای CLI» در داشبورد جدا است**؛ آن صفحه CLIهای شخص ثالث (Claude Code، Cursor، Codex، Cline و …) را پیکربندی میکند تا بتوانند با OmniRoute ارتباط برقرار کنند.
+Pusula یک CLI داخلی (`pusula …`) برای راهاندازی، عیبیابی و کنترل زمان اجرا ارائه میکند. این ابزار **از صفحه «ابزارهای CLI» در داشبورد جدا است**؛ آن صفحه CLIهای شخص ثالث (Claude Code، Cursor، Codex، Cline و …) را پیکربندی میکند تا بتوانند با Pusula ارتباط برقرار کنند.
 
 ```bash
-omniroute setup                    # راهنمای تعاملی (رمز عبور، ارائهدهندگان، ترکیبها)
-omniroute setup --non-interactive  # مناسب برای CI
-omniroute doctor                   # عیبیابی سلامت (دایرکتوری داده، پایگاه داده، ارائهدهندگان، پورتها)
-omniroute providers available      # فهرست ارائهدهندگان پشتیبانیشده
-omniroute providers list           # فهرست اتصالهای پیکربندیشده
-omniroute providers test <id>      # آزمایش زنده اتصال یک ارائهدهنده
-omniroute combos list              # فهرست ترکیبها
-omniroute combos switch <name>     # تنظیم ترکیب پیشفرض
-omniroute models                   # فهرست مدلهای موجود (--json، --search)
-omniroute keys add | list | remove # مدیریت کلیدهای API از ترمینال
-omniroute backup                   # تهیه اسنپشات از پیکربندی و پایگاه داده
-omniroute restore [<timestamp>]    # بازیابی از یک اسنپشات
-omniroute health                   # جزئیات سلامت (قطعکنندهها، کش، حافظه)
-omniroute quota                    # میزان مصرف سهمیه ارائهدهنده
-omniroute mcp status               # وضعیت سرور MCP
-omniroute a2a status               # وضعیت سرور A2A
-omniroute tunnel list|create|stop  # تونلهای Cloudflare/Tailscale/ngrok
-omniroute reset-password           # بازنشانی رمز عبور مدیر
-omniroute --mcp                    # راهاندازی سرور MCP از طریق stdio
-omniroute --port 3000              # راهاندازی سرور روی یک پورت سفارشی
+pusula setup                    # راهنمای تعاملی (رمز عبور، ارائهدهندگان، ترکیبها)
+pusula setup --non-interactive  # مناسب برای CI
+pusula doctor                   # عیبیابی سلامت (دایرکتوری داده، پایگاه داده، ارائهدهندگان، پورتها)
+pusula providers available      # فهرست ارائهدهندگان پشتیبانیشده
+pusula providers list           # فهرست اتصالهای پیکربندیشده
+pusula providers test <id>      # آزمایش زنده اتصال یک ارائهدهنده
+pusula combos list              # فهرست ترکیبها
+pusula combos switch <name>     # تنظیم ترکیب پیشفرض
+pusula models                   # فهرست مدلهای موجود (--json، --search)
+pusula keys add | list | remove # مدیریت کلیدهای API از ترمینال
+pusula backup                   # تهیه اسنپشات از پیکربندی و پایگاه داده
+pusula restore [<timestamp>]    # بازیابی از یک اسنپشات
+pusula health                   # جزئیات سلامت (قطعکنندهها، کش، حافظه)
+pusula quota                    # میزان مصرف سهمیه ارائهدهنده
+pusula mcp status               # وضعیت سرور MCP
+pusula a2a status               # وضعیت سرور A2A
+pusula tunnel list|create|stop  # تونلهای Cloudflare/Tailscale/ngrok
+pusula reset-password           # بازنشانی رمز عبور مدیر
+pusula --mcp                    # راهاندازی سرور MCP از طریق stdio
+pusula --port 3000              # راهاندازی سرور روی یک پورت سفارشی
 ```
 
-نکته: `omniroute doctor --json` را با ابزار پایش خود همراه کنید تا درباره اتصالهای ناسالم ارائهدهندگان هشدار دریافت کنید.
+نکته: `pusula doctor --json` را با ابزار پایش خود همراه کنید تا درباره اتصالهای ناسالم ارائهدهندگان هشدار دریافت کنید.
 
 ---
 
 ## 🖥️ برنامه دسکتاپ (Electron)
 
-OmniRoute بهعنوان یک برنامه دسکتاپ بومی برای Windows، macOS و Linux در دسترس است.
+Pusula بهعنوان یک برنامه دسکتاپ بومی برای Windows، macOS و Linux در دسترس است.
 
 ### نصب
 
@@ -1298,7 +1298,7 @@ npm run build:linux    # Linux (.AppImage)
 
 | متغیر                 | پیشفرض  | توضیحات                               |
 | --------------------- | ------- | ------------------------------------- |
-| `OMNIROUTE_PORT`      | `20128` | پورت سرور                             |
-| `OMNIROUTE_MEMORY_MB` | `512`   | محدودیت heap در Node.js (64–16384 MB) |
+| `PUSULA_PORT`      | `20128` | پورت سرور                             |
+| `PUSULA_MEMORY_MB` | `512`   | محدودیت heap در Node.js (64–16384 MB) |
 
 📖 مستندات کامل: [`electron/README.md`](../../electron/README.md)

@@ -87,7 +87,7 @@ import {
 import { getComboStepTarget } from "@/lib/combos/steps";
 import { DEAD_COMBO_CONFIG_KEYS } from "@/lib/combos/deadConfigKeys";
 import { modelFamily } from "@/lib/combos/invariants";
-import { resolveProviderAlias } from "@omniroute/open-sse/services/providerAlias.ts";
+import { resolveProviderAlias } from "@pusula/open-sse/services/providerAlias.ts";
 import { resolveServerErrorMessage } from "@/lib/api/serverErrorMessage";
 import { useTranslations } from "next-intl";
 
@@ -391,7 +391,7 @@ const STRATEGY_RECOMMENDATIONS_FALLBACK = {
   },
 };
 
-const COMBO_USAGE_GUIDE_STORAGE_KEY = "omniroute:combos:hide-usage-guide";
+const COMBO_USAGE_GUIDE_STORAGE_KEY = "pusula:combos:hide-usage-guide";
 
 // The dismissal lives in localStorage, which SSR cannot read: a lazy useState
 // initializer would render "not dismissed" on the server and the real value on
@@ -1607,7 +1607,7 @@ function ComboUsageGuide({ onHide, onHideForever, onCreateCombo }) {
           {getI18nOrFallback(
             t,
             "usageGuideInvokeOpenrouterNote",
-            "openrouter/auto is a real paid OpenRouter product (Auto Best Available), not an OmniRoute alias — exclude it via Settings → Routing → Hide paid models."
+            "openrouter/auto is a real paid OpenRouter product (Auto Best Available), not an Pusula alias — exclude it via Settings → Routing → Hide paid models."
           )}
         </p>
       </div>
@@ -4447,7 +4447,7 @@ function ComboFormModal({ isOpen, combo, onClose, onSave, activeProviders, combo
                           help={getI18nOrFallback(
                             t,
                             "contextRelayHandoffThresholdHelp",
-                            "When quota usage reaches this threshold, OmniRoute generates a structured handoff summary before the account is exhausted."
+                            "When quota usage reaches this threshold, Pusula generates a structured handoff summary before the account is exhausted."
                           )}
                           showHelp={!isExpertMode}
                         />

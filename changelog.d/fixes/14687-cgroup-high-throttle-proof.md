@@ -1,1 +1,1 @@
-- **fix(resilience):** only report `cgroup_high` pressure as critical on kernel throttle proof ([#14687](https://github.com/diegosouzapw/OmniRoute/pull/14687)) — thanks @maxmad64bis
+- **fix(resilience):** only report `cgroup_high` pressure as critical on kernel throttle proof ([#14687](https://github.com/Ferhat-Yasinoglu/pusula/pull/14687)) — thanks @maxmad64bis

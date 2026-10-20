@@ -33,9 +33,9 @@ export const DEFAULT_CHAT_ADMISSION_SETTINGS: ChatAdmissionSettings = {
  * matching `resolveLegacyCountCap()` in `chatBodyAdmission.ts`.
  */
 const ENV_KEYS: Record<ChatAdmissionSettingKey, string> = {
-  chatMaxHeavyInFlight: "OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT",
-  chatAdmissionHeapShedRatio: "OMNIROUTE_CHAT_ADMISSION_HEAP_SHED_RATIO",
-  chatAdmissionHealthyHeadroom: "OMNIROUTE_CHAT_ADMISSION_HEALTHY_HEADROOM",
+  chatMaxHeavyInFlight: "PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT",
+  chatAdmissionHeapShedRatio: "PUSULA_CHAT_ADMISSION_HEAP_SHED_RATIO",
+  chatAdmissionHealthyHeadroom: "PUSULA_CHAT_ADMISSION_HEALTHY_HEADROOM",
 };
 
 /**

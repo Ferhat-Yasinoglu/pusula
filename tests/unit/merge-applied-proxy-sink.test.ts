@@ -7,7 +7,7 @@ import path from "node:path";
 // The received status travels with the applied proxy: one merge at the log call site, and
 // safeLogEvents forwards it to the proxy log. A locally generated 429 (no fetch) has no
 // upstream status.
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-merge-applied-sink-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-merge-applied-sink-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../src/lib/db/core.ts");

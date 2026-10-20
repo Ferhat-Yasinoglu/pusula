@@ -4,7 +4,7 @@
 
 ---
 
-OmniRoute, yönetim rotalarını yetkilendirebilen **dört kimlik bilgisi ailesine** sahiptir.
+Pusula, yönetim rotalarını yetkilendirebilen **dört kimlik bilgisi ailesine** sahiptir.
 Bunlar birbirinin yerine kullanılamaz. Çıkarım API anahtarları (`sk-…`), açıkça `manage` veya `admin` kapsamı verilmedikçe sunucuyu yönetmez.
 
 Kanonsal uygulama: `src/lib/api/requireManagementAuth.ts`.
@@ -12,8 +12,8 @@ Kanonsal uygulama: `src/lib/api/requireManagementAuth.ts`.
 | Kimlik Bilgisi               | Tipik biçim                             | Oluşturulduğu yer                                          | Amaçlanan kullanım         | Yönetim yeteneği                                                                      |
 | :--------------------------- | :-------------------------------------- | :--------------------------------------------------------- | :------------------------- | :------------------------------------------------------------------------------------ |
 | Kontrol Paneli JWT oturumu   | `auth_token` çerezi                     | Kontrol Paneli girişi                                      | Tarayıcı kullanıcı arayüzü | CSRF, yerellik ve her zaman korunan rota kurallarına tabi tam kontrol paneli yönetimi |
-| CLI makine kimliği belirteci | dahili / yerel                          | CLI önyüklemesi (aynı makinede `omniroute`)                | Yerel CLI                  | Yalnızca yerel yönetim                                                                |
-| Kapsamlı Erişim Belirteci    | `oma_live_…`                            | **Ayarlar → Erişim Belirteçleri** veya `omniroute connect` | Uzak CLI ve yönetim API'si | Rotanın gerekli `read`, `write` veya `admin` kapsamını karşılamalıdır                 |
+| CLI makine kimliği belirteci | dahili / yerel                          | CLI önyüklemesi (aynı makinede `pusula`)                | Yerel CLI                  | Yalnızca yerel yönetim                                                                |
+| Kapsamlı Erişim Belirteci    | `oma_live_…`                            | **Ayarlar → Erişim Belirteçleri** veya `pusula connect` | Uzak CLI ve yönetim API'si | Rotanın gerekli `read`, `write` veya `admin` kapsamını karşılamalıdır                 |
 | Çıkarım API anahtarı         | `sk-…` (ve diğer API anahtarı önekleri) | **API Yöneticisi / API Anahtarları**                       | `/v1/*` çıkarım            | Anahtar meta verileri `manage` veya `admin` içermiyorsa **Yoktur**                    |
 
 `oma_` kimlik bilgileri yönetim/CLI kimlik bilgileridir. Bunlar çıkarım API anahtarları **değildir**.
@@ -63,14 +63,14 @@ API Anahtarları / API Yöneticisi kullanıcı arayüzünde anahtarda `manage` �
 
 ### CLI makine kimliği belirteci
 
-1. Sunucuyla **aynı ana makinede** `omniroute` komutunu çalıştırın (geri döngü).
-2. CLI, `~/.omniroute/` altında bir makine kimliği belirteci oluşturur (chmod 600).
+1. Sunucuyla **aynı ana makinede** `pusula` komutunu çalıştırın (geri döngü).
+2. CLI, `~/.pusula/` altında bir makine kimliği belirteci oluşturur (chmod 600).
 3. Bu, başka bir makineden **çalışmaz**. Uzak CLI için bir Erişim Belirteci kullanın.
 
 ### Kapsamlı Erişim Belirteci (`oma_live_…`)
 
 1. Dashboard: **Ayarlar → Erişim Belirteçleri** → oluşturun (ad + kapsam). **Gizli değer yalnızca bir kez gösterilir.**
-2. Alternatif olarak CLI: `omniroute connect <host>` (parola → belirteç). Bkz. [Uzak Mod](./REMOTE-MODE.md).
+2. Alternatif olarak CLI: `pusula connect <host>` (parola → belirteç). Bkz. [Uzak Mod](./REMOTE-MODE.md).
 3. Üstbilgi: `Authorization: Bearer oma_live_…`
 4. Aynı Erişim Belirteçleri sayfasından iptal edin (veya CLI bağlamını silin).
 5. Sunucu yalnızca bir karma değer saklar. Düz metin değeri bir parola gibi koruyun.
@@ -101,14 +101,14 @@ Yönetim kimlik bilgilerini URL yoluna veya sorgu dizesine koymayın. Yönetim k
 Salt okunur (sağlayıcıları listeleme). Bir `read` Erişim Belirteci kullanın:
 
 ```bash
-curl -sS "$OMNIROUTE_URL/api/providers" \
+curl -sS "$PUSULA_URL/api/providers" \
   -H "Authorization: Bearer oma_live_<read-token>"
 ```
 
 Değişiklik yapma (sağlayıcı bağlantısı oluşturma). `write`/`admin` Erişim Belirteci veya `manage` kapsamlı bir API anahtarı kullanın:
 
 ```bash
-curl -sS -X POST "$OMNIROUTE_URL/api/providers" \
+curl -sS -X POST "$PUSULA_URL/api/providers" \
   -H "Authorization: Bearer oma_live_<write-or-admin-token>" \
   -H "Content-Type: application/json" \
   -d '{"provider":"openai","apiKey":"<upstream-key>"}'
@@ -117,7 +117,7 @@ curl -sS -X POST "$OMNIROUTE_URL/api/providers" \
 Çıkarım (yönetim değildir). Sıradan bir API anahtarı kullanın; `manage` gerekli değildir:
 
 ```bash
-curl -sS "$OMNIROUTE_URL/v1/models" \
+curl -sS "$PUSULA_URL/v1/models" \
   -H "Authorization: Bearer sk-<inference-key>"
 ```
 
@@ -143,6 +143,6 @@ curl -sS "$OMNIROUTE_URL/v1/models" \
 | ------------------------------------------------- | ------------------------------------------------------ |
 | Tarayıcı                                          | Kontrol paneli oturumu                                 |
 | Sunucu ana bilgisayarındaki CLI                   | Makine belirteci                                       |
-| Uzak sunucuyla konuşan dizüstü bilgisayardaki CLI | `omniroute connect`'ten `oma_live_…`                   |
+| Uzak sunucuyla konuşan dizüstü bilgisayardaki CLI | `pusula connect`'ten `oma_live_…`                   |
 | CI / betikler (yalnızca yönetim)                  | Çalışan en küçük kapsamlı `oma_live_…`                 |
 | Hem `/v1` hem de `/api` çağırması gereken CI      | `manage` **veya** iki kimlik bilgisi olan API anahtarı |

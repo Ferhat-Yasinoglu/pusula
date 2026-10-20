@@ -5,11 +5,11 @@
 ---
 
 > **وضعیت:** عموماً در دسترس.
-> **مخاطب:** اپراتورهایی که OpenCode را به یک استقرار OmniRoute متصل میکنند.
+> **مخاطب:** اپراتورهایی که OpenCode را به یک استقرار Pusula متصل میکنند.
 > **منبع اصلی (طرحوارهٔ پیکربندی):** `src/shared/services/opencodeConfig.ts`
-> **منبع اصلی (بستهٔ npm):** `@omniroute/opencode-provider/` (فضای کاری قابل انتشار)
+> **منبع اصلی (بستهٔ npm):** `@pusula/opencode-provider/` (فضای کاری قابل انتشار)
 
-[OpenCode](https://opencode.ai) یک کلاینت هوش مصنوعی عاملمحور برای CLI/دسکتاپ است. این کلاینت کاتالوگ ارائهدهندگان خود را از `~/.config/opencode/opencode.json` (یا `opencode.jsonc`) میخواند و از طرحوارهٔ موجود در `https://opencode.ai/config.json` پیروی میکند. OmniRoute خود را بهعنوان یکی از این ارائهدهندگان به OpenCode معرفی میکند — هر درخواست از سطح استاندارد سازگار با OpenAI در مسیر `/v1` متعلق به OmniRoute عبور میکند؛ بنابراین OpenCode بهطور خودکار از مسیریابی Auto-Combo، مدارشکنها، سیاستهای کلید، مشاهدهپذیری و موارد دیگر بهرهمند میشود.
+[OpenCode](https://opencode.ai) یک کلاینت هوش مصنوعی عاملمحور برای CLI/دسکتاپ است. این کلاینت کاتالوگ ارائهدهندگان خود را از `~/.config/opencode/opencode.json` (یا `opencode.jsonc`) میخواند و از طرحوارهٔ موجود در `https://opencode.ai/config.json` پیروی میکند. Pusula خود را بهعنوان یکی از این ارائهدهندگان به OpenCode معرفی میکند — هر درخواست از سطح استاندارد سازگار با OpenAI در مسیر `/v1` متعلق به Pusula عبور میکند؛ بنابراین OpenCode بهطور خودکار از مسیریابی Auto-Combo، مدارشکنها، سیاستهای کلید، مشاهدهپذیری و موارد دیگر بهرهمند میشود.
 
 **دو مسیر ادغام پشتیبانیشده** وجود دارد. یکی را انتخاب کنید — هر دو پیکربندی یکسانی تولید میکنند.
 
@@ -17,16 +17,16 @@
 
 ## مسیر ۱ — مولد CLI (بدون نصب npm)
 
-برای کاربران نهایی توصیه میشود. همراه OmniRoute ارائه میشود. فایل `opencode.json` را در محل خود مینویسد.
+برای کاربران نهایی توصیه میشود. همراه Pusula ارائه میشود. فایل `opencode.json` را در محل خود مینویسد.
 
 ```bash
-# پس از نصب OmniRoute (npm i -g @omniroute/cli یا کلون محلی)
-omniroute config opencode \
+# پس از نصب Pusula (npm i -g @pusula/cli یا کلون محلی)
+pusula config opencode \
   --base-url http://localhost:20128 \
-  --api-key "$OMNIROUTE_API_KEY"
+  --api-key "$PUSULA_API_KEY"
 ```
 
-در پشت صحنه، CLI تابع `mergeOpenCodeConfigText()` (`src/shared/services/opencodeConfig.ts:104`) را فراخوانی میکند؛ بنابراین سایر ارائهدهندگان و توضیحات موجود در یک فایل `opencode.json` حفظ میشوند. ورودی OmniRoute بهصورت اتمی اضافه یا جایگزین میشود.
+در پشت صحنه، CLI تابع `mergeOpenCodeConfigText()` (`src/shared/services/opencodeConfig.ts:104`) را فراخوانی میکند؛ بنابراین سایر ارائهدهندگان و توضیحات موجود در یک فایل `opencode.json` حفظ میشوند. ورودی Pusula بهصورت اتمی اضافه یا جایگزین میشود.
 
 فایل حاصل (کاتالوگ مدل پیشفرض):
 
@@ -34,9 +34,9 @@ omniroute config opencode \
 {
   "$schema": "https://opencode.ai/config.json",
   "provider": {
-    "omniroute": {
+    "pusula": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "OmniRoute",
+      "name": "Pusula",
       "options": {
         "baseURL": "http://localhost:20128/v1",
         "apiKey": "<کلید-شما>",
@@ -54,21 +54,21 @@ omniroute config opencode \
 
 ---
 
-## مسیر ۲ — بستهٔ npm با نام `@omniroute/opencode-provider`
+## مسیر ۲ — بستهٔ npm با نام `@pusula/opencode-provider`
 
 زمانی توصیه میشود که پیکربندی را با Node/TS اسکریپتنویسی میکنید (پایپلاینهای CI، مخازن یکپارچه، جریانهای نصبکنندهٔ سفارشی).
 
 ```bash
-npm install --save-dev @omniroute/opencode-provider
+npm install --save-dev @pusula/opencode-provider
 ```
 
 ```ts
 import { writeFileSync } from "node:fs";
-import { buildOmniRouteOpenCodeConfig } from "@omniroute/opencode-provider";
+import { buildPusulaOpenCodeConfig } from "@pusula/opencode-provider";
 
-const config = buildOmniRouteOpenCodeConfig({
+const config = buildPusulaOpenCodeConfig({
   baseURL: "http://localhost:20128",
-  apiKey: process.env.OMNIROUTE_API_KEY ?? "sk_omniroute",
+  apiKey: process.env.PUSULA_API_KEY ?? "sk_pusula",
   // اختیاری: بازنویسی کاتالوگ مدل ارائهشده به OpenCode
   models: ["auto", "claude-opus-4-7", "gpt-5.5"],
   modelLabels: { auto: "Auto-Combo" },
@@ -79,19 +79,19 @@ writeFileSync("opencode.json", JSON.stringify(config, null, 2));
 
 برای ادغام غیرمخرب با یک فایل موجود، `mergeOpenCodeConfigText()` را از `opencodeConfig.ts` بازسازی کنید یا مولد CLI را فراخوانی کنید.
 
-برای API کامل، [README بسته](../../@omniroute/opencode-provider/README.md) را ببینید.
+برای API کامل، [README بسته](../../@pusula/opencode-provider/README.md) را ببینید.
 
 ---
 
 ## محیط اجرا واقعاً چه کاری انجام میدهد
 
-هر دو مسیر مقدار یکسان `provider.omniroute.npm: "@ai-sdk/openai-compatible"` را تولید میکنند. در زمان اجرا، OpenCode بستهٔ `@ai-sdk/openai-compatible` (که از قبل یکی از وابستگیهای انتقالی OpenCode است) را بارگذاری و آن را با `baseURL` و `apiKey` پیکربندی میکند. از آنجا:
+هر دو مسیر مقدار یکسان `provider.pusula.npm: "@ai-sdk/openai-compatible"` را تولید میکنند. در زمان اجرا، OpenCode بستهٔ `@ai-sdk/openai-compatible` (که از قبل یکی از وابستگیهای انتقالی OpenCode است) را بارگذاری و آن را با `baseURL` و `apiKey` پیکربندی میکند. از آنجا:
 
 ```
 رابط کاربری/عامل OpenCode
    → @ai-sdk/openai-compatible
-      → HTTP POST {baseURL}/chat/completions          (سطح OpenAI متعلق به OmniRoute)
-         → کنترلکنندهٔ OmniRoute /v1/chat/completions     (open-sse/handlers/chatCore.ts)
+      → HTTP POST {baseURL}/chat/completions          (سطح OpenAI متعلق به Pusula)
+         → کنترلکنندهٔ Pusula /v1/chat/completions     (open-sse/handlers/chatCore.ts)
             → مسیریابی ترکیبی / Auto-Combo / اجراکننده
                → ارائهدهندهٔ بالادستی
 ```
@@ -103,7 +103,7 @@ writeFileSync("opencode.json", JSON.stringify(config, null, 2));
 ## پیشفرضهای کاتالوگ مدل
 
 ```ts
-export const OMNIROUTE_DEFAULT_OPENCODE_MODELS = [
+export const PUSULA_DEFAULT_OPENCODE_MODELS = [
   "claude-opus-4-5-thinking",
   "claude-sonnet-4-5-thinking",
   "gemini-3.1-pro-high",
@@ -113,8 +113,8 @@ export const OMNIROUTE_DEFAULT_OPENCODE_MODELS = [
 
 میتوانید با استفاده از `models: [...]` آن را بازنویسی کنید. موارد پیشنهادی برای افزودن:
 
-- `"auto"` — مسیریاب بدون نیاز به پیکربندی [Auto-Combo](../routing/AUTO-COMBO.md) متعلق به OmniRoute را در دسترس قرار میدهد. به OpenCode اجازه میدهد بدون کدنویسی ثابت کاتالوگ، «بهترین مدل موجود» را انتخاب کند.
-- `"<combo-name>"` — هر ترکیبی که در داشبورد تعریف کردهاید؛ OmniRoute آن را بهصورت شفاف تفکیک و پردازش میکند.
+- `"auto"` — مسیریاب بدون نیاز به پیکربندی [Auto-Combo](../routing/AUTO-COMBO.md) متعلق به Pusula را در دسترس قرار میدهد. به OpenCode اجازه میدهد بدون کدنویسی ثابت کاتالوگ، «بهترین مدل موجود» را انتخاب کند.
+- `"<combo-name>"` — هر ترکیبی که در داشبورد تعریف کردهاید؛ Pusula آن را بهصورت شفاف تفکیک و پردازش میکند.
 
 ---
 
@@ -129,18 +129,18 @@ export const OMNIROUTE_DEFAULT_OPENCODE_MODELS = [
 | `http://localhost:20128/v1`    | `http://localhost:20128/v1` |
 | `http://localhost:20128/v1///` | `http://localhost:20128/v1` |
 
-این حذف موارد تکراری، **رایجترین خرابی** مشاهدهشده در پیکربندیهای قدیمی است. اگر یک `opencode.json` مربوط به قبل از v3.8.0 دارید که به `/v1/v1/...` اشاره میکند، مولد را دوباره اجرا کنید یا بار دیگر `createOmniRouteProvider` را فراخوانی کنید.
+این حذف موارد تکراری، **رایجترین خرابی** مشاهدهشده در پیکربندیهای قدیمی است. اگر یک `opencode.json` مربوط به قبل از v3.8.0 دارید که به `/v1/v1/...` اشاره میکند، مولد را دوباره اجرا کنید یا بار دیگر `createPusulaProvider` را فراخوانی کنید.
 
 ---
 
 ## حالتهای احراز هویت
 
-| تنظیم OmniRoute                            | مقدار پیشنهادی `apiKey`                                    |
+| تنظیم Pusula                            | مقدار پیشنهادی `apiKey`                                    |
 | ------------------------------------------ | ---------------------------------------------------------- |
-| `REQUIRE_API_KEY=false` (پیشفرض برای محلی) | `sk_omniroute` (مقدار جاینگهدار تحتاللفظی)                 |
+| `REQUIRE_API_KEY=false` (پیشفرض برای محلی) | `sk_pusula` (مقدار جاینگهدار تحتاللفظی)                 |
 | `REQUIRE_API_KEY=true`                     | یک کلید API واقعی و مختص هر کاربر از Dashboard → API Keys. |
 
-برای کلاینتهای سبک Anthropic که `x-api-key` و `anthropic-version` را ارسال میکنند، `extractApiKey` متعلق به OmniRoute کلید موجود در `x-api-key` را نیز میپذیرد. OpenCode از رابط OpenAI استفاده میکند، بنابراین همیشه `Authorization: Bearer ${apiKey}` را ارسال خواهد کرد — هیچ حالت خاصی برای Anthropic در اینجا اعمال نمیشود.
+برای کلاینتهای سبک Anthropic که `x-api-key` و `anthropic-version` را ارسال میکنند، `extractApiKey` متعلق به Pusula کلید موجود در `x-api-key` را نیز میپذیرد. OpenCode از رابط OpenAI استفاده میکند، بنابراین همیشه `Authorization: Bearer ${apiKey}` را ارسال خواهد کرد — هیچ حالت خاصی برای Anthropic در اینجا اعمال نمیشود.
 
 ---
 
@@ -149,15 +149,15 @@ export const OMNIROUTE_DEFAULT_OPENCODE_MODELS = [
 | نشانه                                                   | علت                                                                      | راهحل                                                                                                                   |
 | ------------------------------------------------------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
 | خطای `404` در هر درخواست با URL حاوی `/v1/v1/`          | پیکربندی قدیمی افزونه پیش از v3.8 که `/v1` را دو بار اضافه میکرد.        | از طریق مسیر 1 یا 2 دوباره تولید کنید.                                                                                  |
-| `401 Invalid API key`                                   | در OmniRoute مقدار `REQUIRE_API_KEY=true` است و کلید شناخته نمیشود.      | کلید را در داشبورد ایجاد کنید، یا فقط برای محیط محلی `REQUIRE_API_KEY=false` را تنظیم و از `sk_omniroute` استفاده کنید. |
-| فهرست مدلها در رابط کاربری OpenCode خالی است            | هر 4 مدل پیشفرض در قابلیت مشاهده ارائهدهنده OmniRoute مخفی هستند.        | برای نمایش مدلهایی که فعال کردهاید، `models: ["auto", ...]` را ارسال کنید.                                              |
+| `401 Invalid API key`                                   | در Pusula مقدار `REQUIRE_API_KEY=true` است و کلید شناخته نمیشود.      | کلید را در داشبورد ایجاد کنید، یا فقط برای محیط محلی `REQUIRE_API_KEY=false` را تنظیم و از `sk_pusula` استفاده کنید. |
+| فهرست مدلها در رابط کاربری OpenCode خالی است            | هر 4 مدل پیشفرض در قابلیت مشاهده ارائهدهنده Pusula مخفی هستند.        | برای نمایش مدلهایی که فعال کردهاید، `models: ["auto", ...]` را ارسال کنید.                                              |
 | خطای 500 در OpenCode با `cannot read property 'models'` | نسخههای قدیمیتر OpenCode (< 0.1.x) فیلد درونخطی `models` را نمیپذیرفتند. | OpenCode را به نسخهای ارتقا دهید که از طرحواره v1 (`opencode.ai/config.json`) پیروی میکند.                              |
 
 ---
 
 ## همچنین ببینید
 
-- [مرجع API](../reference/API_REFERENCE.md) — پوشش کامل REST در OmniRoute
+- [مرجع API](../reference/API_REFERENCE.md) — پوشش کامل REST در Pusula
 - [Auto-Combo](../routing/AUTO-COMBO.md) — معنای `model: "auto"`
-- [`@omniroute/opencode-provider` README](../../@omniroute/opencode-provider/README.md)
-- منبع: `src/shared/services/opencodeConfig.ts`، `src/lib/cli-helper/config-generator/opencode.ts`، `@omniroute/opencode-provider/src/index.ts`
+- [`@pusula/opencode-provider` README](../../@pusula/opencode-provider/README.md)
+- منبع: `src/shared/services/opencodeConfig.ts`، `src/lib/cli-helper/config-generator/opencode.ts`، `@pusula/opencode-provider/src/index.ts`

@@ -6,7 +6,7 @@ import assert from "node:assert/strict";
 // the Electron dashboard has no effect (the server was spawned with the env
 // value at boot and the subsequent toggle only lands in the DB).
 
-const KEY = "OMNIROUTE_ALLOW_PRIVATE_PROVIDER_URLS";
+const KEY = "PUSULA_ALLOW_PRIVATE_PROVIDER_URLS";
 
 async function withEnv<T>(value: string | undefined, fn: () => Promise<T> | T): Promise<T> {
   const prev = process.env[KEY];
@@ -112,7 +112,7 @@ test("DB override = 'false' leaves the legacy OUTBOUND_SSRF_GUARD_ENABLED=false 
 });
 
 test("a DB override = 'false' for local provider URLs still restores public-only", async () => {
-  const LOCAL_KEY = "OMNIROUTE_ALLOW_LOCAL_PROVIDER_URLS";
+  const LOCAL_KEY = "PUSULA_ALLOW_LOCAL_PROVIDER_URLS";
   const prev = process.env[LOCAL_KEY];
   delete process.env[LOCAL_KEY];
   const { setFeatureFlagOverride, removeFeatureFlagOverride } =

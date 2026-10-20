@@ -7,16 +7,16 @@ import path from "node:path";
 const testRoot = fs.mkdtempSync(path.join(os.tmpdir(), "omni-video-provider-error-"));
 const originalEnv = {
   DATA_DIR: process.env.DATA_DIR,
-  OMNIROUTE_PLUGINS_DIR: process.env.OMNIROUTE_PLUGINS_DIR,
+  PUSULA_PLUGINS_DIR: process.env.PUSULA_PLUGINS_DIR,
   API_KEY_SECRET: process.env.API_KEY_SECRET,
   DISABLE_SQLITE_AUTO_BACKUP: process.env.DISABLE_SQLITE_AUTO_BACKUP,
 };
 process.env.DATA_DIR = path.join(testRoot, "data");
-process.env.OMNIROUTE_PLUGINS_DIR = path.join(testRoot, "plugins");
+process.env.PUSULA_PLUGINS_DIR = path.join(testRoot, "plugins");
 process.env.API_KEY_SECRET = "video-provider-error-test-key";
 process.env.DISABLE_SQLITE_AUTO_BACKUP = "true";
 fs.mkdirSync(process.env.DATA_DIR, { recursive: true });
-fs.mkdirSync(process.env.OMNIROUTE_PLUGINS_DIR, { recursive: true });
+fs.mkdirSync(process.env.PUSULA_PLUGINS_DIR, { recursive: true });
 
 const core = await import("../../src/lib/db/core.ts");
 const providersDb = await import("../../src/lib/db/providers.ts");

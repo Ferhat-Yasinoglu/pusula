@@ -4,10 +4,10 @@
 
 ---
 
-Hinweise für Betreiber zu `POST /v1/embeddings`, wenn OmniRoute vor
+Hinweise für Betreiber zu `POST /v1/embeddings`, wenn Pusula vor
 Hindsight 0.9.1 (nur Text, `encode(list[str])`) und Memorix 1.6.0 (Jina-Medien-
-Gate) geschaltet ist. Live verifiziert am 2026-08-17 mit OmniRoute 3.8.49 unter
-`https://omniroute.jaguar-fish.ts.net/v1`. Nachfolgend keine Geheimnisse.
+Gate) geschaltet ist. Live verifiziert am 2026-08-17 mit Pusula 3.8.49 unter
+`https://pusula.jaguar-fish.ts.net/v1`. Nachfolgend keine Geheimnisse.
 
 ## Funktionierende Modell-IDs
 
@@ -62,8 +62,8 @@ Provider `gemini` oder ein 400-Fehler, der die funktionierende OpenRouter-ID nen
 Reproduktion (Bearer-Token schwärzen):
 
 ```bash
-curl -sS -D- https://omniroute.example/v1/embeddings \
-  -H "Authorization: Bearer $OMNIROUTE_API_KEY" \
+curl -sS -D- https://pusula.example/v1/embeddings \
+  -H "Authorization: Bearer $PUSULA_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"model":"gemini-embedding-2","input":["alpha","beta"]}'
 ```
@@ -71,15 +71,15 @@ curl -sS -D- https://omniroute.example/v1/embeddings \
 Funktionierender Ersatz:
 
 ```bash
-curl -sS https://omniroute.example/v1/embeddings \
-  -H "Authorization: Bearer $OMNIROUTE_API_KEY" \
+curl -sS https://pusula.example/v1/embeddings \
+  -H "Authorization: Bearer $PUSULA_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"model":"openrouter/google/gemini-embedding-2","input":["alpha","beta"]}'
 ```
 
 Das native `gemini-embedding-2` kann nicht allein über GitOps zum Funktionieren gebracht werden. Ein Google-AI-
 Studio-Schlüssel muss als Provider-Verbindung vom Typ `gemini` hinzugefügt werden (Dashboard oder
-in OmniRoute importierter `GEMINI_API_KEY`). Dieses Geheimnis befindet sich nicht in diesem Repository.
+in Pusula importierter `GEMINI_API_KEY`). Dieses Geheimnis befindet sich nicht in diesem Repository.
 
 ### Multimodaler Jina-Pfad
 
@@ -100,7 +100,7 @@ Verwenden Sie `POST /v1/embeddings`, bis ein Alias vorhanden ist.
 
 ### Jina-/Memorix-Bildobjekt
 
-Kanonisches OmniRoute-Bildelement (28×28-PNG, 784 Pixel — Jina lehnt 1×1 ab):
+Kanonisches Pusula-Bildelement (28×28-PNG, 784 Pixel — Jina lehnt 1×1 ab):
 
 ```json
 {
@@ -149,7 +149,7 @@ Tatsächliches Ergebnis: HTTP **400**
 
 Hindsight-Embeddings unterstützen nur Text (`encode(list[str])`). Hindsight sendet keine
 Bildobjekte. Richten Sie die OpenAI-kompatible Embeddings-Basis-URL von Hindsight auf
-OmniRoute `/v1` und verwenden Sie eine funktionierende ID aus der obigen Tabelle
+Pusula `/v1` und verwenden Sie eine funktionierende ID aus der obigen Tabelle
 (`jina-ai/jina-embeddings-v5-omni-small` oder
 `openrouter/google/gemini-embedding-2`). Setzen Sie das Modell nicht auf die bloße ID
 `gemini-embedding-2`, sofern auf dem Gateway kein `gemini`-API-Schlüssel vorhanden ist.
@@ -157,11 +157,11 @@ OmniRoute `/v1` und verwenden Sie eine funktionierende ID aus der obigen Tabelle
 ### Memorix 1.6.0
 
 Memorix behandelt nur eine mit `/jina\.ai/i` übereinstimmende `baseUrl` als native Medienquelle. Eine
-OmniRoute-URL verbleibt auf dem Nur-Text-Pfad, selbst wenn das Modell Jina omni ist.
-Dieses Gate ist ein Problem des Memorix-Clients. Unabhängig davon lehnt OmniRoute weiterhin
+Pusula-URL verbleibt auf dem Nur-Text-Pfad, selbst wenn das Modell Jina omni ist.
+Dieses Gate ist ein Problem des Memorix-Clients. Unabhängig davon lehnt Pusula weiterhin
 den Jina-Body `{image: "data:..."}` ab, den Memorix senden würde, wenn sich das Gate
 öffnete. Daher können Jina-kompatible Clients ohne das kanonische Schema
-`{type,source}` keine Bilder über OmniRoute einbetten.
+`{type,source}` keine Bilder über Pusula einbetten.
 
 Verwenden Sie `jina-ai/jina-embeddings-v5-omni-small` für Text. Richten Sie die Memorix-
-`base_url` nicht auf `https://api.jina.ai` — behalten Sie OmniRoute als einzige Zwischenstation bei.
+`base_url` nicht auf `https://api.jina.ai` — behalten Sie Pusula als einzige Zwischenstation bei.

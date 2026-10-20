@@ -196,7 +196,7 @@ test("no reserve configured means the floor never blocks", () => {
 
 test('an "any" floor counts consumption by anyone, on the most-consumed window', () => {
   const s = schedule({ reserves: [{ window: "any", percent: 30 }] });
-  // 60 % of the account burnt (by OmniRoute or by anyone else) → 40 % left ≥ 30 %.
+  // 60 % of the account burnt (by Pusula or by anyone else) → 40 % left ≥ 30 %.
   assert.equal(failingReserve(s, { weekly: 0.6 }), null);
   // 75 % burnt → only 25 % left, under the floor this window protects.
   assert.deepEqual(failingReserve(s, { weekly: 0.75 }), { window: "any", percent: 30 });

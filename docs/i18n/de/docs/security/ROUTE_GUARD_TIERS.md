@@ -6,7 +6,7 @@
 
 ## Übersicht
 
-Alle Routen der OmniRoute-Verwaltungs-API sind einer von drei Schutzstufen zugeordnet. Die Klassifizierung ist statisch, wird in `src/server/authz/routeGuard.ts` definiert und ausgewertet, bevor ein anderer Authentifizierungszweig ausgeführt wird.
+Alle Routen der Pusula-Verwaltungs-API sind einer von drei Schutzstufen zugeordnet. Die Klassifizierung ist statisch, wird in `src/server/authz/routeGuard.ts` definiert und ausgewertet, bevor ein anderer Authentifizierungszweig ausgeführt wird.
 
 ## Stufen
 
@@ -17,7 +17,7 @@ Alle Routen der OmniRoute-Verwaltungs-API sind einer von drei Schutzstufen zugeo
 
 Diese Routen starten untergeordnete Prozesse oder führen Laufzeitcode aus. Würden sie für Nicht-Loopback-Datenverkehr zugänglich gemacht, könnte ein Angreifer, der ein gültiges JWT erlangt hat (z. B. über einen Cloudflared-/Ngrok-Tunnel), das Starten von Prozessen auslösen — eine bekannte CVE-Klasse ([GHSA-fhh6-4qxv-rpqj](https://github.com/advisories/GHSA-fhh6-4qxv-rpqj)).
 
-**Was GHSA-fhh6-4qxv-rpqj ist (die Angriffsklasse):** Ein Verwaltungs-/Agent-Server stellt einen Endpunkt bereit, der einen Unterprozess startet (`npm install`, `node`, einen Browser, einen Proxy, `git`, `tar`, …). Wenn dieser Endpunkt von außerhalb des Hosts erreichbar ist — weil der Betreiber OmniRoute hinter einem nginx-/Cloudflare-/Tailscale-Tunnel platziert hat und ein JWT offengelegt wurde oder die Authentifizierung falsch konfiguriert war — macht der Angreifer aus „eine API aufrufen“ ein „einen Befehl auf dem Host ausführen“ (Remote-Codeausführung). OmniRoute verhindert dies, indem es für jede Route, die Prozesse starten kann, **bedingungslos und vor jeder Authentifizierungsprüfung eine Prüfung auf einen Loopback-Host erzwingt**: Ein offengelegtes Token kann die Prozessstartfunktion selbst über einen Tunnel nicht erreichen.
+**Was GHSA-fhh6-4qxv-rpqj ist (die Angriffsklasse):** Ein Verwaltungs-/Agent-Server stellt einen Endpunkt bereit, der einen Unterprozess startet (`npm install`, `node`, einen Browser, einen Proxy, `git`, `tar`, …). Wenn dieser Endpunkt von außerhalb des Hosts erreichbar ist — weil der Betreiber Pusula hinter einem nginx-/Cloudflare-/Tailscale-Tunnel platziert hat und ein JWT offengelegt wurde oder die Authentifizierung falsch konfiguriert war — macht der Angreifer aus „eine API aufrufen“ ein „einen Befehl auf dem Host ausführen“ (Remote-Codeausführung). Pusula verhindert dies, indem es für jede Route, die Prozesse starten kann, **bedingungslos und vor jeder Authentifizierungsprüfung eine Prüfung auf einen Loopback-Host erzwingt**: Ein offengelegtes Token kann die Prozessstartfunktion selbst über einen Tunnel nicht erreichen.
 
 **Die vollständige LOCAL_ONLY-Menge.** Die maßgebliche Quelle sind `LOCAL_ONLY_API_PREFIXES` / `LOCAL_ONLY_API_PATTERNS` in `src/server/authz/routeGuard.ts`; die nachstehende Tabelle gibt den aktuellen Stand wieder. Die Prüfung `check-route-guard-membership` erfasst jede `route.ts` unter den Präfixen, die Prozesse starten können, und lässt die CI fehlschlagen, wenn eine davon nicht als ausschließlich lokal klassifiziert ist.
 
@@ -100,7 +100,7 @@ für entfernte, ausschließlich MCP nutzende Aufrufer, die keinen umfassenden Ve
 
 #### Hinweise für Betreiber und Auditierung
 
-Wenn Sie OmniRoute hinter einem Reverse-Proxy oder Tunnel (nginx, Caddy, Cloudflare
+Wenn Sie Pusula hinter einem Reverse-Proxy oder Tunnel (nginx, Caddy, Cloudflare
 Tunnel, Tailscale, Ngrok) betreiben, schützt die Loopback-Prüfung weiterhin die oben genannten
 Routen, die Prozesse starten können — eine Anfrage, deren Clientadresse keine Loopback-Adresse ist, wird
 `403 LOCAL_ONLY` **abgewiesen, bevor die Authentifizierung ausgeführt wird**, sodass selbst ein kompromittiertes JWT keinen Prozessstart auslösen kann. Zwei
@@ -131,7 +131,7 @@ Verantwortlichkeiten verbleiben beim Betreiber:
 - Durchsuchen Sie die Reverse-Proxy-/Zugriffsprotokolle nach den oben genannten Präfixen in Verbindung mit einer
   Nicht-Loopback-Clientadresse. Jeder solche Treffer, der `200` statt
   `403 LOCAL_ONLY` zurückgegeben hat, bedeutet, dass der Proxy die tatsächliche Client-IP verbirgt — korrigieren Sie den Proxy.
-- Ein `403 LOCAL_ONLY` in den OmniRoute-Protokollen für einen dieser Pfade bedeutet, dass der Schutz
+- Ein `403 LOCAL_ONLY` in den Pusula-Protokollen für einen dieser Pfade bedeutet, dass der Schutz
   wie vorgesehen funktioniert, und ist kein Fehler, der unterdrückt werden sollte.
 
 ### Stufe 2 — ALWAYS_PROTECTED
@@ -169,7 +169,7 @@ Wenn kein Verwaltungspasswort konfiguriert ist (und kein `INITIAL_PASSWORD` gese
 Loopback wird anhand der vertrauenswürdigen Peer-Signale in folgender Reihenfolge bestimmt: der mit einem Token gekennzeichnete tatsächliche TCP-Peer
 (`PEER_IP_HEADER` + `VIA_PROXY_HEADER`, den die Richtlinie sieht), die pipelineeigene
 `AUTHZ_HEADER_PEER_LOCALITY`-Entscheidung (die von den Route-Handlern gesehen wird und nur vertrauenswürdig ist, solange
-`OMNIROUTE_PEER_STAMP_TOKEN` gesetzt ist) oder ein tatsächlicher Socket-Peer für direkte Aufrufer. `Host` /
+`PUSULA_PEER_STAMP_TOKEN` gesetzt ist) oder ein tatsächlicher Socket-Peer für direkte Aufrufer. `Host` /
 `nextUrl.hostname` werden niemals herangezogen, und das erstmalige Setzen des Passworts
 (`POST /api/settings/require-login`) unterliegt derselben Einschränkung, statt für jeden
 Netzwerk-Peer offen zu sein (GHSA-7pq4-8pvv-rx7r). `managementPolicy` reicht seine eigene `peerContext`-Entscheidung

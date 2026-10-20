@@ -11,7 +11,7 @@ import { randomUUID } from "node:crypto";
 // exclusion, the two-members-one-entrypoint counting, the untouched GET /pool shape,
 // and the opt-in flag (PROXY_POOL_EGRESS_OBSERVATION, default off).
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-pool-member-egress-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-pool-member-egress-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = "test-secret";
 delete process.env.INITIAL_PASSWORD; // auth not required in this test env

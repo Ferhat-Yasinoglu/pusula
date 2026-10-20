@@ -4,12 +4,12 @@
 
 ---
 
-OmniRoute, başlangıçta SQLite sürücüsünü 5 adımlı bir geri dönüş zinciri aracılığıyla çözümler:
+Pusula, başlangıçta SQLite sürücüsünü 5 adımlı bir geri dönüş zinciri aracılığıyla çözümler:
 
 1. **Paketle birlikte gelen `better-sqlite3`** (`package.json` içindeki `dependencies` aracılığıyla)
    — en hızlı seçenektir; yerel ikili dosyayı kullanır ve derleme araçları mevcut olduğunda `npm install` tarafından yüklenir.
 
-2. **Çalışma zamanında yüklenen `better-sqlite3`** (`~/.omniroute/runtime/` içinde)
+2. **Çalışma zamanında yüklenen `better-sqlite3`** (`~/.pusula/runtime/` içinde)
    — ilk çalıştırmada **VEYA** `scripts/build/postinstall.mjs → scripts/postinstall.mjs` tarafından gerektiğinde yüklenir.
    Bozuk veya yanlış platforma ait ikili dosyalara karşı koruma sağlamak amacıyla yüklemeden önce
    yerel `.node` sihirli baytlarını (ELF / Mach-O / PE) doğrular.
@@ -23,18 +23,18 @@ OmniRoute, başlangıçta SQLite sürücüsünü 5 adımlı bir geri dönüş zi
 ## Bu karmaşıklık neden gerekli?
 
 - **Windows EBUSY**: Önceki sürümün `better_sqlite3.node` dosyası çalışan bir işlem
-  tarafından kilitlenmişse `npm install -g omniroute@latest` başarısız olabilir. Çalışma zamanı
-  yüklemesinin `~/.omniroute/runtime/` içinde yapılması, global npm önbelleğini devre dışı bırakır.
+  tarafından kilitlenmişse `npm install -g pusula@latest` başarısız olabilir. Çalışma zamanı
+  yüklemesinin `~/.pusula/runtime/` içinde yapılması, global npm önbelleğini devre dışı bırakır.
 - **Derleme araçlarının bulunmaması**: Bazı ortamlar (VS Build Tools bulunmayan kurumsal Windows
   sistemleri, minimal Docker imajları) `better-sqlite3` paketini derleyemez. Çalışma zamanı
   yükleyicisi npm kayıt defterinden önceden derlenmiş bir ikili dosya çözümler; geri dönüş
-  sürücüleri ise bu işlem başarısız olsa bile OmniRoute'un başlatılabilmesini sağlar.
+  sürücüleri ise bu işlem başarısız olsa bile Pusula'un başlatılabilmesini sağlar.
 - **İnternete kapalı sistemler**: npm kayıt defterine erişilemiyorsa `node:sqlite`
   veya `sql.js`, temel işlevselliği garanti eder.
 
 ## Sihirli bayt doğrulaması
 
-OmniRoute, çalışma zamanında yüklenmiş bir `.node` dosyasını yüklemeden önce ilk 8
+Pusula, çalışma zamanında yüklenmiş bir `.node` dosyasını yüklemeden önce ilk 8
 baytı okur ve bilinen platform sihirli değerleriyle eşleştirir:
 
 | Platform             | Baytlar (onaltılık) | Etiket      |
@@ -61,14 +61,14 @@ const info = getDriverInfo();
 
 ```bash
 # Hızlı CI yüklemeleri için yükleme sonrası hazırlığı atla
-OMNIROUTE_SKIP_POSTINSTALL=1 npm install -g omniroute
+PUSULA_SKIP_POSTINSTALL=1 npm install -g pusula
 
 # Çalışma zamanı better-sqlite3 paketini yeniden yüklemeye zorla
-rm -rf ~/.omniroute/runtime
-omniroute  # bir sonraki başlatmada yeniden yüklenir
+rm -rf ~/.pusula/runtime
+pusula  # bir sonraki başlatmada yeniden yüklenir
 
 # Hangi sürücünün etkin olduğunu kontrol et
-omniroute config db-info  # (CLI komutu mevcutsa)
+pusula config db-info  # (CLI komutu mevcutsa)
 ```
 
 ## Referans
@@ -84,9 +84,9 @@ Uygulama:
 ## Tek yazıcılı topoloji (HA desteklenmez)
 
 Yukarıdaki sürücü geri dönüş zinciri yine de **tek bir işlemde** çalışır. Varsayılan SQLite
-yapılandırmasında OmniRoute **tek yazıcılıdır**:
+yapılandırmasında Pusula **tek yazıcılıdır**:
 
-- İki OmniRoute replikasını aynı `storage.sqlite` dosyasına bağlamayın.
+- İki Pusula replikasını aynı `storage.sqlite` dosyasına bağlamayın.
 - Bir konteynerin yeniden başlatılması, Recreate dağıtımı, OOM nedeniyle sonlandırma veya HEALTHCHECK
   yeniden başlatması, devam eden tüm SSE oturumlarını sonlandırır. Standart çalışma yolunda oturumların kontrollü biçimde boşaltılması yoktur.
 - Yavaş bir `/healthz` yanıtını sistemin çalışmadığı şeklinde yorumlayan orkestratör canlılık kontrolü, tek

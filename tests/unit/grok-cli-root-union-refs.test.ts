@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-const { GrokCliExecutor } = await import("@omniroute/open-sse/executors/grok-cli");
+const { GrokCliExecutor } = await import("@pusula/open-sse/executors/grok-cli");
 
 // Grok Build validates every function tool's `parameters` root before sampling and refuses
 // the whole request with

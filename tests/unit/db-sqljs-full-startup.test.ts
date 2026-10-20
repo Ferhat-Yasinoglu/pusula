@@ -15,10 +15,10 @@ test("sql.js defers dependent FTS migrations until a native restart", () => {
     try {
       await core.ensureDbInitialized();
       const db = core.getDbInstance();
-      const fallback = process.env.OMNIROUTE_PACK_BOOT_FORCE_SQLJS === '1';
+      const fallback = process.env.PUSULA_PACK_BOOT_FORCE_SQLJS === '1';
       assert.equal(db.driver === 'sql.js', fallback);
       for (const version of ['022', '023', '178']) {
-        const applied = db.prepare('SELECT version FROM _omniroute_migrations WHERE version=?').get(version);
+        const applied = db.prepare('SELECT version FROM _pusula_migrations WHERE version=?').get(version);
         assert.equal(Boolean(applied), !fallback, version);
       }
       if (!fallback) {
@@ -40,8 +40,8 @@ test("sql.js defers dependent FTS migrations until a native restart", () => {
             NODE_ENV: "test",
             APP_LOG_TO_FILE: "false",
             DISABLE_SQLITE_AUTO_BACKUP: "true",
-            OMNIROUTE_PACK_BOOT_SMOKE: "1",
-            OMNIROUTE_PACK_BOOT_FORCE_SQLJS: forceSqljs,
+            PUSULA_PACK_BOOT_SMOKE: "1",
+            PUSULA_PACK_BOOT_FORCE_SQLJS: forceSqljs,
           },
           encoding: "utf8",
           timeout: 30000,

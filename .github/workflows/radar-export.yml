@@ -1,10 +1,10 @@
-# Publica o export estável do catálogo consumido pelo OmniRoute Radar numa URL
+# Publica o export estável do catálogo consumido pelo Pusula Radar numa URL
 # fixa (asset de release `radar-export-latest`), para o servidor privado do Radar
-# (1 GB RAM, nunca clona/builda o OmniRoute) baixá-lo via `RADAR_EXPORT_URL` em
+# (1 GB RAM, nunca clona/builda o Pusula) baixá-lo via `RADAR_EXPORT_URL` em
 # vez de depender do snapshot gravado no deploy. Fonte: scripts/release/radar-export.mjs.
 #
 # A URL estável resultante (definir em RADAR_EXPORT_URL no .env do radar-server):
-#   https://github.com/diegosouzapw/OmniRoute/releases/download/radar-export-latest/export-omniroute.json
+#   https://github.com/Ferhat-Yasinoglu/pusula/releases/download/radar-export-latest/export-pusula.json
 name: Radar Export
 
 on:
@@ -52,7 +52,7 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Generate catalog export with provenance
-        run: node --import tsx/esm scripts/release/radar-export.mjs "$RUNNER_TEMP/export-omniroute.json"
+        run: node --import tsx/esm scripts/release/radar-export.mjs "$RUNNER_TEMP/export-pusula.json"
       - name: Publish to the stable release asset
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -64,7 +64,7 @@ jobs:
             gh release create "$TAG" \
               --repo "$GITHUB_REPOSITORY" \
               --title "Radar catalog export (rolling)" \
-              --notes "Export estável do catálogo OmniRoute para o Radar. Atualizado automaticamente; NÃO é um release de versão do produto." \
+              --notes "Export estável do catálogo Pusula para o Radar. Atualizado automaticamente; NÃO é um release de versão do produto." \
               --latest=false
           fi
-          gh release upload "$TAG" "$RUNNER_TEMP/export-omniroute.json" --repo "$GITHUB_REPOSITORY" --clobber
+          gh release upload "$TAG" "$RUNNER_TEMP/export-pusula.json" --repo "$GITHUB_REPOSITORY" --clobber

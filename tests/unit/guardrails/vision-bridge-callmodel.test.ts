@@ -15,7 +15,7 @@ import os from "node:os";
 import path from "node:path";
 import { cleanupTempDataDir } from "../../_setup/tempDataDir.ts";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-vision-bridge-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-vision-bridge-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 // Prevent vision bridge from routing through a real API
 process.env.VISION_BRIDGE_ENABLED = "false";

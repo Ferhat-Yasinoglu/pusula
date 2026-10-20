@@ -6,7 +6,7 @@
 
 Dashboard → Providers → **Dosyadan içe aktar**, bir CSV veya JSON listesinden API anahtarı bağlantıları oluşturur. Her satır farklı bir sağlayıcıyı hedefleyebilir. Kısmi hata, sözleşmenin bir parçasıdır: diğerleri başarısız olsa bile geçerli satırlar içe aktarılır ve modal pencere, başarısız satırların neden reddedildiğini listeler.
 
-Bu içe aktarma işlemi yeni OpenAI/Anthropic uyumlu uç nokta düğümleri oluşturmaz. Önce bunları oluşturun (Dashboard → Providers → Add OpenAI-Compatible veya `omniroute nodes add`), ardından `provider` sütunu ilgili düğümün kimliği olan satırları içe aktarın. Satır başına bir `baseUrl`, düğümün URL'sini yine de geçersiz kılabilir.
+Bu içe aktarma işlemi yeni OpenAI/Anthropic uyumlu uç nokta düğümleri oluşturmaz. Önce bunları oluşturun (Dashboard → Providers → Add OpenAI-Compatible veya `pusula nodes add`), ardından `provider` sütunu ilgili düğümün kimliği olan satırları içe aktarın. Satır başına bir `baseUrl`, düğümün URL'sini yine de geçersiz kılabilir.
 
 ## CSV (konumsal)
 
@@ -25,7 +25,7 @@ Sütun adları yalnızca görseldir. Ayrıştırıcı her satırı böler ve de�
 İçe aktarma modal penceresinden bir başlangıç dosyası indirin (**CSV şablonunu indir**). Örnek:
 
 ```csv
-# OmniRoute sağlayıcı içe aktarma dosyası (konumsal sütunlar)
+# Pusula sağlayıcı içe aktarma dosyası (konumsal sütunlar)
 provider,name,apiKey,baseUrl,priority
 openai,Prod OpenAI,sk-your-openai-key,,1
 ```

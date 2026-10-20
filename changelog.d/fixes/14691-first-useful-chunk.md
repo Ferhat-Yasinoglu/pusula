@@ -1,1 +1,1 @@
-- **fix(sse):** serve buffered turns at the first useful chunk instead of buffering the whole turn ([#14691](https://github.com/diegosouzapw/OmniRoute/pull/14691))
+- **fix(sse):** serve buffered turns at the first useful chunk instead of buffering the whole turn ([#14691](https://github.com/Ferhat-Yasinoglu/pusula/pull/14691))

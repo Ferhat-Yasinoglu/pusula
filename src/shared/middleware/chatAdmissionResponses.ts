@@ -1,4 +1,4 @@
-import { buildErrorBody } from "@omniroute/open-sse/utils/error.ts";
+import { buildErrorBody } from "@pusula/open-sse/utils/error.ts";
 
 import { CORS_HEADERS } from "../utils/cors";
 

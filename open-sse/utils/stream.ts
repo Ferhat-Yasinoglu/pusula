@@ -29,7 +29,7 @@ import {
 import { rejectEmptyChoicesStream, buildEmptyChoicesStreamError } from "./streamEmptyChoices.ts";
 import { shouldAbortEmptyClaudeStream } from "./streamClaudeEmptyBody.ts";
 import { calculateCost } from "@/lib/usage/costCalculator";
-import { buildOmniRouteSseMetadataComment } from "@/domain/omnirouteResponseMeta";
+import { buildPusulaSseMetadataComment } from "@/domain/pusulaResponseMeta";
 import { sseCommentsEnabled } from "./sseHeartbeat.ts";
 import { createStructuredSSECollector } from "./streamPayloadCollector.ts";
 import { STREAM_IDLE_TIMEOUT_MS, FETCH_BODY_TIMEOUT_MS, HTTP_STATUS } from "../config/constants.ts";
@@ -114,7 +114,7 @@ export { backfillResponsesCompletedOutput, stripResponsesLifecycleEcho };
 
 type JsonRecord = Record<string, unknown>;
 
-export const PENDING_REQUEST_CLEARED_MARKER = "__omniroutePendingRequestCleared";
+export const PENDING_REQUEST_CLEARED_MARKER = "__pusulaPendingRequestCleared";
 
 function markPendingRequestCleared(error: Error): Error {
   (error as Error & Record<string, unknown>)[PENDING_REQUEST_CLEARED_MARKER] = true;
@@ -1210,15 +1210,15 @@ export function createSSEStream(options: StreamOptions = {}) {
     controller: TransformStreamDefaultController,
     finalUsage: UsageTokenRecord | Record<string, unknown> | null | undefined
   ) => {
-    // Skip SSE metadata comment lines when OMNIROUTE_SSE_COMMENTS is disabled
+    // Skip SSE metadata comment lines when PUSULA_SSE_COMMENTS is disabled
     // (e.g., "off", "false", "0", "no"). Strict OpenAI-compatible clients that
-    // JSON.parse every SSE line will crash on `: x-omniroute-*` comment lines.
+    // JSON.parse every SSE line will crash on `: x-pusula-*` comment lines.
     if (!sseCommentsEnabled()) return;
 
     const costUsd = finalUsage
       ? await calculateCost(provider, model, normalizeTokenUsage(finalUsage))
       : 0;
-    const comment = buildOmniRouteSseMetadataComment({
+    const comment = buildPusulaSseMetadataComment({
       provider,
       model,
       cacheHit: false,
@@ -1930,7 +1930,7 @@ export function createSSEStream(options: StreamOptions = {}) {
                   //
                   // For a malformed empty `choices: []` chunk WITHOUT valid usage we DROP
                   // it (log server-side only). We must NOT inject an assistant-content
-                  // chunk like "[OmniRoute] Upstream returned an empty response. Please
+                  // chunk like "[Pusula] Upstream returned an empty response. Please
                   // retry." with finish_reason: "stop" — clients (Goose/opencode) feed that
                   // text back as a turn and spin in a retry loop. This restores the #3400
                   // behavior that #3422 inadvertently reverted (regression #3388/#3502).

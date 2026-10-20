@@ -4,7 +4,7 @@
 
 ---
 
-بازرس ترافیک، اشکالزدای داخلی ترافیک HTTPS در OmniRoute است — ابزاری مشابه Charles Proxy / mitmweb / HTTP Toolkit که **از LLM آگاه** و **از عامل آگاه** است. این ابزار در `/dashboard/tools/traffic-inspector` قرار دارد و ترافیک زنده را از حداکثر ۵ منبع ضبط همزمان دریافت میکند.
+بازرس ترافیک، اشکالزدای داخلی ترافیک HTTPS در Pusula است — ابزاری مشابه Charles Proxy / mitmweb / HTTP Toolkit که **از LLM آگاه** و **از عامل آگاه** است. این ابزار در `/dashboard/tools/traffic-inspector` قرار دارد و ترافیک زنده را از حداکثر ۵ منبع ضبط همزمان دریافت میکند.
 
 **مکان در داشبورد:** `/dashboard/tools/traffic-inspector`
 **گروه نوار کناری:** ابزارها (پس از AgentBridge)
@@ -16,7 +16,7 @@
 
 ### چه چیزی بازرس ترافیک را منحصربهفرد میکند
 
-| قابلیت                                                                        | mitmweb | Charles | Fiddler | **بازرس ترافیک OmniRoute** |
+| قابلیت                                                                        | mitmweb | Charles | Fiddler | **بازرس ترافیک Pusula** |
 | ----------------------------------------------------------------------------- | :-----: | :-----: | :-----: | :------------------------: |
 | مبتنی بر وب                                                                   |    ✓    |    ✗    |    ✗    |             ✓              |
 | متنباز                                                                        |    ✓    |    ✗    |  بخشی   |             ✓              |
@@ -24,7 +24,7 @@
 | **آگاه از LLM** (ساختار OpenAI/Anthropic/Gemini، توکنها و مدل را تجزیه میکند) |    ✗    |    ✗    |    ✗    |             ✓              |
 | **نمایش نگاشت مدل** (gemini-3-flash → claude-sonnet-4.7)                      |    ✗    |    ✗    |    ✗    |             ✓              |
 | **تفکیک تأخیر پراکسی/بالادستی**                                               |  بخشی   |    ✗    |    ✗    |             ✓              |
-| **یکپارچه با مسیریابی، جایگزینی و هزینه OmniRoute**                           |    ✗    |    ✗    |    ✗    |             ✓              |
+| **یکپارچه با مسیریابی، جایگزینی و هزینه Pusula**                           |    ✗    |    ✗    |    ✗    |             ✓              |
 | **اشکالزدایی پراکسی در سراسر سیستم** (هر برنامهای روی دستگاه)                 |    ✓    |    ✓    |    ✓    |             ✓              |
 | **ضبط میزبان سفارشی** (تغییر مسیر DNS برای هر میزبان)                         |    ✓    |    ✓    |    ✓    |             ✓              |
 | **حالت متغیر محیطی HTTP_PROXY**                                               |    ✓    |    ✓    |    ✓    |             ✓              |
@@ -262,8 +262,8 @@ interface LlmMetadata {
   tokensIn: number | null; // usage.prompt_tokens / usage.input_tokens
   tokensOut: number | null; // usage.completion_tokens / usage.output_tokens
   streamed: boolean; // در صورت استریم بودن پاسخ SSE برابر true است
-  mappedTo: string | null; // هدر x-omniroute-mapped
-  costEstimateUsd: number | null; // هزینهٔ تخمینی بر اساس قیمتگذاری OmniRoute
+  mappedTo: string | null; // هدر x-pusula-mapped
+  costEstimateUsd: number | null; // هزینهٔ تخمینی بر اساس قیمتگذاری Pusula
 }
 ```
 
@@ -394,7 +394,7 @@ INSPECTOR_HTTP_PROXY_PORT=8888
 
 ### بازگردانده نشدن پراکسی سیستم
 
-اگر OmniRoute هنگامی که حالت پراکسی سراسری سیستم فعال است از کار بیفتد:
+اگر Pusula هنگامی که حالت پراکسی سراسری سیستم فعال است از کار بیفتد:
 
 **macOS:**
 
@@ -439,7 +439,7 @@ netsh winhttp reset proxy
 | GET    | `/requests`                 | فهرست درخواستها (قابل فیلتر: `?profile=llm&host=&agent=&status=&source=&sessionId=`) |
 | GET    | `/requests/{id}`            | جزئیات یک درخواست                                                                    |
 | DELETE | `/requests`                 | پاک کردن بافر درونحافظهای                                                            |
-| POST   | `/requests/{id}/replay`     | اجرای مجدد همان درخواست از طریق مسیریاب OmniRoute                                    |
+| POST   | `/requests/{id}/replay`     | اجرای مجدد همان درخواست از طریق مسیریاب Pusula                                    |
 | PUT    | `/requests/{id}/annotation` | ذخیره یا بهروزرسانی یادداشت یک درخواست                                               |
 
 ### WebSocket

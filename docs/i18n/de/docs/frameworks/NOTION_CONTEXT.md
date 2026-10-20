@@ -11,12 +11,12 @@
 
 ## Was es ist
 
-OmniRoute kann einen **Notion**-Workspace als **Kontextquelle** anbinden — eine
+Pusula kann einen **Notion**-Workspace als **Kontextquelle** anbinden — eine
 Wissensdatenbank mit Lese- und Schreibzugriff, auf die Agenten über den integrierten
 MCP-Server zugreifen. Sobald ein Notion-Integrationstoken konfiguriert ist, ermöglichen
 die MCP-Tools einem LLM, Seiten und Datenbanken zu durchsuchen, Seiteninhalte und
 Blockstrukturen zu lesen, Datenbanken mit Filtern und Sortierungen abzufragen sowie neue
-Blöcke anzuhängen — alles über OmniRoute weitergeleitet (mit Wiederholungsversuchen,
+Blöcke anzuhängen — alles über Pusula weitergeleitet (mit Wiederholungsversuchen,
 Zeitüberschreitung und Fehlerklassifizierung), sodass das Modell nie direkt auf die
 Notion-API zugreift.
 
@@ -44,7 +44,7 @@ Schlüssel `integration_token`) gespeichert. Konfigurieren Sie es über den Tab
 > [!NOTE]
 > Das Token ist ein **internes Notion-Integrationstoken**. Erstellen Sie unter
 > <https://www.notion.com/my-integrations> eine Integration und geben Sie anschließend
-> die Seiten/Datenbanken, auf die OmniRoute zugreifen soll, für diese Integration frei
+> die Seiten/Datenbanken, auf die Pusula zugreifen soll, für diese Integration frei
 > (das Berechtigungsmodell von Notion basiert auf Freigaben und gilt nicht automatisch
 > für den gesamten Workspace).
 
@@ -64,7 +64,7 @@ curl -X DELETE http://localhost:20128/api/settings/notion
 ```
 
 Alle drei Methoden erfordern eine Dashboard-Authentifizierung (`isAuthenticated`). Bei
-`POST` speichert OmniRoute das Token und führt sofort eine Testsuche mit einem Ergebnis
+`POST` speichert Pusula das Token und führt sofort eine Testsuche mit einem Ergebnis
 durch. Wenn Notion ein Fehlerobjekt zurückgibt, wird das Token gelöscht und der Aufruf
 schlägt mit `400` fehl.
 
@@ -101,8 +101,8 @@ Tool folgenden Fehler aus:
 
 Die Lese-Tools erfordern `read:notion`, das Schreib-Tool erfordert `write:notion`.
 Scopes werden von `withScopeEnforcement()` in
-`open-sse/mcp-server/server.ts` nur erzwungen, wenn `OMNIROUTE_MCP_ENFORCE_SCOPES=true`
-gilt. Die zulässigen Scopes des Aufrufers stammen aus `OMNIROUTE_MCP_SCOPES`
+`open-sse/mcp-server/server.ts` nur erzwungen, wenn `PUSULA_MCP_ENFORCE_SCOPES=true`
+gilt. Die zulässigen Scopes des Aufrufers stammen aus `PUSULA_MCP_SCOPES`
 (durch Kommas getrennt) oder aus dem Scope-Kontext des authentifizierten API-Schlüssels.
 Das vollständige Scope-Modell finden Sie unter [MCP-SERVER.md](./MCP-SERVER.md).
 

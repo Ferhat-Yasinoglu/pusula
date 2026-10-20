@@ -4,7 +4,7 @@
 
 ---
 
-OmniRoute çağrı günlüklerinin harici bir analiz deposuna sürekli ve artımlı olarak aktarılması.
+Pusula çağrı günlüklerinin harici bir analiz deposuna sürekli ve artımlı olarak aktarılması.
 
 Günlükler panosu sekmesi, istek geçmişini rotasyon ve saklama süresiyle sınırlandırılan SQLite'ta (`call_logs`) tutar. Günlük aktarımı, aynı kayıt kümesini belirli bir zamanlamayla dışarı göndererek kayıtların yerel veritabanından daha uzun süre saklanabilmesini ve diğer verilerle birleştirilebilmesini sağlar. İlk hedef BigQuery'dir; işlem hattı bir kayıt sistemi olduğundan daha fazla hedef eklenebilir.
 
@@ -20,7 +20,7 @@ call_logs (SQLite)
         → advanceLogExportCursor(id, lastRowId, count)
 ```
 
-- **Zamanlama** — varsayılan olarak `0 * * * *` (saatlik, UTC) değerini kullanan tek bir `JobRegistry` cron işi: `log_export`. `src/lib/initCloudSync.ts` içinde kaydedilir; `OMNIROUTE_LOG_EXPORT_CRON` ile geçersiz kılınabilir. Her tetikleme, **etkin** hedeflerin tümünü sırayla boşaltır.
+- **Zamanlama** — varsayılan olarak `0 * * * *` (saatlik, UTC) değerini kullanan tek bir `JobRegistry` cron işi: `log_export`. `src/lib/initCloudSync.ts` içinde kaydedilir; `PUSULA_LOG_EXPORT_CRON` ile geçersiz kılınabilir. Her tetikleme, **etkin** hedeflerin tümünü sırayla boşaltır.
 - **İmleç** — SQLite'ın örtük `call_logs.rowid` değeri, hedef başına `log_export_destinations.cursor_row_id` içinde kalıcı olarak saklanır. `timestamp` özellikle imleç olarak kullanılmaz: çağıranlar kendi değerlerini sağlayabilir; dolayısıyla yavaş bir istek, daha sonra başlayan daha hızlı bir isteğin ardından yazılabilir ve zaman damgası imleci bu isteği atlar.
 - **Gruplama** — istek başına `batch_size` satır (varsayılan 500), çalıştırma başına `max_rows_per_run` satır (varsayılan 10000); böylece büyük bir birikim tek bir çalıştırmayı engellemek yerine birkaç tetikleme boyunca boşaltılır.
 - **Teslimat** — imleç yalnızca `send()` sonuçlandıktan sonra ilerler. Başarısız olan bir grup, imleci bulunduğu yerde bırakır; böylece aynı satırlar bir sonraki çalıştırmada yeniden denenir. Sağlanan garanti, gerçek anlamda tam olarak bir kez teslim değil, en az bir kez teslim ile hedef tarafında yinelenen kayıtların kaldırılmasıdır: BigQuery, her satırı çağrı günlüğü kimliğine göre anahtarlar ve bunu kendi yinelenen kayıtları kaldırma penceresi içinde mümkün olan en iyi şekilde uygular.

@@ -6,7 +6,7 @@ import path from "node:path";
 
 /**
  * Regression test for issue #13679 (PR D, item #5) — deploy manifests
- * (`contrib/podman/omniroute.container`, `.env.example`) ship the well-known
+ * (`contrib/podman/pusula.container`, `.env.example`) ship the well-known
  * placeholder `INITIAL_PASSWORD=CHANGEME`. `ensurePersistentManagementPasswordHash()`
  * already warns loudly on boot when the bootstrap password is this literal, but it
  * does NOT stop a remote attacker who simply tries the well-known default from
@@ -19,7 +19,7 @@ import path from "node:path";
  * default credential.
  */
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-13679d-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-13679d-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.JWT_SECRET = "test-jwt-secret-13679d";
 

@@ -3,16 +3,16 @@ import { v1CountTokensSchema } from "@/shared/validation/schemas";
 import { isValidationFailure, validateBody } from "@/shared/validation/helpers";
 import { countTextTokens, type TokenizerContext } from "@/shared/utils/tiktokenCounter";
 import { isRuntimeProviderRetirementError } from "@/shared/constants/providerRetirement";
-import { getExecutor } from "@omniroute/open-sse/executors/index.ts";
-import { buildErrorBody } from "@omniroute/open-sse/utils/error.ts";
-import { runWithProxyContext } from "@omniroute/open-sse/utils/proxyFetch.ts";
+import { getExecutor } from "@pusula/open-sse/executors/index.ts";
+import { buildErrorBody } from "@pusula/open-sse/utils/error.ts";
+import { runWithProxyContext } from "@pusula/open-sse/utils/proxyFetch.ts";
 import { isCommonChatGptWebRetirementError } from "@/shared/constants/chatgptWebRetirement";
 import { getModelInfo } from "@/sse/services/model";
 import { extractApiKey, getProviderCredentials, isValidApiKey } from "@/sse/services/auth";
 import { isCredentialDiagnosticSentinel } from "@/sse/services/credentialSentinel";
 import { safeResolveProxy } from "@/sse/handlers/chatHelpers";
 import * as log from "@/sse/utils/logger";
-import { isInputTokenCountPlausible } from "@omniroute/open-sse/utils/usageTracking.ts";
+import { isInputTokenCountPlausible } from "@pusula/open-sse/utils/usageTracking.ts";
 
 /**
  * Handle CORS preflight

@@ -3,7 +3,7 @@
  *
  * The 2026-09-07 outage: the container's cgroup working set sat at the 5 GiB cap
  * for 36 minutes (every request 503), then the event loop stalled completely until
- * an operator restarted the container by hand. With OMNIROUTE_PRESSURE_SELF_RESTART
+ * an operator restarted the container by hand. With PUSULA_PRESSURE_SELF_RESTART
  * enabled the runtime exits on sustained critical pressure so the supervisor
  * (systemd Restart=always) brings back a clean process in seconds.
  */
@@ -160,8 +160,8 @@ describe("resource pressure self-restart circuit", () => {
   });
 
   it("never exits when the circuit is disabled (the default)", async () => {
-    const saved = process.env.OMNIROUTE_PRESSURE_SELF_RESTART;
-    delete process.env.OMNIROUTE_PRESSURE_SELF_RESTART;
+    const saved = process.env.PUSULA_PRESSURE_SELF_RESTART;
+    delete process.env.PUSULA_PRESSURE_SELF_RESTART;
     const h = makeHarness({ selfRestart: { afterMs: 1_000 } });
     try {
       for (let i = 0; i < 10; i += 1) {
@@ -170,15 +170,15 @@ describe("resource pressure self-restart circuit", () => {
       assert.deepEqual(h.exitCalls, []);
     } finally {
       h.restore();
-      if (saved !== undefined) process.env.OMNIROUTE_PRESSURE_SELF_RESTART = saved;
+      if (saved !== undefined) process.env.PUSULA_PRESSURE_SELF_RESTART = saved;
     }
   });
 
   it("honors the env switch and custom afterMs", async () => {
-    const savedFlag = process.env.OMNIROUTE_PRESSURE_SELF_RESTART;
-    const savedAfter = process.env.OMNIROUTE_PRESSURE_SELF_RESTART_AFTER_MS;
-    process.env.OMNIROUTE_PRESSURE_SELF_RESTART = "1";
-    process.env.OMNIROUTE_PRESSURE_SELF_RESTART_AFTER_MS = "5000";
+    const savedFlag = process.env.PUSULA_PRESSURE_SELF_RESTART;
+    const savedAfter = process.env.PUSULA_PRESSURE_SELF_RESTART_AFTER_MS;
+    process.env.PUSULA_PRESSURE_SELF_RESTART = "1";
+    process.env.PUSULA_PRESSURE_SELF_RESTART_AFTER_MS = "5000";
     const h = makeHarness({});
     try {
       await h.tick(1_000);
@@ -189,10 +189,10 @@ describe("resource pressure self-restart circuit", () => {
       assert.deepEqual(h.exitCalls, [1]);
     } finally {
       h.restore();
-      if (savedFlag === undefined) delete process.env.OMNIROUTE_PRESSURE_SELF_RESTART;
-      else process.env.OMNIROUTE_PRESSURE_SELF_RESTART = savedFlag;
-      if (savedAfter === undefined) delete process.env.OMNIROUTE_PRESSURE_SELF_RESTART_AFTER_MS;
-      else process.env.OMNIROUTE_PRESSURE_SELF_RESTART_AFTER_MS = savedAfter;
+      if (savedFlag === undefined) delete process.env.PUSULA_PRESSURE_SELF_RESTART;
+      else process.env.PUSULA_PRESSURE_SELF_RESTART = savedFlag;
+      if (savedAfter === undefined) delete process.env.PUSULA_PRESSURE_SELF_RESTART_AFTER_MS;
+      else process.env.PUSULA_PRESSURE_SELF_RESTART_AFTER_MS = savedAfter;
     }
   });
 

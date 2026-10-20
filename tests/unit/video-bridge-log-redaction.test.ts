@@ -292,7 +292,7 @@ test("observed video logs omit the request when the per-part redaction shadow ca
   const row = await pollForCallLog(id);
   assert.ok(row);
   assert.equal(JSON.stringify(row.requestBody).includes(SECRET), false);
-  assert.equal((row.requestBody as Record<string, unknown>)._omniroute_omitted, "video-transcript");
+  assert.equal((row.requestBody as Record<string, unknown>)._pusula_omitted, "video-transcript");
 });
 
 test("observed video logs omit the whole request when only some shadow entries match", async () => {
@@ -331,7 +331,7 @@ test("observed video logs omit the whole request when only some shadow entries m
 
   const row = await pollForCallLog(id);
   assert.ok(row);
-  assert.equal((row.requestBody as Record<string, unknown>)._omniroute_omitted, "video-transcript");
+  assert.equal((row.requestBody as Record<string, unknown>)._pusula_omitted, "video-transcript");
   assert.equal(JSON.stringify(row.requestBody).includes(secondSecret), false);
   assert.equal(
     JSON.stringify(body).includes(secondSecret),
@@ -376,7 +376,7 @@ test("observed video logs keep a redacted request when every video shadow matche
 
   const row = await pollForCallLog(id);
   assert.ok(row);
-  assert.equal((row.requestBody as Record<string, unknown>)._omniroute_omitted, undefined);
+  assert.equal((row.requestBody as Record<string, unknown>)._pusula_omitted, undefined);
   assert.equal(persistedPartText(row.requestBody), PLACEHOLDER_TEXT);
   assert.equal(JSON.stringify(row.requestBody).includes(secondSecret), false);
   assert.equal(

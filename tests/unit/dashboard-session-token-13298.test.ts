@@ -2,7 +2,7 @@
  * #13298 — a dashboard session is a JWT that (a) verifies against JWT_SECRET AND
  * (b) carries `authenticated: true`, the claim every dashboard minter emits
  * (login, OIDC callback, pipeline refresh). Any other JWT signed with the same
- * secret — notably the Cursor CLI passthrough token (iss "omniroute", aud
+ * secret — notably the Cursor CLI passthrough token (iss "pusula", aud
  * "cursor-cli", no claim) — is NOT a session.
  */
 import "../_setup/isolateDataDir.ts";
@@ -49,8 +49,8 @@ test("accepts the login-shaped token { authenticated: true } and returns its pay
   assert.equal(typeof payload!.exp, "number");
 });
 
-test("REJECTS the Cursor CLI passthrough token (same secret, iss omniroute / aud cursor-cli, no claim)", async () => {
-  const cursorToken = await sign({ name: "some-key" }, { iss: "omniroute", aud: "cursor-cli" });
+test("REJECTS the Cursor CLI passthrough token (same secret, iss pusula / aud cursor-cli, no claim)", async () => {
+  const cursorToken = await sign({ name: "some-key" }, { iss: "pusula", aud: "cursor-cli" });
   assert.equal(await verifyDashboardSessionToken(cursorToken), null);
 });
 
@@ -91,7 +91,7 @@ test("an explicit secret argument wins over the env; a null secret means no sess
 test("isDashboardSessionAuthenticated(): login token → true, Cursor CLI token → false (route-level)", async () => {
   const { isDashboardSessionAuthenticated } = await import("../../src/shared/utils/apiAuth.ts");
   const login = await sign({ authenticated: true });
-  const cursor = await sign({ name: "k" }, { iss: "omniroute", aud: "cursor-cli" });
+  const cursor = await sign({ name: "k" }, { iss: "pusula", aud: "cursor-cli" });
   const req = (cookie: string) =>
     new Request("http://localhost/api/settings", { headers: { cookie: `auth_token=${cookie}` } });
   assert.equal(await isDashboardSessionAuthenticated(req(login)), true);

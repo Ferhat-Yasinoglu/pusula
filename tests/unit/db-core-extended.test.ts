@@ -4,18 +4,18 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-db-core-ext-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-db-core-ext-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../src/lib/db/core.ts");
 
 function cleanupGlobalDb() {
   try {
-    if ((globalThis as any).__omnirouteDb?.open) {
-      (globalThis as any).__omnirouteDb.close();
+    if ((globalThis as any).__pusulaDb?.open) {
+      (globalThis as any).__pusulaDb.close();
     }
   } catch {}
-  delete (globalThis as any).__omnirouteDb;
+  delete (globalThis as any).__pusulaDb;
 }
 
 async function resetStorage() {
@@ -83,7 +83,7 @@ test("closeDbInstance closes the database", async () => {
 test("closeDbInstance returns false when no instance", async () => {
   await resetStorage();
   core.resetDbInstance();
-  delete (globalThis as any).__omnirouteDb;
+  delete (globalThis as any).__pusulaDb;
   const result = core.closeDbInstance();
   assert.ok(typeof result === "boolean");
 });

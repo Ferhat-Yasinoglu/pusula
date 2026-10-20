@@ -16,7 +16,7 @@ import path from "node:path";
 import { useDecollidedMigrationsDir } from "./helpers/decollidedMigrationsDir.ts";
 
 useDecollidedMigrationsDir();
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-logs-export-13123-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-logs-export-13123-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../src/lib/db/core.ts");

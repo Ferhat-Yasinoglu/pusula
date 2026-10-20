@@ -4,7 +4,7 @@
 
 ---
 
-> **TL;DR**: OmniRoute erfasst die Token-Nutzung jeder Anfrage, berechnet die Kosten, setzt Kontingente pro API-Schlüssel durch und zeigt Analysen im Dashboard an. Dieser Leitfaden erklärt, wie all das funktioniert.
+> **TL;DR**: Pusula erfasst die Token-Nutzung jeder Anfrage, berechnet die Kosten, setzt Kontingente pro API-Schlüssel durch und zeigt Analysen im Dashboard an. Dieser Leitfaden erklärt, wie all das funktioniert.
 
 **Quellen:**
 
@@ -17,7 +17,7 @@
 
 ## Übersicht
 
-Jede Anfrage, die OmniRoute durchläuft, erzeugt einen **Nutzungsdatensatz**, der Folgendes erfasst:
+Jede Anfrage, die Pusula durchläuft, erzeugt einen **Nutzungsdatensatz**, der Folgendes erfasst:
 
 - **Identität**: welcher API-Schlüssel, Anbieter, welches Modell und welche Kombination
 - **Tokens**: Prompt-Tokens, Vervollständigungs-Tokens, zwischengespeicherte Tokens, Gesamtzahl
@@ -74,11 +74,11 @@ const usage = response.usage || {
 };
 ```
 
-Für Anbieter, die keine Nutzungsdaten zurückgeben (einige Web-Cookie-Anbieter), **schätzt** OmniRoute die Token-Anzahl anhand der Heuristik `~4 Zeichen pro Token` (siehe `open-sse/services/autoCombo/pipelineRouter.ts`).
+Für Anbieter, die keine Nutzungsdaten zurückgeben (einige Web-Cookie-Anbieter), **schätzt** Pusula die Token-Anzahl anhand der Heuristik `~4 Zeichen pro Token` (siehe `open-sse/services/autoCombo/pipelineRouter.ts`).
 
 ### Zwischengespeicherte Tokens
 
-OmniRoute erfasst `cached_tokens` getrennt von `prompt_tokens`, weil:
+Pusula erfasst `cached_tokens` getrennt von `prompt_tokens`, weil:
 
 - Anthropic-Prompt-Caching für zwischengespeicherte Tokens einen reduzierten Preis berechnet (10 % des normalen Preises)
 - Einige Anbieter `cache_read_input_tokens` zurückgeben, die anders abgerechnet werden sollten
@@ -117,7 +117,7 @@ Die Preisdaten werden über den Endpunkt `/api/pricing/sync` automatisch von Lit
 curl -X POST http://localhost:20128/api/pricing/sync
 ```
 
-Bei Modellen ohne Preisdaten greift OmniRoute auf eine **Kostenschätzung** anhand interner Durchschnittspreise zurück (basierend auf den Preisdaten von LiteLLM).
+Bei Modellen ohne Preisdaten greift Pusula auf eine **Kostenschätzung** anhand interner Durchschnittspreise zurück (basierend auf den Preisdaten von LiteLLM).
 
 ---
 
@@ -302,14 +302,14 @@ Zwei MCP-Tools stellen Agenten Nutzungsdaten zur Verfügung (siehe `open-sse/mcp
 
 | Tool                    | Beschreibung                                                             |
 | ----------------------- | ------------------------------------------------------------------------ |
-| `omniroute_cost_report` | Erstellt einen Kostenbericht pro Schlüssel für einen bestimmten Zeitraum |
-| `omniroute_check_quota` | Gibt den aktuellen Kontingentstatus für einen API-Schlüssel zurück       |
+| `pusula_cost_report` | Erstellt einen Kostenbericht pro Schlüssel für einen bestimmten Zeitraum |
+| `pusula_check_quota` | Gibt den aktuellen Kontingentstatus für einen API-Schlüssel zurück       |
 
 Beispiel für einen Agentenaufruf:
 
 ```json
 {
-  "tool": "omniroute_cost_report",
+  "tool": "pusula_cost_report",
   "args": { "period": "week" }
 }
 ```

@@ -344,7 +344,7 @@ test("syncRadar: valid signature => cache updated, payload byte-identical to fix
     },
     fetch: (() =>
       Promise.resolve(
-        mockResponse(FIXTURE_BYTES, { "x-omniroute-feed-signature": sig })
+        mockResponse(FIXTURE_BYTES, { "x-pusula-feed-signature": sig })
       )) as unknown as typeof globalThis.fetch,
     now: () => new Date("2026-08-03T12:00:00Z"),
   });
@@ -376,7 +376,7 @@ test("syncRadar: tampered bytes => invalid_signature, cache untouched", async ()
     },
     fetch: (() =>
       Promise.resolve(
-        mockResponse(tampered, { "x-omniroute-feed-signature": sig })
+        mockResponse(tampered, { "x-pusula-feed-signature": sig })
       )) as unknown as typeof globalThis.fetch,
   });
 
@@ -398,7 +398,7 @@ test("syncRadar: valid sig over garbage JSON => invalid_schema, cache untouched"
     },
     fetch: (() =>
       Promise.resolve(
-        mockResponse(garbageBytes, { "x-omniroute-feed-signature": sig })
+        mockResponse(garbageBytes, { "x-pusula-feed-signature": sig })
       )) as unknown as typeof globalThis.fetch,
   });
 
@@ -424,7 +424,7 @@ test("syncRadar: version floor — same version => stale, cache untouched", asyn
     },
     fetch: (() =>
       Promise.resolve(
-        mockResponse(FIXTURE_BYTES, { "x-omniroute-feed-signature": sig })
+        mockResponse(FIXTURE_BYTES, { "x-pusula-feed-signature": sig })
       )) as unknown as typeof globalThis.fetch,
   });
 
@@ -450,8 +450,8 @@ test("syncRadar: same version upgrades a validated v1 cache to the negotiated v2
     fetch: (() =>
       Promise.resolve(
         mockResponse(v2Bytes, {
-          "x-omniroute-feed-signature": sig,
-          "x-omniroute-feed-tier": "community",
+          "x-pusula-feed-signature": sig,
+          "x-pusula-feed-tier": "community",
         })
       )) as unknown as typeof globalThis.fetch,
   });
@@ -485,8 +485,8 @@ test("syncRadar: same-version v2 cannot replace an existing validated v2 cache",
     fetch: (() =>
       Promise.resolve(
         mockResponse(v2Bytes, {
-          "x-omniroute-feed-signature": sig,
-          "x-omniroute-feed-tier": "community",
+          "x-pusula-feed-signature": sig,
+          "x-pusula-feed-tier": "community",
         })
       )) as unknown as typeof globalThis.fetch,
   });
@@ -513,7 +513,7 @@ test("syncRadar: version floor — incoming older => stale", async () => {
     },
     fetch: (() =>
       Promise.resolve(
-        mockResponse(FIXTURE_BYTES, { "x-omniroute-feed-signature": sig })
+        mockResponse(FIXTURE_BYTES, { "x-pusula-feed-signature": sig })
       )) as unknown as typeof globalThis.fetch,
   });
 
@@ -538,8 +538,8 @@ test("syncRadar: an entitlement downgrade replaces a newer live cache with commu
     fetch: (() =>
       Promise.resolve(
         mockResponse(FIXTURE_BYTES, {
-          "x-omniroute-feed-signature": sig,
-          "x-omniroute-feed-tier": "community",
+          "x-pusula-feed-signature": sig,
+          "x-pusula-feed-tier": "community",
         })
       )) as unknown as typeof globalThis.fetch,
   });
@@ -572,7 +572,7 @@ test("syncRadar: version floor — incoming newer => updated", async () => {
     },
     fetch: (() =>
       Promise.resolve(
-        mockResponse(newerBytes, { "x-omniroute-feed-signature": sig })
+        mockResponse(newerBytes, { "x-pusula-feed-signature": sig })
       )) as unknown as typeof globalThis.fetch,
     now: () => new Date("2026-08-03T12:00:00Z"),
   });
@@ -604,7 +604,7 @@ test("syncRadar: numeric version compare (2026.08.02.9 vs 2026.08.02.10)", async
     },
     fetch: (() =>
       Promise.resolve(
-        mockResponse(newerBytes, { "x-omniroute-feed-signature": sig })
+        mockResponse(newerBytes, { "x-pusula-feed-signature": sig })
       )) as unknown as typeof globalThis.fetch,
     now: () => new Date("2026-08-03T12:00:00Z"),
   });
@@ -689,7 +689,7 @@ test("syncRadar: sends Authorization header when supporter key exists", async ()
           ? Object.entries(init.headers as Record<string, string>)
           : []
       );
-      return Promise.resolve(mockResponse(FIXTURE_BYTES, { "x-omniroute-feed-signature": sig }));
+      return Promise.resolve(mockResponse(FIXTURE_BYTES, { "x-pusula-feed-signature": sig }));
     }) as unknown as typeof globalThis.fetch,
     now: () => new Date("2026-08-03T12:00:00Z"),
   });
@@ -711,11 +711,11 @@ test("syncRadar negotiates schema v2 so legacy clients can keep the default v1 a
     setCache: () => {},
     fetch: ((_url: string, init: RequestInit) => {
       requestHeaders = init.headers as Record<string, string>;
-      return Promise.resolve(mockResponse(FIXTURE_BYTES, { "x-omniroute-feed-signature": sig }));
+      return Promise.resolve(mockResponse(FIXTURE_BYTES, { "x-pusula-feed-signature": sig }));
     }) as unknown as typeof globalThis.fetch,
   });
 
-  assert.equal(requestHeaders?.["x-omniroute-radar-schema"], "2");
+  assert.equal(requestHeaders?.["x-pusula-radar-schema"], "2");
 });
 
 test("syncRadar: no Authorization header when no supporter key", async () => {
@@ -733,7 +733,7 @@ test("syncRadar: no Authorization header when no supporter key", async () => {
           ? Object.entries(init.headers as Record<string, string>)
           : []
       );
-      return Promise.resolve(mockResponse(FIXTURE_BYTES, { "x-omniroute-feed-signature": sig }));
+      return Promise.resolve(mockResponse(FIXTURE_BYTES, { "x-pusula-feed-signature": sig }));
     }) as unknown as typeof globalThis.fetch,
     now: () => new Date("2026-08-03T12:00:00Z"),
   });
@@ -766,12 +766,12 @@ test("syncRadar: missing signature header => invalid_signature", async () => {
 });
 
 // ===========================================================================
-// syncRadar — served-tier header (x-omniroute-feed-tier)
+// syncRadar — served-tier header (x-pusula-feed-tier)
 //
 // Regression guard for the defect where a FREE user on a stale/community
 // snapshot saw "Ao vivo (tempo real)" in the UI: the signed body always
 // carries tier:"live" by design (one signed artifact per version), so the
-// client MUST trust the `x-omniroute-feed-tier` response header — the
+// client MUST trust the `x-pusula-feed-tier` response header — the
 // tier ACTUALLY served — rather than the body field.
 // ===========================================================================
 
@@ -792,8 +792,8 @@ test("syncRadar: header 'community' overrides body tier:'live' — cache + resul
     fetch: (() =>
       Promise.resolve(
         mockResponse(bytes, {
-          "x-omniroute-feed-signature": sig,
-          "x-omniroute-feed-tier": "community",
+          "x-pusula-feed-signature": sig,
+          "x-pusula-feed-tier": "community",
         })
       )) as unknown as typeof globalThis.fetch,
     now: () => new Date("2026-08-03T12:00:00Z"),
@@ -832,8 +832,8 @@ test("syncRadar: header 'live' => cache + result use live", async () => {
     fetch: (() =>
       Promise.resolve(
         mockResponse(bytes, {
-          "x-omniroute-feed-signature": sig,
-          "x-omniroute-feed-tier": "live",
+          "x-pusula-feed-signature": sig,
+          "x-pusula-feed-tier": "live",
         })
       )) as unknown as typeof globalThis.fetch,
     now: () => new Date("2026-08-03T12:00:00Z"),
@@ -862,7 +862,7 @@ test("syncRadar: header absent => falls back to body tier (older server)", async
     },
     fetch: (() =>
       Promise.resolve(
-        mockResponse(bytes, { "x-omniroute-feed-signature": sig }) // no tier header
+        mockResponse(bytes, { "x-pusula-feed-signature": sig }) // no tier header
       )) as unknown as typeof globalThis.fetch,
     now: () => new Date("2026-08-03T12:00:00Z"),
   });
@@ -895,8 +895,8 @@ test("syncRadar: header holds a garbage value => falls back to body tier, garbag
     fetch: (() =>
       Promise.resolve(
         mockResponse(bytes, {
-          "x-omniroute-feed-signature": sig,
-          "x-omniroute-feed-tier": "premium", // arbitrary/garbage header value
+          "x-pusula-feed-signature": sig,
+          "x-pusula-feed-tier": "premium", // arbitrary/garbage header value
         })
       )) as unknown as typeof globalThis.fetch,
     now: () => new Date("2026-08-03T12:00:00Z"),
@@ -932,8 +932,8 @@ test("syncRadar: header holds an empty string => falls back to body tier", async
     fetch: (() =>
       Promise.resolve(
         mockResponse(bytes, {
-          "x-omniroute-feed-signature": sig,
-          "x-omniroute-feed-tier": "",
+          "x-pusula-feed-signature": sig,
+          "x-pusula-feed-tier": "",
         })
       )) as unknown as typeof globalThis.fetch,
     now: () => new Date("2026-08-03T12:00:00Z"),
@@ -959,7 +959,7 @@ test("syncRadar: first sync (no cache) with valid data => updated", async () => 
     },
     fetch: (() =>
       Promise.resolve(
-        mockResponse(FIXTURE_BYTES, { "x-omniroute-feed-signature": sig })
+        mockResponse(FIXTURE_BYTES, { "x-pusula-feed-signature": sig })
       )) as unknown as typeof globalThis.fetch,
     now: () => new Date("2026-08-03T12:00:00Z"),
   });

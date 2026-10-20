@@ -2,7 +2,7 @@
 
 import { NextResponse } from "next/server";
 
-import { buildErrorBody, sanitizeErrorMessage } from "@omniroute/open-sse/utils/error";
+import { buildErrorBody, sanitizeErrorMessage } from "@pusula/open-sse/utils/error";
 
 import {
   getRadarCache,

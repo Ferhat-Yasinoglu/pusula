@@ -1,16 +1,16 @@
 {
-  "name": "omniroute",
+  "name": "pusula",
   "version": "3.8.51",
   "description": "Unified AI router with 358 providers, RTK+Caveman compression, auto fallback, MCP/A2A, desktop, PWA, and OpenAI-compatible APIs.",
   "type": "module",
   "bin": {
-    "omniroute": "bin/omniroute.mjs",
-    "omniroute-reset-password": "bin/reset-password.mjs"
+    "pusula": "bin/pusula.mjs",
+    "pusula-reset-password": "bin/reset-password.mjs"
   },
   "files": [
     "bin/",
     "dist/",
-    "@omniroute/",
+    "@pusula/",
     "open-sse/",
     "src/domain/",
     "src/lib/",
@@ -86,9 +86,9 @@
   "author": "diegosouzapw",
   "repository": {
     "type": "git",
-    "url": "https://github.com/diegosouzapw/OmniRoute"
+    "url": "https://github.com/Ferhat-Yasinoglu/pusula"
   },
-  "homepage": "https://omniroute.online",
+  "homepage": "https://github.com/Ferhat-Yasinoglu/pusula",
   "scripts": {
     "dev": "node --max-old-space-size=8192 scripts/dev/run-next.mjs dev",
     "prebuild:docs": "node scripts/docs/gen-openapi-module.mjs",
@@ -107,16 +107,16 @@
     "prebuild": "npm run check:native-deps",
     "prebuild:fast": "npm run check:native-deps",
     "build": "node scripts/build/build-next-isolated.mjs",
-    "build:fast": "cross-env OMNIROUTE_SKIP_STANDALONE=1 node scripts/build/build-next-isolated.mjs",
-    "build:secure": "OMNIROUTE_BUILD_PROFILE=minimal node scripts/build/build-next-isolated.mjs",
-    "build:backend": "cross-env OMNIROUTE_BUILD_BACKEND_ONLY=1 node scripts/build/build-next-isolated.mjs",
-    "build:contributor": "cross-env OMNIROUTE_BUILD_PROFILE=contributor OMNIROUTE_USE_TURBOPACK=0 node scripts/build/build-next-isolated.mjs",
+    "build:fast": "cross-env PUSULA_SKIP_STANDALONE=1 node scripts/build/build-next-isolated.mjs",
+    "build:secure": "PUSULA_BUILD_PROFILE=minimal node scripts/build/build-next-isolated.mjs",
+    "build:backend": "cross-env PUSULA_BUILD_BACKEND_ONLY=1 node scripts/build/build-next-isolated.mjs",
+    "build:contributor": "cross-env PUSULA_BUILD_PROFILE=contributor PUSULA_USE_TURBOPACK=0 node scripts/build/build-next-isolated.mjs",
     "build:cli": "node --import tsx scripts/build/prepublish.ts",
-    "omniroute:verify": "node scripts/check/omniroute-verify.mjs",
-    "build:release": "rm -rf .build dist && OMNIROUTE_BUILD_SHA=$(git rev-parse --short HEAD) npm run build && npm run build:cli && node scripts/build/write-build-sha.mjs",
+    "pusula:verify": "node scripts/check/pusula-verify.mjs",
+    "build:release": "rm -rf .build dist && PUSULA_BUILD_SHA=$(git rev-parse --short HEAD) npm run build && npm run build:cli && node scripts/build/write-build-sha.mjs",
     "build:native:tproxy": "cd src/mitm/tproxy/native && npx --yes node-gyp rebuild",
     "start": "node scripts/dev/run-next.mjs start",
-    "start:fast": "cross-env OMNIROUTE_SKIP_STANDALONE=1 node scripts/dev/run-next.mjs start",
+    "start:fast": "cross-env PUSULA_SKIP_STANDALONE=1 node scripts/dev/run-next.mjs start",
     "homolog": "node scripts/homolog/run.mjs",
     "lint": "eslint . --cache --cache-location .eslintcache --suppressions-location config/quality/eslint-suppressions.json",
     "lint:json": "node scripts/quality/run-eslint-json.mjs",
@@ -468,7 +468,7 @@
       "@swc/core",
       "better-sqlite3",
       "esbuild",
-      "omniroute",
+      "pusula",
       "sharp"
     ]
   },

@@ -7,7 +7,7 @@
 > **Verbindliche Quelle:** `electron/`-Workspace
 > **Zuletzt aktualisiert:** 2026-06-28 — v3.8.40
 
-OmniRoute wird mit einer plattformübergreifenden Desktop-App (Windows / macOS / Linux) ausgeliefert, die auf
+Pusula wird mit einer plattformübergreifenden Desktop-App (Windows / macOS / Linux) ausgeliefert, die auf
 **Electron 41** + **electron-builder 26.10** basiert. Die Desktop-App startet den eigenständigen Next.js-Server
 als untergeordneten Prozess, richtet ein `BrowserWindow` darauf aus und ergänzt eine
 Taskleistenintegration, einen automatischen Updater, eine IPC-Bridge sowie eine konfigurationsfreie Initialisierung geheimer Schlüssel.
@@ -46,8 +46,8 @@ Bestätigt anhand von `electron/package.json`:
 | `electron-updater` | `^6.8.9`                                                      |
 | `better-sqlite3`   | Root `^13.0.2` (Node-API-Prebuilds — kein Electron-Neuaufbau) |
 | App-Version        | `3.8.0`                                                       |
-| App-ID             | `online.omniroute.desktop`                                    |
-| Produktname        | `OmniRoute`                                                   |
+| App-ID             | `online.pusula.desktop`                                    |
+| Produktname        | `Pusula`                                                   |
 
 ## Skripte (`package.json` im Stammverzeichnis)
 
@@ -165,28 +165,28 @@ Beim ersten Start generiert und speichert der Hauptprozess automatisch fehlende 
 
 Gespeichert in `<DATA_DIR>/server.env`. `DATA_DIR` wird wie folgt aufgelöst:
 
-- Windows: `%APPDATA%\omniroute`
-- Linux: `$XDG_CONFIG_HOME/omniroute` oder `~/.omniroute`
-- macOS: `~/.omniroute`
+- Windows: `%APPDATA%\pusula`
+- Linux: `$XDG_CONFIG_HOME/pusula` oder `~/.pusula`
+- macOS: `~/.pusula`
 
 ## Fenster und Taskleisten-Symbol
 
 - `BrowserWindow`: 1400×900 (mindestens 1024×700), `backgroundColor: "#0a0a0a"`.
 - macOS: `titleBarStyle: "hiddenInset"`, Fenstersteuerung bei `{ x: 16, y: 16 }`.
 - Windows/Linux: native Titelleiste.
-- Die Schließen-Schaltfläche minimiert in den Infobereich; das Menü des Taskleisten-Symbols enthält **OmniRoute öffnen**, **Dashboard öffnen** (externer Browser), das Untermenü **Server-Port**, **Nach Updates suchen** und **Beenden**.
+- Die Schließen-Schaltfläche minimiert in den Infobereich; das Menü des Taskleisten-Symbols enthält **Pusula öffnen**, **Dashboard öffnen** (externer Browser), das Untermenü **Server-Port**, **Nach Updates suchen** und **Beenden**.
 
 ## Content Security Policy
 
 Wird über `session.defaultSession.webRequest.onHeadersReceived` festgelegt. Wichtige Direktiven:
 
 - `frame-ancestors 'none'`, `object-src 'none'`, `child-src 'none'`
-- `connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:* https://*.omniroute.online https://*.omniroute.dev`
+- `connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:* https://*.pusula.online https://*.pusula.dev`
 - Im Entwicklungsmodus wird ausschließlich `script-src` um `'unsafe-eval'` ergänzt
 
 ## Automatische Updates
 
-Verwendet `electron-updater` mit dem GitHub-Provider (`diegosouzapw/OmniRoute`).
+Verwendet `electron-updater` mit dem GitHub-Provider (`Ferhat-Yasinoglu/pusula`).
 
 - `autoDownload = false`, `autoInstallOnAppQuit = true`
 - Ereignisse werden über den `update-status`-IPC an den Renderer weitergeleitet:
@@ -258,11 +258,11 @@ Die AppImage-Signierung ist optional — setzen Sie zum Signieren `LINUX_GPG_KEY
 
 Die Artefakte werden in `electron/dist-electron/` abgelegt:
 
-- `OmniRoute.Setup.X.Y.Z.exe`, `OmniRoute X.Y.Z.exe` (Windows)
-- `OmniRoute-X.Y.Z-mac.dmg`, `OmniRoute-X.Y.Z-arm64-mac.dmg` (macOS)
-- `OmniRoute-X.Y.Z.AppImage`, `omniroute-desktop_X.Y.Z_amd64.deb` (Linux)
+- `Pusula.Setup.X.Y.Z.exe`, `Pusula X.Y.Z.exe` (Windows)
+- `Pusula-X.Y.Z-mac.dmg`, `Pusula-X.Y.Z-arm64-mac.dmg` (macOS)
+- `Pusula-X.Y.Z.AppImage`, `pusula-desktop_X.Y.Z_amd64.deb` (Linux)
 
-Releases werden in GitHub Releases (`diegosouzapw/OmniRoute`) veröffentlicht. Dort sucht auch `electron-updater` nach neuen Versionen.
+Releases werden in GitHub Releases (`Ferhat-Yasinoglu/pusula`) veröffentlicht. Dort sucht auch `electron-updater` nach neuen Versionen.
 
 ## Fehlerbehebung
 

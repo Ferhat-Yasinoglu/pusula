@@ -5,8 +5,8 @@
  */
 
 import { randomUUID } from "node:crypto";
-import { refreshCursorToken as refreshCursorTokenOpenSse } from "@omniroute/open-sse/services/tokenRefresh/providers/cursor.ts";
-import { sanitizeErrorMessage } from "@omniroute/open-sse/utils/error.ts";
+import { refreshCursorToken as refreshCursorTokenOpenSse } from "@pusula/open-sse/services/tokenRefresh/providers/cursor.ts";
+import { sanitizeErrorMessage } from "@pusula/open-sse/utils/error.ts";
 import { generatePKCE } from "../utils/pkce";
 import { CURSOR_CONFIG } from "../constants/oauth";
 

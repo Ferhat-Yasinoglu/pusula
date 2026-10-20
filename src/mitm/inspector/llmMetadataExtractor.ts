@@ -165,8 +165,8 @@ export function extractLlmMetadata(req: InterceptedRequest): LlmMetadata | null 
   const streamed = isSseRequest(req);
   const mappedTo =
     req.mappedModel ??
-    req.requestHeaders["x-omniroute-mapped"] ??
-    req.requestHeaders["X-Omniroute-Mapped"] ??
+    req.requestHeaders["x-pusula-mapped"] ??
+    req.requestHeaders["X-Pusula-Mapped"] ??
     null;
 
   return {

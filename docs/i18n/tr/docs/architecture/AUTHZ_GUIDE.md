@@ -7,7 +7,7 @@
 > **Doğruluk Kaynağı:** `src/server/authz/`, `src/shared/constants/publicApiRoutes.ts`, `src/lib/api/requireManagementAuth.ts`, `src/shared/utils/apiAuth.ts`
 > **Son Güncelleme:** 2026-09-22 — kapsam ad alanları `MCP-SERVER.md`'yi işaret ediyor
 
-OmniRoute, her API isteğini denetleyen rota-farkındalıklı bir yetkilendirme hattına sahiptir. Sınıflandırma **deterministik** ve **kapalı-güvenli**dir — sınıflandırılamayan her şey `MANAGEMENT` olarak sonuçlanır ve bir oturum veya yönetim düzeyinde bir jeton gerektirir. Bu sayfa, rotaları sürdüren veya yeni uç noktalar tasarlayan mühendisler için modeli açıklar.
+Pusula, her API isteğini denetleyen rota-farkındalıklı bir yetkilendirme hattına sahiptir. Sınıflandırma **deterministik** ve **kapalı-güvenli**dir — sınıflandırılamayan her şey `MANAGEMENT` olarak sonuçlanır ve bir oturum veya yönetim düzeyinde bir jeton gerektirir. Bu sayfa, rotaları sürdüren veya yeni uç noktalar tasarlayan mühendisler için modeli açıklar.
 
 ![Yetkilendirme hattı (3 rota sınıfı + politika değerlendirmesi)](../diagrams/exported/authz-pipeline.svg)
 
@@ -23,7 +23,7 @@ OpenAI/Anthropic/Gemini uyumlu istemci API'leri ve anahtarın `manage` kapsamın
 Authorization: Bearer <api-key>
 ```
 
-`src/sse/services/auth.ts` içindeki `isValidApiKey()` / `extractApiKey()` tarafından doğrulanır ve `src/shared/utils/apiAuth.ts` üzerinden yeniden dışa aktarılır. Doğrulayıcı ayrıca `OMNIROUTE_API_KEY` / `ROUTER_API_KEY` ortam değişkenlerini kalıcı doğrudan geçiş anahtarları olarak kabul eder (sorun #1350).
+`src/sse/services/auth.ts` içindeki `isValidApiKey()` / `extractApiKey()` tarafından doğrulanır ve `src/shared/utils/apiAuth.ts` üzerinden yeniden dışa aktarılır. Doğrulayıcı ayrıca `PUSULA_API_KEY` / `ROUTER_API_KEY` ortam değişkenlerini kalıcı doğrudan geçiş anahtarları olarak kabul eder (sorun #1350).
 
 ### 2. Pano Oturumu (auth_token çerezi)
 
@@ -38,7 +38,7 @@ Bir çerez yalnızca JWT doğrulandığında **ve** `authenticated: true` taşı
 tüketicisi (rota koruması, authz işlem hattı yenilemesi, WebSocket el sıkışması, canlı
 sunucu, `/api/settings/require-login`, `/api/auth/status`) bu yardımcıdan geçer.
 `JWT_SECRET` ile imzalanmış başka JWT'ler de vardır — Cursor CLI doğrudan geçişi,
-anahtar sahipleri için `iss "omniroute" / aud "cursor-cli"` belirteçleri oluşturur — ve bunlar hiçbir zaman oturum
+anahtar sahipleri için `iss "pusula" / aud "cursor-cli"` belirteçleri oluşturur — ve bunlar hiçbir zaman oturum
 olarak kabul edilmez (#13298).
 
 `src/shared/utils/apiAuth.ts` içindeki `isDashboardSessionAuthenticated()` tarafından doğrulanır. İşlem hattı, 30 günlük kullanım ömrünün bitmesine 7 günden az kaldığında JWT'yi otomatik olarak yeniler.
@@ -86,7 +86,7 @@ kaldırılmaz, yalnızca desteklenir:
 ```
 Gelen istek → src/proxy.ts
   → src/server/authz/pipeline.ts içindeki runAuthzPipeline()
-    1. Güvenilir dahili üstbilgileri kaldır (x-omniroute-auth-*, x-omniroute-route-class)
+    1. Güvenilir dahili üstbilgileri kaldır (x-pusula-auth-*, x-pusula-route-class)
     2. İstek kimliği oluştur, rotayı classifyRoute() aracılığıyla sınıflandır
     3. pathname == "/" ise → /dashboard adresine yönlendir
     4. İstekler boşaltılıyorsa (zarif kapatma) ve rota /api/* ise → 503
@@ -94,11 +94,11 @@ Gelen istek → src/proxy.ts
     6. OPTIONS ise → CORS ön kontrolü 204
     7. options.enforce == false ise → rota sınıfı üstbilgileriyle doğrudan geçir
     8. Aksi takdirde: POLICIES[routeClass].evaluate(ctx)
-       - izin ver  → x-omniroute-auth-{kind,id,label,scopes} ekle → NextResponse.next()
+       - izin ver  → x-pusula-auth-{kind,id,label,scopes} ekle → NextResponse.next()
        - reddet → correlation_id içeren JSON hatası (pano sayfaları → 302 /login)
 ```
 
-Güvenilir dahili üstbilgiler (`src/server/authz/headers.ts` içinde tanımlanır), sınıflandırmadan önce **gelen isteklerden kaldırılır** — istemciler bir öznenin kimliğine bürünmek için `x-omniroute-auth-*` üstbilgilerini önceden dolduramaz.
+Güvenilir dahili üstbilgiler (`src/server/authz/headers.ts` içinde tanımlanır), sınıflandırmadan önce **gelen isteklerden kaldırılır** — istemciler bir öznenin kimliğine bürünmek için `x-pusula-auth-*` üstbilgilerini önceden dolduramaz.
 
 ### İlke sözleşmeleri
 
@@ -213,7 +213,7 @@ API anahtarları bir `scopes` dizisi taşır (`api_keys.scopes` içinde JSON ola
 
 ### MCP araç kapsamları
 
-Katalog ve eşleştirme kuralları (aynı dize veya `*` ile biten verilmiş bir kapsam): [MCP araç kapsamları](../frameworks/MCP-SERVER.md#mcp-tool-scopes). `src/shared/constants/mcpScopes.ts` içindeki `MCP_SCOPE_LIST`, tam katalog değil, orijinal yazılmış alt kümedir. Uygulama, `resolveCallerScopeContext()` MCP kimlik doğrulama bilgisinden, istek meta verilerinden veya `OMNIROUTE_MCP_SCOPES`'tan kapsamları çözümledikten sonra `open-sse/mcp-server/scopeEnforcement.ts` içinde çalışır. `OMNIROUTE_MCP_ENFORCE_SCOPES=true` olmadığı sürece kapalı kalır.
+Katalog ve eşleştirme kuralları (aynı dize veya `*` ile biten verilmiş bir kapsam): [MCP araç kapsamları](../frameworks/MCP-SERVER.md#mcp-tool-scopes). `src/shared/constants/mcpScopes.ts` içindeki `MCP_SCOPE_LIST`, tam katalog değil, orijinal yazılmış alt kümedir. Uygulama, `resolveCallerScopeContext()` MCP kimlik doğrulama bilgisinden, istek meta verilerinden veya `PUSULA_MCP_SCOPES`'tan kapsamları çözümledikten sonra `open-sse/mcp-server/scopeEnforcement.ts` içinde çalışır. `PUSULA_MCP_ENFORCE_SCOPES=true` olmadığı sürece kapalı kalır.
 
 ### Erişim belirteci kapsamları
 
@@ -249,16 +249,16 @@ Katalog ve eşleştirme kuralları (aynı dize veya `*` ile biten verilmiş bir 
 
 ```
 x-request-id:               <korelasyon kimliği, hata gövdelerinde yinelenir>
-x-omniroute-route-class:    PUBLIC | CLIENT_API | MANAGEMENT
+x-pusula-route-class:    PUBLIC | CLIENT_API | MANAGEMENT
 ```
 
 Kimliği doğrulanmış isteklerde yukarı akış (işleyici tarafındaki) istek başlıkları ayrıca şunları içerir:
 
 ```
-x-omniroute-auth-kind:      client_api_key | dashboard_session | management_key | anonymous
-x-omniroute-auth-id:        key_<son-4> | "dashboard" | "anonymous"
-x-omniroute-auth-label:     (isteğe bağlı)
-x-omniroute-auth-scopes:    virgülle ayrılmış liste
+x-pusula-auth-kind:      client_api_key | dashboard_session | management_key | anonymous
+x-pusula-auth-id:        key_<son-4> | "dashboard" | "anonymous"
+x-pusula-auth-label:     (isteğe bağlı)
+x-pusula-auth-scopes:    virgülle ayrılmış liste
 ```
 
 İşleyiciler içinde `assertAuth(req, expectedClass)` kullanın — ara yazılım atlandıysa `AUTHZ_NOT_INITIALIZED` koduyla bir `AuthzAssertionError` oluşturur (testlerde yapılandırma gerilemelerini yakalamak için yararlıdır).

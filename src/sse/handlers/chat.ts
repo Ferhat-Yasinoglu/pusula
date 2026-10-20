@@ -6,8 +6,8 @@ export { buildClientRawRequest, resolveDispatchClientRawRequest };
 import { normalizeReasoningRequest } from "@/shared/reasoning/effortStandardization";
 import { isDetailedLoggingEnabled } from "@/lib/db/detailedLogs";
 import { resolvePreviousResponseState } from "@/lib/db/responsesContinuationStore";
-import { normalizeResponsesPreviousResponseIdMode } from "@omniroute/open-sse/utils/responsesStatePolicy.ts";
-import { FORMATS } from "@omniroute/open-sse/translator/formats.ts";
+import { normalizeResponsesPreviousResponseIdMode } from "@pusula/open-sse/utils/responsesStatePolicy.ts";
+import { FORMATS } from "@pusula/open-sse/translator/formats.ts";
 import { resolveRoutingModel, RoutingModelOps } from "./resolveRoutingModel";
 import {
   getProviderCredentialsWithQuotaPreflight,
@@ -24,45 +24,45 @@ import {
   lockModel,
   recordModelLockoutFailure,
   isDailyQuotaExhausted,
-} from "@omniroute/open-sse/services/accountFallback.ts";
+} from "@pusula/open-sse/services/accountFallback.ts";
 import { getCombo, getComboForModel, getModelInfo } from "../services/model";
-import { stripContextWindowSuffix } from "@omniroute/open-sse/services/model.ts";
-import { resolveBareModelToConnectionDefault } from "@omniroute/open-sse/services/model.ts";
-import { errorResponse } from "@omniroute/open-sse/utils/error.ts";
-import { getImageModelEntry } from "@omniroute/open-sse/config/imageRegistry.ts";
-import { acceptHeaderForcesStream } from "@omniroute/open-sse/utils/aiSdkCompat.ts";
-import { applyNoThinkingAlias } from "@omniroute/open-sse/utils/noThinkingAlias.ts";
+import { stripContextWindowSuffix } from "@pusula/open-sse/services/model.ts";
+import { resolveBareModelToConnectionDefault } from "@pusula/open-sse/services/model.ts";
+import { errorResponse } from "@pusula/open-sse/utils/error.ts";
+import { getImageModelEntry } from "@pusula/open-sse/config/imageRegistry.ts";
+import { acceptHeaderForcesStream } from "@pusula/open-sse/utils/aiSdkCompat.ts";
+import { applyNoThinkingAlias } from "@pusula/open-sse/utils/noThinkingAlias.ts";
 import { resolveCcDiscoveryAliasStrip } from "@/lib/ccDiscoveryAliasResolve";
 import {
   handleComboChat,
   resolveComboTargets,
   shouldSkipConnDisable,
-} from "@omniroute/open-sse/services/combo.ts";
-import type { ComboLike, SingleModelTarget } from "@omniroute/open-sse/services/combo/types.ts";
-import { mergeAbortSignals } from "@omniroute/open-sse/executors/base.ts";
-import { resolveRequestAutoControls } from "@omniroute/open-sse/services/autoCombo/requestControls.ts";
-import { isVerifiedNativeCodexRequest } from "@omniroute/open-sse/config/codexIdentity.ts";
-import { resolveCompressionSettings } from "@omniroute/open-sse/handlers/chatCore/compressionSettings.ts";
-import type { CompressionExclusions } from "@omniroute/open-sse/services/compression/exclusions.ts";
-import { resolveComboConfig } from "@omniroute/open-sse/services/comboConfig.ts";
+} from "@pusula/open-sse/services/combo.ts";
+import type { ComboLike, SingleModelTarget } from "@pusula/open-sse/services/combo/types.ts";
+import { mergeAbortSignals } from "@pusula/open-sse/executors/base.ts";
+import { resolveRequestAutoControls } from "@pusula/open-sse/services/autoCombo/requestControls.ts";
+import { isVerifiedNativeCodexRequest } from "@pusula/open-sse/config/codexIdentity.ts";
+import { resolveCompressionSettings } from "@pusula/open-sse/handlers/chatCore/compressionSettings.ts";
+import type { CompressionExclusions } from "@pusula/open-sse/services/compression/exclusions.ts";
+import { resolveComboConfig } from "@pusula/open-sse/services/comboConfig.ts";
 import { comboPinAllowlist } from "@/lib/combos/steps.ts";
-import { injectHandoffIntoBody } from "@omniroute/open-sse/services/contextHandoff.ts";
-import { runWithTransientBackendRetry } from "@omniroute/open-sse/services/transientBackendRetry.ts";
+import { injectHandoffIntoBody } from "@pusula/open-sse/services/contextHandoff.ts";
+import { runWithTransientBackendRetry } from "@pusula/open-sse/services/transientBackendRetry.ts";
 import {
   HTTP_STATUS,
   ANTIGRAVITY_PRE_RESPONSE_TIMEOUT_CODE,
-} from "@omniroute/open-sse/config/constants.ts";
+} from "@pusula/open-sse/config/constants.ts";
 import {
   getTargetFormat,
   detectFormatFromEndpoint,
   detectFormatFromUrl,
-} from "@omniroute/open-sse/services/provider.ts";
+} from "@pusula/open-sse/services/provider.ts";
 import {
   getModelsByProviderId,
   getModelTargetFormat,
   PROVIDER_ID_TO_ALIAS,
-} from "@omniroute/open-sse/config/providerModels.ts";
-import { getPassthroughProviders } from "@omniroute/open-sse/config/providerRegistry.ts";
+} from "@pusula/open-sse/config/providerModels.ts";
+import { getPassthroughProviders } from "@pusula/open-sse/config/providerRegistry.ts";
 import * as log from "../utils/logger";
 import { checkAndRefreshToken } from "../services/tokenRefresh";
 import { createHookContext, runHooks, initPreRequestRegistry } from "@/lib/middleware/registry";
@@ -111,16 +111,16 @@ import {
 import { buildModalityBridgeHeader } from "@/lib/guardrails/modalityBridge/bridgeStats";
 import type { VideoBridgeLogRedactionEntry } from "@/lib/guardrails/videoBridge";
 import { reanchorVideoBridgeRedaction } from "@/lib/guardrails/videoBridge";
-import { resolveConversationId } from "@omniroute/open-sse/services/conversationTracker.ts";
+import { resolveConversationId } from "@pusula/open-sse/services/conversationTracker.ts";
 import {
   classifyProviderBreakerResult,
   isAntigravityMissingProjectError,
   isProviderBreakerFailureStatus,
   resolveStreamReadinessClassificationError,
 } from "./chatPredicates";
-import { markAntigravityMissingCloudCodeProject } from "@omniroute/open-sse/services/antigravityProjectPersistence.ts";
-import { connectionHasExtraKeys } from "@omniroute/open-sse/services/apiKeyRotator.ts";
-import { wrapResponseWithOAuthSessionRelease } from "@omniroute/open-sse/services/oauthSessionOccupancy.ts";
+import { markAntigravityMissingCloudCodeProject } from "@pusula/open-sse/services/antigravityProjectPersistence.ts";
+import { connectionHasExtraKeys } from "@pusula/open-sse/services/apiKeyRotator.ts";
+import { wrapResponseWithOAuthSessionRelease } from "@pusula/open-sse/services/oauthSessionOccupancy.ts";
 import {
   extractReasoningIntent,
   type ExtractedReasoningIntent,
@@ -136,7 +136,7 @@ import { getComboFailureLogError } from "./comboFailureLogging";
 
 // Pipeline integration — wired modules
 import { classify429FromError, type FailureKind } from "@/shared/utils/classify429";
-import { isSubscriptionQuotaText } from "@omniroute/open-sse/services/quotaTextCooldowns.ts";
+import { isSubscriptionQuotaText } from "@pusula/open-sse/services/quotaTextCooldowns.ts";
 import { resolveUseUpstream429BreakerHints } from "@/shared/utils/providerHints";
 import { isFeatureFlagEnabled, isRotationAttributionEnabled } from "@/shared/utils/featureFlags";
 import * as agyLease from "../services/antigravityLeaseLifecycle";
@@ -151,16 +151,16 @@ import { enforceApiKeyPolicy } from "../../shared/utils/apiKeyPolicy";
 import { rejectIfMeteredBudgetExceeded } from "@/lib/usage/meteredBudgetPolicy";
 import { hasProviderQuotaBypassScope } from "../../shared/constants/apiKeyPolicyScopes";
 import { isMicrosoftDesignerWebProviderRetiredError } from "../../shared/constants/designerWebRetirement";
-import { cloneBoundedForLog } from "@omniroute/open-sse/utils/requestLogger.ts";
+import { cloneBoundedForLog } from "@pusula/open-sse/utils/requestLogger.ts";
 import { handleInternalUsageCommand } from "@/lib/usage/internalUsageCommand";
 import {
   applyTaskAwareRouting,
   getTaskRoutingConfig,
-} from "@omniroute/open-sse/services/taskAwareRouter.ts";
+} from "@pusula/open-sse/services/taskAwareRouter.ts";
 import {
   hasNativeWebSearchTool,
   resolveWebSearchRouteOverride,
-} from "@omniroute/open-sse/services/webSearchRouting.ts";
+} from "@pusula/open-sse/services/webSearchRouting.ts";
 import {
   generateSessionId as generateStableSessionId,
   touchSession,
@@ -168,29 +168,29 @@ import {
   checkSessionLimit,
   registerKeySession,
   isSessionRegisteredForKey,
-} from "@omniroute/open-sse/services/sessionManager.ts";
-import { startQuotaMonitor } from "@omniroute/open-sse/services/quotaMonitor.ts";
+} from "@pusula/open-sse/services/sessionManager.ts";
+import { startQuotaMonitor } from "@pusula/open-sse/services/quotaMonitor.ts";
 import {
   isFallbackDecision,
   shouldUseFallback,
-} from "@omniroute/open-sse/services/emergencyFallback.ts";
+} from "@pusula/open-sse/services/emergencyFallback.ts";
 import {
   registerCodexConnection,
   registerCodexQuotaFetcher,
-} from "@omniroute/open-sse/services/codexQuotaFetcher.ts";
-import { registerBailianCodingPlanQuotaFetcher } from "@omniroute/open-sse/services/bailianQuotaFetcher.ts";
-import { registerQwenTokenPlanQuotaFetcher } from "@omniroute/open-sse/services/qwenTokenPlanQuotaFetcher.ts";
-import { registerCrofUsageFetcher } from "@omniroute/open-sse/services/crofUsageFetcher.ts";
-import { registerDeepseekQuotaFetcher } from "@omniroute/open-sse/services/deepseekQuotaFetcher.ts";
+} from "@pusula/open-sse/services/codexQuotaFetcher.ts";
+import { registerBailianCodingPlanQuotaFetcher } from "@pusula/open-sse/services/bailianQuotaFetcher.ts";
+import { registerQwenTokenPlanQuotaFetcher } from "@pusula/open-sse/services/qwenTokenPlanQuotaFetcher.ts";
+import { registerCrofUsageFetcher } from "@pusula/open-sse/services/crofUsageFetcher.ts";
+import { registerDeepseekQuotaFetcher } from "@pusula/open-sse/services/deepseekQuotaFetcher.ts";
 import {
   registerMoonshotQuotaFetcher,
   registerMoonshotFetchersForNodes,
-} from "@omniroute/open-sse/services/moonshotQuotaFetcher.ts";
-import { registerOpenrouterQuotaFetcher } from "@omniroute/open-sse/services/openrouterQuotaFetcher.ts";
-import { registerOpencodeQuotaFetcher } from "@omniroute/open-sse/services/opencodeQuotaFetcher.ts";
-import { registerGrokWebQuotaFetcher } from "@omniroute/open-sse/services/grokQuotaFetcher.ts";
-import { registerGenericQuotaFetchers } from "@omniroute/open-sse/services/genericQuotaFetcher.ts";
-import "@omniroute/open-sse/services/quotaTrackersBatch.ts";
+} from "@pusula/open-sse/services/moonshotQuotaFetcher.ts";
+import { registerOpenrouterQuotaFetcher } from "@pusula/open-sse/services/openrouterQuotaFetcher.ts";
+import { registerOpencodeQuotaFetcher } from "@pusula/open-sse/services/opencodeQuotaFetcher.ts";
+import { registerGrokWebQuotaFetcher } from "@pusula/open-sse/services/grokQuotaFetcher.ts";
+import { registerGenericQuotaFetchers } from "@pusula/open-sse/services/genericQuotaFetcher.ts";
+import "@pusula/open-sse/services/quotaTrackersBatch.ts";
 import {
   disableCooldownAwareRetry,
   getCooldownAwareRetryDecision,
@@ -456,8 +456,8 @@ async function handleChatImplementation(
   // Discard lookalike JSON fields supplied by callers before evaluating any rule.
   if (body && typeof body === "object") {
     body = { ...body };
-    delete body._omnirouteReasoningRule;
-    delete body._omnirouteReasoningRouteTrace;
+    delete body._pusulaReasoningRule;
+    delete body._pusulaReasoningRouteTrace;
   }
 
   // Feature #6241: fold the canonical `effort` / `thinking` request params onto the
@@ -471,7 +471,7 @@ async function handleChatImplementation(
   const sourceFormat = detectFormatFromUrl(body, request.url);
 
   // Early guard: an invalid `messages` field is rejected here with a clear
-  // OmniRoute-level 400 before any routing or upstream call (#5110, #6402).
+  // Pusula-level 400 before any routing or upstream call (#5110, #6402).
   // Without this guard, schema-invalid bodies fell through to model resolution
   // and surfaced as a misleading 404 `model_not_found` from chatHelpers.ts (#6402).
   // Cases covered:
@@ -684,7 +684,7 @@ async function handleChatImplementation(
   const externalSessionId = extractExternalSessionId(request.headers);
   const sessionId = externalSessionId || generateStableSessionId(body);
   const sessionAffinityKey = extractSessionAffinityKey(body, request.headers) || sessionId;
-  const requestedConnectionId = request.headers.get("x-omniroute-connection")?.trim() || null;
+  const requestedConnectionId = request.headers.get("x-pusula-connection")?.trim() || null;
   if (sessionId) {
     touchSession(sessionId);
   }
@@ -716,15 +716,15 @@ async function handleChatImplementation(
   const bypassProviderQuotaPolicy = hasProviderQuotaBypassScope(apiKeyInfo?.scopes);
   telemetry.endPhase();
 
-  // OmniRoute-native `previous_response_id` continuation: reconstruct the
+  // Pusula-native `previous_response_id` continuation: reconstruct the
   // full input server-side before ANY downstream validation/translation
   // sees this request, so everything after this point (message-shape
   // guards, token-budget checks, provider translation) treats it exactly
   // like an ordinary full-history request. This works regardless of
   // whether the eventually-selected upstream provider itself understands
-  // Responses-API state -- OmniRoute always forwards the full reconstructed
+  // Responses-API state -- Pusula always forwards the full reconstructed
   // history upstream, exactly as it does today for a non-continued request.
-  // Client<->OmniRoute traffic shrinks to the new delta; OmniRoute<->
+  // Client<->Pusula traffic shrinks to the new delta; Pusula<->
   // provider traffic is unchanged. See src/lib/db/responsesContinuationStore.ts.
   //
   // Skipped entirely when the operator has set responsesPreviousResponseIdMode
@@ -848,7 +848,7 @@ async function handleChatImplementation(
   // incoming HTTP request, before combo dispatch / credential retries, so
   // every attempt for this request shares the same id and the
   // agentic_conversations row is only touched once.
-  const clientConversationHeader = request.headers.get("x-omniroute-session-id")?.trim() || null;
+  const clientConversationHeader = request.headers.get("x-pusula-session-id")?.trim() || null;
   let conversationId: string | null = null;
   try {
     ({ conversationId } = await resolveConversationId({
@@ -1790,7 +1790,7 @@ async function handleSingleModelChat(
 
         const breakerFailureStatus = Number(lastStatus ?? credentials?.lastErrorCode);
         // lastError is a string here — check for the proxy_unreachable tag embedded by
-        // tagProxyUnreachable (proxyFetch.ts) and OmniRoute's own queue timeouts. Both mean
+        // tagProxyUnreachable (proxyFetch.ts) and Pusula's own queue timeouts. Both mean
         // we never reached the provider, so they must not trip the provider breaker.
         const isNetworkError =
           typeof lastError === "string" &&
@@ -1903,7 +1903,7 @@ async function handleSingleModelChat(
         comboStrategy === "context-relay" &&
         comboName &&
         runtimeOptions.sessionId &&
-        body?._omnirouteSkipContextRelay !== true
+        body?._pusulaSkipContextRelay !== true
       ) {
         const handoff = getHandoff(runtimeOptions.sessionId, comboName);
         if (handoff && handoff.fromAccount !== credentials.connectionId) {
@@ -1949,7 +1949,7 @@ async function handleSingleModelChat(
           ...(workspaceId ? { workspaceId } : {}),
         });
       }
-      if (runtimeOptions.sessionId && body?._omnirouteInternalRequest !== "context-handoff") {
+      if (runtimeOptions.sessionId && body?._pusulaInternalRequest !== "context-handoff") {
         touchSession(runtimeOptions.sessionId, credentials.connectionId);
         startQuotaMonitor(
           runtimeOptions.sessionId,
@@ -2515,7 +2515,7 @@ async function handleSingleModelChat(
             })
           );
 
-      // An explicit pin (combo step `connectionId` / `x-omniroute-connection`) is an
+      // An explicit pin (combo step `connectionId` / `x-pusula-connection`) is an
       // operator instruction, not a suggestion: the account cooldown above is still
       // recorded, but selection must NOT silently rotate to a sibling account of the
       // same provider. Pinned steps fall through to combo orchestration, which moves

@@ -1,11 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-const API_KEY = process.env.OMNIROUTE_API_KEY;
-const BASE_URL = process.env.OMNIROUTE_URL || "http://localhost:20128";
+const API_KEY = process.env.PUSULA_API_KEY;
+const BASE_URL = process.env.PUSULA_URL || "http://localhost:20128";
 const MODEL = "default";
 
-const skip = !API_KEY ? "OMNIROUTE_API_KEY not set — skipping live test" : undefined;
+const skip = !API_KEY ? "PUSULA_API_KEY not set — skipping live test" : undefined;
 
 // Simple SSE reader (compatible with streamed chat completions)
 async function readSSEStream(response: Response, onChunk?: (chunk: string) => void) {
@@ -57,8 +57,8 @@ test("live request returns streamChunks", { skip }, async () => {
   console.log(
     "[TEST] BASE_URL=",
     BASE_URL,
-    "OMNIROUTE_URL=",
-    process.env.OMNIROUTE_URL,
+    "PUSULA_URL=",
+    process.env.PUSULA_URL,
     "API_KEY set=",
     !!API_KEY
   );
@@ -88,8 +88,8 @@ test("live request returns streamChunks", { skip }, async () => {
       `expected 200 from chat/completions, got ${completionsResponse.status}`
     );
 
-    const requestId = completionsResponse.headers.get("x-omniroute-request-id");
-    assert.ok(requestId, "expected x-omniroute-request-id header in response");
+    const requestId = completionsResponse.headers.get("x-pusula-request-id");
+    assert.ok(requestId, "expected x-pusula-request-id header in response");
 
     let streamFinished = false;
 

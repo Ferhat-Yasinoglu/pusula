@@ -6,7 +6,7 @@ import path from "node:path";
 
 // Isolate the DB to a temp dir BEFORE importing any module that opens it,
 // matching the pattern in embeddings-lan-noauth-6925.test.ts.
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-embed-unknown-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-embed-unknown-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../src/lib/db/core.ts");
@@ -24,7 +24,7 @@ test.after(() => {
  * is what silently 400'd every embedding request for a real production
  * connection whose customModels override used a typo'd provider prefix
  * ("llamacpp" instead of the connection's actual "llama-cpp" id): the
- * request never reached call_logs, so nothing in OmniRoute's own logs or
+ * request never reached call_logs, so nothing in Pusula's own logs or
  * dashboard showed it -- only the calling client's own log did.
  */
 test("createEmbeddingResponse 400s with 'Unknown embedding provider' for a fully unrecognized prefix", async () => {

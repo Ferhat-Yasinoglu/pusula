@@ -139,12 +139,12 @@ function normalizeEndpoint(rawEndpoint) {
 
   let parsed;
   try {
-    parsed = new URL(endpoint, "http://omniroute.local");
+    parsed = new URL(endpoint, "http://pusula.local");
   } catch {
     return null;
   }
 
-  if (parsed.origin !== "http://omniroute.local") {
+  if (parsed.origin !== "http://pusula.local") {
     return null;
   }
 
@@ -165,7 +165,7 @@ function getForwardHeaders(requestUrl, requestHeaders) {
   if (isText(authorization)) {
     headers.authorization = authorization;
   } else {
-    const url = new URL(requestUrl, "http://omniroute.local");
+    const url = new URL(requestUrl, "http://pusula.local");
     for (const key of WS_QUERY_TOKEN_KEYS) {
       const value = url.searchParams.get(key);
       if (isText(value)) {
@@ -458,8 +458,8 @@ class WebSocketSession {
       ...this.requestHeaders,
       accept: payload.stream === false ? "application/json" : "text/event-stream",
       "content-type": "application/json",
-      "x-omniroute-ws-session-id": this.sessionId,
-      "x-omniroute-ws-request-id": requestId,
+      "x-pusula-ws-session-id": this.sessionId,
+      "x-pusula-ws-request-id": requestId,
     };
 
     const response = await this.fetchImpl(new URL(endpoint, this.baseUrl), {
@@ -575,14 +575,14 @@ class WebSocketSession {
   }
 }
 
-export function createOmnirouteWsBridge({
+export function createPusulaWsBridge({
   baseUrl,
   fetchImpl = fetch,
   pingIntervalMs = 25000,
   idleTimeoutMs = 90000,
 } = {}) {
   if (!isText(baseUrl)) {
-    throw new Error("createOmnirouteWsBridge requires a baseUrl");
+    throw new Error("createPusulaWsBridge requires a baseUrl");
   }
 
   return {

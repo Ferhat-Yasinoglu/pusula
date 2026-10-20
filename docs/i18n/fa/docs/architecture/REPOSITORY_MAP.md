@@ -5,14 +5,14 @@
 ---
 
 > **توضیحی یکخطی برای هر دایرکتوری و فایل ریشه.**
-> آخرین بهروزرسانی: 2026-06-28 — OmniRoute v3.8.40
+> آخرین بهروزرسانی: 2026-06-28 — Pusula v3.8.40
 >
 > از این نقشه برای پیمایش سریع در پایگاه کد استفاده کنید. برای بررسیهای عمیقتر، پیوندهای مستندات اختصاصی را دنبال کنید.
 
 ## درخت سطح بالا
 
 ```
-OmniRoute/
+Pusula/
 ├── src/                  # برنامه Next.js 16 (رابط کاربری + مسیرهای API + کتابخانهها + دامنه + سرور)
 ├── open-sse/             # فضای کاری موتور استریم (هندلرها، اجراکنندهها، مترجم، سرور MCP)
 ├── electron/             # پوسته دسکتاپ (Electron 41 + electron-builder 26.10)
@@ -23,9 +23,9 @@ OmniRoute/
 ├── public/               # داراییهای ایستای Next.js، مانیفست PWA، سرویسورکر، آیکونها
 ├── config/               # پیکربندی ایستا + وضعیت دروازه کیفیت (i18n، payloadRules، quality/)
 ├── images/               # داراییهای تصویری بازاریابی / README
-├── @omniroute/           # بستههای همراه قابل انتشار (opencode-plugin، opencode-provider)
+├── @pusula/           # بستههای همراه قابل انتشار (opencode-plugin، opencode-provider)
 ├── skills/               # بستههای مهارت CLI/عامل (cli-* + omni-* + config-codex-cli)
-├── examples/             # افزونههای نمونه + پروژه آغازین omniroute-cmd-hello
+├── examples/             # افزونههای نمونه + پروژه آغازین pusula-cmd-hello
 ├── contrib/              # مشارکتهای جامعه کاربری (podman/)
 ├── .source/              # پیکربندی منبع Fumadocs (source.config.mjs + server/browser/dynamic)
 ├── .github/              # گردشکارهای GitHub Actions + قالبهای مسئله + قالب PR
@@ -257,7 +257,7 @@ src/
 
 ## `open-sse/` — فضای کاری موتور استریم
 
-فضای کاری مستقل npm (`@omniroute/open-sse`). پردازش درخواستها و اجرای ارائهدهندگان را مدیریت میکند.
+فضای کاری مستقل npm (`@pusula/open-sse`). پردازش درخواستها و اجرای ارائهدهندگان را مدیریت میکند.
 
 ```
 open-sse/
@@ -299,7 +299,7 @@ open-sse/
 | فایل             | هدف                                                                                     |
 | ---------------- | --------------------------------------------------------------------------------------- |
 | `main.js`        | فرایند اصلی Electron (BrowserWindow، سرور توکار Next.js، سینی سیستم، بهروزرسانی خودکار) |
-| `preload.js`     | پل IPC (contextBridge → `window.omniroute`)                                             |
+| `preload.js`     | پل IPC (contextBridge → `window.pusula`)                                             |
 | `package.json`   | پیکربندی electron-builder + وابستگیهای Electron 41 و electron-builder 26.10             |
 | `assets/`        | آیکونهای برنامه (Windows .ico، macOS .icns، Linux .png)                                 |
 | `dist-electron/` | خروجی ساخت (نادیدهگرفتهشده توسط git)                                                    |
@@ -312,7 +312,7 @@ open-sse/
 
 | فایل                                                                                                        | کاربرد                                                                                                                      |
 | ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `omniroute.mjs`                                                                                             | ورودی اصلی CLI — `omniroute serve`، `omniroute setup`، `omniroute doctor`، `omniroute providers`، `omniroute combos` و غیره |
+| `pusula.mjs`                                                                                             | ورودی اصلی CLI — `pusula serve`، `pusula setup`، `pusula doctor`، `pusula providers`، `pusula combos` و غیره |
 | `reset-password.mjs`                                                                                        | CLI مستقل برای بازنشانی گذرواژه                                                                                             |
 | `cli/commands/setup.mjs`                                                                                    | راهانداز تعاملی و غیرتعاملی تنظیمات                                                                                         |
 | `cli/commands/doctor.mjs`                                                                                   | عیبیابی سلامت سیستم (بیش از ۸ بررسی)                                                                                        |
@@ -332,7 +332,7 @@ open-sse/
 
 | فایل                         | هدف                                                                                     |
 | ---------------------------- | --------------------------------------------------------------------------------------- |
-| `skills/omniroute*/SKILL.md` | ۱۰ مانیفست مهارت برای عاملهای هوش مصنوعی خارجی (Claude Desktop، ChatGPT، Cursor، Cline) |
+| `skills/pusula*/SKILL.md` | ۱۰ مانیفست مهارت برای عاملهای هوش مصنوعی خارجی (Claude Desktop، ChatGPT، Cursor، Cline) |
 
 ---
 
@@ -393,7 +393,7 @@ open-sse/
 | `RELEASE_CHECKLIST.md`      | فرایند کامل انتشار (مهارتها، husky، conventional commits، استقرار)                                |
 | `COVERAGE_PLAN.md`          | اهداف پوشش و وضعیت فعلی                                                                           |
 | `FREE_TIERS.md`             | ارائهدهندگان منتخب دارای سطح رایگان (بیش از 48 مورد رایگان + 11 مورد OAuth)                       |
-| `CLI-TOOLS.md`              | یکپارچهسازیهای خارجی CLI + رابط خط فرمان داخلی OmniRoute                                          |
+| `CLI-TOOLS.md`              | یکپارچهسازیهای خارجی CLI + رابط خط فرمان داخلی Pusula                                          |
 | `I18N.md`                   | معماری i18n، افزودن زبان، 42 زبان محلی                                                            |
 | `UNINSTALL.md`              | مراحل حذف نصب پاک                                                                                 |
 | `PROVIDER_REFERENCE.md`     | فهرست **تولیدشده بهصورت خودکار** از 355 ارائهدهنده (تولید مجدد: `npm run gen:provider-reference`) |
@@ -545,7 +545,7 @@ open-sse/
 این پوشههای دارای پیشوند زیرخط، محتوایی را نگهداری میکنند که در محصول نهایی منتشر نمیشود:
 
 - **`_ideia/`** — یادداشتهای طراحی (دستههای defer / notfit / viable)
-- **`_mono_repo/`** — زیرپروژههای قدیمی (omnirouteCloud، omnirouteSite، vscode-extension)
+- **`_mono_repo/`** — زیرپروژههای قدیمی (pusulaCloud، pusulaSite، vscode-extension)
 - **`_references/`** — کلونهای فقطخواندنی پروژههای متنباز مرتبط (LiteLLM، 9router، ClawRouter، CLIProxyAPI، modelrelay، new-api و غیره) برای ارجاع متقابل هنگام توسعه
 - **`_tasks/`** — فایلهای پیگیری وظایف هر انتشار (غیررسمی)
 

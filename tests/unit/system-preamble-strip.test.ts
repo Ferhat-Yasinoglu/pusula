@@ -81,7 +81,7 @@ test("REGRESSION (3a8515): a whole-summary <analysis> block with no trailing con
   // summary, not a system echo). Streamed across chunks like a real response.
   const chunks = [
     "<analysis>",
-    "\nThis conversation covered the OmniRoute reasoning-leak diagnosis. ",
+    "\nThis conversation covered the Pusula reasoning-leak diagnosis. ",
     "We traced the bug to the requestedThinking gate in openai-to-claude.ts ",
     "and confirmed fix B synthesizes a text block for reasoning-only responses.",
     "\n</analysis>",

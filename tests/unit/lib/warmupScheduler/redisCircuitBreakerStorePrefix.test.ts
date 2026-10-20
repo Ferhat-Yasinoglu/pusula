@@ -1,7 +1,7 @@
 /**
- * REDIS_KEY_PREFIX is documented as the namespace for ALL OmniRoute Redis keys, and the rate
+ * REDIS_KEY_PREFIX is documented as the namespace for ALL Pusula Redis keys, and the rate
  * limiter, auth cache and quota store honor it. The warmup circuit breaker hardcoded
- * `omniroute:warmup:cb:`, so on a shared Redis with a custom prefix its keys still landed in
+ * `pusula:warmup:cb:`, so on a shared Redis with a custom prefix its keys still landed in
  * the default namespace (outside a `~tenantA:*` key ACL, and colliding between instances).
  * Raised as MANDATORY in the #11042 review.
  *
@@ -62,6 +62,6 @@ test("warmup circuit-breaker keys use REDIS_KEY_PREFIX", async () => {
 });
 
 test("warmup circuit-breaker keys are unchanged when REDIS_KEY_PREFIX is unset or blank", async () => {
-  assert.deepEqual(await keysWrittenWith(undefined), ["omniroute:warmup:cb:conn-1"]);
-  assert.deepEqual(await keysWrittenWith("   "), ["omniroute:warmup:cb:conn-1"]);
+  assert.deepEqual(await keysWrittenWith(undefined), ["pusula:warmup:cb:conn-1"]);
+  assert.deepEqual(await keysWrittenWith("   "), ["pusula:warmup:cb:conn-1"]);
 });

@@ -1,4 +1,4 @@
-# OmniRoute Agent Skills Catalog (فارسی)
+# Pusula Agent Skills Catalog (فارسی)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../frameworks/AGENT-SKILLS.md) · 🇪🇹 [am](../../../am/docs/frameworks/AGENT-SKILLS.md) · 🇸🇦 [ar](../../../ar/docs/frameworks/AGENT-SKILLS.md) · 🇦🇿 [az](../../../az/docs/frameworks/AGENT-SKILLS.md) · 🇧🇬 [bg](../../../bg/docs/frameworks/AGENT-SKILLS.md) · 🇧🇩 [bn](../../../bn/docs/frameworks/AGENT-SKILLS.md) · 🇧🇦 [bs](../../../bs/docs/frameworks/AGENT-SKILLS.md) · 🇨🇿 [cs](../../../cs/docs/frameworks/AGENT-SKILLS.md) · 🇩🇰 [da](../../../da/docs/frameworks/AGENT-SKILLS.md) · 🇩🇪 [de](../../../de/docs/frameworks/AGENT-SKILLS.md) · 🇬🇷 [el](../../../el/docs/frameworks/AGENT-SKILLS.md) · 🇪🇸 [es](../../../es/docs/frameworks/AGENT-SKILLS.md) · 🇪🇪 [et](../../../et/docs/frameworks/AGENT-SKILLS.md) · 🇫🇮 [fi](../../../fi/docs/frameworks/AGENT-SKILLS.md) · 🇫🇷 [fr](../../../fr/docs/frameworks/AGENT-SKILLS.md) · 🇮🇪 [ga](../../../ga/docs/frameworks/AGENT-SKILLS.md) · 🇮🇳 [gu](../../../gu/docs/frameworks/AGENT-SKILLS.md) · 🇳🇬 [ha](../../../ha/docs/frameworks/AGENT-SKILLS.md) · 🇮🇱 [he](../../../he/docs/frameworks/AGENT-SKILLS.md) · 🇮🇳 [hi](../../../hi/docs/frameworks/AGENT-SKILLS.md) · 🇭🇷 [hr](../../../hr/docs/frameworks/AGENT-SKILLS.md) · 🇭🇺 [hu](../../../hu/docs/frameworks/AGENT-SKILLS.md) · 🇦🇲 [hy](../../../hy/docs/frameworks/AGENT-SKILLS.md) · 🇮🇩 [id](../../../id/docs/frameworks/AGENT-SKILLS.md) · 🇳🇬 [ig](../../../ig/docs/frameworks/AGENT-SKILLS.md) · 🇮🇹 [it](../../../it/docs/frameworks/AGENT-SKILLS.md) · 🇯🇵 [ja](../../../ja/docs/frameworks/AGENT-SKILLS.md) · 🇬🇪 [ka](../../../ka/docs/frameworks/AGENT-SKILLS.md) · 🇰🇭 [km](../../../km/docs/frameworks/AGENT-SKILLS.md) · 🇮🇳 [kn](../../../kn/docs/frameworks/AGENT-SKILLS.md) · 🇰🇷 [ko](../../../ko/docs/frameworks/AGENT-SKILLS.md) · 🇱🇹 [lt](../../../lt/docs/frameworks/AGENT-SKILLS.md) · 🇱🇻 [lv](../../../lv/docs/frameworks/AGENT-SKILLS.md) · 🇮🇳 [ml](../../../ml/docs/frameworks/AGENT-SKILLS.md) · 🇮🇳 [mr](../../../mr/docs/frameworks/AGENT-SKILLS.md) · 🇲🇾 [ms](../../../ms/docs/frameworks/AGENT-SKILLS.md) · 🇲🇹 [mt](../../../mt/docs/frameworks/AGENT-SKILLS.md) · 🇲🇲 [my](../../../my/docs/frameworks/AGENT-SKILLS.md) · 🇳🇵 [ne](../../../ne/docs/frameworks/AGENT-SKILLS.md) · 🇳🇱 [nl](../../../nl/docs/frameworks/AGENT-SKILLS.md) · 🇳🇴 [no](../../../no/docs/frameworks/AGENT-SKILLS.md) · 🇮🇳 [or](../../../or/docs/frameworks/AGENT-SKILLS.md) · 🇮🇳 [pa](../../../pa/docs/frameworks/AGENT-SKILLS.md) · 🇵🇭 [phi](../../../phi/docs/frameworks/AGENT-SKILLS.md) · 🇵🇱 [pl](../../../pl/docs/frameworks/AGENT-SKILLS.md) · 🇵🇹 [pt](../../../pt/docs/frameworks/AGENT-SKILLS.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/frameworks/AGENT-SKILLS.md) · 🇷🇴 [ro](../../../ro/docs/frameworks/AGENT-SKILLS.md) · 🇷🇺 [ru](../../../ru/docs/frameworks/AGENT-SKILLS.md) · 🇱🇰 [si](../../../si/docs/frameworks/AGENT-SKILLS.md) · 🇸🇰 [sk](../../../sk/docs/frameworks/AGENT-SKILLS.md) · 🇸🇮 [sl](../../../sl/docs/frameworks/AGENT-SKILLS.md) · 🇷🇸 [sr](../../../sr/docs/frameworks/AGENT-SKILLS.md) · 🇸🇪 [sv](../../../sv/docs/frameworks/AGENT-SKILLS.md) · 🇰🇪 [sw](../../../sw/docs/frameworks/AGENT-SKILLS.md) · 🇮🇳 [ta](../../../ta/docs/frameworks/AGENT-SKILLS.md) · 🇮🇳 [te](../../../te/docs/frameworks/AGENT-SKILLS.md) · 🇹🇭 [th](../../../th/docs/frameworks/AGENT-SKILLS.md) · 🇹🇷 [tr](../../../tr/docs/frameworks/AGENT-SKILLS.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/frameworks/AGENT-SKILLS.md) · 🇵🇰 [ur](../../../ur/docs/frameworks/AGENT-SKILLS.md) · 🇺🇿 [uz](../../../uz/docs/frameworks/AGENT-SKILLS.md) · 🇻🇳 [vi](../../../vi/docs/frameworks/AGENT-SKILLS.md) · 🇳🇬 [yo](../../../yo/docs/frameworks/AGENT-SKILLS.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/frameworks/AGENT-SKILLS.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/frameworks/AGENT-SKILLS.md)
 
@@ -7,7 +7,7 @@
 > **منبع حقیقت:** `src/lib/agentSkills/` (کاتالوگ، مولد، تجزیهگرها) + دایرکتوری `skills/` (فایلهای SKILL.md)
 > **آخرین بهروزرسانی:** 2026-08-02 — v3.8.50
 
-Agent Skills فایلهای ساختاریافتهٔ SKILL.md هستند که به عاملهای خارجی، کلاینتهای MCP و هماهنگکنندههای A2A آموزش میدهند چگونه از REST API و CLI در OmniRoute استفاده کنند. برخلاف [Omni Skills](./SKILLS.md) (که تعاریف ابزارهای LLM هستند و درون OmniRoute اجرا میشوند)، Agent Skills یک _کاتالوگ مستندات_ هستند — Markdown ایستا که میتوان آن را مستقیماً در زمینهٔ عامل قرار داد.
+Agent Skills فایلهای ساختاریافتهٔ SKILL.md هستند که به عاملهای خارجی، کلاینتهای MCP و هماهنگکنندههای A2A آموزش میدهند چگونه از REST API و CLI در Pusula استفاده کنند. برخلاف [Omni Skills](./SKILLS.md) (که تعاریف ابزارهای LLM هستند و درون Pusula اجرا میشوند)، Agent Skills یک _کاتالوگ مستندات_ هستند — Markdown ایستا که میتوان آن را مستقیماً در زمینهٔ عامل قرار داد.
 
 ---
 
@@ -18,7 +18,7 @@ Agent Skills فایلهای ساختاریافتهٔ SKILL.md هستند که ب
 - یک **شناسهٔ متعارف** (`omni-auth`، `cli-serve` و غیره)
 - یک فایل **SKILL.md** در `skills/{id}/SKILL.md` با فرادادهٔ YAML (`name`، `description`) + بدنهٔ غنی Markdown
 - **نقاط پایانی REST** (مهارتهای API) یا **زیرفرمانهای CLI** (مهارتهای CLI) که از مشخصات OpenAPI و رجیستری CLI استخراج شدهاند
-- یک **نشانی خام GitHub** برای دریافت زنده: `https://raw.githubusercontent.com/diegosouzapw/OmniRoute/refs/heads/main/skills/{id}/SKILL.md`
+- یک **نشانی خام GitHub** برای دریافت زنده: `https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/refs/heads/main/skills/{id}/SKILL.md`
 
 ---
 
@@ -116,9 +116,9 @@ curl -H "Accept: text/markdown" "http://localhost:20128/api/agent-skills/omni-pr
 
 | ابزار                             | توضیحات                                                 |
 | :-------------------------------- | :------------------------------------------------------ |
-| `omniroute_agent_skills_list`     | فهرست مهارتها (با فیلترهای اختیاری `category` / `area`) |
-| `omniroute_agent_skills_get`      | دریافت فراداده و SKILL.md یک مهارت بر اساس `id`         |
-| `omniroute_agent_skills_coverage` | آمار پوشش (موجود/کل برای API/CLI)                       |
+| `pusula_agent_skills_list`     | فهرست مهارتها (با فیلترهای اختیاری `category` / `area`) |
+| `pusula_agent_skills_get`      | دریافت فراداده و SKILL.md یک مهارت بر اساس `id`         |
+| `pusula_agent_skills_coverage` | آمار پوشش (موجود/کل برای API/CLI)                       |
 
 برای سیمبندی محدوده و احراز هویت، [MCP-SERVER.md](./MCP-SERVER.md) را ببینید.
 
@@ -177,27 +177,27 @@ curl -H "Accept: text/markdown" "http://localhost:20128/api/agent-skills/omni-pr
 
 | شناسه                 | حوزه               | فرمان ریشه CLI          |
 | :-------------------- | :----------------- | :---------------------- |
-| `cli-serve`           | cli-serve          | `omniroute serve`       |
-| `cli-health`          | cli-health         | `omniroute health`      |
-| `cli-providers`       | cli-providers      | `omniroute providers`   |
-| `cli-keys`            | cli-keys           | `omniroute keys`        |
-| `cli-models`          | cli-models         | `omniroute models`      |
-| `cli-chat`            | cli-chat           | `omniroute chat`        |
-| `cli-routing`         | cli-routing        | `omniroute routing`     |
-| `cli-resilience`      | cli-resilience     | `omniroute resilience`  |
-| `cli-compression`     | cli-compression    | `omniroute compression` |
-| `cli-contexts`        | cli-contexts       | `omniroute contexts`    |
-| `cli-cost-usage`      | cli-cost-usage     | `omniroute cost`        |
-| `cli-mcp`             | cli-mcp            | `omniroute mcp`         |
-| `cli-a2a`             | cli-a2a            | `omniroute a2a`         |
-| `cli-tunnel`          | cli-tunnel         | `omniroute tunnel`      |
-| `cli-backup-sync`     | cli-backup-sync    | `omniroute backup`      |
-| `cli-policy-audit`    | cli-policy-audit   | `omniroute policy`      |
-| `cli-batches`         | cli-batches        | `omniroute batch`       |
-| `cli-eval`            | cli-eval           | `omniroute eval`        |
-| `cli-plugins-skills`  | cli-plugins-skills | `omniroute plugins`     |
-| `cli-setup`           | cli-setup          | `omniroute setup`       |
-| `cli-skill-collector` | cli-setup          | `omniroute skills`      |
+| `cli-serve`           | cli-serve          | `pusula serve`       |
+| `cli-health`          | cli-health         | `pusula health`      |
+| `cli-providers`       | cli-providers      | `pusula providers`   |
+| `cli-keys`            | cli-keys           | `pusula keys`        |
+| `cli-models`          | cli-models         | `pusula models`      |
+| `cli-chat`            | cli-chat           | `pusula chat`        |
+| `cli-routing`         | cli-routing        | `pusula routing`     |
+| `cli-resilience`      | cli-resilience     | `pusula resilience`  |
+| `cli-compression`     | cli-compression    | `pusula compression` |
+| `cli-contexts`        | cli-contexts       | `pusula contexts`    |
+| `cli-cost-usage`      | cli-cost-usage     | `pusula cost`        |
+| `cli-mcp`             | cli-mcp            | `pusula mcp`         |
+| `cli-a2a`             | cli-a2a            | `pusula a2a`         |
+| `cli-tunnel`          | cli-tunnel         | `pusula tunnel`      |
+| `cli-backup-sync`     | cli-backup-sync    | `pusula backup`      |
+| `cli-policy-audit`    | cli-policy-audit   | `pusula policy`      |
+| `cli-batches`         | cli-batches        | `pusula batch`       |
+| `cli-eval`            | cli-eval           | `pusula eval`        |
+| `cli-plugins-skills`  | cli-plugins-skills | `pusula plugins`     |
+| `cli-setup`           | cli-setup          | `pusula setup`       |
+| `cli-skill-collector` | cli-setup          | `pusula skills`      |
 
 ### گردشکار پیکربندی (1)
 
@@ -213,17 +213,17 @@ curl -H "Accept: text/markdown" "http://localhost:20128/api/agent-skills/omni-pr
 
 ```bash
 # دریافت کاتالوگ کامل
-curl "http://your-omniroute/api/agent-skills" | jq '.skills[] | {id, name, category}'
+curl "http://your-pusula/api/agent-skills" | jq '.skills[] | {id, name, category}'
 
 # دریافت SKILL.md برای تزریق زمینه
-curl "http://your-omniroute/api/agent-skills/omni-providers/raw" > omni-providers.md
+curl "http://your-pusula/api/agent-skills/omni-providers/raw" > omni-providers.md
 ```
 
 ### 2. کشف از طریق MCP
 
 ```typescript
 // در یک کلاینت MCP مربوط به Claude Desktop / Cursor:
-const result = await client.callTool("omniroute_agent_skills_list", {
+const result = await client.callTool("pusula_agent_skills_list", {
   category: "api",
 });
 // result.skills → آرایهای از AgentSkill که هر مورد دارای rawUrl است
@@ -234,7 +234,7 @@ const result = await client.callTool("omniroute_agent_skills_list", {
 ```python
 import requests
 
-resp = requests.post("http://your-omniroute/a2a", json={
+resp = requests.post("http://your-pusula/a2a", json={
     "jsonrpc": "2.0", "id": "1",
     "method": "message/send",
     "params": {"skill": "list-capabilities", "messages": [{"role": "user", "content": "list"}]}
@@ -246,7 +246,7 @@ table = resp.json()["result"]["artifacts"][0]["content"]
 ### 4. دریافت مستقیم فایل خام از GitHub (بدون نیاز به سرور)
 
 ```bash
-BASE="https://raw.githubusercontent.com/diegosouzapw/OmniRoute/refs/heads/main/skills"
+BASE="https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/refs/heads/main/skills"
 curl "${BASE}/omni-providers/SKILL.md"
 ```
 
@@ -311,7 +311,7 @@ curl "http://localhost:20128/api/agent-skills/coverage"
 ## موارد مرتبط
 
 - [SKILLS.md](./SKILLS.md) — چارچوب Omni Skills (تزریق ابزار LLM + بازارچه)
-- [MCP-SERVER.md](./MCP-SERVER.md) — کاتالوگ ابزار MCP (ابزارهای `omniroute_agent_skills_*`)
+- [MCP-SERVER.md](./MCP-SERVER.md) — کاتالوگ ابزار MCP (ابزارهای `pusula_agent_skills_*`)
 - [A2A-SERVER.md](./A2A-SERVER.md) — پروتکل A2A (مهارت `list-capabilities`)
 - `src/lib/agentSkills/` — کاتالوگ، مولد و تجزیهگرها
 - `skills/` — فایلهای SKILL.md تولیدشده (45 ورودی)

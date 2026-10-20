@@ -4,7 +4,7 @@
 
 ---
 
-OmniRoute durchsucht Upstream-Fehlerantworten nach Signalen, die darauf hindeuten, dass ein Provider-**Konto dauerhaft unbrauchbar ist** (gesperrt / deaktiviert / wegen Verstoßes gegen die Nutzungsbedingungen gesperrt), und versetzt die betreffende Verbindung bei einem Treffer in einen **terminalen `banned`-Status**, sodass sie nicht mehr für Anfragen ausgewählt wird. Dies wird über die Einstellungskarte **Sicherheit → Gesperrte Schlüsselwörter** konfiguriert („Zusätzliche Schlüsselwörter, die die Erkennung einer dauerhaften Kontosperrung auslösen. Integrierte Schlüsselwörter gelten immer.“).
+Pusula durchsucht Upstream-Fehlerantworten nach Signalen, die darauf hindeuten, dass ein Provider-**Konto dauerhaft unbrauchbar ist** (gesperrt / deaktiviert / wegen Verstoßes gegen die Nutzungsbedingungen gesperrt), und versetzt die betreffende Verbindung bei einem Treffer in einen **terminalen `banned`-Status**, sodass sie nicht mehr für Anfragen ausgewählt wird. Dies wird über die Einstellungskarte **Sicherheit → Gesperrte Schlüsselwörter** konfiguriert („Zusätzliche Schlüsselwörter, die die Erkennung einer dauerhaften Kontosperrung auslösen. Integrierte Schlüsselwörter gelten immer.“).
 
 Diese Seite dokumentiert die integrierte Liste, den Erkennungsablauf, ihren Geltungsbereich, das sichere Hinzufügen benutzerdefinierter Schlüsselwörter und die Wiederherstellung einer markierten Verbindung. Der terminale Status selbst ist Teil des Resilienzmodells — siehe
 [RESILIENCE_GUIDE](../architecture/RESILIENCE_GUIDE.md) („Terminale Status“).

@@ -11,8 +11,8 @@ Submit and monitor batch inference jobs from the CLI. Upload and manage files fo
 ## Quick install
 
 ```bash
-npm install -g omniroute   # or: npx omniroute
-omniroute --version
+npm install -g pusula   # or: npx pusula
+pusula --version
 ```
 
 ## Subcommands
@@ -22,7 +22,7 @@ omniroute --version
 **Example:**
 
 ```bash
-omniroute batches
+pusula batches
 ```
 
 ### `batches list`
@@ -35,7 +35,7 @@ omniroute batches
 **Example:**
 
 ```bash
-omniroute batches list
+pusula batches list
 ```
 
 ### `batches get <batchId>`
@@ -43,7 +43,7 @@ omniroute batches list
 **Example:**
 
 ```bash
-omniroute batches get <batchId>
+pusula batches get <batchId>
 ```
 
 ### `batches create`
@@ -57,7 +57,7 @@ omniroute batches get <batchId>
 **Example:**
 
 ```bash
-omniroute batches create
+pusula batches create
 ```
 
 ### `batches submit`
@@ -70,7 +70,7 @@ omniroute batches create
 **Example:**
 
 ```bash
-omniroute batches submit
+pusula batches submit
 ```
 
 ### `batches cancel <batchId>`
@@ -82,7 +82,7 @@ omniroute batches submit
 **Example:**
 
 ```bash
-omniroute batches cancel <batchId>
+pusula batches cancel <batchId>
 ```
 
 ### `batches wait <batchId>`
@@ -94,7 +94,7 @@ omniroute batches cancel <batchId>
 **Example:**
 
 ```bash
-omniroute batches wait <batchId>
+pusula batches wait <batchId>
 ```
 
 ### `batches output <batchId>`
@@ -106,7 +106,7 @@ omniroute batches wait <batchId>
 **Example:**
 
 ```bash
-omniroute batches output <batchId>
+pusula batches output <batchId>
 ```
 
 ### `batches errors <batchId>`
@@ -118,7 +118,7 @@ omniroute batches output <batchId>
 **Example:**
 
 ```bash
-omniroute batches errors <batchId>
+pusula batches errors <batchId>
 ```
 
 ### `files`
@@ -126,7 +126,7 @@ omniroute batches errors <batchId>
 **Example:**
 
 ```bash
-omniroute files
+pusula files
 ```
 
 ### `files list`
@@ -139,7 +139,7 @@ omniroute files
 **Example:**
 
 ```bash
-omniroute files list
+pusula files list
 ```
 
 ### `files get <fileId>`
@@ -147,7 +147,7 @@ omniroute files list
 **Example:**
 
 ```bash
-omniroute files get <fileId>
+pusula files get <fileId>
 ```
 
 ### `files upload <path>`
@@ -155,7 +155,7 @@ omniroute files get <fileId>
 **Example:**
 
 ```bash
-omniroute files upload <path>
+pusula files upload <path>
 ```
 
 ### `files content <fileId>`
@@ -167,7 +167,7 @@ omniroute files upload <path>
 **Example:**
 
 ```bash
-omniroute files content <fileId>
+pusula files content <fileId>
 ```
 
 ### `files delete <fileId>`
@@ -179,5 +179,5 @@ omniroute files content <fileId>
 **Example:**
 
 ```bash
-omniroute files delete <fileId>
+pusula files delete <fileId>
 ```

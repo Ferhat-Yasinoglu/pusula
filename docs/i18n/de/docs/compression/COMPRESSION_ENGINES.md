@@ -4,7 +4,7 @@
 
 ---
 
-Die OmniRoute-Komprimierung basiert auf Engine-Verträgen. Ein Modus kann eine Engine direkt
+Die Pusula-Komprimierung basiert auf Engine-Verträgen. Ein Modus kann eine Engine direkt
 ausführen (`caveman` oder `rtk`) oder eine deterministische gestapelte Pipeline, die mehrere Engines nacheinander ausführt.
 
 ## Modi
@@ -43,9 +43,9 @@ noch kein Verlauf angesammelt hat, bei `below_min_chars`, und die Engine transfo
 ist `aggressive` statt des sichersten Profils die Standardeinstellung.
 
 Das Paket bestimmt seinen eigenen Modellumfang und sein Profil aus seiner Umgebungskonfiguration.
-OmniRoute delegiert diese Entscheidung niemals: Der Adapter legt die Modellbeschränkung auf den
+Pusula delegiert diese Entscheidung niemals: Der Adapter legt die Modellbeschränkung auf den
 restriktivsten Umfang des Pakets fest, sodass Host-Umgebungseinstellungen die Zulassungsliste nur einschränken, aber niemals
-über die von OmniRoute gemessenen Belege hinaus erweitern können.
+über die von Pusula gemessenen Belege hinaus erweitern können.
 
 ## Engine-Registry
 
@@ -90,7 +90,7 @@ Marker `[CCR retrieve hash=<24hex> chars=N]` bedeutet, dass der Hash unveränder
 (alle 24 Hexadezimalzeichen — falsch kopierte Hashes sind die wahrscheinliche Ursache für
 Fehler vom Typ „Block nicht gefunden“), und dass ein Marker `[dedup:ref sha=...]` „im Verlauf
 nachsehen“ und nicht „das Tool aufrufen“ bedeutet. Der Hinweis wird **nur eingefügt, wenn die
-angekündigten `tools[]` des Aufrufers belegen, dass dieser `omniroute_ccr_retrieve` tatsächlich
+angekündigten `tools[]` des Aufrufers belegen, dass dieser `pusula_ccr_retrieve` tatsächlich
 erreichen kann** (`callerSupportsCcrRetrieve()` in
 `open-sse/services/compression/engines/ccr/protocolInstruction.ts`) — ein einfacher
 OpenAI-kompatibler Aufrufer ohne dieses Tool erhält niemals die Anweisung, etwas aufzurufen,
@@ -112,7 +112,7 @@ Die entsprechende Dashboard-Oberfläche befindet sich unter `Dashboard -> Contex
 
 Das Caveman-Upstream-Projekt berichtet von `~75%` weniger Ausgabetokens, durchschnittlichen Einsparungen
 von `65%` bei der Ausgabe in Benchmarks mit einer Spanne von `22-87%` sowie von einem Tool mit `~46%`
-Eingabekompression. OmniRoute verwendet bei der Dokumentation kombinierter Einsparungen für Prompts und
+Eingabekompression. Pusula verwendet bei der Dokumentation kombinierter Einsparungen für Prompts und
 Kontext den eingabeseitigen Caveman-Wert; der Caveman-Ausgabemodus bleibt eine separate Funktion zur
 Steuerung des Antwortverhaltens.
 
@@ -212,7 +212,7 @@ Je Umgebung:
 
 - **Entwicklung / `npm install`** — wird automatisch installiert, sofern nicht `--omit=optional`
   (oder `--no-optional`) übergeben wurde. Keine Aktion erforderlich.
-- **Globales npm (`npm i -g omniroute`) / eigenständig** — führen Sie den obigen Installationsbefehl im
+- **Globales npm (`npm i -g pusula`) / eigenständig** — führen Sie den obigen Installationsbefehl im
   Verzeichnis des installierten Pakets aus oder installieren Sie es erneut, ohne optionale Abhängigkeiten auszulassen.
 - **Docker** — fügen Sie den Installationsbefehl in einer abgeleiteten Image-Schicht hinzu; das veröffentlichte Image
   ist bewusst schlank gehalten.
@@ -337,11 +337,11 @@ Die Komprimierung stellt fünf MCP-Tools bereit:
 
 | Tool                                | Umfang              | Zweck                                      |
 | ----------------------------------- | ------------------- | ------------------------------------------ |
-| `omniroute_compression_status`      | `read:compression`  | Einstellungen, Analysen, Cache-Statistiken |
-| `omniroute_compression_configure`   | `write:compression` | Globale Einstellungen aktualisieren        |
-| `omniroute_set_compression_engine`  | `write:compression` | Modus und optionale Pipeline festlegen     |
-| `omniroute_list_compression_combos` | `read:compression`  | Komprimierungskombinationen auflisten      |
-| `omniroute_compression_combo_stats` | `read:compression`  | Kombinations-/Engine-Analysen abrufen      |
+| `pusula_compression_status`      | `read:compression`  | Einstellungen, Analysen, Cache-Statistiken |
+| `pusula_compression_configure`   | `write:compression` | Globale Einstellungen aktualisieren        |
+| `pusula_set_compression_engine`  | `write:compression` | Modus und optionale Pipeline festlegen     |
+| `pusula_list_compression_combos` | `read:compression`  | Komprimierungskombinationen auflisten      |
+| `pusula_compression_combo_stats` | `read:compression`  | Kombinations-/Engine-Analysen abrufen      |
 
 ## Umfang und Ausschlüsse
 

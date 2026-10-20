@@ -13,7 +13,7 @@
  *       content_block_stop, message_delta, message_stop
  */
 
-import { restoreClaudeToolName } from "@omniroute/open-sse/services/claudeCodeToolRemapper";
+import { restoreClaudeToolName } from "@pusula/open-sse/services/claudeCodeToolRemapper";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

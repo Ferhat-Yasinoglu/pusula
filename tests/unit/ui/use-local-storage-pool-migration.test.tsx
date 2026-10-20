@@ -65,7 +65,7 @@ describe("adaptLsPoolToApiSchema", () => {
 
 // ── Integration tests for useLocalStoragePoolMigration hook ───────────────
 
-const LS_KEY = "omniroute:quota-share:pools";
+const LS_KEY = "pusula:quota-share:pools";
 
 function HookWrapper({
   pools,

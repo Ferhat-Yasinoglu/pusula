@@ -4,7 +4,7 @@
 
 ---
 
-Dieses Dokument ist die verbindliche Referenz für alle CI-Qualitätsprüfungen in OmniRoute.
+Dieses Dokument ist die verbindliche Referenz für alle CI-Qualitätsprüfungen in Pusula.
 Es beschreibt jede Prüfung, was sie validiert, in welchem CI-Job sie ausgeführt wird, ob sie
 eine Ratchet-Baseline oder eine Bestanden/Nicht-bestanden-Richtlinie verwendet und ob sie den Build blockiert oder nur informativen Charakter hat.
 
@@ -28,7 +28,7 @@ zusätzlich ein nicht blockierendes Signal für den Produktions-Build:
 
 | Job                                              | Umfang                                                                                                                                                                                                                                                                 | Blockierend                                                                                             |
 | ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `Build (advisory)`                               | Nicht als Entwurf markierte Code-PRs und Mergify-Queue-Branches; Node 24, `npm-ci-retry`, `check:node-runtime`, `npm run build` mit `OMNIROUTE_USE_TURBOPACK=1`; kein Artefakt-Upload, da kein nachgelagerter Qualitätsjob ihn verwendet                               | **Nicht blockierend** (`continue-on-error: true`; nach einer Woche stabiler Release-PR-Läufe entfernen) |
+| `Build (advisory)`                               | Nicht als Entwurf markierte Code-PRs und Mergify-Queue-Branches; Node 24, `npm-ci-retry`, `check:node-runtime`, `npm run build` mit `PUSULA_USE_TURBOPACK=1`; kein Artefakt-Upload, da kein nachgelagerter Qualitätsjob ihn verwendet                               | **Nicht blockierend** (`continue-on-error: true`; nach einer Woche stabiler Release-PR-Läufe entfernen) |
 | `Docs Gates (fast-path)`                         | Dokumentations-/Code-PRs; API-Dokumentationsreferenzen und docs-all                                                                                                                                                                                                    | Ja                                                                                                      |
 | `Fast Quality Gates`                             | Code-PRs; statische Prüfungen, Typprüfung, Dashboard-Typprüfung, betroffene Unit-Tests                                                                                                                                                                                 | Ja                                                                                                      |
 | `Forgotten sibling tests`                        | Code-PRs; geänderte Module werden bis zu statischen Konsumenten und infrage kommenden benachbarten Tests nachverfolgt; Barrel- und Dynamic-Import-Pfade werden als nicht blockierende Diagnosen gemeldet, einschließlich referenzierter Ausnahmen aus der Positivliste | **Nicht blockierend**                                                                                   |
@@ -227,7 +227,7 @@ Diese werden nach einem Cron-Zeitplan (und über `workflow_dispatch`) ausgeführ
 | `nightly-property`     | fast-check-Property-Tests mit zufälligem Seed und hoher Anzahl von Durchläufen                                                                                                                    | **Unverbindlich** |
 | `nightly-resilience`   | Heap-Wachstums-Gate, Chaos-Fehlerinjektion, k6-Last-/Dauertests                                                                                                                                   | **Unverbindlich** |
 | `nightly-llm-security` | promptfoo-Injection-Guard (Blockiermodus) + garak-Probes (werden ohne Provider-Secret übersprungen)                                                                                               | **Unverbindlich** |
-| `nightly-schemathesis` | OpenAPI-Vertrags-Fuzzing (schemathesis) gegen eine aktive OmniRoute-Instanz unter Verwendung von `docs/openapi.yaml` — deckt Spezifikationsverletzungen/unbehandelte 500-Fehler auf (Phase 8 B.4) | **Unverbindlich** |
+| `nightly-schemathesis` | OpenAPI-Vertrags-Fuzzing (schemathesis) gegen eine aktive Pusula-Instanz unter Verwendung von `docs/openapi.yaml` — deckt Spezifikationsverletzungen/unbehandelte 500-Fehler auf (Phase 8 B.4) | **Unverbindlich** |
 | `nightly-mutation`     | Stryker-Mutationstestbewertung für die schnelle Unit-Test-Strecke — überlebende Mutanten zeigen schwache Assertions auf                                                                           | **Unverbindlich** |
 | `nightly-compat`       | Kompatibilitätsmatrix der Node-Engine über die unterstützten `engines.node`-Bereiche hinweg                                                                                                       | **Unverbindlich** |
 
@@ -337,7 +337,7 @@ Implementierung ausstehend).
 ### CodeQL-Ratchet: Aktualisierungsintervall und manuelle Auslösung
 
 `check:codeql-ratchet` liest **den Repository-Status, der nach einem Zeitplan aktualisiert wird — nicht pro PR.**
-`gh api repos/diegosouzapw/OmniRoute/code-scanning/default-setup` meldet
+`gh api repos/Ferhat-Yasinoglu/pusula/code-scanning/default-setup` meldet
 `state: configured`, `schedule: weekly`: GitHubs Scan mit Standardkonfiguration, keine Analyse
 bei jedem Push. Folge: Nachdem ein PR, der Warnungen BEHEBT, gemergt wurde, liest das Ratchet
 weiterhin die alte, höhere Anzahl, bis der nächste geplante Scan ausgeführt wird — daher meldet es
@@ -489,7 +489,7 @@ Positivliste vermittelt ein falsches Gefühl von Qualität.
 
 ## Agentenwerkzeuge: LSP-in-the-loop (optional)
 
-Zusätzlich zu den CI-Prüfschritten enthält OmniRoute ein **optionales** `agent-lsp`-Grundgerüst
+Zusätzlich zu den CI-Prüfschritten enthält Pusula ein **optionales** `agent-lsp`-Grundgerüst
 (eine `.mcp.json` auf Projektebene, Phase 7, Aufgabe 15). Erstellen Sie `.mcp.json`,
 um Coding-Agenten einen TypeScript-Sprachserver bereitzustellen, sodass sie Symbole /
 Diagnosen **vor** dem Schreiben von Code auflösen — eine „Kompilieren vor dem Behaupten“-Ergänzung zu
@@ -596,7 +596,7 @@ wird nun wie eine fehlende Übersetzung bewertet. Beheben Sie einen roten Fehler
 `node scripts/i18n/sync-ui-keys.mjs --locale=<codes> --translate-markers --batch-size=40` oder
 alle Locales parallel mit `npm run i18n:translate-new-keys` (`scripts/i18n/translate-new-keys.sh`,
 sicher bei getrenntem Terminal, verweigert den Start ohne die Umgebungsvariablen
-`OMNIROUTE_TRANSLATION_*`). Ein Schlüssel, der Englisch bleiben muss (der fest vorgegebene Name
+`PUSULA_TRANSLATION_*`). Ein Schlüssel, der Englisch bleiben muss (der fest vorgegebene Name
 eines Produkts, einer Engine oder eines Flags), gehört in
 `scripts/i18n/untranslatable-keys.json`, niemals hinter einen Marker. `vi` verbietet Marker
 vollständig (`tests/unit/i18n-vi-completeness.test.ts`).

@@ -4,11 +4,11 @@
 
 ---
 
-`@omniroute/opencode-plugin-v2` integriert Ihren gesamten OmniRoute-Katalog — Modelle, Combos und
+`@pusula/opencode-plugin-v2` integriert Ihren gesamten Pusula-Katalog — Modelle, Combos und
 Auto-Combos — in die Modellauswahl von OpenCode v2, einschließlich Anzeigenamen, Preisen und
 Budgets für die kostenlose Nutzung.
 
-Es handelt sich um ein separates Paket von `@omniroute/opencode-plugin`, da OpenCode v1 und v2
+Es handelt sich um ein separates Paket von `@pusula/opencode-plugin`, da OpenCode v1 und v2
 Plugins über unterschiedliche Schnittstellen laden. Wählen Sie das Paket, das zu Ihrer
 OpenCode-Hauptversion passt; zwischen ihnen wird nichts gemeinsam genutzt, sodass die
 Aktualisierung des einen niemals eine Aktualisierung des anderen erzwingt.
@@ -16,7 +16,7 @@ Aktualisierung des einen niemals eine Aktualisierung des anderen erzwingt.
 ## Voraussetzungen
 
 - OpenCode v2.
-- Ein erreichbares OmniRoute-Gateway (standardmäßig `http://localhost:20128`).
+- Ein erreichbares Pusula-Gateway (standardmäßig `http://localhost:20128`).
 - Node.js 22 oder 24.
 
 ## Installation
@@ -27,9 +27,9 @@ Fügen Sie das Plugin zu `opencode.json` hinzu:
 {
   "plugins": [
     {
-      "package": "@omniroute/opencode-plugin-v2",
+      "package": "@pusula/opencode-plugin-v2",
       "options": {
-        "providerId": "omniroute",
+        "providerId": "pusula",
         "baseURL": "http://localhost:20128"
       }
     }
@@ -37,7 +37,7 @@ Fügen Sie das Plugin zu `opencode.json` hinzu:
 }
 ```
 
-Modelle erscheinen anschließend als `omniroute/<provider>/<model>`; `providerId` bestimmt
+Modelle erscheinen anschließend als `pusula/<provider>/<model>`; `providerId` bestimmt
 dieses Präfix sowie die ID der Integration, unter der OpenCode die Anmeldedaten speichert.
 
 ## Anmeldedaten
@@ -49,7 +49,7 @@ Das Plugin sucht an drei Stellen nach einem Gateway-Schlüssel, und zwar in dies
    davon landet in `opencode.json` — diese Option ist vorzuziehen.
 2. `apiKey` in den Plugin-Optionen für eine projektspezifische Überschreibung. Dadurch wird der
    Schlüssel in einer Datei abgelegt, die möglicherweise eingecheckt wird.
-3. `OMNIROUTE_API_KEY` in der Umgebung.
+3. `PUSULA_API_KEY` in der Umgebung.
 
 Ist keine der drei Optionen vorhanden, bleibt der Katalog leer und das Plugin weist beim Start
 einmal darauf hin, anstatt eine kommentarlos leere Modellauswahl anzuzeigen.
@@ -78,11 +78,11 @@ ungeklärt.
 
 | Schlüssel                        | Standardwert                                       | Hinweise                                                                                                                      |
 | -------------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `providerId`                     | `"omniroute"`                                      | Anbieter-ID, Integrations-ID und das Präfix, unter dem Modelle erscheinen                                                     |
+| `providerId`                     | `"pusula"`                                      | Anbieter-ID, Integrations-ID und das Präfix, unter dem Modelle erscheinen                                                     |
 | `baseURL`                        | erforderlich                                       | Gateway-Stamm-URL, nur `http(s)`; das Suffix `/v1` wird bei Bedarf hinzugefügt                                                |
-| `apiKey`                         | hinterlegte Anmeldedaten, dann `OMNIROUTE_API_KEY` | Chat-Schlüssel für `/v1/*`                                                                                                    |
+| `apiKey`                         | hinterlegte Anmeldedaten, dann `PUSULA_API_KEY` | Chat-Schlüssel für `/v1/*`                                                                                                    |
 | `managementReadToken`            | verwendet ersatzweise `apiKey`                     | Schlüssel für `/api/*` — normalerweise **nicht** derselbe                                                                     |
-| `displayName`                    | `"OmniRoute"`                                      | Anbietername in der Modellauswahl                                                                                             |
+| `displayName`                    | `"Pusula"`                                      | Anbietername in der Modellauswahl                                                                                             |
 | `timeoutMs`                      | `10000`                                            | Abruf-Zeitüberschreitung pro Endpunkt (Auto-Combos verwenden 5 s)                                                             |
 | `modelCacheTtlMs`                | `300000`                                           | TTL des Katalog-Caches; ein Snapshot auf der Festplatte beschleunigt Kaltstarts                                               |
 | `timeouts`                       | verwendet ersatzweise `timeoutMs`                  | Endpunktspezifische Zeitbudgets in ms: `models`, `combos`, `autoCombos`, `enrichment`                                         |
@@ -113,7 +113,7 @@ Legen Sie `"geminiSanitization": false` fest, um diese Funktion zu deaktivieren.
 
 | Symptom                                                      | Ursache                                                                                                                            |
 | ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
-| Die Modellauswahl zeigt kein OmniRoute-Modell                | Es wurde kein Schlüssel aufgelöst (prüfen Sie die Startwarnung), oder das Gateway ist nicht erreichbar                             |
+| Die Modellauswahl zeigt kein Pusula-Modell                | Es wurde kein Schlüssel aufgelöst (prüfen Sie die Startwarnung), oder das Gateway ist nicht erreichbar                             |
 | Unverarbeitete Modell-IDs, keine Kombinationen, keine Preise | Die Verwaltungsendpunkte haben das Token abgelehnt — legen Sie `managementReadToken` fest                                          |
 | Eine Sitzung ist an `opencode-<id>/…` gebunden               | Das v1-Plugin veröffentlichte `opencode-<id>`; v2 veröffentlicht nur `<id>`, wählen Sie das Modell daher erneut unter `<id>/…` aus |
 

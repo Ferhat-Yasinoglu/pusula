@@ -25,7 +25,7 @@
 // Limitações documentadas (v1):
 //  - `exclude` de arquivo individual em vitest configs não é modelado (1 caso hoje:
 //    providerDiversity.test.ts — coletado pelo include, deliberadamente excluído).
-//  - @omniroute/* ficam fora do walk (têm CI próprio: opencode-*-ci.yml).
+//  - @pusula/* ficam fora do walk (têm CI próprio: opencode-*-ci.yml).
 import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
@@ -93,7 +93,7 @@ export const COLLECTORS = [
   // Node native runner — test:combo:live (gated real-upstream smoke; RUN_COMBO_LIVE=1 + VPS creds)
   { glob: "tests/integration/combo-live/*.live.test.ts", sources: ["package.json"] },
   // Node native runner — test:boundary:live (gated real-upstream smoke; RUN_BOUNDARY_LIVE=1,
-  // hits omniroute.vhost2.harre.dynv6.net — never runs unopted in CI)
+  // hits pusula.vhost2.harre.dynv6.net — never runs unopted in CI)
   { glob: "tests/boundary/*.live.test.ts", sources: ["package.json"] },
   // Node native runner — test:system
   { glob: "tests/e2e/system-failover.test.ts", sources: ["package.json"] },

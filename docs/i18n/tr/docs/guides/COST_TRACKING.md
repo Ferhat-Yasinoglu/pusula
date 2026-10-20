@@ -4,7 +4,7 @@
 
 ---
 
-OmniRoute'un her isteğin maliyetini nasıl tahmin ettiği, kaydettiği ve raporladığı — ve
+Pusula'un her isteğin maliyetini nasıl tahmin ettiği, kaydettiği ve raporladığı — ve
 gösterge panelindeki sayının neden bir fatura değil, **tasarruf takipçisi** olduğu.
 
 Ayrıca bkz.: [Kullanıcı Kılavuzu](./USER_GUIDE.md) · [Özellikler Galerisi](./FEATURES.md)
@@ -13,12 +13,12 @@ Ayrıca bkz.: [Kullanıcı Kılavuzu](./USER_GUIDE.md) · [Özellikler Galerisi]
 
 ## Nedir (ve ne değildir)
 
-OmniRoute, token sayılarını modelin fiyatlandırma oranlarıyla çarparak her tamamlama
+Pusula, token sayılarını modelin fiyatlandırma oranlarıyla çarparak her tamamlama
 isteğine USD cinsinden bir maliyet atar. Bu sayılar **Maliyetler** gösterge panelinde,
-`omniroute cost` / `omniroute usage` CLI komutlarında, CSV/JSON dışa aktarımlarında ve
+`pusula cost` / `pusula usage` CLI komutlarında, CSV/JSON dışa aktarımlarında ve
 API anahtarı başına bütçelerde kullanılır.
 
-> **Gösterge panelindeki "maliyet" bir fatura değil, tasarruf takipçisidir.** OmniRoute
+> **Gösterge panelindeki "maliyet" bir fatura değil, tasarruf takipçisidir.** Pusula
 > sizden hiçbir zaman ücret almaz — isteklerinizi daha önce bağladığınız sağlayıcılara
 > (kendi aboneliklerinize, ücretsiz katmanlarınıza ve API anahtarlarınıza) yönlendirir.
 > Tamamı ücretsiz modellerde birikmiş "$290 toplam maliyet", ücretli bir API'ye yaklaşık
@@ -32,7 +32,7 @@ Bu çerçeve, projenin [README](../../README.md) dosyasında doğrudan belirtilm
 
 Bu sayı bir tahmin olduğundan:
 
-- OmniRoute'un her model için sahip olduğu fiyatlandırma tablosuna bağlıdır.
+- Pusula'un her model için sahip olduğu fiyatlandırma tablosuna bağlıdır.
   Fiyatlandırma girdisi olmayan bir model `0` maliyet oluşturur (gezginde
   "Eski / Ücretsiz" satırı olarak görünür).
 - Ücretsiz katman ve abonelik trafiği de _tahmini_ maliyet oluşturur — bu, borçlu
@@ -53,7 +53,7 @@ Maliyetler, aşağıdaki öncelik sırasına göre çözümlenen bir fiyatlandı
    LiteLLM'in herkese açık `model_prices_and_context_window.json` dosyasından alınır
    (geçersiz kılmalarınızın üzerine hiçbir zaman yazmaması için ayrı bir
    `pricing_synced` ad alanında saklanır).
-3. **Sabit kodlanmış varsayılanlar** — OmniRoute ile birlikte sunulur.
+3. **Sabit kodlanmış varsayılanlar** — Pusula ile birlikte sunulur.
 
 Harici fiyatlandırma senkronizasyonu **isteğe bağlıdır** ve varsayılan olarak devre
 dışıdır. İlgili ortam değişkenleri
@@ -99,8 +99,8 @@ devam eder.
 
   | Ortam değişkeni                     | Varsayılan | Amaç                                             |
   | ----------------------------------- | ---------- | ------------------------------------------------ |
-  | `OMNIROUTE_SPEND_FLUSH_INTERVAL_MS` | `60000`    | Milisaniye cinsinden arabelleği yazma aralığı.   |
-  | `OMNIROUTE_SPEND_MAX_BUFFER_SIZE`   | `1000`     | Yazmadan önce arabellekte tutulacak azami girdi. |
+  | `PUSULA_SPEND_FLUSH_INTERVAL_MS` | `60000`    | Milisaniye cinsinden arabelleği yazma aralığı.   |
+  | `PUSULA_SPEND_MAX_BUFFER_SIZE`   | `1000`     | Yazmadan önce arabellekte tutulacak azami girdi. |
 
 Gösterge panelindeki maliyet değerleri, satır başına saklanan bir dolar tutarından
 **okunmaz** — analiz uç noktası her çalıştığında token sayılarından ve geçerli
@@ -192,48 +192,48 @@ Aksi belirtilmedikçe bunların tümü yönetim kimlik doğrulaması gerektirir 
 
 ## CLI
 
-OmniRoute CLI'ı, maliyet, kullanım ve fiyatlandırma komutlarını sunar ([`bin/cli/commands/registry.mjs`](../../bin/cli/commands/registry.mjs) dosyasında kaydedilmiştir).
+Pusula CLI'ı, maliyet, kullanım ve fiyatlandırma komutlarını sunar ([`bin/cli/commands/registry.mjs`](../../bin/cli/commands/registry.mjs) dosyasında kaydedilmiştir).
 
-### `omniroute cost`
+### `pusula cost`
 
 `/api/usage/analytics` üzerinden toplanan bir maliyet raporu.
 
 ```bash
-omniroute cost                          # son 30 gün, sağlayıcıya göre gruplandırılmış
-omniroute cost --period 7d              # son 7 gün
-omniroute cost --group-by model         # provider | model | combo | api-key | day değerine göre gruplandır
-omniroute cost --since 2026-06-01 --until 2026-06-13
-omniroute cost --api-key <key> --limit 50
+pusula cost                          # son 30 gün, sağlayıcıya göre gruplandırılmış
+pusula cost --period 7d              # son 7 gün
+pusula cost --group-by model         # provider | model | combo | api-key | day değerine göre gruplandır
+pusula cost --since 2026-06-01 --until 2026-06-13
+pusula cost --api-key <key> --limit 50
 ```
 
 Sütunlar: grup, istekler, giriş/çıkış token'ları, maliyet (USD) ve toplamın yüzdesi. En sonda genel toplam satırı yazdırılır (`--quiet` veya `--output json` ile gizlenir).
 
-### `omniroute usage`
+### `pusula usage`
 
 ```bash
-omniroute usage analytics --period 30d [--provider <id>]   # sağlayıcı başına maliyet özeti
-omniroute usage logs [--limit 100] [--follow] [--api-key <k>] [--search <q>]
-omniroute usage quota [--provider <id>] [--check]
-omniroute usage utilization [--api-key <k>]
-omniroute usage history [--limit 100]
-omniroute usage proxy-logs [--limit 100]
+pusula usage analytics --period 30d [--provider <id>]   # sağlayıcı başına maliyet özeti
+pusula usage logs [--limit 100] [--follow] [--api-key <k>] [--search <q>]
+pusula usage quota [--provider <id>] [--check]
+pusula usage utilization [--api-key <k>]
+pusula usage history [--limit 100]
+pusula usage proxy-logs [--limit 100]
 
 # Bütçeler
-omniroute usage budget list
-omniroute usage budget get [scope]
-omniroute usage budget set <amount> [--scope global] [--period monthly]
-omniroute usage budget reset [scope]
+pusula usage budget list
+pusula usage budget get [scope]
+pusula usage budget set <amount> [--scope global] [--period monthly]
+pusula usage budget reset [scope]
 ```
 
-### `omniroute pricing`
+### `pusula pricing`
 
 ```bash
-omniroute pricing list [--provider <p>] [--model <m>] [--limit 200]
-omniroute pricing get <model>
-omniroute pricing sync [--provider <p>] [--force]   # POST /api/pricing/sync
-omniroute pricing diff [--model <m>]
-omniroute pricing defaults show
-omniroute pricing defaults set [--input <p>] [--output <p>] [--cache-read <p>] [--cache-write <p>]
+pusula pricing list [--provider <p>] [--model <m>] [--limit 200]
+pusula pricing get <model>
+pusula pricing sync [--provider <p>] [--force]   # POST /api/pricing/sync
+pusula pricing diff [--model <m>]
+pusula pricing defaults show
+pusula pricing defaults set [--input <p>] [--output <p>] [--cache-read <p>] [--cache-write <p>]
 ```
 
 > `pricing defaults show`, `GET /api/pricing/defaults` üzerinden okur. Bunun yerine ayrı ayrı model
@@ -244,12 +244,12 @@ omniroute pricing defaults set [--input <p>] [--output <p>] [--cache-read <p>] [
 ## Sorun giderme
 
 - **Tüm maliyetler $0 / "Legacy / Free" olarak görünüyor.** Kullanılan modeller için fiyatlandırma kaydı yoktur.
-  Harici eşitlemeyi etkinleştirin (`PRICING_SYNC_ENABLED=true`) ve `omniroute pricing sync` komutunu çalıştırın veya
+  Harici eşitlemeyi etkinleştirin (`PRICING_SYNC_ENABLED=true`) ve `pusula pricing sync` komutunu çalıştırın veya
   Fiyatlandırma sayfası / `PATCH /api/pricing` üzerinden fiyatları elle ayarlayın.
 - **Geçmişte kullanılan bir model yanlış fiyatlandırılmış.** Fiyatı düzeltin (geçersiz kılın veya yeniden eşitleyin) — maliyet,
   her analiz okumasında token sayılarından yeniden hesaplandığından tahminler geriye dönük olarak güncellenir.
 - **Harcama gerçek zamanın gerisinde kalıyor.** Anahtar başına harcama toplu olarak işlenir; daha güncel rakamlara ihtiyacınız varsa
-  `OMNIROUTE_SPEND_FLUSH_INTERVAL_MS` değerini düşürün.
+  `PUSULA_SPEND_FLUSH_INTERVAL_MS` değerini düşürün.
 
 ---
 

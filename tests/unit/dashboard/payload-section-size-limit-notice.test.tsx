@@ -2,7 +2,7 @@
 //
 // Regression guard for #13894: a size-limited call-log artifact does not
 // simply drop a payload — callLogArtifacts.ts writes an explicit marker in
-// its place (`{ error: { _omniroute_truncated: true, reason: ... } }` for the
+// its place (`{ error: { _pusula_truncated: true, reason: ... } }` for the
 // pipeline, or the `[omitted: call log artifact size limit exceeded]` string
 // for requestBody/responseBody). Before this fix, RequestLoggerDetail fed
 // that marker straight into the generic JSON/`<pre>` renderer under a
@@ -47,7 +47,7 @@ describe("PayloadSection size-limit omission notice (#13894)", () => {
       root.render(
         <PayloadSection
           title="Pipeline Error"
-          json={JSON.stringify({ error: { _omniroute_truncated: true } }, null, 2)}
+          json={JSON.stringify({ error: { _pusula_truncated: true } }, null, 2)}
           notice
           onCopy={vi.fn().mockResolvedValue(true)}
         />
@@ -56,7 +56,7 @@ describe("PayloadSection size-limit omission notice (#13894)", () => {
 
     expect(container.querySelector("pre")).toBeNull();
     expect(container.textContent).toContain("payloadSizeLimitOmitted");
-    expect(container.textContent).not.toContain("_omniroute_truncated");
+    expect(container.textContent).not.toContain("_pusula_truncated");
   });
 
   it("renders the normal JSON tree when notice is not set", () => {
@@ -83,7 +83,7 @@ describe("PayloadSection size-limit omission notice (#13894)", () => {
     it("flags the pipeline.error size-limit marker with notice=true instead of dumping it as JSON", () => {
       const pipelinePayloads = {
         providerResponse: { status: 200 },
-        error: { _omniroute_truncated: true, reason: "call_log_artifact_size_limit_exceeded" },
+        error: { _pusula_truncated: true, reason: "call_log_artifact_size_limit_exceeded" },
       };
 
       const sections = buildPipelinePayloadSections(entries, pipelinePayloads);

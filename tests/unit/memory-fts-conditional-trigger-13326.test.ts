@@ -14,7 +14,7 @@ import Database from "better-sqlite3";
 const serial = { concurrency: false };
 
 function createTestDb(): Database.Database {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-memory-fts-"));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-memory-fts-"));
   const dbPath = path.join(dir, "test.sqlite");
   const db = new Database(dbPath);
 

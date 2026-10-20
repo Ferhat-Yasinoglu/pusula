@@ -8,7 +8,7 @@ import { createChatPipelineHarness } from "../integration/_chatPipelineHarness.t
 // raw TypeError (`msg.role` off null), surfacing as HTTP 500.
 //
 // The guard at src/sse/handlers/chat.ts now rejects non-object entries with a
-// clear OmniRoute-level 400 before any routing or upstream call, extending the
+// clear Pusula-level 400 before any routing or upstream call, extending the
 // #5110/#6402/#6407/#6412 guard family.
 
 const harness = await createChatPipelineHarness("chat-messages-entry-objects-12643");

@@ -1,5 +1,5 @@
 # ──────────────────────────────────────────────────────────────────────
-#  OmniRoute — Self-Host Compose (零月费自托管 / zero-fee self-host)
+#  Pusula — Self-Host Compose (零月费自托管 / zero-fee self-host)
 # ──────────────────────────────────────────────────────────────────────
 #  KISS: ONE command brings up the whole thing on loopback.
 #
@@ -8,7 +8,7 @@
 #    open http://127.0.0.1:20128
 #
 #  No profiles, no build step, no multi-tenant anything.
-#  Pulls the published image `diegosouzapw/omniroute:latest`.
+#  Pulls the published image `ferhat-yasinoglu/pusula:latest`.
 #
 #  All app ports bind to 127.0.0.1 ONLY by default (REQUIRE_API_KEY ships
 #  as false). Set APP_BIND_HOST=0.0.0.0 in .env ONLY after you have set
@@ -19,12 +19,12 @@
 services:
   redis:
     image: docker.io/library/redis:8.6.5-alpine
-    container_name: omniroute-redis
+    container_name: pusula-redis
     restart: unless-stopped
     # No port published to the host — the app reaches Redis over the compose
     # network (redis:6379). Publishing an unauthenticated Redis on 0.0.0.0
     # is a footgun we refuse to ship. If you need host-side redis-cli, run
-    #   docker exec -it omniroute-redis redis-cli
+    #   docker exec -it pusula-redis redis-cli
     volumes:
       - redis-data:/data
     command: redis-server --save 60 1 --loglevel warning
@@ -34,9 +34,9 @@ services:
       timeout: 5s
       retries: 3
 
-  omniroute:
-    image: diegosouzapw/omniroute:latest
-    container_name: omniroute
+  pusula:
+    image: ferhat-yasinoglu/pusula:latest
+    container_name: pusula
     restart: unless-stopped
     stop_grace_period: 40s
     env_file: .env

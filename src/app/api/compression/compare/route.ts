@@ -5,8 +5,8 @@ import {
   benchmarkEngines,
   compareReports,
   DEFAULT_BENCHMARK_ENGINES,
-} from "@omniroute/open-sse/services/compression/harness/benchmark";
-import { sanitizeErrorMessage } from "@omniroute/open-sse/utils/error";
+} from "@pusula/open-sse/services/compression/harness/benchmark";
+import { sanitizeErrorMessage } from "@pusula/open-sse/utils/error";
 
 export const dynamic = "force-dynamic";
 

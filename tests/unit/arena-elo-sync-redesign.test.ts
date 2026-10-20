@@ -14,7 +14,7 @@
  *  5. A successful sync clears any lastFailedAt stamp.
  *
  * Mirrors tests/unit/arena-elo-sync.test.ts patterns: node:test, real
- * in-memory SQLite via tryOpenSync + globalThis.__omnirouteDb, globalThis.fetch
+ * in-memory SQLite via tryOpenSync + globalThis.__pusulaDb, globalThis.fetch
  * mocks, patched migration 097 (no DEFAULT now on synced_at).
  */
 import { describe, it, beforeEach, afterEach } from "node:test";
@@ -23,7 +23,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-arena-redesign-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-arena-redesign-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const MIGRATION_SQL = fs.readFileSync(
@@ -143,7 +143,7 @@ function fetchServing(modelsByCategory: Record<string, ArenaModelEntry[]>) {
 beforeEach(() => {
   core.resetDbInstance();
   testAdapter = createTestAdapter();
-  globalThis.__omnirouteDb = testAdapter as never;
+  globalThis.__pusulaDb = testAdapter as never;
   stopArenaEloSync();
   delete process.env.ARENA_ELO_SYNC_INTERVAL;
 });
@@ -151,7 +151,7 @@ beforeEach(() => {
 afterEach(() => {
   restoreFetch();
   stopArenaEloSync();
-  delete globalThis.__omnirouteDb;
+  delete globalThis.__pusulaDb;
 });
 
 describe("arenaEloSync redesign", () => {

@@ -44,8 +44,8 @@ npm run test:e2e           # اختیاری، اما توصیه میشود
 این روش ضمن حفظ تضمین WS1.3، جریان کاملاً خودکاری را که پروژه تا v3.8.48 داشت بازیابی میکند
 (یک توکن افشاشده بهتنهایی نمیتواند منتشر کند — زیرا اصلاً توکنی وجود ندارد).
 
-**راهاندازی یکباره (مالک):** npmjs.com → بستهٔ `omniroute` → Settings → _Trusted
-Publisher_ → GitHub: مالک `diegosouzapw`، مخزن `OmniRoute`، گردشکار `npm-publish.yml`
+**راهاندازی یکباره (مالک):** npmjs.com → بستهٔ `pusula` → Settings → _Trusted
+Publisher_ → GitHub: مالک `diegosouzapw`، مخزن `Pusula`، گردشکار `npm-publish.yml`
 (محیط: هیچکدام). تا زمانی که این مورد ایجاد نشده باشد، مرحلهٔ خودکار با `ENEEDAUTH` شکست میخورد:
 دوباره با `publish_mode=staged` (در ادامه) یا `direct` اجرا کنید.
 
@@ -58,7 +58,7 @@ Publisher_ → GitHub: مالک `diegosouzapw`، مخزن `OmniRoute`، گردش
 
 **جریان کار مالک پس از سبزشدن گردشکار:**
 
-1. `npm stage list omniroute` — شناسهٔ مرحله را پیدا کنید (در خلاصهٔ گردشکار نیز چاپ میشود).
+1. `npm stage list pusula` — شناسهٔ مرحله را پیدا کنید (در خلاصهٔ گردشکار نیز چاپ میشود).
 2. بایتهای مرحلهبندیشده را تأیید کنید (توصیه میشود): `npm stage download <id>`، سپس
    tarball دانلودشده را در یک پیشوند موقت نصب و راهاندازی کنید (`npm run check:pack-boot` همین
    نتیجهگیری pack→install→boot را در CI خودکار میکند).
@@ -70,10 +70,10 @@ Publisher_ → GitHub: مالک `diegosouzapw`، مخزن `OmniRoute`، گردش
 `npm publish` فوری را بازیابی میکند (فقط در صورتی استفاده کنید که خود مرحلهبندی درست عمل نکند؛ دلیل را ثبت کنید).
 
 **سختسازی یکباره (مالک، npmjs.com):** Trusted Publisher را برای
-`omniroute` در حالت فقط مرحلهبندی پیکربندی کنید تا یک توکن بلندمدت افشاشده نتواند
+`pusula` در حالت فقط مرحلهبندی پیکربندی کنید تا یک توکن بلندمدت افشاشده نتواند
 از هیچجا مستقیماً `npm publish` را اجرا کند — CI فقط میتواند مرحلهبندی کند؛ تنها 2FA مالک انتشار را انجام میدهد.
 
-**راهنمای عملیاتی آرتیفکت خراب (بدون تغییر):** `npm deprecate omniroute@<bad> "<reason> — use <fixed>"`
+**راهنمای عملیاتی آرتیفکت خراب (بدون تغییر):** `npm deprecate pusula@<bad> "<reason> — use <fixed>"`
 بهعنوان واکنش پیشفرض (چند دقیقه، برگشتپذیر)؛ `npm unpublish` فقط در بازهٔ 72h/بدون وابستگان
 و هرگز بهعنوان نخستین اقدام. Docker: هرگز یک برچسب نسخه را بازنویسی نکنید — بازگردانی یعنی
 اشارهٔ مجدد `latest` به آخرین digest سالم.
@@ -192,7 +192,7 @@ quality-gate، quality-extended) عبور میکند و گیتهای سریع و
 - [ ] `npm run i18n:check` با کد 0 خاتمه مییابد — وضعیت ترجمه (`.i18n-state.json`) با مستندات منبع همگام است (در حالت سختگیرانه هیچ منبع ناهماهنگی وجود ندارد؛ هشدارهای حالت هشدار برای اصلاحات لحظه آخری مستندات قابل قبولاند، اما پیش از برچسبگذاری باید مقدار 0 باشد)
 - [ ] `npm run i18n:check-ui-coverage` با کد 0 خاتمه مییابد — پوشش هر زبان رابط کاربری برابر یا بیشتر از حداقل 80٪ است
 - [ ] `npm run i18n:sync-ui:dry` برای هر 42 زبان، 0 کلید مفقود گزارش میکند
-- [ ] اگر مستندات انگلیسی منبع تغییر کردهاند، پیش از برچسبگذاری `npm run i18n:run` را اجرا کنید (به `OMNIROUTE_TRANSLATION_API_KEY` در `.env` نیاز دارد)
+- [ ] اگر مستندات انگلیسی منبع تغییر کردهاند، پیش از برچسبگذاری `npm run i18n:run` را اجرا کنید (به `PUSULA_TRANSLATION_API_KEY` در `.env` نیاز دارد)
 - [ ] اگر تغییرات ترجمه جزئی هستند، میتوان آنها را به انتشار بعدی موکول کرد (در CHANGELOG پیگیری شود)
 
 ### مهاجرتهای پایگاه داده
@@ -201,7 +201,7 @@ quality-gate، quality-extended) عبور میکند و گیتهای سریع و
   - [ ] هر مهاجرت همتوان است (`CREATE TABLE IF NOT EXISTS` و غیره)
   - [ ] مهاجرتها در تراکنشها محصور شدهاند
   - [ ] شمارهگذاری صحیح است (هیچ شکافی در ترتیب وجود ندارد)
-- [ ] آزمایش روی نصب تازه: `~/.omniroute/omniroute.db` را حذف و `npm run dev` را اجرا کنید
+- [ ] آزمایش روی نصب تازه: `~/.pusula/pusula.db` را حذف و `npm run dev` را اجرا کنید
 - [ ] آزمایش روی نصب موجود: از پایگاه داده نسخه پشتیبان تهیه کنید، مهاجرت را اجرا کنید و شِما را تأیید کنید
 - [ ] اگر مهاجرت جدولها را بازنویسی میکند، فایلهای WAL (`-wal`، `-shm`) بهدرستی مدیریت میشوند
 
@@ -236,7 +236,7 @@ quality-gate، quality-extended) عبور میکند و گیتهای سریع و
 | `.build/` | فایلهای میانی ساخت — خروجی `next build` (`distDir`)       | خیر (در gitignore) |
 | `dist/`   | بسته قابلانتشار npm — مونتاژشده توسط `assembleStandalone` | خیر (در gitignore) |
 
-> **یادداشت اپراتور:** پوشه ایمیج VPS راهدور همچنان `/usr/lib/node_modules/omniroute/app/` است.
+> **یادداشت اپراتور:** پوشه ایمیج VPS راهدور همچنان `/usr/lib/node_modules/pusula/app/` است.
 > فقط خروجی ساخت **درون مخزن** جابهجا شده است (`app/` → `dist/`). مهارتهای استقرار، محتوای
 > `dist/` را با rsync به پوشه راهدور `app/` منتقل میکنند — هیچ تغییری در مسیر VPS لازم نیست.
 
@@ -355,12 +355,12 @@ npm run build:release
 
 پیش از انتشار هر نسخهٔ v3.8.x، این موارد اضافی را بررسی کنید:
 
-- [ ] `omniroute --tray` در macOS راهاندازی میشود (systray2 در `~/.omniroute/runtime/` نصب شده است)
-- [ ] `omniroute --tray` در Linux راهاندازی میشود (به DISPLAY نیاز دارد؛ اگر تنظیم نشده باشد، خطای کنترلشده نمایش داده میشود)
-- [ ] `omniroute --tray` در Windows راهاندازی میشود (PowerShell NotifyIcon، بدون فایلهای باینری اضافی)
-- [ ] `omniroute config tray enable` ورودی autostart را ایجاد میکند؛ غیرفعالسازی آن را حذف میکند
-- [ ] `npm install -g omniroute@<this-version>` مرحلهٔ postinstall را بدون خروج بحرانی اجرا میکند
-- [ ] مسیر بهروزرسانی وابستگیهای اختیاری را حفظ میکند: `omniroute update --apply` و بهروزرسان خودکار
+- [ ] `pusula --tray` در macOS راهاندازی میشود (systray2 در `~/.pusula/runtime/` نصب شده است)
+- [ ] `pusula --tray` در Linux راهاندازی میشود (به DISPLAY نیاز دارد؛ اگر تنظیم نشده باشد، خطای کنترلشده نمایش داده میشود)
+- [ ] `pusula --tray` در Windows راهاندازی میشود (PowerShell NotifyIcon، بدون فایلهای باینری اضافی)
+- [ ] `pusula config tray enable` ورودی autostart را ایجاد میکند؛ غیرفعالسازی آن را حذف میکند
+- [ ] `npm install -g pusula@<this-version>` مرحلهٔ postinstall را بدون خروج بحرانی اجرا میکند
+- [ ] مسیر بهروزرسانی وابستگیهای اختیاری را حفظ میکند: `pusula update --apply` و بهروزرسان خودکار
       دستور `npm install -g … --include=optional` را اجرا میکنند تا `optionalDependencies` (better-sqlite3،
       keytar، tls-client و پشتهٔ SLM مربوط به llmlingua: `@atjsh/llmlingua-2@2.0.5`،
       `js-tiktoken`) پس از بهروزرسانی باقی بمانند. سطح ultra مربوط به `modelPath` در SLM نیز به
@@ -370,13 +370,13 @@ npm run build:release
       را resolve کند — trace مستقل فقط transformers را bundle میکند، نه گزینههایی را که بهصورت پویا import شدهاند؛
       بنابراین بدون این کار، worker، llmlingua-2 را در برابر transformers موجود در root بارگذاری میکند
       و سطح SLM بهصورت بیصدا در حالت fail-open قرار میگیرد.
-- [ ] `omniroute status` بدون `.env` کار میکند (مسیر token در CLI، فقط loopback)
+- [ ] `pusula status` بدون `.env` کار میکند (مسیر token در CLI، فقط loopback)
 - [ ] `curl http://localhost:20128/api/shutdown` پاسخ 401 را برمیگرداند (مسیری که همیشه محافظت میشود)
 - [ ] `curl -H "host: evil.com" http://localhost:20128/api/mcp/sse` پاسخ 401 را برمیگرداند (محافظ loopback)
 - [ ] runtime مربوط به SQLite در نخستین اجرا به `bundled` resolve میشود (فایل باینری bundleشده برای پلتفرم معتبر است)
 - [ ] وقتی `node_modules/better-sqlite3` حذف میشود، runtime مربوط به SQLite به `runtime` fallback میکند
 - [ ] فیلتر هوشمند MCP، خروجی واقعی `playwright-mcp browser_snapshot` را فشرده میکند (کاهش ≥۵۰٪)
-- [ ] هر ۱۰ فایل `skills/omniroute*/SKILL.md` از طریق URL خام GitHub بهصورت عمومی قابل دریافت هستند
+- [ ] هر ۱۰ فایل `skills/pusula*/SKILL.md` از طریق URL خام GitHub بهصورت عمومی قابل دریافت هستند
 - [ ] جادوگر onboarding در راهاندازی تازه، مرحلهٔ معرفی سطحها با عنوان "نحوهٔ کارکرد" را نمایش میدهد
 - [ ] ویجت پوشش سطحها در داشبورد Home، تعداد موارد پیکربندیشده/فعال را نمایش میدهد
 

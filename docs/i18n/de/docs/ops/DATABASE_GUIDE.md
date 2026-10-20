@@ -4,7 +4,7 @@
 
 ---
 
-> **Kurzfassung**: OmniRoute verwendet **SQLite mit WAL-Journaling** als primären Datenspeicher und **AES-256-GCM** zur Verschlüsselung vertraulicher Felder im Ruhezustand. Dieser Leitfaden behandelt das Schema, Migrationen, Sicherung/Wiederherstellung und betriebliche Runbooks.
+> **Kurzfassung**: Pusula verwendet **SQLite mit WAL-Journaling** als primären Datenspeicher und **AES-256-GCM** zur Verschlüsselung vertraulicher Felder im Ruhezustand. Dieser Leitfaden behandelt das Schema, Migrationen, Sicherung/Wiederherstellung und betriebliche Runbooks.
 
 **Quellen:**
 
@@ -19,7 +19,7 @@
 
 ## Warum SQLite?
 
-OmniRoute hat sich aus mehreren Gründen für SQLite anstelle von PostgreSQL/MySQL entschieden:
+Pusula hat sich aus mehreren Gründen für SQLite anstelle von PostgreSQL/MySQL entschieden:
 
 | Faktor              | SQLite                                          | PostgreSQL                                          |
 | ------------------- | ----------------------------------------------- | --------------------------------------------------- |
@@ -30,7 +30,7 @@ OmniRoute hat sich aus mehreren Gründen für SQLite anstelle von PostgreSQL/MyS
 | **Sicherung**       | Kopie einer einzelnen Datei                     | `pg_dump` oder Dateisystem-Snapshot                 |
 | **Anwendungsfall**  | Installation pro Benutzer, eingebettet          | Mandantenfähiges SaaS                               |
 
-Für Bereitstellungen mit **einem Benutzer und einer einzelnen Instanz** (der primäre Anwendungsfall von OmniRoute) ist SQLite einfacher und schneller.
+Für Bereitstellungen mit **einem Benutzer und einer einzelnen Instanz** (der primäre Anwendungsfall von Pusula) ist SQLite einfacher und schneller.
 
 ### WAL-Journaling
 
@@ -50,7 +50,7 @@ Die standardmäßige Cache-Größe beträgt **65.536 KiB (64 MiB)**. SQLite inte
 `cache_size`-Wert als ungefähre Obergrenze in KiB und weist Seiten nach Bedarf zu.
 Unter **Einstellungen > System & Speicher > Cache-Größe** werden Ganzzahlwerte von **1 bis
 1.000.000 KiB** akzeptiert; beim Speichern der Einstellung wird sie auf die aktive Datenbankverbindung angewendet,
-und OmniRoute stellt den gespeicherten Wert beim Start wieder her.
+und Pusula stellt den gespeicherten Wert beim Start wieder her.
 
 ---
 
@@ -60,9 +60,9 @@ Die SQLite-Datei wird hier gespeichert:
 
 | Betriebssystem | Pfad                                                        |
 | -------------- | ----------------------------------------------------------- |
-| Linux          | `~/.omniroute/storage.sqlite`                               |
-| macOS          | `~/.omniroute/storage.sqlite`                               |
-| Windows        | `%USERPROFILE%\.omniroute\storage.sqlite`                   |
+| Linux          | `~/.pusula/storage.sqlite`                               |
+| macOS          | `~/.pusula/storage.sqlite`                               |
+| Windows        | `%USERPROFILE%\.pusula\storage.sqlite`                   |
 | Docker         | `/app/data/storage.sqlite` (konfigurierbar über `DATA_DIR`) |
 
 Zugehörige Dateien:
@@ -74,14 +74,14 @@ Zugehörige Dateien:
 **Speicherort überschreiben:**
 
 ```bash
-DATA_DIR=/custom/path omniroute
+DATA_DIR=/custom/path pusula
 ```
 
 ---
 
 ## Architektur der Domänenmodule
 
-Die Datenbank von OmniRoute umfasst **110 TypeScript-Module auf oberster Ebene** in `src/lib/db/`. Jedes Domänenmodul:
+Die Datenbank von Pusula umfasst **110 TypeScript-Module auf oberster Ebene** in `src/lib/db/`. Jedes Domänenmodul:
 
 - Ist für eine oder mehrere bestimmte Tabellen zuständig
 - Exportiert typisierte CRUD-Funktionen
@@ -90,7 +90,7 @@ Die Datenbank von OmniRoute umfasst **110 TypeScript-Module auf oberster Ebene**
 
 ### Die 110 DB-Module auf oberster Ebene
 
-OmniRoute verfügt über **110 TypeScript-Dateien auf oberster Ebene** in `src/lib/db/`. Nachfolgend finden Sie eine Auswahl der Kernmodule; die vollständige Liste finden Sie in der Verzeichnisauflistung:
+Pusula verfügt über **110 TypeScript-Dateien auf oberster Ebene** in `src/lib/db/`. Nachfolgend finden Sie eine Auswahl der Kernmodule; die vollständige Liste finden Sie in der Verzeichnisauflistung:
 
 | Modul                   | Tabellen                                                       | Zuständigkeit                                                                 |
 | ----------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------- |
@@ -186,7 +186,7 @@ Die vollständige Liste mit über 30 Tabellen befindet sich in `src/lib/db/migra
 
 ## Migrationen
 
-OmniRoute verwendet **versionierte, idempotente Migrationen** in `src/lib/db/migrations/`. Jede Migration ist eine einzelne SQL-Datei mit dem Namen `NNN_description.sql`.
+Pusula verwendet **versionierte, idempotente Migrationen** in `src/lib/db/migrations/`. Jede Migration ist eine einzelne SQL-Datei mit dem Namen `NNN_description.sql`.
 
 ### Benennung von Migrationen
 
@@ -202,7 +202,7 @@ OmniRoute verwendet **versionierte, idempotente Migrationen** in `src/lib/db/mig
 
 Beim Start führt `migrationRunner.ts` folgende Schritte aus:
 
-1. Erstellt die Tabelle `_omniroute_migrations`, falls sie nicht existiert
+1. Erstellt die Tabelle `_pusula_migrations`, falls sie nicht existiert
 2. Fragt bereits angewendete Migrationen ab
 3. Wendet alle neuen Migrationen der Reihe nach an, jeweils innerhalb einer Transaktion
 4. Zeichnet jede angewendete Migration mit einem Zeitstempel auf
@@ -256,7 +256,7 @@ UPDATE combos SET priority = 100 WHERE priority IS NULL;
 CREATE INDEX IF NOT EXISTS idx_combos_priority ON combos(priority);
 ```
 
-> **Nicht abwärtskompatible Änderungen** (z. B. das Löschen von Spalten) sind problematisch. OmniRoute unterstützt KEIN Downgrade — sobald eine Migration angewendet wurde, ist die Schemaänderung dauerhaft. Planen Sie entsprechend.
+> **Nicht abwärtskompatible Änderungen** (z. B. das Löschen von Spalten) sind problematisch. Pusula unterstützt KEIN Downgrade — sobald eine Migration angewendet wurde, ist die Schemaänderung dauerhaft. Planen Sie entsprechend.
 
 ---
 
@@ -310,7 +310,7 @@ Aus Leistungsgründen werden folgende Daten im Klartext gespeichert:
 
 ## Hinweise zur Verschlüsselung (v3.8.16+)
 
-OmniRoute verwendet **`migrateLegacyEncryptedString()`**, um zwei Verschlüsselungsverfahren transparent zu handhaben:
+Pusula verwendet **`migrateLegacyEncryptedString()`**, um zwei Verschlüsselungsverfahren transparent zu handhaben:
 
 - **Legacy** (vor v3.5.0): XOR-basierte „Verschlüsselung“ (keine echte Kryptografie)
 - **Aktuell**: AES-256-GCM mit korrektem IV und Authentifizierungs-Tag
@@ -346,7 +346,7 @@ Der Cache wird bei jedem Schreibvorgang in die entsprechende Tabelle invalidiert
 
 ```bash
 # CLI verwenden, um eine lokale Sicherung zu erstellen
-omniroute backup create --name pre-migration
+pusula backup create --name pre-migration
 
 # Oder über die API
 curl -X PUT http://localhost:20128/api/db-backups \
@@ -366,7 +366,7 @@ Die Sicherungsdatei enthält:
 
 ```bash
 # Über die CLI
-omniroute restore pre-migration
+pusula restore pre-migration
 
 # Über die API
 curl -X POST http://localhost:20128/api/db-backups/restore \
@@ -381,7 +381,7 @@ curl -X POST http://localhost:20128/api/db-backups/restore \
 
 ```bash
 # Automatisierte tägliche Sicherungen über die CLI aktivieren
-omniroute backup auto enable --cron "0 2 * * *" --retention 7
+pusula backup auto enable --cron "0 2 * * *" --retention 7
 ```
 
 Der Zeitplan wird serverseitig durch einen Hintergrundjob ausgeführt, der standardmäßig alle 30 Sekunden
@@ -389,17 +389,17 @@ aktiv wird und den Cron-Ausdruck anhand der lokalen Serverzeit auswertet.
 
 | Variable                                    | Standardwert | Beschreibung                                                                                                         |
 | ------------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------- |
-| `OMNIROUTE_BACKUP_SCHEDULE_JOB_INTERVAL_MS` | `30000`      | Intervall in ms (min. `5000`). Muss kürzer als 60 s sein, damit die passende Cron-Minute zuverlässig getroffen wird. |
+| `PUSULA_BACKUP_SCHEDULE_JOB_INTERVAL_MS` | `30000`      | Intervall in ms (min. `5000`). Muss kürzer als 60 s sein, damit die passende Cron-Minute zuverlässig getroffen wird. |
 
 ### SQLite-Hot-Backup
 
 Für eine Sicherung einer laufenden DB ohne Ausfallzeit:
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite ".backup /backups/omniroute-hot.db"
+sqlite3 ~/.pusula/storage.sqlite ".backup /backups/pusula-hot.db"
 ```
 
-Hierbei wird die Online-Backup-API von SQLite verwendet — die Ausführung ist sicher, während OmniRoute läuft.
+Hierbei wird die Online-Backup-API von SQLite verwendet — die Ausführung ist sicher, während Pusula läuft.
 
 ---
 
@@ -442,10 +442,10 @@ PRAGMA mmap_size = 268435456;  -- 256 MB
 
 ### Komprimierung
 
-Lang laufende OmniRoute-Instanzen profitieren von einem gelegentlichen `VACUUM`:
+Lang laufende Pusula-Instanzen profitieren von einem gelegentlichen `VACUUM`:
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite "VACUUM;"
+sqlite3 ~/.pusula/storage.sqlite "VACUUM;"
 ```
 
 Führen Sie dies monatlich in Zeitfenstern mit geringem Datenverkehr aus. (Der WAL-Modus reduziert die Notwendigkeit, beseitigt sie jedoch nicht vollständig.)
@@ -495,12 +495,12 @@ Die Antwort ist das von `runDbHealthCheck()` erzeugte `DbHealthCheckResult`
 | `driver.name`     | SQLite-Treiber, der die geprüfte Datenbank bereitstellt.                                                                                                                                 |
 | `driver.degraded` | `true`, wenn Schreibvorgänge nicht dauerhaft durch die Datenbankdatei gesichert werden — beim WASM-Fallback `sql.js` (Persistenz der gesamten Datei) oder bei einer In-Memory-Datenbank. |
 
-Dieselbe Nutzlast wird vom MCP-Tool `omniroute_db_health_check` zurückgegeben.
+Dieselbe Nutzlast wird vom MCP-Tool `pusula_db_health_check` zurückgegeben.
 
 Führen Sie `PRAGMA integrity_check` aus, um Beschädigungen zu erkennen:
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite "PRAGMA integrity_check;"
+sqlite3 ~/.pusula/storage.sqlite "PRAGMA integrity_check;"
 # Sollte Folgendes ausgeben: ok
 ```
 
@@ -516,15 +516,15 @@ Die `-wal`-Datei fehlt, aber `-shm` und die Hauptdatenbank sind intakt:
 
 ```bash
 # Wird beim nächsten Öffnen automatisch wiederhergestellt
-omniroute
+pusula
 ```
 
 Falls SQLite keine automatische Wiederherstellung durchführen kann:
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite ".recover" > recovered.sql
+sqlite3 ~/.pusula/storage.sqlite ".recover" > recovered.sql
 sqlite3 recovered.db < recovered.sql
-mv recovered.db ~/.omniroute/storage.sqlite
+mv recovered.db ~/.pusula/storage.sqlite
 ```
 
 ### Szenario 2: Hauptdatenbankdatei beschädigt
@@ -532,7 +532,7 @@ mv recovered.db ~/.omniroute/storage.sqlite
 Aus einer Sicherung wiederherstellen:
 
 ```bash
-omniroute sync pull --merge   # oder: omniroute backup restore <backup-id>
+pusula sync pull --merge   # oder: pusula backup restore <backup-id>
 ```
 
 ### Szenario 3: Verschlüsselungsschlüssel verloren
@@ -547,7 +547,7 @@ SQLite gibt `SQLITE_FULL`-Fehler zurück. Geben Sie Speicherplatz frei und führ
 
 ```bash
 # WAL-Checkpoint durchführen, um Speicherplatz freizugeben
-sqlite3 ~/.omniroute/storage.sqlite "PRAGMA wal_checkpoint(TRUNCATE);"
+sqlite3 ~/.pusula/storage.sqlite "PRAGMA wal_checkpoint(TRUNCATE);"
 ```
 
 ---
@@ -557,13 +557,13 @@ sqlite3 ~/.omniroute/storage.sqlite "PRAGMA wal_checkpoint(TRUNCATE);"
 ### Eine Tabelle untersuchen
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite "SELECT * FROM api_keys LIMIT 5;"
+sqlite3 ~/.pusula/storage.sqlite "SELECT * FROM api_keys LIMIT 5;"
 ```
 
 ### Zeilen in allen Tabellen zählen
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite <<EOF
+sqlite3 ~/.pusula/storage.sqlite <<EOF
 SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';
 EOF
 ```
@@ -571,14 +571,14 @@ EOF
 ### Alle Daten zurücksetzen (löschen)
 
 ```bash
-# Zuerst OmniRoute beenden
-omniroute stop
+# Zuerst Pusula beenden
+pusula stop
 
 # Datenbankdatei löschen
-rm ~/.omniroute/storage.sqlite*
+rm ~/.pusula/storage.sqlite*
 
 # Neu starten (erstellt eine leere Datenbank)
-omniroute
+pusula
 ```
 
 Für ein **selektives** Zurücksetzen (Anbieter beibehalten, Nutzungsdaten löschen):
@@ -592,7 +592,7 @@ DELETE FROM proxy_logs WHERE timestamp < datetime('now', '-30 day');
 ### Einzelne Tabelle exportieren
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite <<EOF
+sqlite3 ~/.pusula/storage.sqlite <<EOF
 .mode csv
 .output api_keys.csv
 SELECT * FROM api_keys;
@@ -609,7 +609,7 @@ Ein anderer Prozess hält eine Schreibsperre. Sie können:
 
 - Warten, bis der andere Prozess abgeschlossen ist (mit `lsof | grep storage.sqlite` prüfen)
 - Den anderen Prozess beenden
-- OmniRoute neu starten, falls das Problem weiterhin besteht
+- Pusula neu starten, falls das Problem weiterhin besteht
 
 ### "Fremdschlüsselbedingung fehlgeschlagen"
 
@@ -639,10 +639,10 @@ PRAGMA mmap_size = 0;
 
 Die Migration wurde innerhalb einer Transaktion ausgeführt und sollte daher zurückgesetzt worden sein. Falls nicht:
 
-1. **OmniRoute beenden** (weitere Versuche verhindern)
+1. **Pusula beenden** (weitere Versuche verhindern)
 2. **Datenbankstatus prüfen** mit `sqlite3`
 3. **Unvollständige Migration manuell korrigieren**
-4. **OmniRoute erneut ausführen** (die Migration wird erneut versucht)
+4. **Pusula erneut ausführen** (die Migration wird erneut versucht)
 
 Um dies zu vermeiden, testen Sie Migrationen immer zuerst an einer Kopie.
 

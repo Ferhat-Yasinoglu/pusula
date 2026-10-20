@@ -6,10 +6,10 @@
 
 ## گزارش آسیبپذیریها
 
-اگر یک آسیبپذیری امنیتی در OmniRoute کشف کردید، لطفاً آن را بهصورت مسئولانه گزارش دهید:
+اگر یک آسیبپذیری امنیتی در Pusula کشف کردید، لطفاً آن را بهصورت مسئولانه گزارش دهید:
 
 1. **بههیچوجه** یک مسئله عمومی در GitHub باز نکنید
-2. از [هشدارهای امنیتی GitHub](https://github.com/diegosouzapw/OmniRoute/security/advisories/new) استفاده کنید
+2. از [هشدارهای امنیتی GitHub](https://github.com/Ferhat-Yasinoglu/pusula/security/advisories/new) استفاده کنید
 3. این موارد را درج کنید: شرح، مراحل بازتولید و تأثیر احتمالی
 
 ## جدول زمانی پاسخگویی
@@ -32,7 +32,7 @@
 
 ## معماری امنیتی
 
-OmniRoute یک مدل امنیتی چندلایه را پیادهسازی میکند:
+Pusula یک مدل امنیتی چندلایه را پیادهسازی میکند:
 
 ```
 درخواست → CORS → خط لوله مجوزدهی (طبقهبندی → سیاستها → اعمال)
@@ -69,7 +69,7 @@ STORAGE_ENCRYPTION_KEY=$(openssl rand -hex 32)
 
 ### 🛡️ چارچوب محافظها
 
-OmniRoute با یک **رجیستری محافظهای** قابل بارگذاری مجدد بدون توقف (`src/lib/guardrails/`) ارائه میشود که شامل 3 محافظ داخلی مرتبشده بر اساس اولویت است:
+Pusula با یک **رجیستری محافظهای** قابل بارگذاری مجدد بدون توقف (`src/lib/guardrails/`) ارائه میشود که شامل 3 محافظ داخلی مرتبشده بر اساس اولویت است:
 
 | محافظ              | اولویت | هدف                                                                                     |
 | ------------------ | ------ | --------------------------------------------------------------------------------------- |
@@ -77,7 +77,7 @@ OmniRoute با یک **رجیستری محافظهای** قابل بارگذار�
 | `pii-masker`       | 10     | حذف PII پیش و پس از فراخوانی (ایمیل، تلفن، CPF، CNPJ، کارت اعتباری، SSN)                |
 | `prompt-injection` | 20     | شناسایی الگوهای بازنویسی دستورها/ربایش نقش/jailbreak/افشای اطلاعات                      |
 
-محافظهای سفارشی از طریق `registerGuardrail(new MyGuardrail())` ثبت میشوند. مدل از نوع fail-open است (استثناها هرگز ترافیک را مسدود نمیکنند). امکان انصراف برای هر درخواست از طریق هدر `x-omniroute-disabled-guardrails` وجود دارد. ← به [`docs/security/GUARDRAILS.md`](docs/security/GUARDRAILS.md) مراجعه کنید.
+محافظهای سفارشی از طریق `registerGuardrail(new MyGuardrail())` ثبت میشوند. مدل از نوع fail-open است (استثناها هرگز ترافیک را مسدود نمیکنند). امکان انصراف برای هر درخواست از طریق هدر `x-pusula-disabled-guardrails` وجود دارد. ← به [`docs/security/GUARDRAILS.md`](docs/security/GUARDRAILS.md) مراجعه کنید.
 
 ### 🧠 محافظ تزریق پرامپت
 
@@ -182,15 +182,15 @@ STORAGE_ENCRYPTION_KEY=$(openssl rand -hex 32)
 
 ```bash
 docker run -d \
-  --name omniroute \
+  --name pusula \
   --restart unless-stopped \
   --read-only \
   -p 20128:20128 \
-  -v omniroute-data:/app/data \
+  -v pusula-data:/app/data \
   -e JWT_SECRET="$(openssl rand -base64 48)" \
   -e API_KEY_SECRET="$(openssl rand -hex 32)" \
   -e STORAGE_ENCRYPTION_KEY="$(openssl rand -hex 32)" \
-  diegosouzapw/omniroute:latest
+  ferhat-yasinoglu/pusula:latest
 ```
 
 ---
@@ -224,7 +224,7 @@ docker run -d \
 
 > **یادداشت محدوده:** فایل `socket.yml` در ریشه مخزن فقط `projectIgnorePaths` را برای اسکن پس از انتشارِ سمت رجیستری Socket.dev روی آرتیفکت منتشرشده npm تنظیم میکند — این فایل یک گیت اجباری برای ادغام CI/PR نیست. هیچ گردش کاری در `.github/workflows`، هیچ اسکریپتی در `package.json` و هیچ هدفی در `Makefile`، Socket.dev را فراخوانی نمیکند.
 
-آرتیفکت منتشرشده `omniroute` در npm، بیلد Next.js با `output: "standalone"` را در خود جای میدهد؛ این یعنی هر مدیریتکننده مسیر — از جمله قابلیتهای ممتاز مستندشده (MITM، واردسازی Zed، Cloud Sync و ناظر سرویس تعبیهشده) — در نهایت در چانکهای مینیفایشده `.next/server/*.js` قرار میگیرد. اسکنرهای اکتشافی زنجیره تأمین اغلب الگوهای موجود در این چانکها را با امضاهای بدافزار تطبیق میدهند.
+آرتیفکت منتشرشده `pusula` در npm، بیلد Next.js با `output: "standalone"` را در خود جای میدهد؛ این یعنی هر مدیریتکننده مسیر — از جمله قابلیتهای ممتاز مستندشده (MITM، واردسازی Zed، Cloud Sync و ناظر سرویس تعبیهشده) — در نهایت در چانکهای مینیفایشده `.next/server/*.js` قرار میگیرد. اسکنرهای اکتشافی زنجیره تأمین اغلب الگوهای موجود در این چانکها را با امضاهای بدافزار تطبیق میدهند.
 
 پیکربندی اسکنری که استفاده میکنیم در [`socket.yml`](socket.yml) در ریشه مخزن قرار دارد (قالب v2 برنامه GitHub مربوط به Socket.dev — بنگرید به
 <https://docs.socket.dev/docs/socket-yml>). این پیکربندی صراحتاً دایرکتوریهایی را که منتشر نمیشوند (`tests/`، `_tasks/`، `_references/`، `_ideia/`،
@@ -239,7 +239,7 @@ docker run -d \
   به همان سند ارجاع میدهند.
 
 برای کاربرانی که خط لوله آنها امکان تعدیل این هشدار را ندارد: با
-`OMNIROUTE_BUILD_PROFILE=minimal npm run build` بیلد کنید. این فرمان چهار
+`PUSULA_BUILD_PROFILE=minimal npm run build` بیلد کنید. این فرمان چهار
 ماژول حساس را با stubهایی جایگزین میکند که هنگام اجرا پاسخ HTTP 503 با
 `feature-disabled` برمیگردانند؛ بنابراین مسیرهای کد ممتاز بهصورت فیزیکی در باندل وجود نخواهند داشت.
 برای دستورالعمل انتشار، به [`docs/security/SOCKET_DEV_FINDINGS.md`](docs/security/SOCKET_DEV_FINDINGS.md)

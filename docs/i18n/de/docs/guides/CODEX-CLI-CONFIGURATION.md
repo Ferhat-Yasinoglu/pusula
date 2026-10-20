@@ -1,10 +1,10 @@
-# Codex CLI — Configuration with OmniRoute (Deutsch)
+# Codex CLI — Configuration with Pusula (Deutsch)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../guides/CODEX-CLI-CONFIGURATION.md) · 🇪🇹 [am](../../../am/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇸🇦 [ar](../../../ar/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇦🇿 [az](../../../az/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇧🇬 [bg](../../../bg/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇧🇩 [bn](../../../bn/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇧🇦 [bs](../../../bs/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇨🇿 [cs](../../../cs/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇩🇰 [da](../../../da/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇬🇷 [el](../../../el/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇪🇸 [es](../../../es/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇪🇪 [et](../../../et/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇷 [fa](../../../fa/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇫🇮 [fi](../../../fi/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇫🇷 [fr](../../../fr/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇪 [ga](../../../ga/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇳 [gu](../../../gu/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇳🇬 [ha](../../../ha/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇱 [he](../../../he/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇳 [hi](../../../hi/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇭🇷 [hr](../../../hr/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇭🇺 [hu](../../../hu/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇦🇲 [hy](../../../hy/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇩 [id](../../../id/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇳🇬 [ig](../../../ig/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇹 [it](../../../it/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇯🇵 [ja](../../../ja/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇬🇪 [ka](../../../ka/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇰🇭 [km](../../../km/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇳 [kn](../../../kn/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇰🇷 [ko](../../../ko/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇱🇹 [lt](../../../lt/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇱🇻 [lv](../../../lv/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇳 [ml](../../../ml/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇳 [mr](../../../mr/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇲🇾 [ms](../../../ms/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇲🇹 [mt](../../../mt/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇲🇲 [my](../../../my/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇳🇵 [ne](../../../ne/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇳🇱 [nl](../../../nl/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇳🇴 [no](../../../no/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇳 [or](../../../or/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇳 [pa](../../../pa/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇵🇭 [phi](../../../phi/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇵🇱 [pl](../../../pl/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇵🇹 [pt](../../../pt/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇷🇴 [ro](../../../ro/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇷🇺 [ru](../../../ru/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇱🇰 [si](../../../si/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇸🇰 [sk](../../../sk/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇸🇮 [sl](../../../sl/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇷🇸 [sr](../../../sr/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇸🇪 [sv](../../../sv/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇰🇪 [sw](../../../sw/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇳 [ta](../../../ta/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇳 [te](../../../te/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇹🇭 [th](../../../th/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇹🇷 [tr](../../../tr/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇵🇰 [ur](../../../ur/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇺🇿 [uz](../../../uz/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇻🇳 [vi](../../../vi/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇳🇬 [yo](../../../yo/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/guides/CODEX-CLI-CONFIGURATION.md)
 
 ---
 
-Vollständige Anleitung zur Verwendung der Codex CLI mit OmniRoute als OpenAI-kompatiblem Backend.
+Vollständige Anleitung zur Verwendung der Codex CLI mit Pusula als OpenAI-kompatiblem Backend.
 
 ---
 
@@ -15,7 +15,7 @@ Vollständige Anleitung zur Verwendung der Codex CLI mit OmniRoute als OpenAI-ko
 > stillschweigend ignoriert. Der Dashboard-Generator (`/api/cli-tools/apply`, Tool
 > `codex`) schreibt TOML mit einer konservativen Zusammenführung — vorhandene Schlüssel
 > und andere Provider-Blöcke bleiben erhalten, der API-Schlüssel verbleibt in
-> `OMNIROUTE_API_KEY` (niemals in der Datei), und eine übrig gebliebene veraltete
+> `PUSULA_API_KEY` (niemals in der Datei), und eine übrig gebliebene veraltete
 > `config.yaml` wird als Migrationshinweis gemeldet, ohne verändert zu werden.
 
 ## Direkt einsetzbare config.toml
@@ -25,23 +25,23 @@ Ersetzen Sie `<YOUR_HOST>` und `<YOUR_KEY>` durch Ihre Werte:
 ```toml
 # ~/.codex/config.toml
 model                          = "cx/gpt-5.5"
-model_provider                 = "omniroute"
+model_provider                 = "pusula"
 model_reasoning_effort         = "xhigh"
 model_context_window           = 400000
 model_auto_compact_token_limit = 350000
 tool_output_token_limit        = 32768    # Obergrenze für die Verlaufsspeicherung pro Tool-Aufruf
 
-[model_providers.omniroute]
-name                 = "OmniRoute"
+[model_providers.pusula]
+name                 = "Pusula"
 base_url             = "http://<YOUR_HOST>:20128/v1"
-env_key              = "OMNIROUTE_API_KEY"
+env_key              = "PUSULA_API_KEY"
 requires_openai_auth = false
 wire_api             = "responses"
 ```
 
 ```bash
 # ~/.bashrc oder ~/.zshrc — tatsächlicher Schlüsselwert, niemals in config.toml
-export OMNIROUTE_API_KEY="<YOUR_KEY>"
+export PUSULA_API_KEY="<YOUR_KEY>"
 ```
 
 ### macOS: In die ChatGPT-App integriertes Codex
@@ -62,18 +62,18 @@ command -v codex
 codex --version
 ```
 
-### Lokales OmniRoute ohne Authentifizierung: Ein Platzhalterschlüssel genügt
+### Lokales Pusula ohne Authentifizierung: Ein Platzhalterschlüssel genügt
 
 Codex überprüft, ob die durch `env_key` benannte Umgebungsvariable vorhanden ist,
 **bevor** die erste Anfrage die CLI verlässt. Wenn Ihre **lokale**
-OmniRoute-Instanz keine Authentifizierung erfordert, genügt ein beliebiger
+Pusula-Instanz keine Authentifizierung erfordert, genügt ein beliebiger
 nicht leerer Platzhalter:
 
 ```bash
-export OMNIROUTE_API_KEY="${OMNIROUTE_API_KEY:-local}"
+export PUSULA_API_KEY="${PUSULA_API_KEY:-local}"
 ```
 
-Verwenden Sie stattdessen einen echten Schlüssel, wenn Ihr OmniRoute-Server
+Verwenden Sie stattdessen einen echten Schlüssel, wenn Ihr Pusula-Server
 geschützt ist oder sich auf einem entfernten System befindet.
 
 > **Gängige Host-Optionen**
@@ -90,19 +90,19 @@ geschützt ist oder sich auf einem entfernten System befindet.
 
 Codex CLI hat `wire_api = "chat"` (Chat Completions) im Februar 2026 als veraltet eingestuft und **erfordert** jetzt `wire_api = "responses"` (OpenAI Responses API). Die Einstellung `wire_api = "chat"` führt seit v0.138 unmittelbar beim Start zum Absturz.
 
-Viele Provider, darunter GLM und Kimi, stellen weiterhin nur einen Chat-Completions-Endpunkt bereit. DeepSeek V4 bietet inzwischen sowohl eine native Responses API als auch einen Anthropic-kompatiblen Endpunkt; OmniRoute verwendet standardmäßig Responses und ermöglicht jeder DeepSeek-Verbindung, die Anthropic-Kompatibilität auszuwählen.
+Viele Provider, darunter GLM und Kimi, stellen weiterhin nur einen Chat-Completions-Endpunkt bereit. DeepSeek V4 bietet inzwischen sowohl eine native Responses API als auch einen Anthropic-kompatiblen Endpunkt; Pusula verwendet standardmäßig Responses und ermöglicht jeder DeepSeek-Verbindung, die Anthropic-Kompatibilität auszuwählen.
 
-**OmniRoute löst dies transparent:**
+**Pusula löst dies transparent:**
 
 ```
 Codex CLI
   → wire_api = "responses"
-  → POST /v1/responses (OmniRoute)
-    → OmniRoute wählt das native Protokoll des Providers aus und übersetzt bei Bedarf
+  → POST /v1/responses (Pusula)
+    → Pusula wählt das native Protokoll des Providers aus und übersetzt bei Bedarf
     → POST /responses (DeepSeek V4) oder /chat/completions (Mistral / GLM / Kimi / andere)
 ```
 
-Bei Verwendung von OmniRoute benötigen Sie niemals einen separaten Übersetzungs-Proxy. **Alle Modelle verwenden `wire_api = "responses"`** — OmniRoute übernimmt den Rest.
+Bei Verwendung von Pusula benötigen Sie niemals einen separaten Übersetzungs-Proxy. **Alle Modelle verwenden `wire_api = "responses"`** — Pusula übernimmt den Rest.
 
 > **`wire_api` ist die Standardeinstellung** — das Feld verwendet standardmäßig `"responses"` und kann vollständig aus `config.toml` weggelassen werden. Setzen Sie es nur dann ausdrücklich, wenn Sie die Absicht dokumentieren möchten.
 
@@ -123,7 +123,7 @@ Bei Verwendung von OmniRoute benötigen Sie niemals einen separaten Übersetzung
 
 ### Kontextfenster nach Modell
 
-| Modell                               | OmniRoute-ID                         | Kontextfenster             | `auto_compact` | `tool_output_limit` |
+| Modell                               | Pusula-ID                         | Kontextfenster             | `auto_compact` | `tool_output_limit` |
 | ------------------------------------ | ------------------------------------ | -------------------------- | -------------- | ------------------- |
 | GPT-5.5                              | `cx/gpt-5.5`                         | 400k zuverlässig (max. 1M) | 350,000        | 32,768              |
 | Kimi K2.7 (denkendes Modell)         | `kmc/kimi-k2.7`                      | 131,072                    | 112,000        | 32,768              |
@@ -151,16 +151,16 @@ Bei Verwendung von OmniRoute benötigen Sie niemals einen separaten Übersetzung
 
 ## Modellpräfix: `cx/`
 
-Alle Codex-Modelle in OmniRoute verwenden das Präfix `cx/`:
+Alle Codex-Modelle in Pusula verwenden das Präfix `cx/`:
 
-| Codex-CLI-Name          | OmniRoute-Modell   |
+| Codex-CLI-Name          | Pusula-Modell   |
 | ----------------------- | ------------------ |
 | `cx/gpt-5.5`            | GPT-5.5 Standard   |
 | `cx/gpt-5.4`            | GPT-5.4 Standard   |
 | `cx/gpt-5.4-mini`       | GPT-5.4 Mini       |
 | `cx/gpt-5.1-codex-mini` | GPT-5.1 Codex Mini |
 
-Andere Anbieter verwenden ihr eigenes Präfix (`kmc/`, `glm/`, `ds/`, `ollamacloud/`, `opencode-go/`, `mistral/`) — das Präfix entspricht dem OmniRoute-Anbieter-Alias.
+Andere Anbieter verwenden ihr eigenes Präfix (`kmc/`, `glm/`, `ds/`, `ollamacloud/`, `opencode-go/`, `mistral/`) — das Präfix entspricht dem Pusula-Anbieter-Alias.
 
 ---
 
@@ -190,9 +190,9 @@ model_reasoning_effort = "xhigh"   # oder ultra, sofern unterstützt
 model_reasoning_summary = "detailed"  # auto | concise | detailed | none
 ```
 
-### OmniRoute-Denkbudget (Servereinstellung)
+### Pusula-Denkbudget (Servereinstellung)
 
-Auf dem OmniRoute-Host muss **Settings → AI → Thinking Budget** auf **`passthrough`** gesetzt sein, damit Codex-Aufwand und -Zusammenfassung an den Upstream-Anbieter weitergeleitet werden. Der Modus **`auto` entfernt** alle clientseitigen Felder `reasoning` / `reasoning_effort` und führt zu leeren Thinking-Panels, selbst wenn Codex korrekt konfiguriert ist.
+Auf dem Pusula-Host muss **Settings → AI → Thinking Budget** auf **`passthrough`** gesetzt sein, damit Codex-Aufwand und -Zusammenfassung an den Upstream-Anbieter weitergeleitet werden. Der Modus **`auto` entfernt** alle clientseitigen Felder `reasoning` / `reasoning_effort` und führt zu leeren Thinking-Panels, selbst wenn Codex korrekt konfiguriert ist.
 
 Vollständige Anleitung: [THINKING_BUDGET.md](./THINKING_BUDGET.md).
 
@@ -276,49 +276,49 @@ codex -p chat     # cx/gpt-5.5, kein Aufwand festgelegt (Serverstandard)
 
 ---
 
-## Profile automatisch mit `omniroute setup-codex` generieren
+## Profile automatisch mit `pusula setup-codex` generieren
 
-Wenn Sie OmniRoute auf einem VPS ausführen, können Sie Profildateien automatisch aus dem Live-Modellkatalog generieren:
+Wenn Sie Pusula auf einem VPS ausführen, können Sie Profildateien automatisch aus dem Live-Modellkatalog generieren:
 
 ```bash
-# Von einem VPS aus (verwendet das lokale OmniRoute auf Port 20128)
-omniroute setup-codex
+# Von einem VPS aus (verwendet das lokale Pusula auf Port 20128)
+pusula setup-codex
 
 # Von einem beliebigen Rechner aus — auf Ihren VPS verweisen
-omniroute setup-codex --remote http://100.x.x.x:20128 --api-key sk-xxx
+pusula setup-codex --remote http://100.x.x.x:20128 --api-key sk-xxx
 
 # Vorschau anzeigen, ohne Dateien zu schreiben
-omniroute setup-codex --remote http://100.x.x.x:20128 --dry-run
+pusula setup-codex --remote http://100.x.x.x:20128 --dry-run
 
 # Nur GLM- und Kimi-Profile generieren
-omniroute setup-codex --only glm,kimi
+pusula setup-codex --only glm,kimi
 
 # In ein benutzerdefiniertes Verzeichnis schreiben
-omniroute setup-codex --codex-home /path/to/.codex
+pusula setup-codex --codex-home /path/to/.codex
 ```
 
 Der Befehl ruft `/v1/models` ab, verwendet optimierte Profile für bekannte Modelle, greift bei anderen kompatiblen Textmodellen auf die Katalogmetadaten zurück und schreibt für jedes Modell `~/.codex/<name>.config.toml`. Der Vorgang ist idempotent und kann daher sicher erneut ausgeführt werden.
 
-OmniRoute kann dieselben Profildateien außerdem **automatisch synchronisieren**, nachdem eine erfolgreiche Erkennung bzw. ein erfolgreicher Import von Anbietermodellen den Live-Katalog geändert hat. Diese Funktion ist **optional und standardmäßig deaktiviert**: Aktivieren Sie sie im **CLI Code dashboard** („CLI profile auto-sync“ → Codex) oder setzen Sie `OMNIROUTE_AUTO_SYNC_CODEX_PROFILES=true` (dabei wird auch `CLI_ALLOW_CONFIG_WRITES` berücksichtigt, das standardmäßig aktiviert ist). Wenn diese Funktion aktiviert ist, schreibt sie ausschließlich separate Profildateien unter `~/.codex/*.config.toml`; die aktive bzw. standardmäßige Datei `~/.codex/config.toml`, Codex-lb-Einstellungen, Authentifizierung oder Anbieterauswahl werden niemals geändert.
+Pusula kann dieselben Profildateien außerdem **automatisch synchronisieren**, nachdem eine erfolgreiche Erkennung bzw. ein erfolgreicher Import von Anbietermodellen den Live-Katalog geändert hat. Diese Funktion ist **optional und standardmäßig deaktiviert**: Aktivieren Sie sie im **CLI Code dashboard** („CLI profile auto-sync“ → Codex) oder setzen Sie `PUSULA_AUTO_SYNC_CODEX_PROFILES=true` (dabei wird auch `CLI_ALLOW_CONFIG_WRITES` berücksichtigt, das standardmäßig aktiviert ist). Wenn diese Funktion aktiviert ist, schreibt sie ausschließlich separate Profildateien unter `~/.codex/*.config.toml`; die aktive bzw. standardmäßige Datei `~/.codex/config.toml`, Codex-lb-Einstellungen, Authentifizierung oder Anbieterauswahl werden niemals geändert.
 
 ---
 
-## Codex mit `omniroute launch-codex` starten
+## Codex mit `pusula launch-codex` starten
 
-Prüft den Zustand Ihrer OmniRoute-Instanz, bevor Codex gestartet wird:
+Prüft den Zustand Ihrer Pusula-Instanz, bevor Codex gestartet wird:
 
 ```bash
-# Mit dem lokalen OmniRoute starten (Standardport 20128)
-omniroute launch-codex
+# Mit dem lokalen Pusula starten (Standardport 20128)
+pusula launch-codex
 
 # Mit einem bestimmten Profil starten
-omniroute launch-codex --profile kimi-k27
+pusula launch-codex --profile kimi-k27
 
 # Mit einem entfernten VPS starten
-omniroute launch-codex --remote http://100.x.x.x:20128/v1 --api-key sk-xxx
+pusula launch-codex --remote http://100.x.x.x:20128/v1 --api-key sk-xxx
 
 # Zusätzliche Argumente an codex übergeben
-omniroute launch-codex --profile glm52 -- --yolo "fix this bug"
+pusula launch-codex --profile glm52 -- --yolo "fix this bug"
 ```
 
 Codex ist außerdem ein Ziel der beiden generischen, manifestgesteuerten Einstiegspunkte
@@ -326,10 +326,10 @@ Codex ist außerdem ein Ziel der beiden generischen, manifestgesteuerten Einstie
 
 ```bash
 # Interaktive Modellauswahl → schreibt ~/.codex/<name>.config.toml (TOML, env_key)
-omniroute configure codex
+pusula configure codex
 
-# codex mit dem über -c-Flags injizierten omniroute-Anbieter starten (es wird keine Konfiguration geschrieben)
-omniroute run codex
+# codex mit dem über -c-Flags injizierten pusula-Anbieter starten (es wird keine Konfiguration geschrieben)
+pusula run codex
 ```
 
 ---
@@ -365,21 +365,21 @@ service_tier = "fast"   # "fast" | "flex"
 ### Neue `[model_providers.<id>]`-Felder
 
 ```toml
-[model_providers.omniroute]
+[model_providers.pusula]
 base_url             = "http://100.x.x.x:20128/v1"
-env_key              = "OMNIROUTE_API_KEY"
+env_key              = "PUSULA_API_KEY"
 requires_openai_auth = false
 
 # Statische zusätzliche Header bei jeder Anfrage
-[model_providers.omniroute.http_headers]
+[model_providers.pusula.http_headers]
 "X-Custom-Header" = "value"
 
 # Aus Umgebungsvariablen gelesene Header
-[model_providers.omniroute.env_http_headers]
+[model_providers.pusula.env_http_headers]
 "X-Trace-Id" = "TRACE_ID"
 
 # Zusätzliche URL-Abfrageparameter (nützlich für die Azure-api-version)
-[model_providers.omniroute.query_params]
+[model_providers.pusula.query_params]
 "api-version" = "2024-12-01-preview"
 ```
 
@@ -399,13 +399,13 @@ region  = "us-east-1"
 ## Mehrere Server
 
 ```toml
-[model_providers.omniroute-main]
+[model_providers.pusula-main]
 base_url = "http://192.168.0.1:20128/v1"
-env_key  = "OMNIROUTE_API_KEY"
+env_key  = "PUSULA_API_KEY"
 
-[model_providers.omniroute-tailscale]
+[model_providers.pusula-tailscale]
 base_url = "http://100.x.x.x:20128/v1"
-env_key  = "OMNIROUTE_API_KEY"
+env_key  = "PUSULA_API_KEY"
 ```
 
 ---
@@ -458,14 +458,14 @@ Innerhalb einer interaktiven Sitzung:
 
 ## Lang laufende Aufgaben
 
-Zwei OmniRoute-Standardeinstellungen können mehrstündige Codex-CLI-Sitzungen unbemerkt sabotieren. Keine davon ist eine Codex-CLI-Einstellung — beide befinden sich auf der OmniRoute-Seite. Benutzer, die eine Konfiguration von vorgeschalteten Proxys migrieren, welche Konten fest zuordnen und Leerlaufbegrenzungen deaktivieren, stoßen häufig auf beide Probleme und kommen zu dem Schluss, OmniRoute könne „keine lange Sitzung aufrechterhalten“.
+Zwei Pusula-Standardeinstellungen können mehrstündige Codex-CLI-Sitzungen unbemerkt sabotieren. Keine davon ist eine Codex-CLI-Einstellung — beide befinden sich auf der Pusula-Seite. Benutzer, die eine Konfiguration von vorgeschalteten Proxys migrieren, welche Konten fest zuordnen und Leerlaufbegrenzungen deaktivieren, stoßen häufig auf beide Probleme und kommen zu dem Schluss, Pusula könne „keine lange Sitzung aufrechterhalten“.
 
 | Symptom                                                                                     | Wahrscheinliche Ursache                                                        | Einstellung              |
 | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | ------------------------ |
 | Sitzung wechselt ständig die Konten / Prompt-Cache-Kontinuität geht zwischen Zügen verloren | TTL der Sitzungsaffinität ist `0` (deaktiviert)                                | `sessionAffinityTtlMs`   |
 | Verbindung bricht mitten im Schlussfolgern ohne clientseitige Meldung ab                    | Stream-Leerlaufüberwachung wurde nach 10 Minuten ohne Upstream-Chunk ausgelöst | `STREAM_IDLE_TIMEOUT_MS` |
 
-Zugehörige Diskussionen: [#7126](https://github.com/diegosouzapw/OmniRoute/discussions/7126) (Abbrüche bei langen Aufgaben), [#5718](https://github.com/diegosouzapw/OmniRoute/discussions/5718) (warum Affinität standardmäßig deaktiviert ist). Nachverfolgung: [#7287](https://github.com/diegosouzapw/OmniRoute/issues/7287).
+Zugehörige Diskussionen: [#7126](https://github.com/Ferhat-Yasinoglu/pusula/discussions/7126) (Abbrüche bei langen Aufgaben), [#5718](https://github.com/Ferhat-Yasinoglu/pusula/discussions/5718) (warum Affinität standardmäßig deaktiviert ist). Nachverfolgung: [#7287](https://github.com/Ferhat-Yasinoglu/pusula/issues/7287).
 
 ### 1. Sitzungsaffinität — eine Konversation einem Konto fest zuordnen
 
@@ -480,7 +480,7 @@ Zugehörige Diskussionen: [#7126](https://github.com/diegosouzapw/OmniRoute/disc
 
 **Was nicht funktioniert, wenn der Wert bei 0 bleibt**
 
-Jeder Zug einer Codex-Konversation mit mehreren Zügen wird von der aktiven Kombinationsstrategie unabhängig geroutet und kann bei jedem Zug auf einem **anderen Konto** landen. Dadurch wird die Kontinuität der Upstream-Sitzung bzw. des Prompt-Caches unterbrochen. OmniRoute berücksichtigt Codex-Sitzungsheader (`x-codex-session-id` / `x-session-id` / `x-omniroute-session`) und Textkörperfelder wie `prompt_cache_key` / `session_id` nur dann, wenn die TTL größer als `0` ist (`extractSessionAffinityKey` in `src/sse/services/auth.ts`).
+Jeder Zug einer Codex-Konversation mit mehreren Zügen wird von der aktiven Kombinationsstrategie unabhängig geroutet und kann bei jedem Zug auf einem **anderen Konto** landen. Dadurch wird die Kontinuität der Upstream-Sitzung bzw. des Prompt-Caches unterbrochen. Pusula berücksichtigt Codex-Sitzungsheader (`x-codex-session-id` / `x-session-id` / `x-pusula-session`) und Textkörperfelder wie `prompt_cache_key` / `session_id` nur dann, wenn die TTL größer als `0` ist (`extractSessionAffinityKey` in `src/sse/services/auth.ts`).
 
 **Empfehlung für eine einzelne mehrstündige Aufgabe**
 
@@ -502,13 +502,13 @@ Die explizite Aktivierung ist beabsichtigt: Das Deaktivieren der Affinität beg�
 
 Ein Codex-Reasoning-/Tool-Turn, der länger als 10 Minuten ohne **echten Upstream-Chunk** still bleibt, wird vom SSE-Inaktivitäts-Watchdog (`open-sse/utils/stream.ts`) zwangsweise beendet. Der Client stellt häufig nur einen abrupten Verbindungsabbruch fest — passend zu „automatisch und ohne Benachrichtigung gestoppt“.
 
-Entscheidendes Detail: Der synthetische SSE-**Heartbeat** von OmniRoute setzt den Inaktivitäts-Timer **nicht zurück**. Nur ein echter Upstream-Body-Chunk aktualisiert `lastChunkTime`. Ein stilles Modell, das noch „nachdenkt“, ist aus Sicht des Watchdogs nicht von einem blockierten Upstream zu unterscheiden.
+Entscheidendes Detail: Der synthetische SSE-**Heartbeat** von Pusula setzt den Inaktivitäts-Timer **nicht zurück**. Nur ein echter Upstream-Body-Chunk aktualisiert `lastChunkTime`. Ein stilles Modell, das noch „nachdenkt“, ist aus Sicht des Watchdogs nicht von einem blockierten Upstream zu unterscheiden.
 
 Verwandte Undici-Body-Inaktivität: `FETCH_BODY_TIMEOUT_MS` (standardmäßig ebenfalls dieselbe 10-Minuten-Basislinie; `0` deaktiviert sie). Beim Streaming deckt `FETCH_TIMEOUT_MS` nur den Verbindungsaufbau / die ersten Header ab — sobald der Stream aktiv ist, werden Unterbrechungen durch `STREAM_IDLE_TIMEOUT_MS` und `FETCH_BODY_TIMEOUT_MS` geregelt.
 
 **Empfehlung für eine einzelne, mehrere Stunden dauernde Aufgabe**
 
-In der Prozessumgebung von OmniRoute (`.env` / compose / systemd):
+In der Prozessumgebung von Pusula (`.env` / compose / systemd):
 
 ```bash
 # Inaktivitätslimits für Stream und Body bei langen Reasoning-Turns deaktivieren
@@ -524,20 +524,20 @@ STREAM_IDLE_TIMEOUT_MS=7200000
 FETCH_BODY_TIMEOUT_MS=7200000
 ```
 
-Starten Sie OmniRoute neu, nachdem Sie diese Umgebungsvariablen geändert haben.
+Starten Sie Pusula neu, nachdem Sie diese Umgebungsvariablen geändert haben.
 
 ### Konkrete Anleitung — mehrstündige Codex-Aufgabe
 
 1. **Konto fest zuordnen:** Dashboard → Settings → Routing → Session affinity → Affinity TTL = `43200` (12 Std.) oder `86400` (max. 24 Std.).
-2. **Inaktivitätslimits erhöhen / deaktivieren** in der Umgebung von OmniRoute:
+2. **Inaktivitätslimits erhöhen / deaktivieren** in der Umgebung von Pusula:
 
 ```bash
 STREAM_IDLE_TIMEOUT_MS=0
 FETCH_BODY_TIMEOUT_MS=0
 ```
 
-3. Behalten Sie die übliche Codex-`config.toml` bei (`wire_api = "responses"`, korrekte `base_url`, `OMNIROUTE_API_KEY`) — für diese beiden Verhaltensweisen gibt es auf Codex-Seite keine Optionen für Affinität/Inaktivität.
-4. Starten Sie OmniRoute neu und anschließend die lange Codex-Aufgabe.
+3. Behalten Sie die übliche Codex-`config.toml` bei (`wire_api = "responses"`, korrekte `base_url`, `PUSULA_API_KEY`) — für diese beiden Verhaltensweisen gibt es auf Codex-Seite keine Optionen für Affinität/Inaktivität.
+4. Starten Sie Pusula neu und anschließend die lange Codex-Aufgabe.
 
 ### Entscheidung zu Standardwerten (#7287)
 
@@ -550,13 +550,13 @@ Eine globale Änderung eines dieser Standardwerte würde das Verhalten für jede
 
 ### Diagnose von Inaktivitätsabbrüchen
 
-Wenn der Inaktivitäts-Watchdog ausgelöst wird, protokolliert OmniRoute eine Zeile in folgender Form:
+Wenn der Inaktivitäts-Watchdog ausgelöst wird, protokolliert Pusula eine Zeile in folgender Form:
 
 ```text
 [STREAM] Idle timeout: no data from codex for 600000ms (model: cx/gpt-5.5)
 ```
 
-Suchen Sie mit Grep nach `Idle timeout: no data from` (oder nach dem Code `stream_idle_timeout` / Fehlernamen `StreamIdleTimeoutError`). Das Provider-Segment entspricht dem Provider, den OmniRoute für diese Anfrage verwendet hat (`codex`, eine andere Provider-ID oder `provider`, falls unbekannt) — es ist nicht immer die wörtliche Zeichenfolge `codex`.
+Suchen Sie mit Grep nach `Idle timeout: no data from` (oder nach dem Code `stream_idle_timeout` / Fehlernamen `StreamIdleTimeoutError`). Das Provider-Segment entspricht dem Provider, den Pusula für diese Anfrage verwendet hat (`codex`, eine andere Provider-ID oder `provider`, falls unbekannt) — es ist nicht immer die wörtliche Zeichenfolge `codex`.
 
 ---
 
@@ -566,16 +566,16 @@ Suchen Sie mit Grep nach `Idle timeout: no data from` (oder nach dem Code `strea
 Entfernen Sie `wire_api = "chat"` aus Ihrer Konfiguration. Setzen Sie `wire_api = "responses"` oder lassen Sie das Feld weg (seit v0.138 ist `"responses"` der Standardwert).
 
 **`Error: model not found`**
-Überprüfen Sie, ob das Modell in OmniRoute mit dem richtigen Präfix vorhanden ist. Verwenden Sie `omniroute models list` oder öffnen Sie `/dashboard/providers/<provider>`.
+Überprüfen Sie, ob das Modell in Pusula mit dem richtigen Präfix vorhanden ist. Verwenden Sie `pusula models list` oder öffnen Sie `/dashboard/providers/<provider>`.
 
 **`Authentication error`**
-Stellen Sie sicher, dass `OMNIROUTE_API_KEY` exportiert ist: `echo $OMNIROUTE_API_KEY`.
+Stellen Sie sicher, dass `PUSULA_API_KEY` exportiert ist: `echo $PUSULA_API_KEY`.
 
-**`ERROR: Missing environment variable: OMNIROUTE_API_KEY`**
-Codex überprüft vor der ersten Anfrage, ob die Umgebungsvariable vorhanden ist. Exportieren Sie für geschützte Server einen echten Schlüssel oder einen nicht leeren Platzhalter wie `OMNIROUTE_API_KEY=local`, wenn Ihre **lokale** OmniRoute-Instanz keine Authentifizierung erfordert. Starten Sie die Shell neu, wenn Sie die Variable zu `~/.bashrc` oder `~/.zshrc` hinzugefügt haben.
+**`ERROR: Missing environment variable: PUSULA_API_KEY`**
+Codex überprüft vor der ersten Anfrage, ob die Umgebungsvariable vorhanden ist. Exportieren Sie für geschützte Server einen echten Schlüssel oder einen nicht leeren Platzhalter wie `PUSULA_API_KEY=local`, wenn Ihre **lokale** Pusula-Instanz keine Authentifizierung erfordert. Starten Sie die Shell neu, wenn Sie die Variable zu `~/.bashrc` oder `~/.zshrc` hinzugefügt haben.
 
 **`Connection refused`**
-Überprüfen Sie, ob OmniRoute ausgeführt wird und ob Host und Port von `base_url` für Ihr Netzwerk korrekt sind (lokal, Tailscale oder VPS).
+Überprüfen Sie, ob Pusula ausgeführt wird und ob Host und Port von `base_url` für Ihr Netzwerk korrekt sind (lokal, Tailscale oder VPS).
 
 **Sitzung stürzt nahe dem Kontextlimit ab**
 Setzen Sie `model_context_window` und `model_auto_compact_token_limit` explizit. Siehe die Tabelle zum Kontextfenster oben.
@@ -587,4 +587,4 @@ Senken Sie `model_auto_compact_token_limit` auf 80–85 % des Fensters. Setzen S
 Stellen Sie sicher, dass die Datei unter `~/.codex/<name>.config.toml` vorhanden ist (ohne das Präfix `profile-`). Führen Sie `ls ~/.codex/*.config.toml` aus.
 
 **Lange Codex-Aufgabe bricht während der Ausführung ab / wechselt zwischen Anfragen das Konto**
-Siehe [Lang laufende Aufgaben](#long-running-tasks). Aktivieren Sie Sitzungsaffinität (TTL länger als die Aufgabendauer) und erhöhen oder deaktivieren Sie `STREAM_IDLE_TIMEOUT_MS` / `FETCH_BODY_TIMEOUT_MS`. Durchsuchen Sie die OmniRoute-Protokolle mit grep nach `Idle timeout: no data from`.
+Siehe [Lang laufende Aufgaben](#long-running-tasks). Aktivieren Sie Sitzungsaffinität (TTL länger als die Aufgabendauer) und erhöhen oder deaktivieren Sie `STREAM_IDLE_TIMEOUT_MS` / `FETCH_BODY_TIMEOUT_MS`. Durchsuchen Sie die Pusula-Protokolle mit grep nach `Idle timeout: no data from`.

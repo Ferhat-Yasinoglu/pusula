@@ -31,10 +31,10 @@ test("apply adds the main slot and preserves unrelated TOML", () => {
   const result = applyGrokBuildConfig(source, main);
   const parsed = parseGrokBuildConfig(result);
 
-  assert.equal(parsed.default, "omniroute");
+  assert.equal(parsed.default, "pusula");
   assert.equal(parsed.model?.model, main.model);
   assert.equal(parsed.model?.context_window, main.contextWindow);
-  assert.match(result, /# omniroute-prev-default = "custom"/);
+  assert.match(result, /# pusula-prev-default = "custom"/);
   assert.match(result, /# user comment/);
   assert.match(result, /theme = "dark"/);
   assert.match(result, /\[model\.custom\]/);
@@ -46,25 +46,25 @@ test("apply records an absent default once and reset removes it", () => {
     model: "anthropic/claude-opus-4-1",
   });
 
-  assert.equal(appliedTwice.match(/omniroute-prev-default/g)?.length, 1);
+  assert.equal(appliedTwice.match(/pusula-prev-default/g)?.length, 1);
   const reset = resetGrokBuildConfig(appliedTwice);
   assert.doesNotMatch(reset, /^default\s*=/m);
-  assert.doesNotMatch(reset, /\[model\.omniroute\]/);
+  assert.doesNotMatch(reset, /\[model\.pusula\]/);
   assert.match(reset, /\[ui\]\ncompact = true/);
 });
 
 test("reset never restores the obsolete grok-build default", () => {
   const source = [
     "[models]",
-    'default = "omniroute"',
+    'default = "pusula"',
     "",
-    '# omniroute-prev-default = "grok-build"',
-    "[model.omniroute]",
-    '# omniroute-managed = "true"',
+    '# pusula-prev-default = "grok-build"',
+    "[model.pusula]",
+    '# pusula-managed = "true"',
     'model = "openai/gpt-5.5"',
     'base_url = "http://localhost:20128/v1"',
-    'name = "OmniRoute"',
-    'description = "Routed via OmniRoute gateway"',
+    'name = "Pusula"',
+    'description = "Routed via Pusula gateway"',
     'api_backend = "chat_completions"',
     "",
   ].join("\n");
@@ -89,13 +89,13 @@ test("apply manages all subagent slots and keeps context windows", () => {
   );
   const parsed = parseGrokBuildConfig(result);
 
-  assert.equal(parsed.subagentMappings["general-purpose"], "omniroute-general-purpose");
+  assert.equal(parsed.subagentMappings["general-purpose"], "pusula-general-purpose");
   assert.equal(parsed.subagentMappings.explore, "old-explore");
-  assert.equal(parsed.subagentMappings.plan, "omniroute-plan");
+  assert.equal(parsed.subagentMappings.plan, "pusula-plan");
   assert.equal(parsed.subagentModels["general-purpose"]?.context_window, 1048576);
   assert.equal(parsed.subagentModels.plan?.context_window, 200000);
-  assert.match(result, /omniroute-prev-subagent-general-purpose = "old-general"/);
-  assert.match(result, /omniroute-prev-subagent-plan = "__omniroute_unset__"/);
+  assert.match(result, /pusula-prev-subagent-general-purpose = "old-general"/);
+  assert.match(result, /pusula-prev-subagent-plan = "__pusula_unset__"/);
 });
 
 test("an absent subagentModels property preserves current subagent values", () => {
@@ -121,7 +121,7 @@ test("an empty subagentModels object removes all managed overrides", () => {
 
   assert.equal(parsed.subagentMappings.explore, "user-explore");
   assert.equal(parsed.subagentMappings.plan, null);
-  assert.doesNotMatch(result, /\[model\.omniroute-(?:explore|plan)\]/);
+  assert.doesNotMatch(result, /\[model\.pusula-(?:explore|plan)\]/);
 });
 
 test("reset restores only mappings that still reference managed slots", () => {
@@ -129,20 +129,20 @@ test("reset restores only mappings that still reference managed slots", () => {
     ...main,
     subagentModels: { explore: { model: "xai/grok-4", contextWindow: 256000 } },
   });
-  source = source.replace('explore = "omniroute-explore"', 'explore = "user-changed-explore"');
+  source = source.replace('explore = "pusula-explore"', 'explore = "user-changed-explore"');
 
   const result = resetGrokBuildConfig(source);
   assert.match(result, /explore = "user-changed-explore"/);
-  assert.doesNotMatch(result, /omniroute-prev-subagent/);
+  assert.doesNotMatch(result, /pusula-prev-subagent/);
 });
 
-test("apply accepts the exact legacy OmniRoute table", () => {
+test("apply accepts the exact legacy Pusula table", () => {
   const legacy = [
-    "[model.omniroute]",
+    "[model.pusula]",
     'model = "grok-4.5"',
     'base_url = "http://localhost:20128/v1"',
-    'name = "OmniRoute"',
-    'description = "Routed via OmniRoute gateway"',
+    'name = "Pusula"',
+    'description = "Routed via Pusula gateway"',
     'api_backend = "chat_completions"',
     'api_key = "sk-old"',
     "",
@@ -151,9 +151,9 @@ test("apply accepts the exact legacy OmniRoute table", () => {
   assert.doesNotThrow(() => applyGrokBuildConfig(legacy, main));
 });
 
-test("apply rejects an unowned model.omniroute table", () => {
+test("apply rejects an unowned model.pusula table", () => {
   const source = [
-    "[model.omniroute]",
+    "[model.pusula]",
     'model = "private-model"',
     'base_url = "https://example.test/v1"',
     'name = "User model"',

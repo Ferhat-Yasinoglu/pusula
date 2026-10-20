@@ -7,17 +7,17 @@
       "publishedAt": "2026-08-09T00:00:00.000Z",
       "text": {
         "en": {
-          "title": "OmniRoute Radar",
-          "message": "An opt-in, GET-only free-model catalog overlay with no telemetry from the OmniRoute client.",
+          "title": "Pusula Radar",
+          "message": "An opt-in, GET-only free-model catalog overlay with no telemetry from the Pusula client.",
           "linkLabel": "Learn about Radar"
         },
         "pt-BR": {
-          "title": "OmniRoute Radar",
-          "message": "Um catálogo opcional de modelos gratuitos, somente GET e sem telemetria enviada pelo cliente OmniRoute.",
+          "title": "Pusula Radar",
+          "message": "Um catálogo opcional de modelos gratuitos, somente GET e sem telemetria enviada pelo cliente Pusula.",
           "linkLabel": "Conheça o Radar"
         }
       },
-      "link": "https://radar.omniroute.online/planos",
+      "link": "https://radar.pusula.online/planos",
       "icon": "radar"
     },
     {

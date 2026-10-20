@@ -68,7 +68,7 @@ test("duplicate turn result uses a sanitized 409 body and retry headers", async 
   assert.equal(duplicate.result.errorType, "turn_in_progress");
   assert.equal(duplicate.result.errorCode, "turn_in_progress");
   assert.equal(duplicate.result.response.headers.get("Retry-After"), "1");
-  assert.equal(duplicate.result.response.headers.get("X-OmniRoute-Turn-Retry"), "3");
+  assert.equal(duplicate.result.response.headers.get("X-Pusula-Turn-Retry"), "3");
   assert.deepEqual(
     await duplicate.result.response.json(),
     JSON.parse(JSON.stringify(duplicate.body))

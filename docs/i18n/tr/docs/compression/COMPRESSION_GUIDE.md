@@ -1,4 +1,4 @@
-# 🗜️ Prompt Compression Guide — OmniRoute (Türkçe)
+# 🗜️ Prompt Compression Guide — Pusula (Türkçe)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../compression/COMPRESSION_GUIDE.md) · 🇪🇹 [am](../../../am/docs/compression/COMPRESSION_GUIDE.md) · 🇸🇦 [ar](../../../ar/docs/compression/COMPRESSION_GUIDE.md) · 🇦🇿 [az](../../../az/docs/compression/COMPRESSION_GUIDE.md) · 🇧🇬 [bg](../../../bg/docs/compression/COMPRESSION_GUIDE.md) · 🇧🇩 [bn](../../../bn/docs/compression/COMPRESSION_GUIDE.md) · 🇧🇦 [bs](../../../bs/docs/compression/COMPRESSION_GUIDE.md) · 🇨🇿 [cs](../../../cs/docs/compression/COMPRESSION_GUIDE.md) · 🇩🇰 [da](../../../da/docs/compression/COMPRESSION_GUIDE.md) · 🇩🇪 [de](../../../de/docs/compression/COMPRESSION_GUIDE.md) · 🇬🇷 [el](../../../el/docs/compression/COMPRESSION_GUIDE.md) · 🇪🇸 [es](../../../es/docs/compression/COMPRESSION_GUIDE.md) · 🇪🇪 [et](../../../et/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇷 [fa](../../../fa/docs/compression/COMPRESSION_GUIDE.md) · 🇫🇮 [fi](../../../fi/docs/compression/COMPRESSION_GUIDE.md) · 🇫🇷 [fr](../../../fr/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇪 [ga](../../../ga/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [gu](../../../gu/docs/compression/COMPRESSION_GUIDE.md) · 🇳🇬 [ha](../../../ha/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇱 [he](../../../he/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [hi](../../../hi/docs/compression/COMPRESSION_GUIDE.md) · 🇭🇷 [hr](../../../hr/docs/compression/COMPRESSION_GUIDE.md) · 🇭🇺 [hu](../../../hu/docs/compression/COMPRESSION_GUIDE.md) · 🇦🇲 [hy](../../../hy/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇩 [id](../../../id/docs/compression/COMPRESSION_GUIDE.md) · 🇳🇬 [ig](../../../ig/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇹 [it](../../../it/docs/compression/COMPRESSION_GUIDE.md) · 🇯🇵 [ja](../../../ja/docs/compression/COMPRESSION_GUIDE.md) · 🇬🇪 [ka](../../../ka/docs/compression/COMPRESSION_GUIDE.md) · 🇰🇭 [km](../../../km/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [kn](../../../kn/docs/compression/COMPRESSION_GUIDE.md) · 🇰🇷 [ko](../../../ko/docs/compression/COMPRESSION_GUIDE.md) · 🇱🇹 [lt](../../../lt/docs/compression/COMPRESSION_GUIDE.md) · 🇱🇻 [lv](../../../lv/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [ml](../../../ml/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [mr](../../../mr/docs/compression/COMPRESSION_GUIDE.md) · 🇲🇾 [ms](../../../ms/docs/compression/COMPRESSION_GUIDE.md) · 🇲🇹 [mt](../../../mt/docs/compression/COMPRESSION_GUIDE.md) · 🇲🇲 [my](../../../my/docs/compression/COMPRESSION_GUIDE.md) · 🇳🇵 [ne](../../../ne/docs/compression/COMPRESSION_GUIDE.md) · 🇳🇱 [nl](../../../nl/docs/compression/COMPRESSION_GUIDE.md) · 🇳🇴 [no](../../../no/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [or](../../../or/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [pa](../../../pa/docs/compression/COMPRESSION_GUIDE.md) · 🇵🇭 [phi](../../../phi/docs/compression/COMPRESSION_GUIDE.md) · 🇵🇱 [pl](../../../pl/docs/compression/COMPRESSION_GUIDE.md) · 🇵🇹 [pt](../../../pt/docs/compression/COMPRESSION_GUIDE.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/compression/COMPRESSION_GUIDE.md) · 🇷🇴 [ro](../../../ro/docs/compression/COMPRESSION_GUIDE.md) · 🇷🇺 [ru](../../../ru/docs/compression/COMPRESSION_GUIDE.md) · 🇱🇰 [si](../../../si/docs/compression/COMPRESSION_GUIDE.md) · 🇸🇰 [sk](../../../sk/docs/compression/COMPRESSION_GUIDE.md) · 🇸🇮 [sl](../../../sl/docs/compression/COMPRESSION_GUIDE.md) · 🇷🇸 [sr](../../../sr/docs/compression/COMPRESSION_GUIDE.md) · 🇸🇪 [sv](../../../sv/docs/compression/COMPRESSION_GUIDE.md) · 🇰🇪 [sw](../../../sw/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [ta](../../../ta/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [te](../../../te/docs/compression/COMPRESSION_GUIDE.md) · 🇹🇭 [th](../../../th/docs/compression/COMPRESSION_GUIDE.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/compression/COMPRESSION_GUIDE.md) · 🇵🇰 [ur](../../../ur/docs/compression/COMPRESSION_GUIDE.md) · 🇺🇿 [uz](../../../uz/docs/compression/COMPRESSION_GUIDE.md) · 🇻🇳 [vi](../../../vi/docs/compression/COMPRESSION_GUIDE.md) · 🇳🇬 [yo](../../../yo/docs/compression/COMPRESSION_GUIDE.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/compression/COMPRESSION_GUIDE.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/compression/COMPRESSION_GUIDE.md)
 
@@ -8,7 +8,7 @@
 
 ## Genel Bakış
 
-OmniRoute, istekler üst sağlayıcılara ulaşmadan önce **proaktif olarak** çalışan modüler bir istem sıkıştırma işlem hattı uygular. Bu, token tasarrufunun şeffaf biçimde gerçekleştiği anlamına gelir — iş akışınızda herhangi bir değişiklik yapmanız gerekmez.
+Pusula, istekler üst sağlayıcılara ulaşmadan önce **proaktif olarak** çalışan modüler bir istem sıkıştırma işlem hattı uygular. Bu, token tasarrufunun şeffaf biçimde gerçekleştiği anlamına gelir — iş akışınızda herhangi bir değişiklik yapmanız gerekmez.
 
 ```
 İstemci İsteği
@@ -113,15 +113,15 @@ Bu sıra, önce terminal/araç çıktısını kompakt hâle getirir, ardından k
 
 ## Yukarı Akış Tasarruf Hesaplaması
 
-OmniRoute, sıkıştırma tasarruflarını iki kaynağa dayanarak belgeler: yukarı akış proje karşılaştırmaları ve
-OmniRoute'un kendi motor bileşimi.
+Pusula, sıkıştırma tasarruflarını iki kaynağa dayanarak belgeler: yukarı akış proje karşılaştırmaları ve
+Pusula'un kendi motor bileşimi.
 
 | Kaynak  | Burada kullanılan yukarı akış README değeri                                                                                       |
 | ------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | Caveman | `~75%` daha az çıktı tokenı, karşılaştırmalarda ortalama `65%` çıktı tasarrufu, `22-87%` aralığı ve `~46%` giriş sıkıştırma aracı |
 | RTK     | Komut çıktısında `60-90%` tasarruf; örnek oturumda `~118,000 -> ~23,900` token veya `79.7%` tasarruf (`~80%`)                     |
 
-Çakışan araç/bağlam yükleri için varsayılan OmniRoute kombinasyonu motorları üst üste uygular:
+Çakışan araç/bağlam yükleri için varsayılan Pusula kombinasyonu motorları üst üste uygular:
 
 ```txt
 RTK -> Caveman
@@ -212,7 +212,7 @@ yukarıda belgelenen işlem hattı atama onay kutusunun hemen yanında, `Kontrol
 
 ### İstek Başına Geçersiz Kılma
 
-Tek bir istek için sıkıştırma planını geçersiz kılmak üzere `x-omniroute-compression` istek başlığını gönderin.
+Tek bir istek için sıkıştırma planını geçersiz kılmak üzere `x-pusula-compression` istek başlığını gönderin.
 En yüksek önceliğe sahiptir — yönlendirme-kombinasyonu geçersiz kılmasını, etkin profili, otomatik tetiklemeyi ve panel Varsayılanını yener. Bilinmeyen değerler yok sayılır (istek asla reddedilmez) ve genel ana anahtar her şeyi hala kontrol eder: sıkıştırma genel olarak kapalıyken, başlık onu açamaz. Değerler:
 
 | Değer         | Etki                                                                                                  |
@@ -227,7 +227,7 @@ En yüksek önceliğe sahiptir — yönlendirme-kombinasyonu geçersiz kılması
 `allow-lossy`, `engine:<id>` veya adlandırılmış bir kombinasyon olmadan, kayıplı motorlar uygulanmaz.
 Sıkıştırma açıkken istek yine de oturum tekilleştirme ve boşluk katlama alır.
 
-Uygulanan plan, `X-OmniRoute-Compression: <mode>; source=<source>` yanıt başlığında geri yansıtılır; burada `<source>`, `request-header`, `routing-override`, `active-profile`, `auto-trigger`, `default` veya `off` değerlerinden biridir.
+Uygulanan plan, `X-Pusula-Compression: <mode>; source=<source>` yanıt başlığında geri yansıtılır; burada `<source>`, `request-header`, `routing-override`, `active-profile`, `auto-trigger`, `default` veya `off` değerlerinden biridir.
 
 ### API
 
@@ -314,7 +314,7 @@ RTK modu, **[RTK AI](https://github.com/rtk-ai)** tarafından geliştirilen **[R
 
 ## Gelişmiş Sıkıştırma Sistemleri
 
-7 standart modun ötesinde, OmniRoute bağlama göre otomatik olarak çalışan çeşitli
+7 standart modun ötesinde, Pusula bağlama göre otomatik olarak çalışan çeşitli
 gelişmiş sıkıştırma sistemleri içerir.
 
 ### Önbellek Duyarlı Sıkıştırma
@@ -342,7 +342,7 @@ stratejisini buna göre **ayarlayarak** bu sorunu çözer.
 import {
   detectCachingContext,
   getCacheAwareStrategy,
-} from "@omniroute/open-sse/services/compression/cachingAware";
+} from "@pusula/open-sse/services/compression/cachingAware";
 
 const body = {
   model: "anthropic/claude-sonnet-4.5",
@@ -379,7 +379,7 @@ göre derecelendirir**:
 #### Kod örneği
 
 ```ts
-import { applyAging } from "@omniroute/open-sse/services/compression/progressiveAging";
+import { applyAging } from "@pusula/open-sse/services/compression/progressiveAging";
 
 const messages = [
   { role: "system", content: "You are a helpful assistant" },
@@ -465,7 +465,7 @@ hata dizelerini, URL'leri ve tanımlayıcıları olduğu gibi korur.
 seçimi kataloğa göre çözer (bilinmeyen kimlikler ve yerel ayar uyumsuz stiller
 bırakılır, asla hata olmaz), seçilen talimatları katalog sırasına göre birleştirir,
 sınırlar maddesini **bir kez** ekler ve sonucu tek bir idempontans işaretçisinin
-(`[OmniRoute Output Styles]`) arkasındaki sistem istemine önceden yükler — yeniden
+(`[Pusula Output Styles]`) arkasındaki sistem istemine önceden yükler — yeniden
 uygulama bir no-op'tur. Algılanan istek dilinin bir çevirisi olduğunda, İngilizce
 yerine yerelleştirilmiş talimat enjekte edilir.
 

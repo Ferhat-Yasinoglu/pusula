@@ -5,7 +5,7 @@ import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "omniroute-images-"));
+process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "pusula-images-"));
 
 // Stub DNS for fetchRemoteImage's GHSA-cmhj-wh2f-9cgx guard so mocked example.com URLs
 // resolve as public. #13883's `pinDns: true` pins the connection via undici, bypassing a
@@ -876,7 +876,7 @@ test("handleImageGeneration sanitizes Antigravity upstream error payloads", asyn
         error: {
           code: 500,
           message:
-            "failed at /Users/backryun/OmniRoute/open-sse/handlers/imageGeneration.ts:1\nstack",
+            "failed at /Users/backryun/Pusula/open-sse/handlers/imageGeneration.ts:1\nstack",
           status: "INTERNAL",
         },
       }),

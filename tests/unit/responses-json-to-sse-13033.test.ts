@@ -21,10 +21,10 @@ function chatCompletion(content = "hi") {
 
 test("wraps non-streaming chat JSON as Responses SSE ending in response.completed", async () => {
   const response = wrapChatCompletionJsonAsResponsesSse(chatCompletion("hello"), {
-    "X-OmniRoute-Cache": "MISS",
+    "X-Pusula-Cache": "MISS",
   });
   assert.equal(response.headers.get("Content-Type"), "text/event-stream");
-  assert.equal(response.headers.get("X-OmniRoute-Cache"), "MISS");
+  assert.equal(response.headers.get("X-Pusula-Cache"), "MISS");
   const sse = await response.text();
   assert.match(sse, /event: response\.created/);
   assert.match(sse, /event: response\.completed/);
@@ -52,7 +52,7 @@ test("maybeWrapForcedNonStreamingResponsesJson wraps JSON when the client asked 
   const response = maybeWrapForcedNonStreamingResponsesJson({
     clientRequestedResponsesStream: true,
     body: chatCompletion("stream-me"),
-    headers: { "Content-Type": "application/json", "X-OmniRoute-Cache": "MISS" },
+    headers: { "Content-Type": "application/json", "X-Pusula-Cache": "MISS" },
   });
   assert.equal(response.headers.get("Content-Type"), "text/event-stream");
   const sse = await response.text();

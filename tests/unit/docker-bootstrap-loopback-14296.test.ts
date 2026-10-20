@@ -29,7 +29,7 @@ import path from "node:path";
 // gateway peer with no token — means someone reintroduced the rejected
 // "gateway = loopback" fix.
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-docker-loopback-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-docker-loopback-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = "test-api-key-secret";
 
@@ -45,12 +45,12 @@ async function resetStorage() {
   fs.rmSync(TEST_DATA_DIR, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
   fs.mkdirSync(TEST_DATA_DIR, { recursive: true });
   delete process.env.INITIAL_PASSWORD;
-  delete process.env.OMNIROUTE_PEER_STAMP_TOKEN;
+  delete process.env.PUSULA_PEER_STAMP_TOKEN;
 }
 
 /** Mirrors the real pipeline: the custom server stamps the real TCP peer it saw. */
 function stampedPeerRequest(url: string, peerIp: string, init: RequestInit = {}): Request {
-  process.env.OMNIROUTE_PEER_STAMP_TOKEN = TEST_PEER_STAMP_TOKEN;
+  process.env.PUSULA_PEER_STAMP_TOKEN = TEST_PEER_STAMP_TOKEN;
   const headers = new Headers(init.headers);
   headers.set(PEER_IP_HEADER, `${TEST_PEER_STAMP_TOKEN}|${peerIp}`);
   headers.set(VIA_PROXY_HEADER, `${TEST_PEER_STAMP_TOKEN}|0`);
@@ -67,7 +67,7 @@ test.after(() => {
   delete process.env.DATA_DIR;
   delete process.env.API_KEY_SECRET;
   delete process.env.INITIAL_PASSWORD;
-  delete process.env.OMNIROUTE_PEER_STAMP_TOKEN;
+  delete process.env.PUSULA_PEER_STAMP_TOKEN;
 });
 
 test("#14296: the docker0/bridge-gateway peer must NEVER classify as loopback — it stays auth-required without a valid bootstrap token", async () => {

@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-const { GrokCliExecutor } = await import("@omniroute/open-sse/executors/grok-cli");
+const { GrokCliExecutor } = await import("@pusula/open-sse/executors/grok-cli");
 
 // Responses clients (Codex CLI / desktop, `store: false`) replay every prior reasoning item
 // with its `encrypted_content`. When a combo served an earlier turn from another Responses

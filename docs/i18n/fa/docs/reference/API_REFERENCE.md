@@ -6,7 +6,7 @@
 
 🌐 **Languages:** 🇺🇸 [English](../../../../reference/API_REFERENCE.md) · 🇪🇹 [am](../../../am/docs/reference/API_REFERENCE.md) · 🇸🇦 [ar](../../../ar/docs/reference/API_REFERENCE.md) · 🇦🇿 [az](../../../az/docs/reference/API_REFERENCE.md) · 🇧🇬 [bg](../../../bg/docs/reference/API_REFERENCE.md) · 🇧🇩 [bn](../../../bn/docs/reference/API_REFERENCE.md) · 🇧🇦 [bs](../../../bs/docs/reference/API_REFERENCE.md) · 🇨🇿 [cs](../../../cs/docs/reference/API_REFERENCE.md) · 🇩🇰 [da](../../../da/docs/reference/API_REFERENCE.md) · 🇩🇪 [de](../../../de/docs/reference/API_REFERENCE.md) · 🇬🇷 [el](../../../el/docs/reference/API_REFERENCE.md) · 🇪🇸 [es](../../../es/docs/reference/API_REFERENCE.md) · 🇪🇪 [et](../../../et/docs/reference/API_REFERENCE.md) · 🇫🇮 [fi](../../../fi/docs/reference/API_REFERENCE.md) · 🇫🇷 [fr](../../../fr/docs/reference/API_REFERENCE.md) · 🇮🇪 [ga](../../../ga/docs/reference/API_REFERENCE.md) · 🇮🇳 [gu](../../../gu/docs/reference/API_REFERENCE.md) · 🇳🇬 [ha](../../../ha/docs/reference/API_REFERENCE.md) · 🇮🇱 [he](../../../he/docs/reference/API_REFERENCE.md) · 🇮🇳 [hi](../../../hi/docs/reference/API_REFERENCE.md) · 🇭🇷 [hr](../../../hr/docs/reference/API_REFERENCE.md) · 🇭🇺 [hu](../../../hu/docs/reference/API_REFERENCE.md) · 🇦🇲 [hy](../../../hy/docs/reference/API_REFERENCE.md) · 🇮🇩 [id](../../../id/docs/reference/API_REFERENCE.md) · 🇳🇬 [ig](../../../ig/docs/reference/API_REFERENCE.md) · 🇮🇹 [it](../../../it/docs/reference/API_REFERENCE.md) · 🇯🇵 [ja](../../../ja/docs/reference/API_REFERENCE.md) · 🇬🇪 [ka](../../../ka/docs/reference/API_REFERENCE.md) · 🇰🇭 [km](../../../km/docs/reference/API_REFERENCE.md) · 🇮🇳 [kn](../../../kn/docs/reference/API_REFERENCE.md) · 🇰🇷 [ko](../../../ko/docs/reference/API_REFERENCE.md) · 🇱🇹 [lt](../../../lt/docs/reference/API_REFERENCE.md) · 🇱🇻 [lv](../../../lv/docs/reference/API_REFERENCE.md) · 🇮🇳 [ml](../../../ml/docs/reference/API_REFERENCE.md) · 🇮🇳 [mr](../../../mr/docs/reference/API_REFERENCE.md) · 🇲🇾 [ms](../../../ms/docs/reference/API_REFERENCE.md) · 🇲🇹 [mt](../../../mt/docs/reference/API_REFERENCE.md) · 🇲🇲 [my](../../../my/docs/reference/API_REFERENCE.md) · 🇳🇵 [ne](../../../ne/docs/reference/API_REFERENCE.md) · 🇳🇱 [nl](../../../nl/docs/reference/API_REFERENCE.md) · 🇳🇴 [no](../../../no/docs/reference/API_REFERENCE.md) · 🇮🇳 [or](../../../or/docs/reference/API_REFERENCE.md) · 🇮🇳 [pa](../../../pa/docs/reference/API_REFERENCE.md) · 🇵🇭 [phi](../../../phi/docs/reference/API_REFERENCE.md) · 🇵🇱 [pl](../../../pl/docs/reference/API_REFERENCE.md) · 🇵🇹 [pt](../../../pt/docs/reference/API_REFERENCE.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/reference/API_REFERENCE.md) · 🇷🇴 [ro](../../../ro/docs/reference/API_REFERENCE.md) · 🇷🇺 [ru](../../../ru/docs/reference/API_REFERENCE.md) · 🇱🇰 [si](../../../si/docs/reference/API_REFERENCE.md) · 🇸🇰 [sk](../../../sk/docs/reference/API_REFERENCE.md) · 🇸🇮 [sl](../../../sl/docs/reference/API_REFERENCE.md) · 🇷🇸 [sr](../../../sr/docs/reference/API_REFERENCE.md) · 🇸🇪 [sv](../../../sv/docs/reference/API_REFERENCE.md) · 🇰🇪 [sw](../../../sw/docs/reference/API_REFERENCE.md) · 🇮🇳 [ta](../../../ta/docs/reference/API_REFERENCE.md) · 🇮🇳 [te](../../../te/docs/reference/API_REFERENCE.md) · 🇹🇭 [th](../../../th/docs/reference/API_REFERENCE.md) · 🇹🇷 [tr](../../../tr/docs/reference/API_REFERENCE.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/reference/API_REFERENCE.md) · 🇵🇰 [ur](../../../ur/docs/reference/API_REFERENCE.md) · 🇺🇿 [uz](../../../uz/docs/reference/API_REFERENCE.md) · 🇻🇳 [vi](../../../vi/docs/reference/API_REFERENCE.md) · 🇳🇬 [yo](../../../yo/docs/reference/API_REFERENCE.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/reference/API_REFERENCE.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/reference/API_REFERENCE.md)
 
-مرجع اصلی برای API OmniRoute. این مرجع سطح عمومی `/v1` و پرکاربردترین نقاط پایانی مدیریت را پوشش میدهد؛ فایل [`docs/openapi.yaml`](../openapi.yaml) قابل خواندن توسط ماشین و درخت مسیر تحت `src/app/api/` منابع جامع هستند.
+مرجع اصلی برای API Pusula. این مرجع سطح عمومی `/v1` و پرکاربردترین نقاط پایانی مدیریت را پوشش میدهد؛ فایل [`docs/openapi.yaml`](../openapi.yaml) قابل خواندن توسط ماشین و درخت مسیر تحت `src/app/api/` منابع جامع هستند.
 
 ---
 
@@ -63,33 +63,33 @@ Content-Type: application/json
 
 | هدر                      | جهت     | توضیحات                                                                                                                                                                                                                         |
 | :----------------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `X-OmniRoute-No-Cache`   | درخواست | برای دور زدن کش، روی `true` تنظیم شود                                                                                                                                                                                           |
-| `x-omniroute-no-memory`  | درخواست | برای این درخواست، تزریق حافظه + مهارتها را نادیده میگیرد (مشابه no-cache؛ از سربار توکن/هزینه به ازای هر فراخوانی جلوگیری میکند)                                                                                                |
-| `X-OmniRoute-Progress`   | درخواست | برای رویدادهای پیشرفت، روی `true` تنظیم شود                                                                                                                                                                                     |
+| `X-Pusula-No-Cache`   | درخواست | برای دور زدن کش، روی `true` تنظیم شود                                                                                                                                                                                           |
+| `x-pusula-no-memory`  | درخواست | برای این درخواست، تزریق حافظه + مهارتها را نادیده میگیرد (مشابه no-cache؛ از سربار توکن/هزینه به ازای هر فراخوانی جلوگیری میکند)                                                                                                |
+| `X-Pusula-Progress`   | درخواست | برای رویدادهای پیشرفت، روی `true` تنظیم شود                                                                                                                                                                                     |
 | `X-Session-Id`           | درخواست | کلید نشست چسبنده برای وابستگی نشست خارجی                                                                                                                                                                                        |
 | `x_session_id`           | درخواست | نوع آندرسکور نیز پذیرفته میشود (HTTP مستقیم)                                                                                                                                                                                    |
-| `X-OmniRoute-Session-Id` | درخواست | برچسب نشست/مکالمه ارائهشده توسط تماسگیرنده (همچنین حافظه را تغذیه میکند). در صورت وجود، به صورت کلمهبهکلمه در `call_logs.session_tag` برای تخصیص هزینه به ازای هر نشست (8249#) ذخیره میشود — هرگز در صورت عدم وجود، سنتز نمیشود |
+| `X-Pusula-Session-Id` | درخواست | برچسب نشست/مکالمه ارائهشده توسط تماسگیرنده (همچنین حافظه را تغذیه میکند). در صورت وجود، به صورت کلمهبهکلمه در `call_logs.session_tag` برای تخصیص هزینه به ازای هر نشست (8249#) ذخیره میشود — هرگز در صورت عدم وجود، سنتز نمیشود |
 | `Idempotency-Key`        | درخواست | کلید حذف تکرار (پنجره 5 ثانیه)                                                                                                                                                                                                  |
 | `X-Request-Id`           | درخواست | کلید جایگزین حذف تکرار                                                                                                                                                                                                          |
-| `X-OmniRoute-Cache`      | پاسخ    | `HIT` یا `MISS` (غیر استریمینگ)                                                                                                                                                                                                 |
-| `X-OmniRoute-Idempotent` | پاسخ    | `true` اگر تکرار حذف شده باشد                                                                                                                                                                                                   |
-| `X-OmniRoute-Progress`   | پاسخ    | `enabled` اگر ردیابی پیشرفت فعال باشد                                                                                                                                                                                           |
-| `X-OmniRoute-Session-Id` | پاسخ    | شناسه نشست مؤثر مورد استفاده OmniRoute                                                                                                                                                                                          |
-| `X-OmniRoute-Request-Id` | پاسخ    | شناسه همبستگی درخواست (در صورت معلوم بودن)                                                                                                                                                                                      |
-| `X-OmniRoute-Version`    | پاسخ    | نسخه ساخت OmniRoute (همیشه موجود است)                                                                                                                                                                                           |
-| `X-OmniRoute-Cost-Saved` | پاسخ    | دلار آمریکا که کش در یک HIT از آن جلوگیری کرده است (فقط در صورت HIT کش)                                                                                                                                                         |
-| `X-OmniRoute-Decision`   | پاسخ    | ردیابی مسیریابی: `strategy=<name>; provider=<alias>; latency_ms=<n>` (`<name>` استراتژی ترکیبی است، یا `single` برای یک درخواست غیر ترکیبی) — همیشه در پاسخهای تکمیل موجود است                                                  |
+| `X-Pusula-Cache`      | پاسخ    | `HIT` یا `MISS` (غیر استریمینگ)                                                                                                                                                                                                 |
+| `X-Pusula-Idempotent` | پاسخ    | `true` اگر تکرار حذف شده باشد                                                                                                                                                                                                   |
+| `X-Pusula-Progress`   | پاسخ    | `enabled` اگر ردیابی پیشرفت فعال باشد                                                                                                                                                                                           |
+| `X-Pusula-Session-Id` | پاسخ    | شناسه نشست مؤثر مورد استفاده Pusula                                                                                                                                                                                          |
+| `X-Pusula-Request-Id` | پاسخ    | شناسه همبستگی درخواست (در صورت معلوم بودن)                                                                                                                                                                                      |
+| `X-Pusula-Version`    | پاسخ    | نسخه ساخت Pusula (همیشه موجود است)                                                                                                                                                                                           |
+| `X-Pusula-Cost-Saved` | پاسخ    | دلار آمریکا که کش در یک HIT از آن جلوگیری کرده است (فقط در صورت HIT کش)                                                                                                                                                         |
+| `X-Pusula-Decision`   | پاسخ    | ردیابی مسیریابی: `strategy=<name>; provider=<alias>; latency_ms=<n>` (`<name>` استراتژی ترکیبی است، یا `single` برای یک درخواست غیر ترکیبی) — همیشه در پاسخهای تکمیل موجود است                                                  |
 
 > نکته Nginx: اگر به هدرهای آندرسکور (به عنوان مثال `x_session_id`) تکیه میکنید، `underscores_in_headers on;` را فعال کنید.
 
-> **هدرهای تلهمتری هزینه:** پاسخهای موفق غیرجریانی نیز مجموعه تلهمتری هزینه `X-OmniRoute-*` را حمل میکنند — `X-OmniRoute-Response-Cost` (دلار آمریکا، ثابت ۱۰ رقم اعشار؛ `0.0000000000` برای رایگان/بدون قیمتگذاری)، `X-OmniRoute-Tokens-In` / `X-OmniRoute-Tokens-Out`، `X-OmniRoute-Model`، `X-OmniRoute-Provider`، `X-OmniRoute-Latency-Ms`، `X-OmniRoute-Cache-Hit`، و `X-OmniRoute-Fallback-Attempts` (فقط زمانی که > 0)، به علاوه `X-OmniRoute-Request-Id` و `X-OmniRoute-Version`. اینها توسط تکمیل چت، `/v1/responses`، `/v1/messages`، **و نقاط پایانی رسانه** — `/v1/embeddings`، `/v1/images/generations`، `/v1/audio/speech`، `/v1/audio/transcriptions`، `/v1/rerank`، `/v1/videos/generations`، `/v1/music/generations`، و `/v1/moderations` (همیشه هزینه `0`) منتشر میشوند. هزینه رسانه بر اساس هر حالت (به ازای هر تصویر، به ازای هر ثانیه، به ازای هر کاراکتر، به ازای هر واحد جستجو) محاسبه میشود، در صورتی که قیمتگذاری موجود باشد، در غیر این صورت `0` (fail-open).
+> **هدرهای تلهمتری هزینه:** پاسخهای موفق غیرجریانی نیز مجموعه تلهمتری هزینه `X-Pusula-*` را حمل میکنند — `X-Pusula-Response-Cost` (دلار آمریکا، ثابت ۱۰ رقم اعشار؛ `0.0000000000` برای رایگان/بدون قیمتگذاری)، `X-Pusula-Tokens-In` / `X-Pusula-Tokens-Out`، `X-Pusula-Model`، `X-Pusula-Provider`، `X-Pusula-Latency-Ms`، `X-Pusula-Cache-Hit`، و `X-Pusula-Fallback-Attempts` (فقط زمانی که > 0)، به علاوه `X-Pusula-Request-Id` و `X-Pusula-Version`. اینها توسط تکمیل چت، `/v1/responses`، `/v1/messages`، **و نقاط پایانی رسانه** — `/v1/embeddings`، `/v1/images/generations`، `/v1/audio/speech`، `/v1/audio/transcriptions`، `/v1/rerank`، `/v1/videos/generations`، `/v1/music/generations`، و `/v1/moderations` (همیشه هزینه `0`) منتشر میشوند. هزینه رسانه بر اساس هر حالت (به ازای هر تصویر، به ازای هر ثانیه، به ازای هر کاراکتر، به ازای هر واحد جستجو) محاسبه میشود، در صورتی که قیمتگذاری موجود باشد، در غیر این صورت `0` (fail-open).
 
-> **معناشناسی هزینه Cache-hit:** در یک HIT کش معنایی (`X-OmniRoute-Cache-Hit: true`) هیچ فراخوانی بالادستی انجام نمیشود، بنابراین `X-OmniRoute-Response-Cost` برابر با `0.0000000000` است (هزینه **افزایشی** ارائه hit). هزینه اصلی/که میتوانست باشد به طور جداگانه در `X-OmniRoute-Cost-Saved` گزارش میشود. مصرفکنندگان صورتحساب باید `X-OmniRoute-Response-Cost` را جمع کنند (hitها هزینهای ندارند)؛ تحلیلگران کش میتوانند `X-OmniRoute-Cost-Saved` را تجمیع کنند.
+> **معناشناسی هزینه Cache-hit:** در یک HIT کش معنایی (`X-Pusula-Cache-Hit: true`) هیچ فراخوانی بالادستی انجام نمیشود، بنابراین `X-Pusula-Response-Cost` برابر با `0.0000000000` است (هزینه **افزایشی** ارائه hit). هزینه اصلی/که میتوانست باشد به طور جداگانه در `X-Pusula-Cost-Saved` گزارش میشود. مصرفکنندگان صورتحساب باید `X-Pusula-Response-Cost` را جمع کنند (hitها هزینهای ندارند)؛ تحلیلگران کش میتوانند `X-Pusula-Cost-Saved` را تجمیع کنند.
 
 ## اجارههای انحصاری نشست مدیریتشده
 
 اجاره انحصاری نشست مدیریتشده یک قرارداد مسیریابی اختیاری و مستقل از کلاینت است: یک مالک فعال
-یک اتصال OmniRoute واجد شرایط را در اختیار دارد. این قرارداد یک مدل را اجاره نمیدهد، به OAuth نیاز ندارد،
+یک اتصال Pusula واجد شرایط را در اختیار دارد. این قرارداد یک مدل را اجاره نمیدهد، به OAuth نیاز ندارد،
 یک کلاینت خاص را شناسایی نمیکند، یا به یک ارائهدهنده خاص نیاز ندارد.
 
 کلید API احراز هویت باید دارای دامنه `lease:exclusive` و یک لیست `allowedConnections` صریح و غیرخالی باشد.
@@ -99,7 +99,7 @@ Content-Type: application/json
 POST /api/v1/session-leases
 Authorization: Bearer <managed-api-key>
 Content-Type: application/json
-X-OmniRoute-Lease-Owner: vlo_<43-base64url-characters>
+X-Pusula-Lease-Owner: vlo_<43-base64url-characters>
 
 {"action":"acquire","model":"glm/glm-4.6"}
 ```
@@ -138,7 +138,7 @@ generation را در بدنه JSON ارائه میدهند:
 
 این عمل وضعیت اختیاری توسط مالک مبهم، کلید API مدیریتشده احراز هویتشده، و generation فعال دقیق
 در یک تراکنش پایگاه داده محافظت میشود. `displayName` فقط نام اتصال پیکربندیشده و کوتاه شده است؛
-اگر نام پیکربندیشده ایمنی وجود نداشته باشد، `null` است. OmniRoute هرگز یک ایمیل یا هویت حساب تولیدشده را جایگزین نمیکند.
+اگر نام پیکربندیشده ایمنی وجود نداشته باشد، `null` است. Pusula هرگز یک ایمیل یا هویت حساب تولیدشده را جایگزین نمیکند.
 مقدار ارائهدهنده یک برچسب نمایش غیرحساس است و هرگز یک شناسه ارائهدهنده سازگار تولیدشده نیست.
 اعتبارنامهها، توکنها، کوکیها، شناسههای اتصال خام یا کلید API، هشهای مالک، اسرار محافظت،
 و دادههای مسیریابی داخلی حذف میشوند.
@@ -159,8 +159,8 @@ generation را در بدنه JSON ارائه میدهند:
 سپس هر درخواست استنتاج مدیریتشده هر دو هدر کنترل را ارائه میدهد:
 
 ```http
-X-OmniRoute-Lease-Owner: vlo_<43-base64url-characters>
-X-OmniRoute-Lease-Generation: 1
+X-Pusula-Lease-Owner: vlo_<43-base64url-characters>
+X-Pusula-Lease-Generation: 1
 ```
 
 مالک دقیق، generation، اتصال فعال و کلید API احراز هویتشده بلافاصله قبل از هر تلاش پشتیبانیشده
@@ -181,9 +181,9 @@ X-OmniRoute-Lease-Generation: 1
 
 این پاسخ فقط به این معنی است که مجموعه واجد شرایط عادی غیرخالی بوده و هر کاندیدای آزاد
 توسط یک اجاره فعال خارجی نگهداری میشده است. مدلها/ارائهدهندگان پشتیبانینشده، عدم تطابق سیاست،
-دوره خنکسازی، سهمیه، سلامت و سایر خطاهای عادی واجد شرایط بودن، پاسخهای موجود OmniRoute خود را حفظ میکنند.
+دوره خنکسازی، سهمیه، سلامت و سایر خطاهای عادی واجد شرایط بودن، پاسخهای موجود Pusula خود را حفظ میکنند.
 
-### `x-omniroute-compression`
+### `x-pusula-compression`
 
 بازنویسی فشردهسازی برای هر درخواست. بالاترین اولویت — بر بازنویسی ترکیب مسیریابی،
 پروفایل فعال، فعالسازی خودکار و پیشفرض پنل غلبه میکند. مقادیر:
@@ -207,7 +207,7 @@ X-OmniRoute-Lease-Generation: 1
 طرح اعمالشده در هدر پاسخ بازتاب داده میشود:
 
 ```
-X-OmniRoute-Compression: <mode>; source=<source>
+X-Pusula-Compression: <mode>; source=<source>
 ```
 
 که در آن `<source>` یکی از `request-header`, `routing-override`, `active-profile`, `auto-trigger`, `default`, یا `off` است.
@@ -250,7 +250,7 @@ Jina v5 Omni (`jina-ai/jina-embeddings-v5-omni-small`, `jina-ai/jina-embeddings-
 }
 ```
 
-مقادیر بومی `{ image | audio | video | pdf }` میتوانند یک URL عمومی HTTPS، یک URI از نوع `data:`، یا base64 خام باشند. OmniRoute این اشیاء را به رشته تبدیل نمیکند یا URLهای تصویر بومی را واکشی نمیکند — جینا خود رسانههای عمومی را بازیابی میکند. فیلدهای اضافی جینا (`task`, `normalized`, `truncate`, `embedding_type`) ارسال میشوند. SKUهای فقط متنی جینا همچنان اسناد غیرمتنی را رد میکنند.
+مقادیر بومی `{ image | audio | video | pdf }` میتوانند یک URL عمومی HTTPS، یک URI از نوع `data:`، یا base64 خام باشند. Pusula این اشیاء را به رشته تبدیل نمیکند یا URLهای تصویر بومی را واکشی نمیکند — جینا خود رسانههای عمومی را بازیابی میکند. فیلدهای اضافی جینا (`task`, `normalized`, `truncate`, `embedding_type`) ارسال میشوند. SKUهای فقط متنی جینا همچنان اسناد غیرمتنی را رد میکنند.
 
 محدودیتهای امنیتی و انتقال:
 
@@ -358,7 +358,7 @@ API `analyze` در Azure Document Intelligence ناهمگام است: درخوا
 
 ### احراز هویت و حل نقطه پایانی Vertex AI DeepSeek OCR
 
-`vertex-deepseek-ocr` از همان احراز هویت Vertex AI که OmniRoute قبلاً برای ترافیک چت/تصویر پشتیبانی میکند
+`vertex-deepseek-ocr` از همان احراز هویت Vertex AI که Pusula قبلاً برای ترافیک چت/تصویر پشتیبانی میکند
 (`open-sse/executors/vertex.ts`) استفاده مجدد میکند: کلید API اتصال یا یک اعتبارنامه JSON حساب سرویس
 (که از طریق جریان JWT-bearer با یک توکن دسترسی OAuth کوتاهمدت مبادله میشود) یا یک توکن دسترسی OAuth
 از قبل صادر شده است که به همان شکل استفاده میشود. URL نقطه پایانی بالادستی، نقطه پایانی شریک عمومی
@@ -401,10 +401,10 @@ GET /v1/models?prefix=canonical    # فقط پیشوند کامل شناسه ا�
 
 ### انواع مدل بدون تفکر
 
-برای مدلهای Claude با قابلیت تفکر، `/v1/models` همچنین یک نوع **بدون تفکر** را تبلیغ میکند که شناسه آن با `claude-3-omniroute-no-thinking/` پیشوندگذاری شده است:
+برای مدلهای Claude با قابلیت تفکر، `/v1/models` همچنین یک نوع **بدون تفکر** را تبلیغ میکند که شناسه آن با `claude-3-pusula-no-thinking/` پیشوندگذاری شده است:
 
 ```
-claude-3-omniroute-no-thinking/<provider>/<model>
+claude-3-pusula-no-thinking/<provider>/<model>
 ```
 
 انتخاب این شناسه (مثلاً در یک پیکربندی Claude Code که همیشه یک بلوک `thinking` را پیوست میکند) به مدل واقعی `<provider>/<model>` با سرکوب استدلال برمیگردد — `thinking:{type:"disabled"}` در مسیر `/v1/messages`، یا حذف فیلدهای `reasoning`/`reasoning_effort` در مسیر `/v1/chat/completions`. این نوع فقط برای مدلهای خانواده Claude که از تفکر پشتیبانی میکنند **و** به `disabled` احترام میگذارند (بنابراین مثلاً مدلهای فقط تطبیقی که `disabled` را رد میکنند، مستثنی هستند) فهرست میشود. اپراتورها میتوانند این نوع را به ازای هر مدل از طریق `ModelSpec.noThinkingAlias` فعال یا غیرفعال کنند.
@@ -455,7 +455,7 @@ GET /api/v1/provider-plugin-manifest
 
 تمام مسیرهای POST از یک شکل پیروی میکنند: `Bearer your-api-key` + بدنه JSON اعتبارسنجی شده توسط Zod (مانند `v1RerankSchema`, `v1ModerationSchema`, `v1AudioSpeechSchema` و غیره، به `src/shared/validation/schemas.ts` مراجعه کنید). در صورت خطای طرحواره، کد 4xx برگردانده میشود.
 
-برای کلاینتهایی که نمیتوانند `Authorization: Bearer ...` را پیوست کنند، OmniRoute کلیدهای API را در URL نیز میپذیرد، یا از طریق سازگاری با رشته کوئری (`?token=...`, `?apiKey=...`, `?api_key=...`, `?key=...`) یا از طریق نقاط پایانی اختصاصی `/api/v1/vscode/{token}/...` که در ادامه مستند شدهاند.
+برای کلاینتهایی که نمیتوانند `Authorization: Bearer ...` را پیوست کنند، Pusula کلیدهای API را در URL نیز میپذیرد، یا از طریق سازگاری با رشته کوئری (`?token=...`, `?apiKey=...`, `?api_key=...`, `?key=...`) یا از طریق نقاط پایانی اختصاصی `/api/v1/vscode/{token}/...` که در ادامه مستند شدهاند.
 
 ```bash
 # بازرتبهبندی (ارائهدهنده رجیستری ابری، یا یک گره ارائهدهنده سازگار با OpenAI به عنوان "<prefix>/<model>")
@@ -484,7 +484,7 @@ POST /v1/videos/generations { "model": "runway/gen-3", "prompt": "..." }
 POST /v1/music/generations  { "model": "kie/suno-v4.0",   "prompt": "..." }
 ```
 
-> **گرههای ارائهدهنده بازرتبهبندی:** `POST /v1/rerank` همچنین به گرههای ارائهدهنده سازگار با OpenAI (oMLX, vLLM, Infinity, TEI پشت یک گیتوی، ...) که با فرمت `<node-prefix>/<model>` آدرسدهی میشوند، مسیردهی میکند. گرههای لوپبک (`localhost`, `127.0.0.1`, `172.16.0.0/12`) همیشه واجد شرایط هستند. گرههای روی هر میزبان دیگری — یک جعبه LAN یا همتای Tailscale — تنها زمانی واجد شرایط هستند که اپراتور پرچم ویژگی `RERANK_REMOTE_PROVIDER_NODES` را فعال کند **و** URL پایه گره از سیاست URL خروجی ارائهدهنده (`OMNIROUTE_ALLOW_LOCAL_PROVIDER_URLS` / `OMNIROUTE_ALLOW_PRIVATE_PROVIDER_URLS`) عبور کند؛ میزبانهای فراداده ابری هرگز مسیردهی نمیشوند. مرحله بازرتبهبندی موتور حافظه این مسیر را از طریق لوپبک فراخوانی میکند، بنابراین همین قانون بر `rerankProviderModel` در تنظیمات حافظه حاکم است.
+> **گرههای ارائهدهنده بازرتبهبندی:** `POST /v1/rerank` همچنین به گرههای ارائهدهنده سازگار با OpenAI (oMLX, vLLM, Infinity, TEI پشت یک گیتوی، ...) که با فرمت `<node-prefix>/<model>` آدرسدهی میشوند، مسیردهی میکند. گرههای لوپبک (`localhost`, `127.0.0.1`, `172.16.0.0/12`) همیشه واجد شرایط هستند. گرههای روی هر میزبان دیگری — یک جعبه LAN یا همتای Tailscale — تنها زمانی واجد شرایط هستند که اپراتور پرچم ویژگی `RERANK_REMOTE_PROVIDER_NODES` را فعال کند **و** URL پایه گره از سیاست URL خروجی ارائهدهنده (`PUSULA_ALLOW_LOCAL_PROVIDER_URLS` / `PUSULA_ALLOW_PRIVATE_PROVIDER_URLS`) عبور کند؛ میزبانهای فراداده ابری هرگز مسیردهی نمیشوند. مرحله بازرتبهبندی موتور حافظه این مسیر را از طریق لوپبک فراخوانی میکند، بنابراین همین قانون بر `rerankProviderModel` در تنظیمات حافظه حاکم است.
 >
 > **اشکال سرور محلی:** گره در `<base>/v1/rerank` و در صورت 404، در `<base>/rerank` (Infinity, TEI) فراخوانی میشود. بدنه بالادستی هم املای Cohere/OpenAI (`documents`, `return_documents`) و هم املای TEI (`texts`, `return_text`) را حمل میکند، و پاسخ بالادستی به قالب Cohere نرمالسازی میشود: `[{index, score, text}]` خالی TEI، `{results: [{index, score}]}` از گیتویهای نازک، و `{data: [...]}` به سبک Voyage همگی به عنوان `{results: [{index, relevance_score, document?}]}` به کلاینت بازمیگردند، که بر اساس امتیاز مرتب شده و به `top_n` محدود شدهاند.
 
@@ -586,8 +586,8 @@ GET /v1/ws?handshake=1
 
 ```bash
 # Same host:port as the HTTP API (default 20128); upgrade the connection:
-wscat -c "ws://localhost:20128/v1/responses?api_key=<OMNIROUTE_API_KEY>"
-# (or: -H "Authorization: Bearer <OMNIROUTE_API_KEY>")
+wscat -c "ws://localhost:20128/v1/responses?api_key=<PUSULA_API_KEY>"
+# (or: -H "Authorization: Bearer <PUSULA_API_KEY>")
 
 # First frame MUST be response.create:
 { "type": "response.create", "model": "gpt-5.5", "input": [ { "role": "user", "content": "hi" } ] }
@@ -609,33 +609,33 @@ wscat -c "ws://localhost:20128/v1/responses?api_key=<OMNIROUTE_API_KEY>"
 **CLI کدکس OpenAI** نام مدل را در سمت کلاینت زمانی که `supports_websockets = true` است اعتبارسنجی میکند و
 **شناسههای دارای پیشوند ارائهدهنده** مانند `codex/gpt-5.5` را رد میکند
 (`The 'codex/gpt-5.5' model is not supported when using Codex with a ChatGPT account`).
-شناسه **خام** را ارسال کنید (مثلاً `gpt-5.5`). پل OmniRoute فقط برای کدکس است،
+شناسه **خام** را ارسال کنید (مثلاً `gpt-5.5`). پل Pusula فقط برای کدکس است،
 بنابراین یک شناسه خام را به عنوان یک مدل کدکس (`resolveCodexWsModelInfo`) قبل از تونلزنی به بالادست مجدداً حل میکند —
 حتی اگر یک `gpt-5.5` خام در غیر این صورت از طریق HTTP به ارائهدهنده دیگری مسیریابی شود.
 
 #### پیکربندی OpenAI Codex CLI
 
-CLI کدکس را با افزودن یک ارائهدهنده سفارشی با پشتیبانی WebSocket به `~/.codex/config.toml` به OmniRoute اشاره دهید
+CLI کدکس را با افزودن یک ارائهدهنده سفارشی با پشتیبانی WebSocket به `~/.codex/config.toml` به Pusula اشاره دهید
 (از یک `CODEX_HOME` جداگانه برای جلوگیری از دستکاری یک پیکربندی موجود استفاده کنید):
 
 ```toml
 model = "gpt-5.5"                 # bare id — NOT "codex/gpt-5.5"
-model_provider = "omniroute"
+model_provider = "pusula"
 
-[model_providers.omniroute]
-name = "OmniRoute (WS)"
+[model_providers.pusula]
+name = "Pusula (WS)"
 base_url = "http://localhost:20128/v1"   # no trailing slash; the WS URL is derived (use https/wss in production)
 wire_api = "responses"                    # only supported value since Feb 2026
 supports_websockets = true                # enables the Responses-over-WS transport
-env_key = "OMNIROUTE_API_KEY"             # holds the OmniRoute API key (Bearer)
+env_key = "PUSULA_API_KEY"             # holds the Pusula API key (Bearer)
 ```
 
 ```bash
-export OMNIROUTE_API_KEY=sk-...           # an OmniRoute API key (any key if REQUIRE_API_KEY=false)
+export PUSULA_API_KEY=sk-...           # an Pusula API key (any key if REQUIRE_API_KEY=false)
 codex exec "Responda apenas: PONG"
 ```
 
-CLI، `base_url + /responses` را به یک WebSocket ارتقا میدهد و OmniRoute آن را به اتصال OAuth کدکس انتخاب شده تونل میزند.
+CLI، `base_url + /responses` را به یک WebSocket ارتقا میدهد و Pusula آن را به اتصال OAuth کدکس انتخاب شده تونل میزند.
 اعتبارسنجی سرتاسری در برابر سرور محلی: ChatGPT، `codex.rate_limits` + `response.created` را برمیگرداند و تکمیل را استریم میکند.
 
 ---
@@ -731,7 +731,7 @@ DELETE /api/cache/stats
 
 ### تأثیر تأخیر
 
-یک HIT کش معنایی، پاسخ را از کش **بدون فراخوانی بالادستی** ارائه میدهد، بنابراین `X-OmniRoute-Response-Latency` گزارششده نزدیک به صفر است (صرفنظر از تأخیر اصلی بالادستی). کلاینتهای حساس به تأخیر (بنچمارکینگ، نظارت p50/p99) باید هدر پاسخ `X-OmniRoute-Cache-Latency` را بررسی کنند:
+یک HIT کش معنایی، پاسخ را از کش **بدون فراخوانی بالادستی** ارائه میدهد، بنابراین `X-Pusula-Response-Latency` گزارششده نزدیک به صفر است (صرفنظر از تأخیر اصلی بالادستی). کلاینتهای حساس به تأخیر (بنچمارکینگ، نظارت p50/p99) باید هدر پاسخ `X-Pusula-Cache-Latency` را بررسی کنند:
 
 | مقدار       | معنی                                                     |
 | ----------- | -------------------------------------------------------- |
@@ -758,7 +758,7 @@ DELETE /api/cache/stats
 هر درخواستی میتواند کش را صرفنظر از تنظیمات کلید دور بزند:
 
 ```
-X-OmniRoute-No-Cache: true
+X-Pusula-No-Cache: true
 ```
 
 ## داشبورد و مدیریت
@@ -976,7 +976,7 @@ Content-Type: application/json
 {
   "success": true,
   "repaired": ["CLAUDE_CODE_OAUTH_CLIENT_ID", "CLAUDE_CODE_OAUTH_CLIENT_SECRET"],
-  "backupPath": "/home/user/.omniroute/backups/env-repair-2026-04-11.bak"
+  "backupPath": "/home/user/.pusula/backups/env-repair-2026-04-11.bak"
 }
 ```
 
@@ -1065,7 +1065,7 @@ curl -X POST https://your-host.example/api/v1/vscode/YOUR_API_KEY/chat/completio
 
 - نامهای مستعار توکندار از همان هندلرهای `/v1/*` و `/api/tags` استفاده مجدد میکنند؛ شکل پاسخها یکسان باقی میماند.
 - هر زمان که کلاینت از هدرهای سفارشی پشتیبانی میکند، `Authorization: Bearer ...` را ترجیح دهید.
-- توکنهای مبتنی بر URL ممکن است در لاگهای پروکسی معکوس، تاریخچه مرورگر و تلهمتری خارج از OmniRoute ظاهر شوند. آنها را به عنوان یک گزینه سازگاری در نظر بگیرید، نه حالت احراز هویت پیشفرض.
+- توکنهای مبتنی بر URL ممکن است در لاگهای پروکسی معکوس، تاریخچه مرورگر و تلهمتری خارج از Pusula ظاهر شوند. آنها را به عنوان یک گزینه سازگاری در نظر بگیرید، نه حالت احراز هویت پیشفرض.
 
 ---
 
@@ -1173,7 +1173,7 @@ DELETE /api/usage/token-limits?id=tl-abc
 
 ## وبهوکها
 
-اشتراکهای وبهوک خروجی برای رویدادهای OmniRoute (تکمیل درخواست، اتمام سهمیه، چرخش کلید و غیره).
+اشتراکهای وبهوک خروجی برای رویدادهای Pusula (تکمیل درخواست، اتمام سهمیه، چرخش کلید و غیره).
 
 | Method | Path                      | Description                                                        |
 | ------ | ------------------------- | ------------------------------------------------------------------ |
@@ -1206,7 +1206,7 @@ DELETE /api/usage/token-limits?id=tl-abc
 
 ## پروتکل عاملها
 
-وظایف عامل ابری (Claude Code، Codex Cloud، OpenHands و غیره) که از راه دور به نمایندگی از کاربران OmniRoute اجرا میشوند.
+وظایف عامل ابری (Claude Code، Codex Cloud، OpenHands و غیره) که از راه دور به نمایندگی از کاربران Pusula اجرا میشوند.
 
 | متد    | مسیر                          | توضیحات                                                                                                                                                 |
 | ------ | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1252,7 +1252,7 @@ curl -X POST http://localhost:20128/api/v1/agents/tasks \
 
 ## تابآوری (توسعهیافته)
 
-OmniRoute سه مکانیزم مستقل برای شکست موقت ارائه میدهد؛ نقاط پایانی مدیریتی زیر به اپراتورها اجازه میدهند تا آنها را بخوانند و لغو کنند:
+Pusula سه مکانیزم مستقل برای شکست موقت ارائه میدهد؛ نقاط پایانی مدیریتی زیر به اپراتورها اجازه میدهند تا آنها را بخوانند و لغو کنند:
 
 | دامنه             | ذخیرهسازی وضعیت                          | خواندن                                    | بازنشانی / پاک کردن                                               |
 | :---------------- | :--------------------------------------- | :---------------------------------------- | :---------------------------------------------------------------- |
@@ -1281,7 +1281,7 @@ curl -X DELETE http://localhost:20128/api/resilience/model-cooldowns \
 
 ## مهارتها
 
-چارچوب مهارت برای توسعه OmniRoute با کنترلکنندههای اجرایی سفارشی، به علاوه ادغامهای بازار.
+چارچوب مهارت برای توسعه Pusula با کنترلکنندههای اجرایی سفارشی، به علاوه ادغامهای بازار.
 
 | متد    | مسیر                              | توضیحات                                                                                                               |
 | :----- | :-------------------------------- | :-------------------------------------------------------------------------------------------------------------------- |
@@ -1318,7 +1318,7 @@ curl -X DELETE http://localhost:20128/api/resilience/model-cooldowns \
 
 ## سرور MCP
 
-OmniRoute یک سرور پروتکل زمینه مدل (Model Context Protocol) تعبیهشده با 3 انتقال (stdio, SSE, streamable-http) و ابزارهای محدود شده را ارائه میدهد. نقاط پایانی داشبورد زیر دادههای وضعیت/حسابرسی را میخوانند و انتقالهای HTTP را پروکسی میکنند.
+Pusula یک سرور پروتکل زمینه مدل (Model Context Protocol) تعبیهشده با 3 انتقال (stdio, SSE, streamable-http) و ابزارهای محدود شده را ارائه میدهد. نقاط پایانی داشبورد زیر دادههای وضعیت/حسابرسی را میخوانند و انتقالهای HTTP را پروکسی میکنند.
 
 | متد    | مسیر                   | توضیحات                                                                                             |
 | ------ | ---------------------- | --------------------------------------------------------------------------------------------------- |
@@ -1340,13 +1340,13 @@ OmniRoute یک سرور پروتکل زمینه مدل (Model Context Protocol) 
 
 ## سرور A2A
 
-OmniRoute یک نقطه پایانی JSON-RPC 2.0 A2A (Agent-to-Agent) به همراه یک پوشش REST برای استفاده در بازرسی/داشبورد ارائه میدهد.
+Pusula یک نقطه پایانی JSON-RPC 2.0 A2A (Agent-to-Agent) به همراه یک پوشش REST برای استفاده در بازرسی/داشبورد ارائه میدهد.
 
 ### JSON-RPC
 
 ```bash
 POST /a2a
-Authorization: Bearer your-api-key   # اختیاری است مگر اینکه OMNIROUTE_API_KEY تنظیم شده باشد
+Authorization: Bearer your-api-key   # اختیاری است مگر اینکه PUSULA_API_KEY تنظیم شده باشد
 Content-Type: application/json
 
 {
@@ -1389,7 +1389,7 @@ GET /.well-known/agent.json
 | GET  | `/api/a2a/tasks/[id]`        | بازیابی یک وظیفه                                                                         |
 | POST | `/api/a2a/tasks/[id]/cancel` | لغو یک وظیفه                                                                             |
 
-**احراز هویت:** کمککنندههای REST بدون احراز هویت مدیریتی (قابل خواندن در داشبورد) اجرا میشوند؛ مسیر JSON-RPC `/a2a` در صورت پیکربندی از Bearer `OMNIROUTE_API_KEY` استفاده میکند.
+**احراز هویت:** کمککنندههای REST بدون احراز هویت مدیریتی (قابل خواندن در داشبورد) اجرا میشوند؛ مسیر JSON-RPC `/a2a` در صورت پیکربندی از Bearer `PUSULA_API_KEY` استفاده میکند.
 
 ---
 
@@ -1566,7 +1566,7 @@ GET /.well-known/agent.json
 
 ## مدیریت ابزارهای CLI
 
-مدیریت ابزارهای CLI که با OmniRoute یکپارچه میشوند (antigravity, commandCode,
+مدیریت ابزارهای CLI که با Pusula یکپارچه میشوند (antigravity, commandCode,
 devin-cli و غیره). برای مشاهده لیست کامل به [مرجع ارائهدهنده](./PROVIDER_REFERENCE.md) مراجعه کنید.
 
 | متد  | مسیر                                    | توضیحات                                                                                                                                                     |
@@ -1677,7 +1677,7 @@ devin-cli و غیره). برای مشاهده لیست کامل به [مرجع �
 
 ## افزونهها (Plugins)
 
-مدیریت افزونههای OmniRoute (افزونههای شخص ثالث).
+مدیریت افزونههای Pusula (افزونههای شخص ثالث).
 
 | Method | Path                               | Description                  |
 | ------ | ---------------------------------- | ---------------------------- |
@@ -1703,7 +1703,7 @@ devin-cli و غیره). برای مشاهده لیست کامل به [مرجع �
 
 ## محافظها (Guardrails)
 
-بازرسی محافظهای زمان اجرا (شناسایی PII، شناسایی تزریق پرامپت، پلسازی بینایی). محافظها در هر درخواست اجرا میشوند؛ انصراف از هر فراخوانی از طریق هدر درخواست `x-omniroute-disabled-guardrails` انجام میشود — هیچ سطح فعال/غیرفعالسازی دائمی وجود ندارد.
+بازرسی محافظهای زمان اجرا (شناسایی PII، شناسایی تزریق پرامپت، پلسازی بینایی). محافظها در هر درخواست اجرا میشوند؛ انصراف از هر فراخوانی از طریق هدر درخواست `x-pusula-disabled-guardrails` انجام میشود — هیچ سطح فعال/غیرفعالسازی دائمی وجود ندارد.
 
 | Method | Path                   | Description                                                                                        |
 | ------ | ---------------------- | -------------------------------------------------------------------------------------------------- |

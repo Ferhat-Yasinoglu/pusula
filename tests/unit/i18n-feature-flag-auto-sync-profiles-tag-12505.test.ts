@@ -10,7 +10,7 @@ const { FEATURE_FLAG_DEFINITIONS } =
   await import("../../src/shared/constants/featureFlagDefinitions.ts");
 
 const MESSAGES_DIR = path.resolve("src/i18n/messages");
-const FLAG_KEY = "OMNIROUTE_AUTO_SYNC_CLAUDE_PROFILES";
+const FLAG_KEY = "PUSULA_AUTO_SYNC_CLAUDE_PROFILES";
 const MESSAGE_KEY = `definitions.${FLAG_KEY}.description`;
 const RAW_PATH = "profiles/<name>/";
 const QUOTED_PATH = "profiles/'<name>'/";
@@ -19,7 +19,7 @@ const RENDERED_PATH = "~/.claude/profiles/<name>/settings.json";
 
 /**
  * Regression guard for #12505 (INVALID_MESSAGE: UNCLOSED_TAG on the Feature
- * Flags page). The `featureFlags.definitions.OMNIROUTE_AUTO_SYNC_CLAUDE_PROFILES.description`
+ * Flags page). The `featureFlags.definitions.PUSULA_AUTO_SYNC_CLAUDE_PROFILES.description`
  * message carried a literal `~/.claude/profiles/<name>/settings.json` path.
  * next-intl parses `<name>` as a rich-text tag, no tag element is ever passed
  * by `FeatureFlagsGrid.tsx` (plain `t()`), so the message failed to compile and

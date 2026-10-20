@@ -1,10 +1,10 @@
-# Codex CLI — Configuration with OmniRoute (Türkçe)
+# Codex CLI — Configuration with Pusula (Türkçe)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../guides/CODEX-CLI-CONFIGURATION.md) · 🇪🇹 [am](../../../am/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇸🇦 [ar](../../../ar/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇦🇿 [az](../../../az/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇧🇬 [bg](../../../bg/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇧🇩 [bn](../../../bn/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇧🇦 [bs](../../../bs/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇨🇿 [cs](../../../cs/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇩🇰 [da](../../../da/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇩🇪 [de](../../../de/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇬🇷 [el](../../../el/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇪🇸 [es](../../../es/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇪🇪 [et](../../../et/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇷 [fa](../../../fa/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇫🇮 [fi](../../../fi/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇫🇷 [fr](../../../fr/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇪 [ga](../../../ga/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇳 [gu](../../../gu/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇳🇬 [ha](../../../ha/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇱 [he](../../../he/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇳 [hi](../../../hi/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇭🇷 [hr](../../../hr/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇭🇺 [hu](../../../hu/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇦🇲 [hy](../../../hy/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇩 [id](../../../id/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇳🇬 [ig](../../../ig/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇹 [it](../../../it/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇯🇵 [ja](../../../ja/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇬🇪 [ka](../../../ka/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇰🇭 [km](../../../km/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇳 [kn](../../../kn/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇰🇷 [ko](../../../ko/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇱🇹 [lt](../../../lt/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇱🇻 [lv](../../../lv/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇳 [ml](../../../ml/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇳 [mr](../../../mr/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇲🇾 [ms](../../../ms/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇲🇹 [mt](../../../mt/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇲🇲 [my](../../../my/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇳🇵 [ne](../../../ne/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇳🇱 [nl](../../../nl/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇳🇴 [no](../../../no/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇳 [or](../../../or/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇳 [pa](../../../pa/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇵🇭 [phi](../../../phi/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇵🇱 [pl](../../../pl/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇵🇹 [pt](../../../pt/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇷🇴 [ro](../../../ro/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇷🇺 [ru](../../../ru/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇱🇰 [si](../../../si/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇸🇰 [sk](../../../sk/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇸🇮 [sl](../../../sl/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇷🇸 [sr](../../../sr/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇸🇪 [sv](../../../sv/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇰🇪 [sw](../../../sw/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇳 [ta](../../../ta/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇮🇳 [te](../../../te/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇹🇭 [th](../../../th/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇵🇰 [ur](../../../ur/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇺🇿 [uz](../../../uz/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇻🇳 [vi](../../../vi/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇳🇬 [yo](../../../yo/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/guides/CODEX-CLI-CONFIGURATION.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/guides/CODEX-CLI-CONFIGURATION.md)
 
 ---
 
-OmniRoute'u OpenAI uyumlu bir arka uç olarak kullanacak şekilde Codex CLI kullanımına yönelik eksiksiz kılavuz.
+Pusula'u OpenAI uyumlu bir arka uç olarak kullanacak şekilde Codex CLI kullanımına yönelik eksiksiz kılavuz.
 
 ---
 
@@ -14,7 +14,7 @@ OmniRoute'u OpenAI uyumlu bir arka uç olarak kullanacak şekilde Codex CLI kull
 > belirtir). Eski `~/.codex/config.yaml`, eski npm CLI'a aitti ve sessizce yok sayılır.
 > Kontrol paneli oluşturucusu (`/api/cli-tools/apply`, araç `codex`), korumacı bir
 > birleştirme yaklaşımıyla TOML yazar — mevcut anahtarlar ve diğer sağlayıcı blokları
-> korunur, API anahtarı `OMNIROUTE_API_KEY` içinde kalır (asla dosyaya yazılmaz) ve
+> korunur, API anahtarı `PUSULA_API_KEY` içinde kalır (asla dosyaya yazılmaz) ve
 > geride kalmış eski bir `config.yaml` dosyası, dosyaya dokunulmadan taşıma notu olarak
 > bildirilir.
 
@@ -25,23 +25,23 @@ OmniRoute'u OpenAI uyumlu bir arka uç olarak kullanacak şekilde Codex CLI kull
 ```toml
 # ~/.codex/config.toml
 model                          = "cx/gpt-5.5"
-model_provider                 = "omniroute"
+model_provider                 = "pusula"
 model_reasoning_effort         = "xhigh"
 model_context_window           = 400000
 model_auto_compact_token_limit = 350000
 tool_output_token_limit        = 32768    # araç çağrısı başına geçmiş depolama sınırı
 
-[model_providers.omniroute]
-name                 = "OmniRoute"
+[model_providers.pusula]
+name                 = "Pusula"
 base_url             = "http://<YOUR_HOST>:20128/v1"
-env_key              = "OMNIROUTE_API_KEY"
+env_key              = "PUSULA_API_KEY"
 requires_openai_auth = false
 wire_api             = "responses"
 ```
 
 ```bash
 # ~/.bashrc veya ~/.zshrc — gerçek anahtar değeri, asla config.toml içinde değil
-export OMNIROUTE_API_KEY="<YOUR_KEY>"
+export PUSULA_API_KEY="<YOUR_KEY>"
 ```
 
 ### macOS: ChatGPT uygulamasının içinde paketlenmiş Codex
@@ -61,17 +61,17 @@ command -v codex
 codex --version
 ```
 
-### Kimlik doğrulaması olmayan yerel OmniRoute: yer tutucu anahtar yeterlidir
+### Kimlik doğrulaması olmayan yerel Pusula: yer tutucu anahtar yeterlidir
 
 Codex, ilk istek CLI'dan ayrılmadan **önce** `env_key` tarafından belirtilen
-ortam değişkeninin mevcut olduğunu doğrular. **Yerel** OmniRoute örneğiniz kimlik
+ortam değişkeninin mevcut olduğunu doğrular. **Yerel** Pusula örneğiniz kimlik
 doğrulaması gerektirmiyorsa boş olmayan herhangi bir yer tutucu yeterlidir:
 
 ```bash
-export OMNIROUTE_API_KEY="${OMNIROUTE_API_KEY:-local}"
+export PUSULA_API_KEY="${PUSULA_API_KEY:-local}"
 ```
 
-OmniRoute sunucunuz korumalı veya uzaksa bunun yerine gerçek bir anahtar kullanın.
+Pusula sunucunuz korumalı veya uzaksa bunun yerine gerçek bir anahtar kullanın.
 
 > **Yaygın ana makine seçenekleri**
 >
@@ -87,19 +87,19 @@ OmniRoute sunucunuz korumalı veya uzaksa bunun yerine gerçek bir anahtar kulla
 
 Codex CLI, `wire_api = "chat"` (Chat Completions) seçeneğini Şubat 2026'da kullanımdan kaldırdı ve artık `wire_api = "responses"` (OpenAI Responses API) kullanımını **zorunlu tutuyor**. `wire_api = "chat"` olarak ayarlandığında v0.138'den itibaren başlatma sırasında anında çökme meydana gelir.
 
-GLM ve Kimi dahil birçok sağlayıcı hâlâ yalnızca bir Chat Completions uç noktası sunar. DeepSeek V4 artık Anthropic uyumlu bir uç noktanın yanı sıra yerel bir Responses API da sunuyor; OmniRoute varsayılan olarak Responses kullanır ve her DeepSeek bağlantısının Anthropic uyumluluğunu seçmesine olanak tanır.
+GLM ve Kimi dahil birçok sağlayıcı hâlâ yalnızca bir Chat Completions uç noktası sunar. DeepSeek V4 artık Anthropic uyumlu bir uç noktanın yanı sıra yerel bir Responses API da sunuyor; Pusula varsayılan olarak Responses kullanır ve her DeepSeek bağlantısının Anthropic uyumluluğunu seçmesine olanak tanır.
 
-**OmniRoute bunu şeffaf biçimde çözer:**
+**Pusula bunu şeffaf biçimde çözer:**
 
 ```
 Codex CLI
   → wire_api = "responses"
-  → POST /v1/responses (OmniRoute)
-    → OmniRoute, sağlayıcının yerel protokolünü seçer ve gerektiğinde dönüştürür
+  → POST /v1/responses (Pusula)
+    → Pusula, sağlayıcının yerel protokolünü seçer ve gerektiğinde dönüştürür
     → POST /responses (DeepSeek V4) veya /chat/completions (Mistral / GLM / Kimi / diğerleri)
 ```
 
-OmniRoute kullanırken hiçbir zaman ayrı bir dönüştürme proxy'sine ihtiyaç duymazsınız. **Tüm modeller `wire_api = "responses"` kullanır** — geri kalanını OmniRoute halleder.
+Pusula kullanırken hiçbir zaman ayrı bir dönüştürme proxy'sine ihtiyaç duymazsınız. **Tüm modeller `wire_api = "responses"` kullanır** — geri kalanını Pusula halleder.
 
 > **`wire_api` varsayılan değerdir** — alanın varsayılanı `"responses"` olduğundan
 > `config.toml` dosyasından tamamen çıkarılabilir. Yalnızca amacı belgeliyorsanız bunu
@@ -122,7 +122,7 @@ OmniRoute kullanırken hiçbir zaman ayrı bir dönüştürme proxy'sine ihtiya�
 
 ### Modele göre bağlam pencereleri
 
-| Model                                | OmniRoute kimliği                    | Bağlam penceresi          | `auto_compact` | `tool_output_limit` |
+| Model                                | Pusula kimliği                    | Bağlam penceresi          | `auto_compact` | `tool_output_limit` |
 | ------------------------------------ | ------------------------------------ | ------------------------- | -------------- | ------------------- |
 | GPT-5.5                              | `cx/gpt-5.5`                         | 400k güvenilir (maks. 1M) | 350,000        | 32,768              |
 | Kimi K2.7 (düşünme)                  | `kmc/kimi-k2.7`                      | 131,072                   | 112,000        | 32,768              |
@@ -150,16 +150,16 @@ OmniRoute kullanırken hiçbir zaman ayrı bir dönüştürme proxy'sine ihtiya�
 
 ## Model öneki: `cx/`
 
-OmniRoute'taki tüm Codex modelleri `cx/` önekini kullanır:
+Pusula'taki tüm Codex modelleri `cx/` önekini kullanır:
 
-| Codex CLI adı           | OmniRoute modeli   |
+| Codex CLI adı           | Pusula modeli   |
 | ----------------------- | ------------------ |
 | `cx/gpt-5.5`            | GPT-5.5 standart   |
 | `cx/gpt-5.4`            | GPT-5.4 standart   |
 | `cx/gpt-5.4-mini`       | GPT-5.4 mini       |
 | `cx/gpt-5.1-codex-mini` | GPT-5.1 Codex mini |
 
-Diğer sağlayıcılar kendi öneklerini kullanır (`kmc/`, `glm/`, `ds/`, `ollamacloud/`, `opencode-go/`, `mistral/`) — önek, OmniRoute sağlayıcı takma adıyla eşleşir.
+Diğer sağlayıcılar kendi öneklerini kullanır (`kmc/`, `glm/`, `ds/`, `ollamacloud/`, `opencode-go/`, `mistral/`) — önek, Pusula sağlayıcı takma adıyla eşleşir.
 
 ---
 
@@ -189,9 +189,9 @@ model_reasoning_effort = "xhigh"   # veya desteklendiğinde ultra
 model_reasoning_summary = "detailed"  # auto | concise | detailed | none
 ```
 
-### OmniRoute Düşünme Bütçesi (sunucu ayarı)
+### Pusula Düşünme Bütçesi (sunucu ayarı)
 
-OmniRoute ana makinesinde, Codex çaba/özet bilgilerinin üst sağlayıcıya ulaşması için **Settings → AI → Thinking Budget** ayarı **`passthrough`** olmalıdır. **`auto` modu**, istemciden gelen tüm `reasoning` / `reasoning_effort` alanlarını kaldırır ve Codex doğru yapılandırılmış olsa bile düşünme panellerinin boş kalmasına neden olur.
+Pusula ana makinesinde, Codex çaba/özet bilgilerinin üst sağlayıcıya ulaşması için **Settings → AI → Thinking Budget** ayarı **`passthrough`** olmalıdır. **`auto` modu**, istemciden gelen tüm `reasoning` / `reasoning_effort` alanlarını kaldırır ve Codex doğru yapılandırılmış olsa bile düşünme panellerinin boş kalmasına neden olur.
 
 Tam kılavuz: [THINKING_BUDGET.md](./THINKING_BUDGET.md).
 
@@ -275,49 +275,49 @@ codex -p chat     # cx/gpt-5.5, çaba ayarlanmamış (sunucu varsayılanı)
 
 ---
 
-## `omniroute setup-codex` ile otomatik profil oluşturma
+## `pusula setup-codex` ile otomatik profil oluşturma
 
-OmniRoute'u bir VPS üzerinde çalıştırıyorsanız canlı model kataloğundan otomatik olarak profil dosyaları oluşturabilirsiniz:
+Pusula'u bir VPS üzerinde çalıştırıyorsanız canlı model kataloğundan otomatik olarak profil dosyaları oluşturabilirsiniz:
 
 ```bash
-# Bir VPS üzerinden (20128 numaralı bağlantı noktasındaki yerel OmniRoute'u kullanır)
-omniroute setup-codex
+# Bir VPS üzerinden (20128 numaralı bağlantı noktasındaki yerel Pusula'u kullanır)
+pusula setup-codex
 
 # Herhangi bir makineden — VPS'nizi belirtin
-omniroute setup-codex --remote http://100.x.x.x:20128 --api-key sk-xxx
+pusula setup-codex --remote http://100.x.x.x:20128 --api-key sk-xxx
 
 # Dosyaları yazmadan önizleyin
-omniroute setup-codex --remote http://100.x.x.x:20128 --dry-run
+pusula setup-codex --remote http://100.x.x.x:20128 --dry-run
 
 # Yalnızca GLM ve Kimi profillerini oluşturun
-omniroute setup-codex --only glm,kimi
+pusula setup-codex --only glm,kimi
 
 # Özel bir dizine yazın
-omniroute setup-codex --codex-home /path/to/.codex
+pusula setup-codex --codex-home /path/to/.codex
 ```
 
 Komut `/v1/models` verilerini alır, bilinen modeller için optimize edilmiş profilleri kullanır, diğer uyumlu metin modelleri için katalog meta verilerine geri döner ve her biri için `~/.codex/<name>.config.toml` dosyasını yazar. İdempotenttir — yeniden çalıştırılması güvenlidir.
 
-OmniRoute, başarılı bir sağlayıcı model keşfi/içe aktarma işlemi canlı kataloğu değiştirdikten sonra aynı profil dosyalarını **otomatik olarak eşitleyebilir**. Bu özellik **isteğe bağlıdır ve varsayılan olarak kapalıdır**: **CLI Code dashboard** üzerinden etkinleştirin ("CLI profile auto-sync" → Codex) veya `OMNIROUTE_AUTO_SYNC_CODEX_PROFILES=true` değerini ayarlayın (`CLI_ALLOW_CONFIG_WRITES` ayarını da dikkate alır; bu ayar varsayılan olarak açıktır). Etkinleştirildiğinde yalnızca ayrı `~/.codex/*.config.toml` profil dosyalarını yazar; etkin/varsayılan `~/.codex/config.toml` dosyasını, Codex-lb ayarlarını, kimlik doğrulamayı veya sağlayıcı seçimini hiçbir zaman değiştirmez.
+Pusula, başarılı bir sağlayıcı model keşfi/içe aktarma işlemi canlı kataloğu değiştirdikten sonra aynı profil dosyalarını **otomatik olarak eşitleyebilir**. Bu özellik **isteğe bağlıdır ve varsayılan olarak kapalıdır**: **CLI Code dashboard** üzerinden etkinleştirin ("CLI profile auto-sync" → Codex) veya `PUSULA_AUTO_SYNC_CODEX_PROFILES=true` değerini ayarlayın (`CLI_ALLOW_CONFIG_WRITES` ayarını da dikkate alır; bu ayar varsayılan olarak açıktır). Etkinleştirildiğinde yalnızca ayrı `~/.codex/*.config.toml` profil dosyalarını yazar; etkin/varsayılan `~/.codex/config.toml` dosyasını, Codex-lb ayarlarını, kimlik doğrulamayı veya sağlayıcı seçimini hiçbir zaman değiştirmez.
 
 ---
 
-## `omniroute launch-codex` ile Codex'i başlatma
+## `pusula launch-codex` ile Codex'i başlatma
 
-Codex'i başlatmadan önce OmniRoute örneğinizin durumunu denetler:
+Codex'i başlatmadan önce Pusula örneğinizin durumunu denetler:
 
 ```bash
-# Yerel OmniRoute ile başlatın (varsayılan bağlantı noktası: 20128)
-omniroute launch-codex
+# Yerel Pusula ile başlatın (varsayılan bağlantı noktası: 20128)
+pusula launch-codex
 
 # Belirli bir profille başlatın
-omniroute launch-codex --profile kimi-k27
+pusula launch-codex --profile kimi-k27
 
 # Uzak bir VPS ile başlatın
-omniroute launch-codex --remote http://100.x.x.x:20128/v1 --api-key sk-xxx
+pusula launch-codex --remote http://100.x.x.x:20128/v1 --api-key sk-xxx
 
 # codex'e ek bağımsız değişkenler iletin
-omniroute launch-codex --profile glm52 -- --yolo "fix this bug"
+pusula launch-codex --profile glm52 -- --yolo "fix this bug"
 ```
 
 Codex ayrıca manifest tarafından yönlendirilen iki genel giriş noktasının da hedefidir
@@ -325,10 +325,10 @@ Codex ayrıca manifest tarafından yönlendirilen iki genel giriş noktasının 
 
 ```bash
 # Etkileşimli model seçici → ~/.codex/<name>.config.toml dosyasını yazar (TOML, env_key)
-omniroute configure codex
+pusula configure codex
 
-# -c bayrakları aracılığıyla omniroute sağlayıcısını ekleyerek codex'i başlatır (yapılandırma yazılmaz)
-omniroute run codex
+# -c bayrakları aracılığıyla pusula sağlayıcısını ekleyerek codex'i başlatır (yapılandırma yazılmaz)
+pusula run codex
 ```
 
 ---
@@ -364,21 +364,21 @@ service_tier = "fast"   # "fast" | "flex"
 ### Yeni `[model_providers.<id>]` alanları
 
 ```toml
-[model_providers.omniroute]
+[model_providers.pusula]
 base_url             = "http://100.x.x.x:20128/v1"
-env_key              = "OMNIROUTE_API_KEY"
+env_key              = "PUSULA_API_KEY"
 requires_openai_auth = false
 
 # Her isteğe eklenecek statik ek üstbilgiler
-[model_providers.omniroute.http_headers]
+[model_providers.pusula.http_headers]
 "X-Custom-Header" = "value"
 
 # Ortam değişkenlerinden okunan üstbilgiler
-[model_providers.omniroute.env_http_headers]
+[model_providers.pusula.env_http_headers]
 "X-Trace-Id" = "TRACE_ID"
 
 # Ek URL sorgu parametreleri (Azure api-version için kullanışlıdır)
-[model_providers.omniroute.query_params]
+[model_providers.pusula.query_params]
 "api-version" = "2024-12-01-preview"
 ```
 
@@ -398,13 +398,13 @@ region  = "us-east-1"
 ## Birden fazla sunucu
 
 ```toml
-[model_providers.omniroute-main]
+[model_providers.pusula-main]
 base_url = "http://192.168.0.1:20128/v1"
-env_key  = "OMNIROUTE_API_KEY"
+env_key  = "PUSULA_API_KEY"
 
-[model_providers.omniroute-tailscale]
+[model_providers.pusula-tailscale]
 base_url = "http://100.x.x.x:20128/v1"
-env_key  = "OMNIROUTE_API_KEY"
+env_key  = "PUSULA_API_KEY"
 ```
 
 ---
@@ -457,14 +457,14 @@ Etkileşimli bir oturum içinde:
 
 ## Uzun süreli görevler
 
-İki OmniRoute varsayılanı, saatler süren Codex CLI oturumlarını fark ettirmeden sekteye uğratabilir. Bunların hiçbiri Codex CLI ayarı değildir — ikisi de OmniRoute tarafında bulunur. Hesapları sabitleyen ve boşta kalma kesintilerini devre dışı bırakan üst akış proxy'lerinden bir yapılandırmayı taşıyan kullanıcılar çoğu zaman her iki sorunla da karşılaşır ve OmniRoute'un “uzun bir oturumu sürdüremediği” sonucuna varır.
+İki Pusula varsayılanı, saatler süren Codex CLI oturumlarını fark ettirmeden sekteye uğratabilir. Bunların hiçbiri Codex CLI ayarı değildir — ikisi de Pusula tarafında bulunur. Hesapları sabitleyen ve boşta kalma kesintilerini devre dışı bırakan üst akış proxy'lerinden bir yapılandırmayı taşıyan kullanıcılar çoğu zaman her iki sorunla da karşılaşır ve Pusula'un “uzun bir oturumu sürdüremediği” sonucuna varır.
 
 | Belirti                                                                                    | Olası neden                                                                        | Ayar                     |
 | ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------- | ------------------------ |
 | Oturum sürekli hesap değiştiriyor / istem önbelleği sürekliliği turlar arasında kayboluyor | Oturum benzeşimi TTL değeri `0` (devre dışı)                                       | `sessionAffinityTtlMs`   |
 | İstemciye yönelik bir istem olmadan bağlantı akıl yürütme sırasında kesiliyor              | Üst akıştan 10 dakika boyunca parça gelmeyince akış boşta kalma gözcüsü tetiklendi | `STREAM_IDLE_TIMEOUT_MS` |
 
-İlgili tartışmalar: [#7126](https://github.com/diegosouzapw/OmniRoute/discussions/7126) (uzun görev kesintileri), [#5718](https://github.com/diegosouzapw/OmniRoute/discussions/5718) (benzeşimin neden varsayılan olarak kapalı olduğu). Takip: [#7287](https://github.com/diegosouzapw/OmniRoute/issues/7287).
+İlgili tartışmalar: [#7126](https://github.com/Ferhat-Yasinoglu/pusula/discussions/7126) (uzun görev kesintileri), [#5718](https://github.com/Ferhat-Yasinoglu/pusula/discussions/5718) (benzeşimin neden varsayılan olarak kapalı olduğu). Takip: [#7287](https://github.com/Ferhat-Yasinoglu/pusula/issues/7287).
 
 ### 1. Oturum benzeşimi — bir konuşmayı tek bir hesaba sabitleyin
 
@@ -479,7 +479,7 @@ Etkileşimli bir oturum içinde:
 
 **0 olarak kaldığında ne bozulur**
 
-Çok turlu bir Codex konuşmasının her turu, etkin birleşim stratejisi tarafından bağımsız olarak yönlendirilir ve **her tur farklı bir hesaba** ulaşabilir. Bu, üst akış oturumu / istem önbelleği sürekliliğini bozar. OmniRoute, yalnızca TTL `0` değerinden büyük olduğunda Codex oturum üstbilgilerini (`x-codex-session-id` / `x-session-id` / `x-omniroute-session`) ve `prompt_cache_key` / `session_id` gibi gövde alanlarını dikkate alır (`src/sse/services/auth.ts` içindeki `extractSessionAffinityKey`).
+Çok turlu bir Codex konuşmasının her turu, etkin birleşim stratejisi tarafından bağımsız olarak yönlendirilir ve **her tur farklı bir hesaba** ulaşabilir. Bu, üst akış oturumu / istem önbelleği sürekliliğini bozar. Pusula, yalnızca TTL `0` değerinden büyük olduğunda Codex oturum üstbilgilerini (`x-codex-session-id` / `x-session-id` / `x-pusula-session`) ve `prompt_cache_key` / `session_id` gibi gövde alanlarını dikkate alır (`src/sse/services/auth.ts` içindeki `extractSessionAffinityKey`).
 
 **Saatler süren tek bir görev için öneri**
 
@@ -501,13 +501,13 @@ Etkinleştirmenin isteğe bağlı olması bilinçli bir tercihtir: benzeşimi de
 
 10 dakikadan uzun süre boyunca **gerçek bir upstream chunk gelmeden** sessiz kalan bir Codex akıl yürütme / araç turu, SSE boşta kalma watchdog'u (`open-sse/utils/stream.ts`) tarafından zorla kapatılır. İstemci çoğu zaman yalnızca bağlantının kesildiğini görür; bu da “herhangi bir bildirim olmadan otomatik olarak durdu” durumuyla eşleşir.
 
-Kritik ayrıntı: OmniRoute’un sentetik SSE **heartbeat'i boşta kalma sayacını sıfırlamaz**. `lastChunkTime` yalnızca gerçek bir upstream gövde chunk'ı geldiğinde güncellenir. Hâlâ “düşünen” ancak sessiz kalan bir model, watchdog açısından takılmış bir upstream ile aynı görünür.
+Kritik ayrıntı: Pusula’un sentetik SSE **heartbeat'i boşta kalma sayacını sıfırlamaz**. `lastChunkTime` yalnızca gerçek bir upstream gövde chunk'ı geldiğinde güncellenir. Hâlâ “düşünen” ancak sessiz kalan bir model, watchdog açısından takılmış bir upstream ile aynı görünür.
 
 İlgili Undici gövde hareketsizliği ayarı: `FETCH_BODY_TIMEOUT_MS` (bu da varsayılan olarak aynı 10 dakikalık temel değeri kullanır; `0` bu zaman aşımını devre dışı bırakır). Akış sırasında `FETCH_TIMEOUT_MS` yalnızca bağlantı kurulumunu / ilk header'ları kapsar; akış etkinleştikten sonra duraklamalar `STREAM_IDLE_TIMEOUT_MS` ve `FETCH_BODY_TIMEOUT_MS` tarafından yönetilir.
 
 **Saatler süren tek bir görev için önerilen ayarlar**
 
-OmniRoute süreç ortamında (`.env` / compose / systemd):
+Pusula süreç ortamında (`.env` / compose / systemd):
 
 ```bash
 # Uzun akıl yürütme turlarında akışın boşta kalma ve gövde hareketsizliği nedeniyle kesilmesini devre dışı bırakın
@@ -523,20 +523,20 @@ STREAM_IDLE_TIMEOUT_MS=7200000
 FETCH_BODY_TIMEOUT_MS=7200000
 ```
 
-Bu ortam değişkenlerini değiştirdikten sonra OmniRoute’u yeniden başlatın.
+Bu ortam değişkenlerini değiştirdikten sonra Pusula’u yeniden başlatın.
 
 ### Somut tarif — saatler süren Codex görevi
 
 1. **Hesabı sabitleyin:** Dashboard → Settings → Routing → Session affinity → Affinity TTL = `43200` (12 sa.) veya `86400` (maks. 24 sa.).
-2. OmniRoute ortamındaki **boşta kalma eşiklerini yükseltin / devre dışı bırakın**:
+2. Pusula ortamındaki **boşta kalma eşiklerini yükseltin / devre dışı bırakın**:
 
 ```bash
 STREAM_IDLE_TIMEOUT_MS=0
 FETCH_BODY_TIMEOUT_MS=0
 ```
 
-3. Her zamanki Codex `config.toml` yapılandırmasını (`wire_api = "responses"`, doğru `base_url`, `OMNIROUTE_API_KEY`) kullanmaya devam edin; bu iki davranış için Codex tarafında oturum benzeşimi/boşta kalma ayarı yoktur.
-4. OmniRoute’u yeniden başlatın, ardından uzun Codex görevini başlatın.
+3. Her zamanki Codex `config.toml` yapılandırmasını (`wire_api = "responses"`, doğru `base_url`, `PUSULA_API_KEY`) kullanmaya devam edin; bu iki davranış için Codex tarafında oturum benzeşimi/boşta kalma ayarı yoktur.
+4. Pusula’u yeniden başlatın, ardından uzun Codex görevini başlatın.
 
 ### Varsayılanlar kararı (#7287)
 
@@ -549,13 +549,13 @@ Her iki varsayılanı da genel olarak değiştirmek, yalnızca Codex’in değil
 
 ### Boşta kalma kaynaklı kesintıları tanılama
 
-Boşta kalma watchdog'u devreye girdiğinde OmniRoute aşağıdakine benzer bir satır loglar:
+Boşta kalma watchdog'u devreye girdiğinde Pusula aşağıdakine benzer bir satır loglar:
 
 ```text
 [STREAM] Idle timeout: no data from codex for 600000ms (model: cx/gpt-5.5)
 ```
 
-`Idle timeout: no data from` ifadesini (veya `stream_idle_timeout` kodunu / `StreamIdleTimeoutError` hata adını) grep ile arayın. Sağlayıcı bölümü, OmniRoute’un söz konusu istek için kullandığı değerdir (`codex`, başka bir sağlayıcı kimliği veya bilinmiyorsa `provider`); her zaman doğrudan `codex` dizesi değildir.
+`Idle timeout: no data from` ifadesini (veya `stream_idle_timeout` kodunu / `StreamIdleTimeoutError` hata adını) grep ile arayın. Sağlayıcı bölümü, Pusula’un söz konusu istek için kullandığı değerdir (`codex`, başka bir sağlayıcı kimliği veya bilinmiyorsa `provider`); her zaman doğrudan `codex` dizesi değildir.
 
 ---
 
@@ -565,16 +565,16 @@ Boşta kalma watchdog'u devreye girdiğinde OmniRoute aşağıdakine benzer bir 
 Yapılandırmanızdan `wire_api = "chat"` satırını kaldırın. `wire_api = "responses"` olarak ayarlayın veya alanı atlayın (v0.138 sürümünden beri varsayılan değer `"responses"`).
 
 **`Error: model not found`**
-Modelin OmniRoute'ta doğru ön ekle mevcut olduğunu doğrulayın. `omniroute models list` komutunu kullanın veya `/dashboard/providers/<provider>` yolunu açın.
+Modelin Pusula'ta doğru ön ekle mevcut olduğunu doğrulayın. `pusula models list` komutunu kullanın veya `/dashboard/providers/<provider>` yolunu açın.
 
 **`Authentication error`**
-`OMNIROUTE_API_KEY` değişkeninin dışa aktarıldığını doğrulayın: `echo $OMNIROUTE_API_KEY`.
+`PUSULA_API_KEY` değişkeninin dışa aktarıldığını doğrulayın: `echo $PUSULA_API_KEY`.
 
-**`ERROR: Missing environment variable: OMNIROUTE_API_KEY`**
-Codex, ilk isteği yapmadan önce ortam değişkeninin mevcut olduğunu doğrular. Korumalı sunucular için gerçek bir anahtarı dışa aktarın veya **yerel** OmniRoute örneğiniz kimlik doğrulaması gerektirmiyorsa `OMNIROUTE_API_KEY=local` gibi boş olmayan bir yer tutucu kullanın. Değişkeni `~/.bashrc` veya `~/.zshrc` dosyasına eklediyseniz kabuğu yeniden başlatın.
+**`ERROR: Missing environment variable: PUSULA_API_KEY`**
+Codex, ilk isteği yapmadan önce ortam değişkeninin mevcut olduğunu doğrular. Korumalı sunucular için gerçek bir anahtarı dışa aktarın veya **yerel** Pusula örneğiniz kimlik doğrulaması gerektirmiyorsa `PUSULA_API_KEY=local` gibi boş olmayan bir yer tutucu kullanın. Değişkeni `~/.bashrc` veya `~/.zshrc` dosyasına eklediyseniz kabuğu yeniden başlatın.
 
 **`Connection refused`**
-OmniRoute'un çalıştığını ve `base_url` ana makinesinin/bağlantı noktasının ağınız için doğru olduğunu doğrulayın (yerel, Tailscale veya VPS).
+Pusula'un çalıştığını ve `base_url` ana makinesinin/bağlantı noktasının ağınız için doğru olduğunu doğrulayın (yerel, Tailscale veya VPS).
 
 **Oturum bağlam sınırına yakınken çöküyor**
 `model_context_window` ve `model_auto_compact_token_limit` değerlerini açıkça ayarlayın. Yukarıdaki bağlam penceresi tablosuna bakın.
@@ -586,4 +586,4 @@ OmniRoute'un çalıştığını ve `base_url` ana makinesinin/bağlantı noktas�
 Dosyanın `~/.codex/<name>.config.toml` konumunda bulunduğunu doğrulayın (`profile-` ön eki olmadan). `ls ~/.codex/*.config.toml` komutunu çalıştırın.
 
 **Uzun Codex görevi çalışmanın ortasında kesiliyor / turlar arasında hesap değiştiriyor**
-[Uzun süren görevler](#long-running-tasks) bölümüne bakın. Oturum benzeşimini etkinleştirin (TTL, görev süresinden uzun olmalıdır) ve `STREAM_IDLE_TIMEOUT_MS` / `FETCH_BODY_TIMEOUT_MS` değerlerini artırın veya devre dışı bırakın. OmniRoute günlüklerinde `Idle timeout: no data from` ifadesini grep ile arayın.
+[Uzun süren görevler](#long-running-tasks) bölümüne bakın. Oturum benzeşimini etkinleştirin (TTL, görev süresinden uzun olmalıdır) ve `STREAM_IDLE_TIMEOUT_MS` / `FETCH_BODY_TIMEOUT_MS` değerlerini artırın veya devre dışı bırakın. Pusula günlüklerinde `Idle timeout: no data from` ifadesini grep ile arayın.

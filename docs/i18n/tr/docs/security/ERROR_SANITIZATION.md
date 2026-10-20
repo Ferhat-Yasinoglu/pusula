@@ -38,7 +38,7 @@ prototip denetim anahtarlarını kaldırır.
 `buildErrorBody()` kullanın — temizleme yerleşik olarak uygulanır:
 
 ```ts
-import { buildErrorBody } from "@omniroute/open-sse/utils/error.ts";
+import { buildErrorBody } from "@pusula/open-sse/utils/error.ts";
 
 export async function POST(req: Request) {
   try {
@@ -62,7 +62,7 @@ import {
   unavailableResponse, // Retry-After ekler
   providerCircuitOpenResponse,
   modelCooldownResponse,
-} from "@omniroute/open-sse/utils/error.ts";
+} from "@pusula/open-sse/utils/error.ts";
 ```
 
 Bunların tümü standart herkese açık hata sınırını uygular. `errorResponse`, `writeStreamError` ve
@@ -75,7 +75,7 @@ herkese açık bağlamlarını doğrudan yansıtır ve temizler. Bu yardımcıla
 Yukarıdaki yardımcıları kullanamadığınızda (ör. yanıt biçimi Connect-RPC gibi bir üst kaynak protokolü tarafından belirleniyorsa) `sanitizeErrorMessage` işlevini doğrudan içe aktarın:
 
 ```ts
-import { sanitizeErrorMessage } from "@omniroute/open-sse/utils/error.ts";
+import { sanitizeErrorMessage } from "@pusula/open-sse/utils/error.ts";
 
 const body = JSON.stringify({
   error: {
@@ -168,11 +168,11 @@ Her açık sınıflandırmayı bu dördüncü bağımsız değişkende iletin. `
 3. Derinlik sınırı: 4 seviyeyi aşan iç içe yerleştirme, `"[truncated]"` dizesiyle değiştirilir.
 4. Diziler en fazla 32 öğeyle sınırlandırılır.
 
-Yalnızca ayrıştırılmış bir sağlayıcı hata gövdesine sahip çağrı noktaları `upstreamDetails` iletmelidir. Dahili OmniRoute hataları (SSE ayrıştırma hataları, boş içerik, koruma kuralı engellemeleri) bunu içermemelidir.
+Yalnızca ayrıştırılmış bir sağlayıcı hata gövdesine sahip çağrı noktaları `upstreamDetails` iletmelidir. Dahili Pusula hataları (SSE ayrıştırma hataları, boş içerik, koruma kuralı engellemeleri) bunu içermemelidir.
 
 Ham `err.stack`, `err.message` veya çalışma zamanı istisnasından gelen herhangi bir dizeyi `upstreamDetails` öğesine GEÇİRMEYİN. Bunlar, üst kaynak gövdesi olmadan yine `errorResponse` / `buildErrorBody(code, msg)` üzerinden geçirilmelidir.
 
-Seçici üst kaynak 4xx aktarımı, istemcinin otomatik kurtarması için gereken sağlayıcının güvenli JSON şeklini ve ifadesini korur; ancak bu, bayt düzeyinde bire bir aktarım değildir: özyinelemeli temizleyici, serileştirmeden önce her zaman çalışır. Döngüsel, BigInt içeren veya kötü niyetli `toJSON()` gövdeleri güvenli biçimde başarısız olur ve aktarım için uygun sayılmaz. OCR ve moderasyon da aynı kuralı uygular; JSON olmayan, boş veya yanlış etiketlenmiş üst kaynak gövdeleri, standart OmniRoute JSON hata zarfına dönüştürülür.
+Seçici üst kaynak 4xx aktarımı, istemcinin otomatik kurtarması için gereken sağlayıcının güvenli JSON şeklini ve ifadesini korur; ancak bu, bayt düzeyinde bire bir aktarım değildir: özyinelemeli temizleyici, serileştirmeden önce her zaman çalışır. Döngüsel, BigInt içeren veya kötü niyetli `toJSON()` gövdeleri güvenli biçimde başarısız olur ve aktarım için uygun sayılmaz. OCR ve moderasyon da aynı kuralı uygular; JSON olmayan, boş veya yanlış etiketlenmiş üst kaynak gövdeleri, standart Pusula JSON hata zarfına dönüştürülür.
 
 ## Bilinen CodeQL sınırlaması: özel temizleyiciler tanınmıyor
 

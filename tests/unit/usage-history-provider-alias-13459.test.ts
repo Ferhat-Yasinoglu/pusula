@@ -7,7 +7,7 @@ import path from "node:path";
 // #13459: usage_history rows written under a provider alias ("af") and under the
 // canonical id ("api-airforce") split one provider into two analytics buckets.
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-usage-alias-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-usage-alias-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../src/lib/db/core.ts");

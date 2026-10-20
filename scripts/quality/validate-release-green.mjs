@@ -43,7 +43,7 @@
 //                   read straight from ci.yml so the set never drifts. Catches the whole
 //                   "static base-red" category the curated list missed (v3.8.46: 11 of 16
 //                   leaked reds). Pair with --quick for the fast "1 command, 0 CI layers" pass.
-//     --hermetic    scrub OMNIROUTE_API_KEY/OMNIROUTE_URL from gate env so live
+//     --hermetic    scrub PUSULA_API_KEY/PUSULA_URL from gate env so live
 //                   tests self-skip exactly like CI (dev machines otherwise run
 //                   them against localhost and produce false-positive reds)
 //
@@ -395,15 +395,15 @@ export function classifyRunError(err, timeoutMs) {
 }
 
 // --hermetic: scrub the live-test trigger vars so the pre-flight behaves like CI
-// (a dev machine with OMNIROUTE_API_KEY set runs 17+ live tests that CI skips —
+// (a dev machine with PUSULA_API_KEY set runs 17+ live tests that CI skips —
 // every one a false-positive red against the release branch).
-const HERMETIC_SCRUB = ["OMNIROUTE_API_KEY", "OMNIROUTE_URL"];
+const HERMETIC_SCRUB = ["PUSULA_API_KEY", "PUSULA_URL"];
 let hermetic = false;
 /**
  * Env for the pack gate's provenance guard (#10427).
  *
  * `validate-pack-artifact.ts` checks `dist/BUILD_SHA` for ancestry against
- * `OMNIROUTE_RELEASE_REF`, defaulting to `origin/main`. That default is right at
+ * `PUSULA_RELEASE_REF`, defaulting to `origin/main`. That default is right at
  * PUBLICATION (npm-publish.yml runs on main) but structurally impossible here: this
  * validator runs ON a release branch, whose tip is by definition NOT an ancestor of
  * main mid-cycle, so the gate reported `off-release-line` on every single run and the
@@ -413,7 +413,7 @@ let hermetic = false;
  * HEAD. This does not relax the guard: a dist/ built from some other commit still
  * fails, and a missing BUILD_SHA still fails.
  */
-const PACK_GATE_ENV = { OMNIROUTE_RELEASE_REF: "HEAD" };
+const PACK_GATE_ENV = { PUSULA_RELEASE_REF: "HEAD" };
 
 function buildGateEnv(extra) {
   const env = { ...process.env, FORCE_COLOR: "0", ...(extra || {}) };

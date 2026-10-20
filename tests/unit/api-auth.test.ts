@@ -5,7 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import { SignJWT } from "jose";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-api-auth-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-api-auth-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = "test-api-key-secret";
 
@@ -22,7 +22,7 @@ const { AUTHZ_HEADER_PEER_LOCALITY, CLI_TOKEN_HEADER, PEER_IP_HEADER, VIA_PROXY_
 
 const ORIGINAL_JWT_SECRET = process.env.JWT_SECRET;
 const ORIGINAL_INITIAL_PASSWORD = process.env.INITIAL_PASSWORD;
-const ORIGINAL_PEER_STAMP_TOKEN = process.env.OMNIROUTE_PEER_STAMP_TOKEN;
+const ORIGINAL_PEER_STAMP_TOKEN = process.env.PUSULA_PEER_STAMP_TOKEN;
 
 // The per-process secret the custom Node server uses to stamp the real TCP peer
 // (scripts/dev/peer-stamp.mjs). Tests mint the same `<token>|<ip>` shape.
@@ -35,7 +35,7 @@ async function resetStorage() {
   fs.mkdirSync(TEST_DATA_DIR, { recursive: true });
   delete process.env.JWT_SECRET;
   delete process.env.INITIAL_PASSWORD;
-  delete process.env.OMNIROUTE_PEER_STAMP_TOKEN;
+  delete process.env.PUSULA_PEER_STAMP_TOKEN;
 }
 
 /**
@@ -44,7 +44,7 @@ async function resetStorage() {
  * influenced by the URL / Host header the client chose.
  */
 function stampedPeerRequest(url: string, peerIp: string, init: RequestInit = {}): Request {
-  process.env.OMNIROUTE_PEER_STAMP_TOKEN = TEST_PEER_STAMP_TOKEN;
+  process.env.PUSULA_PEER_STAMP_TOKEN = TEST_PEER_STAMP_TOKEN;
   const headers = new Headers(init.headers);
   headers.set(PEER_IP_HEADER, `${TEST_PEER_STAMP_TOKEN}|${peerIp}`);
   headers.set(VIA_PROXY_HEADER, `${TEST_PEER_STAMP_TOKEN}|0`);
@@ -89,9 +89,9 @@ test.after(() => {
   }
 
   if (ORIGINAL_PEER_STAMP_TOKEN === undefined) {
-    delete process.env.OMNIROUTE_PEER_STAMP_TOKEN;
+    delete process.env.PUSULA_PEER_STAMP_TOKEN;
   } else {
-    process.env.OMNIROUTE_PEER_STAMP_TOKEN = ORIGINAL_PEER_STAMP_TOKEN;
+    process.env.PUSULA_PEER_STAMP_TOKEN = ORIGINAL_PEER_STAMP_TOKEN;
   }
 });
 
@@ -393,7 +393,7 @@ test("isLoopbackRequest ignores a spoofed Host header — a non-loopback stamped
   );
 
   // The forged stamp shape (`<wrong-token>|127.0.0.1`) fails closed.
-  process.env.OMNIROUTE_PEER_STAMP_TOKEN = TEST_PEER_STAMP_TOKEN;
+  process.env.PUSULA_PEER_STAMP_TOKEN = TEST_PEER_STAMP_TOKEN;
   assert.equal(
     apiAuth.isLoopbackRequest(
       new Request("http://localhost/api/providers", {
@@ -425,7 +425,7 @@ test("isLoopbackRequest ignores a spoofed Host header — a non-loopback stamped
 test("isLoopbackRequest consults Host only when no stamping server exists in the process (GHSA-7pq4-8pvv-rx7r)", async () => {
   // Every supported runtime calls ensurePeerStampToken() at boot, so once a token
   // exists a signal-less request is never loopback, whatever Host says.
-  process.env.OMNIROUTE_PEER_STAMP_TOKEN = TEST_PEER_STAMP_TOKEN;
+  process.env.PUSULA_PEER_STAMP_TOKEN = TEST_PEER_STAMP_TOKEN;
   assert.equal(
     apiAuth.isLoopbackRequest(
       new Request("http://localhost/api/providers", { headers: { host: "localhost" } })
@@ -437,7 +437,7 @@ test("isLoopbackRequest consults Host only when no stamping server exists in the
   // No token at all = no stamping server = direct handler invocation (the unit-test
   // harness). There is no real peer to read, so the historical URL verdict applies —
   // and it still rejects a non-loopback hostname.
-  delete process.env.OMNIROUTE_PEER_STAMP_TOKEN;
+  delete process.env.PUSULA_PEER_STAMP_TOKEN;
   assert.equal(apiAuth.isLoopbackRequest(new Request("http://localhost/api/providers")), true);
   assert.equal(apiAuth.isLoopbackRequest(new Request("https://example.com/api/providers")), false);
 });
@@ -449,10 +449,10 @@ test("isLoopbackRequest trusts the pipeline locality verdict only when a stampin
   const verdict = new Request("https://example.com/api/providers", {
     headers: { [AUTHZ_HEADER_PEER_LOCALITY]: "loopback" },
   });
-  delete process.env.OMNIROUTE_PEER_STAMP_TOKEN;
+  delete process.env.PUSULA_PEER_STAMP_TOKEN;
   assert.equal(apiAuth.isLoopbackRequest(verdict), false);
 
-  process.env.OMNIROUTE_PEER_STAMP_TOKEN = TEST_PEER_STAMP_TOKEN;
+  process.env.PUSULA_PEER_STAMP_TOKEN = TEST_PEER_STAMP_TOKEN;
   assert.equal(apiAuth.isLoopbackRequest(verdict), true);
   assert.equal(
     apiAuth.isLoopbackRequest(
@@ -611,9 +611,9 @@ test("isAuthRequired treats partial OIDC config as not configured (bootstrap beh
   );
 });
 
-test("getApiKeyMetadata recognizes OMNIROUTE_API_KEY environment variable", async () => {
+test("getApiKeyMetadata recognizes PUSULA_API_KEY environment variable", async () => {
   const envKey = "sk-test-env-key-" + Date.now();
-  process.env.OMNIROUTE_API_KEY = envKey;
+  process.env.PUSULA_API_KEY = envKey;
 
   const metadata = await apiKeysDb.getApiKeyMetadata(envKey);
 
@@ -621,7 +621,7 @@ test("getApiKeyMetadata recognizes OMNIROUTE_API_KEY environment variable", asyn
   assert.equal(metadata.id, "env-key");
   assert.equal(metadata.name, "Environment Key");
 
-  delete process.env.OMNIROUTE_API_KEY;
+  delete process.env.PUSULA_API_KEY;
 });
 
 test("getApiKeyMetadata recognizes ROUTER_API_KEY environment variable", async () => {
@@ -705,15 +705,15 @@ test("requireManagementAuth accepts the legacy 32-character local CLI token", as
   assert.equal(res, null);
 });
 
-test("requireManagementAuth returns null for OMNIROUTE_API_KEY env passthrough", async () => {
+test("requireManagementAuth returns null for PUSULA_API_KEY env passthrough", async () => {
   await setupAuth();
   const envKey = "sk-env-root-" + Date.now();
-  process.env.OMNIROUTE_API_KEY = envKey;
+  process.env.PUSULA_API_KEY = envKey;
   try {
     const res = await requireManagementAuth(managementRequest(envKey));
     assert.equal(res, null);
   } finally {
-    delete process.env.OMNIROUTE_API_KEY;
+    delete process.env.PUSULA_API_KEY;
   }
 });
 

@@ -332,8 +332,8 @@ export class ZcodeAppServerClient implements ZcodeClientLike {
       child.stdin.write(
         `${JSON.stringify({
           type: "zcode-hello-ack",
-          version: "omniroute",
-          clientId: `omniroute-${process.pid}`,
+          version: "pusula",
+          clientId: `pusula-${process.pid}`,
         })}\n`
       );
       this.handshakeDone = true;

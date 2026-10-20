@@ -1,15 +1,15 @@
-import { getEmbeddingProvider } from "@omniroute/open-sse/config/embeddingRegistry.ts";
-import { getRerankProvider } from "@omniroute/open-sse/config/rerankRegistry.ts";
-import { getImageProvider } from "@omniroute/open-sse/config/imageRegistry.ts";
-import { getVideoProvider } from "@omniroute/open-sse/config/videoRegistry.ts";
+import { getEmbeddingProvider } from "@pusula/open-sse/config/embeddingRegistry.ts";
+import { getRerankProvider } from "@pusula/open-sse/config/rerankRegistry.ts";
+import { getImageProvider } from "@pusula/open-sse/config/imageRegistry.ts";
+import { getVideoProvider } from "@pusula/open-sse/config/videoRegistry.ts";
 import {
   getSpeechProvider,
   getTranscriptionProvider,
-} from "@omniroute/open-sse/config/audioRegistry.ts";
-import { ANTIGRAVITY_PUBLIC_MODELS } from "@omniroute/open-sse/config/antigravityModelAliases.ts";
-import { getStaticQoderModels } from "@omniroute/open-sse/services/qoderCli.ts";
-import { getSearchProvider } from "@omniroute/open-sse/config/searchRegistry.ts";
-import { BAILIAN_CODING_PLAN_MODELS } from "@omniroute/open-sse/config/providers/registry/bailian-coding-plan/index.ts";
+} from "@pusula/open-sse/config/audioRegistry.ts";
+import { ANTIGRAVITY_PUBLIC_MODELS } from "@pusula/open-sse/config/antigravityModelAliases.ts";
+import { getStaticQoderModels } from "@pusula/open-sse/services/qoderCli.ts";
+import { getSearchProvider } from "@pusula/open-sse/config/searchRegistry.ts";
+import { BAILIAN_CODING_PLAN_MODELS } from "@pusula/open-sse/config/providers/registry/bailian-coding-plan/index.ts";
 
 import { getModelsByProviderId } from "@/shared/constants/models";
 

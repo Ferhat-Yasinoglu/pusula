@@ -7,7 +7,7 @@ import {
   refreshCopilotToken,
   resolveCopilotTokenBaseUrl,
 } from "@/sse/services/tokenRefresh";
-import { rotationGroupFor } from "@omniroute/open-sse/services/refreshSerializer.ts";
+import { rotationGroupFor } from "@pusula/open-sse/services/refreshSerializer.ts";
 
 type RefreshResult = {
   accessToken?: string;

@@ -1,6 +1,6 @@
 // Regression for GitHub issue #13012 (Bug 2): there was no CLI/env path to
 // flip the mcpEnabled setting on — it was dashboard-only. Pins the new
-// `omniroute mcp enable`/`mcp disable` PATCH /api/settings body shape.
+// `pusula mcp enable`/`mcp disable` PATCH /api/settings body shape.
 import test from "node:test";
 import assert from "node:assert/strict";
 

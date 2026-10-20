@@ -275,7 +275,7 @@ test("replaceImageParts replaces an image nested inside tool_result content", ()
     ],
   };
 
-  const result = replaceImageParts(body, ["[Image 1]: A screenshot of the OmniRoute dashboard"]);
+  const result = replaceImageParts(body, ["[Image 1]: A screenshot of the Pusula dashboard"]);
 
   const toolResult = result.messages[0].content[0] as {
     type: string;
@@ -283,7 +283,7 @@ test("replaceImageParts replaces an image nested inside tool_result content", ()
   };
   assert.strictEqual(toolResult.type, "tool_result");
   assert.deepStrictEqual(toolResult.content, [
-    { type: "text", text: "[Image 1]: A screenshot of the OmniRoute dashboard" },
+    { type: "text", text: "[Image 1]: A screenshot of the Pusula dashboard" },
   ]);
   // Sibling text preserved.
   assert.strictEqual(result.messages[0].content[1].type, "text");

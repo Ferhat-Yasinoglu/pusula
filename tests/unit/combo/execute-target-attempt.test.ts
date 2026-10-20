@@ -91,7 +91,7 @@ function emptyContent200(connectionId = "c-fail"): Response {
       status: 200,
       headers: {
         "content-type": "application/json",
-        "x-omniroute-selected-connection-id": connectionId,
+        "x-pusula-selected-connection-id": connectionId,
       },
     }
   );

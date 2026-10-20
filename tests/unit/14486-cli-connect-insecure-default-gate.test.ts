@@ -20,7 +20,7 @@ import path from "node:path";
  * every path that accepts that password, not just the dashboard one.
  */
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-14486-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-14486-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.JWT_SECRET = "test-jwt-secret-14486";
 

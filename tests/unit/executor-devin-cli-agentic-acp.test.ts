@@ -73,10 +73,10 @@ test("Devin isolated-home check accepts Windows sandbox paths (#12405)", () => {
   for (const home of [
     "C:\\Users\\example\\.sandbox\\home",
     "C:\\Users\\example\\.sandbox\\devin-sandbox\\home",
-    "D:/omniroute/.sandbox/home",
+    "D:/pusula/.sandbox/home",
     "\\\\server\\share\\.sandbox\\home",
     "/home/bridge",
-    "/opt/omniroute/.sandbox/unit-home",
+    "/opt/pusula/.sandbox/unit-home",
   ]) {
     assert.equal(isIsolatedDevinHome(home), true, `accepts ${home}`);
   }

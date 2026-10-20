@@ -1,4 +1,4 @@
-# 🗜️ Prompt Compression Guide — OmniRoute (Deutsch)
+# 🗜️ Prompt Compression Guide — Pusula (Deutsch)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../compression/COMPRESSION_GUIDE.md) · 🇪🇹 [am](../../../am/docs/compression/COMPRESSION_GUIDE.md) · 🇸🇦 [ar](../../../ar/docs/compression/COMPRESSION_GUIDE.md) · 🇦🇿 [az](../../../az/docs/compression/COMPRESSION_GUIDE.md) · 🇧🇬 [bg](../../../bg/docs/compression/COMPRESSION_GUIDE.md) · 🇧🇩 [bn](../../../bn/docs/compression/COMPRESSION_GUIDE.md) · 🇧🇦 [bs](../../../bs/docs/compression/COMPRESSION_GUIDE.md) · 🇨🇿 [cs](../../../cs/docs/compression/COMPRESSION_GUIDE.md) · 🇩🇰 [da](../../../da/docs/compression/COMPRESSION_GUIDE.md) · 🇬🇷 [el](../../../el/docs/compression/COMPRESSION_GUIDE.md) · 🇪🇸 [es](../../../es/docs/compression/COMPRESSION_GUIDE.md) · 🇪🇪 [et](../../../et/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇷 [fa](../../../fa/docs/compression/COMPRESSION_GUIDE.md) · 🇫🇮 [fi](../../../fi/docs/compression/COMPRESSION_GUIDE.md) · 🇫🇷 [fr](../../../fr/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇪 [ga](../../../ga/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [gu](../../../gu/docs/compression/COMPRESSION_GUIDE.md) · 🇳🇬 [ha](../../../ha/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇱 [he](../../../he/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [hi](../../../hi/docs/compression/COMPRESSION_GUIDE.md) · 🇭🇷 [hr](../../../hr/docs/compression/COMPRESSION_GUIDE.md) · 🇭🇺 [hu](../../../hu/docs/compression/COMPRESSION_GUIDE.md) · 🇦🇲 [hy](../../../hy/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇩 [id](../../../id/docs/compression/COMPRESSION_GUIDE.md) · 🇳🇬 [ig](../../../ig/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇹 [it](../../../it/docs/compression/COMPRESSION_GUIDE.md) · 🇯🇵 [ja](../../../ja/docs/compression/COMPRESSION_GUIDE.md) · 🇬🇪 [ka](../../../ka/docs/compression/COMPRESSION_GUIDE.md) · 🇰🇭 [km](../../../km/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [kn](../../../kn/docs/compression/COMPRESSION_GUIDE.md) · 🇰🇷 [ko](../../../ko/docs/compression/COMPRESSION_GUIDE.md) · 🇱🇹 [lt](../../../lt/docs/compression/COMPRESSION_GUIDE.md) · 🇱🇻 [lv](../../../lv/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [ml](../../../ml/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [mr](../../../mr/docs/compression/COMPRESSION_GUIDE.md) · 🇲🇾 [ms](../../../ms/docs/compression/COMPRESSION_GUIDE.md) · 🇲🇹 [mt](../../../mt/docs/compression/COMPRESSION_GUIDE.md) · 🇲🇲 [my](../../../my/docs/compression/COMPRESSION_GUIDE.md) · 🇳🇵 [ne](../../../ne/docs/compression/COMPRESSION_GUIDE.md) · 🇳🇱 [nl](../../../nl/docs/compression/COMPRESSION_GUIDE.md) · 🇳🇴 [no](../../../no/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [or](../../../or/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [pa](../../../pa/docs/compression/COMPRESSION_GUIDE.md) · 🇵🇭 [phi](../../../phi/docs/compression/COMPRESSION_GUIDE.md) · 🇵🇱 [pl](../../../pl/docs/compression/COMPRESSION_GUIDE.md) · 🇵🇹 [pt](../../../pt/docs/compression/COMPRESSION_GUIDE.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/compression/COMPRESSION_GUIDE.md) · 🇷🇴 [ro](../../../ro/docs/compression/COMPRESSION_GUIDE.md) · 🇷🇺 [ru](../../../ru/docs/compression/COMPRESSION_GUIDE.md) · 🇱🇰 [si](../../../si/docs/compression/COMPRESSION_GUIDE.md) · 🇸🇰 [sk](../../../sk/docs/compression/COMPRESSION_GUIDE.md) · 🇸🇮 [sl](../../../sl/docs/compression/COMPRESSION_GUIDE.md) · 🇷🇸 [sr](../../../sr/docs/compression/COMPRESSION_GUIDE.md) · 🇸🇪 [sv](../../../sv/docs/compression/COMPRESSION_GUIDE.md) · 🇰🇪 [sw](../../../sw/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [ta](../../../ta/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [te](../../../te/docs/compression/COMPRESSION_GUIDE.md) · 🇹🇭 [th](../../../th/docs/compression/COMPRESSION_GUIDE.md) · 🇹🇷 [tr](../../../tr/docs/compression/COMPRESSION_GUIDE.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/compression/COMPRESSION_GUIDE.md) · 🇵🇰 [ur](../../../ur/docs/compression/COMPRESSION_GUIDE.md) · 🇺🇿 [uz](../../../uz/docs/compression/COMPRESSION_GUIDE.md) · 🇻🇳 [vi](../../../vi/docs/compression/COMPRESSION_GUIDE.md) · 🇳🇬 [yo](../../../yo/docs/compression/COMPRESSION_GUIDE.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/compression/COMPRESSION_GUIDE.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/compression/COMPRESSION_GUIDE.md)
 
@@ -8,7 +8,7 @@
 
 ## Überblick
 
-OmniRoute implementiert eine modulare Pipeline zur Prompt-Komprimierung, die **proaktiv** ausgeführt wird, bevor Anfragen die vorgelagerten Anbieter erreichen. Dadurch werden Token transparent eingespart — Änderungen an deinem Arbeitsablauf sind nicht erforderlich.
+Pusula implementiert eine modulare Pipeline zur Prompt-Komprimierung, die **proaktiv** ausgeführt wird, bevor Anfragen die vorgelagerten Anbieter erreichen. Dadurch werden Token transparent eingespart — Änderungen an deinem Arbeitsablauf sind nicht erforderlich.
 
 ```
 Client-Anfrage
@@ -118,15 +118,15 @@ Komprimierungs-Combos konfiguriert werden, die Routing-Combos zugewiesen sind.
 
 ## Berechnung der Einsparungen aus vorgelagerten Projekten
 
-OmniRoute dokumentiert Komprimierungseinsparungen aus zwei Quellen: Benchmarks vorgelagerter Projekte und
-der eigenen Engine-Kombination von OmniRoute.
+Pusula dokumentiert Komprimierungseinsparungen aus zwei Quellen: Benchmarks vorgelagerter Projekte und
+der eigenen Engine-Kombination von Pusula.
 
 | Quelle  | Hier verwendete Angabe aus der vorgelagerten README                                                                                                             |
 | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Caveman | `~75%` weniger Ausgabetokens, durchschnittlich `65%` Ausgabeeinsparungen im Benchmark, eine Spanne von `22-87%` und ein Tool zur Eingabekomprimierung um `~46%` |
 | RTK     | `60-90%` Einsparungen bei Befehlsausgaben; Beispielsitzung mit `~118,000 -> ~23,900` Tokens oder `79.7%` Einsparung (`~80%`)                                    |
 
-Bei sich überschneidenden Tool-/Kontext-Nutzdaten kombiniert die standardmäßige OmniRoute-Konfiguration die Engines:
+Bei sich überschneidenden Tool-/Kontext-Nutzdaten kombiniert die standardmäßige Pusula-Konfiguration die Engines:
 
 ```txt
 RTK -> Caveman
@@ -210,7 +210,7 @@ Diese Zuweisung zur „Überschreibung pro Kombination“ ist ein anderes Steuer
 
 ### Überschreibung pro Anfrage
 
-Senden Sie den Anfrage-Header `x-omniroute-compression`, um den Komprimierungsplan für eine einzelne Anfrage zu überschreiben. Er hat die höchste Priorität — er setzt die Überschreibung der Routing-Kombination, das aktive Profil, den automatischen Auslöser und den Standardwert des Panels außer Kraft. Unbekannte Werte werden ignoriert (die Anfrage wird niemals abgelehnt), und der globale Hauptschalter bleibt weiterhin maßgeblich: Wenn die Komprimierung global deaktiviert ist, kann sie durch den Header nicht aktiviert werden. Werte:
+Senden Sie den Anfrage-Header `x-pusula-compression`, um den Komprimierungsplan für eine einzelne Anfrage zu überschreiben. Er hat die höchste Priorität — er setzt die Überschreibung der Routing-Kombination, das aktive Profil, den automatischen Auslöser und den Standardwert des Panels außer Kraft. Unbekannte Werte werden ignoriert (die Anfrage wird niemals abgelehnt), und der globale Hauptschalter bleibt weiterhin maßgeblich: Wenn die Komprimierung global deaktiviert ist, kann sie durch den Header nicht aktiviert werden. Werte:
 
 | Wert          | Wirkung                                                                                                                                             |
 | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -223,7 +223,7 @@ Senden Sie den Anfrage-Header `x-omniroute-compression`, um den Komprimierungspl
 
 Ohne `allow-lossy`, `engine:<id>` oder eine benannte Kombination werden verlustbehaftete Engines nicht angewendet. Wenn die Komprimierung aktiviert ist, erhält die Anfrage weiterhin Sitzungs-Deduplizierung und die Zusammenfassung von Leerraum.
 
-Der angewendete Plan wird im Antwort-Header `X-OmniRoute-Compression: <mode>; source=<source>` zurückgegeben, wobei `<source>` einen der Werte `request-header`, `routing-override`, `active-profile`, `auto-trigger`, `default` oder `off` hat.
+Der angewendete Plan wird im Antwort-Header `X-Pusula-Compression: <mode>; source=<source>` zurückgegeben, wobei `<source>` einen der Werte `request-header`, `routing-override`, `active-profile`, `auto-trigger`, `default` oder `off` hat.
 
 ### API
 
@@ -311,7 +311,7 @@ Der RTK-Modus ist von **[RTK - Rust Token Killer](https://github.com/rtk-ai/rtk)
 
 ## Erweiterte Komprimierungssysteme
 
-Zusätzlich zu den 7 Standardmodi umfasst OmniRoute mehrere erweiterte
+Zusätzlich zu den 7 Standardmodi umfasst Pusula mehrere erweiterte
 Komprimierungssysteme, die abhängig vom Kontext automatisch arbeiten.
 
 ### Cache-bewusste Komprimierung
@@ -338,7 +338,7 @@ die **Komprimierungsstrategie entsprechend anpasst**.
 import {
   detectCachingContext,
   getCacheAwareStrategy,
-} from "@omniroute/open-sse/services/compression/cachingAware";
+} from "@pusula/open-sse/services/compression/cachingAware";
 
 const body = {
   model: "anthropic/claude-sonnet-4.5",
@@ -374,7 +374,7 @@ weniger relevant. Das Modul `progressiveAging.ts` **reduziert Nachrichten abhän
 #### Codebeispiel
 
 ```ts
-import { applyAging } from "@omniroute/open-sse/services/compression/progressiveAging";
+import { applyAging } from "@pusula/open-sse/services/compression/progressiveAging";
 
 const messages = [
   { role: "system", content: "You are a helpful assistant" },
@@ -460,7 +460,7 @@ Fehlermeldungen, URLs und Bezeichner unverändert beibehält.
 die Auswahl mit dem Katalog ab (unbekannte IDs und nicht zum Gebietsschema passende Stile werden
 verworfen und verursachen nie einen Fehler), verkettet die ausgewählten Anweisungen in Katalogreihenfolge,
 hängt die Begrenzungsklausel **einmal** an und stellt das Ergebnis im System-Prompt
-hinter einer einzelnen Idempotenzmarkierung (`[OmniRoute Output Styles]`) voran — eine erneute Anwendung
+hinter einer einzelnen Idempotenzmarkierung (`[Pusula Output Styles]`) voran — eine erneute Anwendung
 bewirkt nichts. Wenn für die erkannte Anfragesprache eine Übersetzung vorhanden ist, wird anstelle
 der englischen Anweisung die lokalisierte Anweisung injiziert.
 

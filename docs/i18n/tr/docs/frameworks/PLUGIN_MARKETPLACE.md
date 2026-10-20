@@ -9,7 +9,7 @@
 > `src/app/(dashboard)/dashboard/plugins/`
 > **Son güncelleme:** 2026-06-28 — v3.8.40
 
-OmniRoute, WordPress tarzı bir eklenti sistemiyle birlikte gelir. Eklentiler;
+Pusula, WordPress tarzı bir eklenti sistemiyle birlikte gelir. Eklentiler;
 her biri bir `plugin.json` manifesti ve bir giriş dosyası içeren, kendi kendine
 yeterli dizinlerdir. İstek işlem hattına (`onRequest` / `onResponse` / `onError`)
 ve yaşam döngüsü olaylarına (`onInstall` / `onActivate` / `onDeactivate` /
@@ -158,10 +158,10 @@ anahtarlara izin verilir.
 
 ### Eklenti dizini
 
-Eklentiler OmniRoute veri dizini altında bulunur:
+Eklentiler Pusula veri dizini altında bulunur:
 
 ```
-~/.omniroute/plugins/<plugin-name>/
+~/.pusula/plugins/<plugin-name>/
   ├─ plugin.json
   └─ index.js          # (veya manifest.main her neyi işaret ediyorsa)
 ```
@@ -169,15 +169,15 @@ Eklentiler OmniRoute veri dizini altında bulunur:
 `getDefaultPluginDir()` (`src/lib/plugins/scanner.ts`) bu dizini üç adımda
 çözümler:
 
-1. **`OMNIROUTE_PLUGINS_DIR`**, ayarlandığında — `HOME` ne söylerse söylesin aynen
+1. **`PUSULA_PLUGINS_DIR`**, ayarlandığında — `HOME` ne söylerse söylesin aynen
    kullanılır. Bu, eklenti ağacının genellikle konteynerin ana diziniyle hiçbir
    ilgisi olmayan bir yola bağlandığı Docker/K8s için açık ayardır (#11827).
-2. `<home>/.omniroute/plugins`; burada `<home>`, `HOME` / `USERPROFILE` ortam
+2. `<home>/.pusula/plugins`; burada `<home>`, `HOME` / `USERPROFILE` ortam
    değişkenlerinden alınır.
-3. Süreç hiçbir ana dizin dışa aktarmıyorsa `/tmp/.omniroute/plugins`.
+3. Süreç hiçbir ana dizin dışa aktarmıyorsa `/tmp/.pusula/plugins`.
 
 Çözümlenen dizin, başlangıçta bir kez `scanner.dir_resolved` olarak günlüğe
-kaydedilir ve hangi girdinin seçildiği (`OMNIROUTE_PLUGINS_DIR`, `home` veya
+kaydedilir ve hangi girdinin seçildiği (`PUSULA_PLUGINS_DIR`, `home` veya
 `no-home-fallback`) belirtilir — böylece sessizce 3. adıma düşen bir imaj, yalnızca
 boş bir eklenti listesi bildirmek yerine bunu açıkça belirtir.
 `POST /api/plugins/scan`, burada geçerli bir `plugin.json` barındıran tüm alt
@@ -185,8 +185,8 @@ dizinleri keşfeder ve kaydeder; aynı dizin, `pluginManager.install()` işlevin
 eklentileri kopyaladığı kök dizindir. Dolayısıyla geçersiz kılma, keşif ve yükleme
 konumlarını birlikte taşır.
 
-> **`OMNIROUTE_PLUGINS_DIR`, `OMNIROUTE_PLUGIN_PATH` değildir.** İkincisi yalnızca,
-> `omniroute` alt komutlarını ekleyen `omniroute-cmd-*` npm paketlerini bulmak için CLI
+> **`PUSULA_PLUGINS_DIR`, `PUSULA_PLUGIN_PATH` değildir.** İkincisi yalnızca,
+> `pusula` alt komutlarını ekleyen `pusula-cmd-*` npm paketlerini bulmak için CLI
 > komut eklentisi yükleyicisi (`bin/cli/plugins.mjs`) tarafından okunur — burada
 > açıklanan çalışma zamanı tarayıcısı üzerinde hiçbir etkisi yoktur. Bu konu için
 > [PLUGINS.md](./PLUGINS.md) belgesine bakın.
@@ -289,7 +289,7 @@ sessizce yerleşik başlangıç kayıt defterine geri döner ve bir uyarı kayde
 | `main`             | string?   | Giriş dosyası; varsayılanı `index.js`                                 |
 | `source`           | enum?     | `local` \| `marketplace` (varsayılanı `local`)                        |
 | `tags`             | string[]? | Arama etiketleri                                                      |
-| `requires`         | object?   | `{ omniroute?, permissions[] }`                                       |
+| `requires`         | object?   | `{ pusula?, permissions[] }`                                       |
 | `hooks`            | object?   | Eklentinin hangi kancaları uyguladığını bildiren Boolean değerleri    |
 | `skills`           | object[]? | İsteğe bağlı beceri tanımları                                         |
 | `enabledByDefault` | boolean?  | Yükleme sırasında otomatik olarak etkinleştir                         |
@@ -304,7 +304,7 @@ sessizce yerleşik başlangıç kayıt defterine geri döner ve bir uyarı kayde
 ```
 kurulum (POST /api/plugins, yol)
   → manifesti tara/doğrula → hazırlama alanına kopyala → ana dosyanın dizin içinde olduğunu doğrula
-  → atomik olarak ~/.omniroute/plugins/<name> konumuna yeniden adlandır → DB satırı ekle
+  → atomik olarak ~/.pusula/plugins/<name> konumuna yeniden adlandır → DB satırı ekle
   → onInstall olayını tetikle → enabledByDefault ise: etkinleştir
 
 etkinleştirme (POST /api/plugins/{name}/activate)

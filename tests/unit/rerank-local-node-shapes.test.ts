@@ -12,7 +12,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-rerank-shapes-test-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-rerank-shapes-test-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const { buildLocalRerankRequestBody, documentText, normalizeLocalRerankResponse } =

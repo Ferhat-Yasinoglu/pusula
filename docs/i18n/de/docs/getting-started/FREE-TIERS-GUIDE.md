@@ -4,7 +4,7 @@
 
 ---
 
-> **Kurzfassung**: OmniRoute registriert 357 Anbieter-IDs, darunter **152 Anbieter-Katalogeinträge, die mit `hasFree` gekennzeichnet sind**. Der strengere, geprüfte Katalog kostenloser Modelle umfasst **35 wiederkehrende Pool-Schlüssel / 482 Einträge** (475 aktiv + 7 eingestellt). Verbinden Sie mehrere geeignete Anbieter, um die Fallback-Kapazität zu erhöhen; sämtliche Kontingente, Genehmigungsregeln, Datenschutzrichtlinien und Bedingungen für kostenpflichtige Mehrnutzung gelten weiterhin.
+> **Kurzfassung**: Pusula registriert 357 Anbieter-IDs, darunter **152 Anbieter-Katalogeinträge, die mit `hasFree` gekennzeichnet sind**. Der strengere, geprüfte Katalog kostenloser Modelle umfasst **35 wiederkehrende Pool-Schlüssel / 482 Einträge** (475 aktiv + 7 eingestellt). Verbinden Sie mehrere geeignete Anbieter, um die Fallback-Kapazität zu erhöhen; sämtliche Kontingente, Genehmigungsregeln, Datenschutzrichtlinien und Bedingungen für kostenpflichtige Mehrnutzung gelten weiterhin.
 
 ---
 
@@ -15,7 +15,7 @@ einen Endpunkt ohne Authentifizierung, ein wiederkehrendes Kontingent, unbegrenz
 eine manuelle Genehmigung oder eine vorübergehende Werbeaktion bedeuten. Einige Optionen erfordern ein Konto, einen API-Schlüssel,
 eine Kreditkarte, eine KYC-Prüfung oder die Zustimmung zu anbieterspezifischen Bedingungen.
 
-OmniRoute **bündelt** diese kostenlosen Tarife in einem einzigen Endpunkt. Anstatt sich bei 10 verschiedenen Diensten anzumelden, verbinden Sie sie alle mit OmniRoute und verwenden `model: "auto"`, um automatisch die beste kostenlose Option für jede Anfrage auszuwählen.
+Pusula **bündelt** diese kostenlosen Tarife in einem einzigen Endpunkt. Anstatt sich bei 10 verschiedenen Diensten anzumelden, verbinden Sie sie alle mit Pusula und verwenden `model: "auto"`, um automatisch die beste kostenlose Option für jede Anfrage auszuwählen.
 
 ---
 
@@ -61,7 +61,7 @@ Diese Anbieter haben **kostenlose Tarife** mit spezifischen Beschränkungen:
 
 ## So kombinieren Sie kostenlose Kontingente
 
-Die Stärke von OmniRoute liegt im **Kombinieren kostenloser Kontingente**. Anstatt sich auf einen einzigen Anbieter zu verlassen, verbinden Sie mehrere kostenlose Anbieter und lassen OmniRoute automatisch den besten für jede Anfrage auswählen.
+Die Stärke von Pusula liegt im **Kombinieren kostenloser Kontingente**. Anstatt sich auf einen einzigen Anbieter zu verlassen, verbinden Sie mehrere kostenlose Anbieter und lassen Pusula automatisch den besten für jede Anfrage auswählen.
 
 ### Beispiel: Breitere Abdeckung durch kostenlose Kontingente
 
@@ -72,7 +72,7 @@ Verbinden Sie mehrere Anbieter, um die Abhängigkeit von einem einzelnen Konting
 3. **Pollinations** — schlüsselloser, ratenbegrenzter Zugriff
 4. **LongCat** — einmaliges Startguthaben nach der Registrierung (erfordert KYC)
 
-Verwenden Sie anschließend `model: "auto"`. OmniRoute wird dann:
+Verwenden Sie anschließend `model: "auto"`. Pusula wird dann:
 
 - Zuerst die am höchsten eingestufte geeignete Verbindung ausprobieren
 - Wenn deren Kontingent ausgeschöpft ist oder die Integritätsprüfung fehlschlägt → den nächsten konfigurierten Anbieter ausprobieren
@@ -115,7 +115,7 @@ Verbinden Sie mehrere Anbieter, deren Bedingungen und Datenschutzmodell zu Ihrem
 
 ## Den Katalog richtig interpretieren
 
-- `NOAUTH` bedeutet, dass OmniRoute Sie nicht nach Anmeldedaten für den Anbieter fragt; dies
+- `NOAUTH` bedeutet, dass Pusula Sie nicht nach Anmeldedaten für den Anbieter fragt; dies
   garantiert weder Verfügbarkeit noch Datenschutz oder unbegrenzte Kapazität.
 - `hasFree` ist eine Metadatenangabe zur Auffindbarkeit. Sie kann für ein wiederkehrendes Kontingent, schlüssellosen Zugriff,
   Startguthaben, ein Genehmigungsprogramm oder eine Werbeaktion stehen.
@@ -128,15 +128,15 @@ Verbinden Sie mehrere Anbieter, deren Bedingungen und Datenschutzmodell zu Ihrem
 
 ---
 
-## So verbessert OmniRoute kostenlose Kontingente
+## So verbessert Pusula kostenlose Kontingente
 
 ### 1. Automatische Ausweichfunktion
 
-Wenn ein kostenloser Anbieter ausgelastet oder nicht verfügbar ist, probiert OmniRoute automatisch den nächsten aus. Sie müssen nichts unternehmen.
+Wenn ein kostenloser Anbieter ausgelastet oder nicht verfügbar ist, probiert Pusula automatisch den nächsten aus. Sie müssen nichts unternehmen.
 
 ### 2. Intelligentes Routing
 
-OmniRoute wählt für jede Anfrage den **besten kostenlosen Anbieter** anhand folgender Kriterien aus:
+Pusula wählt für jede Anfrage den **besten kostenlosen Anbieter** anhand folgender Kriterien aus:
 
 - Geschwindigkeit — Welcher Anbieter ist derzeit am schnellsten?
 - Qualität — Welcher Anbieter eignet sich am besten für diese Aufgabe?
@@ -144,13 +144,13 @@ OmniRoute wählt für jede Anfrage den **besten kostenlosen Anbieter** anhand fo
 
 ### 3. Token-Einsparungen
 
-Die Komprimierungspipeline von OmniRoute kann die Anzahl geeigneter Prompt- und Tool-Ausgabe-Token reduzieren. Die
+Die Komprimierungspipeline von Pusula kann die Anzahl geeigneter Prompt- und Tool-Ausgabe-Token reduzieren. Die
 tatsächliche Einsparung hängt von den Inhalten, den ausgewählten Engines, der Abrechnung des Anbieters und den Einstellungen
 zur Wiedergabetreue ab; durch Komprimierung wird nicht jedes Anbieterkontingent um einen festen Faktor vervielfacht.
 
 ### 4. Unterstützung mehrerer Konten
 
-Wenn die Bedingungen des Anbieters mehrere Konten oder Anmeldedaten zulassen, kann OmniRoute jede
+Wenn die Bedingungen des Anbieters mehrere Konten oder Anmeldedaten zulassen, kann Pusula jede
 Verbindung als separaten Routing-Kandidaten behandeln. Erstellen Sie keine zusätzlichen Konten, um das
 Kontingent oder die Zugriffsrichtlinien eines Anbieters zu umgehen.
 
@@ -195,7 +195,7 @@ Produktionsanforderungen erfüllen. Für kritische Workloads sollten überwachte
 
 Zu den möglichen Nachteilen gehören strenge Limits, Wartelisten, KYC-Prüfungen, Kreditkartenverifizierung, Training anhand von
 Prompts, schwächerer Datenschutz, kein SLA, häufige Modellwechsel, geografische Einschränkungen, kostenpflichtige Mehrnutzung oder
-Risiken aufgrund von Kontorichtlinien. OmniRoute stellt die verfügbaren Metadaten bereit; Sie entscheiden, was Sie aktivieren.
+Risiken aufgrund von Kontorichtlinien. Pusula stellt die verfügbaren Metadaten bereit; Sie entscheiden, was Sie aktivieren.
 
 ### „Wie erhalte ich ein größeres kostenloses Kontingent?“
 
@@ -214,7 +214,7 @@ Ranglistenseite für kostenlose Anbieter als Qualitätssignal und überprüfen S
 
 ## Wie geht es weiter?
 
-- **[Auto-Combo-Anleitung](./AUTO-COMBO-GUIDE.md)** — Lassen Sie OmniRoute die beste KI für Sie auswählen
+- **[Auto-Combo-Anleitung](./AUTO-COMBO-GUIDE.md)** — Lassen Sie Pusula die beste KI für Sie auswählen
 - **[Anleitung zu Anbietern](./PROVIDERS-GUIDE.md)** — Verbinden Sie weitere Anbieter
 - **[Fehlerbehebung](../guides/TROUBLESHOOTING.md)** — Beheben Sie häufige Probleme
 - **[Übersicht der kostenlosen Tarife](../reference/FREE_TIERS.md)** — Vollständige Liste der kostenlosen Tarife

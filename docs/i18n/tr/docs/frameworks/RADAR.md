@@ -42,7 +42,7 @@ veya harici entegrasyonun şu anda kullanılabilir olduğuna dair bir taahhüt d
 | Destekçi teklifleri               | Ayrı, imzalı ve yalnızca canlı ortamda sunulan bir akış ve pano sayfası olarak uygulanmıştır. İstemci, kapalı avantaj şemasını yeniden doğrular, son geçerli önbelleği korur, süresi dolmuş girdileri filtreler ve iş ortağı tekliflerini açıkça etiketler.              |
 | İstihbarat ve destekçi tanıma     | Radar'a ait ELO, olgusal katalog güncelliği/eğilimi, doğrulanmış yerel destekçi rozeti, pano sayfası ve yalnızca yerel CLI durum/eşitleme komutları içeren, katı biçimde imzalanmış ve yalnızca canlı ortamda sunulan bir akış olarak uygulanmıştır.                     |
 | Ödemeler ve işlemsel e-posta      | OSS istemcisinde uygulanmamıştır. Satın alma, bağış, makbuz inceleme, kurtarma ve posta teslimatı özel hizmete aittir; barındırılan hizmetin kullanılabilirliği hâlâ hizmetin gözetimli dağıtımına ve sağlayıcı yapılandırmasına bağlıdır.                               |
-| Araştırma aracısı çalışma akışı   | Bu istemci sürümünün parçası değildir. Düzenlenmiş akış içerikleri sunucu tarafı verileri olarak kalır; bir OmniRoute kurulumunda hiçbir otonom araştırma aracısı çalışmaz.                                                                                              |
+| Araştırma aracısı çalışma akışı   | Bu istemci sürümünün parçası değildir. Düzenlenmiş akış içerikleri sunucu tarafı verileri olarak kalır; bir Pusula kurulumunda hiçbir otonom araştırma aracısı çalışmaz.                                                                                              |
 
 ---
 
@@ -108,7 +108,7 @@ Katılım seçilmedi → { status: "opt_out" }    — ağ çağrısı yok
 
 Her ikisi de açıkken eşitleme yolu şöyledir:
 
-1. `x-omniroute-radar-schema: 2` ve isteğe bağlı bir `Authorization: Bearer <supporter key>`
+1. `x-pusula-radar-schema: 2` ve isteğe bağlı bir `Authorization: Bearer <supporter key>`
    üstbilgisiyle (aşağıya bakın) `GET <feed base URL>/v1/catalog/latest`. Şema üstbilgisi olmadığında
    sunucular varsayılan olarak ayrıca imzalanmış v1 geçiş artefaktını sunar; böylece eski kurulu istemciler
    güncellemeleri almaya devam eder.
@@ -120,7 +120,7 @@ Her ikisi de açıkken eşitleme yolu şöyledir:
    IP'nin günlük olarak dönüşümlü, kısaltılmış HMAC değerini kullanır; bu tablolar ne anahtarı ne de IP'yi
    ham biçimde kalıcı olarak saklar. Altyapı erişim günlükleri ve şifrelenmiş teslimat giden kutusu
    ayrı operasyonel sınırlardır.
-3. OmniRoute; istemleri, yanıtları, konuşmaları, sağlayıcı kimlik bilgilerini, model trafiğini,
+3. Pusula; istemleri, yanıtları, konuşmaları, sağlayıcı kimlik bilgilerini, model trafiğini,
    çalışma süresini, gecikmeyi veya yerel sağlayıcı yapılandırmasını Radar hizmetine hiçbir zaman göndermez.
 4. Yanıt doğrulanır, geçerliliği denetlenir ve yerel olarak önbelleğe alınır (bkz.
    [Güvenlik modeli](#security-model)). Radar'ın sunucu tarafında tam olarak dört ağ yolu vardır:
@@ -189,12 +189,12 @@ akışa bağlantı verir. OSS deposunun kendisi hiçbir zaman anahtar sağlamaz,
 hedef sayfalarda belirlenir ve gösterilir (spesifikasyon kararı D14).
 
 - **"Katkıda bulunan biriyim"** — özel Radar sunucusunda barındırılan bir GitHub OAuth talep akışı olan `RADAR_CONTRIBUTOR_CLAIM_URL` adresini (varsayılan:
-  `https://radar.omniroute.online/auth/github`) açar. En son tamamlanan haftalık sıralamayı kontrol eder: İlk 10, 365 gün
+  `https://radar.pusula.online/auth/github`) açar. En son tamamlanan haftalık sıralamayı kontrol eder: İlk 10, 365 gün
   ve 11–100. sıralardakiler 90 gün kazanır. İlk 100 dışında PR sayısı hiçbir zaman erişim sağlamaz; akış
   bunun yerine ayrı, tek kullanımlık yıldız + takip düzeyini kontrol eder.
 - **"Projeyi destekle"** — tek seferlik 6 aylık, 1 yıllık ve
   ömür boyu seçeneklerin barındırıldığı sayfa olan `RADAR_SUPPORTER_PLANS_URL` adresini (varsayılan:
-  `https://radar.omniroute.online/planos`) açar. OSS sayfası yine herhangi bir parasal değer göstermez.
+  `https://radar.pusula.online/planos`) açar. OSS sayfası yine herhangi bir parasal değer göstermez.
 
 Her iki URL de sunucu tarafında çözümlenir (`src/lib/radar/links.ts`, `RADAR_FEED_URL` ile aynı
 ortam değişkeniyle geçersiz kılma kalıbı) ve mevcut
@@ -203,12 +203,12 @@ istemci bileşeni hiçbir zaman doğrudan `process.env` okumaz.
 
 | Değişken                      | Amaç                                                                                                     |
 | ----------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `RADAR_CONTRIBUTOR_CLAIM_URL` | Katkıda bulunan talep URL'sini geçersiz kılar (varsayılan `https://radar.omniroute.online/auth/github`). |
-| `RADAR_SUPPORTER_PLANS_URL`   | Destekçi planları URL'sini geçersiz kılar (varsayılan `https://radar.omniroute.online/planos`).          |
+| `RADAR_CONTRIBUTOR_CLAIM_URL` | Katkıda bulunan talep URL'sini geçersiz kılar (varsayılan `https://radar.pusula.online/auth/github`). |
+| `RADAR_SUPPORTER_PLANS_URL`   | Destekçi planları URL'sini geçersiz kılar (varsayılan `https://radar.pusula.online/planos`).          |
 
 ### Kayıp bir destekçi anahtarını kurtarma
 
-Barındırılan hizmetin kurtarma giriş noktası `https://radar.omniroute.online/recover` adresidir; ayrıca
+Barındırılan hizmetin kurtarma giriş noktası `https://radar.pusula.online/recover` adresidir; ayrıca
 planlar sayfasından da buna bağlantı verilir. Yerel kurulum satın alanın/katkıda bulunanın e-posta adresini
 hiçbir zaman almadığı ve şifrelenmiş ayarlarından ham anahtarı yeniden oluşturamadığı için kurtarma işlemi
 tamamen OSS istemcisinin dışında kalır.
@@ -245,11 +245,11 @@ bulunan bir operatörün onu etkinleştirdiği yerdir.
 ### Uçtan uca etkinleştirme ve yönlendirmeli kurulum
 
 Özel akış hizmeti ile bu OSS istemcisi arasında kasıtlı olarak dar bir sınır vardır: hizmet
-destekçi anahtarını sağlar ve doğrular; yerel OmniRoute kurulumu ise anahtarı şifreler,
+destekçi anahtarını sağlar ve doğrular; yerel Pusula kurulumu ise anahtarı şifreler,
 imzalı yapıtları sunucu tarafında eşitler ve sağlayıcı kurulumuna rehberlik eder. Destekli doğrulama sırası şöyledir:
 
 1. Katılımcı talebi, planlar/ödeme, kurtarma süreci veya yetkili bir özel sunucu operatörü üzerinden yeni düzenlenmiş ya da kurtarılmış bir anahtar edinin. Ham anahtarı günlüklere, ekran görüntülerine, sorun yorumlarına veya komut satırı bağımsız değişkenlerine yapıştırmayın.
-2. Yerel OmniRoute kurulumunda `RADAR_ENABLED` özellik bayrağını etkinleştirin. Bu işlem kullanıcı arayüzünü görünür hâle getirir ancak ayrı katılım tercihi kaydedilene kadar ağ etkinliği başlatmaz.
+2. Yerel Pusula kurulumunda `RADAR_ENABLED` özellik bayrağını etkinleştirin. Bu işlem kullanıcı arayüzünü görünür hâle getirir ancak ayrı katılım tercihi kaydedilene kadar ağ etkinliği başlatmaz.
 3. `/dashboard/radar` sayfasını açın, anahtarı yapıştırın ve etkinleştirin. Tarayıcı, `{ optIn: true, supporterKey }` ile tek bir yerel `POST /api/radar/settings` isteği gönderir; anahtar yerel olarak şifrelenir ve yanıt yalnızca `omr_****<last4>` değerini içerir.
 4. Etkinleştirme ekranının katalog eşitlemesini çalıştırmasına izin verin veya **Şimdi eşitle** seçeneğini belirleyin. Sayfanın `live` durumunu, bir akış sürümünü ve bir getirme zamanını bildirdiğini doğrulayın. Kimliği doğrulanmış yerel tanılama için `GET /api/radar/status`, anahtarı döndürmeden katılım/anahtar durumunu ve dört önbellek durumunu bildirir. `POST /api/radar/sync-all`; kataloğu, yönlendirmeleri, teklifleri ve Intel'i açıkça yenileyebilir.
 5. `/dashboard/radar/setup?provider=<provider>` sayfasını açın. Sağlayıcıya ait kimlik bilgisi URL'sini izleyin, **API anahtarı ekle** seçeneğini belirleyin, gerçek sağlayıcı formu üzerinden kaydedin, rehbere dönün ve **Bağlantıyı test et** işlemini çalıştırın. Rehber, normal `/api/providers` ve `/api/providers/<connection-id>/test` rotalarını kullanır; paralel bir Radar kimlik bilgisi oluşturmaz.
@@ -289,12 +289,12 @@ anahtar, rotasyon öncesinde başa eklenebilir ve önceki anahtarla imzalanmış
 ### Çatallara uygun env geçersiz kılmaları
 
 İki env değişkeni, çatalların ve kendi barındırdığı kurulumların istemciyi varsayılan
-OmniRoute hizmeti yerine kendi akışlarına yönlendirmesine olanak tanır — aşağıdaki
+Pusula hizmeti yerine kendi akışlarına yönlendirmesine olanak tanır — aşağıdaki
 [Bir akış nasıl kendi sunucunuzda barındırılır](#how-to-self-host-a-feed) bölümüne bakın:
 
 | Değişken            | Amaç                                                                                                                 |
 | ------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `RADAR_FEED_URL`    | Akış temel URL'sini geçersiz kılar (varsayılan: `https://radar.omniroute.online`).                                   |
+| `RADAR_FEED_URL`    | Akış temel URL'sini geçersiz kılar (varsayılan: `https://radar.pusula.online`).                                   |
 | `RADAR_FEED_PUBKEY` | Sabitlenmiş ortak anahtarı geçersiz kılar (base64-DER SPKI veya PEM) ve yerleşik diziyi bu tek anahtarla değiştirir. |
 
 ### Sürüm alt sınırı
@@ -387,12 +387,12 @@ katmana özgü bir hata yolu yoktur.
 bunları içermez. Her yapıt, kendi tam baytları üzerinden imzalanır. Gövde yine de
 yetkilendirme kararının kaynağı değildir; bir istek için gerçekten seçilen katman,
 isteğin `Authorization` anahtarına göre sunucu tarafında belirlenip
-**`x-omniroute-feed-tier` yanıt başlığında** taşınır.
+**`x-pusula-feed-tier` yanıt başlığında** taşınır.
 
 `syncRadar()` (`src/lib/radar/sync.ts::parseServedTierHeader()`), istemcinin güvenmesi
 gereken katmanı çözümleyen tek yerdir:
 
-1. `x-omniroute-feed-tier` değerini `RadarTierSchema` (Zod) ile ayrıştırın — eksik bir
+1. `x-pusula-feed-tier` değerini `RadarTierSchema` (Zod) ile ayrıştırın — eksik bir
    başlık veya tam olarak `"community"` ya da `"live"` olmayan bir değer, **mevcut
    değilmiş** gibi değerlendirilir (asla olduğu gibi önbelleğe veya kullanıcı arayüzüne
    güvenilir biçimde aktarılmaz; bu, başlıktan önceki eski akış sunucularını da kapsar).
@@ -455,7 +455,7 @@ Katalog yayınları `schemaVersion: 2` kullanır. `contextWindow` ile `tools`, `
 `thinking` alanlarının her biri bağımsız olarak `number | null` / `boolean | null`
 türündedir: `null` bilinmiyor anlamına gelirken `false`, D16 tarafından doğrulanmış
 resmî bir sağlayıcı kaynağının ilgili yeteneğin bulunmadığını açıkça belirttiği
-anlamına gelir. Dahili OmniRoute kayıt/model belirtimi bayrakları hiçbir zaman doğrudan
+anlamına gelir. Dahili Pusula kayıt/model belirtimi bayrakları hiçbir zaman doğrudan
 akış olgularına dönüştürülmez. İstemci hâlâ v1 anlık görüntülerini kabul eder; eski
 oluşturucu yokluğu belirtmek için `false` kullandığından, v1 `false` bilinmiyor olarak
 normalleştirilirken v1 `true` olgusal kalır. Bilinmeyen şema sürümleri güvenli biçimde
@@ -481,7 +481,7 @@ Yönlendirmeli kullanıcı arayüzü `/dashboard/radar/combos` konumunda bulunur
 `GET /api/radar/catalog` ve `GET /api/combos/builder/options` uç noktalarını okur. Hiçbir zaman Radar senkronizasyonunu tetiklemez,
 sağlayıcı kimlik bilgilerini okumaz veya combo veritabanına doğrudan yazmaz.
 
-MCP istemcileri aynı yerel projeksiyonu `omniroute_radar_catalog` (`read:radar`) ile okuyabilir. İsteğe bağlı
+MCP istemcileri aynı yerel projeksiyonu `pusula_radar_catalog` (`read:radar`) ile okuyabilir. İsteğe bağlı
 `provider`, `familyId` ve `enabledOnly` filtreleri, tek bir yerel
 `GET /api/radar/catalog` okumasından sonra değerlendirilir. Kapalı çıktısı; katalog meta verilerinin yanı sıra sağlayıcı/model,
 görünen ad, `familyId`, kota, yetenekler, etkinlik durumu, kaynak ve `disabledBy` alanlarını içerir; kurulum URL'leri,
@@ -522,7 +522,7 @@ Aşağıdaki yerel Radar rota aileleri, `src/app/api/radar/` altındaki kullanı
 | `/api/radar/local-model-state` | DELETE | Mevcut mezar taşını korurken düzenlenebilir geçersiz kılma alanlarını temizler.                                                              |
 
 **Kesin kural: Bu rotalar akış hizmetine asla proxy görevi görmez.** Tarayıcı yalnızca
-yerel OmniRoute sunucusuyla iletişim kurar. Radar hizmetine erişen dört modül
+yerel Pusula sunucusuyla iletişim kurar. Radar hizmetine erişen dört modül
 `src/lib/radar/sync.ts` (katalog), `src/lib/radar/referralsSync.ts` (yönlendirmeler),
 `src/lib/radar/offersSync.ts` (teklifler) ve `src/lib/radar/intelSync.ts` (Intel)
 olup bunların tümü istemci tarafında değil, sunucu tarafında çalışır. Bu, akış
@@ -554,7 +554,7 @@ boole değerini döndürür.
 
 Teklifler kendilerine ait imzalı yapıtı, `GET /v1/offers/latest` kullanır ve katalog ya da yönlendirme önbelleğini asla paylaşmaz. Sunucu uç noktası geçerli ve etkin bir destekçi Bearer anahtarı gerektirir; topluluk sürümüne geri dönüş yoktur. Bu nedenle `syncRadarOffers()`, özellik bayrağı kapalıysa, operatör katılmayı tercih etmemişse veya herhangi bir destekçi anahtarı yapılandırılmamışsa ağ isteği yapmadan durur.
 
-Başarılı bir GET isteğinden sonra istemci, yanıtın birebir baytları üzerinden Ed25519 imzasını doğrular, `RadarOffersFeedSchema` şemasını doğrular, hem imzalı gövdenin hem de `x-omniroute-feed-tier` başlığının `live` değerini belirtmesini zorunlu kılar, noktayla ayrılmış sürümün kesinlikle daha yeni olmasını şart koşar ve ancak bundan sonra `radar_offers_cache` önbelleğini atomik olarak değiştirir (`144_radar_offers_cache.sql` geçişi). Diğer akışlarda kullanılan aynı 10 MB'lık başlık-artı-akış sınırı burada da geçerlidir. İmza, şema, katman, yeniden oynatma, boyut, HTTP ve ağ hatalarının tümünde son doğrulanmış önbellek korunur.
+Başarılı bir GET isteğinden sonra istemci, yanıtın birebir baytları üzerinden Ed25519 imzasını doğrular, `RadarOffersFeedSchema` şemasını doğrular, hem imzalı gövdenin hem de `x-pusula-feed-tier` başlığının `live` değerini belirtmesini zorunlu kılar, noktayla ayrılmış sürümün kesinlikle daha yeni olmasını şart koşar ve ancak bundan sonra `radar_offers_cache` önbelleğini atomik olarak değiştirir (`144_radar_offers_cache.sql` geçişi). Diğer akışlarda kullanılan aynı 10 MB'lık başlık-artı-akış sınırı burada da geçerlidir. İmza, şema, katman, yeniden oynatma, boyut, HTTP ve ağ hatalarının tümünde son doğrulanmış önbellek korunur.
 
 Kapalı teklif yapısı, karşılaştırılabilir üç avantaj türünü destekler: baz puan cinsinden yüzde, para biriminin alt birimleri cinsinden kredi veya deneme günleri. Bir iş ortağı teklifi, aynı türden herkese açık bir temel değer içermeli ve avantajı kesinlikle daha yüksek olmalıdır; resmî tekliflerde iş ortağı temel değeri bulunmaz. URL'ler kimlik bilgisi içermeyen HTTPS adresleri olmalıdır. `getRadarOffers()`, önbelleğe alınmış yükü tedbir amacıyla yeniden doğrular ve her yerel okumada süresi dolmuş girdileri filtreler; `/dashboard/radar/offers`, görüntüleme öncesinde son kullanma tarihini tekrar filtreler, mevcut olduğunda Portekizce metni, aksi hâlde İngilizceyi kullanır ve iş ortağı tekliflerini açıkça etiketler.
 
@@ -568,7 +568,7 @@ Intel, `GET /v1/intel/latest` konumundaki imzalı bir yapıttır. Kapalı `Radar
 
 `syncRadarIntel()`, tekliflerle aynı sunucu tarafı Bearer kimlik doğrulamasını, 30 saniyelik zaman aşımını, 10 MiB'lık akış sınırını, birebir baytlar üzerinden Ed25519 doğrulamasını, katı şemayı, gövde/başlık için `live` gereksinimini, sürüm alt sınırını ve son sağlam önbelleğin korunmasını uygular. Doğrulanmış etkin bir anlık görüntü kalıcı olarak kaydedildikten sonra istemci `radar:<sha256(supporter key)>` değerini türetir, yalnızca bu tek yönlü kimliği saklar ve özel `radar_supporter` tanıma olayını yayınlar. Bunun `radar-supporter` rozeti eş etkili biçimde çalışır ve sıfır XP verir; liderlik tablolarını hiçbir zaman güncellemez veya `token_share` değerini yeniden kullanmaz. `/dashboard/radar/intel`, rozeti yalnızca doğrulanmış yerel önbellek meta verilerinden oluşturur.
 
-CLI, `omniroute radar status` ve `omniroute radar sync` komutlarını sunar. Her ikisi de yalnızca yerel OmniRoute API'siyle iletişim kurar. `status`, salt okunur bir `GET /api/radar/status` isteği gerçekleştirir; `sync`, tek bir `POST /api/radar/sync-all` isteği gönderir ve her akış için bir sonuç yazdırır. İki komut da destekçi anahtarını okumaz, kabul etmez veya yazdırmaz ve Radar hizmetiyle doğrudan iletişim kurmaz.
+CLI, `pusula radar status` ve `pusula radar sync` komutlarını sunar. Her ikisi de yalnızca yerel Pusula API'siyle iletişim kurar. `status`, salt okunur bir `GET /api/radar/status` isteği gerçekleştirir; `sync`, tek bir `POST /api/radar/sync-all` isteği gönderir ve her akış için bir sonuç yazdırır. İki komut da destekçi anahtarını okumaz, kabul etmez veya yazdırmaz ve Radar hizmetiyle doğrudan iletişim kurmaz.
 
 ---
 
@@ -582,7 +582,7 @@ Yönlendirmeler akışı, kendine ait ve çok daha kısa bir sıklıkta eşitlen
 // GET /v1/referrals/latest yanıt gövdesi (Ed25519 ile imzalanmış, katalog
 // akışıyla aynı sabitlenmiş anahtar):
 {
-  feed: "omniroute-radar-referrals",
+  feed: "pusula-radar-referrals",
   schemaVersion: 1,
   generatedAt: string,           // ISO — deterministik: yönlendirme bağlantıları genelindeki
                                   // max(updatedAt); böylece iki özdeş istek tam olarak aynı
@@ -597,7 +597,7 @@ Yönlendirmeler akışı, kendine ait ve çok daha kısa bir sıklıkta eşitlen
 //                    requiredAction, isDefault }
 ```
 
-Katalog akışının aksine bu gövde hiçbir `tier` alanı taşımaz — sunucu, `Authorization` anahtarına göre her isteğe nelerin dâhil edileceğine karar verir; bu nedenle sunulan katman için TEK kaynak `x-omniroute-feed-tier` yanıt başlığıdır (`referralsSync.ts::syncRadarReferrals`). Eksik veya tanınmayan bir başlık, en az ayrıcalıklı varsayım olan `"community"` katmanına düşürülür. `RadarReferralsFeedSchema` (`src/lib/radar/referralsFeedSchema.ts`), gövdenin tamamını doğrular ve her iki akışın da yönlendirmeleri aynı şekilde doğrulaması için `feedSchema.ts` tarafından dışa aktarılan aynı yönlendirme başına `RadarReferralSchema` şemasını yeniden kullanır. Her `RadarReferral.url` değeri `https://` olmalıdır — bir `http://` URL'si şema doğrulamasından geçemez.
+Katalog akışının aksine bu gövde hiçbir `tier` alanı taşımaz — sunucu, `Authorization` anahtarına göre her isteğe nelerin dâhil edileceğine karar verir; bu nedenle sunulan katman için TEK kaynak `x-pusula-feed-tier` yanıt başlığıdır (`referralsSync.ts::syncRadarReferrals`). Eksik veya tanınmayan bir başlık, en az ayrıcalıklı varsayım olan `"community"` katmanına düşürülür. `RadarReferralsFeedSchema` (`src/lib/radar/referralsFeedSchema.ts`), gövdenin tamamını doğrular ve her iki akışın da yönlendirmeleri aynı şekilde doğrulaması için `feedSchema.ts` tarafından dışa aktarılan aynı yönlendirme başına `RadarReferralSchema` şemasını yeniden kullanır. Her `RadarReferral.url` değeri `https://` olmalıdır — bir `http://` URL'si şema doğrulamasından geçemez.
 
 `RadarFeedSchema` (`feedSchema.ts`) üzerindeki, kataloğa gömülü ESKİ `referrals` alanı, önceden önbelleğe alınmış katalog akışlarıyla geriye dönük uyumluluk için korunur; ancak `getRadarReferrals()` artık bu alanı okumaz — aşağıdaki [Erişimci](#accessor) bölümüne bakın.
 
@@ -687,9 +687,9 @@ Tasarım gereği gevşek bağlantı:
 Katalog üzerinde tam denetim isteyen bir fork veya kendi sunucusunda barındıran taraf, istemci koduna dokunmadan kendi feed hizmetini çalıştırabilir:
 
 1. `RadarFeedSchema` (`src/lib/radar/feedSchema.ts`) şemasını karşılayan bir JSON gövdesi döndüren `GET /v1/catalog/latest` endpoint'ini sunun — üst düzeyde `feed:
-"omniroute-radar"`, `schemaVersion: 2`, `version`, `tier`, `providers`, `models`,
-   `quirks` ve `totals`. `x-omniroute-radar-schema: 2` başlığını dikkate alın; geçiş uyumlu bir sunucu, bu başlık olmadan gelen istekleri varsayılan olarak ayrı imzalanmış bir v1 artefaktına yönlendirmelidir.
-2. Yanıtın birebir baytlarını bir Ed25519 anahtar çiftiyle imzalayın ve base64 imzayı `x-omniroute-feed-signature` yanıt başlığında döndürün.
+"pusula-radar"`, `schemaVersion: 2`, `version`, `tier`, `providers`, `models`,
+   `quirks` ve `totals`. `x-pusula-radar-schema: 2` başlığını dikkate alın; geçiş uyumlu bir sunucu, bu başlık olmadan gelen istekleri varsayılan olarak ayrı imzalanmış bir v1 artefaktına yönlendirmelidir.
+2. Yanıtın birebir baytlarını bir Ed25519 anahtar çiftiyle imzalayın ve base64 imzayı `x-pusula-feed-signature` yanıt başlığında döndürün.
 3. `RADAR_FEED_URL` değerini yeni temel URL'ye, `RADAR_FEED_PUBKEY` değerini ise eşleşen ortak anahtara (base64-DER SPKI veya PEM) ayarlayın — [ortam değişkeni referansına](../reference/ENVIRONMENT.md#27-radar-feed-self-hosting) bakın.
 4. `RADAR_ENABLED` değişkenini etkinleştirin ve `POST /api/radar/settings`
    (`{ optIn: true }`) aracılığıyla katılım sağlayın.
@@ -698,9 +698,9 @@ Başka hiçbir kod değişikliği gerekmez — `verifyFeedBytes()` geçersiz kı
 
 Yönlendirme bağlantıları (yukarıdaki [Yönlendirme bağlantıları (ücretsiz krediler)](#referral-links-free-credits) bölümüne bakın) ayrı ve isteğe bağlı bir artefakttır: yalnızca `/v1/catalog/latest` sunan bir fork da tamamen çalışır — `syncRadarReferrals()`, `/v1/referrals/latest` üzerinden bir `404` aldığında `{ status: "error" }` durumuna düşer ve önbellek boş kalır; böylece `GET /api/radar/referrals`, sayfanın geri kalanının başarısız olmasına neden olmak yerine `{ fixed: [], campaigns: [], tier: null }` döndürmeye devam eder. Yönlendirme bağlantıları da sunmak için `RadarReferralsFeedSchema` (`src/lib/radar/referralsFeedSchema.ts`) şemasını karşılayan `GET /v1/referrals/latest` endpoint'ini sunun ve bunu katalog feed'iyle aynı Ed25519 anahtar çiftiyle imzalayın.
 
-Destekçi teklifleri de isteğe bağlı başka bir artefakttır. Bunları sunmak için kapalı `RadarOffersFeedSchema` (`src/lib/radar/offersFeedSchema.ts`) şemasıyla `GET /v1/offers/latest` endpoint'ini uygulayın, canlı yetkilendirme gerektirin, `x-omniroute-feed-tier: live` döndürün ve birebir baytları aynı anahtarla imzalayın. Bu endpoint'i sunmayan bir fork'ta katalog/yönlendirme davranışı değişmeden kalır; teklif yenileme işlemi mevcut verileri bozmadan başarısız olur ve son doğrulanmış yerel teklif önbelleği kullanılabilir durumda kalır.
+Destekçi teklifleri de isteğe bağlı başka bir artefakttır. Bunları sunmak için kapalı `RadarOffersFeedSchema` (`src/lib/radar/offersFeedSchema.ts`) şemasıyla `GET /v1/offers/latest` endpoint'ini uygulayın, canlı yetkilendirme gerektirin, `x-pusula-feed-tier: live` döndürün ve birebir baytları aynı anahtarla imzalayın. Bu endpoint'i sunmayan bir fork'ta katalog/yönlendirme davranışı değişmeden kalır; teklif yenileme işlemi mevcut verileri bozmadan başarısız olur ve son doğrulanmış yerel teklif önbelleği kullanılabilir durumda kalır.
 
-Intel de aynı şekilde isteğe bağlıdır. Kendi sunucusunda barındıran taraf, `RadarIntelFeedSchema` (`src/lib/radar/intelFeedSchema.ts`) kullanarak `GET /v1/intel/latest` endpoint'ini sunabilir, canlı yetkilendirme gerektirebilir, `x-omniroute-feed-tier: live` döndürebilir ve birebir baytları paylaşılan Ed25519 anahtarıyla imzalayabilir. Endpoint'in sunulmaması katalog, yönlendirmeler ve teklifleri değiştirmez; Intel yenilemesi, son doğrulanmış yerel anlık görüntüyü korur.
+Intel de aynı şekilde isteğe bağlıdır. Kendi sunucusunda barındıran taraf, `RadarIntelFeedSchema` (`src/lib/radar/intelFeedSchema.ts`) kullanarak `GET /v1/intel/latest` endpoint'ini sunabilir, canlı yetkilendirme gerektirebilir, `x-pusula-feed-tier: live` döndürebilir ve birebir baytları paylaşılan Ed25519 anahtarıyla imzalayabilir. Endpoint'in sunulmaması katalog, yönlendirmeler ve teklifleri değiştirmez; Intel yenilemesi, son doğrulanmış yerel anlık görüntüyü korur.
 
 ---
 

@@ -11,8 +11,8 @@ Query available AI models, list model aliases, and browse the full model catalog
 ## Quick install
 
 ```bash
-npm install -g omniroute   # or: npx omniroute
-omniroute --version
+npm install -g pusula   # or: npx pusula
+pusula --version
 ```
 
 ## Subcommands
@@ -27,7 +27,7 @@ omniroute --version
 **Example:**
 
 ```bash
-omniroute models [provider]
+pusula models [provider]
 ```
 
 ### `models manual <provider>`
@@ -37,7 +37,7 @@ List manual model metadata from the selected server
 **Example:**
 
 ```bash
-omniroute models manual <provider>
+pusula models manual <provider>
 ```
 
 ### `models add <provider> <model-id>`
@@ -55,7 +55,7 @@ Add an unverified manual model, then verify persistence
 **Example:**
 
 ```bash
-omniroute models add <provider> <model-id>
+pusula models add <provider> <model-id>
 ```
 
 ### `models edit <provider> <model-id>`
@@ -73,7 +73,7 @@ Edit manual model metadata, then verify persistence
 **Example:**
 
 ```bash
-omniroute models edit <provider> <model-id>
+pusula models edit <provider> <model-id>
 ```
 
 ### `models remove <provider> <model-id>`
@@ -88,5 +88,5 @@ Remove only a manual model override, then verify persistence
 **Example:**
 
 ```bash
-omniroute models remove <provider> <model-id>
+pusula models remove <provider> <model-id>
 ```

@@ -52,9 +52,9 @@ test("parseEnvDocVars: extracts SHOUTY_NAMES from inline backticks", () => {
 });
 
 test("parseEnvDocVars: ignores values like `7s` or two-letter codes", () => {
-  const md = "TTL is `60s` and the type is `JSON`. Real var: `OMNIROUTE_TTL_MS`.";
+  const md = "TTL is `60s` and the type is `JSON`. Real var: `PUSULA_TTL_MS`.";
   const vars = parseEnvDocVars(md);
-  assert.deepEqual([...vars].sort(), ["JSON", "OMNIROUTE_TTL_MS"]);
+  assert.deepEqual([...vars].sort(), ["JSON", "PUSULA_TTL_MS"]);
 });
 
 test("runEnvDocSync: matched fixture passes", () => {
@@ -223,8 +223,8 @@ test("repository contract is in sync (live data)", () => {
 
 test("isMainEntry: absolute argv[1] matches the module URL (normal CLI invocation)", () => {
   const moduleUrl =
-    "file:///home/runner/work/OmniRoute/OmniRoute/scripts/check/check-env-doc-sync.mjs";
-  const argv1 = "/home/runner/work/OmniRoute/OmniRoute/scripts/check/check-env-doc-sync.mjs";
+    "file:///home/runner/work/Pusula/Pusula/scripts/check/check-env-doc-sync.mjs";
+  const argv1 = "/home/runner/work/Pusula/Pusula/scripts/check/check-env-doc-sync.mjs";
   assert.equal(isMainEntry(argv1, moduleUrl), true);
 });
 
@@ -232,16 +232,16 @@ test("isMainEntry: path with characters that import.meta.url percent-encodes sti
   // A checkout path containing a space is the common macOS case; the module
   // URL carries %20 while process.argv[1] carries the raw character.
   const moduleUrl =
-    "file:///Users/dev/My%20Projects/OmniRoute/scripts/check/check-env-doc-sync.mjs";
-  const argv1 = "/Users/dev/My Projects/OmniRoute/scripts/check/check-env-doc-sync.mjs";
+    "file:///Users/dev/My%20Projects/Pusula/scripts/check/check-env-doc-sync.mjs";
+  const argv1 = "/Users/dev/My Projects/Pusula/scripts/check/check-env-doc-sync.mjs";
   assert.equal(isMainEntry(argv1, moduleUrl), true);
 });
 
 test("isMainEntry: different entry target or missing argv[1] does not trigger the CLI", () => {
   const moduleUrl =
-    "file:///home/runner/work/OmniRoute/OmniRoute/scripts/check/check-env-doc-sync.mjs";
+    "file:///home/runner/work/Pusula/Pusula/scripts/check/check-env-doc-sync.mjs";
   assert.equal(
-    isMainEntry("/home/runner/work/OmniRoute/OmniRoute/tests/unit/x.test.ts", moduleUrl),
+    isMainEntry("/home/runner/work/Pusula/Pusula/tests/unit/x.test.ts", moduleUrl),
     false
   );
   assert.equal(isMainEntry(undefined, moduleUrl), false);

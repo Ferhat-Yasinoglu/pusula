@@ -6,7 +6,7 @@ import path from "node:path";
 import { cleanupTempDataDir } from "../_setup/tempDataDir.ts";
 
 // providerLimits.ts touches the DB singleton at import time; give it a scratch dir.
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-rotating-expired-guard-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-rotating-expired-guard-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = process.env.API_KEY_SECRET || "rotating-expired-guard-secret";
 

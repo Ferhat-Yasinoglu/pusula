@@ -43,7 +43,7 @@ export const DEFAULT_ADAPTIVE_ADMISSION_CONFIG: Readonly<AdaptiveAdmissionConfig
   virtualLanes: false,
 });
 
-const RUNTIME_STORE_KEY = Symbol.for("omniroute.adaptiveAdmission.runtime");
+const RUNTIME_STORE_KEY = Symbol.for("pusula.adaptiveAdmission.runtime");
 
 type RuntimeStore = {
   runtime: AdaptiveAdmissionRuntime | null;
@@ -120,8 +120,8 @@ export function resolveAdaptiveAdmissionConfigFromEnv(
   // Shared pure validation — accept exact documented maxima, reject core-invalid configs.
   validateConfig(cfg);
 
-  // Per-tenant virtual admission lanes (#9654) — opt-in via OMNIROUTE_CHAT_VIRTUAL_LANES.
-  const vlRaw = env.OMNIROUTE_CHAT_VIRTUAL_LANES;
+  // Per-tenant virtual admission lanes (#9654) — opt-in via PUSULA_CHAT_VIRTUAL_LANES.
+  const vlRaw = env.PUSULA_CHAT_VIRTUAL_LANES;
   cfg.virtualLanes = vlRaw === "1" || vlRaw === "true";
 
   return cfg;

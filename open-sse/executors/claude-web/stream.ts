@@ -469,10 +469,10 @@ function responseHeaders(contentType: string, metadata: Record<string, string>):
     "Cache-Control": "no-cache",
   });
   const headerNames: Record<string, string> = {
-    operation: "X-OmniRoute-Claude-Web-Operation",
-    conversation_id: "X-OmniRoute-Claude-Web-Conversation-Id",
-    parent_message_uuid: "X-OmniRoute-Claude-Web-Parent-Message-Uuid",
-    assistant_message_uuid: "X-OmniRoute-Claude-Web-Assistant-Message-Uuid",
+    operation: "X-Pusula-Claude-Web-Operation",
+    conversation_id: "X-Pusula-Claude-Web-Conversation-Id",
+    parent_message_uuid: "X-Pusula-Claude-Web-Parent-Message-Uuid",
+    assistant_message_uuid: "X-Pusula-Claude-Web-Assistant-Message-Uuid",
   };
   for (const [key, headerName] of Object.entries(headerNames)) {
     const value = metadata[key];

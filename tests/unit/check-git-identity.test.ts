@@ -46,11 +46,11 @@ function runGate(
     // unlike `git -c`, which would only apply to a single invocation.
     Object.assign(env, {
       GIT_CONFIG_COUNT: "3",
-      GIT_CONFIG_KEY_0: "omniroute.expectedName",
+      GIT_CONFIG_KEY_0: "pusula.expectedName",
       GIT_CONFIG_VALUE_0: OWNER_NAME,
-      GIT_CONFIG_KEY_1: "omniroute.expectedEmail",
+      GIT_CONFIG_KEY_1: "pusula.expectedEmail",
       GIT_CONFIG_VALUE_1: OWNER_EMAIL,
-      GIT_CONFIG_KEY_2: "omniroute.legacyEmail",
+      GIT_CONFIG_KEY_2: "pusula.legacyEmail",
       GIT_CONFIG_VALUE_2: LEGACY_EMAIL,
     });
   }

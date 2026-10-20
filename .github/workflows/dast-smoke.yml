@@ -48,9 +48,9 @@ jobs:
       - uses: ./.github/actions/npm-ci-retry
       - name: Build CLI bundle
         env:
-          OMNIROUTE_BUILD_BACKEND_ONLY: "1"
+          PUSULA_BUILD_BACKEND_ONLY: "1"
         run: npm run build:cli
-      - name: Start OmniRoute
+      - name: Start Pusula
         env:
           PORT: "20128"
           INJECTION_GUARD_MODE: block
@@ -84,8 +84,8 @@ jobs:
         run: npm install -g promptfoo@0.122.0
       - name: promptfoo injection-guard (blocking)
         env:
-          OMNIROUTE_URL: http://localhost:20128
-          OMNIROUTE_API_KEY: not-needed-blocked-before-upstream
+          PUSULA_URL: http://localhost:20128
+          PUSULA_API_KEY: not-needed-blocked-before-upstream
         run: promptfoo eval -c promptfooconfig.yaml --no-cache
       - name: Stop server
         if: always()

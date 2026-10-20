@@ -9,7 +9,7 @@ const { initState } = await import("../../open-sse/translator/index.ts");
 const { FORMATS } = await import("../../open-sse/translator/formats.ts");
 
 // #13122: Codex CLI (wire_api="responses") sends tool_choice.type = "custom" when it wants
-// to force the model to call a declared freeform/custom tool (e.g. functions__exec). OmniRoute
+// to force the model to call a declared freeform/custom tool (e.g. functions__exec). Pusula
 // rejects this with an unsupported_feature error, even though the same request's `tools[].type
 // = "custom"` declaration is already accepted and normalized into a Chat { input: string }
 // function schema a few lines above (see translator-openai-responses-custom-tool-1007.test.ts).
@@ -38,7 +38,7 @@ test("Responses -> Chat: tool_choice.type = 'custom' forces the named custom too
   };
 
   // Previously (buggy) this threw:
-  //   "Unsupported Responses API feature: tool_choice type 'custom' is not supported by omniroute"
+  //   "Unsupported Responses API feature: tool_choice type 'custom' is not supported by pusula"
   // reproducing the exact error body from issue #13122's Reproduction 1 curl.
   const result = openaiResponsesToOpenAIRequest("kr/gpt-5.6-sol", body, false, {});
 
@@ -68,7 +68,7 @@ test("Responses -> Chat: tool_choice.type = 'custom' without a name still throws
 
   assert.throws(
     () => openaiResponsesToOpenAIRequest("kr/gpt-5.6-sol", body, false, {}),
-    /Unsupported Responses API feature: tool_choice type 'custom' is not supported by omniroute/
+    /Unsupported Responses API feature: tool_choice type 'custom' is not supported by pusula/
   );
 });
 

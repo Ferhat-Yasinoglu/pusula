@@ -11,7 +11,7 @@ import { createTempDataDir, cleanupTempDataDir } from "../_setup/tempDataDir.ts"
 
 test("createTempDataDir points DATA_DIR at a fresh directory", () => {
   const previous = process.env.DATA_DIR;
-  const { dir, cleanup } = createTempDataDir("omniroute-tempdatadir-test-");
+  const { dir, cleanup } = createTempDataDir("pusula-tempdatadir-test-");
   try {
     assert.equal(process.env.DATA_DIR, dir);
     assert.ok(fs.existsSync(dir), "directory must exist");
@@ -23,7 +23,7 @@ test("createTempDataDir points DATA_DIR at a fresh directory", () => {
 
 test("cleanup removes the directory after the database has been opened", async () => {
   const previous = process.env.DATA_DIR;
-  const { dir, cleanup } = createTempDataDir("omniroute-tempdatadir-db-");
+  const { dir, cleanup } = createTempDataDir("pusula-tempdatadir-db-");
 
   try {
     // Open the DB so a real SQLite handle exists inside the directory. This is the
@@ -47,7 +47,7 @@ test("cleanup removes the directory after the database has been opened", async (
 });
 
 test("cleanup never throws when the directory is already gone", async () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-tempdatadir-missing-"));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-tempdatadir-missing-"));
   fs.rmSync(dir, { recursive: true, force: true });
 
   await assert.doesNotReject(() => cleanupTempDataDir(dir));

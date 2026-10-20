@@ -50,7 +50,7 @@ test("parseJsonArrayOutput extracts the first valid array from mixed command out
 
 test("parseJsonArrayOutput can skip valid arrays that are not the target payload", () => {
   const output = `[]
-[{"filename":"omniroute.tgz","files":[{"path":"src/index.ts"}]}]`;
+[{"filename":"pusula.tgz","files":[{"path":"src/index.ts"}]}]`;
   assert.deepEqual(
     parseJsonArrayOutput(output, (candidate) =>
       candidate.some(
@@ -60,7 +60,7 @@ test("parseJsonArrayOutput can skip valid arrays that are not the target payload
           Array.isArray((entry as { files?: unknown }).files)
       )
     ),
-    [{ filename: "omniroute.tgz", files: [{ path: "src/index.ts" }] }]
+    [{ filename: "pusula.tgz", files: [{ path: "src/index.ts" }] }]
   );
 });
 
@@ -108,27 +108,27 @@ test("findUnexpectedArtifactPaths flags app pack files outside the allowlist", (
 });
 
 test("findUnexpectedArtifactPaths flags node_modules even inside an allowed prefix", () => {
-  // Regression guard: the allowlist grants the whole `@omniroute/opencode-provider/`
+  // Regression guard: the allowlist grants the whole `@pusula/opencode-provider/`
   // prefix, which used to authorize a nested node_modules inside it — 79 MB of
   // devDependencies (80% of the tarball) whenever the publish ran from a machine
   // that had installed inside that subpackage. package.json `files[]` excludes it
   // at the source; this asserts the gate FAILS instead of allowing a regression.
   const unexpectedPaths = findUnexpectedArtifactPaths(
     [
-      "@omniroute/opencode-provider/node_modules/tsup/package.json",
-      "@omniroute/opencode-provider/node_modules/esbuild/lib/main.js",
-      "@omniroute/opencode-provider/dist/index.js",
-      "@omniroute/opencode-provider/package.json",
+      "@pusula/opencode-provider/node_modules/tsup/package.json",
+      "@pusula/opencode-provider/node_modules/esbuild/lib/main.js",
+      "@pusula/opencode-provider/dist/index.js",
+      "@pusula/opencode-provider/package.json",
     ],
     {
       exactPaths: [],
-      prefixPaths: ["@omniroute/opencode-provider/"],
+      prefixPaths: ["@pusula/opencode-provider/"],
     }
   );
 
   assert.deepEqual(unexpectedPaths, [
-    "@omniroute/opencode-provider/node_modules/esbuild/lib/main.js",
-    "@omniroute/opencode-provider/node_modules/tsup/package.json",
+    "@pusula/opencode-provider/node_modules/esbuild/lib/main.js",
+    "@pusula/opencode-provider/node_modules/tsup/package.json",
   ]);
 });
 
@@ -182,7 +182,7 @@ test("package.json files[] excludes nested node_modules from the published packa
   assert.ok(
     files.includes("!**/node_modules/**"),
     'package.json "files" must keep the "!**/node_modules/**" negation — without it, ' +
-      "a nested install inside @omniroute/* ships ~79 MB of devDependencies."
+      "a nested install inside @pusula/* ships ~79 MB of devDependencies."
   );
 });
 
@@ -231,7 +231,7 @@ test("dist/tls-options.mjs is a required tarball path (regression guard for #545
   );
 });
 
-test("setupPolyfill.ts is allowed in the tarball (bin/omniroute.mjs imports it at startup)", () => {
+test("setupPolyfill.ts is allowed in the tarball (bin/pusula.mjs imports it at startup)", () => {
   const unexpectedPaths = findUnexpectedArtifactPaths(["open-sse/utils/setupPolyfill.ts"], {
     exactPaths: PACK_ARTIFACT_ALLOWED_EXACT_PATHS,
     prefixPaths: PACK_ARTIFACT_ALLOWED_PATH_PREFIXES,
@@ -241,7 +241,7 @@ test("setupPolyfill.ts is allowed in the tarball (bin/omniroute.mjs imports it a
 });
 
 test("config/i18n.json ships in the tarball: allowed, required, and in package.json files[]", () => {
-  // Locale source of truth read at runtime by bin/cli/i18n.mjs (OMNIROUTE_LANG alias
+  // Locale source of truth read at runtime by bin/cli/i18n.mjs (PUSULA_LANG alias
   // resolution, e.g. uk → uk-UA / fil → phi) and bin/cli/commands/config.mjs
   // (`config lang list`). package.json "files" never shipped config/, so the published
   // CLI silently fell back to en for every alias — pin all three layers so the file can
@@ -269,7 +269,7 @@ test("findMissingArtifactPaths flags missing root runtime files in the tarball",
   const missingPaths = findMissingArtifactPaths(
     [
       "dist/server.js",
-      "bin/omniroute.mjs",
+      "bin/pusula.mjs",
       "package.json",
       "scripts/build/postinstall.mjs",
       "scripts/build/postinstallSupport.mjs",
@@ -279,7 +279,7 @@ test("findMissingArtifactPaths flags missing root runtime files in the tarball",
 
   // findMissingArtifactPaths returns the missing required paths sorted
   // alphabetically (bin/ < dist/ < scripts/ < src/), minus the paths present
-  // above (dist/server.js, bin/omniroute.mjs, package.json, the postinstall scripts).
+  // above (dist/server.js, bin/pusula.mjs, package.json, the postinstall scripts).
   assert.deepEqual(missingPaths, [
     "bin/aliasResolver.mjs",
     "bin/aliasResolverHook.mjs",
@@ -323,15 +323,15 @@ test("findMissingArtifactPaths flags missing root runtime files in the tarball",
   ]);
 });
 
-test("every shipped @omniroute workspace package is covered by an artifact prefix", () => {
+test("every shipped @pusula workspace package is covered by an artifact prefix", () => {
   const packageJson = JSON.parse(readFileSync("package.json", "utf8")) as { files: string[] };
-  assert.ok(packageJson.files.includes("@omniroute/"));
+  assert.ok(packageJson.files.includes("@pusula/"));
 
-  const workspacePackages = readdirSync("@omniroute", { withFileTypes: true })
-    .filter((entry) => entry.isDirectory() && existsSync(`@omniroute/${entry.name}/package.json`))
-    .map((entry) => `@omniroute/${entry.name}/`);
+  const workspacePackages = readdirSync("@pusula", { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && existsSync(`@pusula/${entry.name}/package.json`))
+    .map((entry) => `@pusula/${entry.name}/`);
 
-  assert.ok(workspacePackages.includes("@omniroute/opencode-plugin-v2/"));
+  assert.ok(workspacePackages.includes("@pusula/opencode-plugin-v2/"));
   const uncovered = workspacePackages.filter(
     (prefix) => !PACK_ARTIFACT_ALLOWED_PATH_PREFIXES.includes(prefix)
   );

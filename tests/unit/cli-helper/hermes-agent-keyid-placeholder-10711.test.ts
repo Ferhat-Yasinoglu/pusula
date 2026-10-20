@@ -3,7 +3,7 @@
  *
  * The Hermes Agent dashboard "Apply" flow (HermesAgentToolCard.tsx) only
  * ever sends `keyId` (never a raw `apiKey`). Credentials belong in Hermes'
- * `.env`, while config.yaml references `OMNIROUTE_API_KEY` through the
+ * `.env`, while config.yaml references `PUSULA_API_KEY` through the
  * canonical `custom_providers` schema. The generator must never serialize a
  * key or placeholder into config.yaml.
  */
@@ -13,7 +13,7 @@ import assert from "node:assert/strict";
 import * as yaml from "js-yaml";
 import {
   generateHermesAgentConfig,
-  sanitizeOmniRouteRoleCredentials,
+  sanitizePusulaRoleCredentials,
 } from "../../../src/lib/cli-helper/config-generator/hermes-agent.ts";
 
 interface HermesAgentParsedConfig {
@@ -23,7 +23,7 @@ interface HermesAgentParsedConfig {
   auxiliary: Record<string, { api_key?: string }>;
 }
 
-test("Hermes Agent config references OMNIROUTE_API_KEY when only keyId is supplied", async () => {
+test("Hermes Agent config references PUSULA_API_KEY when only keyId is supplied", async () => {
   const result = await generateHermesAgentConfig({
     baseUrl: "http://localhost:20128",
     keyId: "some-stored-key-id", // what the real dashboard flow actually sends
@@ -38,13 +38,13 @@ test("Hermes Agent config references OMNIROUTE_API_KEY when only keyId is suppli
   assert.equal(result.error, undefined);
   const parsed = yaml.load(result.yaml) as HermesAgentParsedConfig;
 
-  assert.equal(parsed.providers?.omniroute, undefined);
-  const provider = parsed.custom_providers.find((entry) => entry.name === "omniroute");
-  assert.equal(provider?.key_env, "OMNIROUTE_API_KEY");
+  assert.equal(parsed.providers?.pusula, undefined);
+  const provider = parsed.custom_providers.find((entry) => entry.name === "pusula");
+  assert.equal(provider?.key_env, "PUSULA_API_KEY");
   assert.equal(provider?.api_key, undefined);
   assert.equal(parsed.delegation.api_key, undefined);
   assert.equal(parsed.auxiliary.vision.api_key, undefined);
-  assert.ok(!result.yaml.includes("YOUR_OMNIROUTE_API_KEY_HERE"));
+  assert.ok(!result.yaml.includes("YOUR_PUSULA_API_KEY_HERE"));
 });
 
 test("Hermes Agent config never serializes an explicitly resolved API key", async () => {
@@ -67,13 +67,13 @@ test("Hermes Agent config never serializes an explicitly resolved API key", asyn
   assert.equal(parsed.auxiliary.vision.api_key, undefined);
 });
 
-test("Hermes Agent config strips stale inline credentials from every OmniRoute role", () => {
+test("Hermes Agent config strips stale inline credentials from every Pusula role", () => {
   const config = {
-    model: { provider: "omniroute", default: "main", base_url: "http://old", api_key: "main-key" },
-    delegation: { provider: "omniroute", model: "delegate", api_key: "delegate-key" },
+    model: { provider: "pusula", default: "main", base_url: "http://old", api_key: "main-key" },
+    delegation: { provider: "pusula", model: "delegate", api_key: "delegate-key" },
     auxiliary: {
       vision: {
-        provider: "omniroute",
+        provider: "pusula",
         model: "vision",
         base_url: "http://old",
         api_key: "vision-key",
@@ -82,7 +82,7 @@ test("Hermes Agent config strips stale inline credentials from every OmniRoute r
     },
   };
 
-  sanitizeOmniRouteRoleCredentials(config);
+  sanitizePusulaRoleCredentials(config);
 
   assert.equal(config.model.api_key, undefined);
   assert.equal(config.model.base_url, undefined);

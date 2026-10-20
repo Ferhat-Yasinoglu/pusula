@@ -12,12 +12,12 @@ const source = await readFile(pageUrl, "utf8");
 test("combos dashboard keeps provider alias resolution on the client-safe module", () => {
   assert.match(
     source,
-    /import\s+\{\s*resolveProviderAlias\s*\}\s+from\s+["']@omniroute\/open-sse\/services\/providerAlias\.ts["'];?/
+    /import\s+\{\s*resolveProviderAlias\s*\}\s+from\s+["']@pusula\/open-sse\/services\/providerAlias\.ts["'];?/
   );
 
   assert.doesNotMatch(
     source,
-    /@omniroute\/open-sse\/services\/model\.ts/
+    /@pusula\/open-sse\/services\/model\.ts/
   );
 
   assert.doesNotMatch(

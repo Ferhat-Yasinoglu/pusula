@@ -25,7 +25,7 @@ import {
 // default in a cold thread; the DB-backed materialization tests below need it.
 vi.setConfig({ testTimeout: 20_000 });
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-family-combo-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-family-combo-"));
 const ORIGINAL_DATA_DIR = process.env.DATA_DIR;
 process.env.DATA_DIR = TEST_DATA_DIR;
 

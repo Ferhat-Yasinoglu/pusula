@@ -21,7 +21,7 @@ test("standalone build ships an executable health worker without tsx", async () 
   try {
     execFileSync(process.execPath, ["scripts/build/colocate-standalone.mjs"], {
       cwd: root,
-      env: { ...process.env, OMNIROUTE_STANDALONE_DIR: dir },
+      env: { ...process.env, PUSULA_STANDALONE_DIR: dir },
       stdio: "pipe",
     });
     const workerFile = path.join(dir, "src/lib/db/healthCheckWorker.js");

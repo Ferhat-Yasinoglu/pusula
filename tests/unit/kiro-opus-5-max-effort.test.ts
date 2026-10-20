@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { buildKiroPayload } from "@omniroute/open-sse/translator/request/openai-to-kiro.ts";
-import { appendClaudeEffortVariants } from "@omniroute/open-sse/utils/claudeEffortVariants.ts";
+import { buildKiroPayload } from "@pusula/open-sse/translator/request/openai-to-kiro.ts";
+import { appendClaudeEffortVariants } from "@pusula/open-sse/utils/claudeEffortVariants.ts";
 import {
   CANONICAL_EFFORT_VALUES,
   extendCodexGpt56EffortValues,

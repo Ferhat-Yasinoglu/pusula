@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createHash, randomUUID, timingSafeEqual } from "node:crypto";
 import { z } from "zod";
-import { CodexExecutor } from "@omniroute/open-sse/executors/codex.ts";
+import { CodexExecutor } from "@pusula/open-sse/executors/codex.ts";
 import { getApiKeyMetadata } from "@/lib/db/apiKeys";
 import { authorizeWebSocketHandshake, extractWsTokenFromRequest } from "@/lib/ws/handshake";
 import { getModelInfo } from "@/sse/services/model";
@@ -19,12 +19,12 @@ import {
   getMemorySettings,
   toMemoryRetrievalConfig,
 } from "@/lib/memory/settings";
-import { sanitizeErrorMessage } from "@omniroute/open-sse/utils/error.ts";
-import { logger } from "@omniroute/open-sse/utils/logger.ts";
+import { sanitizeErrorMessage } from "@pusula/open-sse/utils/error.ts";
+import { logger } from "@pusula/open-sse/utils/logger.ts";
 import { resolveProxyForConnection } from "@/lib/db/settings";
-import { withCodexFingerprintCredentials } from "@omniroute/open-sse/config/codexIdentity.ts";
-import { withReasoningRuleContext } from "@omniroute/open-sse/utils/reasoningRuleContext.ts";
-import { proxyConfigToUrl } from "@omniroute/open-sse/utils/proxyDispatcher.ts";
+import { withCodexFingerprintCredentials } from "@pusula/open-sse/config/codexIdentity.ts";
+import { withReasoningRuleContext } from "@pusula/open-sse/utils/reasoningRuleContext.ts";
+import { proxyConfigToUrl } from "@pusula/open-sse/utils/proxyDispatcher.ts";
 import {
   attachReasoningRuleDirective,
   applyReasoningRuleDirective,
@@ -268,7 +268,7 @@ async function maybeInjectResponsesWsMemory(
 }
 
 function getBridgeSecret(): string {
-  return process.env.OMNIROUTE_WS_BRIDGE_SECRET || "";
+  return process.env.PUSULA_WS_BRIDGE_SECRET || "";
 }
 
 function hashBridgeSecret(value: string): Buffer {
@@ -285,7 +285,7 @@ export function bridgeSecretMatches(expectedSecret: string, receivedSecret: stri
 function getAuthRequest(body: JsonRecord): Request {
   const requestUrl = typeof body.requestUrl === "string" ? body.requestUrl : "/api/v1/responses";
   const headers = isRecord(body.headers) ? body.headers : {};
-  const url = new URL(requestUrl, "http://omniroute.local");
+  const url = new URL(requestUrl, "http://pusula.local");
   const requestHeaders = new Headers();
 
   for (const [key, value] of Object.entries(headers)) {
@@ -479,7 +479,7 @@ async function resolveCodexCredentials(
 async function resolveCodexRequestContext(
   body: JsonRecord
 ): Promise<CodexWsFailure | CodexWsRequestContext> {
-  if (!isFeatureFlagEnabled("OMNIROUTE_CODEX_WS_ENABLED")) {
+  if (!isFeatureFlagEnabled("PUSULA_CODEX_WS_ENABLED")) {
     return {
       error: jsonError(503, "codex_ws_disabled", "Codex Responses WebSocket transport is disabled"),
     };
@@ -669,15 +669,15 @@ async function prepare(body: JsonRecord) {
     responseBodyWithMemory = await maybeInjectResponsesWsMemory(responseBody, metadata);
     if (reasoningDecision) {
       const withDirective = attachReasoningRuleDirective(responseBodyWithMemory, reasoningDecision);
-      reasoningRuleDirective = withDirective._omnirouteReasoningRule;
-      reasoningRouting = isRecord(withDirective._omnirouteReasoningRouteTrace)
-        ? withDirective._omnirouteReasoningRouteTrace
+      reasoningRuleDirective = withDirective._pusulaReasoningRule;
+      reasoningRouting = isRecord(withDirective._pusulaReasoningRouteTrace)
+        ? withDirective._pusulaReasoningRouteTrace
         : null;
       responseBodyWithMemory = applyReasoningRuleDirective(
         withDirective,
         "openai-responses"
       ) as JsonRecord;
-      delete responseBodyWithMemory._omnirouteReasoningRouteTrace;
+      delete responseBodyWithMemory._pusulaReasoningRouteTrace;
     }
     // #8052: the WS bridge previously skipped the whole prompt-compression pipeline that the
     // HTTP/SSE path (chatCore.ts) runs on every request — wire the same core pipeline in here,
@@ -758,7 +758,7 @@ async function prepare(body: JsonRecord) {
 
 export async function POST(request: Request) {
   const expectedSecret = getBridgeSecret();
-  const receivedSecret = request.headers.get("x-omniroute-ws-bridge-secret") || "";
+  const receivedSecret = request.headers.get("x-pusula-ws-bridge-secret") || "";
   if (!bridgeSecretMatches(expectedSecret, receivedSecret)) {
     return jsonError(403, "internal_bridge_forbidden", "Forbidden");
   }

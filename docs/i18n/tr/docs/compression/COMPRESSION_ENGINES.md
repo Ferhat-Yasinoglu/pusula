@@ -4,7 +4,7 @@
 
 ---
 
-OmniRoute sıkıştırması, motor sözleşmeleri üzerine kuruludur. Bir mod, doğrudan tek bir motoru
+Pusula sıkıştırması, motor sözleşmeleri üzerine kuruludur. Bir mod, doğrudan tek bir motoru
 (`caveman` veya `rtk`) ya da birden fazla motoru sırayla çalıştıran deterministik, yığınlanmış bir işlem hattını çalıştırabilir.
 
 ## Modlar
@@ -35,7 +35,7 @@ Profil bir **tavan, taban değil**: Paketteki `mergeCompressionProfileOptions`, 
 
 Bu kod tabanında ölçüldüğünde: `coding-safe` ve `balanced`, `minCompressChars` değerini maksimuma çıkarır ve sistemi, araç şemalarını ve araç sonuçlarını yerel tutar, bu nedenle henüz geçmiş biriktirmemiş bir oturum `below_min_chars` değerinde durur ve motor hiçbir şeyi dönüştürmez. Bu nedenle varsayılan, en güvenli profil yerine `aggressive`'dir.
 
-Paket, kendi model kapsamını ve profilini ortam yapılandırmasından çözer. OmniRoute kararı asla devretmez: adaptör, model geçidini paketin en kısıtlayıcı kapsamına sabitler, böylece ana bilgisayar ortamı ayarları izin verilenler listesini yalnızca daraltabilir, OmniRoute'un ölçülen makbuzlarının ötesine asla genişletemez.
+Paket, kendi model kapsamını ve profilini ortam yapılandırmasından çözer. Pusula kararı asla devretmez: adaptör, model geçidini paketin en kısıtlayıcı kapsamına sabitler, böylece ana bilgisayar ortamı ayarları izin verilenler listesini yalnızca daraltabilir, Pusula'un ölçülen makbuzlarının ötesine asla genişletemez.
 
 ## Motor Kayıt Defteri
 
@@ -80,7 +80,7 @@ değiştirdiği durumda motor, çağırana işaretçi → araç sözleşmesini �
 kopyalanması gerektiğini (24 onaltılık karakterin tamamı — hatalı kopyalanan hash değerleri,
 "blok bulunamadı" hatalarının olası nedenidir) ve bir `[dedup:ref sha=...]` işaretçisinin
 "aracı çağır" değil, "geçmişe bak" anlamına geldiğini açıklar. Not, **yalnızca çağıranın bildirdiği
-`tools[]`, `omniroute_ccr_retrieve` aracına gerçekten erişebildiğini kanıtladığında** eklenir
+`tools[]`, `pusula_ccr_retrieve` aracına gerçekten erişebildiğini kanıtladığında** eklenir
 (`open-sse/services/compression/engines/ccr/protocolInstruction.ts` içindeki
 `callerSupportsCcrRetrieve()`) — bu araca sahip olmayan düz bir OpenAI uyumlu çağıran, erişemeyeceği
 bir şeyi çağırma talimatı almaz. İdempotentlik, ekleme işleminden önce mesaj geçmişinde gözcü
@@ -98,7 +98,7 @@ Caveman modu, normal düzyazının anlamsal olarak yoğunlaştırılmasına odak
 
 Gösterge panelindeki konumu `Dashboard -> Context & Cache -> Caveman` şeklindedir.
 
-Caveman upstream'i, kıyaslamalarda `~75%` daha az çıktı tokenı ve `22-87%` aralığında ortalama `65%` çıktı tasarrufunun yanı sıra `~46%` oranında bir girdi sıkıştırma aracı bildirir. OmniRoute, yığılmış istem/bağlam tasarruflarını belgelendirirken Caveman'ın girdi tarafındaki oranını kullanır; Caveman çıktı modu ise ayrı bir yanıt davranışı özelliği olmaya devam eder.
+Caveman upstream'i, kıyaslamalarda `~75%` daha az çıktı tokenı ve `22-87%` aralığında ortalama `65%` çıktı tasarrufunun yanı sıra `~46%` oranında bir girdi sıkıştırma aracı bildirir. Pusula, yığılmış istem/bağlam tasarruflarını belgelendirirken Caveman'ın girdi tarafındaki oranını kullanır; Caveman çıktı modu ise ayrı bir yanıt davranışı özelliği olmaya devam eder.
 
 ## RTK
 
@@ -157,7 +157,7 @@ Ortama göre:
 
 - **Geliştirme / `npm install`** — `--omit=optional` (veya `--no-optional`)
   seçeneğini kullanmadıysanız otomatik olarak yüklenir. Herhangi bir işlem gerekmez.
-- **Global npm (`npm i -g omniroute`) / bağımsız kurulum** — yukarıdaki yükleme komutunu
+- **Global npm (`npm i -g pusula`) / bağımsız kurulum** — yukarıdaki yükleme komutunu
   kurulu paket dizininde çalıştırın veya isteğe bağlı bağımlılıkları hariç tutmadan yeniden yükleyin.
 - **Docker** — yükleme komutunu türetilmiş bir imaj katmanına ekleyin; yayımlanan imaj
   tasarım gereği minimum boyuttadır.
@@ -284,11 +284,11 @@ Sıkıştırma, beş MCP aracı sunar:
 
 | Araç                                | Kapsam              | Amaç                                        |
 | ----------------------------------- | ------------------- | ------------------------------------------- |
-| `omniroute_compression_status`      | `read:compression`  | Ayarlar, analizler, önbellek istatistikleri |
-| `omniroute_compression_configure`   | `write:compression` | Genel ayarları güncelleme                   |
-| `omniroute_set_compression_engine`  | `write:compression` | Modu ve isteğe bağlı işlem hattını ayarlama |
-| `omniroute_list_compression_combos` | `read:compression`  | Sıkıştırma kombinasyonlarını listeleme      |
-| `omniroute_compression_combo_stats` | `read:compression`  | Kombinasyon/motor analizlerini okuma        |
+| `pusula_compression_status`      | `read:compression`  | Ayarlar, analizler, önbellek istatistikleri |
+| `pusula_compression_configure`   | `write:compression` | Genel ayarları güncelleme                   |
+| `pusula_set_compression_engine`  | `write:compression` | Modu ve isteğe bağlı işlem hattını ayarlama |
+| `pusula_list_compression_combos` | `read:compression`  | Sıkıştırma kombinasyonlarını listeleme      |
+| `pusula_compression_combo_stats` | `read:compression`  | Kombinasyon/motor analizlerini okuma        |
 
 ## Kapsam ve hariç tutmalar
 

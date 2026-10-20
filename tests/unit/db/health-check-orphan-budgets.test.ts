@@ -54,7 +54,7 @@ function makeHarness(seed: {
   budgets?: string[];
   history?: string[];
 }): Harness {
-  const dir = mkdtempSync(path.join(tmpdir(), "omniroute-healthcheck-"));
+  const dir = mkdtempSync(path.join(tmpdir(), "pusula-healthcheck-"));
   const file = path.join(dir, "storage.sqlite");
   const raw = new Database(file);
   raw.exec(`

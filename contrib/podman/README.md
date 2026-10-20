@@ -1,6 +1,6 @@
 # Podman Deployment
 
-Run OmniRoute with **podman compose** on Linux, macOS, or Windows, or with
+Run Pusula with **podman compose** on Linux, macOS, or Windows, or with
 **Quadlet** on a Linux host that runs systemd.
 
 ---
@@ -23,26 +23,26 @@ Machine from a macOS or Windows host.
 ### 1. Build the image
 
 ```bash
-cd /path/to/omniroute
-podman build --target runner-base -t omniroute:base .
+cd /path/to/pusula
+podman build --target runner-base -t pusula:base .
 # For web-cookie providers (gemini-web, claude-web, claude-turnstile):
-podman build --target runner-web -t omniroute:web .
+podman build --target runner-web -t pusula:web .
 # For CLI tool support:
-podman build --target runner-cli -t omniroute:cli .
+podman build --target runner-cli -t pusula:cli .
 ```
 
 ### 2. Copy Quadlet files to the systemd directory
 
 ```bash
-mkdir -p ~/.config/containers/systemd/omniroute
-cp contrib/podman/*.container ~/.config/containers/systemd/omniroute/
-cp contrib/podman/*.network ~/.config/containers/systemd/omniroute/
-cp contrib/podman/*.volume ~/.config/containers/systemd/omniroute/
+mkdir -p ~/.config/containers/systemd/pusula
+cp contrib/podman/*.container ~/.config/containers/systemd/pusula/
+cp contrib/podman/*.network ~/.config/containers/systemd/pusula/
+cp contrib/podman/*.volume ~/.config/containers/systemd/pusula/
 ```
 
 ### 3. Generate secrets before first start
 
-`omniroute.container` no longer ships `JWT_SECRET` / `API_KEY_SECRET` /
+`pusula.container` no longer ships `JWT_SECRET` / `API_KEY_SECRET` /
 `INITIAL_PASSWORD` values — earlier versions shipped copy-pasteable
 placeholders (`change-me-to-a-random-base64-string`,
 `change-me-to-a-random-hex-string`) that an operator could forget to
@@ -63,12 +63,12 @@ a known credential to log in with.
 
 ### 4. Mount the project .env for secrets
 
-Edit `~/.config/containers/systemd/omniroute/omniroute.container` and
+Edit `~/.config/containers/systemd/pusula/pusula.container` and
 uncomment/replace the `EnvironmentFile` line with the absolute path to
 your project `.env`:
 
 ```
-EnvironmentFile=/home/USER/code/docker/OmniRoute/.env
+EnvironmentFile=/home/USER/code/docker/Pusula/.env
 ```
 
 Make sure `CONTAINER_HOST=podman` is set in that `.env`.
@@ -79,21 +79,21 @@ Alternatively, edit the env vars directly in the `.container` file.
 
 ```bash
 systemctl --user daemon-reload
-systemctl --user start omniroute-redis
-systemctl --user start omniroute
+systemctl --user start pusula-redis
+systemctl --user start pusula
 ```
 
 ### 6. Verify
 
 ```bash
-systemctl --user status omniroute
+systemctl --user status pusula
 curl http://localhost:20128/v1/models
 ```
 
 To follow logs:
 
 ```bash
-journalctl --user -u omniroute -f
+journalctl --user -u pusula -f
 ```
 
 The checked-in Quadlet files already contain `[Install]` sections with
@@ -127,7 +127,7 @@ mkdir -p data
 
 ### 3. Build and start
 
-The application profiles use local image names such as `omniroute:base`; those
+The application profiles use local image names such as `pusula:base`; those
 are build outputs, not published Docker Hub tags. On the first run, have Compose
 build the selected profile:
 
@@ -139,7 +139,7 @@ Alternatively, build the matching target explicitly and tell Compose to reuse
 that local image:
 
 ```bash
-podman build --target runner-base -t omniroute:base .
+podman build --target runner-base -t pusula:base .
 podman compose --profile base up -d --no-build
 ```
 
@@ -185,13 +185,13 @@ database files, use a Podman-managed named volume with the published image.
 Named volumes avoid host-directory UID translation:
 
 ```bash
-podman volume create omniroute-data
-podman run -d --name omniroute \
+podman volume create pusula-data
+podman run -d --name pusula \
   --env-file .env \
   -e DATA_DIR=/app/data \
   -p 20128:20128 \
-  -v omniroute-data:/app/data \
-  docker.io/diegosouzapw/omniroute:latest
+  -v pusula-data:/app/data \
+  docker.io/ferhat-yasinoglu/pusula:latest
 ```
 
 For a bind mount that still fails, inspect or repair the shared path from the

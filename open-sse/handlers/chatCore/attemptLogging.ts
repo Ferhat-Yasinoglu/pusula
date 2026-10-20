@@ -24,7 +24,7 @@ import { isEstimatedUsage } from "../../utils/usageTracking.ts";
 import { cloneBoundedChatLogPayload, truncateForLog } from "./logTruncation.ts";
 import { attachLogMeta } from "./cacheUsageMeta.ts";
 
-const OMITTED_VIDEO_TRANSCRIPT_REQUEST = { _omniroute_omitted: "video-transcript" };
+const OMITTED_VIDEO_TRANSCRIPT_REQUEST = { _pusula_omitted: "video-transcript" };
 
 interface VideoLogCloneState {
   source: Record<string, unknown>;
@@ -213,7 +213,7 @@ export function applyVideoBridgeLogRedaction(
 
 /**
  * Extract the OpenAI Responses API response id this attempt produced, so it
- * can be indexed for OmniRoute-native `previous_response_id` continuation
+ * can be indexed for Pusula-native `previous_response_id` continuation
  * (see src/lib/db/responsesContinuationStore.ts). Only meaningful when the
  * client actually used the Responses endpoint -- a Chat Completions
  * `chatcmpl-*` id must never be mistaken for a Responses response id.
@@ -284,7 +284,7 @@ export type PersistAttemptLogsContext = {
   noLogEnabled: unknown;
   correlationId?: string | null;
   modelPinned?: boolean;
-  /** #8249: caller-supplied X-OmniRoute-Session-Id header, only set when the header was
+  /** #8249: caller-supplied X-Pusula-Session-Id header, only set when the header was
    * explicitly present (never synthesized from skillRequestId) — persisted as call_logs.session_tag
    * for per-session cost attribution. */
   sessionTag?: string | null;
@@ -451,7 +451,7 @@ export function persistAttemptLogs(args: PersistAttemptLogsArgs, ctx: PersistAtt
       ? OMITTED_VIDEO_TRANSCRIPT_REQUEST
       : redactedRequest;
   const retainedResponse = videoContentRemoved
-    ? { _omniroute_omitted: "video-transcript" }
+    ? { _pusula_omitted: "video-transcript" }
     : responseBody;
   const retainedError = videoContentRemoved && error ? "[omitted: video transcript]" : error;
 

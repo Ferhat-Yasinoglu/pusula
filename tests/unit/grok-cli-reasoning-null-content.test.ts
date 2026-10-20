@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-const { GrokCliExecutor } = await import("@omniroute/open-sse/executors/grok-cli");
+const { GrokCliExecutor } = await import("@pusula/open-sse/executors/grok-cli");
 
 // Codex CLI replays Grok's reasoning items with `content: null`. Grok Build rejects that turn
 // with `400 Could not decode the compaction blob. Ensure it is unmodified from the compact

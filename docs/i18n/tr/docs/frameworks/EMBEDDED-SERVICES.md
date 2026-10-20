@@ -8,9 +8,9 @@
 > **Son güncelleme:** 2026-09-09
 > **Hedef kitle:** Gömülü hizmetler (9Router, CLIProxyAPI, Mux, Bifrost, open-wa) ekleyen, bunların bakımını yapan veya hatalarını ayıklayan mühendisler.
 
-Gömülü hizmetler; OmniRoute'un yüklediği, denetlediği ve birinci sınıf yönlendirme hedefleri olarak
+Gömülü hizmetler; Pusula'un yüklediği, denetlediği ve birinci sınıf yönlendirme hedefleri olarak
 sunduğu, yerel olarak kurulan yardımcı süreç araçlarıdır. Harici sağlayıcıların aksine (bunlara internet
-üzerinden API anahtarlarıyla erişilir), gömülü hizmetler OmniRoute ile aynı makinede çalışır ve geri döngü
+üzerinden API anahtarlarıyla erişilir), gömülü hizmetler Pusula ile aynı makinede çalışır ve geri döngü
 arabirimi üzerinden iletişim kurar.
 
 ---
@@ -36,7 +36,7 @@ Altı hizmet gömülüdür:
 
 | Hizmet          | npm paketi                              | Varsayılan port | Amaç                                                                                                                                                                                            |
 | --------------- | --------------------------------------- | :-------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **9Router**     | `9router`                               |      20130      | OmniRoute'un alt sağlayıcı olarak kullanabileceği AI yönlendiricisi. Modeller `9router/{sub}/{model}` biçiminde sunulur                                                                         |
+| **9Router**     | `9router`                               |      20130      | Pusula'un alt sağlayıcı olarak kullanabileceği AI yönlendiricisi. Modeller `9router/{sub}/{model}` biçiminde sunulur                                                                         |
 | **CLIProxyAPI** | GitHub sürüm ikili dosyası (`cliproxy`) |      8317       | Anthropic CLI kimlik doğrulama akışları için yerel proxy bağdaştırıcısı. OAuth belirteçlerinin süresi dolduğunda yedek yönlendirme sağlar                                                       |
 | **Mux**         | `mux` (başsız `mux server`)             |      8322       | Yerel ajan orkestrasyon daemon'u (coder/mux). Yalnızca yaşam döngüsü yönetilir — bir yönlendirme hedefi değildir (LLM proxy'leme yoktur).                                                       |
 | **Bifrost**     | `@maximhq/bifrost`                      |      8080       | Go AI ağ geçidi aktarma arka ucu. Çalışırken aktarma rotası (`/v1/relay/`) tarafından otomatik olarak seçilir                                                                                   |
@@ -45,9 +45,9 @@ Altı hizmet gömülüdür:
 
 Altı hizmetin tümü aynı gözetim modelini izler:
 
-- OmniRoute bunları `DATA_DIR/services/{name}/` altına kurar (OmniRoute'un kendi `package.json` dosyasından yalıtılmış olarak)
-- OmniRoute bunları alt süreçler olarak başlatır ve izler
-- OmniRoute, alt sürecin ortamına geçici bir API anahtarı enjekte eder ve bunu kesinti olmadan döndürür (uygulanabildiği durumlarda)
+- Pusula bunları `DATA_DIR/services/{name}/` altına kurar (Pusula'un kendi `package.json` dosyasından yalıtılmış olarak)
+- Pusula bunları alt süreçler olarak başlatır ve izler
+- Pusula, alt sürecin ortamına geçici bir API anahtarı enjekte eder ve bunu kesinti olmadan döndürür (uygulanabildiği durumlarda)
 - Tüm yönetim rotaları (`/api/services/*`) **LOCAL_ONLY** kapsamındadır — yalnızca geri döngü arabiriminden erişilebilir (kesin kural #17)
 
 ### Temel kararlar (tasarım planından)
@@ -57,7 +57,7 @@ Altı hizmetin tümü aynı gözetim modelini izler:
 | 9Router yerel kullanıcı arayüzüne pano erişimi | `/dashboard/providers/services/9router/embed/*` adresinde ters proxy                                       |
 | Kurulum mekanizması                            | `execFile` aracılığıyla `npm install {package}` (kabuk enterpolasyonu yok)                                 |
 | Kullanım modu                                  | Yönlendirme motorunda `9router/{sub}/{model}` olarak kaydedilen sağlayıcı                                  |
-| API anahtarı yönetimi                          | OmniRoute oluşturur, bekleme durumunda şifreler (AES-256-GCM) ve ortam değişkeni aracılığıyla enjekte eder |
+| API anahtarı yönetimi                          | Pusula oluşturur, bekleme durumunda şifreler (AES-256-GCM) ve ortam değişkeni aracılığıyla enjekte eder |
 | Pano konumu                                    | `/dashboard/providers/services` (üç sekme)                                                                 |
 | Otomatik başlatma                              | Hizmet başına geçiş düğmesi, varsayılan olarak KAPALI                                                      |
 
@@ -224,7 +224,7 @@ Loopback dışı istekler, kimlik doğrulama belirtecinden bağımsız olarak `4
 #### `POST /api/services/9router/install`
 
 9Router'ı npm üzerinden yükler. Kendi `package.json` ve `node_modules/` öğelerini içeren
-`DATA_DIR/services/9router/` dizinini oluşturur. OmniRoute'un kendi bağımlılıklarıyla çakışmaz.
+`DATA_DIR/services/9router/` dizinini oluşturur. Pusula'un kendi bağımlılıklarıyla çakışmaz.
 
 **İstek gövdesi** (tümü isteğe bağlı):
 
@@ -384,7 +384,7 @@ Sürüm meta verileri ve API anahtarı önizlemesi dâhil olmak üzere birleşti
 
 #### `POST /api/services/9router/auto-start`
 
-Otomatik başlatma bayrağını değiştirir. `enabled: true` olduğunda hizmet, OmniRoute'un
+Otomatik başlatma bayrağını değiştirir. `enabled: true` olduğunda hizmet, Pusula'un
 bir sonraki başlatılışında otomatik olarak başlar (hizmet yüklüyse).
 
 **İstek gövdesi:**
@@ -514,7 +514,7 @@ ayarlanmış `BIFROST_BASE_URL` ortam değişkeni her zaman önceliklidir.
 Diğer hizmetlerle aynı yaşam döngüsü yapısına sahiptir (`install`, `start`, `stop`,
 `restart`, `update`, `status`, `auto-start`, `auto-restart-adopted`); buna ek olarak
 `admin/` altında token korumalı bir OAuth kontrol düzlemi bulunur:
-`admin/accounts`, `admin/import-from-omniroute`, `admin/login-start`,
+`admin/accounts`, `admin/import-from-pusula`, `admin/login-start`,
 `admin/login-complete` (tümü `DARIO_ADMIN_TOKEN` ile korunur).
 
 ### 4.6 open-wa uç noktaları (7 rota)
@@ -565,7 +565,7 @@ GET|POST|... /dashboard/providers/services/9router/embed/[...path]
 Bu proxy:
 
 - İsteği `http://127.0.0.1:{port}/{path}` adresine iletir (yalnızca geri döngü)
-- Gelen `cookie` ve `authorization` başlıklarını kaldırır (OmniRoute oturumu sızıntısı olmaz)
+- Gelen `cookie` ve `authorization` başlıklarını kaldırır (Pusula oturumu sızıntısı olmaz)
 - 9Router kimlik doğrulaması için `Authorization: Bearer {apiKey}` başlığını enjekte eder
 - Yanıttan `set-cookie`, `content-security-policy`, `x-frame-options`, `cross-origin-*` başlıklarını kaldırır
 - `<base href>` enjekte etmek ve mutlak yolları normalleştirmek için HTML yanıtlarını yeniden yazar (`/foo` → `/dashboard/.../embed/foo`)
@@ -602,7 +602,7 @@ süreç başlatmayı tetiklemesini önler. Katman matrisinin tamamı için
 ### API anahtarı ekleme
 
 9Router ve Mux, kendi HTTP uç noktaları için bir API anahtarı/bearer token gerektirir.
-OmniRoute:
+Pusula:
 
 1. Hizmete özgü bir önekle (9Router için `nr_`, Mux için `mx_`)
    `crypto.randomBytes(32).toString("base64url")` aracılığıyla bir anahtar oluşturur.
@@ -782,7 +782,7 @@ Gömülü hizmet, OpenAI uyumlu bir `/v1/chat/completions` uç noktası sunuyors
 **Kontrol listesi:**
 
 1. `GET /api/services/{name}/logs` uç noktasını (veya kontrol panelindeki Günlükler panelini) kontrol edin. `Error: ENOENT`, `address already in use` veya `Cannot find module` gibi satırları arayın.
-2. `npm` komutunun PATH içinde olduğunu doğrulayın: OmniRoute'u çalıştıran kullanıcı hesabıyla `which npm` komutunu çalıştırın.
+2. `npm` komutunun PATH içinde olduğunu doğrulayın: Pusula'u çalıştıran kullanıcı hesabıyla `which npm` komutunu çalıştırın.
 3. Hizmetin kurulu olduğunu doğrulayın: `installedVersion` alanı için `GET /api/services/{name}/status` uç noktasını kontrol edin. Değer `null` ise önce kurulumu çalıştırın.
 4. `DATA_DIR/services/{name}/node_modules/` dizininin mevcut ve boş olmadığını kontrol edin.
 5. Temizlenmiş çıkış nedenini görmek için durum yanıtındaki `lastError` alanını kontrol edin.
@@ -814,7 +814,7 @@ Gömülü hizmet, OpenAI uyumlu bir `/v1/chat/completions` uç noktası sunuyors
 2. Çakışan işlemi bulup sonlandırın: `lsof -ti :20130 | xargs kill -9`.
 3. Port, `bootstrap.ts` içinde `port` alanı aracılığıyla her hizmet için ayrı ayrı yapılandırılabilir.
 
-**Not:** 9Router, OmniRoute'un varsayılan 20128 numaralı portuyla çakışmayı önlemek için varsayılan olarak özellikle 20130 numaralı portu kullanır.
+**Not:** 9Router, Pusula'un varsayılan 20128 numaralı portuyla çakışmayı önlemek için varsayılan olarak özellikle 20130 numaralı portu kullanır.
 
 ---
 
@@ -824,13 +824,13 @@ Gömülü hizmet, OpenAI uyumlu bir `/v1/chat/completions` uç noktası sunuyors
 
 **Nedenler:**
 
-- OmniRoute işlemi, `DATA_DIR` dizinine veya bu dizinin üst dizinine yazma iznine sahip değil.
+- Pusula işlemi, `DATA_DIR` dizinine veya bu dizinin üst dizinine yazma iznine sahip değil.
 - Eşlenen birime yazma erişimi olmadan köksüz Docker içinde çalıştırılıyor.
 
 **Çözüm:**
 
-1. `DATA_DIR` dizinini kontrol edin (varsayılan: `~/.omniroute/`): `ls -la ~/.omniroute/`
-2. OmniRoute işlemini çalıştıran kullanıcının dizinin sahibi olduğundan emin olun: `chown -R $USER ~/.omniroute/`
+1. `DATA_DIR` dizinini kontrol edin (varsayılan: `~/.pusula/`): `ls -la ~/.pusula/`
+2. Pusula işlemini çalıştıran kullanıcının dizinin sahibi olduğundan emin olun: `chown -R $USER ~/.pusula/`
 3. Docker'da, birim bağlamanın konteyner kullanıcısı için doğru izinlere sahip olduğundan emin olun.
 
 ---
@@ -843,7 +843,7 @@ Gömülü hizmet, OpenAI uyumlu bir `/v1/chat/completions` uç noktası sunuyors
 
 1. npm kayıt sunucusuna erişilebildiğini doğrulayın: `npm ping`.
 2. Kurumsal proxy olup olmadığını kontrol edin: `npm config get proxy`, `npm config get https-proxy`.
-3. Kurulumu manuel olarak deneyin: `npm install {package}@latest --prefix ~/.omniroute/services/{name}/`.
+3. Kurulumu manuel olarak deneyin: `npm install {package}@latest --prefix ~/.pusula/services/{name}/`.
 4. İnternet erişimi olmayan bir ortamdaysanız tarball dosyasını önceden indirin ve `npm install /path/to/tarball.tgz` komutunu kullanın.
 
 ---
@@ -870,15 +870,15 @@ Hayır. LOCAL_ONLY katmanı kasıtlıdır (kesin kural #17). `npm install` çal�
 
 **S: 9Router ve CLIProxyAPI üretim/bulut dağıtımlarında kullanılabilecek mi?**
 
-Evet. Her iki hizmet de OmniRoute ile aynı önce yerel modelini izler. Aynı makinede çalışır ve loopback üzerinden iletişim kurarlar. Buradaki "üretim", uzak bir bulut sağlayıcısını değil, OmniRoute'un dağıtıldığı VPS'yi veya yerel sunucuyu ifade eder.
+Evet. Her iki hizmet de Pusula ile aynı önce yerel modelini izler. Aynı makinede çalışır ve loopback üzerinden iletişim kurarlar. Buradaki "üretim", uzak bir bulut sağlayıcısını değil, Pusula'un dağıtıldığı VPS'yi veya yerel sunucuyu ifade eder.
 
 ---
 
 **S: Gözetici üzerinde nasıl hata ayıklayabilirim?**
 
 1. SSE günlük akışını takip edin: `curl -N http://localhost:20128/api/services/9router/logs`.
-2. OmniRoute'un pino çıktısındaki yapılandırılmış günlükleri `service:supervisor` ad alanına göre filtreleyerek kontrol edin.
-3. Veritabanı satırını inceleyin: `sqlite3 ~/.omniroute/omniroute.db "SELECT * FROM version_manager WHERE tool='9router'"`.
+2. Pusula'un pino çıktısındaki yapılandırılmış günlükleri `service:supervisor` ad alanına göre filtreleyerek kontrol edin.
+3. Veritabanı satırını inceleyin: `sqlite3 ~/.pusula/pusula.db "SELECT * FROM version_manager WHERE tool='9router'"`.
 4. Geçerli canlı durumu, PID'yi, sistem durumunu ve `lastError` değerini tek bir çağrıda görmek için `GET /api/services/9router/status` kullanın.
 
 ---

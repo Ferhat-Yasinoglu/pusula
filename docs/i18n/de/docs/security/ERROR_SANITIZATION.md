@@ -40,7 +40,7 @@ Schlüssel zur Prototypsteuerung, bevor eine Antwort serialisiert wird.
 Verwende `buildErrorBody()` — die Bereinigung ist integriert:
 
 ```ts
-import { buildErrorBody } from "@omniroute/open-sse/utils/error.ts";
+import { buildErrorBody } from "@pusula/open-sse/utils/error.ts";
 
 export async function POST(req: Request) {
   try {
@@ -64,7 +64,7 @@ import {
   unavailableResponse, // fügt Retry-After hinzu
   providerCircuitOpenResponse,
   modelCooldownResponse,
-} from "@omniroute/open-sse/utils/error.ts";
+} from "@pusula/open-sse/utils/error.ts";
 ```
 
 Alle diese Funktionen wenden die kanonische öffentliche Fehlergrenze an. `errorResponse`, `writeStreamError` und
@@ -77,7 +77,7 @@ projizieren und bereinigen ihren öffentlichen Kontext direkt. **Bei Verwendung 
 Wenn du die oben genannten Helper nicht verwenden kannst (z. B. weil die Antwortstruktur durch ein vorgelagertes Protokoll wie Connect-RPC vorgegeben ist), importiere `sanitizeErrorMessage` direkt:
 
 ```ts
-import { sanitizeErrorMessage } from "@omniroute/open-sse/utils/error.ts";
+import { sanitizeErrorMessage } from "@pusula/open-sse/utils/error.ts";
 
 const body = JSON.stringify({
   error: {
@@ -172,11 +172,11 @@ Auf `upstreamDetails` angewendete Bereinigungsregeln:
 3. Tiefenbegrenzung: Verschachtelungen über 4 Ebenen hinaus werden durch die Zeichenfolge `"[truncated]"` ersetzt.
 4. Arrays werden auf 32 Elemente begrenzt.
 
-Nur Aufrufstellen mit einem geparsten Provider-Fehlerantwortkörper sollten `upstreamDetails` übergeben. Interne OmniRoute-Fehler (SSE-Parsingfehler, leere Inhalte, Guardrail-Blockierungen) dürfen es nicht enthalten.
+Nur Aufrufstellen mit einem geparsten Provider-Fehlerantwortkörper sollten `upstreamDetails` übergeben. Interne Pusula-Fehler (SSE-Parsingfehler, leere Inhalte, Guardrail-Blockierungen) dürfen es nicht enthalten.
 
 Übergeben Sie KEINE unverarbeiteten Werte aus `err.stack`, `err.message` oder sonstige Zeichenfolgen aus einer Laufzeitausnahme an `upstreamDetails`. Diese müssen weiterhin ohne Upstream-Antwortkörper durch `errorResponse` / `buildErrorBody(code, msg)` verarbeitet werden.
 
-Die selektive Durchleitung von Upstream-4xx-Antworten bewahrt die sichere JSON-Struktur und Formulierung des Providers, die für die automatische Wiederherstellung des Clients erforderlich sind. Es handelt sich jedoch nicht um eine bytegenaue Durchleitung: Die rekursive Bereinigung wird vor der Serialisierung immer ausgeführt. Zyklische, BigInt-enthaltende oder bösartige `toJSON()`-Antwortkörper werden nach dem Fail-Closed-Prinzip abgelehnt und kommen für eine Durchleitung nicht infrage. OCR und Moderation wenden dieselbe Regel an; Nicht-JSON-, leere oder falsch gekennzeichnete Upstream-Antwortkörper werden in die kanonische OmniRoute-JSON-Fehlerhülle umgewandelt.
+Die selektive Durchleitung von Upstream-4xx-Antworten bewahrt die sichere JSON-Struktur und Formulierung des Providers, die für die automatische Wiederherstellung des Clients erforderlich sind. Es handelt sich jedoch nicht um eine bytegenaue Durchleitung: Die rekursive Bereinigung wird vor der Serialisierung immer ausgeführt. Zyklische, BigInt-enthaltende oder bösartige `toJSON()`-Antwortkörper werden nach dem Fail-Closed-Prinzip abgelehnt und kommen für eine Durchleitung nicht infrage. OCR und Moderation wenden dieselbe Regel an; Nicht-JSON-, leere oder falsch gekennzeichnete Upstream-Antwortkörper werden in die kanonische Pusula-JSON-Fehlerhülle umgewandelt.
 
 ## Bekannte CodeQL-Einschränkung: Benutzerdefinierte Sanitizer werden nicht erkannt
 

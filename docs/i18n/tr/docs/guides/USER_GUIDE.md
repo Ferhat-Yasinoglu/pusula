@@ -6,7 +6,7 @@
 
 🌐 **Languages:** 🇺🇸 [English](../../../../guides/USER_GUIDE.md) · 🇪🇹 [am](../../../am/docs/guides/USER_GUIDE.md) · 🇸🇦 [ar](../../../ar/docs/guides/USER_GUIDE.md) · 🇦🇿 [az](../../../az/docs/guides/USER_GUIDE.md) · 🇧🇬 [bg](../../../bg/docs/guides/USER_GUIDE.md) · 🇧🇩 [bn](../../../bn/docs/guides/USER_GUIDE.md) · 🇧🇦 [bs](../../../bs/docs/guides/USER_GUIDE.md) · 🇨🇿 [cs](../../../cs/docs/guides/USER_GUIDE.md) · 🇩🇰 [da](../../../da/docs/guides/USER_GUIDE.md) · 🇩🇪 [de](../../../de/docs/guides/USER_GUIDE.md) · 🇬🇷 [el](../../../el/docs/guides/USER_GUIDE.md) · 🇪🇸 [es](../../../es/docs/guides/USER_GUIDE.md) · 🇪🇪 [et](../../../et/docs/guides/USER_GUIDE.md) · 🇮🇷 [fa](../../../fa/docs/guides/USER_GUIDE.md) · 🇫🇮 [fi](../../../fi/docs/guides/USER_GUIDE.md) · 🇫🇷 [fr](../../../fr/docs/guides/USER_GUIDE.md) · 🇮🇪 [ga](../../../ga/docs/guides/USER_GUIDE.md) · 🇮🇳 [gu](../../../gu/docs/guides/USER_GUIDE.md) · 🇳🇬 [ha](../../../ha/docs/guides/USER_GUIDE.md) · 🇮🇱 [he](../../../he/docs/guides/USER_GUIDE.md) · 🇮🇳 [hi](../../../hi/docs/guides/USER_GUIDE.md) · 🇭🇷 [hr](../../../hr/docs/guides/USER_GUIDE.md) · 🇭🇺 [hu](../../../hu/docs/guides/USER_GUIDE.md) · 🇦🇲 [hy](../../../hy/docs/guides/USER_GUIDE.md) · 🇮🇩 [id](../../../id/docs/guides/USER_GUIDE.md) · 🇳🇬 [ig](../../../ig/docs/guides/USER_GUIDE.md) · 🇮🇹 [it](../../../it/docs/guides/USER_GUIDE.md) · 🇯🇵 [ja](../../../ja/docs/guides/USER_GUIDE.md) · 🇬🇪 [ka](../../../ka/docs/guides/USER_GUIDE.md) · 🇰🇭 [km](../../../km/docs/guides/USER_GUIDE.md) · 🇮🇳 [kn](../../../kn/docs/guides/USER_GUIDE.md) · 🇰🇷 [ko](../../../ko/docs/guides/USER_GUIDE.md) · 🇱🇹 [lt](../../../lt/docs/guides/USER_GUIDE.md) · 🇱🇻 [lv](../../../lv/docs/guides/USER_GUIDE.md) · 🇮🇳 [ml](../../../ml/docs/guides/USER_GUIDE.md) · 🇮🇳 [mr](../../../mr/docs/guides/USER_GUIDE.md) · 🇲🇾 [ms](../../../ms/docs/guides/USER_GUIDE.md) · 🇲🇹 [mt](../../../mt/docs/guides/USER_GUIDE.md) · 🇲🇲 [my](../../../my/docs/guides/USER_GUIDE.md) · 🇳🇵 [ne](../../../ne/docs/guides/USER_GUIDE.md) · 🇳🇱 [nl](../../../nl/docs/guides/USER_GUIDE.md) · 🇳🇴 [no](../../../no/docs/guides/USER_GUIDE.md) · 🇮🇳 [or](../../../or/docs/guides/USER_GUIDE.md) · 🇮🇳 [pa](../../../pa/docs/guides/USER_GUIDE.md) · 🇵🇭 [phi](../../../phi/docs/guides/USER_GUIDE.md) · 🇵🇱 [pl](../../../pl/docs/guides/USER_GUIDE.md) · 🇵🇹 [pt](../../../pt/docs/guides/USER_GUIDE.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/guides/USER_GUIDE.md) · 🇷🇴 [ro](../../../ro/docs/guides/USER_GUIDE.md) · 🇷🇺 [ru](../../../ru/docs/guides/USER_GUIDE.md) · 🇱🇰 [si](../../../si/docs/guides/USER_GUIDE.md) · 🇸🇰 [sk](../../../sk/docs/guides/USER_GUIDE.md) · 🇸🇮 [sl](../../../sl/docs/guides/USER_GUIDE.md) · 🇷🇸 [sr](../../../sr/docs/guides/USER_GUIDE.md) · 🇸🇪 [sv](../../../sv/docs/guides/USER_GUIDE.md) · 🇰🇪 [sw](../../../sw/docs/guides/USER_GUIDE.md) · 🇮🇳 [ta](../../../ta/docs/guides/USER_GUIDE.md) · 🇮🇳 [te](../../../te/docs/guides/USER_GUIDE.md) · 🇹🇭 [th](../../../th/docs/guides/USER_GUIDE.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/guides/USER_GUIDE.md) · 🇵🇰 [ur](../../../ur/docs/guides/USER_GUIDE.md) · 🇺🇿 [uz](../../../uz/docs/guides/USER_GUIDE.md) · 🇻🇳 [vi](../../../vi/docs/guides/USER_GUIDE.md) · 🇳🇬 [yo](../../../yo/docs/guides/USER_GUIDE.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/guides/USER_GUIDE.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/guides/USER_GUIDE.md)
 
-Sağlayıcıları yapılandırma, kombinasyonlar oluşturma, CLI araçlarını entegre etme ve OmniRoute'u dağıtma konusunda eksiksiz kılavuz.
+Sağlayıcıları yapılandırma, kombinasyonlar oluşturma, CLI araçlarını entegre etme ve Pusula'u dağıtma konusunda eksiksiz kılavuz.
 
 ---
 
@@ -137,10 +137,10 @@ Modeller:
   cc/claude-haiku-4-5-20251001
 ```
 
-**Profesyonel İpucu:** Karmaşık görevler için Opus'u, hız için Sonnet'i kullanın. OmniRoute kotayı model bazında takip eder!
+**Profesyonel İpucu:** Karmaşık görevler için Opus'u, hız için Sonnet'i kullanın. Pusula kotayı model bazında takip eder!
 
 Claude ve Claude Code uyumlu rotalar, Opus ve Sonnet modelleri için `max` düşünme eforunu
-korur. Haiku modelleri `max` efor katmanını kabul etmez; bu nedenle OmniRoute, isteği
+korur. Haiku modelleri `max` efor katmanını kabul etmez; bu nedenle Pusula, isteği
 üst sağlayıcıya göndermeden önce yüksek bir düşünme bütçesine düşürür.
 
 #### OpenAI Codex (Plus/Pro)
@@ -191,7 +191,7 @@ Modeller:
 
 #### Kimi K2 (Aylık sabit $9)
 
-1. Abone olun: [Moonshot AI](https://platform.kimi.ai?aff=omniroute)
+1. Abone olun: [Moonshot AI](https://platform.kimi.ai?aff=pusula)
 2. API anahtarını alın → Kontrol Paneli → API Anahtarı Ekle
 
 **Kullanım:** `kimi/kimi-k2.5` — **Profesyonel İpucu:** 10M token için aylık sabit $9 = 1M başına efektif $0.90 maliyet!
@@ -262,16 +262,16 @@ Maliyet: şu anda $0 olarak listelenmektedir; koşullar ve kullanılabilirlik de
 
 ### Cursor IDE
 
-**Cursor'ı bir OmniRoute istemcisi olarak kullanma** (Cursor sohbetini OmniRoute üzerinden yönlendirin):
+**Cursor'ı bir Pusula istemcisi olarak kullanma** (Cursor sohbetini Pusula üzerinden yönlendirin):
 
 ```
 Ayarlar → Modeller → Gelişmiş:
   OpenAI API Temel URL'si: http://localhost:20128/v1
-  OpenAI API Anahtarı: [OmniRoute kontrol panelinden]
+  OpenAI API Anahtarı: [Pusula kontrol panelinden]
   Model: cc/claude-opus-4-7
 ```
 
-**OmniRoute'u bir Cursor sağlayıcısı olarak kullanma** (OmniRoute, Cursor üst hizmetini çağırır): tercihen
+**Pusula'u bir Cursor sağlayıcısı olarak kullanma** (Pusula, Cursor üst hizmetini çağırır): tercihen
 **Kontrol Paneli → Sağlayıcılar → Cursor → Cursor ile Giriş Yap** yolunu kullanın. Docker'da
 [`docs/providers/CURSOR-DOCKER.md`](../providers/CURSOR-DOCKER.md) belgesine bakın.
 
@@ -283,7 +283,7 @@ Ayarlar → Modeller → Gelişmiş:
 {
   "env": {
     "ANTHROPIC_BASE_URL": "http://localhost:20128",
-    "ANTHROPIC_AUTH_TOKEN": "your-omniroute-api-key"
+    "ANTHROPIC_AUTH_TOKEN": "your-pusula-api-key"
   }
 }
 ```
@@ -294,7 +294,7 @@ Burada Claude uyumlu kök uç noktayı kullanın. `ANTHROPIC_BASE_URL` sonuna `/
 
 ```bash
 export OPENAI_BASE_URL="http://localhost:20128"
-export OPENAI_API_KEY="your-omniroute-api-key"
+export OPENAI_API_KEY="your-pusula-api-key"
 codex "your prompt"
 ```
 
@@ -306,14 +306,14 @@ codex "your prompt"
 {
   "agents": {
     "defaults": {
-      "model": { "primary": "omniroute/if/kimi-k2.7-code" }
+      "model": { "primary": "pusula/if/kimi-k2.7-code" }
     }
   },
   "models": {
     "providers": {
-      "omniroute": {
+      "pusula": {
         "baseUrl": "http://localhost:20128/v1",
-        "apiKey": "your-omniroute-api-key",
+        "apiKey": "your-pusula-api-key",
         "api": "openai-completions",
         "models": [{ "id": "if/kimi-k2.7-code", "name": "Kimi K2.7 Code" }]
       }
@@ -340,28 +340,28 @@ Model: cc/claude-opus-4-7
 ### Global npm kurulumu (Önerilen)
 
 ```bash
-npm install -g omniroute
+npm install -g pusula
 
 # Yapılandırma dizinini oluşturun
-mkdir -p ~/.omniroute
+mkdir -p ~/.pusula
 
 # .env dosyasını oluşturun (.env.example dosyasına bakın)
-cp .env.example ~/.omniroute/.env
+cp .env.example ~/.pusula/.env
 
 # Sunucuyu başlatın
-omniroute
+pusula
 # Veya özel bir port ile:
-omniroute --port 3000
+pusula --port 3000
 ```
 
-CLI, `.env` dosyasını `~/.omniroute/.env` veya `./.env` konumundan otomatik olarak yükler.
+CLI, `.env` dosyasını `~/.pusula/.env` veya `./.env` konumundan otomatik olarak yükler.
 
 ### Sistem tepsisi modu
 
-OmniRoute'u sistem tepsisinde başlatın:
+Pusula'u sistem tepsisinde başlatın:
 
 ```bash
-omniroute serve --tray
+pusula serve --tray
 ```
 
 Komut, sunucu ve sistem tepsisi hazır olduktan sonra tamamlanır.
@@ -375,7 +375,7 @@ Sistem tepsisi modu macOS, Windows ve grafiksel Linux oturumlarını destekler. 
 - Kontrol panelini açma.
 - `/dashboard/logs` sayfasını açma.
 - Otomatik başlatma ayarını değiştirme.
-- OmniRoute'u durdurma.
+- Pusula'u durdurma.
 
 `--tray` seçeneğini şu seçeneklerle birlikte kullanmayın:
 
@@ -388,7 +388,7 @@ Bu modlar farklı işlem sahipliği gerektirir.
 Bir sonraki makine oturum açılışında başlatmayı etkinleştirin:
 
 ```bash
-omniroute autostart enable
+pusula autostart enable
 ```
 
 Otomatik başlatma, macOS, Windows ve grafiksel Linux oturumlarında sistem tepsisi modunu kullanır. Başsız Linux, mevcut systemd kullanıcı hizmetini kullanır.
@@ -396,29 +396,29 @@ Otomatik başlatma, macOS, Windows ve grafiksel Linux oturumlarında sistem teps
 Oturum açılışında başlatmayı devre dışı bırakın:
 
 ```bash
-omniroute autostart disable
+pusula autostart disable
 ```
 
 ### Kaldırma
 
-OmniRoute'a artık ihtiyacınız kalmadığında, temiz bir kaldırma işlemi için iki hızlı betik sunuyoruz:
+Pusula'a artık ihtiyacınız kalmadığında, temiz bir kaldırma işlemi için iki hızlı betik sunuyoruz:
 
 | Komut                    | İşlem                                                                                                        |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------ |
-| `npm run uninstall`      | Sistem uygulamasını kaldırır ancak `~/.omniroute` içindeki **veritabanınızı ve yapılandırmalarınızı korur**. |
+| `npm run uninstall`      | Sistem uygulamasını kaldırır ancak `~/.pusula` içindeki **veritabanınızı ve yapılandırmalarınızı korur**. |
 | `npm run uninstall:full` | Uygulamayı kaldırır VE **tüm yapılandırmaları, anahtarları ve veritabanlarını kalıcı olarak siler**.         |
 
-> Not: Bu komutları çalıştırmak için OmniRoute proje klasörüne gidin (projeyi klonladıysanız) ve komutları çalıştırın. Alternatif olarak, global olarak kurduysanız yalnızca `npm uninstall -g omniroute` komutunu çalıştırabilirsiniz.
+> Not: Bu komutları çalıştırmak için Pusula proje klasörüne gidin (projeyi klonladıysanız) ve komutları çalıştırın. Alternatif olarak, global olarak kurduysanız yalnızca `npm uninstall -g pusula` komutunu çalıştırabilirsiniz.
 
 ### VPS Dağıtımı
 
 ```bash
-git clone https://github.com/diegosouzapw/OmniRoute.git
-cd OmniRoute && npm install && npm run build
+git clone https://github.com/Ferhat-Yasinoglu/pusula.git
+cd Pusula && npm install && npm run build
 
 export JWT_SECRET="your-secure-secret-change-this"
 export INITIAL_PASSWORD="your-password"
-export DATA_DIR="/var/lib/omniroute"
+export DATA_DIR="/var/lib/pusula"
 export PORT="20128"
 export HOSTNAME="0.0.0.0"
 export NODE_ENV="production"
@@ -426,7 +426,7 @@ export NEXT_PUBLIC_BASE_URL="http://localhost:20128"
 export API_KEY_SECRET="endpoint-proxy-api-key-secret"
 
 npm run start
-# Veya: pm2 start npm --name omniroute -- start
+# Veya: pm2 start npm --name pusula -- start
 ```
 
 ### PM2 Dağıtımı (Düşük Bellek)
@@ -435,10 +435,10 @@ Sınırlı RAM'e sahip sunucular için bellek sınırı seçeneğini kullanın:
 
 ```bash
 # 512MB sınırıyla (varsayılan)
-pm2 start npm --name omniroute -- start
+pm2 start npm --name pusula -- start
 
 # Veya özel bir bellek sınırıyla
-OMNIROUTE_MEMORY_MB=512 pm2 start npm --name omniroute -- start
+PUSULA_MEMORY_MB=512 pm2 start npm --name pusula -- start
 
 # Veya ecosystem.config.js kullanarak
 pm2 start ecosystem.config.js
@@ -450,12 +450,12 @@ pm2 start ecosystem.config.js
 module.exports = {
   apps: [
     {
-      name: "omniroute",
+      name: "pusula",
       script: "npm",
       args: "start",
       env: {
         NODE_ENV: "production",
-        OMNIROUTE_MEMORY_MB: "512",
+        PUSULA_MEMORY_MB: "512",
         JWT_SECRET: "your-secret",
         INITIAL_PASSWORD: "your-password",
       },
@@ -470,24 +470,24 @@ module.exports = {
 
 ```bash
 # İmajı derleyin (varsayılan = codex/claude/droid önceden yüklenmiş runner-cli)
-docker build -t omniroute:cli .
+docker build -t pusula:cli .
 
 # Taşınabilir mod (önerilen)
-docker run -d --name omniroute -p 20128:20128 --env-file ./.env -v omniroute-data:/app/data omniroute:cli
+docker run -d --name pusula -p 20128:20128 --env-file ./.env -v pusula-data:/app/data pusula:cli
 ```
 
 CLI ikili dosyalarıyla ana sistemle entegre mod için ana belgelerdeki Docker bölümüne bakın.
 
 ### Void Linux (xbps-src)
 
-Void Linux kullanıcıları, `xbps-src` çapraz derleme çerçevesini kullanarak OmniRoute'u yerel olarak paketleyip kurabilir. Bu işlem, gerekli `better-sqlite3` yerel bağlamalarıyla birlikte bağımsız Node.js derlemesini otomatikleştirir.
+Void Linux kullanıcıları, `xbps-src` çapraz derleme çerçevesini kullanarak Pusula'u yerel olarak paketleyip kurabilir. Bu işlem, gerekli `better-sqlite3` yerel bağlamalarıyla birlikte bağımsız Node.js derlemesini otomatikleştirir.
 
 <details>
 <summary><b>xbps-src şablonunu görüntüle</b></summary>
 
 ```bash
-# 'omniroute' için şablon dosyası
-pkgname=omniroute
+# 'pusula' için şablon dosyası
+pkgname=pusula
 version=3.8.0
 revision=1
 hostmakedepends="nodejs python3 make"
@@ -495,11 +495,11 @@ depends="openssl"
 short_desc="Universal AI gateway with smart routing for multiple LLM providers"
 maintainer="zenobit <zenobit@disroot.org>"
 license="MIT"
-homepage="https://github.com/diegosouzapw/OmniRoute"
-distfiles="https://github.com/diegosouzapw/OmniRoute/archive/refs/tags/v${version}.tar.gz"
+homepage="https://github.com/Ferhat-Yasinoglu/pusula"
+distfiles="https://github.com/Ferhat-Yasinoglu/pusula/archive/refs/tags/v${version}.tar.gz"
 checksum=009400afee90a9f32599d8fe734145cfd84098140b7287990183dde45ae2245b
-system_accounts="_omniroute"
-omniroute_homedir="/var/lib/omniroute"
+system_accounts="_pusula"
+pusula_homedir="/var/lib/pusula"
 export NODE_ENV=production
 export npm_config_engine_strict=false
 export npm_config_loglevel=error
@@ -549,26 +549,26 @@ do_check() {
 }
 
 do_install() {
-	vmkdir usr/lib/omniroute/.next
-	vcopy .next/standalone/. usr/lib/omniroute/.next/standalone
+	vmkdir usr/lib/pusula/.next
+	vcopy .next/standalone/. usr/lib/pusula/.next/standalone
 
 	# Boş Next.js uygulama yönlendiricisi dizinlerinin kurulum sonrası kancası tarafından kaldırılmasını önle
 	for _d in \
 		.next/standalone/.next/server/app/dashboard \
 		.next/standalone/.next/server/app/dashboard/settings \
 		.next/standalone/.next/server/app/dashboard/providers; do
-		touch "${DESTDIR}/usr/lib/omniroute/${_d}/.keep"
+		touch "${DESTDIR}/usr/lib/pusula/${_d}/.keep"
 	done
 
-	cat > "${WRKDIR}/omniroute" <<'EOF'
+	cat > "${WRKDIR}/pusula" <<'EOF'
 #!/bin/sh
 export PORT="${PORT:-20128}"
-export DATA_DIR="${DATA_DIR:-${XDG_DATA_HOME:-${HOME}/.local/share}/omniroute}"
+export DATA_DIR="${DATA_DIR:-${XDG_DATA_HOME:-${HOME}/.local/share}/pusula}"
 export APP_LOG_TO_FILE="${APP_LOG_TO_FILE:-false}"
 mkdir -p "${DATA_DIR}"
-exec node /usr/lib/omniroute/.next/standalone/server.js "$@"
+exec node /usr/lib/pusula/.next/standalone/server.js "$@"
 EOF
-	vbin "${WRKDIR}/omniroute"
+	vbin "${WRKDIR}/pusula"
 }
 
 post_install() {
@@ -582,14 +582,14 @@ post_install() {
 
 | Değişken                                | Varsayılan                           | Açıklama                                                                                                                                                           |
 | --------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `JWT_SECRET`                            | `omniroute-default-secret-change-me` | JWT imzalama gizli anahtarı (**üretim ortamında değiştirin**)                                                                                                      |
+| `JWT_SECRET`                            | `pusula-default-secret-change-me` | JWT imzalama gizli anahtarı (**üretim ortamında değiştirin**)                                                                                                      |
 | `INITIAL_PASSWORD`                      | `CHANGEME`                           | İlk oturum açma parolası                                                                                                                                           |
-| `DATA_DIR`                              | `~/.omniroute`                       | Veri dizini (veritabanı, kullanım verileri, günlükler)                                                                                                             |
+| `DATA_DIR`                              | `~/.pusula`                       | Veri dizini (veritabanı, kullanım verileri, günlükler)                                                                                                             |
 | `PORT`                                  | framework varsayılanı                | Hizmet portu (örneklerde `20128`)                                                                                                                                  |
 | `HOSTNAME`                              | framework varsayılanı                | Bağlanılacak ana makine (Docker varsayılan olarak `0.0.0.0` kullanır)                                                                                              |
 | `NODE_ENV`                              | çalışma zamanı varsayılanı           | Dağıtım için `production` olarak ayarlayın                                                                                                                         |
 | `NEXT_PUBLIC_BASE_URL`                  | `http://localhost:20128`             | Kontrol panelinde gösterilen ve sunucuya sağlanan genel temel URL (eski `BASE_URL` değişkeninin yerini alır)                                                       |
-| `NEXT_PUBLIC_CLOUD_URL`                 | `https://omniroute.dev`              | Bulut eşitleme uç noktasının temel URL'si (eski `CLOUD_URL` değişkeninin yerini alır)                                                                              |
+| `NEXT_PUBLIC_CLOUD_URL`                 | `https://pusula.dev`              | Bulut eşitleme uç noktasının temel URL'si (eski `CLOUD_URL` değişkeninin yerini alır)                                                                              |
 | `API_KEY_SECRET`                        | `endpoint-proxy-api-key-secret`      | Oluşturulan API anahtarları için HMAC gizli anahtarı                                                                                                               |
 | `REQUIRE_API_KEY`                       | `false`                              | `/v1/*` üzerinde Bearer API anahtarını zorunlu kılar                                                                                                               |
 | `ALLOW_API_KEY_REVEAL`                  | `false`                              | Kimliği doğrulanmış kontrol paneli kullanıcılarının, saklanan API anahtarlarının tam değerlerini isteğe bağlı görmesini sağlar                                     |
@@ -599,7 +599,7 @@ post_install() {
 | `AUTH_COOKIE_SECURE`                    | `false`                              | `Secure` kimlik doğrulama çerezini zorunlu kılar (HTTPS ters proxy arkasında)                                                                                      |
 | `CLOUDFLARED_BIN`                       | ayarlanmamış                         | Yönetilen indirme yerine mevcut bir `cloudflared` ikili dosyasını kullanır                                                                                         |
 | `CLOUDFLARED_PROTOCOL`                  | `http2`                              | Yönetilen Hızlı Tüneller için aktarım protokolü (`http2`, `quic` veya `auto`)                                                                                      |
-| `OMNIROUTE_MEMORY_MB`                   | `512`                                | MB cinsinden Node.js yığın bellek sınırı                                                                                                                           |
+| `PUSULA_MEMORY_MB`                   | `512`                                | MB cinsinden Node.js yığın bellek sınırı                                                                                                                           |
 | `PROMPT_CACHE_MAX_SIZE`                 | `50`                                 | İstem önbelleğindeki azami girdi sayısı                                                                                                                            |
 | `SEMANTIC_CACHE_MAX_SIZE`               | `100`                                | Anlamsal önbellekteki azami girdi sayısı                                                                                                                           |
 
@@ -660,7 +660,7 @@ Ortam değişkenlerinin tam listesi için [README](../README.md) dosyasına bak�
 
 **Diğer uyumlu sağlayıcılar** (seçili): `cohere`, `databricks`, `snowflake`, `together`, `vertex`, `alibaba`, `alibaba-cn`, `bedrock` (`aws-bedrock` aracılığıyla), `azure-ai`, `openrouter` (doğrudan aktarılan katalog), `siliconflow`, `hyperbolic`, `huggingface`, `featherless-ai`, `cloudflare-ai`, `scaleway`, `deepinfra`, `vercel-ai-gateway`, `bazaarlink`, `friendliai`, `nous-research`, `reka`, `volcengine`, `ai21`, `gigachat`. Her biri `providerRegistry.ts` içinde kendi model listesini tutar ve sağlayıcı bir `/models` uç noktası sunduğunda otomatik olarak eşitlenebilir.
 
-**Model kimlikleri hakkında not:** OmniRoute, sağlayıcıya özgü kimlikleri (`claude-opus-4-8`, `gpt-5.5`, `glm-5.1`, `MiniMax-M2.7`, `kimi-k2.5`, `grok-4.20-0309-reasoning`) kullanır. Bazı kimlikler noktalı sürümler içerir; çünkü üst kaynak API bunları bu biçimde bekler. Bir model yukarıda listelenmiyorsa kullanılabilirliğini doğrulamak için `omniroute models --search <term>` komutunu çalıştırın veya `GET /api/models/catalog` uç noktasına istek gönderin.
+**Model kimlikleri hakkında not:** Pusula, sağlayıcıya özgü kimlikleri (`claude-opus-4-8`, `gpt-5.5`, `glm-5.1`, `MiniMax-M2.7`, `kimi-k2.5`, `grok-4.20-0309-reasoning`) kullanır. Bazı kimlikler noktalı sürümler içerir; çünkü üst kaynak API bunları bu biçimde bekler. Bir model yukarıda listelenmiyorsa kullanılabilirliğini doğrulamak için `pusula models --search <term>` komutunu çalıştırın veya `GET /api/models/catalog` uç noktasına istek gönderin.
 
 </details>
 
@@ -689,35 +689,35 @@ Notlar:
 - OpenRouter ve OpenAI/Anthropic uyumlu sağlayıcılar yalnızca **Kullanılabilir Modeller** üzerinden yönetilir. Manuel ekleme, içe aktarma ve otomatik eşitlemenin tümü aynı kullanılabilir model listesine eklenir; bu nedenle bu sağlayıcılar için ayrı bir Özel Modeller bölümü yoktur.
 - **Özel Modeller** bölümü, yönetilen kullanılabilir model içe aktarımlarını sunmayan sağlayıcılar içindir.
 
-### OmniRoute Eşlerini Zincirleme
+### Pusula Eşlerini Zincirleme
 
-Başka bir OmniRoute ağ geçidi, **Özel OpenAI uyumlu** bir sağlayıcı olarak eklenebilir. Eşin
+Başka bir Pusula ağ geçidi, **Özel OpenAI uyumlu** bir sağlayıcı olarak eklenebilir. Eşin
 `/v1` temel URL'sini ve o eş tarafından verilmiş, yalnızca gerekli yetkilere sahip özel bir API anahtarını kullanın.
 
 Karşılıklı veya çok atlamalı zincirler için her ağ geçidinde isteğe bağlı döngü korumasını etkinleştirin:
 
 ```bash
 # gateway-a
-OMNIROUTE_INSTANCE_ID=gateway-a
-OMNIROUTE_PEER_URLS=http://gateway-b:20128/v1
-OMNIROUTE_PEER_MAX_HOPS=4
+PUSULA_INSTANCE_ID=gateway-a
+PUSULA_PEER_URLS=http://gateway-b:20128/v1
+PUSULA_PEER_MAX_HOPS=4
 ```
 
 ```bash
 # gateway-b
-OMNIROUTE_INSTANCE_ID=gateway-b
-OMNIROUTE_PEER_URLS=http://gateway-a:20128/v1
-OMNIROUTE_PEER_MAX_HOPS=4
+PUSULA_INSTANCE_ID=gateway-b
+PUSULA_PEER_URLS=http://gateway-a:20128/v1
+PUSULA_PEER_MAX_HOPS=4
 ```
 
 Yalnızca açıkça izin verilenler listesine eklenmiş bir eş URL'sine gönderilen istekler
-`X-OmniRoute-Peer-Trace` üst bilgisini alır. Bir ağ geçidi, yinelenen bir örnek kimliğini veya tükenmiş atlama
+`X-Pusula-Peer-Trace` üst bilgisini alır. Bir ağ geçidi, yinelenen bir örnek kimliğini veya tükenmiş atlama
 bütçesini HTTP `508 Loop Detected` ile reddeder; sıradan yukarı akış sağlayıcıları hiçbir eş meta verisi almaz.
 
 Eş zincirleme, veritabanı çoğaltma veya ana makine yük devretme değildir. Her ağ geçidi bağımsız
 SQLite durumu, önbellekler, hız sayaçları ve oturumlar tutar. Etkin/pasif veya etkin/etkin kullanılabilirlik için
 sağlık denetimli bir ters proxy ya da istemci yük devretmesi kullanın ve tek bir SQLite veritabanını asla
-çalışan birden fazla OmniRoute örneğine bağlamayın.
+çalışan birden fazla Pusula örneğine bağlamayın.
 
 ### Özel Sağlayıcı Rotaları
 
@@ -768,7 +768,7 @@ Sağlayıcıya göre gruplandırılmış modelleri türleriyle (`chat`, `embeddi
 - Docker ve diğer kendi sunucunuzda barındırılan dağıtımlar için **Kontrol Paneli → Uç Noktalar** bölümünde kullanılabilir
 - Geçerli OpenAI uyumlu `/v1` uç noktanıza yönlendiren geçici bir `https://*.trycloudflare.com` URL'si oluşturur
 - İlk etkinleştirmede `cloudflared` yalnızca gerektiğinde yüklenir; sonraki yeniden başlatmalarda aynı yönetilen ikili dosya yeniden kullanılır
-- Hızlı Tüneller, OmniRoute veya kapsayıcı yeniden başlatıldıktan sonra otomatik olarak geri yüklenmez; gerektiğinde kontrol panelinden yeniden etkinleştirin
+- Hızlı Tüneller, Pusula veya kapsayıcı yeniden başlatıldıktan sonra otomatik olarak geri yüklenmez; gerektiğinde kontrol panelinden yeniden etkinleştirin
 - Tünel URL'leri geçicidir ve tüneli her durdurup başlattığınızda değişir
 - Yönetilen Hızlı Tüneller, kısıtlı kapsayıcılarda gürültülü QUIC UDP arabellek uyarılarını önlemek için varsayılan olarak HTTP/2 aktarımını kullanır
 - Yönetilen aktarım seçimini geçersiz kılmak istiyorsanız `CLOUDFLARED_PROTOCOL=quic` veya `auto` olarak ayarlayın
@@ -777,15 +777,15 @@ Sağlayıcıya göre gruplandırılmış modelleri türleriyle (`chat`, `embeddi
 
 ### LLM Ağ Geçidi Zekâsı (Aşama 9)
 
-- **Anlamsal Önbellek** — Akışsız ve temperature=0 olan yanıtları otomatik olarak önbelleğe alır (`X-OmniRoute-No-Cache: true` ile atlayın)
+- **Anlamsal Önbellek** — Akışsız ve temperature=0 olan yanıtları otomatik olarak önbelleğe alır (`X-Pusula-No-Cache: true` ile atlayın)
 - **İstek Yinelenmesini Önleme** — `Idempotency-Key` veya `X-Request-Id` üst bilgisi aracılığıyla 5 saniye içindeki istekleri tekilleştirir
-- **İlerleme Takibi** — `X-OmniRoute-Progress: true` üst bilgisi aracılığıyla isteğe bağlı SSE `event: progress` olayları sağlar
+- **İlerleme Takibi** — `X-Pusula-Progress: true` üst bilgisi aracılığıyla isteğe bağlı SSE `event: progress` olayları sağlar
 
 ---
 
 ### Çevirici Deneme Alanı
 
-**Kontrol Paneli → Çevirici** üzerinden erişin. OmniRoute'un sağlayıcılar arasındaki API isteklerini nasıl çevirdiğini hata ayıklayın ve görselleştirin.
+**Kontrol Paneli → Çevirici** üzerinden erişin. Pusula'un sağlayıcılar arasındaki API isteklerini nasıl çevirdiğini hata ayıklayın ve görselleştirin.
 
 | Mod              | Amaç                                                                                             |
 | ---------------- | ------------------------------------------------------------------------------------------------ |
@@ -838,7 +838,7 @@ Harici oturum yakınlığı için (örneğin, ters proxy'lerin arkasındaki Clau
 X-Session-Id: oturum-anahtarınız
 ```
 
-OmniRoute ayrıca `x_session_id` değerini kabul eder ve etkin oturum anahtarını `X-OmniRoute-Session-Id` içinde döndürür.
+Pusula ayrıca `x_session_id` değerini kabul eder ve etkin oturum anahtarını `X-Pusula-Session-Id` içinde döndürür.
 
 Nginx kullanıyor ve alt çizgi biçimli başlıklar gönderiyorsanız şunu etkinleştirin:
 
@@ -874,7 +874,7 @@ Zincir: production-fallback
 
 **Dashboard → Ayarlar → Dayanıklılık** üzerinden yapılandırın.
 
-OmniRoute, beş bileşenle sağlayıcı düzeyinde dayanıklılık uygular:
+Pusula, beş bileşenle sağlayıcı düzeyinde dayanıklılık uygular:
 
 1. **İstek Kuyruğu ve Hız Denetimi** — Sistem düzeyinde istek biçimlendirme:
    - **Dakika Başına İstek (RPM)** — Hesap başına dakikadaki maksimum istek sayısı
@@ -899,7 +899,7 @@ OmniRoute, beş bileşenle sağlayıcı düzeyinde dayanıklılık uygular:
 
    Sağlayıcı devre kesicisinin çalışma zamanı durumu yalnızca **Dashboard → Sağlık** bölümünde gösterilir.
 
-4. **Bekleme Süresini Bekle** — Tüm aday bağlantılar zaten bekleme süresindeyse OmniRoute, en erken sona erecek bekleme süresini bekleyebilir ve aynı istemci isteğini otomatik olarak yeniden deneyebilir.
+4. **Bekleme Süresini Bekle** — Tüm aday bağlantılar zaten bekleme süresindeyse Pusula, en erken sona erecek bekleme süresini bekleyebilir ve aynı istemci isteğini otomatik olarak yeniden deneyebilir.
 
 5. **Hız Sınırını Otomatik Algılama** — Üst kaynak sağlayıcılar açık bekleme pencereleri döndürdüğünde ve ayar etkinleştirildiğinde bu ipuçları yerel bağlantı bekleme süresini geçersiz kılar.
 
@@ -933,7 +933,7 @@ curl -X POST http://localhost:20128/api/db-backups/import \
 
 **Kullanım Alanları:**
 
-- OmniRoute'u makineler arasında taşıma
+- Pusula'u makineler arasında taşıma
 - Olağanüstü durum kurtarma için harici yedekler oluşturma
 - Yapılandırmaları ekip üyeleri arasında paylaşma (tümünü dışa aktar → arşivi paylaş)
 
@@ -985,7 +985,7 @@ curl http://localhost:20128/api/usage/budget
 
 ### Ses Transkripsiyonu
 
-OmniRoute, OpenAI uyumlu uç nokta üzerinden ses transkripsiyonunu destekler:
+Pusula, OpenAI uyumlu uç nokta üzerinden ses transkripsiyonunu destekler:
 
 ```bash
 POST /v1/audio/transcriptions
@@ -1060,7 +1060,7 @@ gecikmesi karşılığında yönlendirme/istek doğruluğundan ödün vermesine 
 Üst sağlayıcılar katı
 `max_tokens` / `maxOutputTokens` sınırları gerektirdiğinde **Reasoning token buffer** seçeneğini devre dışı bırakın. Etkinleştirildiğinde kombinasyon yönlendirmesi, yalnızca bilinen bir çıktı sınırı olan modeller için muhakeme modeli
 ek kapasitesi ekler ve güvenli tamponlu değer bu sınırı aşacaksa istemci belirteç sınırını değiştirmez. İstemci sınırı zaten bilinen bir sınırın üzerindeyse
-OmniRoute, isteği üst sağlayıcıya göndermeden önce bu değeri söz konusu sınıra düşürür.
+Pusula, isteği üst sağlayıcıya göndermeden önce bu değeri söz konusu sınıra düşürür.
 
 ---
 
@@ -1083,7 +1083,7 @@ OmniRoute, isteği üst sağlayıcıya göndermeden önce bu değeri söz konusu
 
 ## 🤖 Otomatik Yönlendirme (Sıfır yapılandırma)
 
-OmniRoute, bağlı tüm sağlayıcılar arasından her istek için en iyi modeli seçen **puan odaklı bir otomatik yönlendiriciyle** birlikte gelir — yönetilmesi gereken bir kombinasyon yoktur. İsteği `auto/*` öneklerinden biriyle göndermeniz yeterlidir; OmniRoute gecikme süresi, maliyet, başarı oranı, bağlam uyumu, modelin göreve uygunluğu, son hatalar, kota ve devre kesici durumuna göre adayları puanlayarak anında sanal bir kombinasyon oluşturur.
+Pusula, bağlı tüm sağlayıcılar arasından her istek için en iyi modeli seçen **puan odaklı bir otomatik yönlendiriciyle** birlikte gelir — yönetilmesi gereken bir kombinasyon yoktur. İsteği `auto/*` öneklerinden biriyle göndermeniz yeterlidir; Pusula gecikme süresi, maliyet, başarı oranı, bağlam uyumu, modelin göreve uygunluğu, son hatalar, kota ve devre kesici durumuna göre adayları puanlayarak anında sanal bir kombinasyon oluşturur.
 
 | Önek           | Optimizasyon hedefi                                                                                    |
 | -------------- | ------------------------------------------------------------------------------------------------------ |
@@ -1099,7 +1099,7 @@ OmniRoute, bağlı tüm sağlayıcılar arasından her istek için en iyi modeli
 
 ```bash
 curl -X POST http://localhost:20128/v1/chat/completions \
-  -H "Authorization: Bearer $OMNIROUTE_KEY" \
+  -H "Authorization: Bearer $PUSULA_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "auto/coding",
@@ -1114,13 +1114,13 @@ Otomatik yönlendirici; puanlama ağırlıklarının nasıl ayarlanacağı, sağ
 
 ## 🔌 MCP ve A2A Entegrasyonu
 
-OmniRoute hem bir **MCP sunucusudur** (Model Context Protocol) hem de bir **A2A sunucusudur** (Agent-to-Agent JSON-RPC 2.0). MCP uyumlu herhangi bir IDE veya aracı ana makinesi, OmniRoute araçlarını doğrudan çağırabilir — ek bir sarmalayıcı gerekmez.
+Pusula hem bir **MCP sunucusudur** (Model Context Protocol) hem de bir **A2A sunucusudur** (Agent-to-Agent JSON-RPC 2.0). MCP uyumlu herhangi bir IDE veya aracı ana makinesi, Pusula araçlarını doğrudan çağırabilir — ek bir sarmalayıcı gerekmez.
 
 ### MCP aktarımları
 
 - **SSE**: `http://localhost:20128/api/mcp/sse`
 - **Akışlı HTTP**: `http://localhost:20128/api/mcp/stream`
-- **stdio**: `omniroute --mcp` (stdio tercih eden IDE eklentileri için)
+- **stdio**: `pusula --mcp` (stdio tercih eden IDE eklentileri için)
 
 ### Claude Desktop'ı bağlama
 
@@ -1129,8 +1129,8 @@ macOS'ta `~/Library/Application Support/Claude/claude_desktop_config.json` dosya
 ```json
 {
   "mcpServers": {
-    "omniroute": {
-      "command": "omniroute",
+    "pusula": {
+      "command": "pusula",
       "args": ["--mcp"]
     }
   }
@@ -1149,7 +1149,7 @@ MCP şu anda 32 adlandırılmış kapsam tanımlar. Her Bearer anahtarı belirli
 
 ## 🧠 Beceri Sistemi
 
-OmniRoute, ajanların ve A2A uç noktasının alana özgü rutinleri (ör. `code-review`, `summarize`, `extract-facts`, `web-research`) çalıştırabilmesi için genişletilebilir bir **beceri çerçevesi** (`src/lib/skills/`) sunar.
+Pusula, ajanların ve A2A uç noktasının alana özgü rutinleri (ör. `code-review`, `summarize`, `extract-facts`, `web-research`) çalıştırabilmesi için genişletilebilir bir **beceri çerçevesi** (`src/lib/skills/`) sunar.
 
 - **Pazar Yeri Arayüzü** — **Panel → Beceriler** bölümünden becerilere göz atın ve bunları yükleyin
 - **Anahtar başına kapsamlar** — Hangi API anahtarlarının hangi becerileri çağırabileceğini kısıtlayın
@@ -1161,7 +1161,7 @@ Tam referans: [SKILLS.md](../frameworks/SKILLS.md).
 
 ## 💾 Bellek Sistemi
 
-OmniRoute, hibrit erişimle **uzun süreli konuşma belleğini** kalıcı olarak saklar:
+Pusula, hibrit erişimle **uzun süreli konuşma belleğini** kalıcı olarak saklar:
 
 - Geçmiş konuşma sıralarında anahtar kelime araması için **SQLite FTS5**
 - Anlamsal hatırlama için **Qdrant vektör deposu** (isteğe bağlı)
@@ -1174,11 +1174,11 @@ Bellekleri **Panel → Bellek** bölümünden yönetin (arama, düzenleme, dış
 
 ## 🔔 Webhook'lar
 
-Gerçek zamanlı izleme ve otomasyon için OmniRoute olaylarına abone olun.
+Gerçek zamanlı izleme ve otomasyon için Pusula olaylarına abone olun.
 
 - Hedef URL ve HMAC imzalama gizli anahtarıyla **Panel → Webhook'lar** bölümünde bir webhook oluşturun
 - Kullanılabilir olaylar: `request.completed`, `request.failed`, `provider.unavailable`, `budget.exceeded`, `combo.switched`, `circuit_breaker.opened`, `circuit_breaker.closed`
-- Her yük, doğrulama için `X-OmniRoute-Signature` (HMAC-SHA256) içerir
+- Her yük, doğrulama için `X-Pusula-Signature` (HMAC-SHA256) içerir
 - Yeniden denemeler: üstel geri çekilme ile 3 deneme, ardından teslim edilemeyen iletiler kuyruğu
 
 Şemanın tamamı için bkz. [WEBHOOKS.md](../frameworks/WEBHOOKS.md).
@@ -1187,11 +1187,11 @@ Gerçek zamanlı izleme ve otomasyon için OmniRoute olaylarına abone olun.
 
 ## ☁️ Bulut Ajanları
 
-OmniRoute, uzun süreli görevleri yerel yönlendirmenizi yönettiğiniz aynı panelden gönderebilmeniz için bulut kodlama ajanlarıyla (**OpenAI Codex Cloud**, **Devin**, **Jules**, **Antigravity**) entegre olur.
+Pusula, uzun süreli görevleri yerel yönlendirmenizi yönettiğiniz aynı panelden gönderebilmeniz için bulut kodlama ajanlarıyla (**OpenAI Codex Cloud**, **Devin**, **Jules**, **Antigravity**) entegre olur.
 
 - **Panel → Bulut Ajanları** bölümünden veya `POST /api/v1/agents/tasks` aracılığıyla görevler oluşturun
 - Her görev için durumu, günlükleri ve çıktıları takip edin
-- Her sağlayıcı için kendi API anahtarınızı kullanın — kimlik bilgileri OmniRoute örneğinden asla ayrılmaz
+- Her sağlayıcı için kendi API anahtarınızı kullanın — kimlik bilgileri Pusula örneğinden asla ayrılmaz
 
 Tam referans: [CLOUD_AGENT.md](../frameworks/CLOUD_AGENT.md).
 
@@ -1199,30 +1199,30 @@ Tam referans: [CLOUD_AGENT.md](../frameworks/CLOUD_AGENT.md).
 
 ## 🛠️ Programatik Yönetim
 
-Her OmniRoute kaynağını (sağlayıcılar, kombinasyonlar, anahtarlar, ayarlar) **`manage` kapsamına sahip bir Bearer anahtarı** kullanarak HTTP üzerinden yönetebilirsiniz.
+Her Pusula kaynağını (sağlayıcılar, kombinasyonlar, anahtarlar, ayarlar) **`manage` kapsamına sahip bir Bearer anahtarı** kullanarak HTTP üzerinden yönetebilirsiniz.
 
 Anahtarı **Panel → API Anahtarları → Yeni Anahtar → Kapsam: manage** bölümünden oluşturun, ardından:
 
 ```bash
 # Sağlayıcıları listele
 curl http://localhost:20128/api/providers \
-  -H "Authorization: Bearer $OMNIROUTE_MANAGE_KEY"
+  -H "Authorization: Bearer $PUSULA_MANAGE_KEY"
 
 # Sağlayıcı bağlantısı ekle
 curl -X POST http://localhost:20128/api/providers \
-  -H "Authorization: Bearer $OMNIROUTE_MANAGE_KEY" \
+  -H "Authorization: Bearer $PUSULA_MANAGE_KEY" \
   -H "Content-Type: application/json" \
   -d '{ "provider": "openai", "apiKey": "sk-...", "name": "main" }'
 
 # Kombinasyon oluştur
 curl -X POST http://localhost:20128/api/combos \
-  -H "Authorization: Bearer $OMNIROUTE_MANAGE_KEY" \
+  -H "Authorization: Bearer $PUSULA_MANAGE_KEY" \
   -H "Content-Type: application/json" \
   -d '{ "name": "premium", "strategy": "priority", "models": [{ "model": "cc/claude-opus-4-7" }, { "model": "glm/glm-5.1" }] }'
 
 # API anahtarlarını listele/oluştur
-curl http://localhost:20128/api/keys -H "Authorization: Bearer $OMNIROUTE_MANAGE_KEY"
-curl -X POST http://localhost:20128/api/keys -H "Authorization: Bearer $OMNIROUTE_MANAGE_KEY" \
+curl http://localhost:20128/api/keys -H "Authorization: Bearer $PUSULA_MANAGE_KEY"
+curl -X POST http://localhost:20128/api/keys -H "Authorization: Bearer $PUSULA_MANAGE_KEY" \
   -d '{ "name": "ci-bot", "scopes": ["chat"] }'
 ```
 
@@ -1232,38 +1232,38 @@ Uç noktaların tam kataloğu ve istek/yanıt şemaları için [API_REFERENCE.md
 
 ## 💻 Dahili CLI
 
-OmniRoute; kurulum, tanılama ve çalışma zamanı denetimi için dahili bir CLI (`omniroute …`) ile birlikte gelir. Bu, üçüncü taraf CLI'ları (Claude Code, Cursor, Codex, Cline, …) OmniRoute ile iletişim kurabilecek şekilde yapılandıran panodaki **"CLI Araçları" sayfasından ayrıdır**.
+Pusula; kurulum, tanılama ve çalışma zamanı denetimi için dahili bir CLI (`pusula …`) ile birlikte gelir. Bu, üçüncü taraf CLI'ları (Claude Code, Cursor, Codex, Cline, …) Pusula ile iletişim kurabilecek şekilde yapılandıran panodaki **"CLI Araçları" sayfasından ayrıdır**.
 
 ```bash
-omniroute setup                    # Etkileşimli sihirbaz (parola, sağlayıcılar, kombinasyonlar)
-omniroute setup --non-interactive  # CI kullanımına uygun
-omniroute doctor                   # Sistem durumu tanılaması (veri dizini, DB, sağlayıcılar, portlar)
-omniroute providers available      # Desteklenen sağlayıcıları listele
-omniroute providers list           # Yapılandırılmış bağlantıları listele
-omniroute providers test <id>      # Bir sağlayıcı bağlantısını canlı olarak test et
-omniroute combos list              # Kombinasyonları listele
-omniroute combos switch <name>     # Varsayılan kombinasyonu ayarla
-omniroute models                   # Kullanılabilir modelleri listele (--json, --search)
-omniroute keys add | list | remove # API anahtarlarını terminalden yönet
-omniroute backup                   # Yapılandırmanın ve DB'nin anlık görüntüsünü al
-omniroute restore [<timestamp>]    # Bir anlık görüntüden geri yükle
-omniroute health                   # Ayrıntılı sistem durumu (devre kesiciler, önbellek, bellek)
-omniroute quota                    # Sağlayıcı kota kullanımı
-omniroute mcp status               # MCP sunucusu durumu
-omniroute a2a status               # A2A sunucusu durumu
-omniroute tunnel list|create|stop  # Cloudflare/Tailscale/ngrok tünelleri
-omniroute reset-password           # Yönetici parolasını sıfırla
-omniroute --mcp                    # MCP sunucusunu stdio üzerinden başlat
-omniroute --port 3000              # Sunucuyu özel bir portta başlat
+pusula setup                    # Etkileşimli sihirbaz (parola, sağlayıcılar, kombinasyonlar)
+pusula setup --non-interactive  # CI kullanımına uygun
+pusula doctor                   # Sistem durumu tanılaması (veri dizini, DB, sağlayıcılar, portlar)
+pusula providers available      # Desteklenen sağlayıcıları listele
+pusula providers list           # Yapılandırılmış bağlantıları listele
+pusula providers test <id>      # Bir sağlayıcı bağlantısını canlı olarak test et
+pusula combos list              # Kombinasyonları listele
+pusula combos switch <name>     # Varsayılan kombinasyonu ayarla
+pusula models                   # Kullanılabilir modelleri listele (--json, --search)
+pusula keys add | list | remove # API anahtarlarını terminalden yönet
+pusula backup                   # Yapılandırmanın ve DB'nin anlık görüntüsünü al
+pusula restore [<timestamp>]    # Bir anlık görüntüden geri yükle
+pusula health                   # Ayrıntılı sistem durumu (devre kesiciler, önbellek, bellek)
+pusula quota                    # Sağlayıcı kota kullanımı
+pusula mcp status               # MCP sunucusu durumu
+pusula a2a status               # A2A sunucusu durumu
+pusula tunnel list|create|stop  # Cloudflare/Tailscale/ngrok tünelleri
+pusula reset-password           # Yönetici parolasını sıfırla
+pusula --mcp                    # MCP sunucusunu stdio üzerinden başlat
+pusula --port 3000              # Sunucuyu özel bir portta başlat
 ```
 
-İpucu: Sağlıksız sağlayıcı bağlantıları için uyarı almak üzere `omniroute doctor --json` komutunu izleme aracınızla birlikte kullanın.
+İpucu: Sağlıksız sağlayıcı bağlantıları için uyarı almak üzere `pusula doctor --json` komutunu izleme aracınızla birlikte kullanın.
 
 ---
 
 ## 🖥️ Masaüstü Uygulaması (Electron)
 
-OmniRoute; Windows, macOS ve Linux için yerel bir masaüstü uygulaması olarak sunulur.
+Pusula; Windows, macOS ve Linux için yerel bir masaüstü uygulaması olarak sunulur.
 
 ### Kurulum
 
@@ -1306,7 +1306,7 @@ npm run build:linux    # Linux (.AppImage)
 
 | Değişken              | Varsayılan | Açıklama                           |
 | --------------------- | ---------- | ---------------------------------- |
-| `OMNIROUTE_PORT`      | `20128`    | Sunucu portu                       |
-| `OMNIROUTE_MEMORY_MB` | `512`      | Node.js yığın sınırı (64–16384 MB) |
+| `PUSULA_PORT`      | `20128`    | Sunucu portu                       |
+| `PUSULA_MEMORY_MB` | `512`      | Node.js yığın sınırı (64–16384 MB) |
 
 📖 Tam dokümantasyon: [`electron/README.md`](../../electron/README.md)

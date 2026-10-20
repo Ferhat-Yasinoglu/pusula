@@ -4,16 +4,16 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-chat-admission-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-chat-admission-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../src/lib/db/core.ts");
 const settings = await import("../../src/lib/db/chatAdmissionSettings.ts");
 
 const ENV_NAMES = [
-  "OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT",
-  "OMNIROUTE_CHAT_ADMISSION_HEAP_SHED_RATIO",
-  "OMNIROUTE_CHAT_ADMISSION_HEALTHY_HEADROOM",
+  "PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT",
+  "PUSULA_CHAT_ADMISSION_HEAP_SHED_RATIO",
+  "PUSULA_CHAT_ADMISSION_HEALTHY_HEADROOM",
 ] as const;
 
 const DEFAULTS = settings.DEFAULT_CHAT_ADMISSION_SETTINGS;
@@ -24,13 +24,13 @@ function clearEnvOverrides() {
 }
 
 function cleanupGlobalDb() {
-  const holder = globalThis as { __omnirouteDb?: { open?: boolean; close?: () => void } };
+  const holder = globalThis as { __pusulaDb?: { open?: boolean; close?: () => void } };
   try {
-    if (holder.__omnirouteDb?.open) holder.__omnirouteDb.close?.();
+    if (holder.__pusulaDb?.open) holder.__pusulaDb.close?.();
   } catch {
     // ignore — the instance is being discarded either way.
   }
-  delete holder.__omnirouteDb;
+  delete holder.__pusulaDb;
 }
 
 // `SQLITE_FILE` in src/lib/db/core.ts is a module-level constant derived from DATA_DIR at
@@ -144,9 +144,9 @@ test("resetChatAdmissionSettings drops the stored row and returns effective defa
 });
 
 test("env parsing accepts valid values per field", () => {
-  process.env.OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT = "6";
-  process.env.OMNIROUTE_CHAT_ADMISSION_HEAP_SHED_RATIO = "0.5";
-  process.env.OMNIROUTE_CHAT_ADMISSION_HEALTHY_HEADROOM = "0";
+  process.env.PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT = "6";
+  process.env.PUSULA_CHAT_ADMISSION_HEAP_SHED_RATIO = "0.5";
+  process.env.PUSULA_CHAT_ADMISSION_HEALTHY_HEADROOM = "0";
 
   assert.deepEqual(settings.readChatAdmissionSettingsFromEnv(), {
     chatMaxHeavyInFlight: 6,
@@ -157,10 +157,10 @@ test("env parsing accepts valid values per field", () => {
 
 test("env parsing rejects malformed values per field without discarding valid siblings", () => {
   // chatMaxHeavyInFlight requires a safe integer >= 1: "Infinity" is invalid.
-  process.env.OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT = "Infinity";
+  process.env.PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT = "Infinity";
   // The ratio keeps the runtime constant's strict rule: "1.2" is outside (0, 1].
-  process.env.OMNIROUTE_CHAT_ADMISSION_HEAP_SHED_RATIO = "1.2";
-  process.env.OMNIROUTE_CHAT_ADMISSION_HEALTHY_HEADROOM = "5";
+  process.env.PUSULA_CHAT_ADMISSION_HEAP_SHED_RATIO = "1.2";
+  process.env.PUSULA_CHAT_ADMISSION_HEALTHY_HEADROOM = "5";
 
   assert.deepEqual(settings.readChatAdmissionSettingsFromEnv(), {
     chatMaxHeavyInFlight: DEFAULTS.chatMaxHeavyInFlight,
@@ -170,9 +170,9 @@ test("env parsing rejects malformed values per field without discarding valid si
 });
 
 test("env parsing treats blank values as unset", () => {
-  process.env.OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT = "   ";
-  process.env.OMNIROUTE_CHAT_ADMISSION_HEAP_SHED_RATIO = "";
-  process.env.OMNIROUTE_CHAT_ADMISSION_HEALTHY_HEADROOM = "   ";
+  process.env.PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT = "   ";
+  process.env.PUSULA_CHAT_ADMISSION_HEAP_SHED_RATIO = "";
+  process.env.PUSULA_CHAT_ADMISSION_HEALTHY_HEADROOM = "   ";
 
   assert.deepEqual(settings.readChatAdmissionSettingsFromEnv(), DEFAULTS);
   assert.deepEqual(settings.getChatAdmissionSettingsSource(), {
@@ -183,10 +183,10 @@ test("env parsing treats blank values as unset", () => {
 });
 
 test("env ratio boundary: 1 is accepted, 0 is rejected", () => {
-  process.env.OMNIROUTE_CHAT_ADMISSION_HEAP_SHED_RATIO = "1";
+  process.env.PUSULA_CHAT_ADMISSION_HEAP_SHED_RATIO = "1";
   assert.equal(settings.readChatAdmissionSettingsFromEnv().chatAdmissionHeapShedRatio, 1);
 
-  process.env.OMNIROUTE_CHAT_ADMISSION_HEAP_SHED_RATIO = "0";
+  process.env.PUSULA_CHAT_ADMISSION_HEAP_SHED_RATIO = "0";
   assert.equal(
     settings.readChatAdmissionSettingsFromEnv().chatAdmissionHeapShedRatio,
     DEFAULTS.chatAdmissionHeapShedRatio
@@ -195,7 +195,7 @@ test("env ratio boundary: 1 is accepted, 0 is rejected", () => {
 
 test("env parsing mirrors the runtime parser for the integer tunables", () => {
   // chatBodyAdmission.ts resolves these with parseInt, so "2.5" reads as 2 there too.
-  process.env.OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT = "2.5";
+  process.env.PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT = "2.5";
   assert.equal(settings.readChatAdmissionSettingsFromEnv().chatMaxHeavyInFlight, 2);
 });
 
@@ -206,7 +206,7 @@ test("a single env override does not collapse the other keys to their defaults",
     chatAdmissionHealthyHeadroom: 4,
   });
 
-  process.env.OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT = "9";
+  process.env.PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT = "9";
 
   assert.deepEqual(settings.getEffectiveChatAdmissionSettings(), {
     chatMaxHeavyInFlight: 9,
@@ -221,7 +221,7 @@ test("a single env override does not collapse the other keys to their defaults",
 });
 
 test("updateChatAdmissionSettings reports the effective value when an env override is set", async () => {
-  process.env.OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT = "11";
+  process.env.PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT = "11";
 
   const returned = await settings.updateChatAdmissionSettings({
     chatMaxHeavyInFlight: 2,

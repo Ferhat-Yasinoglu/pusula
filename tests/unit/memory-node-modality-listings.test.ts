@@ -11,7 +11,7 @@ import path from "node:path";
 import test from "node:test";
 import { NextRequest } from "next/server";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-node-modality-listings-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-node-modality-listings-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const { buildProviderNodeModalityListings } =

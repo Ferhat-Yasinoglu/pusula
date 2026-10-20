@@ -3,7 +3,7 @@
  *
  * DeepSeek's thinking mode requires the reasoning of EVERY prior assistant turn to be
  * passed back whenever the request carries `tools` — including turns that made no tool
- * call. OmniRoute's replay cache re-injects that reasoning for clients that drop it.
+ * call. Pusula's replay cache re-injects that reasoning for clients that drop it.
  *
  * Two gaps existed once the model moved from Chat Completions to `/responses`:
  *
@@ -29,7 +29,7 @@ import { mkdtempSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 
-process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "omniroute-reasoning-history-"));
+process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "pusula-reasoning-history-"));
 process.env.API_KEY_SECRET = process.env.API_KEY_SECRET || "reasoning-history-test-secret";
 
 import {

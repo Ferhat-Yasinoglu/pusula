@@ -104,7 +104,7 @@ test("translator parses a complete DSML block into a tool_use block", () => {
   // 2026-08-18 complete case: <｜DSML｜:Read><path>...</path></｜DSML｜:Read>
   // should become a tool_use block, not visible text.
   const state = createState();
-  const block = `<${FW}DSML${FW}:Read>\n<path>images/omniroute.png</path>\n</${FW}DSML${FW}:Read>`;
+  const block = `<${FW}DSML${FW}:Read>\n<path>images/pusula.png</path>\n</${FW}DSML${FW}:Read>`;
   const first = openaiToClaudeResponse(
     {
       id: "chatcmpl-dsml-complete",

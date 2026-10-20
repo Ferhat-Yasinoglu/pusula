@@ -4,12 +4,12 @@
 
 ---
 
-OmniRoute ermittelt seinen SQLite-Treiber beim Start über eine 5-stufige Fallback-Kette:
+Pusula ermittelt seinen SQLite-Treiber beim Start über eine 5-stufige Fallback-Kette:
 
 1. **Mitgeliefertes `better-sqlite3`** (über `dependencies` in `package.json`)
    — am schnellsten, native Binärdatei, wird durch `npm install` installiert, wenn Build-Werkzeuge vorhanden sind.
 
-2. **Zur Laufzeit installiertes `better-sqlite3`** (in `~/.omniroute/runtime/`)
+2. **Zur Laufzeit installiertes `better-sqlite3`** (in `~/.pusula/runtime/`)
    — wird beim ersten Start **ODER** durch `scripts/build/postinstall.mjs → scripts/postinstall.mjs` verzögert installiert.
    Validiert vor dem Laden die Magic Bytes der nativen `.node`-Datei (ELF / Mach-O / PE),
    um vor beschädigten oder für die falsche Plattform bestimmten Binärdateien zu schützen.
@@ -22,19 +22,19 @@ OmniRoute ermittelt seinen SQLite-Treiber beim Start über eine 5-stufige Fallba
 
 ## Warum diese Komplexität?
 
-- **Windows EBUSY**: `npm install -g omniroute@latest` kann fehlschlagen, wenn die
+- **Windows EBUSY**: `npm install -g pusula@latest` kann fehlschlagen, wenn die
   `better_sqlite3.node`-Datei der vorherigen Version durch einen laufenden Prozess gesperrt ist. Die Laufzeitinstallation
-  in `~/.omniroute/runtime/` umgeht den globalen npm-Cache.
+  in `~/.pusula/runtime/` umgeht den globalen npm-Cache.
 - **Keine Build-Werkzeuge**: Einige Umgebungen (Unternehmens-Windows ohne VS Build
   Tools, minimale Docker-Images) können `better-sqlite3` nicht kompilieren. Das Laufzeit-Installationsprogramm
   bezieht eine vorkompilierte Binärdatei aus der npm-Registry; die Fallback-
-  Treiber stellen sicher, dass OmniRoute selbst dann noch startet, wenn dies fehlschlägt.
+  Treiber stellen sicher, dass Pusula selbst dann noch startet, wenn dies fehlschlägt.
 - **Vom Netz getrennte Systeme**: Wenn die npm-Registry nicht erreichbar ist, gewährleisten `node:sqlite`
   oder `sql.js` eine grundlegende Funktionalität.
 
 ## Magic-Byte-Validierung
 
-Vor dem Laden einer zur Laufzeit installierten `.node`-Datei liest OmniRoute die ersten 8
+Vor dem Laden einer zur Laufzeit installierten `.node`-Datei liest Pusula die ersten 8
 Bytes und gleicht sie mit bekannten plattformspezifischen Magic Bytes ab:
 
 | Plattform              | Bytes (hex)   | Bezeichnung |
@@ -61,14 +61,14 @@ const info = getDriverInfo();
 
 ```bash
 # Postinstall-Aufwärmphase überspringen (für schnelle CI-Installationen)
-OMNIROUTE_SKIP_POSTINSTALL=1 npm install -g omniroute
+PUSULA_SKIP_POSTINSTALL=1 npm install -g pusula
 
 # better-sqlite3 für die Laufzeit zwangsweise neu installieren
-rm -rf ~/.omniroute/runtime
-omniroute  # wird beim nächsten Start neu installiert
+rm -rf ~/.pusula/runtime
+pusula  # wird beim nächsten Start neu installiert
 
 # Prüfen, welcher Treiber aktiv ist
-omniroute config db-info  # (falls der CLI-Befehl vorhanden ist)
+pusula config db-info  # (falls der CLI-Befehl vorhanden ist)
 ```
 
 ## Referenz
@@ -84,9 +84,9 @@ Implementierung:
 ## Single-Writer-Topologie (HA nicht unterstützt)
 
 Die oben beschriebene Treiber-Fallback-Kette läuft weiterhin in **einem Prozess**. Mit dem standardmäßigen SQLite
-ist OmniRoute ein **Single Writer**:
+ist Pusula ein **Single Writer**:
 
-- Verbinden Sie nicht zwei OmniRoute-Replikate mit derselben `storage.sqlite`-Datei.
+- Verbinden Sie nicht zwei Pusula-Replikate mit derselben `storage.sqlite`-Datei.
 - Ein Container-Neustart, ein Recreate-Deployment, ein OOM-Kill oder ein HEALTHCHECK-Neustart beendet
   jede laufende SSE-Sitzung. Im Standardpfad gibt es kein geordnetes Beenden von Sitzungen.
 - Eine Orchestrator-Liveness-Prüfung, die ein langsames `/healthz` als Ausfall wertet, beendet das einzige

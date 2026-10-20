@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-issue-14060-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-issue-14060-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 const ORIGINAL_INITIAL_PASSWORD = process.env.INITIAL_PASSWORD;
 delete process.env.INITIAL_PASSWORD;

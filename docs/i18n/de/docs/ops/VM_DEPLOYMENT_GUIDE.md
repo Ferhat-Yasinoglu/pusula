@@ -1,4 +1,4 @@
-# OmniRoute — Deployment Guide on VM with Cloudflare (Deutsch)
+# Pusula — Deployment Guide on VM with Cloudflare (Deutsch)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../ops/VM_DEPLOYMENT_GUIDE.md) · 🇪🇹 [am](../../../am/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇸🇦 [ar](../../../ar/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇦🇿 [az](../../../az/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇧🇬 [bg](../../../bg/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇧🇩 [bn](../../../bn/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇧🇦 [bs](../../../bs/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇨🇿 [cs](../../../cs/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇩🇰 [da](../../../da/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇬🇷 [el](../../../el/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇪🇸 [es](../../../es/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇪🇪 [et](../../../et/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇷 [fa](../../../fa/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇫🇮 [fi](../../../fi/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇫🇷 [fr](../../../fr/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇪 [ga](../../../ga/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇳 [gu](../../../gu/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇳🇬 [ha](../../../ha/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇱 [he](../../../he/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇳 [hi](../../../hi/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇭🇷 [hr](../../../hr/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇭🇺 [hu](../../../hu/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇦🇲 [hy](../../../hy/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇩 [id](../../../id/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇳🇬 [ig](../../../ig/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇹 [it](../../../it/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇯🇵 [ja](../../../ja/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇬🇪 [ka](../../../ka/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇰🇭 [km](../../../km/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇳 [kn](../../../kn/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇰🇷 [ko](../../../ko/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇱🇹 [lt](../../../lt/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇱🇻 [lv](../../../lv/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇳 [ml](../../../ml/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇳 [mr](../../../mr/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇲🇾 [ms](../../../ms/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇲🇹 [mt](../../../mt/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇲🇲 [my](../../../my/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇳🇵 [ne](../../../ne/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇳🇱 [nl](../../../nl/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇳🇴 [no](../../../no/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇳 [or](../../../or/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇳 [pa](../../../pa/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇵🇭 [phi](../../../phi/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇵🇱 [pl](../../../pl/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇵🇹 [pt](../../../pt/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇷🇴 [ro](../../../ro/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇷🇺 [ru](../../../ru/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇱🇰 [si](../../../si/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇸🇰 [sk](../../../sk/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇸🇮 [sl](../../../sl/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇷🇸 [sr](../../../sr/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇸🇪 [sv](../../../sv/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇰🇪 [sw](../../../sw/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇳 [ta](../../../ta/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇳 [te](../../../te/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇹🇭 [th](../../../th/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇹🇷 [tr](../../../tr/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇵🇰 [ur](../../../ur/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇺🇿 [uz](../../../uz/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇻🇳 [vi](../../../vi/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇳🇬 [yo](../../../yo/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/ops/VM_DEPLOYMENT_GUIDE.md)
 
@@ -6,7 +6,7 @@
 
 🌐 **Languages:** 🇺🇸 [English](../../../../ops/VM_DEPLOYMENT_GUIDE.md) · 🇪🇹 [am](../../../am/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇸🇦 [ar](../../../ar/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇦🇿 [az](../../../az/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇧🇬 [bg](../../../bg/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇧🇩 [bn](../../../bn/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇧🇦 [bs](../../../bs/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇨🇿 [cs](../../../cs/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇩🇰 [da](../../../da/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇬🇷 [el](../../../el/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇪🇸 [es](../../../es/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇪🇪 [et](../../../et/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇷 [fa](../../../fa/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇫🇮 [fi](../../../fi/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇫🇷 [fr](../../../fr/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇪 [ga](../../../ga/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇳 [gu](../../../gu/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇳🇬 [ha](../../../ha/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇱 [he](../../../he/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇳 [hi](../../../hi/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇭🇷 [hr](../../../hr/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇭🇺 [hu](../../../hu/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇦🇲 [hy](../../../hy/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇩 [id](../../../id/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇳🇬 [ig](../../../ig/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇹 [it](../../../it/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇯🇵 [ja](../../../ja/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇬🇪 [ka](../../../ka/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇰🇭 [km](../../../km/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇳 [kn](../../../kn/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇰🇷 [ko](../../../ko/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇱🇹 [lt](../../../lt/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇱🇻 [lv](../../../lv/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇳 [ml](../../../ml/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇳 [mr](../../../mr/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇲🇾 [ms](../../../ms/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇲🇹 [mt](../../../mt/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇲🇲 [my](../../../my/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇳🇵 [ne](../../../ne/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇳🇱 [nl](../../../nl/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇳🇴 [no](../../../no/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇳 [or](../../../or/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇳 [pa](../../../pa/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇵🇭 [phi](../../../phi/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇵🇱 [pl](../../../pl/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇵🇹 [pt](../../../pt/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇷🇴 [ro](../../../ro/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇷🇺 [ru](../../../ru/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇱🇰 [si](../../../si/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇸🇰 [sk](../../../sk/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇸🇮 [sl](../../../sl/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇷🇸 [sr](../../../sr/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇸🇪 [sv](../../../sv/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇰🇪 [sw](../../../sw/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇳 [ta](../../../ta/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇮🇳 [te](../../../te/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇹🇭 [th](../../../th/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇹🇷 [tr](../../../tr/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇵🇰 [ur](../../../ur/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇺🇿 [uz](../../../uz/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇻🇳 [vi](../../../vi/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇳🇬 [yo](../../../yo/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/ops/VM_DEPLOYMENT_GUIDE.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/ops/VM_DEPLOYMENT_GUIDE.md)
 
-Vollständige Anleitung zur Installation und Konfiguration von OmniRoute auf einer VM (VPS) mit einer über Cloudflare verwalteten Domain.
+Vollständige Anleitung zur Installation und Konfiguration von Pusula auf einer VM (VPS) mit einer über Cloudflare verwalteten Domain.
 
 ---
 
@@ -84,18 +84,18 @@ ufw enable
 
 ---
 
-## 2. OmniRoute installieren
+## 2. Pusula installieren
 
 ### 2.1 Konfigurationsverzeichnis erstellen
 
 ```bash
-mkdir -p /opt/omniroute
+mkdir -p /opt/pusula
 ```
 
 ### 2.2 Datei mit Umgebungsvariablen erstellen
 
 ```bash
-cat > /opt/omniroute/.env << 'EOF'
+cat > /opt/pusula/.env << 'EOF'
 # === Sicherheit ===
 JWT_SECRET=CHANGE-TO-A-UNIQUE-64-CHAR-SECRET-KEY
 INITIAL_PASSWORD=YourSecurePassword123!
@@ -103,7 +103,7 @@ API_KEY_SECRET=REPLACE-WITH-ANOTHER-SECRET-KEY
 STORAGE_ENCRYPTION_KEY=REPLACE-WITH-THIRD-SECRET-KEY
 STORAGE_ENCRYPTION_KEY_VERSION=v1
 MACHINE_ID_SALT=CHANGE-TO-A-UNIQUE-SALT
-OMNIROUTE_WS_BRIDGE_SECRET=REPLACE-WITH-WS-BRIDGE-SECRET  # In der Produktionsumgebung ERFORDERLICH: wird von der Codex Responses WS Bridge verwendet
+PUSULA_WS_BRIDGE_SECRET=REPLACE-WITH-WS-BRIDGE-SECRET  # In der Produktionsumgebung ERFORDERLICH: wird von der Codex Responses WS Bridge verwendet
 
 # === Anwendung ===
 PORT=20128
@@ -120,11 +120,11 @@ BASE_URL=http://127.0.0.1:20128
 # Browserseitige URL für OAuth-Callbacks, Dashboard-Links und generierte öffentliche URLs.
 NEXT_PUBLIC_BASE_URL=https://llms.seudominio.com
 # Optionale explizite Überschreibung des öffentlichen Ursprungs für generierte öffentliche Asset-URLs.
-# OMNIROUTE_PUBLIC_BASE_URL=https://llms.seudominio.com
+# PUSULA_PUBLIC_BASE_URL=https://llms.seudominio.com
 
 # === Cloud-Synchronisierung (optional) ===
-# CLOUD_URL=https://cloud.omniroute.online
-# NEXT_PUBLIC_CLOUD_URL=https://cloud.omniroute.online
+# CLOUD_URL=https://cloud.pusula.online
+# NEXT_PUBLIC_CLOUD_URL=https://cloud.pusula.online
 EOF
 ```
 
@@ -133,22 +133,22 @@ EOF
 ### 2.3 Container starten
 
 ```bash
-docker pull diegosouzapw/omniroute:latest
+docker pull ferhat-yasinoglu/pusula:latest
 
 docker run -d \
-  --name omniroute \
+  --name pusula \
   --restart unless-stopped \
-  --env-file /opt/omniroute/.env \
+  --env-file /opt/pusula/.env \
   -p 20128:20128 \
-  -v omniroute-data:/app/data \
-  diegosouzapw/omniroute:latest
+  -v pusula-data:/app/data \
+  ferhat-yasinoglu/pusula:latest
 ```
 
 ### 2.4 Ausführung überprüfen
 
 ```bash
-docker ps | grep omniroute
-docker logs omniroute --tail 20
+docker ps | grep pusula
+docker logs pusula --tail 20
 ```
 
 Folgendes sollte angezeigt werden: `[DB] SQLite database ready` und `listening on port 20128`.
@@ -181,7 +181,7 @@ chmod 600 /etc/nginx/ssl/origin.key
 ### 3.2 Nginx-Konfiguration
 
 ```bash
-cat > /etc/nginx/sites-available/omniroute << 'NGINX'
+cat > /etc/nginx/sites-available/pusula << 'NGINX'
 # Standardserver — blockiert den direkten Zugriff über die IP-Adresse
 server {
     listen 80 default_server;
@@ -194,7 +194,7 @@ server {
     return 444;
 }
 
-# OmniRoute — HTTPS
+# Pusula — HTTPS
 server {
     listen 443 ssl;
     listen [::]:443 ssl;
@@ -237,16 +237,16 @@ server {
 NGINX
 ```
 
-Stimmen Sie die Stream-Zeitüberschreitungen des Reverse-Proxys mit den Timeout-Umgebungsvariablen von OmniRoute ab. Wenn Sie
+Stimmen Sie die Stream-Zeitüberschreitungen des Reverse-Proxys mit den Timeout-Umgebungsvariablen von Pusula ab. Wenn Sie
 `FETCH_TIMEOUT_MS` / `STREAM_IDLE_TIMEOUT_MS` erhöhen, erhöhen Sie `proxy_read_timeout` / `proxy_send_timeout`
 über denselben Schwellenwert hinaus.
 
-OmniRoute verwendet `NEXT_PUBLIC_BASE_URL` als kanonischen, browserseitig erreichbaren Ursprung für OAuth-
+Pusula verwendet `NEXT_PUBLIC_BASE_URL` als kanonischen, browserseitig erreichbaren Ursprung für OAuth-
 Callbacks und generierte öffentliche Links. Authentifizierte Schreibvorgänge im Dashboard verwenden Same-Origin-Anfragen
 sowie sitzungsgebundenen CSRF-Schutz und benötigen daher keine statische öffentliche Basis-URL. Die oben aufgeführten
 `X-Forwarded-*`-Header sind weiterhin nützliche Routing-Metadaten, ersetzen jedoch nicht
 die Festlegung der expliziten öffentlichen URL, wenn OAuth oder generierte Browserlinks eine solche benötigen. Aktivieren Sie
-`OMNIROUTE_TRUST_PROXY` nur, wenn OmniRoute für Clients nicht direkt erreichbar ist und Ihr Proxy
+`PUSULA_TRUST_PROXY` nur, wenn Pusula für Clients nicht direkt erreichbar ist und Ihr Proxy
 eingehende Forwarded-Header entfernt und neu erstellt.
 
 ### 3.3 Aktivieren und testen
@@ -255,8 +255,8 @@ eingehende Forwarded-Header entfernt und neu erstellt.
 # Standardkonfiguration entfernen
 rm -f /etc/nginx/sites-enabled/default
 
-# OmniRoute aktivieren
-ln -sf /etc/nginx/sites-available/omniroute /etc/nginx/sites-enabled/omniroute
+# Pusula aktivieren
+ln -sf /etc/nginx/sites-available/pusula /etc/nginx/sites-enabled/pusula
 
 # Testen und neu laden
 nginx -t && systemctl reload nginx
@@ -300,40 +300,40 @@ curl -sI https://llms.seudominio.com/health
 ### Auf eine neue Version aktualisieren
 
 ```bash
-docker pull diegosouzapw/omniroute:latest
-docker stop omniroute && docker rm omniroute
-docker run -d --name omniroute --restart unless-stopped \
-  --env-file /opt/omniroute/.env \
+docker pull ferhat-yasinoglu/pusula:latest
+docker stop pusula && docker rm pusula
+docker run -d --name pusula --restart unless-stopped \
+  --env-file /opt/pusula/.env \
   -p 20128:20128 \
-  -v omniroute-data:/app/data \
-  diegosouzapw/omniroute:latest
+  -v pusula-data:/app/data \
+  ferhat-yasinoglu/pusula:latest
 ```
 
 ### Protokolle anzeigen
 
 ```bash
-docker logs -f omniroute          # Echtzeit-Ausgabe
-docker logs omniroute --tail 50   # Letzte 50 Zeilen
+docker logs -f pusula          # Echtzeit-Ausgabe
+docker logs pusula --tail 50   # Letzte 50 Zeilen
 ```
 
 ### Manuelle Datenbanksicherung
 
 ```bash
 # Daten aus dem Volume auf den Host kopieren
-docker cp omniroute:/app/data ./backup-$(date +%F)
+docker cp pusula:/app/data ./backup-$(date +%F)
 
 # Oder das gesamte Volume komprimieren
-docker run --rm -v omniroute-data:/data -v $(pwd):/backup \
-  alpine tar czf /backup/omniroute-data-$(date +%F).tar.gz /data
+docker run --rm -v pusula-data:/data -v $(pwd):/backup \
+  alpine tar czf /backup/pusula-data-$(date +%F).tar.gz /data
 ```
 
 ### Aus einer Sicherung wiederherstellen
 
 ```bash
-docker stop omniroute
-docker run --rm -v omniroute-data:/data -v $(pwd):/backup \
-  alpine sh -c "rm -rf /data/* && tar xzf /backup/omniroute-data-YYYY-MM-DD.tar.gz -C /"
-docker start omniroute
+docker stop pusula
+docker run --rm -v pusula-data:/data -v $(pwd):/backup \
+  alpine sh -c "rm -rf /data/* && tar xzf /backup/pusula-data-YYYY-MM-DD.tar.gz -C /"
+docker start pusula
 ```
 
 ---
@@ -402,13 +402,13 @@ Für den Remotezugriff über Cloudflare Workers, ohne die VM direkt zugänglich 
 
 ```bash
 # Im lokalen Repository
-cd omnirouteCloud
+cd pusulaCloud
 npm install
 npx wrangler login
 npx wrangler deploy
 ```
 
-Eine Anleitung zu Cloudflare Tunnel innerhalb des Repositorys finden Sie außerdem in [TUNNELS_GUIDE.md](./TUNNELS_GUIDE.md). Der eigenständige Worker `omnirouteCloud/` befindet sich in einem separaten Begleit-Repository.
+Eine Anleitung zu Cloudflare Tunnel innerhalb des Repositorys finden Sie außerdem in [TUNNELS_GUIDE.md](./TUNNELS_GUIDE.md). Der eigenständige Worker `pusulaCloud/` befindet sich in einem separaten Begleit-Repository.
 
 ---
 
@@ -419,15 +419,15 @@ Eine Anleitung zu Cloudflare Tunnel innerhalb des Repositorys finden Sie außerd
 | 22    | SSH         | Öffentlich (mit fail2ban)  |
 | 80    | nginx HTTP  | Weiterleitung → HTTPS      |
 | 443   | nginx HTTPS | Über Cloudflare Proxy      |
-| 20128 | OmniRoute   | Nur localhost (über nginx) |
+| 20128 | Pusula   | Nur localhost (über nginx) |
 
 ## Optimierung für wenig Arbeitsspeicher / kleine VPS-Instanzen
 
 Für Bereitstellungen auf kleinen VPS-Instanzen (1 GB RAM oder weniger):
 
-- **Hintergrunddienste deaktivieren** — setzen Sie `OMNIROUTE_DISABLE_BACKGROUND_SERVICES=1`, um den Scheduler, den MCP-Server und regelmäßige Wartungsaufgaben zu überspringen. Siehe `docs/reference/ENVIRONMENT.md`.
+- **Hintergrunddienste deaktivieren** — setzen Sie `PUSULA_DISABLE_BACKGROUND_SERVICES=1`, um den Scheduler, den MCP-Server und regelmäßige Wartungsaufgaben zu überspringen. Siehe `docs/reference/ENVIRONMENT.md`.
 - **SQLite-WAL-Modus verwenden** — ist standardmäßig aktiviert und reduziert den maximalen Speicherverbrauch bei gleichzeitigen Lesevorgängen.
-- **V8-Heap begrenzen** — setzen Sie `OMNIROUTE_MEMORY_MB` (z. B. `512`), damit die Laufzeitumgebung keinen Grenzwert ermittelt, der größer als die VM ist. Siehe `docs/reference/ENVIRONMENT.md`.
-- **Die Zulassung ressourcenintensiver Anfragen skaliert automatisch mit der Heap-Begrenzung** -- sobald `OMNIROUTE_MEMORY_MB` wie oben beschrieben festgelegt ist, wird das Byte-Budget für die Aufnahme (`OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES`) von demselben Grenzwert abgeleitet. Dadurch erhält eine VM mit begrenztem Arbeitsspeicher ohne zusätzliche Feinabstimmung automatisch ein kleineres Budget für gleichzeitige Anfragen; überzählige Anfragen erhalten eine wiederholbare `503`-Antwort mit `Retry-After`, anstatt um Arbeitsspeicher zu konkurrieren. Legen Sie die ältere, anzahlbasierte Obergrenze `OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT` nur fest, wenn Sie zusätzlich eine harte Begrenzung benötigen.
+- **V8-Heap begrenzen** — setzen Sie `PUSULA_MEMORY_MB` (z. B. `512`), damit die Laufzeitumgebung keinen Grenzwert ermittelt, der größer als die VM ist. Siehe `docs/reference/ENVIRONMENT.md`.
+- **Die Zulassung ressourcenintensiver Anfragen skaliert automatisch mit der Heap-Begrenzung** -- sobald `PUSULA_MEMORY_MB` wie oben beschrieben festgelegt ist, wird das Byte-Budget für die Aufnahme (`PUSULA_CHAT_MAX_INFLIGHT_BYTES`) von demselben Grenzwert abgeleitet. Dadurch erhält eine VM mit begrenztem Arbeitsspeicher ohne zusätzliche Feinabstimmung automatisch ein kleineres Budget für gleichzeitige Anfragen; überzählige Anfragen erhalten eine wiederholbare `503`-Antwort mit `Retry-After`, anstatt um Arbeitsspeicher zu konkurrieren. Legen Sie die ältere, anzahlbasierte Obergrenze `PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT` nur fest, wenn Sie zusätzlich eine harte Begrenzung benötigen.
 - **`next build` auf dem VPS vermeiden** — erstellen Sie den Build lokal und stellen Sie die eigenständige Ausgabe (`.next/standalone/`) bereit.
-- **Mit `top` / `free -m` überwachen** — OmniRoute verwendet auf einer VM mit 1 GB im Leerlauf normalerweise 200–400 MB RSS.
+- **Mit `top` / `free -m` überwachen** — Pusula verwendet auf einer VM mit 1 GB im Leerlauf normalerweise 200–400 MB RSS.

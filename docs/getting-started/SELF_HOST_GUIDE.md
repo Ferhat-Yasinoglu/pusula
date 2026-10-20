@@ -1,10 +1,10 @@
 ---
-title: "🚀 Self-Host Guide — OmniRoute (零月费自托管 / zero-fee self-host)"
+title: "🚀 Self-Host Guide — Pusula (零月费自托管 / zero-fee self-host)"
 version: 3.8.51
 lastUpdated: 2026-09-14
 ---
 
-# 🚀 Self-Host Guide — OmniRoute
+# 🚀 Self-Host Guide — Pusula
 
 > **TL;DR** — three commands, one local endpoint, zero monthly fees. No SaaS
 > billing, no multi-tenant isolation, no hosted prompt-processing hop. Your
@@ -16,14 +16,14 @@ docker compose -f docker-compose.selfhost.yml up -d
 open http://127.0.0.1:20128
 ```
 
-This is the **self-host carrier** for OmniRoute's "零月费 + 自托管" product
+This is the **self-host carrier** for Pusula's "零月费 + 自托管" product
 form: a packaged container/binary you run on your own machine in 5 minutes.
 
 ---
 
 ## Why this guide exists
 
-OmniRoute ships a sophisticated `docker-compose.yml` with profiles
+Pusula ships a sophisticated `docker-compose.yml` with profiles
 (`base`, `web`, `cli`, `host`, `cliproxyapi`, `memory`, `bifrost`). Each app
 service is profile-gated, so a bare `docker compose up -d` only starts Redis.
 That is correct for power users who pick a profile — but it is *not* a
@@ -70,11 +70,11 @@ API key / login. On first boot the dashboard auto-generates an
 `INITIAL_PASSWORD` — read it from the logs:
 
 ```bash
-docker logs omniroute | grep -i password
+docker logs pusula | grep -i password
 ```
 
 The other variables (`DASHBOARD_PORT`, `API_PORT`, `LIVE_WS_PORT`,
-`OMNIROUTE_MEMORY_MB`) already have sane defaults. Leave them unless you know
+`PUSULA_MEMORY_MB`) already have sane defaults. Leave them unless you know
 you need to change them.
 
 ---
@@ -85,7 +85,7 @@ you need to change them.
 docker compose -f docker-compose.selfhost.yml up -d
 ```
 
-Pulls `diegosouzapw/omniroute:latest` (multi-arch AMD64 + ARM64, ~250 MB) and
+Pulls `ferhat-yasinoglu/pusula:latest` (multi-arch AMD64 + ARM64, ~250 MB) and
 `redis:8.6.5-alpine`, starts both, and waits for Redis to be healthy before
 the app boots.
 
@@ -96,7 +96,7 @@ the app boots.
 curl -fsS http://127.0.0.1:20128/healthz && echo
 
 # container health
-docker inspect --format '{{.State.Health.Status}}' omniroute
+docker inspect --format '{{.State.Health.Status}}' pusula
 ```
 
 You should see `{"status":"ok"}` and `healthy`. Then open the dashboard:
@@ -136,7 +136,7 @@ http://127.0.0.1:20128/v1
 ```
 
 For provider choice, see the
-[Free Tiers Guide](./FREE-TIERS-GUIDE.md) — OmniRoute aggregates 150+ free
+[Free Tiers Guide](./FREE-TIERS-GUIDE.md) — Pusula aggregates 150+ free
 tiers into one endpoint, so you can run `model: "auto"` to pick the best free
 option per request.
 
@@ -144,18 +144,18 @@ option per request.
 
 ## Sizing the container
 
-The image pins `OMNIROUTE_MEMORY_MB=1024`. That is enough for the dashboard
+The image pins `PUSULA_MEMORY_MB=1024`. That is enough for the dashboard
 and light chat. **Coding agents** (`POST /v1/responses` from Claude Code,
 Codex, Grok, …) retain multiple large context graphs during compression and
 can abort V8 at ~12 GiB old-space under two overlapping long contexts
-([#7849](https://github.com/diegosouzapw/OmniRoute/issues/7849)).
+([#7849](https://github.com/Ferhat-Yasinoglu/pusula/issues/7849)).
 
-`.env.selfhost.example` defaults to `OMNIROUTE_MEMORY_MB=2048` — a safe floor
+`.env.selfhost.example` defaults to `PUSULA_MEMORY_MB=2048` — a safe floor
 for a single user running coding agents. Raise it if you fan out many models
 in parallel (fusion combos) or hit `FATAL ERROR: Reached heap limit`:
 
 ```dotenv
-OMNIROUTE_MEMORY_MB=4096
+PUSULA_MEMORY_MB=4096
 ```
 
 Memory is a V8 heap ceiling; native buffers (SQLite, ONNX, better-sqlite3)
@@ -168,8 +168,8 @@ sit outside it, so size the container a few hundred MB above the heap.
 Prefer a binary over Docker? The npm package is the same code:
 
 ```bash
-npm install -g omniroute
-omniroute
+npm install -g pusula
+pusula
 ```
 
 This runs the Next.js standalone server directly on your host — same ports,
@@ -180,8 +180,8 @@ because it bundles the exact runtime the image was tested with.
 From source (development only — not a deploy path):
 
 ```bash
-git clone https://github.com/diegosouzapw/OmniRoute.git
-cd OmniRoute
+git clone https://github.com/Ferhat-Yasinoglu/pusula.git
+cd Pusula
 npm install
 npm run build && npm start
 ```
@@ -220,11 +220,11 @@ sections for copy-paste reverse-proxy configs.
   Restore with `./bin/restore-data.sh`.
 - **Reset the dashboard password**:
   ```bash
-  docker exec -it omniroute node bin/reset-password.mjs
+  docker exec -it pusula node bin/reset-password.mjs
   ```
 - **Reset policies** (routing/failover/quota to factory defaults):
   ```bash
-  docker exec -it omniroute node bin/restore-policies.sh
+  docker exec -it pusula node bin/restore-policies.sh
   ```
 
 ---
@@ -248,8 +248,8 @@ Or, with the full compose, pick a profile:
 <details>
 <summary>Healthcheck stays <code>starting</code> / <code>unhealthy</code></summary>
 
-- Check Redis is up: `docker inspect --format '{{.State.Health.Status}}' omniroute-redis`
-- Check app logs: `docker logs omniroute`
+- Check Redis is up: `docker inspect --format '{{.State.Health.Status}}' pusula-redis`
+- Check app logs: `docker logs pusula`
 - The healthcheck probes `/healthz` and allows a 20 s start period. A slow
   first boot (cold migrations) can take longer — bump `start_period` in the
   compose file if your disk is slow.
@@ -258,7 +258,7 @@ Or, with the full compose, pick a profile:
 <details>
 <summary><code>FATAL ERROR: Reached heap limit</code> under coding agents</summary>
 
-Raise `OMNIROUTE_MEMORY_MB` in `.env` (e.g. `4096`), then
+Raise `PUSULA_MEMORY_MB` in `.env` (e.g. `4096`), then
 `docker compose -f docker-compose.selfhost.yml up -d`. See
 [Sizing the container](#sizing-the-container).
 </details>

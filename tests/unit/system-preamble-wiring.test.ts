@@ -23,10 +23,10 @@ function emittedText(events: Array<Record<string, unknown>>): string {
 // English-prose heuristics). These wiring tests exercise the opted-in path;
 // the default-off contract is pinned in system-preamble-gate-and-flush.test.ts.
 test.before(() => {
-  process.env.OMNIROUTE_STRIP_SYSTEM_PREAMBLE = "1";
+  process.env.PUSULA_STRIP_SYSTEM_PREAMBLE = "1";
 });
 test.after(() => {
-  delete process.env.OMNIROUTE_STRIP_SYSTEM_PREAMBLE;
+  delete process.env.PUSULA_STRIP_SYSTEM_PREAMBLE;
 });
 
 function chunkWith(content: string) {

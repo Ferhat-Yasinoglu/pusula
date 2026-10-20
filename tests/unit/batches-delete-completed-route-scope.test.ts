@@ -34,7 +34,7 @@
  *     `validateApiKey` to re-derive it (omni-code-review LEDGER-3/9).
  *
  * Self-isolating: DATA_DIR points at a fresh temp dir BEFORE any `@/lib/db/*`
- * module loads (dynamic imports below), so this file never touches ~/.omniroute.
+ * module loads (dynamic imports below), so this file never touches ~/.pusula.
  */
 import { describe, it, after } from "node:test";
 import assert from "node:assert";

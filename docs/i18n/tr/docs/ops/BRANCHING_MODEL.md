@@ -4,7 +4,7 @@
 
 ---
 
-OmniRoute, **paralel döngü** yayın modelini kullanır: etkin döngü için özel bir `release/vX.Y.Z`
+Pusula, **paralel döngü** yayın modelini kullanır: etkin döngü için özel bir `release/vX.Y.Z`
 dalı, yayımlanmış hat için `main` ve döngü yayınlandığında değiştirilemez bir
 `vX.Y.Z` etiketi. Commit'lerin hem `release/*` dallarına _hem de_
 `main` dalına gelmesi beklenen bir durumdur — bir karışıklık değildir.
@@ -55,7 +55,7 @@ açılır. Bu, **geliştirmeyi durdurmaz**:
 İstediğiniz dalın birleştirilebilir olduğunu varsaymadan önce açık bir dondurma olup olmadığını kontrol edin:
 
 ```bash
-gh issue list --repo diegosouzapw/OmniRoute --label release-freeze --state open
+gh issue list --repo Ferhat-Yasinoglu/pusula --label release-freeze --state open
 ```
 
 Birleştirme mekanizmaları (sahibin eklediği `queue` etiketi → Mergify)

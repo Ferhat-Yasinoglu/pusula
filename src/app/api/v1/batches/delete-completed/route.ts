@@ -3,7 +3,7 @@ import { deleteCompletedBatches, type DeleteCompletedBatchesScope } from "@/lib/
 import { NextResponse } from "next/server";
 import { getApiKeyRequestScope, resolveEffectiveApiKeyId } from "@/app/api/v1/_helpers/apiKeyScope";
 import { enforceApiKeyPolicy } from "@/shared/utils/apiKeyPolicy";
-import { buildErrorBody } from "@omniroute/open-sse/utils/error";
+import { buildErrorBody } from "@pusula/open-sse/utils/error";
 import * as log from "@/sse/utils/logger";
 
 const LOG_ROUTE = "batches/delete-completed";

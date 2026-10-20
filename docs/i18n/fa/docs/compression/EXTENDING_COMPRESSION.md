@@ -4,7 +4,7 @@
 
 ---
 
-> **خلاصه**: موتور فشردهسازی OmniRoute **قابلافزونه** است — میتوانید موتورهای سفارشی را ثبت کنید، بستههای زبانی برای زبانهای جدید ارائه دهید و پایپلاینهای پشتهای را ترکیب کنید. این راهنما چگونگی انجام این کار را نشان میدهد.
+> **خلاصه**: موتور فشردهسازی Pusula **قابلافزونه** است — میتوانید موتورهای سفارشی را ثبت کنید، بستههای زبانی برای زبانهای جدید ارائه دهید و پایپلاینهای پشتهای را ترکیب کنید. این راهنما چگونگی انجام این کار را نشان میدهد.
 
 **راهنماهای مرتبط:**
 
@@ -83,8 +83,8 @@ interface CompressionEngine {
 سادهترین موتور ممکن — حذف فاصلههای سفید اضافی از پیامها.
 
 ````ts
-import type { CompressionEngine } from "omniroute/compression/engines/types";
-import { registerCompressionEngine } from "omniroute/compression/engines/registry";
+import type { CompressionEngine } from "pusula/compression/engines/types";
+import { registerCompressionEngine } from "pusula/compression/engines/registry";
 
 function preserveCodeBlocks(text: string): string {
   // بر اساس نشانگرهای بلوک کد تقسیم کن و فاصلههای سفید داخل آنها را حفظ کن
@@ -195,7 +195,7 @@ registerCompressionEngine(whitespaceEngine);
 ### محل قرار دادن موتورهای سفارشی
 
 ```
-~/.omniroute/compression/engines/my-engine.ts    # سطح کاربر
+~/.pusula/compression/engines/my-engine.ts    # سطح کاربر
 <project>/compression-engines/my-engine.ts        # سطح پروژه (هنگام راهاندازی بارگذاری میشود)
 ```
 
@@ -206,7 +206,7 @@ registerCompressionEngine(whitespaceEngine);
 import {
   registerCompressionEngine,
   unregisterCompressionEngine,
-} from "@omniroute/open-sse/services/compression/engines/registry";
+} from "@pusula/open-sse/services/compression/engines/registry";
 import { myEngine } from "./engines/my-engine";
 
 export default definePlugin({
@@ -232,7 +232,7 @@ export default definePlugin({
 
 ## ایجاد بستههای زبانی
 
-فشردهسازی به سبک Caveman از **بستههای قواعد مختص هر زبان** برای مدیریت کلمات پُرکننده، عبارات محتاطانه و الگوهای پُرگویی در هر زبان طبیعی استفاده میکند. OmniRoute همراه با **6 بستهٔ زبانی** عرضه میشود: `en`، `es`، `fr`، `de`، `ja`، `pt-BR`.
+فشردهسازی به سبک Caveman از **بستههای قواعد مختص هر زبان** برای مدیریت کلمات پُرکننده، عبارات محتاطانه و الگوهای پُرگویی در هر زبان طبیعی استفاده میکند. Pusula همراه با **6 بستهٔ زبانی** عرضه میشود: `en`، `es`، `fr`، `de`، `ja`، `pt-BR`.
 
 ### ساختار بسته
 
@@ -327,7 +327,7 @@ RULE_LOADER: اعتبارسنجی بستهٔ "hi/filler.json" ناموفق بو�
 ### بارگذاری یک بستهٔ زبانی سفارشی
 
 ```ts
-import { loadRulePack } from "omniroute/compression/ruleLoader";
+import { loadRulePack } from "pusula/compression/ruleLoader";
 
 await loadRulePack("./my-custom-rules/hi/filler.json");
 ```
@@ -335,7 +335,7 @@ await loadRulePack("./my-custom-rules/hi/filler.json");
 یا آن را در یکی از مکانهای شناختهشده قرار دهید:
 
 ```
-~/.omniroute/compression/rules/hi/filler.json  # سطح کاربر
+~/.pusula/compression/rules/hi/filler.json  # سطح کاربر
 <project>/.compression/rules/hi/filler.json   # سطح پروژه
 ```
 
@@ -392,7 +392,7 @@ await loadRulePack("./my-custom-rules/hi/filler.json");
 
 ### حالتهای فشردهسازی
 
-OmniRoute بر اساس پیکربندی، آستانههای فعالسازی خودکار و بازنویسیهای combo، برای هر درخواست **یک حالت** را انتخاب میکند.
+Pusula بر اساس پیکربندی، آستانههای فعالسازی خودکار و بازنویسیهای combo، برای هر درخواست **یک حالت** را انتخاب میکند.
 حالتهای موجود در `open-sse/services/compression/types.ts` (نوع `CompressionMode`) تعریف شدهاند:
 
 | حالت         | موتورها              | مورد استفاده                                                                                                                                                                                                         |
@@ -480,10 +480,10 @@ compress(body, config) {
 
 هیچ رجیستریای برای پایپلاینهای نامگذاریشده وجود ندارد. یک پایپلاین پشتهای صرفاً یک **آرایهٔ درونخطی
 از مراحل** است که به `applyStackedCompression()` ارسال میشود (که از
-`@omniroute/open-sse/services/compression/strategySelector` صادر شده است):
+`@pusula/open-sse/services/compression/strategySelector` صادر شده است):
 
 ```ts
-import { applyStackedCompression } from "@omniroute/open-sse/services/compression/strategySelector";
+import { applyStackedCompression } from "@pusula/open-sse/services/compression/strategySelector";
 
 const result = applyStackedCompression(body, [
   { engine: "rtk", intensity: "aggressive" },
@@ -512,10 +512,10 @@ const result = applyStackedCompression(body, [
 
 ## سیاست همگامسازی با بالادست
 
-موتورهای فشردهسازی OmniRoute در README از چندین پروژهٔ بالادست نام بردهاند
+موتورهای فشردهسازی Pusula در README از چندین پروژهٔ بالادست نام بردهاند
 ("با الهام از RTK، Caveman، LLMLingua-2 و Troglodita"). یکی از پرسشهای رایج مشارکتکنندگان
 این است: **وقتی RTK بالادست یک فیلتر ابزار جدید اضافه میکند یا Caveman یک بستهٔ
-قواعد جدید میافزاید، این تغییر چگونه به OmniRoute میرسد؟** این بخش پاسخ رسمی و مرجع است.
+قواعد جدید میافزاید، این تغییر چگونه به Pusula میرسد؟** این بخش پاسخ رسمی و مرجع است.
 
 ### نسخههای وندورشده در برابر پیادهسازیهای مستقل
 
@@ -536,7 +536,7 @@ _ایدهها_ (قواعد فیلتر، بستههای قواعد) هستند، 
 بهطور طراحیشده، **هیچ ردیابی خودکاری برای انتشارهای بالادست و هیچ برچسب
 `compression-sync`ای وجود ندارد**. از آنجا که موتورها بازپیادهسازی شدهاند، یک فیلتر
 RTK بالادست یا بستهٔ قواعد Caveman بهصورت کد ادغام نمیشود؛ بلکه **بهعنوان یک
-قاعده/فیلتر جدید در قالب اختصاصی OmniRoute بازبیان میشود** (نگاه کنید به
+قاعده/فیلتر جدید در قالب اختصاصی Pusula بازبیان میشود** (نگاه کنید به
 [COMPRESSION_RULES_FORMAT.md](./COMPRESSION_RULES_FORMAT.md)) و بهصورت موردی از طریق
 یک PR عادی وارد میشود. نقاط توسعهٔ بالا (موتور سفارشی، بستهٔ زبان، فیلتر RTK)
 روشهای رسمی برای مشارکت در این زمینه هستند.
@@ -550,14 +550,14 @@ RTK بالادست یا بستهٔ قواعد Caveman بهصورت کد ادغا
 ### Headroom (پراکسی فشردهسازی ورودی)
 
 Headroom **کاملاً داخلی** است — یک اسنپشات وندورشده و پینشده از کُدک `gcf`، بههمراه
-لایههای اختصاصی `smartcrusher` / `toon` / `tabular` متعلق به OmniRoute. فراتر از
+لایههای اختصاصی `smartcrusher` / `toon` / `tabular` متعلق به Pusula. فراتر از
 نسخهٔ وندورشده، هیچ بالادست فعالی برای ردیابی وجود ندارد؛ بهروزرسانیهای `gcf`
 هنگام تغییر کُدک بهصورت دستی تازهسازی میشوند و دوباره در برابر دروازهٔ بودجهٔ فشردهسازی
 (`check:compression-budget`) اعتبارسنجی میشوند.
 
 ### پیشنهاد یک بهبود الهامگرفته از بالادست
 
-1. **وندور نکنید** — قاعده/فیلتر بالادست را در قالب OmniRoute بازبیان کنید.
+1. **وندور نکنید** — قاعده/فیلتر بالادست را در قالب Pusula بازبیان کنید.
 2. آن را از طریق نقطهٔ توسعهٔ منطبق در زیر اضافه کنید (بستهٔ زبان، فیلتر RTK یا
    موتور سفارشی).
 3. در توضیحات PR به پروژهٔ بالادست ارجاع دهید (انتساب)، نه با

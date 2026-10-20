@@ -22,7 +22,7 @@ import path from "node:path";
 import test from "node:test";
 import { cleanupTempDataDir } from "../_setup/tempDataDir.ts";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-catalog-cache-8728-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-catalog-cache-8728-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const readCache = await import("../../src/lib/db/readCache.ts");

@@ -1,16 +1,16 @@
 import { buildGitLabOAuthEndpoints, resolveGitLabOAuthBaseUrl } from "@/lib/oauth/gitlab";
-import { ANTIGRAVITY_RUNTIME_BASE_URLS } from "@omniroute/open-sse/config/antigravityUpstream.ts";
-import { getAntigravityContentHeaders } from "@omniroute/open-sse/services/antigravityHeaders.ts";
-import { getAntigravityClientProfile } from "@omniroute/open-sse/services/antigravityClientProfile.ts";
+import { ANTIGRAVITY_RUNTIME_BASE_URLS } from "@pusula/open-sse/config/antigravityUpstream.ts";
+import { getAntigravityContentHeaders } from "@pusula/open-sse/services/antigravityHeaders.ts";
+import { getAntigravityClientProfile } from "@pusula/open-sse/services/antigravityClientProfile.ts";
 import {
   generateAntigravityRequestId,
   getAntigravityEnvelopeUserAgent,
-} from "@omniroute/open-sse/services/antigravityIdentity.ts";
+} from "@pusula/open-sse/services/antigravityIdentity.ts";
 import {
   ensureAntigravityProjectAssigned,
   ANTIGRAVITY_REQUIRES_MANUAL_PROJECT,
-} from "@omniroute/open-sse/services/antigravityProjectBootstrap.ts";
-import { isGeoBlockedError } from "@omniroute/open-sse/services/errorClassifier.ts";
+} from "@pusula/open-sse/services/antigravityProjectBootstrap.ts";
+import { isGeoBlockedError } from "@pusula/open-sse/services/errorClassifier.ts";
 
 // Real model-surface probe for antigravity/agy. The previous probe only hit the
 // OAuth userinfo endpoint, which is NOT geo-restricted — so "Test Connection"
@@ -228,7 +228,7 @@ export const OAUTH_TEST_CONFIG: Record<string, OAuthTestConfigEntry> = {
     method: "GET",
     authHeader: "Authorization",
     authPrefix: "Bearer ",
-    extraHeaders: { "User-Agent": "OmniRoute", Accept: "application/vnd.github+json" },
+    extraHeaders: { "User-Agent": "Pusula", Accept: "application/vnd.github+json" },
   },
   "gitlab-duo": {
     getUrl: (connection: any) =>
@@ -320,7 +320,7 @@ export const OAUTH_TEST_CONFIG: Record<string, OAuthTestConfigEntry> = {
     method: "GET",
     authHeader: "Authorization",
     authPrefix: "Bearer ",
-    extraHeaders: { "User-Agent": "OmniRoute", Accept: "application/vnd.github+json" },
+    extraHeaders: { "User-Agent": "Pusula", Accept: "application/vnd.github+json" },
     refreshable: true,
   },
   // Openference: first-party OAuth gateway — list models to verify the JWT without

@@ -42,7 +42,7 @@ gehostete Bereitstellung oder externe Integration derzeit verfügbar ist.
 | Unterstützerangebote                    | Als separater signierter, ausschließlich live verfügbarer Feed und als Dashboard-Seite implementiert. Der Client revalidiert das geschlossene Vorteilschema, bewahrt den letzten gültigen Cache, filtert abgelaufene Einträge und kennzeichnet Partnerangebote ausdrücklich.                                |
 | Informationen und Unterstützererkennung | Als strikter signierter, ausschließlich live verfügbarer Feed mit Radar-eigener ELO, sachlichen Angaben zu Aktualität und Trends des Katalogs, einem verifizierten lokalen Unterstützerabzeichen, einer Dashboard-Seite und ausschließlich lokalen CLI-Status- und Synchronisierungsbefehlen implementiert. |
 | Zahlungen und Transaktions-E-Mails      | Im OSS-Client nicht implementiert. Kauf, Spende, Belegprüfung, Wiederherstellung und E-Mail-Versand gehören zum privaten Dienst; die Verfügbarkeit des gehosteten Dienstes hängt weiterhin von dessen überwachter Bereitstellung und Anbieterkonfiguration ab.                                              |
-| Arbeitsbereich Forschungsagent          | Nicht Bestandteil dieses Client-Releases. Die Inhalte des kuratierten Feeds bleiben serverseitige Daten; in einer OmniRoute-Installation wird kein autonomer Forschungsagent ausgeführt.                                                                                                                    |
+| Arbeitsbereich Forschungsagent          | Nicht Bestandteil dieses Client-Releases. Die Inhalte des kuratierten Feeds bleiben serverseitige Daten; in einer Pusula-Installation wird kein autonomer Forschungsagent ausgeführt.                                                                                                                    |
 
 ---
 
@@ -108,7 +108,7 @@ Zustimmung fehlt → { status: "opt_out" }    — kein Netzwerkaufruf
 
 Wenn beide aktiviert sind, sieht der Synchronisierungspfad wie folgt aus:
 
-1. `GET <Feed-Basis-URL>/v1/catalog/latest` mit `x-omniroute-radar-schema: 2` und einem optionalen
+1. `GET <Feed-Basis-URL>/v1/catalog/latest` mit `x-pusula-radar-schema: 2` und einem optionalen
    `Authorization: Bearer <Supporter-Schlüssel>`-Header (siehe unten). Server verwenden standardmäßig das separat
    signierte v1-Übergangsartefakt, wenn der Schema-Header fehlt, sodass ältere installierte Clients weiterhin
    Aktualisierungen erhalten.
@@ -120,7 +120,7 @@ Wenn beide aktiviert sind, sieht der Synchronisierungspfad wie folgt aus:
    der IP-Adresse für die manuelle Missbrauchsprüfung; in diesen Tabellen werden weder der Schlüssel noch die IP-Adresse in Rohform gespeichert.
    Infrastruktur-Zugriffsprotokolle und die verschlüsselte Versand-Outbox bilden separate betriebliche
    Grenzen.
-3. OmniRoute sendet niemals Prompts, Antworten, Konversationen, Provider-Anmeldedaten, Modellverkehr,
+3. Pusula sendet niemals Prompts, Antworten, Konversationen, Provider-Anmeldedaten, Modellverkehr,
    Verfügbarkeit, Latenz oder die lokale Provider-Konfiguration an den Radar-Dienst.
 4. Die Antwort wird verifiziert, validiert und lokal zwischengespeichert (siehe
    [Sicherheitsmodell](#security-model)). Radar verfügt über genau vier serverseitige Netzwerkpfade:
@@ -187,12 +187,12 @@ Supporter-Schlüssels. Das OSS-Repository selbst stellt niemals einen Schlüssel
 Zielseiten festgelegt und angezeigt, nicht in diesem Repository (Spezifikationsentscheidung D14).
 
 - **„Ich bin Mitwirkender“** — öffnet `RADAR_CONTRIBUTOR_CLAIM_URL` (Standard:
-  `https://radar.omniroute.online/auth/github`), einen auf dem privaten Radar-Server gehosteten
+  `https://radar.pusula.online/auth/github`), einen auf dem privaten Radar-Server gehosteten
   GitHub-OAuth-Ablauf zur Anforderung. Er prüft das jüngste vollständig abgeschlossene wöchentliche Ranking: Die Top 10 erhalten 365 Tage
   und die Plätze 11–100 erhalten 90 Tage. Außerhalb der Top 100 gewährt die Anzahl der PRs niemals Zugriff; stattdessen
   prüft der Ablauf die separate, einmalig nutzbare Stufe für Stern + Folgen.
 - **„Projekt unterstützen“** — öffnet `RADAR_SUPPORTER_PLANS_URL` (Standard:
-  `https://radar.omniroute.online/planos`), die gehostete Seite mit den einmaligen Optionen für 6 Monate, 1 Jahr und
+  `https://radar.pusula.online/planos`), die gehostete Seite mit den einmaligen Optionen für 6 Monate, 1 Jahr und
   lebenslange Nutzung. Die OSS-Seite zeigt weiterhin keinen Geldbetrag an.
 
 Beide URLs werden serverseitig aufgelöst (`src/lib/radar/links.ts`, dasselbe Muster für Umgebungsüberschreibungen
@@ -202,12 +202,12 @@ Client-Komponente liest `process.env` niemals selbst aus.
 
 | Variable                      | Zweck                                                                                                          |
 | ----------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `RADAR_CONTRIBUTOR_CLAIM_URL` | Überschreibt die URL zur Anforderung für Mitwirkende (Standard: `https://radar.omniroute.online/auth/github`). |
-| `RADAR_SUPPORTER_PLANS_URL`   | Überschreibt die URL für Supporter-Optionen (Standard: `https://radar.omniroute.online/planos`).               |
+| `RADAR_CONTRIBUTOR_CLAIM_URL` | Überschreibt die URL zur Anforderung für Mitwirkende (Standard: `https://radar.pusula.online/auth/github`). |
+| `RADAR_SUPPORTER_PLANS_URL`   | Überschreibt die URL für Supporter-Optionen (Standard: `https://radar.pusula.online/planos`).               |
 
 ### Einen verlorenen Supporter-Schlüssel wiederherstellen
 
-Der Einstiegspunkt des gehosteten Dienstes zur Wiederherstellung lautet `https://radar.omniroute.online/recover`; er ist außerdem
+Der Einstiegspunkt des gehosteten Dienstes zur Wiederherstellung lautet `https://radar.pusula.online/recover`; er ist außerdem
 auf der Seite mit den Optionen verlinkt. Die Wiederherstellung bleibt vollständig außerhalb des OSS-Clients, da die lokale
 Installation niemals die E-Mail-Adresse des Käufers/Mitwirkenden erhält und aus ihren verschlüsselten Einstellungen keinen
 unverschlüsselten Schlüssel rekonstruieren kann.
@@ -244,11 +244,11 @@ der bereits einen besitzt.
 ### Durchgängige Aktivierung und geführte Einrichtung
 
 Der private Feed-Dienst und dieser OSS-Client besitzen bewusst eine klar abgegrenzte Schnittstelle: Der Dienst
-stellt den Supporter-Schlüssel aus und validiert ihn, während die lokale OmniRoute-Installation den Schlüssel verschlüsselt,
+stellt den Supporter-Schlüssel aus und validiert ihn, während die lokale Pusula-Installation den Schlüssel verschlüsselt,
 signierte Artefakte serverseitig synchronisiert und durch die Anbietereinrichtung führt. Die Reihenfolge der unterstützten Validierung lautet:
 
 1. Beziehen Sie einen neu ausgestellten oder wiederhergestellten Schlüssel über den Anspruch für Mitwirkende, Pläne/Checkout, den Wiederherstellungsprozess oder einen autorisierten Betreiber eines privaten Servers. Fügen Sie den Rohschlüssel nicht in Protokolle, Screenshots, Issue-Kommentare oder Befehlszeilenargumente ein.
-2. Aktivieren Sie das Feature-Flag `RADAR_ENABLED` in der lokalen OmniRoute-Installation. Dadurch wird die Benutzeroberfläche verfügbar, bleibt jedoch netzwerkinaktiv, bis die separate Einwilligung gespeichert wurde.
+2. Aktivieren Sie das Feature-Flag `RADAR_ENABLED` in der lokalen Pusula-Installation. Dadurch wird die Benutzeroberfläche verfügbar, bleibt jedoch netzwerkinaktiv, bis die separate Einwilligung gespeichert wurde.
 3. Öffnen Sie `/dashboard/radar`, fügen Sie den Schlüssel ein und aktivieren Sie ihn. Der Browser sendet einmalig lokal einen `POST /api/radar/settings` mit `{ optIn: true, supporterKey }`; der Schlüssel wird lokal verschlüsselt, und die Antwort enthält nur `omr_****<last4>`.
 4. Lassen Sie auf dem Aktivierungsbildschirm die Katalogsynchronisierung durchlaufen oder wählen Sie **Jetzt synchronisieren**. Vergewissern Sie sich, dass die Seite `live`, eine Feed-Version und eine Abrufzeit meldet. Für eine authentifizierte lokale Diagnose meldet `GET /api/radar/status` den Einwilligungs-/Schlüsselstatus sowie die vier Cache-Zustände, ohne den Schlüssel zurückzugeben. Mit `POST /api/radar/sync-all` können Katalog, Empfehlungen, Angebote und Intel explizit aktualisiert werden.
 5. Öffnen Sie `/dashboard/radar/setup?provider=<provider>`. Folgen Sie der vom Anbieter bereitgestellten Anmeldedaten-URL, wählen Sie **API-Schlüssel hinzufügen**, speichern Sie über das tatsächliche Anbieterformular, kehren Sie zur Anleitung zurück und führen Sie **Verbindung testen** aus. Die Anleitung verwendet die regulären Routen `/api/providers` und `/api/providers/<connection-id>/test`; sie erstellt keine separaten Radar-Anmeldedaten.
@@ -288,12 +288,12 @@ erneut synchronisiert werden.
 ### Fork-freundliche Umgebungsvariablen zum Überschreiben
 
 Zwei Umgebungsvariablen ermöglichen Forks und selbstgehosteten Installationen, den Client statt auf den
-standardmäßigen OmniRoute-Dienst auf einen eigenen Feed zu verweisen — siehe
+standardmäßigen Pusula-Dienst auf einen eigenen Feed zu verweisen — siehe
 [So hosten Sie einen Feed selbst](#how-to-self-host-a-feed) weiter unten:
 
 | Variable            | Zweck                                                                                                                                               |
 | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `RADAR_FEED_URL`    | Überschreibt die Basis-URL des Feeds (Standard: `https://radar.omniroute.online`).                                                                  |
+| `RADAR_FEED_URL`    | Überschreibt die Basis-URL des Feeds (Standard: `https://radar.pusula.online`).                                                                  |
 | `RADAR_FEED_PUBKEY` | Überschreibt den angehefteten öffentlichen Schlüssel (Base64-DER-SPKI oder PEM) und ersetzt das integrierte Array durch diesen einzelnen Schlüssel. |
 
 ### Versionsuntergrenze
@@ -383,13 +383,13 @@ Das Feld `tier` im signierten Feed-**Body** lautet immer `"live"` — der Feed-D
 liefert **zwei signierte Artefakte pro Version** aus: „live“ enthält aktuelle Kampagnen,
 „community“ lässt sie aus. Jedes Artefakt wird über seine eigenen exakten Bytes signiert.
 Der Body dient weiterhin nicht als Berechtigungsentscheidung; die tatsächlich für eine
-Anfrage ausgewählte Stufe wird im **Antwort-Header `x-omniroute-feed-tier`** übermittelt
+Anfrage ausgewählte Stufe wird im **Antwort-Header `x-pusula-feed-tier`** übermittelt
 und serverseitig anhand des `Authorization`-Schlüssels der Anfrage bestimmt.
 
 `syncRadar()` (`src/lib/radar/sync.ts::parseServedTierHeader()`) ist die einzige Stelle,
 die bestimmt, welcher Stufe ein Client vertrauen soll:
 
-1. `x-omniroute-feed-tier` mit `RadarTierSchema` (Zod) parsen — ein fehlender Header
+1. `x-pusula-feed-tier` mit `RadarTierSchema` (Zod) parsen — ein fehlender Header
    oder ein Wert, der nicht exakt `"community"` oder `"live"` entspricht, wird als
    **nicht vorhanden** behandelt (er wird niemals unverändert als vertrauenswürdig
    in den Cache/die UI übernommen; dies deckt auch ältere Feed-Server ab, die vor
@@ -456,7 +456,7 @@ Katalogveröffentlichungen verwenden `schemaVersion: 2`. `contextWindow` und jew
 `tools`, `vision` und `thinking` sind unabhängig voneinander `number | null` /
 `boolean | null`: `null` bedeutet unbekannt, während `false` bedeutet, dass eine durch
 D16 bestätigte offizielle Anbieterquelle ausdrücklich angibt, dass die Fähigkeit nicht
-vorhanden ist. Interne Registry-/Modellspezifikations-Flags von OmniRoute werden niemals
+vorhanden ist. Interne Registry-/Modellspezifikations-Flags von Pusula werden niemals
 direkt zu Feed-Fakten hochgestuft. Der Client akzeptiert weiterhin v1-Snapshots; da der
 alte Builder `false` als Platzhalter für Abwesenheit verwendete, wird `false` aus v1 zu
 „unbekannt“ normalisiert, während `true` aus v1 weiterhin als Fakt gilt. Unbekannte
@@ -482,7 +482,7 @@ Die geführte Benutzeroberfläche befindet sich unter `/dashboard/radar/combos`.
 `GET /api/radar/catalog` und `GET /api/combos/builder/options`. Sie löst niemals eine Radar-Synchronisierung aus,
 liest keine Anbieterzugangsdaten und schreibt nicht direkt in die Combo-Datenbank.
 
-MCP-Clients können dieselbe lokale Projektion mit `omniroute_radar_catalog` (`read:radar`) lesen. Die
+MCP-Clients können dieselbe lokale Projektion mit `pusula_radar_catalog` (`read:radar`) lesen. Die
 optionalen Filter `provider`, `familyId` und `enabledOnly` werden nach einem einzelnen lokalen
 Lesezugriff auf `GET /api/radar/catalog` ausgewertet. Die geschlossene Ausgabe umfasst Katalogmetadaten sowie Anbieter/Modell,
 Anzeigename, `familyId`, Kontingent, Funktionen, Aktivierungsstatus, Ursprung und `disabledBy`; Einrichtungs-URLs,
@@ -523,7 +523,7 @@ Die folgenden lokalen Radar-Routenfamilien unterstützen die Benutzeroberfläche
 | `/api/radar/local-model-state` | DELETE  | Löscht bearbeitbare Überschreibungsfelder, während ein vorhandener Tombstone erhalten bleibt.                                                        |
 
 **Strikte Regel: Diese Routen fungieren niemals als Proxy für den Feed-Dienst.** Der Browser kommuniziert ausschließlich
-mit dem lokalen OmniRoute-Server. Die vier Module, die auf den Radar-Dienst zugreifen, sind
+mit dem lokalen Pusula-Server. Die vier Module, die auf den Radar-Dienst zugreifen, sind
 `src/lib/radar/sync.ts` (Katalog), `src/lib/radar/referralsSync.ts` (Empfehlungen) und
 `src/lib/radar/offersSync.ts` (Angebote) sowie `src/lib/radar/intelSync.ts` (Intel); alle werden
 serverseitig und niemals clientseitig ausgeführt. Dadurch bleiben
@@ -552,7 +552,7 @@ booleschen Wert `hasSupporterKey`.
 
 Angebote verwenden ihr eigenes signiertes Artefakt, `GET /v1/offers/latest`, und teilen sich niemals den Katalog- oder Empfehlungs-Cache. Der Server-Endpunkt erfordert einen gültigen aktiven Supporter-Bearer-Key; es gibt keinen Community-Fallback. `syncRadarOffers()` wird daher noch vor dem Netzwerkzugriff beendet, wenn das Feature-Flag deaktiviert ist, der Betreiber nicht zugestimmt hat oder kein Supporter-Key konfiguriert ist.
 
-Nach einem erfolgreichen GET überprüft der Client die Ed25519-Signatur über die exakten Antwortbytes, validiert `RadarOffersFeedSchema`, verlangt, dass sowohl der signierte Body als auch der Header `x-omniroute-feed-tier` den Wert `live` enthalten, erzwingt eine strikt neuere gepunktete Version und ersetzt erst dann atomar `radar_offers_cache` (Migration `144_radar_offers_cache.sql`). Es gilt dieselbe Obergrenze von 10 MB für Header plus Stream wie bei den anderen Feeds. Bei Signatur-, Schema-, Tier-, Replay-, Größen-, HTTP- und Netzwerkfehlern bleibt der zuletzt verifizierte Cache stets erhalten.
+Nach einem erfolgreichen GET überprüft der Client die Ed25519-Signatur über die exakten Antwortbytes, validiert `RadarOffersFeedSchema`, verlangt, dass sowohl der signierte Body als auch der Header `x-pusula-feed-tier` den Wert `live` enthalten, erzwingt eine strikt neuere gepunktete Version und ersetzt erst dann atomar `radar_offers_cache` (Migration `144_radar_offers_cache.sql`). Es gilt dieselbe Obergrenze von 10 MB für Header plus Stream wie bei den anderen Feeds. Bei Signatur-, Schema-, Tier-, Replay-, Größen-, HTTP- und Netzwerkfehlern bleibt der zuletzt verifizierte Cache stets erhalten.
 
 Das geschlossene Angebotsformat unterstützt drei vergleichbare Vorteilssarten: Prozentsatz in Basispunkten, Guthaben in kleinsten Währungseinheiten oder Testzeiträume in Tagen. Ein Partnerangebot muss eine öffentliche Vergleichsbasis derselben Art enthalten, und sein Vorteil muss strikt größer sein; offizielle Angebote haben keine Partner-Vergleichsbasis. URLs müssen HTTPS verwenden und dürfen keine Zugangsdaten enthalten. `getRadarOffers()` validiert die zwischengespeicherte Nutzlast bei jedem lokalen Lesezugriff vorsichtshalber erneut und filtert abgelaufene Einträge heraus; `/dashboard/radar/offers` filtert vor dem Rendern nochmals nach Ablaufdatum, verwendet portugiesischen Text, sofern verfügbar, mit englischem Fallback und kennzeichnet Partnerangebote ausdrücklich.
 
@@ -566,7 +566,7 @@ Intel ist ein signiertes Artefakt unter `GET /v1/intel/latest`. Das geschlossene
 
 `syncRadarIntel()` wendet dieselben Regeln wie für Angebote an: serverseitige Bearer-Authentifizierung, ein Timeout von 30 Sekunden, eine gestreamte Obergrenze von 10 MiB, Ed25519-Verifizierung der exakten Bytes, strikte Schemavalidierung, die Anforderung `live` für Body und Header, eine Versionsuntergrenze sowie die Beibehaltung des letzten gültigen Caches. Nachdem ein verifizierter Live-Snapshot gespeichert wurde, leitet der Client `radar:<sha256(supporter key)>` ab, speichert nur diese nicht umkehrbare Identität und erzeugt das dedizierte Erkennungsereignis `radar_supporter`. Das Badge `radar-supporter` ist idempotent und vergibt null XP; es aktualisiert niemals Bestenlisten und verwendet `token_share` nicht erneut. `/dashboard/radar/intel` rendert das Badge ausschließlich anhand verifizierter lokaler Cache-Metadaten.
 
-Die CLI stellt `omniroute radar status` und `omniroute radar sync` bereit. Beide kommunizieren ausschließlich mit der lokalen OmniRoute-API. `status` führt ein schreibgeschütztes `GET /api/radar/status` aus; `sync` sendet einmalig `POST /api/radar/sync-all` und gibt für jeden Feed ein Ergebnis aus. Keiner der beiden Befehle liest, akzeptiert oder gibt den Supporter-Key aus, und keiner kontaktiert den Radar-Dienst direkt.
+Die CLI stellt `pusula radar status` und `pusula radar sync` bereit. Beide kommunizieren ausschließlich mit der lokalen Pusula-API. `status` führt ein schreibgeschütztes `GET /api/radar/status` aus; `sync` sendet einmalig `POST /api/radar/sync-all` und gibt für jeden Feed ein Ergebnis aus. Keiner der beiden Befehle liest, akzeptiert oder gibt den Supporter-Key aus, und keiner kontaktiert den Radar-Dienst direkt.
 
 ---
 
@@ -584,7 +584,7 @@ diese Verzögerung, indem er in einem eigenen, deutlich kürzeren Intervall sync
 // Antwortkörper von GET /v1/referrals/latest (Ed25519-signiert, derselbe fest
 // hinterlegte Schlüssel wie beim Katalog-Feed):
 {
-  feed: "omniroute-radar-referrals",
+  feed: "pusula-radar-referrals",
   schemaVersion: 1,
   generatedAt: string,           // ISO — deterministisch: max(updatedAt) über alle
                                   // Empfehlungslinks, sodass zwei identische Anfragen exakt
@@ -601,7 +601,7 @@ diese Verzögerung, indem er in einem eigenen, deutlich kürzeren Intervall sync
 
 Anders als der Katalog-Feed enthält dieser Körper überhaupt kein `tier`-Feld — der Server
 entscheidet pro Anfrage anhand des `Authorization`-Schlüssels, was einbezogen wird, sodass
-der Antwort-Header `x-omniroute-feed-tier` die EINZIGE Quelle für den bereitgestellten Tarif
+der Antwort-Header `x-pusula-feed-tier` die EINZIGE Quelle für den bereitgestellten Tarif
 ist (`referralsSync.ts::syncRadarReferrals`); ein fehlender/nicht erkannter Header führt zur
 Herabstufung auf `"community"`, der Annahme mit den geringsten Berechtigungen.
 `RadarReferralsFeedSchema` (`src/lib/radar/referralsFeedSchema.ts`) validiert den gesamten
@@ -732,9 +732,9 @@ Lose Kopplung als bewusstes Designprinzip:
 Ein Fork oder Selbsthoster, der die vollständige Kontrolle über den Katalog haben möchte, kann einen eigenen Feed-Dienst betreiben, ohne den Client-Code zu ändern:
 
 1. Stellen Sie einen Endpunkt `GET /v1/catalog/latest` bereit, der einen JSON-Body zurückgibt, der `RadarFeedSchema` (`src/lib/radar/feedSchema.ts`) erfüllt — auf oberster Ebene `feed:
-"omniroute-radar"`, `schemaVersion: 2`, `version`, `tier`, `providers`, `models`,
-   `quirks` und `totals`. Berücksichtigen Sie `x-omniroute-radar-schema: 2`; ein übergangskompatibler Server sollte Anfragen ohne diesen Header standardmäßig mit einem separat signierten v1-Artefakt beantworten.
-2. Signieren Sie die exakten Antwortbytes mit einem Ed25519-Schlüsselpaar und geben Sie die Base64-Signatur im Antwort-Header `x-omniroute-feed-signature` zurück.
+"pusula-radar"`, `schemaVersion: 2`, `version`, `tier`, `providers`, `models`,
+   `quirks` und `totals`. Berücksichtigen Sie `x-pusula-radar-schema: 2`; ein übergangskompatibler Server sollte Anfragen ohne diesen Header standardmäßig mit einem separat signierten v1-Artefakt beantworten.
+2. Signieren Sie die exakten Antwortbytes mit einem Ed25519-Schlüsselpaar und geben Sie die Base64-Signatur im Antwort-Header `x-pusula-feed-signature` zurück.
 3. Setzen Sie `RADAR_FEED_URL` auf die neue Basis-URL und `RADAR_FEED_PUBKEY` auf den zugehörigen öffentlichen Schlüssel (Base64-DER-SPKI oder PEM) — siehe die
    [Referenz der Umgebungsvariablen](../reference/ENVIRONMENT.md#27-radar-feed-self-hosting).
 4. Aktivieren Sie `RADAR_ENABLED` und stimmen Sie über `POST /api/radar/settings` zu
@@ -745,9 +745,9 @@ Es sind keine weiteren Codeänderungen erforderlich — `verifyFeedBytes()` übe
 Empfehlungslinks (siehe [Empfehlungslinks (kostenlose Guthaben)](#referral-links-free-credits)
 oben) sind ein separates, optionales Artefakt: Ein Fork, der nur `/v1/catalog/latest` bereitstellt, funktioniert weiterhin vollständig — `syncRadarReferrals()` wechselt bei einem `404` von `/v1/referrals/latest` auf `{ status: "error" }`, und der Cache bleibt einfach leer, sodass `GET /api/radar/referrals` weiterhin `{ fixed: [], campaigns: [], tier: null }` zurückgibt, anstatt den Rest der Seite fehlschlagen zu lassen. Um zusätzlich Empfehlungslinks anzubieten, stellen Sie `GET /v1/referrals/latest` so bereit, dass es `RadarReferralsFeedSchema` (`src/lib/radar/referralsFeedSchema.ts`) erfüllt, und signieren Sie es mit demselben Ed25519-Schlüsselpaar wie den Katalog-Feed.
 
-Supporter-Angebote sind ein weiteres optionales Artefakt. Um sie bereitzustellen, implementieren Sie `GET /v1/offers/latest` mit dem geschlossenen `RadarOffersFeedSchema` (`src/lib/radar/offersFeedSchema.ts`), verlangen Sie eine aktive Berechtigung, geben Sie `x-omniroute-feed-tier: live` zurück und signieren Sie die exakten Bytes mit demselben Schlüssel. Bei einem Fork, der diesen Endpunkt weglässt, bleibt das Verhalten von Katalog und Empfehlungen unverändert; die Aktualisierung der Angebote schlägt ohne destruktive Auswirkungen fehl, und der zuletzt verifizierte lokale Angebots-Cache bleibt verfügbar.
+Supporter-Angebote sind ein weiteres optionales Artefakt. Um sie bereitzustellen, implementieren Sie `GET /v1/offers/latest` mit dem geschlossenen `RadarOffersFeedSchema` (`src/lib/radar/offersFeedSchema.ts`), verlangen Sie eine aktive Berechtigung, geben Sie `x-pusula-feed-tier: live` zurück und signieren Sie die exakten Bytes mit demselben Schlüssel. Bei einem Fork, der diesen Endpunkt weglässt, bleibt das Verhalten von Katalog und Empfehlungen unverändert; die Aktualisierung der Angebote schlägt ohne destruktive Auswirkungen fehl, und der zuletzt verifizierte lokale Angebots-Cache bleibt verfügbar.
 
-Intel ist auf dieselbe Weise optional. Ein Selbsthoster kann `GET /v1/intel/latest` mithilfe von `RadarIntelFeedSchema` (`src/lib/radar/intelFeedSchema.ts`) bereitstellen, eine aktive Berechtigung verlangen, `x-omniroute-feed-tier: live` zurückgeben und die exakten Bytes mit dem gemeinsamen Ed25519-Schlüssel signieren. Wird der Endpunkt weggelassen, bleiben Katalog, Empfehlungen und Angebote unverändert; die Intel-Aktualisierung bewahrt den letzten verifizierten lokalen Snapshot auf.
+Intel ist auf dieselbe Weise optional. Ein Selbsthoster kann `GET /v1/intel/latest` mithilfe von `RadarIntelFeedSchema` (`src/lib/radar/intelFeedSchema.ts`) bereitstellen, eine aktive Berechtigung verlangen, `x-pusula-feed-tier: live` zurückgeben und die exakten Bytes mit dem gemeinsamen Ed25519-Schlüssel signieren. Wird der Endpunkt weggelassen, bleiben Katalog, Empfehlungen und Angebote unverändert; die Intel-Aktualisierung bewahrt den letzten verifizierten lokalen Snapshot auf.
 
 ---
 

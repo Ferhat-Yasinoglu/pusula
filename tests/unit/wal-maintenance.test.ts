@@ -219,7 +219,7 @@ const db = {
   close: () => real.close(),
 };
 const persisted = () => Number(real.prepare("SELECT value FROM key_value WHERE namespace='walMaintenance' AND key='busyTotal'").get()?.value ?? 0);
-const env = { OMNIROUTE_WAL_PASSIVE_INTERVAL_MS: "60" };
+const env = { PUSULA_WAL_PASSIVE_INTERVAL_MS: "60" };
 const out = {};
 startWalMaintenance(db, file, env);
 out.restoredAtBoot = getWalMaintenanceState().busyTotal;
@@ -250,7 +250,7 @@ test("boot wiring: restores the persisted total, never writes on a busy tick, fl
   const { pathToFileURL } = await import("node:url");
   const { tryOpenSync } = await import("../../src/lib/db/adapters/driverFactory.ts");
 
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-wal-boot-"));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-wal-boot-"));
   const file = path.join(dir, "storage.sqlite");
   const seed = tryOpenSync(file);
   if (!seed) {
@@ -319,58 +319,58 @@ test("getWalPassiveIntervalMs parses env: garbage falls back to the 5m default",
   const DEF = 5 * 60 * 1000;
   assert.equal(getWalPassiveIntervalMs({}), DEF, "unset -> default");
   assert.equal(
-    getWalPassiveIntervalMs({ OMNIROUTE_WAL_PASSIVE_INTERVAL_MS: "" }),
+    getWalPassiveIntervalMs({ PUSULA_WAL_PASSIVE_INTERVAL_MS: "" }),
     DEF,
     "empty -> default"
   );
   assert.equal(
-    getWalPassiveIntervalMs({ OMNIROUTE_WAL_PASSIVE_INTERVAL_MS: "  " }),
+    getWalPassiveIntervalMs({ PUSULA_WAL_PASSIVE_INTERVAL_MS: "  " }),
     DEF,
     "whitespace -> default"
   );
   assert.equal(
-    getWalPassiveIntervalMs({ OMNIROUTE_WAL_PASSIVE_INTERVAL_MS: "abc" }),
+    getWalPassiveIntervalMs({ PUSULA_WAL_PASSIVE_INTERVAL_MS: "abc" }),
     DEF,
     "non-numeric -> default"
   );
   assert.equal(
-    getWalPassiveIntervalMs({ OMNIROUTE_WAL_PASSIVE_INTERVAL_MS: "-50" }),
+    getWalPassiveIntervalMs({ PUSULA_WAL_PASSIVE_INTERVAL_MS: "-50" }),
     DEF,
     "negative -> default"
   );
   assert.equal(
-    getWalPassiveIntervalMs({ OMNIROUTE_WAL_PASSIVE_INTERVAL_MS: "Infinity" }),
+    getWalPassiveIntervalMs({ PUSULA_WAL_PASSIVE_INTERVAL_MS: "Infinity" }),
     DEF,
     "non-finite -> default"
   );
 });
 
 test("getWalPassiveIntervalMs: '0' disables the scheduler, valid values pass through", () => {
-  assert.equal(getWalPassiveIntervalMs({ OMNIROUTE_WAL_PASSIVE_INTERVAL_MS: "0" }), 0);
-  assert.equal(getWalPassiveIntervalMs({ OMNIROUTE_WAL_PASSIVE_INTERVAL_MS: "60000" }), 60000);
-  assert.equal(getWalPassiveIntervalMs({ OMNIROUTE_WAL_PASSIVE_INTERVAL_MS: " 60000 " }), 60000);
+  assert.equal(getWalPassiveIntervalMs({ PUSULA_WAL_PASSIVE_INTERVAL_MS: "0" }), 0);
+  assert.equal(getWalPassiveIntervalMs({ PUSULA_WAL_PASSIVE_INTERVAL_MS: "60000" }), 60000);
+  assert.equal(getWalPassiveIntervalMs({ PUSULA_WAL_PASSIVE_INTERVAL_MS: " 60000 " }), 60000);
 });
 
 test("getWalGuardMaxBytes parses env: garbage falls back to the 256MB default", () => {
   const DEF = 256 * 1024 * 1024;
   assert.equal(getWalGuardMaxBytes({}), DEF, "unset -> default");
   assert.equal(
-    getWalGuardMaxBytes({ OMNIROUTE_WAL_GUARD_MAX_MB: "abc" }),
+    getWalGuardMaxBytes({ PUSULA_WAL_GUARD_MAX_MB: "abc" }),
     DEF,
     "non-numeric -> default"
   );
   assert.equal(
-    getWalGuardMaxBytes({ OMNIROUTE_WAL_GUARD_MAX_MB: "0" }),
+    getWalGuardMaxBytes({ PUSULA_WAL_GUARD_MAX_MB: "0" }),
     DEF,
     "below 1MB -> default"
   );
   assert.equal(
-    getWalGuardMaxBytes({ OMNIROUTE_WAL_GUARD_MAX_MB: "0.5" }),
+    getWalGuardMaxBytes({ PUSULA_WAL_GUARD_MAX_MB: "0.5" }),
     DEF,
     "fractional below 1 -> default"
   );
   assert.equal(
-    getWalGuardMaxBytes({ OMNIROUTE_WAL_GUARD_MAX_MB: "512" }),
+    getWalGuardMaxBytes({ PUSULA_WAL_GUARD_MAX_MB: "512" }),
     512 * 1024 * 1024,
     "valid MB value -> bytes"
   );

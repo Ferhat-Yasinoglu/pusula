@@ -54,7 +54,7 @@ function removeQuietly(dir: string): void {
  * test.after(cleanup);
  * ```
  */
-export function createTempDataDir(prefix = "omniroute-test-"): {
+export function createTempDataDir(prefix = "pusula-test-"): {
   dir: string;
   cleanup: () => Promise<void>;
 } {

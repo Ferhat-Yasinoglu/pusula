@@ -4,7 +4,7 @@
 
 ---
 
-این سند مرجع رسمی تمام دروازههای کیفیت CI در OmniRoute است.
+این سند مرجع رسمی تمام دروازههای کیفیت CI در Pusula است.
 این سند هر دروازه، مواردی که اعتبارسنجی میکند، job مربوط به CI که در آن اجرا میشود، اینکه آیا از
 خط مبنای ratchet یا سیاست قبول/رد استفاده میکند، و اینکه آیا build را مسدود میکند یا صرفاً جنبه مشورتی دارد، شرح میدهد.
 
@@ -26,7 +26,7 @@
 
 | کار                                              | دامنه                                                                                                                                                                                                                    | مسدودکننده                                                                              |
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------- |
-| `Build (advisory)`                               | PRهای کدِ غیرپیشنویس و شاخههای صف Mergify؛ Node 24، `npm-ci-retry`، `check:node-runtime`، اجرای `npm run build` با `OMNIROUTE_USE_TURBOPACK=1`؛ بدون بارگذاری artifact، زیرا هیچ کار کیفیتیِ پاییندستی آن را مصرف نمیکند | **مشورتی** (`continue-on-error: true`؛ پس از یک هفته اجرای پایدار PRهای انتشار حذف شود) |
+| `Build (advisory)`                               | PRهای کدِ غیرپیشنویس و شاخههای صف Mergify؛ Node 24، `npm-ci-retry`، `check:node-runtime`، اجرای `npm run build` با `PUSULA_USE_TURBOPACK=1`؛ بدون بارگذاری artifact، زیرا هیچ کار کیفیتیِ پاییندستی آن را مصرف نمیکند | **مشورتی** (`continue-on-error: true`؛ پس از یک هفته اجرای پایدار PRهای انتشار حذف شود) |
 | `Docs Gates (fast-path)`                         | PRهای مستندات/کد؛ ارجاعهای مستندات API و docs-all                                                                                                                                                                        | بله                                                                                     |
 | `Fast Quality Gates`                             | PRهای کد؛ بررسیهای ایستا، typecheck، typecheck داشبورد، تستهای واحدِ تحت تأثیر                                                                                                                                           | بله                                                                                     |
 | `Forgotten sibling tests`                        | PRهای کد؛ ردیابی ماژولهای تغییریافته تا مصرفکنندگان ایستا و تستهای همتای کاندید؛ مسیرهای barrel و dynamic-import بهصورت تشخیصهای مشورتی گزارش میشوند، همراه با استثناهای allowlist ارجاعشده                              | **مشورتی**                                                                              |
@@ -227,7 +227,7 @@ BASE_REF=origin/release/vX.Y.Z npm run i18n:check-value-drift
 | `nightly-property`     | تستهای property مبتنی بر fast-check با seed تصادفی و تعداد اجرای بالا                                                                                            | **مشورتی** |
 | `nightly-resilience`   | gate رشد heap، تزریق خطای chaos، آزمون بار/soak با k6                                                                                                            | **مشورتی** |
 | `nightly-llm-security` | محافظ تزریق promptfoo (حالت block) + پروبهای garak (بدون secret ارائهدهنده نادیده گرفته میشوند)                                                                  | **مشورتی** |
-| `nightly-schemathesis` | fuzzing قرارداد OpenAPI با schemathesis روی یک OmniRoute زنده با استفاده از `docs/openapi.yaml` — نقضهای spec / خطاهای 500 مدیریتنشده را آشکار میکند (فاز 8 B.4) | **مشورتی** |
+| `nightly-schemathesis` | fuzzing قرارداد OpenAPI با schemathesis روی یک Pusula زنده با استفاده از `docs/openapi.yaml` — نقضهای spec / خطاهای 500 مدیریتنشده را آشکار میکند (فاز 8 B.4) | **مشورتی** |
 | `nightly-mutation`     | امتیاز mutation-testing در Stryker برای مسیر سریع unit — mutantهای باقیمانده، assertهای ضعیف را آشکار میکنند                                                     | **مشورتی** |
 | `nightly-compat`       | ماتریس سازگاری موتور Node در بازههای پشتیبانیشدهٔ `engines.node`                                                                                                 | **مشورتی** |
 
@@ -330,7 +330,7 @@ git add quality-baseline.json
 ### ratchet مربوط به CodeQL: تناوب نوسازی و اجرای دستی
 
 `check:codeql-ratchet` **وضعیت repo را میخواند که طبق یک زمانبندی نوسازی میشود — نه بهازای هر PR.**
-`gh api repos/diegosouzapw/OmniRoute/code-scanning/default-setup` مقادیر
+`gh api repos/Ferhat-Yasinoglu/pusula/code-scanning/default-setup` مقادیر
 `state: configured` و `schedule: weekly` را گزارش میکند: اسکن default-setup گیتهاب، نه تحلیلی بهازای هر push.
 نتیجه: پس از merge شدن PRای که هشدارها را رفع میکند، ratchet تا زمان اجرای اسکن زمانبندیشده بعدی
 همچنان تعداد قدیمی و بالاتر را میخواند — بنابراین تا زمانی که اسکن بهروز شود، در هر PR باز،
@@ -482,7 +482,7 @@ SLOهای هدف پس از راهاندازی تلهمتری آزمونهای ن
 
 ## ابزارهای عامل: LSP-in-the-loop (اختیاری)
 
-فراتر از دروازههای CI، OmniRoute یک چارچوب `agent-lsp` **اختیاری** ارائه میکند
+فراتر از دروازههای CI، Pusula یک چارچوب `agent-lsp` **اختیاری** ارائه میکند
 (یک `.mcp.json` در سطح پروژه، فاز ۷ وظیفهٔ ۱۵). `.mcp.json` را ایجاد کنید
 تا یک سرور زبان TypeScript را در اختیار عاملهای کدنویسی قرار دهد و آنها نمادها /
 عیبیابیها را **پیش از** نوشتن کد بررسی کنند — مکملی برای کامپایل پیش از ادعا در کنار
@@ -582,7 +582,7 @@ SLOهای هدف پس از راهاندازی تلهمتری آزمونهای ن
 خطای قرمز را با
 `node scripts/i18n/sync-ui-keys.mjs --locale=<codes> --translate-markers --batch-size=40` برطرف کنید، یا
 همهٔ زبانها را بهصورت موازی با `npm run i18n:translate-new-keys` اجرا کنید (`scripts/i18n/translate-new-keys.sh`،
-ایمن برای حالت detached و بدون متغیرهای محیطی `OMNIROUTE_TRANSLATION_*` از شروع خودداری میکند).
+ایمن برای حالت detached و بدون متغیرهای محیطی `PUSULA_TRANSLATION_*` از شروع خودداری میکند).
 کلیدی که باید انگلیسی بماند (نام ثابتشدهٔ محصول/موتور/پرچم) باید در `scripts/i18n/untranslatable-keys.json`
 قرار گیرد، نه پشت یک نشانگر. `vi` نشانگرها را بهطور کامل ممنوع میکند
 (`tests/unit/i18n-vi-completeness.test.ts`).

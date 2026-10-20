@@ -51,8 +51,8 @@ describe("formatCompressionAnnotation", () => {
     assert.ok(result.includes("dedupx2"), `missing dedupx2 in: ${result}`);
   });
 
-  it("is ASCII-only so it survives HTTP header (X-OmniRoute-Compression) construction", () => {
-    // Regression: the annotation is appended to the X-OmniRoute-Compression response
+  it("is ASCII-only so it survives HTTP header (X-Pusula-Compression) construction", () => {
+    // Regression: the annotation is appended to the X-Pusula-Compression response
     // header, a latin-1 ByteString. A non-ASCII char (e.g. U+2192 →) throws at
     // Headers/Response construction → 500 on every compressed response with rules.
     const stats = makeStats({
@@ -67,9 +67,9 @@ describe("formatCompressionAnnotation", () => {
       );
     }
     // Must not throw at real Headers/Response construction.
-    assert.doesNotThrow(() => new Headers({ "X-OmniRoute-Compression": value }));
-    const res = new Response(null, { headers: { "X-OmniRoute-Compression": value } });
-    assert.equal(res.headers.get("X-OmniRoute-Compression"), value);
+    assert.doesNotThrow(() => new Headers({ "X-Pusula-Compression": value }));
+    const res = new Response(null, { headers: { "X-Pusula-Compression": value } });
+    assert.equal(res.headers.get("X-Pusula-Compression"), value);
   });
 
   it("orders rule counts descending by count", () => {
@@ -110,7 +110,7 @@ describe("formatCompressionAnnotation", () => {
     );
     assert.ok(annotation.endsWith(", ..."), `expected truncation marker in: ${annotation}`);
     assert.doesNotThrow(
-      () => new Response(null, { headers: { "X-OmniRoute-Compression": annotation } })
+      () => new Response(null, { headers: { "X-Pusula-Compression": annotation } })
     );
   });
 
@@ -125,7 +125,7 @@ describe("formatCompressionAnnotation", () => {
       `expected a sanitized rule name in: ${annotation}`
     );
     assert.doesNotThrow(
-      () => new Response(null, { headers: { "X-OmniRoute-Compression": annotation } })
+      () => new Response(null, { headers: { "X-Pusula-Compression": annotation } })
     );
   });
 

@@ -15,7 +15,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-cache-read-13746-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-cache-read-13746-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../src/lib/db/core.ts");
@@ -104,8 +104,8 @@ test("implausible usage repair clears nested cache-read details before normaliza
 });
 
 test("Responses SSE metadata uses normalized nested cache-read usage", async () => {
-  const previous = process.env.OMNIROUTE_SSE_COMMENTS;
-  process.env.OMNIROUTE_SSE_COMMENTS = "on";
+  const previous = process.env.PUSULA_SSE_COMMENTS;
+  process.env.PUSULA_SSE_COMMENTS = "on";
   try {
     const output = await readSse([
       `event: response.completed\ndata: ${JSON.stringify({
@@ -122,10 +122,10 @@ test("Responses SSE metadata uses normalized nested cache-read usage", async () 
       })}\n\n`,
     ]);
 
-    assert.match(output, /: x-omniroute-response-cost=0\.1090000000/);
+    assert.match(output, /: x-pusula-response-cost=0\.1090000000/);
   } finally {
-    if (previous === undefined) delete process.env.OMNIROUTE_SSE_COMMENTS;
-    else process.env.OMNIROUTE_SSE_COMMENTS = previous;
+    if (previous === undefined) delete process.env.PUSULA_SSE_COMMENTS;
+    else process.env.PUSULA_SSE_COMMENTS = previous;
   }
 });
 

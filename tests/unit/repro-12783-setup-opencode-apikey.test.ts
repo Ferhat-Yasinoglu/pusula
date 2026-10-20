@@ -6,9 +6,9 @@ import { test } from "node:test";
 
 import { resolveOpencodeTarget } from "../../bin/cli/commands/setup-opencode.mjs";
 
-/** Point OMNIROUTE_CONTEXT config resolution at an isolated, throwaway DATA_DIR. */
+/** Point PUSULA_CONTEXT config resolution at an isolated, throwaway DATA_DIR. */
 function withIsolatedContext(contextConfig, fn) {
-  const dir = mkdtempSync(join(tmpdir(), "omniroute-setup-opencode-test-"));
+  const dir = mkdtempSync(join(tmpdir(), "pusula-setup-opencode-test-"));
   const originalDataDir = process.env.DATA_DIR;
   process.env.DATA_DIR = dir;
   writeFileSync(
@@ -29,14 +29,14 @@ function withIsolatedContext(contextConfig, fn) {
 }
 
 function withEnvApiKey(value, fn) {
-  const original = process.env.OMNIROUTE_API_KEY;
-  if (value === undefined) delete process.env.OMNIROUTE_API_KEY;
-  else process.env.OMNIROUTE_API_KEY = value;
+  const original = process.env.PUSULA_API_KEY;
+  if (value === undefined) delete process.env.PUSULA_API_KEY;
+  else process.env.PUSULA_API_KEY = value;
   try {
     return fn();
   } finally {
-    if (original === undefined) delete process.env.OMNIROUTE_API_KEY;
-    else process.env.OMNIROUTE_API_KEY = original;
+    if (original === undefined) delete process.env.PUSULA_API_KEY;
+    else process.env.PUSULA_API_KEY = original;
   }
 }
 
@@ -55,7 +55,7 @@ test("setup-opencode: --api-key typed AFTER the subcommand name is not stolen by
   await program.parseAsync(
     [
       "node",
-      "omniroute",
+      "pusula",
       "setup-opencode",
       "--remote",
       "http://100.64.0.1:20128",
@@ -84,7 +84,7 @@ test("resolveOpencodeTarget: (a) explicit --api-key flag wins over an active con
   });
 });
 
-test("resolveOpencodeTarget: (b) OMNIROUTE_API_KEY env wins over an active context's management token when no flag is passed", () => {
+test("resolveOpencodeTarget: (b) PUSULA_API_KEY env wins over an active context's management token when no flag is passed", () => {
   withEnvApiKey("sk-ENVKEY", () => {
     withIsolatedContext(
       { baseUrl: "http://100.64.0.1:20128", accessToken: "oma_live_CONTEXT_TOKEN" },

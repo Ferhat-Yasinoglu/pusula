@@ -6,15 +6,15 @@
 
 **Status:** Vorschlag (wartet auf Prüfung durch @diegosouzapw)
 **Datum:** 2026-06-20
-**Referenzen:** [#3932](https://github.com/diegosouzapw/OmniRoute/issues/3932), PR #4381
+**Referenzen:** [#3932](https://github.com/Ferhat-Yasinoglu/pusula/issues/3932), PR #4381
 
 ## Kurzfassung
 
-Zwei optionale Compose-Profile (`memory`, `bifrost`) für die bestehende Bereitstellung mit 8 Diensten in [`docker-compose.yml`](../../docker-compose.yml). Das standardmäßige Startverhalten bleibt **unverändert**: 3 × `omniroute`-Replikate + Caddy + Redis + CliproxyAPI. Die beiden neuen Profile fügen Qdrant und Bifrost als optionale Sidecars hinzu, die über `docker compose --profile <name> up` aktiviert werden. **Kein bestehender Dienst wird entfernt oder ersetzt.**
+Zwei optionale Compose-Profile (`memory`, `bifrost`) für die bestehende Bereitstellung mit 8 Diensten in [`docker-compose.yml`](../../docker-compose.yml). Das standardmäßige Startverhalten bleibt **unverändert**: 3 × `pusula`-Replikate + Caddy + Redis + CliproxyAPI. Die beiden neuen Profile fügen Qdrant und Bifrost als optionale Sidecars hinzu, die über `docker compose --profile <name> up` aktiviert werden. **Kein bestehender Dienst wird entfernt oder ersetzt.**
 
 ## Warum dieser Ansatz konservativ ist
 
-Die bestehende Bereitstellungsarchitektur von OmniRoute ist bereits schlank und bewährt:
+Die bestehende Bereitstellungsarchitektur von Pusula ist bereits schlank und bewährt:
 
 - **`redis:7-alpine`** verarbeitet die Rate-Limit- und Cache-Workloads im Produktionsmaßstab.
 - **SQLite + sqlite-vec + FTS5** decken lokalen Speicher sowie Vektor- und Textsuche ab (siehe [`src/lib/memory/vectorStore.ts:108`](../../src/lib/memory/vectorStore.ts)).
@@ -30,14 +30,14 @@ Die beiden Profile sind **Skalierungsoptionen für Bereitstellungen, die an die 
 **Wann sollte es aktiviert werden:**
 
 - > 1 Mio. Embeddings pro Bereitstellung (sqlite-vec wird bei dieser Größenordnung langsamer).
-- Bereitstellung mit mehreren Replikaten, die einen gemeinsamen Vektorstatus für `omniroute-1/2/3` benötigt.
+- Bereitstellung mit mehreren Replikaten, die einen gemeinsamen Vektorstatus für `pusula-1/2/3` benötigt.
 - Es ist bereits ein externer Qdrant-Cluster vorhanden (Qdrant Cloud, On-Premises).
 
 **Was hinzugefügt wird:**
 
 | Dienst   | Image                   | Ports       | Hinweise                                                |
 | -------- | ----------------------- | ----------- | ------------------------------------------------------- |
-| `qdrant` | `qdrant/qdrant:v1.12.4` | `6333` HTTP | HNSW-Index; persistentes Volume `omniroute_qdrant_data` |
+| `qdrant` | `qdrant/qdrant:v1.12.4` | `6333` HTTP | HNSW-Index; persistentes Volume `pusula_qdrant_data` |
 
 **Aktivierung:** `qdrantEnabled = true` in der Einstellungsoberfläche aktivieren **oder** die Umgebungsvariable `QDRANT_HOST=qdrant` setzen. Die Prioritätsregeln (Einstellungstabelle → Umgebungsvariable → Standardwert) sind unter [`src/lib/memory/qdrant.ts:60`](../../src/lib/memory/qdrant.ts) beschrieben.
 
@@ -47,15 +47,15 @@ Die beiden Profile sind **Skalierungsoptionen für Bereitstellungen, die an die 
 
 **Wann sollte es aktiviert werden:**
 
-- Es werden ≥3 `omniroute`-Replikate ausgeführt und die Provider-Rotation soll zentral in einem einzigen Go-Prozess erfolgen.
+- Es werden ≥3 `pusula`-Replikate ausgeführt und die Provider-Rotation soll zentral in einem einzigen Go-Prozess erfolgen.
 - Es soll eine zentrale Audit-/Protokollierungsoberfläche für Anfragen an vorgelagerte Provider über alle Replikate hinweg geben.
-- Die Tier-1-Routingebene soll unabhängig von den OmniRoute-Replikaten horizontal skaliert werden.
+- Die Tier-1-Routingebene soll unabhängig von den Pusula-Replikaten horizontal skaliert werden.
 
 **Was hinzugefügt wird:**
 
 | Dienst    | Image                             | Ports  | Hinweise                                                                           |
 | --------- | --------------------------------- | ------ | ---------------------------------------------------------------------------------- |
-| `bifrost` | `ghcr.io/maximhq/bifrost:v1.6.11` | `8080` | Go-basierter Tier-1-Router; persistentes Protokoll-Volume `omniroute_bifrost_logs` |
+| `bifrost` | `ghcr.io/maximhq/bifrost:v1.6.11` | `8080` | Go-basierter Tier-1-Router; persistentes Protokoll-Volume `pusula_bifrost_logs` |
 
 **Aktivierung:** `BIFROST_BASE_URL=http://bifrost:8080` in `.env.example` setzen. Die bestehende Sidecar-Proxy-Route unter [`src/app/api/v1/relay/chat/completions/bifrost/route.ts`](../../src/app/api/v1/relay/chat/completions/bifrost/route.ts) (hinzugefügt in PR #4381) übernimmt diese Einstellung automatisch.
 
@@ -68,7 +68,7 @@ Im ursprünglichen Issue-Thread wurde eine umfangreichere Überarbeitung des Clu
 | Komponente                           | Entscheidung  | Begründung                                                                                                                    |
 | ------------------------------------ | ------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | **Dragonfly**                        | **VERWORFEN** | `redis:7-alpine` ist für den Rate-Limit-Workload im Produktionsmaßstab bereits ausreichend; es gibt keine Kapazitätsgrenze.   |
-| **NATS**                             | **VERWORFEN** | Jede `omniroute`-Replik ist ein einzelner Node.js-Prozess; es existiert kein prozessübergreifender Pub/Sub-Workload.          |
+| **NATS**                             | **VERWORFEN** | Jede `pusula`-Replik ist ein einzelner Node.js-Prozess; es existiert kein prozessübergreifender Pub/Sub-Workload.          |
 | **PostgreSQL**                       | **VERWORFEN** | SQLite + sqlite-vec + FTS5 decken alle 3 Anwendungsfälle ab; 97 Migrationen + Electron-Paketierung verhindern eine Migration. |
 | **Neo4j**                            | **VERWORFEN** | Das Routing besteht aus einem Join über 5 Tabellen; ein rekursiver CTE unter SQLite ist ausreichend.                          |
 | **MinIO**                            | **VERWORFEN** | Es gibt keinen Multi-MB-Blob-Workload; Bilder/Audiodaten werden über Passthrough-Proxys weitergeleitet.                       |

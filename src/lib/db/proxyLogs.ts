@@ -169,7 +169,7 @@ export type PoolEgressObservationCounts = {
 
 /**
  * How many distinct observed egress IPs served a proxy pool's members since `since`, how
- * many OmniRoute connections went through them, and the most connections seen behind one
+ * many Pusula connections went through them, and the most connections seen behind one
  * egress IP over that window. Members are matched to log rows by host and port, so two
  * registry rows sharing one entry point count together. Only numbers leave this function.
  * `scope` and `scopeId` must already be normalized (normalizeScope and

@@ -5,7 +5,7 @@
 ---
 
 `devin-cli-agentic` ermöglicht es der echten Claude-Code-Laufzeitumgebung, den lokalen Anthropic-
-Messages-Endpunkt von OmniRoute zu verwenden, während die offizielle Devin CLI Modellantworten über ACP stdio
+Messages-Endpunkt von Pusula zu verwenden, während die offizielle Devin CLI Modellantworten über ACP stdio
 bereitstellt. Die bestehenden Anbieter für Anthropic, Claude OAuth, Claude Web oder `devin-cli`
 werden dabei nicht verändert.
 
@@ -15,7 +15,7 @@ werden dabei nicht verändert.
 > Clientseite gesteuerte `Read`-, `Edit`- und `Bash`-Durchläufe, erfolgreiche `npm test`-Ergebnisse,
 > die Erkennung von Projektbefehlen und Skills, ausschließliches Routing über Devin
 > sowie keinerlei ausgehenden Claude-Datenverkehr. Anschließend wurde die Festsetzung auf `2.1.258`
-> angehoben (die CLI-Generation, deren Claude-Identität OmniRoute nachahmt, und die erste Version,
+> angehoben (die CLI-Generation, deren Claude-Identität Pusula nachahmt, und die erste Version,
 > die die Fable-5.1-Stufe nativ ausliefert). Mit der neuen Festsetzung wurden die Installationsschicht
 > und `claude --version` auf dem festgesetzten Basis-Image überprüft; außerdem bestehen die
 > Unit-Test-Suite der Bridge, `compose config` und der statische Isolationsnachweis — das
@@ -27,7 +27,7 @@ werden dabei nicht verändert.
 
 ```text
 Claude Code 2.1.258 (isolierter Linux-Container ohne Root-Rechte)
-  -> http://omniroute:20128/v1/messages
+  -> http://pusula:20128/v1/messages
   -> devin-cli-agentic (Claude-Format, Anbieter ohne Authentifizierung)
   -> devin acp --agent-type summarizer (offizielles ACP stdio, keine Devin-Tools)
   -> Devin-Konto im dedizierten devin-auth-Volume
@@ -49,7 +49,7 @@ Der Parser akzeptiert pro Modelldurchlauf einen einzelnen, eigenständigen `<too
 Er gleicht den Namen mit der Tool-Liste der Anfrage ab, validiert die Argumente anhand des
 JSON-Schemas dieses Tools, lehnt gemischte Erzählungen und Aktionen ab und erlaubt einen
 begrenzten Reparaturversuch. Claude Code führt anschließend den resultierenden Anthropic-`tool_use`
-lokal aus und sendet das `tool_result` über OmniRoute zurück.
+lokal aus und sendet das `tool_result` über Pusula zurück.
 
 ## Isolation und Bedrohungsmodell
 
@@ -59,18 +59,18 @@ Geltungsbereichs und gelten als nicht zulässig. Die Compose-Dienste:
 - werden mit UID/GID `10001:10001`, einem schreibgeschützten Root-Dateisystem, entfernten
   Capabilities und `no-new-privileges` ausgeführt;
 - verwenden ein privates `/home/bridge`, ein dediziertes Claude-Konfigurations-Volume,
-  isolierte OmniRoute-Daten und ein separates `devin-auth`-Volume;
+  isolierte Pusula-Daten und ein separates `devin-auth`-Volume;
 - binden ausschließlich kurzlebige `.sandbox`-Arbeitsbereiche und Nachweise ein;
 - binden weder das Home-Verzeichnis des Hosts noch Keychain, SSH, Cloud-Anmeldedaten oder
   den Docker-Socket ein;
 - erstellen explizite Umgebungen und entfernen Variablen für Anthropic API/OAuth/Routing;
 - leiten Claude-Code-Inferenz ausschließlich mit einem rein lokalen Schlüssel an
-  `http://omniroute:20128` weiter.
+  `http://pusula:20128` weiter.
 
-Das Offline-Profil verwendet ein internes Netzwerk. Im Live-Profil erreicht OmniRoute die
+Das Offline-Profil verwendet ein internes Netzwerk. Im Live-Profil erreicht Pusula die
 offiziellen Devin-Endpunkte ausschließlich über `network-guard`; Verbindungen zu anderen
 Zielen werden verweigert. Claude Code verfügt über eine separate Egress-Sperre und kann über
-`NO_PROXY` ausschließlich den lokalen OmniRoute-Dienst erreichen. Die Audit-Dateien der
+`NO_PROXY` ausschließlich den lokalen Pusula-Dienst erreichen. Die Audit-Dateien der
 Sperren werden ausschließlich von ihrem jeweiligen Sperrprozess eingebunden. Die Skripte
 überprüfen Dateieigentümerschaft, Modus, Link-Anzahl und jede Entscheidung, bevor sie
 tokenfreie Nachweise exportieren.
@@ -150,7 +150,7 @@ Installieren Sie keines der beiden CLI-Tools global auf dem Host und ersetzen Si
 
 ## Diagnose und Bereinigung
 
-- `docker compose -f docker/devin-bridge/compose.yml --profile offline logs omniroute`
+- `docker compose -f docker/devin-bridge/compose.yml --profile offline logs pusula`
   zeigt das lokale Routing und bereinigte Executor-Fehler an.
 - `.sandbox/evidence/mock-acp.jsonl` zeichnet deterministische Mock-ACP-Aktionen auf.
 - `.sandbox/evidence/claude-stream.jsonl` zeichnet den echten Offline-Lauf von Claude Code auf.

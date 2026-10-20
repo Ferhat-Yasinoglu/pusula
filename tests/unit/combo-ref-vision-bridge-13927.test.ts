@@ -13,7 +13,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-process.env.DATA_DIR = `/tmp/omniroute-test-13927-${Date.now()}`;
+process.env.DATA_DIR = `/tmp/pusula-test-13927-${Date.now()}`;
 
 const { getComboVisionBridgeDecision } = await import("../../src/lib/guardrails/visionBridge.ts");
 const combosDb = await import("../../src/lib/db/combos.ts");

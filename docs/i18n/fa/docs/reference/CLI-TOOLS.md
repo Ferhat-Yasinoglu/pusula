@@ -1,4 +1,4 @@
-# CLI Tools — OmniRoute (فارسی)
+# CLI Tools — Pusula (فارسی)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../reference/CLI-TOOLS.md) · 🇪🇹 [am](../../../am/docs/reference/CLI-TOOLS.md) · 🇸🇦 [ar](../../../ar/docs/reference/CLI-TOOLS.md) · 🇦🇿 [az](../../../az/docs/reference/CLI-TOOLS.md) · 🇧🇬 [bg](../../../bg/docs/reference/CLI-TOOLS.md) · 🇧🇩 [bn](../../../bn/docs/reference/CLI-TOOLS.md) · 🇧🇦 [bs](../../../bs/docs/reference/CLI-TOOLS.md) · 🇨🇿 [cs](../../../cs/docs/reference/CLI-TOOLS.md) · 🇩🇰 [da](../../../da/docs/reference/CLI-TOOLS.md) · 🇩🇪 [de](../../../de/docs/reference/CLI-TOOLS.md) · 🇬🇷 [el](../../../el/docs/reference/CLI-TOOLS.md) · 🇪🇸 [es](../../../es/docs/reference/CLI-TOOLS.md) · 🇪🇪 [et](../../../et/docs/reference/CLI-TOOLS.md) · 🇫🇮 [fi](../../../fi/docs/reference/CLI-TOOLS.md) · 🇫🇷 [fr](../../../fr/docs/reference/CLI-TOOLS.md) · 🇮🇪 [ga](../../../ga/docs/reference/CLI-TOOLS.md) · 🇮🇳 [gu](../../../gu/docs/reference/CLI-TOOLS.md) · 🇳🇬 [ha](../../../ha/docs/reference/CLI-TOOLS.md) · 🇮🇱 [he](../../../he/docs/reference/CLI-TOOLS.md) · 🇮🇳 [hi](../../../hi/docs/reference/CLI-TOOLS.md) · 🇭🇷 [hr](../../../hr/docs/reference/CLI-TOOLS.md) · 🇭🇺 [hu](../../../hu/docs/reference/CLI-TOOLS.md) · 🇦🇲 [hy](../../../hy/docs/reference/CLI-TOOLS.md) · 🇮🇩 [id](../../../id/docs/reference/CLI-TOOLS.md) · 🇳🇬 [ig](../../../ig/docs/reference/CLI-TOOLS.md) · 🇮🇹 [it](../../../it/docs/reference/CLI-TOOLS.md) · 🇯🇵 [ja](../../../ja/docs/reference/CLI-TOOLS.md) · 🇬🇪 [ka](../../../ka/docs/reference/CLI-TOOLS.md) · 🇰🇭 [km](../../../km/docs/reference/CLI-TOOLS.md) · 🇮🇳 [kn](../../../kn/docs/reference/CLI-TOOLS.md) · 🇰🇷 [ko](../../../ko/docs/reference/CLI-TOOLS.md) · 🇱🇹 [lt](../../../lt/docs/reference/CLI-TOOLS.md) · 🇱🇻 [lv](../../../lv/docs/reference/CLI-TOOLS.md) · 🇮🇳 [ml](../../../ml/docs/reference/CLI-TOOLS.md) · 🇮🇳 [mr](../../../mr/docs/reference/CLI-TOOLS.md) · 🇲🇾 [ms](../../../ms/docs/reference/CLI-TOOLS.md) · 🇲🇹 [mt](../../../mt/docs/reference/CLI-TOOLS.md) · 🇲🇲 [my](../../../my/docs/reference/CLI-TOOLS.md) · 🇳🇵 [ne](../../../ne/docs/reference/CLI-TOOLS.md) · 🇳🇱 [nl](../../../nl/docs/reference/CLI-TOOLS.md) · 🇳🇴 [no](../../../no/docs/reference/CLI-TOOLS.md) · 🇮🇳 [or](../../../or/docs/reference/CLI-TOOLS.md) · 🇮🇳 [pa](../../../pa/docs/reference/CLI-TOOLS.md) · 🇵🇭 [phi](../../../phi/docs/reference/CLI-TOOLS.md) · 🇵🇱 [pl](../../../pl/docs/reference/CLI-TOOLS.md) · 🇵🇹 [pt](../../../pt/docs/reference/CLI-TOOLS.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/reference/CLI-TOOLS.md) · 🇷🇴 [ro](../../../ro/docs/reference/CLI-TOOLS.md) · 🇷🇺 [ru](../../../ru/docs/reference/CLI-TOOLS.md) · 🇱🇰 [si](../../../si/docs/reference/CLI-TOOLS.md) · 🇸🇰 [sk](../../../sk/docs/reference/CLI-TOOLS.md) · 🇸🇮 [sl](../../../sl/docs/reference/CLI-TOOLS.md) · 🇷🇸 [sr](../../../sr/docs/reference/CLI-TOOLS.md) · 🇸🇪 [sv](../../../sv/docs/reference/CLI-TOOLS.md) · 🇰🇪 [sw](../../../sw/docs/reference/CLI-TOOLS.md) · 🇮🇳 [ta](../../../ta/docs/reference/CLI-TOOLS.md) · 🇮🇳 [te](../../../te/docs/reference/CLI-TOOLS.md) · 🇹🇭 [th](../../../th/docs/reference/CLI-TOOLS.md) · 🇹🇷 [tr](../../../tr/docs/reference/CLI-TOOLS.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/reference/CLI-TOOLS.md) · 🇵🇰 [ur](../../../ur/docs/reference/CLI-TOOLS.md) · 🇺🇿 [uz](../../../uz/docs/reference/CLI-TOOLS.md) · 🇻🇳 [vi](../../../vi/docs/reference/CLI-TOOLS.md) · 🇳🇬 [yo](../../../yo/docs/reference/CLI-TOOLS.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/reference/CLI-TOOLS.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/reference/CLI-TOOLS.md)
 
@@ -6,13 +6,13 @@
 
 آخرین بهروزرسانی: 2026-08-23
 
-OmniRoute با سه دسته از ابزارهای CLI که در سه صفحهٔ اختصاصی داشبورد قرار دارند، یکپارچه میشود:
+Pusula با سه دسته از ابزارهای CLI که در سه صفحهٔ اختصاصی داشبورد قرار دارند، یکپارچه میشود:
 
 | صفحه           | مسیر                    | مفهوم                                                                                        | تعداد             |
 | -------------- | ----------------------- | -------------------------------------------------------------------------------------------- | ----------------- |
-| **CLI Code's** | `/dashboard/cli-code`   | ابزارهای کدنویسی که به OmniRoute متصل میکنید (Client → CLI → OmniRoute → Provider)           | 26                |
-| **CLI Agents** | `/dashboard/cli-agents` | عاملهای خودمختاری که به OmniRoute متصل میکنید (همان جریان، با دامنهای گستردهتر)              | 10                |
-| **ACP Agents** | `/dashboard/acp-agents` | ابزارهای CLI که OmniRoute آنها را از طریق stdio/ACP بهعنوان backend اجرا میکند (جریان معکوس) | رجیستری را ببینید |
+| **CLI Code's** | `/dashboard/cli-code`   | ابزارهای کدنویسی که به Pusula متصل میکنید (Client → CLI → Pusula → Provider)           | 26                |
+| **CLI Agents** | `/dashboard/cli-agents` | عاملهای خودمختاری که به Pusula متصل میکنید (همان جریان، با دامنهای گستردهتر)              | 10                |
+| **ACP Agents** | `/dashboard/acp-agents` | ابزارهای CLI که Pusula آنها را از طریق stdio/ACP بهعنوان backend اجرا میکند (جریان معکوس) | رجیستری را ببینید |
 
 مسیرهای قدیمی با کد 308 هدایت میشوند: `/dashboard/cli-tools` → `/dashboard/cli-code`، `/dashboard/agents` → `/dashboard/acp-agents`.
 
@@ -24,14 +24,14 @@ OmniRoute با سه دسته از ابزارهای CLI که در سه صفحهٔ
 کدهای CLI / نمایندگان CLI (جریان مصرف):
 Claude / Codex / OpenCode / Cline / KiloCode / Continue / Hermes Agent / Goose / ...
            │
-           ▼  (همه به OmniRoute اشاره می‌کنند)
+           ▼  (همه به Pusula اشاره می‌کنند)
     http://YOUR_SERVER:20128/v1
            │
-           ▼  (OmniRoute به ارائه‌دهنده صحیح هدایت می‌کند)
+           ▼  (Pusula به ارائه‌دهنده صحیح هدایت می‌کند)
     Anthropic / OpenAI / Gemini / DeepSeek / Groq / Mistral / ...
 
 نمایندگان ACP (جریان ایجاد معکوس):
-    درخواست مشتری → OmniRoute → CLI را از طریق stdio/ACP ایجاد می‌کند → پاسخ
+    درخواست مشتری → Pusula → CLI را از طریق stdio/ACP ایجاد می‌کند → پاسخ
 ```
 
 **مزایا:**
@@ -45,25 +45,25 @@ Claude / Codex / OpenCode / Cline / KiloCode / Continue / Hermes Agent / Goose /
 
 ## پیکربندی خودکار با `setup-*`
 
-لازم نیست پیکربندی هر ابزار را به صورت دستی بنویسید. OmniRoute برای هر CLI پشتیبانی شده یک دستور `setup-*` ارائه میدهد که کاتالوگ مدل **زنده** را از یک OmniRoute در حال اجرا (محلی یا از راه دور) میخواند و پیکربندی خود ابزار را روی دستگاه شما مینویسد:
+لازم نیست پیکربندی هر ابزار را به صورت دستی بنویسید. Pusula برای هر CLI پشتیبانی شده یک دستور `setup-*` ارائه میدهد که کاتالوگ مدل **زنده** را از یک Pusula در حال اجرا (محلی یا از راه دور) میخواند و پیکربندی خود ابزار را روی دستگاه شما مینویسد:
 
 ```bash
-omniroute setup-codex        omniroute setup-claude       omniroute setup-opencode
-omniroute setup-cline        omniroute setup-kilo         omniroute setup-continue
-omniroute setup-cursor       omniroute setup-roo          omniroute setup-crush
-omniroute setup-goose        omniroute setup-qwen         omniroute setup-aider
-omniroute setup-5dive
+pusula setup-codex        pusula setup-claude       pusula setup-opencode
+pusula setup-cline        pusula setup-kilo         pusula setup-continue
+pusula setup-cursor       pusula setup-roo          pusula setup-crush
+pusula setup-goose        pusula setup-qwen         pusula setup-aider
+pusula setup-5dive
 ```
 
-هر کدام `--remote <url> --api-key <key>` (پیکربندی یک ابزار محلی در برابر یک OmniRoute از راه دور)، `--dry-run` (پیشنمایش بدون نوشتن) و `--port` را میپذیرد. ابزارهایی که قابلیت کشف خودکار مدل را ندارند (Cline, Kilo, Roo, Goose, Aider, Qwen, 5dive) از `--model <id>` (و `--yes` برای اجرای غیرتعاملی) استفاده میکنند. `setup-5dive` تنها دستورالعملی است که در `$HOME` نمینویسد: این دستور با نوشتن یک پروفایل احراز هویت متعلق به روت روی هاست فلیت، یک فلیت عامل 5dive را پیکربندی میکند، بنابراین از طریق `sudo` مجدداً اجرا میشود و حالت از راه دور خاص خود را ندارد. برای راهاندازی یک CLI با تزریق محیط صحیح و بدون نوشتن هیچ پیکربندی، از راهانداز عمومی `omniroute run <target>` استفاده کنید (claude, codex, aider, goose, opencode, qwen, gemini — اهداف و نامهای مستعار از `bin/cli/cli-manifest.mjs` میآیند)؛ راهاندازهای قدیمیتر برای هر ابزار `omniroute launch` (Claude Code) و `omniroute launch-codex` (Codex) همچنان در دسترس هستند. Gemini CLI فقط برای راهاندازی است: این یک هدف `omniroute run` است اما دستورالعمل `setup-*`/`configure` ندارد.
+هر کدام `--remote <url> --api-key <key>` (پیکربندی یک ابزار محلی در برابر یک Pusula از راه دور)، `--dry-run` (پیشنمایش بدون نوشتن) و `--port` را میپذیرد. ابزارهایی که قابلیت کشف خودکار مدل را ندارند (Cline, Kilo, Roo, Goose, Aider, Qwen, 5dive) از `--model <id>` (و `--yes` برای اجرای غیرتعاملی) استفاده میکنند. `setup-5dive` تنها دستورالعملی است که در `$HOME` نمینویسد: این دستور با نوشتن یک پروفایل احراز هویت متعلق به روت روی هاست فلیت، یک فلیت عامل 5dive را پیکربندی میکند، بنابراین از طریق `sudo` مجدداً اجرا میشود و حالت از راه دور خاص خود را ندارد. برای راهاندازی یک CLI با تزریق محیط صحیح و بدون نوشتن هیچ پیکربندی، از راهانداز عمومی `pusula run <target>` استفاده کنید (claude, codex, aider, goose, opencode, qwen, gemini — اهداف و نامهای مستعار از `bin/cli/cli-manifest.mjs` میآیند)؛ راهاندازهای قدیمیتر برای هر ابزار `pusula launch` (Claude Code) و `pusula launch-codex` (Codex) همچنان در دسترس هستند. Gemini CLI فقط برای راهاندازی است: این یک هدف `pusula run` است اما دستورالعمل `setup-*`/`configure` ندارد.
 
 > **مرجع کامل:** جدول اصلی — آنچه هر دستور مینویسد، هر پرچم، محلی در مقابل از راه دور، و کدام ابزارها به پسوند `/v1` نیاز دارند — در **[CLI Integrations](../guides/CLI-INTEGRATIONS.md)** قرار دارد.
 
 ### اجرای این موارد در داخل یک کانتینر
 
-یک دستور `setup-*` که در داخل کانتینر OmniRoute اجرا میشود، در دایرکتوری خانگی خود کانتینر مینویسد، که هیچ CLI هاست آن را نمیخواند و با حذف کانتینر ناپدید میشود. OmniRoute این را تشخیص میدهد و به جای نوشتن، با کد `2` و دستورالعملها خارج میشود. دو راه حل پشتیبانی شده وجود دارد — CLI را روی هاست نصب کنید و با `omniroute connect` به کانتینر متصل شوید، یا دایرکتوریهای پیکربندی را bind-mount کرده و `CLI_CONFIG_HOME` را تنظیم کنید (پروفایل `host` کامپوز). هر دستور `setup-*`، به علاوه `omniroute configure` و `omniroute config set`، پرچم `--allow-container-write` را میپذیرد، زمانی که منظور شما واقعاً پیکربندی CLIهای خود کانتینر است؛ `OMNIROUTE_ALLOW_CONTAINER_CONFIG_WRITE=true` همین کار را برای سرور انجام میدهد. به [Docker Guide → Configuring host CLI tools](../guides/DOCKER_GUIDE.md#configuring-host-cli-tools-when-omniroute-runs-in-docker) مراجعه کنید.
+یک دستور `setup-*` که در داخل کانتینر Pusula اجرا میشود، در دایرکتوری خانگی خود کانتینر مینویسد، که هیچ CLI هاست آن را نمیخواند و با حذف کانتینر ناپدید میشود. Pusula این را تشخیص میدهد و به جای نوشتن، با کد `2` و دستورالعملها خارج میشود. دو راه حل پشتیبانی شده وجود دارد — CLI را روی هاست نصب کنید و با `pusula connect` به کانتینر متصل شوید، یا دایرکتوریهای پیکربندی را bind-mount کرده و `CLI_CONFIG_HOME` را تنظیم کنید (پروفایل `host` کامپوز). هر دستور `setup-*`، به علاوه `pusula configure` و `pusula config set`، پرچم `--allow-container-write` را میپذیرد، زمانی که منظور شما واقعاً پیکربندی CLIهای خود کانتینر است؛ `PUSULA_ALLOW_CONTAINER_CONFIG_WRITE=true` همین کار را برای سرور انجام میدهد. به [Docker Guide → Configuring host CLI tools](../guides/DOCKER_GUIDE.md#configuring-host-cli-tools-when-pusula-runs-in-docker) مراجعه کنید.
 
-نقطه پایانی **apply** داشبورد (`POST /api/cli-tools/apply`) همان محافظ را اعمال میکند: در یک کانتینر، یک عملیات نوشتن که هدف آن از هاست bind-mount نشده باشد، با کد **`422`** و `containerEphemeralTarget: true`، متن خطای ایمن و — برای ابزارهایی با دستورالعمل هاست (claude, codex, opencode, cline, kilo, continue) — یک `hostSetupCommand` (مثلاً `omniroute setup-opencode`) برای اجرا روی هاست به جای آن پاسخ میدهد؛ چیزی نوشته نمیشود. `dryRun: true` در حالت کانتینر به کار خود ادامه میدهد و یک پیشنمایش ویرایششده + مسیر هدف را بدون دست زدن به دیسک برمیگرداند. محتوای پیشنمایش یک پیکربندی حاوی اعتبارنامه برای کپی یا وارد کردن نیست. با ابزار اصلی/URL پایه/کلید API/ورودیهای مدل روی هاست اعمال کنید، یا از دستور راهاندازی سمت هاست که نشان داده شده است استفاده کنید. برای هدر پیشنمایش و قرارداد درخواست، به [CLI configuration security](../security/CLI-CONFIGURATION.md) مراجعه کنید. این رفتار عمدی است و توسط `tests/unit/api/cli-tools/apply-container-guard.test.ts` در برابر رگرسیون محافظت میشود — هرگز یک خطای 422 را با حذف محافظ "رفع" نکنید.
+نقطه پایانی **apply** داشبورد (`POST /api/cli-tools/apply`) همان محافظ را اعمال میکند: در یک کانتینر، یک عملیات نوشتن که هدف آن از هاست bind-mount نشده باشد، با کد **`422`** و `containerEphemeralTarget: true`، متن خطای ایمن و — برای ابزارهایی با دستورالعمل هاست (claude, codex, opencode, cline, kilo, continue) — یک `hostSetupCommand` (مثلاً `pusula setup-opencode`) برای اجرا روی هاست به جای آن پاسخ میدهد؛ چیزی نوشته نمیشود. `dryRun: true` در حالت کانتینر به کار خود ادامه میدهد و یک پیشنمایش ویرایششده + مسیر هدف را بدون دست زدن به دیسک برمیگرداند. محتوای پیشنمایش یک پیکربندی حاوی اعتبارنامه برای کپی یا وارد کردن نیست. با ابزار اصلی/URL پایه/کلید API/ورودیهای مدل روی هاست اعمال کنید، یا از دستور راهاندازی سمت هاست که نشان داده شده است استفاده کنید. برای هدر پیشنمایش و قرارداد درخواست، به [CLI configuration security](../security/CLI-CONFIGURATION.md) مراجعه کنید. این رفتار عمدی است و توسط `tests/unit/api/cli-tools/apply-container-guard.test.ts` در برابر رگرسیون محافظت میشود — هرگز یک خطای 422 را با حذف محافظ "رفع" نکنید.
 
 ---
 
@@ -92,8 +92,8 @@ omniroute setup-5dive
 | ------------------- | ---------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
 | **کاتالوگ شده**     | در کاتالوگ داشبورد ظاهر می‌شود (نام، فروشنده، مستندات، نوع پیکربندی)               | `src/shared/constants/cliTools.ts` (`CLI_TOOLS`)                  |
 | **قابل شناسایی**    | شناسایی باینری/پیکربندی، بررسی سلامت، مسیرهای پیکربندی                             | `src/shared/services/cliRuntime.ts` (`CLI_TOOLS` runtime catalog) |
-| **قابل پیکربندی**   | توسط `omniroute configure <cli>` پشتیبانی می‌شود (دستورالعمل راه‌اندازی وجود دارد) | `bin/cli/cli-manifest.mjs` (`configure: true`)                    |
-| **قابل راه‌اندازی** | توسط `omniroute run <target>` پشتیبانی می‌شود (تزریق env/args تعریف شده)           | `bin/cli/cli-manifest.mjs` (`run: true`)                          |
+| **قابل پیکربندی**   | توسط `pusula configure <cli>` پشتیبانی می‌شود (دستورالعمل راه‌اندازی وجود دارد) | `bin/cli/cli-manifest.mjs` (`configure: true`)                    |
+| **قابل راه‌اندازی** | توسط `pusula run <target>` پشتیبانی می‌شود (تزریق env/args تعریف شده)           | `bin/cli/cli-manifest.mjs` (`run: true`)                          |
 
 `bin/cli/cli-manifest.mjs` مانفیست اجرایی رسمی برای دستورات CLI است: `run`، `configure` و تولیدکنندگان تکمیل شل همه لیست‌های هدف، حل نام مستعار (به عنوان مثال `kilocode`/`kilo-code`/`kilo_cli` → `kilo`) و اتصال پرچم `--model` را از آن استخراج می‌کنند. نگهبان انحراف
 `tests/unit/cli/cli-manifest-drift.test.ts` تأیید می‌کند که مانفیست، کاتالوگ زمان اجرا، کاتالوگ UI و هر سطح مصرف‌کننده در همگام بمانند — هدفی که به یک سطح اضافه می‌شود بدون اینکه به دیگران اضافه شود، به جای انحراف بی‌صدا، آزمون را شکست می‌دهد.
@@ -153,7 +153,7 @@ omniroute setup-5dive
 
 ## 3. عامل‌های ACP (/dashboard/acp-agents)
 
-این صفحه (که از `/dashboard/agents` تغییر نام داده است) CLIهایی را نشان می‌دهد که OmniRoute می‌تواند به عنوان موتورهای اجرایی backend از طریق پروتکل stdio/ACP **ایجاد** کند. کاتالوگ به طور جداگانه در `src/lib/acp/registry.ts` نگهداری می‌شود و **همانند** `CLI_TOOLS` نیست.
+این صفحه (که از `/dashboard/agents` تغییر نام داده است) CLIهایی را نشان می‌دهد که Pusula می‌تواند به عنوان موتورهای اجرایی backend از طریق پروتکل stdio/ACP **ایجاد** کند. کاتالوگ به طور جداگانه در `src/lib/acp/registry.ts` نگهداری می‌شود و **همانند** `CLI_TOOLS` نیست.
 
 ---
 
@@ -216,7 +216,7 @@ interface ToolBatchStatus {
 | `POST /api/cli-tools/codewhale-settings`    | CodeWhale (OPENAI_BASE_URL, primary + legacy `~/.deepseek` sync) |
 | `POST /api/cli-tools/smelt-settings`        | Smelt                                                            |
 | `POST /api/cli-tools/pi-settings`           | Pi coding agent                                                  |
-| `POST /api/cli-tools/grok-build-settings`   | Grok Build (~/.grok/config.toml, `[model.omniroute]`)            |
+| `POST /api/cli-tools/grok-build-settings`   | Grok Build (~/.grok/config.toml, `[model.pusula]`)            |
 | `POST /api/cli-tools/qwen-settings`         | Qwen Code (`~/.qwen/settings.json` + dedicated `.env` key)       |
 
 تمام مسیرها از `sanitizeErrorMessage()` برای پاسخ‌های خطا استفاده می‌کنند (قانون سخت شماره ۱۲).
@@ -276,7 +276,7 @@ interface ToolBatchStatus {
 
 ## 9. شروع سریع
 
-### مرحله 1 — دریافت کلید API OmniRoute
+### مرحله 1 — دریافت کلید API Pusula
 
 1. به `/dashboard/api-manager` بروید → **ایجاد کلید API**
 2. یک نام به آن بدهید (مثلاً `cli-tools`) و تمام مجوزها را انتخاب کنید
@@ -309,7 +309,7 @@ npm install -g kilocode
 # Qwen Code
 npm install -g @qwen-code/qwen-code
 
-# Google Gemini CLI (قابل راه‌اندازی از طریق `omniroute run gemini` → /v1beta surface)
+# Google Gemini CLI (قابل راه‌اندازی از طریق `pusula run gemini` → /v1beta surface)
 npm install -g @google/gemini-cli
 
 # Aider
@@ -340,14 +340,14 @@ cargo install smelt  # مبتنی بر Rust
 ### مرحله 4 — تنظیم متغیرهای محیطی جهانی
 
 ```bash
-# نقطه پایانی جهانی OmniRoute
+# نقطه پایانی جهانی Pusula
 export OPENAI_BASE_URL="http://localhost:20128/v1"
-export OPENAI_API_KEY="sk-your-omniroute-key"
+export OPENAI_API_KEY="sk-your-pusula-key"
 export ANTHROPIC_BASE_URL="http://localhost:20128"
-export ANTHROPIC_AUTH_TOKEN="sk-your-omniroute-key"
+export ANTHROPIC_AUTH_TOKEN="sk-your-pusula-key"
 # Gemini CLI در ROOT متغیر GOOGLE_GEMINI_BASE_URL را می‌خواند (SDK آن به طور خودکار /v1beta/... را اضافه می‌کند)
 export GOOGLE_GEMINI_BASE_URL="http://localhost:20128"
-export GEMINI_API_KEY="sk-your-omniroute-key"
+export GEMINI_API_KEY="sk-your-pusula-key"
 ```
 
 > برای **سرور از راه دور** `localhost:20128` را با IP یا دامنه سرور جایگزین کنید،
@@ -365,7 +365,7 @@ mkdir -p ~/.claude && cat > ~/.claude/settings.json << EOF
 {
   "env": {
     "ANTHROPIC_BASE_URL": "http://localhost:20128",
-    "ANTHROPIC_AUTH_TOKEN": "sk-your-omniroute-key"
+    "ANTHROPIC_AUTH_TOKEN": "sk-your-pusula-key"
   }
 }
 EOF
@@ -379,19 +379,19 @@ EOF
 
 #### OpenAI Codex
 
-Codex مدرن (v0.137+) فقط `~/.codex/config.toml` را می‌خواند — `config.yaml` قدیمی متعلق به CLI قدیمی npm است و به طور خاموش نادیده گرفته می‌شود. کلید API در متغیر محیطی `OMNIROUTE_API_KEY` (`env_key`) باقی می‌ماند و هرگز در داخل فایل نیست:
+Codex مدرن (v0.137+) فقط `~/.codex/config.toml` را می‌خواند — `config.yaml` قدیمی متعلق به CLI قدیمی npm است و به طور خاموش نادیده گرفته می‌شود. کلید API در متغیر محیطی `PUSULA_API_KEY` (`env_key`) باقی می‌ماند و هرگز در داخل فایل نیست:
 
 ```bash
 mkdir -p ~/.codex && cat > ~/.codex/config.toml << EOF
-model_provider = "omniroute"
+model_provider = "pusula"
 
-[model_providers.omniroute]
-name                 = "OmniRoute"
+[model_providers.pusula]
+name                 = "Pusula"
 base_url             = "http://localhost:20128/v1"
-env_key              = "OMNIROUTE_API_KEY"
+env_key              = "PUSULA_API_KEY"
 requires_openai_auth = false
 EOF
-export OMNIROUTE_API_KEY="sk-your-omniroute-key"
+export PUSULA_API_KEY="sk-your-pusula-key"
 ```
 
 مرجع کامل (پروفایل‌ها، `wire_api`، پنجره‌های زمینه): [CODEX-CLI-CONFIGURATION.md](../guides/CODEX-CLI-CONFIGURATION.md).
@@ -407,12 +407,12 @@ mkdir -p ~/.config/opencode && cat > ~/.config/opencode/opencode.json << EOF
 {
   "\$schema": "https://opencode.ai/config.json",
   "provider": {
-    "omniroute": {
+    "pusula": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "OmniRoute",
+      "name": "Pusula",
       "options": {
         "baseURL": "http://localhost:20128/v1",
-        "apiKey": "sk-your-omniroute-key"
+        "apiKey": "sk-your-pusula-key"
       },
       "models": {
         "claude-sonnet-4-5": { "name": "claude-sonnet-4-5" },
@@ -427,7 +427,7 @@ EOF
 
 **آزمایش:** `opencode`
 
-> از `opencode run "your prompt" --model omniroute/claude-sonnet-4-5-thinking --variant high`
+> از `opencode run "your prompt" --model pusula/claude-sonnet-4-5-thinking --variant high`
 > برای ارسال واریانت‌های تفکر استفاده کنید.
 
 ---
@@ -441,7 +441,7 @@ mkdir -p ~/.cline/data && cat > ~/.cline/data/globalState.json << EOF
 {
   "apiProvider": "openai",
   "openAiBaseUrl": "http://localhost:20128/v1",
-  "openAiApiKey": "sk-your-omniroute-key"
+  "openAiApiKey": "sk-your-pusula-key"
 }
 EOF
 ```
@@ -449,7 +449,7 @@ EOF
 **حالت VS Code:**
 تنظیمات افزونه Cline → ارائه‌دهنده API: `OpenAI Compatible` → URL پایه: `http://localhost:20128/v1`
 
-یا از داشبورد OmniRoute استفاده کنید → **CLI Tools → Cline → Apply Config**.
+یا از داشبورد Pusula استفاده کنید → **CLI Tools → Cline → Apply Config**.
 
 ---
 
@@ -458,7 +458,7 @@ EOF
 **حالت CLI:**
 
 ```bash
-kilocode --api-base http://localhost:20128/v1 --api-key sk-your-omniroute-key
+kilocode --api-base http://localhost:20128/v1 --api-key sk-your-pusula-key
 ```
 
 **تنظیمات VS Code:**
@@ -466,11 +466,11 @@ kilocode --api-base http://localhost:20128/v1 --api-key sk-your-omniroute-key
 ```json
 {
   "kilo-code.openAiBaseUrl": "http://localhost:20128/v1",
-  "kilo-code.apiKey": "sk-your-omniroute-key"
+  "kilo-code.apiKey": "sk-your-pusula-key"
 }
 ```
 
-یا از داشبورد OmniRoute استفاده کنید → **CLI Tools → KiloCode → Apply Config**.
+یا از داشبورد Pusula استفاده کنید → **CLI Tools → KiloCode → Apply Config**.
 
 ---
 
@@ -480,11 +480,11 @@ kilocode --api-base http://localhost:20128/v1 --api-key sk-your-omniroute-key
 
 ```yaml
 models:
-  - name: OmniRoute
+  - name: Pusula
     provider: openai
     model: auto
     apiBase: http://localhost:20128/v1
-    apiKey: sk-your-omniroute-key
+    apiKey: sk-your-pusula-key
     default: true
 ```
 
@@ -494,25 +494,25 @@ models:
 
 #### VS Code Insiders (`chatLanguageModels.json`)
 
-از این مورد زمانی استفاده کنید که VS Code Insiders برای مدل‌های نقطه پایانی سفارشی پیکربندی شده و می‌خواهید OmniRoute بدون فیلد هدر سفارشی کار کند.
+از این مورد زمانی استفاده کنید که VS Code Insiders برای مدل‌های نقطه پایانی سفارشی پیکربندی شده و می‌خواهید Pusula بدون فیلد هدر سفارشی کار کند.
 
 **محل توصیه شده:**
 
 - لینوکس: `~/.config/Code - Insiders/User/chatLanguageModels.json`
 - ویندوز: `%APPDATA%/Code - Insiders/User/chatLanguageModels.json`
 
-**مثال با استفاده از نام مستعار توکن‌شده OmniRoute:**
+**مثال با استفاده از نام مستعار توکن‌شده Pusula:**
 
 ```json
 [
   {
     "vendor": "customendpoint",
     "id": "auto",
-    "name": "OmniRoute Auto",
+    "name": "Pusula Auto",
     "family": "gpt-4",
     "version": "1.0.0",
-    "url": "http://localhost:20128/api/v1/vscode/sk-your-omniroute-key/chat/completions",
-    "modelsUrl": "http://localhost:20128/api/v1/vscode/sk-your-omniroute-key/models",
+    "url": "http://localhost:20128/api/v1/vscode/sk-your-pusula-key/chat/completions",
+    "modelsUrl": "http://localhost:20128/api/v1/vscode/sk-your-pusula-key/models",
     "requestFormat": "openai-chat-completions",
     "contextWindow": 256000,
     "maxOutputTokens": 32768,
@@ -525,7 +525,7 @@ models:
 
 **نکات:**
 
-- `sk-your-omniroute-key` را با کلید API ایجاد شده در OmniRoute جایگزین کنید.
+- `sk-your-pusula-key` را با کلید API ایجاد شده در Pusula جایگزین کنید.
 - فیلد `url` باید به `/api/v1/vscode/{token}/chat/completions` اشاره کند.
 - فیلد `modelsUrl` باید به `/api/v1/vscode/{token}/models` اشاره کند.
 - در صورت پشتیبانی کلاینت از هدرهای سفارشی، از جریان معمول `/v1` + هدر Bearer استفاده کنید.
@@ -539,39 +539,39 @@ models:
 # به حساب AWS/Kiro خود وارد شوید:
 kiro-cli login
 
-# CLI از احراز هویت خود استفاده می‌کند — OmniRoute به عنوان backend برای Kiro CLI خود لازم نیست.
-# از kiro-cli در کنار OmniRoute برای ابزارهای دیگر استفاده کنید.
+# CLI از احراز هویت خود استفاده می‌کند — Pusula به عنوان backend برای Kiro CLI خود لازم نیست.
+# از kiro-cli در کنار Pusula برای ابزارهای دیگر استفاده کنید.
 kiro-cli status
 ```
 
-برای برنامه دسکتاپ **Kiro IDE**، از نقطه پایانی MITM که توسط OmniRoute در زیر `/dashboard/cli-tools → Kiro` در دسترس است استفاده کنید.
+برای برنامه دسکتاپ **Kiro IDE**، از نقطه پایانی MITM که توسط Pusula در زیر `/dashboard/cli-tools → Kiro` در دسترس است استفاده کنید.
 
 ---
 
-## 10. رابط خط فرمان داخلی OmniRoute
+## 10. رابط خط فرمان داخلی Pusula
 
-فایل اجرایی `omniroute` فرمانهایی را برای چرخه عمر سرور، راهاندازی، عیبیابی و مدیریت ارائهدهندگان فراهم میکند. نقطه ورود: `bin/omniroute.mjs`.
+فایل اجرایی `pusula` فرمانهایی را برای چرخه عمر سرور، راهاندازی، عیبیابی و مدیریت ارائهدهندگان فراهم میکند. نقطه ورود: `bin/pusula.mjs`.
 
 ```bash
-omniroute                              # راهاندازی سرور (پورت پیشفرض 20128)
-omniroute setup                        # جادوگر راهاندازی تعاملی
-omniroute doctor                       # بررسی پیکربندی، پایگاه داده، پورتها و محیط اجرا
-omniroute providers list               # اتصالهای پیکربندیشده ارائهدهندگان
-omniroute providers test-all           # آزمایش همه اتصالهای فعال
-omniroute reset-password               # بازنشانی گذرواژه مدیر
-omniroute logs                         # پخش زنده گزارشهای درخواست
-omniroute health                       # جزئیات سلامت (مدارشکنها، حافظه نهان، حافظه)
-omniroute --version                    # نمایش نسخه
-omniroute --help                       # نمایش همه فرمانها
+pusula                              # راهاندازی سرور (پورت پیشفرض 20128)
+pusula setup                        # جادوگر راهاندازی تعاملی
+pusula doctor                       # بررسی پیکربندی، پایگاه داده، پورتها و محیط اجرا
+pusula providers list               # اتصالهای پیکربندیشده ارائهدهندگان
+pusula providers test-all           # آزمایش همه اتصالهای فعال
+pusula reset-password               # بازنشانی گذرواژه مدیر
+pusula logs                         # پخش زنده گزارشهای درخواست
+pusula health                       # جزئیات سلامت (مدارشکنها، حافظه نهان، حافظه)
+pusula --version                    # نمایش نسخه
+pusula --help                       # نمایش همه فرمانها
 ```
 
 ### راهاندازی و مقداردهی اولیه
 
 ```bash
-omniroute setup                        # جادوگر راهاندازی تعاملی
-omniroute setup --non-interactive      # حالت CI/خودکارسازی (خواندن متغیرهای محیطی و فلگها)
-omniroute setup --password '<value>'   # تنظیم مستقیم گذرواژه مدیر
-omniroute setup --add-provider \
+pusula setup                        # جادوگر راهاندازی تعاملی
+pusula setup --non-interactive      # حالت CI/خودکارسازی (خواندن متغیرهای محیطی و فلگها)
+pusula setup --password '<value>'   # تنظیم مستقیم گذرواژه مدیر
+pusula setup --add-provider \
   --provider openai \
   --api-key '<value>' \
   --test-provider                      # افزودن و آزمایش یک ارائهدهنده در یک مرحله
@@ -581,21 +581,21 @@ omniroute setup --add-provider \
 
 | متغیر               | هدف                                                                   |
 | ------------------- | --------------------------------------------------------------------- |
-| `OMNIROUTE_API_KEY` | کلید API ارائهدهنده (اتصال به `--api-key` از طریق Commander `.env()`) |
-| `DATA_DIR`          | بازنویسی مسیر پوشه داده OmniRoute                                     |
+| `PUSULA_API_KEY` | کلید API ارائهدهنده (اتصال به `--api-key` از طریق Commander `.env()`) |
+| `DATA_DIR`          | بازنویسی مسیر پوشه داده Pusula                                     |
 
 سایر ورودیهای غیرتعاملی بهصورت فلگ ارسال میشوند، نه متغیر محیطی:
 `--password`، `--provider`، `--provider-name`، `--provider-base-url`، `--default-model`
-(گزینههای `omniroute setup` در بالا را ببینید).
+(گزینههای `pusula setup` در بالا را ببینید).
 
 ### عیبیابی
 
 ```bash
-omniroute doctor                       # بررسی پیکربندی، پایگاه داده، پورتها، محیط اجرا، حافظه و زندهبودن
-omniroute doctor --json                # JSON قابلخواندن توسط ماشین
-omniroute doctor --no-liveness         # رد کردن کاوش سلامت HTTP
-omniroute doctor --host 0.0.0.0        # بازنویسی میزبان بررسی زندهبودن
-omniroute doctor --liveness-url <url>  # بازنویسی کامل URL نقطه پایانی سلامت
+pusula doctor                       # بررسی پیکربندی، پایگاه داده، پورتها، محیط اجرا، حافظه و زندهبودن
+pusula doctor --json                # JSON قابلخواندن توسط ماشین
+pusula doctor --no-liveness         # رد کردن کاوش سلامت HTTP
+pusula doctor --host 0.0.0.0        # بازنویسی میزبان بررسی زندهبودن
+pusula doctor --liveness-url <url>  # بازنویسی کامل URL نقطه پایانی سلامت
 ```
 
 فرمان doctor این بررسیها را اجرا میکند: `Config`، `Database`، `Storage/encryption`،
@@ -605,47 +605,47 @@ omniroute doctor --liveness-url <url>  # بازنویسی کامل URL نقطه 
 ### مدیریت ارائهدهندگان
 
 ```bash
-omniroute providers available                       # کاتالوگ ارائهدهندگان OmniRoute
-omniroute providers available --search openai       # فیلتر کردن کاتالوگ بر اساس شناسه/نام/نام مستعار/دسته
-omniroute providers available --category api-key    # فیلتر بر اساس دسته (api-key، oauth، free، ...)
-omniroute providers available --json                # JSON قابلخواندن توسط ماشین
+pusula providers available                       # کاتالوگ ارائهدهندگان Pusula
+pusula providers available --search openai       # فیلتر کردن کاتالوگ بر اساس شناسه/نام/نام مستعار/دسته
+pusula providers available --category api-key    # فیلتر بر اساس دسته (api-key، oauth، free، ...)
+pusula providers available --json                # JSON قابلخواندن توسط ماشین
 
-omniroute providers list                            # اتصالهای پیکربندیشده ارائهدهندگان
-omniroute providers list --json
+pusula providers list                            # اتصالهای پیکربندیشده ارائهدهندگان
+pusula providers list --json
 
-omniroute providers test <id|name>                  # آزمایش یک اتصال پیکربندیشده
-omniroute providers test-all                        # آزمایش همه اتصالهای فعال
-omniroute providers validate                        # اعتبارسنجی ساختاری صرفاً محلی
-omniroute providers add <provider> --credential-env PROVIDER_KEY
-omniroute providers import ./providers.json --dry-run --json
-omniroute providers auth <provider>                 # جریان OAuth موجود
-omniroute providers edit <id|name> --default-model <model>
-omniroute providers remove <id|name> --yes
+pusula providers test <id|name>                  # آزمایش یک اتصال پیکربندیشده
+pusula providers test-all                        # آزمایش همه اتصالهای فعال
+pusula providers validate                        # اعتبارسنجی ساختاری صرفاً محلی
+pusula providers add <provider> --credential-env PROVIDER_KEY
+pusula providers import ./providers.json --dry-run --json
+pusula providers auth <provider>                 # جریان OAuth موجود
+pusula providers edit <id|name> --default-model <model>
+pusula providers remove <id|name> --yes
 ```
 
 فرمانهای `providers add/import/auth/edit/remove` در درجه اول مبتنی بر API هستند و بنابراین روی
 بافت فعال محلی یا راه دور کار میکنند. برای ورود اطلاعات اعتبارنامه باید از
 `--credential-stdin` یا `--credential-env` استفاده شود؛ `--dry-run --json` فقط
-وجود/ساختار سانسورشده را گزارش میکند. `providers available` کاتالوگ OmniRoute را میخواند؛
+وجود/ساختار سانسورشده را گزارش میکند. `providers available` کاتالوگ Pusula را میخواند؛
 `providers list/test/test-all/validate` رفتار محلی SQLite خود را حفظ میکنند و
 به در حال اجرا بودن سرور نیاز ندارند.
 
 ### بازیابی و بازنشانی
 
 ```bash
-omniroute reset-password                # بازنشانی گذرواژه مدیر (همچنین: omniroute-reset-password)
-omniroute reset-encrypted-columns       # نمایش هشدار و اجرای آزمایشی برای بازنشانی اعتبارنامههای رمزگذاریشده
-omniroute reset-encrypted-columns --force  # تهی کردن واقعی اعتبارنامههای رمزگذاریشده در SQLite
+pusula reset-password                # بازنشانی گذرواژه مدیر (همچنین: pusula-reset-password)
+pusula reset-encrypted-columns       # نمایش هشدار و اجرای آزمایشی برای بازنشانی اعتبارنامههای رمزگذاریشده
+pusula reset-encrypted-columns --force  # تهی کردن واقعی اعتبارنامههای رمزگذاریشده در SQLite
 ```
 
 ### صدور اعتبارنامهها (⚠ با احتیاط استفاده کنید)
 
 ```bash
-omniroute auth export                                 # نمایش هشدار و درخواست تأیید — بدون دسترسی به پایگاه داده
-omniroute auth export --force                          # صدور اعتبارنامههای رمزگشاییشده همه اتصالها به stdout در قالب JSON
-omniroute auth export --force --id <id>                 # صدور فقط اتصال منطبق
-omniroute auth export --force --format env               # تولید خطوط OMNIROUTE_<PROVIDER>_<FIELD>=<value>
-omniroute auth export --force --out creds.json           # نوشتن در فایل (ایجادشده با مجوزهای 0600)
+pusula auth export                                 # نمایش هشدار و درخواست تأیید — بدون دسترسی به پایگاه داده
+pusula auth export --force                          # صدور اعتبارنامههای رمزگشاییشده همه اتصالها به stdout در قالب JSON
+pusula auth export --force --id <id>                 # صدور فقط اتصال منطبق
+pusula auth export --force --format env               # تولید خطوط PUSULA_<PROVIDER>_<FIELD>=<value>
+pusula auth export --force --out creds.json           # نوشتن در فایل (ایجادشده با مجوزهای 0600)
 ```
 
 `auth export` **صرفاً محلی** است (خواندن مستقیم SQLite، بدون مسیر HTTP) و عمداً مقادیر
@@ -657,36 +657,36 @@ omniroute auth export --force --out creds.json           # نوشتن در فا�
 
 ### سایر زیرفرمانها
 
-این فرمانها، مگر آنکه خلاف آن ذکر شده باشد، مستلزم در حال اجرا بودن سرور OmniRoute هستند:
+این فرمانها، مگر آنکه خلاف آن ذکر شده باشد، مستلزم در حال اجرا بودن سرور Pusula هستند:
 
 ```bash
-omniroute status                       # وضعیت جامع زمان اجرا
-omniroute logs                         # پخش زندهٔ گزارش درخواستها (--json، --search، --follow)
-omniroute config list                  # نمایش ابزارهای CLI پیکربندیشده
+pusula status                       # وضعیت جامع زمان اجرا
+pusula logs                         # پخش زندهٔ گزارش درخواستها (--json، --search، --follow)
+pusula config list                  # نمایش ابزارهای CLI پیکربندیشده
 
-omniroute provider list                # فهرست ارائهدهندگان موجود (نام مستعار providers list)
-omniroute provider add                 # ثبت OmniRoute بهعنوان ارائهدهنده در یک ابزار
-omniroute keys add | list | remove     # مدیریت کلیدهای API
-omniroute models [provider]            # فهرست مدلها (--json، --search)
-omniroute combo list | switch | create | delete
+pusula provider list                # فهرست ارائهدهندگان موجود (نام مستعار providers list)
+pusula provider add                 # ثبت Pusula بهعنوان ارائهدهنده در یک ابزار
+pusula keys add | list | remove     # مدیریت کلیدهای API
+pusula models [provider]            # فهرست مدلها (--json، --search)
+pusula combo list | switch | create | delete
 
-omniroute backup                       # تهیهٔ اسنپشات از پیکربندی و DB
-omniroute restore                      # بازیابی از یک اسنپشات قبلی
+pusula backup                       # تهیهٔ اسنپشات از پیکربندی و DB
+pusula restore                      # بازیابی از یک اسنپشات قبلی
 
-omniroute health                       # جزئیات سلامت (قطعکنندهها، کش، حافظه)
-omniroute quota                        # میزان استفاده از سهمیهٔ ارائهدهنده
-omniroute cache                        # وضعیت کش
-omniroute cache clear                  # پاکسازی کشهای معنایی و امضا
+pusula health                       # جزئیات سلامت (قطعکنندهها، کش، حافظه)
+pusula quota                        # میزان استفاده از سهمیهٔ ارائهدهنده
+pusula cache                        # وضعیت کش
+pusula cache clear                  # پاکسازی کشهای معنایی و امضا
 
-omniroute mcp status | restart         # وضعیت / راهاندازی مجدد سرور MCP
-omniroute a2a status | card            # وضعیت سرور A2A / کارت عامل
+pusula mcp status | restart         # وضعیت / راهاندازی مجدد سرور MCP
+pusula a2a status | card            # وضعیت سرور A2A / کارت عامل
 
-omniroute tunnel list | create | stop  # مدیریت تونلها (cloudflare/tailscale/ngrok)
-omniroute env show | get <k> | set <k> <v>  # بررسی / تنظیم متغیرهای محیطی (موقت)
+pusula tunnel list | create | stop  # مدیریت تونلها (cloudflare/tailscale/ngrok)
+pusula env show | get <k> | set <k> <v>  # بررسی / تنظیم متغیرهای محیطی (موقت)
 
-omniroute test                         # آزمون سریع اتصال به ارائهدهنده
-omniroute update                       # بررسی بهروزرسانیها
-omniroute completion                   # تولید تکمیل خودکار پوسته
+pusula test                         # آزمون سریع اتصال به ارائهدهنده
+pusula update                       # بررسی بهروزرسانیها
+pusula completion                   # تولید تکمیل خودکار پوسته
 ```
 
 ### پرچمهای متداول
@@ -715,7 +715,7 @@ omniroute completion                   # تولید تکمیل خودکار پو
 | `/v1/audio/speech`         | تبدیل متن به گفتار               | ElevenLabs، OpenAI TTS                         |
 | `/v1/audio/transcriptions` | تبدیل گفتار به متن               | Deepgram، AssemblyAI                           |
 
-نمونه‌های آماده برای چسباندن با یک URL OmniRoute توکن‌شده:
+نمونه‌های آماده برای چسباندن با یک URL Pusula توکن‌شده:
 
 ```txt
 مثال توکن: sk-a3ab3c080beaee3a-69f4a4-070d71af
@@ -734,7 +734,7 @@ omniroute completion                   # تولید تکمیل خودکار پو
 
 | خطا                                           | علت                                 | راه حل                                                  |
 | --------------------------------------------- | ----------------------------------- | ------------------------------------------------------- |
-| `Connection refused`                          | OmniRoute در حال اجرا نیست          | `omniroute serve`                                       |
+| `Connection refused`                          | Pusula در حال اجرا نیست          | `pusula serve`                                       |
 | `401 Unauthorized`                            | کلید API اشتباه                     | بررسی در `/dashboard/api-manager`                       |
 | `No combo configured`                         | هیچ ترکیب مسیریابی فعالی وجود ندارد | تنظیم در `/dashboard/combos`                            |
 | CLI نشان می‌دهد "not installed"               | باینری در PATH نیست                 | بررسی `which <command>`                                 |

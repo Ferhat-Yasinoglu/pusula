@@ -1,1 +1,1 @@
-- **feat(dashboard):** Add a unified, searchable model catalog across all providers ([#14684](https://github.com/diegosouzapw/OmniRoute/pull/14684)) — thanks @Dattuog
+- **feat(dashboard):** Add a unified, searchable model catalog across all providers ([#14684](https://github.com/Ferhat-Yasinoglu/pusula/pull/14684)) — thanks @Dattuog

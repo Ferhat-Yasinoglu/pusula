@@ -27,7 +27,7 @@
  *     are still swept.
  *
  * Self-isolating: DATA_DIR is pointed at a fresh temp dir BEFORE any `@/lib/db/*`
- * module loads (dynamic imports below), so this file never touches ~/.omniroute
+ * module loads (dynamic imports below), so this file never touches ~/.pusula
  * even when run without tests/_setup/isolateDataDir.ts.
  */
 import { describe, it, after, mock } from "node:test";

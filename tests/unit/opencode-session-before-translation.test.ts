@@ -19,12 +19,12 @@ test("body identity is not forwarded for another provider", () => {
 
 test("OpenCode headers preserve native identity and strip lease-control headers", () => {
   const result = buildExecutorClientHeaders(
-    new Headers({ Session_Id: "native-conversation", "x-omniroute-lease-owner": "private-owner" }),
+    new Headers({ Session_Id: "native-conversation", "x-pusula-lease-owner": "private-owner" }),
     undefined,
     { provider: "opencode" }
   );
   assert.equal(result?.["x-opencode-session"], "native-conversation");
-  assert.equal(result?.["x-omniroute-lease-owner"], undefined);
+  assert.equal(result?.["x-pusula-lease-owner"], undefined);
 });
 
 test("malformed or account-only Claude metadata never becomes conversation identity", () => {

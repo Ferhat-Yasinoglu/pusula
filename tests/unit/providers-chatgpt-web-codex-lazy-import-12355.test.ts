@@ -26,8 +26,8 @@ import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
 
-const STATIC_IMPORT_RE = /^import\s+[\s\S]*?from\s+["']@omniroute\/open-sse\/services\/chatgptWebCodexAdmin\.ts["'];?\s*$/m;
-const DYNAMIC_IMPORT_RE = /await import\(["']@omniroute\/open-sse\/services\/chatgptWebCodexAdmin\.ts["']\)/;
+const STATIC_IMPORT_RE = /^import\s+[\s\S]*?from\s+["']@pusula\/open-sse\/services\/chatgptWebCodexAdmin\.ts["'];?\s*$/m;
+const DYNAMIC_IMPORT_RE = /await import\(["']@pusula\/open-sse\/services\/chatgptWebCodexAdmin\.ts["']\)/;
 
 function readSource(relativePath: string): string {
   return fs.readFileSync(path.join(process.cwd(), relativePath), "utf8");

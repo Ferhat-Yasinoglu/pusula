@@ -4,7 +4,7 @@
 
 ---
 
-OmniRoute چگونه هزینهٔ هر درخواست را تخمین میزند، ثبت میکند و گزارش میدهد — و چرا عدد
+Pusula چگونه هزینهٔ هر درخواست را تخمین میزند، ثبت میکند و گزارش میدهد — و چرا عدد
 داشبورد یک **ردیاب صرفهجویی** است، نه یک صورتحساب.
 
 همچنین ببینید: [راهنمای کاربر](./USER_GUIDE.md) · [گالری قابلیتها](./FEATURES.md)
@@ -13,11 +13,11 @@ OmniRoute چگونه هزینهٔ هر درخواست را تخمین میزند
 
 ## چیست (و چه چیزی نیست)
 
-OmniRoute با ضرب تعداد توکنها در نرخهای قیمتگذاری مدل، برای هر تکمیل یک هزینهٔ دلاری
+Pusula با ضرب تعداد توکنها در نرخهای قیمتگذاری مدل، برای هر تکمیل یک هزینهٔ دلاری
 بهازای هر درخواست تعیین میکند. این اعداد مبنای داشبورد **هزینهها**، رابط خط فرمان
-`omniroute cost` / `omniroute usage`، خروجیهای CSV/JSON و بودجههای هر کلید API هستند.
+`pusula cost` / `pusula usage`، خروجیهای CSV/JSON و بودجههای هر کلید API هستند.
 
-> **«هزینه» در داشبورد یک ردیاب صرفهجویی است، نه یک صورتحساب.** OmniRoute هرگز از شما
+> **«هزینه» در داشبورد یک ردیاب صرفهجویی است، نه یک صورتحساب.** Pusula هرگز از شما
 > هزینهای دریافت نمیکند — بلکه درخواستهایتان را به ارائهدهندگانی هدایت میکند که از قبل
 > متصل کردهاید (اشتراکهای خودتان، سطوح رایگان و کلیدهای API). اگر «هزینهٔ کل ۲۹۰ دلار»
 > کاملاً از مدلهای رایگان ناشی شده باشد، یعنی تقریباً **۲۹۰ دلار است که به یک API پولی
@@ -30,7 +30,7 @@ OmniRoute با ضرب تعداد توکنها در نرخهای قیمتگذار
 
 از آنجا که این عدد تخمینی است:
 
-- به جدول قیمتگذاریای وابسته است که OmniRoute برای هر مدل در اختیار دارد. مدلی که ورودی
+- به جدول قیمتگذاریای وابسته است که Pusula برای هر مدل در اختیار دارد. مدلی که ورودی
   قیمتگذاری نداشته باشد، هزینهٔ `0` ایجاد میکند (در مرورگر بهصورت ردیف «قدیمی / رایگان»
   نمایش داده میشود).
 - ترافیک سطح رایگان و اشتراکی نیز همچنان یک هزینهٔ _تخمینی_ انباشته میکند — این همان
@@ -49,7 +49,7 @@ OmniRoute با ضرب تعداد توکنها در نرخهای قیمتگذار
 2. **قیمتگذاری خارجی همگامشده** — هنگامی که همگامسازی فعال باشد، از فایل عمومی
    `model_prices_and_context_window.json` متعلق به LiteLLM دریافت میشود (در فضای نام جداگانهٔ
    `pricing_synced` ذخیره میشود تا هرگز بازنویسیهای شما را جایگزین نکند).
-3. **مقادیر پیشفرض کدنویسیشده** — همراه OmniRoute ارائه میشوند.
+3. **مقادیر پیشفرض کدنویسیشده** — همراه Pusula ارائه میشوند.
 
 همگامسازی قیمتگذاری خارجی **اختیاری** است و بهطور پیشفرض غیرفعال است. متغیرهای محیطی مرتبط
 (به [`.env.example`](../../.env.example) مراجعه کنید):
@@ -91,8 +91,8 @@ OmniRoute با ضرب تعداد توکنها در نرخهای قیمتگذار
 
   | متغیر محیطی                         | پیشفرض  | هدف                                   |
   | ----------------------------------- | ------- | ------------------------------------- |
-  | `OMNIROUTE_SPEND_FLUSH_INTERVAL_MS` | `60000` | فاصلهٔ تخلیه برحسب میلیثانیه.         |
-  | `OMNIROUTE_SPEND_MAX_BUFFER_SIZE`   | `1000`  | حداکثر ورودیهای بافرشده پیش از تخلیه. |
+  | `PUSULA_SPEND_FLUSH_INTERVAL_MS` | `60000` | فاصلهٔ تخلیه برحسب میلیثانیه.         |
+  | `PUSULA_SPEND_MAX_BUFFER_SIZE`   | `1000`  | حداکثر ورودیهای بافرشده پیش از تخلیه. |
 
 ارقام هزینه در داشبورد از یک مبلغ دلاری ذخیرهشده برای هر ردیف خوانده **نمیشوند** — در عوض،
 هر بار که نقطهٔ پایانی تحلیل اجرا میشود، بر اساس تعداد توکنها و جدول قیمتگذاری فعلی مجدداً
@@ -194,50 +194,50 @@ OmniRoute با ضرب تعداد توکنها در نرخهای قیمتگذار
 
 ## CLI
 
-رابط خط فرمان OmniRoute فرمانهای هزینه، مصرف و قیمتگذاری را ارائه میکند (ثبتشده در
+رابط خط فرمان Pusula فرمانهای هزینه، مصرف و قیمتگذاری را ارائه میکند (ثبتشده در
 [`bin/cli/commands/registry.mjs`](../../bin/cli/commands/registry.mjs)).
 
-### `omniroute cost`
+### `pusula cost`
 
 گزارش هزینه تجمیعشده از `/api/usage/analytics`.
 
 ```bash
-omniroute cost                          # ۳۰ روز گذشته، گروهبندیشده بر اساس ارائهدهنده
-omniroute cost --period 7d              # ۷ روز گذشته
-omniroute cost --group-by model         # گروهبندی بر اساس provider | model | combo | api-key | day
-omniroute cost --since 2026-06-01 --until 2026-06-13
-omniroute cost --api-key <key> --limit 50
+pusula cost                          # ۳۰ روز گذشته، گروهبندیشده بر اساس ارائهدهنده
+pusula cost --period 7d              # ۷ روز گذشته
+pusula cost --group-by model         # گروهبندی بر اساس provider | model | combo | api-key | day
+pusula cost --since 2026-06-01 --until 2026-06-13
+pusula cost --api-key <key> --limit 50
 ```
 
 ستونها: گروه، درخواستها، توکنهای ورودی/خروجی، هزینه (USD) و درصد از کل. یک خط جمع کل
 در انتها نمایش داده میشود (با `--quiet` یا `--output json` نمایش داده نمیشود).
 
-### `omniroute usage`
+### `pusula usage`
 
 ```bash
-omniroute usage analytics --period 30d [--provider <id>]   # خلاصه هزینه بهازای هر ارائهدهنده
-omniroute usage logs [--limit 100] [--follow] [--api-key <k>] [--search <q>]
-omniroute usage quota [--provider <id>] [--check]
-omniroute usage utilization [--api-key <k>]
-omniroute usage history [--limit 100]
-omniroute usage proxy-logs [--limit 100]
+pusula usage analytics --period 30d [--provider <id>]   # خلاصه هزینه بهازای هر ارائهدهنده
+pusula usage logs [--limit 100] [--follow] [--api-key <k>] [--search <q>]
+pusula usage quota [--provider <id>] [--check]
+pusula usage utilization [--api-key <k>]
+pusula usage history [--limit 100]
+pusula usage proxy-logs [--limit 100]
 
 # بودجهها
-omniroute usage budget list
-omniroute usage budget get [scope]
-omniroute usage budget set <amount> [--scope global] [--period monthly]
-omniroute usage budget reset [scope]
+pusula usage budget list
+pusula usage budget get [scope]
+pusula usage budget set <amount> [--scope global] [--period monthly]
+pusula usage budget reset [scope]
 ```
 
-### `omniroute pricing`
+### `pusula pricing`
 
 ```bash
-omniroute pricing list [--provider <p>] [--model <m>] [--limit 200]
-omniroute pricing get <model>
-omniroute pricing sync [--provider <p>] [--force]   # POST /api/pricing/sync
-omniroute pricing diff [--model <m>]
-omniroute pricing defaults show
-omniroute pricing defaults set [--input <p>] [--output <p>] [--cache-read <p>] [--cache-write <p>]
+pusula pricing list [--provider <p>] [--model <m>] [--limit 200]
+pusula pricing get <model>
+pusula pricing sync [--provider <p>] [--force]   # POST /api/pricing/sync
+pusula pricing diff [--model <m>]
+pusula pricing defaults show
+pusula pricing defaults set [--input <p>] [--output <p>] [--cache-read <p>] [--cache-write <p>]
 ```
 
 > `pricing defaults show` دادهها را از `GET /api/pricing/defaults` میخواند. برای ویرایش قیمت
@@ -248,12 +248,12 @@ omniroute pricing defaults set [--input <p>] [--output <p>] [--cache-read <p>] [
 ## عیبیابی
 
 - **همه هزینهها $0 / «قدیمی / رایگان» نمایش داده میشوند.** مدلهای در حال استفاده ورودی قیمتگذاری ندارند.
-  همگامسازی خارجی را فعال کنید (`PRICING_SYNC_ENABLED=true`) و `omniroute pricing sync` را اجرا کنید، یا
+  همگامسازی خارجی را فعال کنید (`PRICING_SYNC_ENABLED=true`) و `pusula pricing sync` را اجرا کنید، یا
   قیمتها را بهصورت دستی از طریق صفحه قیمتگذاری / `PATCH /api/pricing` تنظیم کنید.
 - **قیمت یک مدل قدیمی اشتباه است.** قیمت را اصلاح کنید (با لغو مقدار یا همگامسازی مجدد) — هزینه
   در هر بار خواندن تحلیلها بر اساس تعداد توکنها دوباره محاسبه میشود، بنابراین برآوردها بهصورت عطفبهماسبق بهروزرسانی میشوند.
 - **میزان هزینهکرد از زمان واقعی عقبتر است.** هزینهکرد هر کلید بهصورت دستهای ثبت میشود؛ اگر به اعداد
-  بهروزتری نیاز دارید، مقدار `OMNIROUTE_SPEND_FLUSH_INTERVAL_MS` را کاهش دهید.
+  بهروزتری نیاز دارید، مقدار `PUSULA_SPEND_FLUSH_INTERVAL_MS` را کاهش دهید.
 
 ---
 

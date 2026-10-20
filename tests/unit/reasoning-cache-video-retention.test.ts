@@ -16,7 +16,7 @@ import {
 import { FORMATS } from "../../open-sse/translator/formats.ts";
 import { translateRequest } from "../../open-sse/translator/index.ts";
 
-process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "omniroute-video-reasoning-"));
+process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "pusula-video-reasoning-"));
 process.env.API_KEY_SECRET ||= "reasoning-cache-video-test-secret";
 
 describe("Reasoning Replay Cache — video transcript retention", () => {

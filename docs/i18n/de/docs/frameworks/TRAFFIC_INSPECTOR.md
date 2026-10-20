@@ -4,7 +4,7 @@
 
 ---
 
-Traffic Inspector ist der integrierte HTTPS-Traffic-Debugger von OmniRoute — ein mit Charles Proxy / mitmweb / HTTP Toolkit vergleichbares Tool, das **LLM-fähig** und **Agenten-fähig** ist. Es befindet sich unter `/dashboard/tools/traffic-inspector` und empfängt Live-Traffic von bis zu 5 gleichzeitigen Erfassungsquellen.
+Traffic Inspector ist der integrierte HTTPS-Traffic-Debugger von Pusula — ein mit Charles Proxy / mitmweb / HTTP Toolkit vergleichbares Tool, das **LLM-fähig** und **Agenten-fähig** ist. Es befindet sich unter `/dashboard/tools/traffic-inspector` und empfängt Live-Traffic von bis zu 5 gleichzeitigen Erfassungsquellen.
 
 **Dashboard-Speicherort:** `/dashboard/tools/traffic-inspector`
 **Seitenleistengruppe:** Tools (nach AgentBridge)
@@ -16,7 +16,7 @@ Traffic Inspector ist der integrierte HTTPS-Traffic-Debugger von OmniRoute — e
 
 ### Was Traffic Inspector einzigartig macht
 
-| Funktion                                                                         |  mitmweb  | Charles |  Fiddler  | **OmniRoute Traffic Inspector** |
+| Funktion                                                                         |  mitmweb  | Charles |  Fiddler  | **Pusula Traffic Inspector** |
 | -------------------------------------------------------------------------------- | :-------: | :-----: | :-------: | :-----------------------------: |
 | Webbasiert                                                                       |     ✓     |    ✗    |     ✗     |                ✓                |
 | Open Source                                                                      |     ✓     |    ✗    | teilweise |                ✓                |
@@ -24,7 +24,7 @@ Traffic Inspector ist der integrierte HTTPS-Traffic-Debugger von OmniRoute — e
 | **LLM-fähig** (analysiert OpenAI-/Anthropic-/Gemini-Struktur, Tokens und Modell) |     ✗     |    ✗    |     ✗     |                ✓                |
 | **Modellzuordnung sichtbar** (gemini-3-flash → claude-sonnet-4.7)                |     ✗     |    ✗    |     ✗     |                ✓                |
 | **Getrennte Proxy-/Upstream-Latenz**                                             | teilweise |    ✗    |     ✗     |                ✓                |
-| **In OmniRoute integriert:** Routing, Fallback und Kosten                        |     ✗     |    ✗    |     ✗     |                ✓                |
+| **In Pusula integriert:** Routing, Fallback und Kosten                        |     ✗     |    ✗    |     ✗     |                ✓                |
 | **Systemweites Proxy-Debugging** (jede App auf dem Rechner)                      |     ✓     |    ✓    |     ✓     |                ✓                |
 | **Benutzerdefinierte Host-Erfassung** (DNS-Umleitung pro Host)                   |     ✓     |    ✓    |     ✓     |                ✓                |
 | **HTTP_PROXY-Umgebungsmodus**                                                    |     ✓     |    ✓    |     ✓     |                ✓                |
@@ -263,8 +263,8 @@ interface LlmMetadata {
   tokensIn: number | null; // usage.prompt_tokens / usage.input_tokens
   tokensOut: number | null; // usage.completion_tokens / usage.output_tokens
   streamed: boolean; // true bei einer SSE-Antwort
-  mappedTo: string | null; // x-omniroute-mapped-Header
-  costEstimateUsd: number | null; // geschätzte Kosten auf Grundlage der OmniRoute-Preise
+  mappedTo: string | null; // x-pusula-mapped-Header
+  costEstimateUsd: number | null; // geschätzte Kosten auf Grundlage der Pusula-Preise
 }
 ```
 
@@ -395,7 +395,7 @@ INSPECTOR_HTTP_PROXY_PORT=8888
 
 ### System-Proxy wurde nicht zurückgesetzt
 
-Wenn OmniRoute abstürzt, während der systemweite Proxy-Modus aktiv ist:
+Wenn Pusula abstürzt, während der systemweite Proxy-Modus aktiv ist:
 
 **macOS:**
 
@@ -440,7 +440,7 @@ Basispfad: `/api/tools/traffic-inspector/`
 | GET     | `/requests`                 | Anfragen auflisten (filterbar: `?profile=llm&host=&agent=&status=&source=&sessionId=`) |
 | GET     | `/requests/{id}`            | Details einer einzelnen Anfrage                                                        |
 | DELETE  | `/requests`                 | In-Memory-Puffer leeren                                                                |
-| POST    | `/requests/{id}/replay`     | Dieselbe Anfrage erneut über den OmniRoute-Router ausführen                            |
+| POST    | `/requests/{id}/replay`     | Dieselbe Anfrage erneut über den Pusula-Router ausführen                            |
 | PUT     | `/requests/{id}/annotation` | Notiz zu einer Anfrage speichern oder aktualisieren                                    |
 
 ### WebSocket

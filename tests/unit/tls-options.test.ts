@@ -1,5 +1,5 @@
 /**
- * #5242 (Bug 1C) — opt-in native HTTPS/TLS serving for `omniroute serve`.
+ * #5242 (Bug 1C) — opt-in native HTTPS/TLS serving for `pusula serve`.
  *
  * `resolveTlsOptions` + `createServerListener` (scripts/dev/tls-options.mjs) are
  * the pure decision helpers the CLI (serve.mjs) and the standalone server
@@ -33,7 +33,7 @@ function makeReader(map: Record<string, string>) {
 test("both cert+key provided and readable → returns TLS options", () => {
   const warnings: string[] = [];
   const opts = resolveTlsOptions(
-    { OMNIROUTE_TLS_CERT: "/c/server.crt", OMNIROUTE_TLS_KEY: "/c/server.key" },
+    { PUSULA_TLS_CERT: "/c/server.crt", PUSULA_TLS_KEY: "/c/server.key" },
     { readFileSync: makeReader({ "/c/server.crt": "CERT", "/c/server.key": "KEY" }), warn: (m) => warnings.push(m) }
   );
   assert.ok(opts, "expected non-null TLS options");
@@ -53,29 +53,29 @@ test("neither cert nor key → null, no warning (default HTTP path)", () => {
 test("only cert provided → null + warning (never half-enable TLS)", () => {
   const warnings: string[] = [];
   const opts = resolveTlsOptions(
-    { OMNIROUTE_TLS_CERT: "/c/server.crt" },
+    { PUSULA_TLS_CERT: "/c/server.crt" },
     { warn: (m) => warnings.push(m) }
   );
   assert.equal(opts, null);
   assert.equal(warnings.length, 1);
-  assert.match(warnings[0], /both OMNIROUTE_TLS_CERT and OMNIROUTE_TLS_KEY/);
+  assert.match(warnings[0], /both PUSULA_TLS_CERT and PUSULA_TLS_KEY/);
 });
 
 test("only key provided → null + warning", () => {
   const warnings: string[] = [];
   const opts = resolveTlsOptions(
-    { OMNIROUTE_TLS_KEY: "/c/server.key" },
+    { PUSULA_TLS_KEY: "/c/server.key" },
     { warn: (m) => warnings.push(m) }
   );
   assert.equal(opts, null);
   assert.equal(warnings.length, 1);
-  assert.match(warnings[0], /both OMNIROUTE_TLS_CERT and OMNIROUTE_TLS_KEY/);
+  assert.match(warnings[0], /both PUSULA_TLS_CERT and PUSULA_TLS_KEY/);
 });
 
 test("unreadable path → null + warning, falls back to HTTP (never crash)", () => {
   const warnings: string[] = [];
   const opts = resolveTlsOptions(
-    { OMNIROUTE_TLS_CERT: "/missing.crt", OMNIROUTE_TLS_KEY: "/missing.key" },
+    { PUSULA_TLS_CERT: "/missing.crt", PUSULA_TLS_KEY: "/missing.key" },
     { readFileSync: makeReader({}), warn: (m) => warnings.push(m) }
   );
   assert.equal(opts, null);
@@ -85,7 +85,7 @@ test("unreadable path → null + warning, falls back to HTTP (never crash)", () 
 
 test("whitespace-only env values are treated as absent", () => {
   const opts = resolveTlsOptions(
-    { OMNIROUTE_TLS_CERT: "   ", OMNIROUTE_TLS_KEY: "  " },
+    { PUSULA_TLS_CERT: "   ", PUSULA_TLS_KEY: "  " },
     { warn: () => {} }
   );
   assert.equal(opts, null);

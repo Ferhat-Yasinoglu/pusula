@@ -7,15 +7,15 @@
 > **Quelle:** `src/lib/{a2a,acp,cloudAgent}/`, `src/app/api/{a2a,acp,cloud}/`, `src/app/api/v1/agents/`
 > **Zuletzt aktualisiert:** 2026-06-28 — v3.8.40
 
-OmniRoute stellt drei verschiedene agentenbezogene Schnittstellen bereit. Auf den ersten Blick sehen sie ähnlich aus, lösen jedoch unterschiedliche Probleme. Verwenden Sie diese Seite, um die richtige auszuwählen.
+Pusula stellt drei verschiedene agentenbezogene Schnittstellen bereit. Auf den ersten Blick sehen sie ähnlich aus, lösen jedoch unterschiedliche Probleme. Verwenden Sie diese Seite, um die richtige auszuwählen.
 
 ## Kurzfassung
 
 | Schnittstelle                 | Optimal für                                                                                                                                                       | Transport                         | Standard                        |
 | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | ------------------------------- |
 | **A2A — Agent-to-Agent**      | Agentenübergreifende Zusammenarbeit mit Peer-Agenten, die das A2A-Protokoll unterstützen                                                                          | JSON-RPC 2.0 über HTTP            | A2A v0.3 (offene Spezifikation) |
-| **ACP — CLI-Agentenregister** | Erkennen, Registrieren und Starten von CLI-Coding-Agenten, die auf dem Rechner des Benutzers installiert sind (Cursor, Cline, Codex CLI, Claude Code, Aider usw.) | HTTP REST                         | OmniRoute-spezifisch            |
-| **Cloud-Agenten**             | Übermitteln lang laufender Coding-Aufgaben an externe Cloud-Dienste (Codex Cloud, Devin, Jules, Cursor Cloud)                                                     | HTTP REST + DB-gestützte Aufgaben | OmniRoute-spezifisch            |
+| **ACP — CLI-Agentenregister** | Erkennen, Registrieren und Starten von CLI-Coding-Agenten, die auf dem Rechner des Benutzers installiert sind (Cursor, Cline, Codex CLI, Claude Code, Aider usw.) | HTTP REST                         | Pusula-spezifisch            |
+| **Cloud-Agenten**             | Übermitteln lang laufender Coding-Aufgaben an externe Cloud-Dienste (Codex Cloud, Devin, Jules, Cursor Cloud)                                                     | HTTP REST + DB-gestützte Aufgaben | Pusula-spezifisch            |
 
 Die drei Schnittstellen sind unabhängig voneinander — wählen Sie eine beliebige Kombination aus.
 
@@ -38,14 +38,14 @@ Benötigen Sie einen Cloud-Dienst, der Arbeiten außerhalb dieses Rechners ausf�
 ## 1. A2A — Agent-to-Agent
 
 **Spezifikation:** [A2A v0.3](https://a2a-protocol.org)
-**OmniRoute-Endpunkt:** `POST /a2a` (JSON-RPC 2.0)
+**Pusula-Endpunkt:** `POST /a2a` (JSON-RPC 2.0)
 **Agentenkarte:** `GET /.well-known/agent.json`
 
 ### Einsatzgebiete
 
-- Aufbau eines Multi-Agenten-Systems, in dem OmniRoute einer der Peer-Agenten ist
-- Bereitstellung der Routing-Intelligenz von OmniRoute (intelligentes Routing, Kontingentverwaltung usw.) für Agenten in Frameworks wie Google ADK oder generischen Agentennetzwerken
-- Einbindung von OmniRoute hinter einer standardisierten Schnittstelle für Erkennung und Aufruf
+- Aufbau eines Multi-Agenten-Systems, in dem Pusula einer der Peer-Agenten ist
+- Bereitstellung der Routing-Intelligenz von Pusula (intelligentes Routing, Kontingentverwaltung usw.) für Agenten in Frameworks wie Google ADK oder generischen Agentennetzwerken
+- Einbindung von Pusula hinter einer standardisierten Schnittstelle für Erkennung und Aufruf
 
 ### Methoden
 
@@ -69,12 +69,12 @@ Weitere Informationen zu Transportdetails, zur Struktur der Agentenkarte, zur TT
 
 ## 2. ACP — CLI-Agenten-Registry
 
-**OmniRoute-Endpunkt:** `GET /api/acp/agents`
+**Pusula-Endpunkt:** `GET /api/acp/agents`
 **Quelle:** `src/lib/acp/{index,manager,registry}.ts`
 
 ### Was es ist
 
-ACP ist OmniRoutes **lokales Inventar für CLI-Agenten**. Es erkennt, welche Coding-CLIs auf dem Host installiert sind (Cursor, Cline, Claude Code, Codex CLI, Continue usw.), ermittelt deren Versionen und zeigt sie im Dashboard an, damit Benutzer jede CLI so konfigurieren können, dass sie auf OmniRoute verweist.
+ACP ist Pusulas **lokales Inventar für CLI-Agenten**. Es erkennt, welche Coding-CLIs auf dem Host installiert sind (Cursor, Cline, Claude Code, Codex CLI, Continue usw.), ermittelt deren Versionen und zeigt sie im Dashboard an, damit Benutzer jede CLI so konfigurieren können, dass sie auf Pusula verweist.
 
 Dies ist KEIN externes Protokoll — es handelt sich um eine interne Registry, die die Benutzeroberfläche „CLI Tools“ und die Verfolgung von CLI-Fingerprints unterstützt (siehe [CLI-TOOLS.md](../reference/CLI-TOOLS.md)).
 
@@ -110,22 +110,22 @@ Body-Format für POST (`customAgentBodySchema` in `src/app/api/acp/agents/route.
 
 ### Anwendungsfälle
 
-- Die Dashboard-Seite „CLI Tools“ listet auf, was installiert ist, und hilft dabei, die einzelnen Tools auf OmniRoute zu verweisen
-- Mit benutzerdefinierten Agenten können erfahrene Benutzer interne/proprietäre CLIs registrieren, die OmniRoute standardmäßig nicht kennt
+- Die Dashboard-Seite „CLI Tools“ listet auf, was installiert ist, und hilft dabei, die einzelnen Tools auf Pusula zu verweisen
+- Mit benutzerdefinierten Agenten können erfahrene Benutzer interne/proprietäre CLIs registrieren, die Pusula standardmäßig nicht kennt
 - Das Erkennungsergebnis dient als Grundlage für die `cli-tools`-Fingerprint-Matrix
 
 ### Wann ACP NICHT verwendet werden sollte
 
-- ACP führt keine Aufgaben _aus_. Es erkennt und konfiguriert lediglich CLIs. Um eine CLI tatsächlich aufzurufen, starten Sie sie selbst mit den von OmniRoute bereitgestellten Umgebungsvariablen (`OPENAI_BASE_URL`, `OPENAI_API_KEY` usw.).
+- ACP führt keine Aufgaben _aus_. Es erkennt und konfiguriert lediglich CLIs. Um eine CLI tatsächlich aufzurufen, starten Sie sie selbst mit den von Pusula bereitgestellten Umgebungsvariablen (`OPENAI_BASE_URL`, `OPENAI_API_KEY` usw.).
 
 ## 3. Cloud-Agenten
 
-**OmniRoute-Endpunkte:** `/api/v1/agents/tasks/*` (Lebenszyklus) + `/api/cloud/*` (Infrastruktur)
+**Pusula-Endpunkte:** `/api/v1/agents/tasks/*` (Lebenszyklus) + `/api/cloud/*` (Infrastruktur)
 **Quelle:** `src/lib/cloudAgent/`
 
 ### Was es ist
 
-Eine einheitliche Schnittstelle für Cloud-Coding-Agenten von Drittanbietern. Sie übermitteln einen Prompt + eine Repository-URL, OmniRoute leitet die Anfrage an den richtigen Cloud-Agenten weiter, fragt den Status ab und gibt die Ergebnisse zurück.
+Eine einheitliche Schnittstelle für Cloud-Coding-Agenten von Drittanbietern. Sie übermitteln einen Prompt + eine Repository-URL, Pusula leitet die Anfrage an den richtigen Cloud-Agenten weiter, fragt den Status ab und gibt die Ergebnisse zurück.
 
 ### Unterstützte Agenten (4, alle in `src/lib/cloudAgent/agents/` bestätigt)
 
@@ -166,16 +166,16 @@ Beide unterstützen „lang laufende Aufgaben“, jedoch auf unterschiedlichen E
 
 | Aspekt                 | A2A                                                                                        | Cloud Agents                                          |
 | ---------------------- | ------------------------------------------------------------------------------------------ | ----------------------------------------------------- |
-| Standard               | Offenes A2A v0.3                                                                           | OmniRoute-spezifisch                                  |
-| Ausführungsort         | Innerhalb von OmniRoute (verwendet konfigurierte Kombinationen)                            | Extern (Codex-/Devin-/Jules-Server)                   |
+| Standard               | Offenes A2A v0.3                                                                           | Pusula-spezifisch                                  |
+| Ausführungsort         | Innerhalb von Pusula (verwendet konfigurierte Kombinationen)                            | Extern (Codex-/Devin-/Jules-Server)                   |
 | Aufgabendauer          | Standard-TTL: 5 Min. (in `TaskManager` konfigurierbar)                                     | Minuten bis Stunden                                   |
 | Repository-Verständnis | Nein (übergibt nur Prompts)                                                                | Ja (Repository-URL + Branch)                          |
 | Anwendungsfall         | Agentenübergreifende Zusammenarbeit, intelligentes Routing als Dienst                      | „Feature X in Repository Y implementieren“ delegieren |
-| Authentifizierung      | Optionaler `OMNIROUTE_API_KEY` für `/a2a`; Verwaltungszugriff für `/api/a2a/*`-REST-Helfer | Immer Verwaltungszugriff                              |
+| Authentifizierung      | Optionaler `PUSULA_API_KEY` für `/a2a`; Verwaltungszugriff für `/api/a2a/*`-REST-Helfer | Immer Verwaltungszugriff                              |
 
 ## Integrationsbeispiele
 
-### A2A-Funktionen von OmniRoute ermitteln
+### A2A-Funktionen von Pusula ermitteln
 
 ```bash
 curl http://localhost:20128/.well-known/agent.json
@@ -183,7 +183,7 @@ curl http://localhost:20128/.well-known/agent.json
 
 Gibt die Agent Card mit allen 6 Fähigkeiten, Transporten und der Version zurück.
 
-### OmniRoute als A2A-Agent aufrufen
+### Pusula als A2A-Agent aufrufen
 
 ```bash
 curl -X POST http://localhost:20128/a2a \
@@ -257,7 +257,7 @@ curl http://localhost:20128/api/v1/agents/tasks/<task-id> \
 
 ```
                 ┌─────────────────────┐
-                │   OmniRoute Core    │
+                │   Pusula Core    │
                 └─────────────────────┘
                   ↑       ↑        ↑
         ┌─────────┘       │        └─────────┐

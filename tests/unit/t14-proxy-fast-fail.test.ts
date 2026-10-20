@@ -161,8 +161,8 @@ test("SOCKS5 real transport failure: owned by transport path, not T14 probe", as
 test("control-plane directFallbackOnUnreachable SOCKS5: blocking probe preserved", async () => {
   const proxyUrl = "socks5://127.0.0.1:1080";
   invalidateProxyHealth(proxyUrl);
-  const prevEnv = process.env.OMNIROUTE_CONTROL_PLANE_PROXY_DIRECT_FALLBACK;
-  process.env.OMNIROUTE_CONTROL_PLANE_PROXY_DIRECT_FALLBACK = "true";
+  const prevEnv = process.env.PUSULA_CONTROL_PLANE_PROXY_DIRECT_FALLBACK;
+  process.env.PUSULA_CONTROL_PLANE_PROXY_DIRECT_FALLBACK = "true";
   let probeCount = 0;
   __setProxyHealthTcpCheckForTesting(async () => {
     probeCount += 1;
@@ -189,9 +189,9 @@ test("control-plane directFallbackOnUnreachable SOCKS5: blocking probe preserved
     __setProxyHealthTcpCheckForTesting(null);
     invalidateProxyHealth(proxyUrl);
     if (prevEnv === undefined) {
-      delete process.env.OMNIROUTE_CONTROL_PLANE_PROXY_DIRECT_FALLBACK;
+      delete process.env.PUSULA_CONTROL_PLANE_PROXY_DIRECT_FALLBACK;
     } else {
-      process.env.OMNIROUTE_CONTROL_PLANE_PROXY_DIRECT_FALLBACK = prevEnv;
+      process.env.PUSULA_CONTROL_PLANE_PROXY_DIRECT_FALLBACK = prevEnv;
     }
   }
 });
@@ -199,8 +199,8 @@ test("control-plane directFallbackOnUnreachable SOCKS5: blocking probe preserved
 test("control-plane directFallbackOnUnreachable HTTP: blocking probe preserved", async () => {
   const proxyUrl = "http://127.0.0.1:8080";
   invalidateProxyHealth(proxyUrl);
-  const prevEnv = process.env.OMNIROUTE_CONTROL_PLANE_PROXY_DIRECT_FALLBACK;
-  process.env.OMNIROUTE_CONTROL_PLANE_PROXY_DIRECT_FALLBACK = "true";
+  const prevEnv = process.env.PUSULA_CONTROL_PLANE_PROXY_DIRECT_FALLBACK;
+  process.env.PUSULA_CONTROL_PLANE_PROXY_DIRECT_FALLBACK = "true";
   let probeCount = 0;
   __setProxyHealthTcpCheckForTesting(async () => {
     probeCount += 1;
@@ -227,9 +227,9 @@ test("control-plane directFallbackOnUnreachable HTTP: blocking probe preserved",
     __setProxyHealthTcpCheckForTesting(null);
     invalidateProxyHealth(proxyUrl);
     if (prevEnv === undefined) {
-      delete process.env.OMNIROUTE_CONTROL_PLANE_PROXY_DIRECT_FALLBACK;
+      delete process.env.PUSULA_CONTROL_PLANE_PROXY_DIRECT_FALLBACK;
     } else {
-      process.env.OMNIROUTE_CONTROL_PLANE_PROXY_DIRECT_FALLBACK = prevEnv;
+      process.env.PUSULA_CONTROL_PLANE_PROXY_DIRECT_FALLBACK = prevEnv;
     }
   }
 });

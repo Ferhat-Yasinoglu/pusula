@@ -4,16 +4,16 @@ title: "Deterministic Routing Strategies"
 
 # Deterministic routing strategies
 
-OmniRoute's self-hosted gateway entry (`/v1/chat/completions`, RIC-738) routes to a
+Pusula's self-hosted gateway entry (`/v1/chat/completions`, RIC-738) routes to a
 single provider by default. When you configure a `strategy:` block, the route decision
-becomes a **deterministic, explainable policy** — the OmniRoute differentiator vs
+becomes a **deterministic, explainable policy** — the Pusula differentiator vs
 NotDiamond/Martian "predict" black-box routing.
 
 Every decision is:
 
 - **Deterministic** — the same config + same runtime state yields the same provider.
 - **Config-expressed** — one rule per line; no "一体化智能体", no learned model.
-- **Explainable** — every response carries `x-omniroute-route-decision`, a one-line
+- **Explainable** — every response carries `x-pusula-route-decision`, a one-line
   answer to "why this model?" (and "why NOT that one").
 
 This is M2 of the RIC-697 differentiation (D3 可审计路由). There is **no predictive /
@@ -23,7 +23,7 @@ ML dependency** — the strategies are pure rules over observable signals
 ## Enable
 
 Add a `strategy:` block to the same YAML document as `providers:`, or point
-`OMNIROUTE_SELF_HOSTED_STRATEGY` (inline YAML) / `OMNIROUTE_SELF_HOSTED_STRATEGY_FILE`
+`PUSULA_SELF_HOSTED_STRATEGY` (inline YAML) / `PUSULA_SELF_HOSTED_STRATEGY_FILE`
 (a file) at a standalone `strategy:` document. An explicit env strategy merges over
 the inline block per-key.
 
@@ -75,7 +75,7 @@ ordering stage sorts the survivors: explicit `fallbackChain` wins; otherwise
 
 ## Pinned providers
 
-The `x-omniroute-provider` header and the `provider/model` model-prefix are **explicit
+The `x-pusula-provider` header and the `provider/model` model-prefix are **explicit
 pins**, not preferences. If a pinned provider is excluded by a hard filter (blacklist /
 whitelist / active cooldown), the request fails with `400` and the pin reason — the
 gateway never silently re-routes a client who asked for a specific provider. If the pin
@@ -97,7 +97,7 @@ decision is returned.
 Every response routed through the strategy engine carries:
 
 ```
-x-omniroute-route-decision: cheap(cost-priority: cheap #1) -> fast(cost-priority: fast #2); premium excluded: blacklist: premium forbidden
+x-pusula-route-decision: cheap(cost-priority: cheap #1) -> fast(cost-priority: fast #2); premium excluded: blacklist: premium forbidden
 ```
 
 The value is the ordered candidate list plus every exclusion reason — the audit trail

@@ -3,9 +3,9 @@
  * `/v1/chat/completions` calls `handleSelfHostedCompletions()` and returns its
  * response BEFORE `enforceApiKeyPolicy()` ever runs (that call lives deep
  * inside `handleChat()`, which the divert never reaches). A disabled/banned
- * OmniRoute API key — normally rejected with 403 "This API key is disabled" —
+ * Pusula API key — normally rejected with 403 "This API key is disabled" —
  * sails straight through to the self-hosted provider once
- * OMNIROUTE_SELF_HOSTED_PROVIDERS is configured.
+ * PUSULA_SELF_HOSTED_PROVIDERS is configured.
  */
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -15,7 +15,7 @@ import path from "node:path";
 import { createServer, type Server } from "node:http";
 import type { AddressInfo } from "node:net";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-selfhosted-policy-14485-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-selfhosted-policy-14485-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = process.env.API_KEY_SECRET || "task-14485-api-key-secret";
 
@@ -52,7 +52,7 @@ await new Promise<void>((resolve) => upstream.listen(0, "127.0.0.1", resolve));
 const upstreamPort = (upstream.address() as AddressInfo).port;
 const upstreamBaseUrl = `http://127.0.0.1:${upstreamPort}/v1`;
 
-process.env.OMNIROUTE_SELF_HOSTED_PROVIDERS = [
+process.env.PUSULA_SELF_HOSTED_PROVIDERS = [
   "providers:",
   "  - id: stub",
   "    kind: openai",
@@ -80,7 +80,7 @@ test.after(async () => {
   }
 });
 
-test("#14485: self-hosted divert must not bypass enforceApiKeyPolicy for a disabled OmniRoute key", async () => {
+test("#14485: self-hosted divert must not bypass enforceApiKeyPolicy for a disabled Pusula key", async () => {
   const created = await apiKeysDb.createApiKey("Disabled Key 14485", "machine-14485");
   await apiKeysDb.updateApiKeyPermissions(created.id, { isActive: false });
 
@@ -101,7 +101,7 @@ test("#14485: self-hosted divert must not bypass enforceApiKeyPolicy for a disab
   assert.notEqual(
     response.status,
     200,
-    "BUG #14485: a DISABLED OmniRoute API key reached the self-hosted upstream " +
+    "BUG #14485: a DISABLED Pusula API key reached the self-hosted upstream " +
       `(status=${response.status}, upstream received ${upstreamCalls} call(s)) — ` +
       "the divert at src/app/api/v1/chat/completions/route.ts skips enforceApiKeyPolicy entirely"
   );
@@ -174,8 +174,8 @@ test("#14485: a cloud request (no self-hosted config) runs the key policy ONCE, 
     rateLimits: [{ limit: 1, window: 60 }],
   });
 
-  const savedConfig = process.env.OMNIROUTE_SELF_HOSTED_PROVIDERS;
-  delete process.env.OMNIROUTE_SELF_HOSTED_PROVIDERS;
+  const savedConfig = process.env.PUSULA_SELF_HOSTED_PROVIDERS;
+  delete process.env.PUSULA_SELF_HOSTED_PROVIDERS;
   const before = upstreamCalls;
   try {
     const request = new Request("http://localhost/v1/chat/completions", {
@@ -202,7 +202,7 @@ test("#14485: a cloud request (no self-hosted config) runs the key policy ONCE, 
     assert.doesNotMatch(text, /Request limit exceeded/);
     assert.equal(upstreamCalls, before, "a cloud request must never reach the self-hosted stub");
   } finally {
-    process.env.OMNIROUTE_SELF_HOSTED_PROVIDERS = savedConfig;
+    process.env.PUSULA_SELF_HOSTED_PROVIDERS = savedConfig;
   }
 });
 

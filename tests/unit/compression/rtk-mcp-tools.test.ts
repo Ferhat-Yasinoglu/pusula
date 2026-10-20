@@ -5,7 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import { cleanupTempDataDir } from "../../_setup/tempDataDir.ts";
 
-// T07 — omniroute_rtk_discover / omniroute_rtk_learn MCP tools (read-only; audited).
+// T07 — pusula_rtk_discover / pusula_rtk_learn MCP tools (read-only; audited).
 
 const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omni-rtk-mcp-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
@@ -52,7 +52,7 @@ after(async () => {
 });
 
 describe("RTK MCP tools (T07)", () => {
-  it("omniroute_rtk_discover returns ranked noise candidates from the sample store", async () => {
+  it("pusula_rtk_discover returns ranked noise candidates from the sample store", async () => {
     seedSamples();
     const result = await handleRtkDiscover({ limit: 100 });
     assert.equal(typeof result.sampleCount, "number");
@@ -60,7 +60,7 @@ describe("RTK MCP tools (T07)", () => {
     assert.ok(Array.isArray(result.candidates));
   });
 
-  it("omniroute_rtk_learn returns a filter draft for a specific command", async () => {
+  it("pusula_rtk_learn returns a filter draft for a specific command", async () => {
     seedSamples();
     const result = await handleRtkLearn({ command: "gradle build", limit: 100 });
     assert.equal(result.command, "gradle build");
@@ -84,7 +84,7 @@ describe("RTK MCP tools (T07)", () => {
     await handleRtkLearn({ command: "gradle build" });
     const entries = await getRecentAuditEntries(20);
     const names = entries.map((e) => e.toolName);
-    assert.ok(names.includes("omniroute_rtk_discover"), "discover must be audited");
-    assert.ok(names.includes("omniroute_rtk_learn"), "learn must be audited");
+    assert.ok(names.includes("pusula_rtk_discover"), "discover must be audited");
+    assert.ok(names.includes("pusula_rtk_learn"), "learn must be audited");
   });
 });

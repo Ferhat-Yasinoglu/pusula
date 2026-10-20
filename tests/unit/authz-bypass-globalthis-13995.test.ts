@@ -20,7 +20,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-const GLOBAL_KEY = "__omniroute_authzBypass_config__";
+const GLOBAL_KEY = "__pusula_authzBypass_config__";
 const g = globalThis as unknown as Record<
   string,
   { enabled: boolean; prefixes: string[] } | undefined

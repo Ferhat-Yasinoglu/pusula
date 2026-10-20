@@ -1,4 +1,4 @@
-import { isVertexXaiModel } from "@omniroute/open-sse/config/vertexModels.ts";
+import { isVertexXaiModel } from "@pusula/open-sse/config/vertexModels.ts";
 
 import { parseVertexPublisherModels } from "./vertexPublisherModelsParser";
 

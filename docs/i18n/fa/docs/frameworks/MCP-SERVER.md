@@ -1,4 +1,4 @@
-# OmniRoute MCP Server Documentation (فارسی)
+# Pusula MCP Server Documentation (فارسی)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../frameworks/MCP-SERVER.md) · 🇪🇹 [am](../../../am/docs/frameworks/MCP-SERVER.md) · 🇸🇦 [ar](../../../ar/docs/frameworks/MCP-SERVER.md) · 🇦🇿 [az](../../../az/docs/frameworks/MCP-SERVER.md) · 🇧🇬 [bg](../../../bg/docs/frameworks/MCP-SERVER.md) · 🇧🇩 [bn](../../../bn/docs/frameworks/MCP-SERVER.md) · 🇧🇦 [bs](../../../bs/docs/frameworks/MCP-SERVER.md) · 🇨🇿 [cs](../../../cs/docs/frameworks/MCP-SERVER.md) · 🇩🇰 [da](../../../da/docs/frameworks/MCP-SERVER.md) · 🇩🇪 [de](../../../de/docs/frameworks/MCP-SERVER.md) · 🇬🇷 [el](../../../el/docs/frameworks/MCP-SERVER.md) · 🇪🇸 [es](../../../es/docs/frameworks/MCP-SERVER.md) · 🇪🇪 [et](../../../et/docs/frameworks/MCP-SERVER.md) · 🇫🇮 [fi](../../../fi/docs/frameworks/MCP-SERVER.md) · 🇫🇷 [fr](../../../fr/docs/frameworks/MCP-SERVER.md) · 🇮🇪 [ga](../../../ga/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [gu](../../../gu/docs/frameworks/MCP-SERVER.md) · 🇳🇬 [ha](../../../ha/docs/frameworks/MCP-SERVER.md) · 🇮🇱 [he](../../../he/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [hi](../../../hi/docs/frameworks/MCP-SERVER.md) · 🇭🇷 [hr](../../../hr/docs/frameworks/MCP-SERVER.md) · 🇭🇺 [hu](../../../hu/docs/frameworks/MCP-SERVER.md) · 🇦🇲 [hy](../../../hy/docs/frameworks/MCP-SERVER.md) · 🇮🇩 [id](../../../id/docs/frameworks/MCP-SERVER.md) · 🇳🇬 [ig](../../../ig/docs/frameworks/MCP-SERVER.md) · 🇮🇹 [it](../../../it/docs/frameworks/MCP-SERVER.md) · 🇯🇵 [ja](../../../ja/docs/frameworks/MCP-SERVER.md) · 🇬🇪 [ka](../../../ka/docs/frameworks/MCP-SERVER.md) · 🇰🇭 [km](../../../km/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [kn](../../../kn/docs/frameworks/MCP-SERVER.md) · 🇰🇷 [ko](../../../ko/docs/frameworks/MCP-SERVER.md) · 🇱🇹 [lt](../../../lt/docs/frameworks/MCP-SERVER.md) · 🇱🇻 [lv](../../../lv/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [ml](../../../ml/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [mr](../../../mr/docs/frameworks/MCP-SERVER.md) · 🇲🇾 [ms](../../../ms/docs/frameworks/MCP-SERVER.md) · 🇲🇹 [mt](../../../mt/docs/frameworks/MCP-SERVER.md) · 🇲🇲 [my](../../../my/docs/frameworks/MCP-SERVER.md) · 🇳🇵 [ne](../../../ne/docs/frameworks/MCP-SERVER.md) · 🇳🇱 [nl](../../../nl/docs/frameworks/MCP-SERVER.md) · 🇳🇴 [no](../../../no/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [or](../../../or/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [pa](../../../pa/docs/frameworks/MCP-SERVER.md) · 🇵🇭 [phi](../../../phi/docs/frameworks/MCP-SERVER.md) · 🇵🇱 [pl](../../../pl/docs/frameworks/MCP-SERVER.md) · 🇵🇹 [pt](../../../pt/docs/frameworks/MCP-SERVER.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/frameworks/MCP-SERVER.md) · 🇷🇴 [ro](../../../ro/docs/frameworks/MCP-SERVER.md) · 🇷🇺 [ru](../../../ru/docs/frameworks/MCP-SERVER.md) · 🇱🇰 [si](../../../si/docs/frameworks/MCP-SERVER.md) · 🇸🇰 [sk](../../../sk/docs/frameworks/MCP-SERVER.md) · 🇸🇮 [sl](../../../sl/docs/frameworks/MCP-SERVER.md) · 🇷🇸 [sr](../../../sr/docs/frameworks/MCP-SERVER.md) · 🇸🇪 [sv](../../../sv/docs/frameworks/MCP-SERVER.md) · 🇰🇪 [sw](../../../sw/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [ta](../../../ta/docs/frameworks/MCP-SERVER.md) · 🇮🇳 [te](../../../te/docs/frameworks/MCP-SERVER.md) · 🇹🇭 [th](../../../th/docs/frameworks/MCP-SERVER.md) · 🇹🇷 [tr](../../../tr/docs/frameworks/MCP-SERVER.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/frameworks/MCP-SERVER.md) · 🇵🇰 [ur](../../../ur/docs/frameworks/MCP-SERVER.md) · 🇺🇿 [uz](../../../uz/docs/frameworks/MCP-SERVER.md) · 🇻🇳 [vi](../../../vi/docs/frameworks/MCP-SERVER.md) · 🇳🇬 [yo](../../../yo/docs/frameworks/MCP-SERVER.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/frameworks/MCP-SERVER.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/frameworks/MCP-SERVER.md)
 
@@ -6,21 +6,21 @@
 
 > سرور Model Context Protocol با 110 ابزار برای عملیات مسیریابی، کش، فشردهسازی، حافظه، مهارتها، پروکسی، استخر، Radar و منابع زمینه.
 >
-> منبع حقیقت: فایل `open-sse/mcp-server/server.ts` با استفاده از `countUniqueMcpTools()` تعداد **110 ابزار منحصربهفرد** را محاسبه میکند: 45 تعریف متعارف (شامل شش ابزار چرخهٔ حیات CCR، سهگانهٔ agent-skills، ابزار `omniroute_radar_catalog` و ابزار `omniroute_x_search`)، بهعلاوهٔ حافظه (3)، مهارتها (4)، مهارتهای GitHub (3)، استخر (6)، بازیوارسازی (8)، افزونهها (8)، Notion (6)، Obsidian (22)، پیکرهٔ محلی (3) و دو ابزار فشردهسازی مختص RTK.
+> منبع حقیقت: فایل `open-sse/mcp-server/server.ts` با استفاده از `countUniqueMcpTools()` تعداد **110 ابزار منحصربهفرد** را محاسبه میکند: 45 تعریف متعارف (شامل شش ابزار چرخهٔ حیات CCR، سهگانهٔ agent-skills، ابزار `pusula_radar_catalog` و ابزار `pusula_x_search`)، بهعلاوهٔ حافظه (3)، مهارتها (4)، مهارتهای GitHub (3)، استخر (6)، بازیوارسازی (8)، افزونهها (8)، Notion (6)، Obsidian (22)، پیکرهٔ محلی (3) و دو ابزار فشردهسازی مختص RTK.
 
 ## نصب
 
-OmniRoute MCP بهصورت داخلی ارائه شده است. آن را با دستور زیر راهاندازی کنید:
+Pusula MCP بهصورت داخلی ارائه شده است. آن را با دستور زیر راهاندازی کنید:
 
 ```bash
-omniroute --mcp
+pusula --mcp
 ```
 
 یا از طریق انتقال open-sse:
 
 ```bash
 # انتقال HTTP قابلاستریم (درگاه 20130)
-omniroute --dev  # MCP بهطور خودکار روی نقطهٔ پایانی /mcp راهاندازی میشود
+pusula --dev  # MCP بهطور خودکار روی نقطهٔ پایانی /mcp راهاندازی میشود
 ```
 
 انتقالهای HTTP (`sse` / `streamable-http` که درون همان فرایند توسط سرور داشبورد ارائه میشوند)
@@ -28,10 +28,10 @@ omniroute --dev  # MCP بهطور خودکار روی نقطهٔ پایانی /m
 به بعد، CLI نیز قابلیتهای یکسانی دارد:
 
 ```bash
-omniroute mcp status                                  # وضعیت فعال/آنلاین، انتقال و تعداد ابزارها
-omniroute mcp enable [--transport stdio|sse|streamable-http]
-omniroute mcp disable
-omniroute mcp restart                                 # نشستهای فعال sse/streamable-http را بازنشانی میکند
+pusula mcp status                                  # وضعیت فعال/آنلاین، انتقال و تعداد ابزارها
+pusula mcp enable [--transport stdio|sse|streamable-http]
+pusula mcp disable
+pusula mcp restart                                 # نشستهای فعال sse/streamable-http را بازنشانی میکند
 ```
 
 `mcp enable`/`mcp disable` همان تنظیم `mcpEnabled` (و در صورت نیاز `mcpTransport`) را که
@@ -83,61 +83,61 @@ curl -i \
 
 | ابزار                           | حوزههای دسترسی        | توضیحات                                                                                                                           |
 | :------------------------------ | :-------------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
-| `omniroute_get_health`          | `read:health`         | زمان فعالیت، حافظه، قطعکنندههای مدار، محدودیتهای نرخ، آمار کش                                                                     |
-| `omniroute_list_combos`         | `read:combos`         | همه ترکیبهای پیکربندیشده بههمراه راهبردها (معیارهای اختیاری)                                                                      |
-| `omniroute_get_combo_metrics`   | `read:combos`         | معیارهای عملکرد برای یک ترکیب مشخص                                                                                                |
-| `omniroute_switch_combo`        | `write:combos`        | فعال یا غیرفعالکردن یک ترکیب                                                                                                      |
-| `omniroute_create_combo`        | `write:combos`        | ایجاد یک ترکیب اعتبارسنجیشده از طریق API موجود ترکیبها                                                                            |
-| `omniroute_check_quota`         | `read:quota`          | سهمیه مصرفشده/کل، درصد باقیمانده، زمان بازنشانی، سلامت توکن                                                                       |
-| `omniroute_route_request`       | `execute:completions` | ارسال یک تکمیل گفتوگو از طریق مسیریابی OmniRoute                                                                                  |
-| `omniroute_cost_report`         | `read:usage`          | گزارش هزینه بر اساس دوره (نشست/روز/هفته/ماه)                                                                                      |
-| `omniroute_list_models_catalog` | `read:models`         | فهرست کامل مدلها بههمراه قابلیتها، وضعیت و قیمتگذاری                                                                              |
-| `omniroute_radar_catalog`       | `read:radar`          | فهرست محلی و امضاشده Radar؛ فیلترهای اختیاری ارائهدهنده/خانواده                                                                   |
-| `omniroute_tool_search`         | `read:tools`          | یافتن ابزارها از فهرست ثبتشده MCP                                                                                                 |
-| `omniroute_web_search`          | `execute:search`      | جستوجوی وب از طریق ارائهدهندگان جستوجوی پیکربندیشده. شامل X/Twitter نمیشود.                                                       |
-| `omniroute_x_search`            | `execute:search`      | جستوجوی X از طریق xAI/SuperGrok، یا انتخاب `xquik-search` برای نتایج API سرویس Xquik. به اعتبارنامههای بکاند انتخابشده نیاز دارد. |
-| `omniroute_web_fetch`           | `execute:search`      | واکشی محتوای وب از طریق ارائهدهندگان واکشی پیکربندیشده                                                                            |
+| `pusula_get_health`          | `read:health`         | زمان فعالیت، حافظه، قطعکنندههای مدار، محدودیتهای نرخ، آمار کش                                                                     |
+| `pusula_list_combos`         | `read:combos`         | همه ترکیبهای پیکربندیشده بههمراه راهبردها (معیارهای اختیاری)                                                                      |
+| `pusula_get_combo_metrics`   | `read:combos`         | معیارهای عملکرد برای یک ترکیب مشخص                                                                                                |
+| `pusula_switch_combo`        | `write:combos`        | فعال یا غیرفعالکردن یک ترکیب                                                                                                      |
+| `pusula_create_combo`        | `write:combos`        | ایجاد یک ترکیب اعتبارسنجیشده از طریق API موجود ترکیبها                                                                            |
+| `pusula_check_quota`         | `read:quota`          | سهمیه مصرفشده/کل، درصد باقیمانده، زمان بازنشانی، سلامت توکن                                                                       |
+| `pusula_route_request`       | `execute:completions` | ارسال یک تکمیل گفتوگو از طریق مسیریابی Pusula                                                                                  |
+| `pusula_cost_report`         | `read:usage`          | گزارش هزینه بر اساس دوره (نشست/روز/هفته/ماه)                                                                                      |
+| `pusula_list_models_catalog` | `read:models`         | فهرست کامل مدلها بههمراه قابلیتها، وضعیت و قیمتگذاری                                                                              |
+| `pusula_radar_catalog`       | `read:radar`          | فهرست محلی و امضاشده Radar؛ فیلترهای اختیاری ارائهدهنده/خانواده                                                                   |
+| `pusula_tool_search`         | `read:tools`          | یافتن ابزارها از فهرست ثبتشده MCP                                                                                                 |
+| `pusula_web_search`          | `execute:search`      | جستوجوی وب از طریق ارائهدهندگان جستوجوی پیکربندیشده. شامل X/Twitter نمیشود.                                                       |
+| `pusula_x_search`            | `execute:search`      | جستوجوی X از طریق xAI/SuperGrok، یا انتخاب `xquik-search` برای نتایج API سرویس Xquik. به اعتبارنامههای بکاند انتخابشده نیاز دارد. |
+| `pusula_web_fetch`           | `execute:search`      | واکشی محتوای وب از طریق ارائهدهندگان واکشی پیکربندیشده                                                                            |
 
 ## ابزارهای پیشرفته (11) — فاز 2
 
 | ابزار                              | محدودههای دسترسی                     | توضیحات                                                                                                   |
 | :--------------------------------- | :----------------------------------- | :-------------------------------------------------------------------------------------------------------- |
-| `omniroute_simulate_route`         | `read:health`, `read:combos`         | شبیهسازی مسیریابی بهصورت اجرای آزمایشی همراه با درخت مسیرهای جایگزین                                      |
-| `omniroute_set_budget_guard`       | `write:budget`                       | بودجهٔ نشست با اقدام کاهش کیفیت/مسدودسازی/هشدار                                                           |
-| `omniroute_set_routing_strategy`   | `write:combos`                       | بهروزرسانی راهبرد ترکیبی در زمان اجرا (اولویتدار/وزندار/خودکار/غیره)                                      |
-| `omniroute_set_resilience_profile` | `write:resilience`                   | اعمال پیشتنظیم تابآوری `aggressive` / `balanced` / `conservative`                                         |
-| `omniroute_test_combo`             | `execute:completions`, `read:combos` | آزمون زندهٔ همهٔ ارائهدهندگان در یک ترکیب با استفاده از فراخوانی واقعی بالادستی                           |
-| `omniroute_get_provider_metrics`   | `read:health`                        | معیارهای هر ارائهدهنده شامل تأخیر p50/p95/p99 و وضعیت قطعکنندهٔ مدار                                      |
-| `omniroute_best_combo_for_task`    | `read:combos`, `read:health`         | پیشنهاد ترکیب بر اساس نوع وظیفه، با محدودیتهای بودجه/تأخیر                                                |
-| `omniroute_explain_route`          | `read:health`, `read:usage`          | توضیح علت مسیریابی یک درخواست به ارائهدهنده (عوامل امتیازدهی + مسیرهای جایگزین)                           |
-| `omniroute_get_session_snapshot`   | `read:usage`                         | تصویر لحظهای کامل نشست: هزینه، توکنها، مدلها/ارائهدهندگان برتر، خطاها و محافظ بودجه                       |
-| `omniroute_db_health_check`        | `read:health`, `write:resilience`    | تشخیص ناهماهنگی پایگاه داده، مانند ارجاعات ترکیبی خراب/ردیفهای یتیم (و در صورت انتخاب، تعمیر خودکار آنها) |
-| `omniroute_sync_pricing`           | `pricing:write`                      | همگامسازی دادههای قیمتگذاری از منابع خارجی (LiteLLM)؛ پشتیبانی از `dryRun`                                |
+| `pusula_simulate_route`         | `read:health`, `read:combos`         | شبیهسازی مسیریابی بهصورت اجرای آزمایشی همراه با درخت مسیرهای جایگزین                                      |
+| `pusula_set_budget_guard`       | `write:budget`                       | بودجهٔ نشست با اقدام کاهش کیفیت/مسدودسازی/هشدار                                                           |
+| `pusula_set_routing_strategy`   | `write:combos`                       | بهروزرسانی راهبرد ترکیبی در زمان اجرا (اولویتدار/وزندار/خودکار/غیره)                                      |
+| `pusula_set_resilience_profile` | `write:resilience`                   | اعمال پیشتنظیم تابآوری `aggressive` / `balanced` / `conservative`                                         |
+| `pusula_test_combo`             | `execute:completions`, `read:combos` | آزمون زندهٔ همهٔ ارائهدهندگان در یک ترکیب با استفاده از فراخوانی واقعی بالادستی                           |
+| `pusula_get_provider_metrics`   | `read:health`                        | معیارهای هر ارائهدهنده شامل تأخیر p50/p95/p99 و وضعیت قطعکنندهٔ مدار                                      |
+| `pusula_best_combo_for_task`    | `read:combos`, `read:health`         | پیشنهاد ترکیب بر اساس نوع وظیفه، با محدودیتهای بودجه/تأخیر                                                |
+| `pusula_explain_route`          | `read:health`, `read:usage`          | توضیح علت مسیریابی یک درخواست به ارائهدهنده (عوامل امتیازدهی + مسیرهای جایگزین)                           |
+| `pusula_get_session_snapshot`   | `read:usage`                         | تصویر لحظهای کامل نشست: هزینه، توکنها، مدلها/ارائهدهندگان برتر، خطاها و محافظ بودجه                       |
+| `pusula_db_health_check`        | `read:health`, `write:resilience`    | تشخیص ناهماهنگی پایگاه داده، مانند ارجاعات ترکیبی خراب/ردیفهای یتیم (و در صورت انتخاب، تعمیر خودکار آنها) |
+| `pusula_sync_pricing`           | `pricing:write`                      | همگامسازی دادههای قیمتگذاری از منابع خارجی (LiteLLM)؛ پشتیبانی از `dryRun`                                |
 
 ## ابزارهای حافظهٔ نهان (2)
 
 | ابزار                   | محدودههای دسترسی | توضیحات                                               |
 | :---------------------- | :--------------- | :---------------------------------------------------- |
-| `omniroute_cache_stats` | `read:cache`     | آمار حافظهٔ نهان معنایی، حافظهٔ نهان پرامپت و همتوانی |
-| `omniroute_cache_flush` | `write:cache`    | پاکسازی سراسری حافظهٔ نهان یا بر اساس امضا/مدل        |
+| `pusula_cache_stats` | `read:cache`     | آمار حافظهٔ نهان معنایی، حافظهٔ نهان پرامپت و همتوانی |
+| `pusula_cache_flush` | `write:cache`    | پاکسازی سراسری حافظهٔ نهان یا بر اساس امضا/مدل        |
 
 ## ابزارهای فشردهسازی (13)
 
 | ابزار                               | محدودههای دسترسی    | توضیحات                                                                                                               |
 | :---------------------------------- | :------------------ | :-------------------------------------------------------------------------------------------------------------------- |
-| `omniroute_compression_status`      | `read:compression`  | تنظیمات فشردهسازی، خلاصهٔ تحلیلها و آمار آگاه از حافظهٔ نهان (شامل فرادادهٔ `analytics.mcpDescriptionCompression`)    |
-| `omniroute_compression_configure`   | `write:compression` | پیکربندی حالت فشردهسازی، آستانه، نسبت هدف، حفظ پرامپت سیستمی و کلید تغییر وضعیت فشردهسازی توضیحات MCP                 |
-| `omniroute_set_compression_engine`  | `write:compression` | انتخاب موتور فعال (off/caveman/rtk/stacked) و شدت Caveman/RTK                                                         |
-| `omniroute_list_compression_combos` | `read:compression`  | فهرستکردن ترکیبهای نامگذاریشدهٔ فشردهسازی و خط لولهٔ موتورهای آنها                                                    |
-| `omniroute_compression_combo_stats` | `read:compression`  | تحلیلهای گروهبندیشده بر اساس ترکیب فشردهسازی و موتور                                                                  |
-| `omniroute_ccr_store`               | `write:compression` | ذخیرهٔ محتوای تفکیکشده بر اساس فراخواننده در مخزن درونحافظهای محدود CCR و بازگرداندن یک نشانگر بههمراه ارجاع `ccr://` |
-| `omniroute_ccr_retrieve`            | `read:compression`  | بازیابی کامل محتوای CCR یا بازیابی با حالتهای ابتدا، انتها، خطوط، grep و آمار                                         |
-| `omniroute_ccr_inspect`             | `read:compression`  | بررسی فرادادهٔ CCR متعلق به فراخواننده بدون بازگرداندن محتوا                                                          |
-| `omniroute_ccr_list`                | `read:compression`  | فهرستکردن صفحهبندیشدهٔ فرادادهٔ بلوکهای CCR متعلق به فراخواننده                                                       |
-| `omniroute_ccr_delete`              | `write:compression` | حذف یک بلوک CCR متعلق به فراخواننده                                                                                   |
-| `omniroute_ccr_stats`               | `read:compression`  | گزارش مصرف حافظه در محدودهٔ فراخواننده، شمارندههای چرخهٔ عمر و محدودیتهای مخزن                                        |
-| `omniroute_rtk_discover`            | `read:compression`  | کشف نویز تکرارشونده در نمونههای خروجی RTK با مشارکت اختیاری                                                           |
-| `omniroute_rtk_learn`               | `read:compression`  | ایجاد پیشنویس قابلبازبینی فیلتر RTK از نمونههای دارای مشارکت اختیاری                                                  |
+| `pusula_compression_status`      | `read:compression`  | تنظیمات فشردهسازی، خلاصهٔ تحلیلها و آمار آگاه از حافظهٔ نهان (شامل فرادادهٔ `analytics.mcpDescriptionCompression`)    |
+| `pusula_compression_configure`   | `write:compression` | پیکربندی حالت فشردهسازی، آستانه، نسبت هدف، حفظ پرامپت سیستمی و کلید تغییر وضعیت فشردهسازی توضیحات MCP                 |
+| `pusula_set_compression_engine`  | `write:compression` | انتخاب موتور فعال (off/caveman/rtk/stacked) و شدت Caveman/RTK                                                         |
+| `pusula_list_compression_combos` | `read:compression`  | فهرستکردن ترکیبهای نامگذاریشدهٔ فشردهسازی و خط لولهٔ موتورهای آنها                                                    |
+| `pusula_compression_combo_stats` | `read:compression`  | تحلیلهای گروهبندیشده بر اساس ترکیب فشردهسازی و موتور                                                                  |
+| `pusula_ccr_store`               | `write:compression` | ذخیرهٔ محتوای تفکیکشده بر اساس فراخواننده در مخزن درونحافظهای محدود CCR و بازگرداندن یک نشانگر بههمراه ارجاع `ccr://` |
+| `pusula_ccr_retrieve`            | `read:compression`  | بازیابی کامل محتوای CCR یا بازیابی با حالتهای ابتدا، انتها، خطوط، grep و آمار                                         |
+| `pusula_ccr_inspect`             | `read:compression`  | بررسی فرادادهٔ CCR متعلق به فراخواننده بدون بازگرداندن محتوا                                                          |
+| `pusula_ccr_list`                | `read:compression`  | فهرستکردن صفحهبندیشدهٔ فرادادهٔ بلوکهای CCR متعلق به فراخواننده                                                       |
+| `pusula_ccr_delete`              | `write:compression` | حذف یک بلوک CCR متعلق به فراخواننده                                                                                   |
+| `pusula_ccr_stats`               | `read:compression`  | گزارش مصرف حافظه در محدودهٔ فراخواننده، شمارندههای چرخهٔ عمر و محدودیتهای مخزن                                        |
+| `pusula_rtk_discover`            | `read:compression`  | کشف نویز تکرارشونده در نمونههای خروجی RTK با مشارکت اختیاری                                                           |
+| `pusula_rtk_learn`               | `read:compression`  | ایجاد پیشنویس قابلبازبینی فیلتر RTK از نمونههای دارای مشارکت اختیاری                                                  |
 
 ورودیهای CCR فقط در حافظه نگهداری میشوند و پس از راهاندازی مجدد از بین میروند. هر بلوک به 2 MiB، هر
 هویت اصلی به 16 MiB و کل مخزن به 64 MiB محدود است. TTL پیشفرض ورودیها 24 ساعت است (حداکثر
@@ -145,14 +145,14 @@ curl -i \
 محدودهای و grep در دسترس میمانند. ذخیرهسازی، بازیابی، فهرستکردن، بررسی، حذف و آمار بر اساس
 هویت اصلی کلید API احراز هویتشده تفکیک میشوند. رکوردهای ممیزی فقط شامل هشها و فرادادهٔ اندازه هستند و هرگز محتوا را در بر نمیگیرند.
 
-`omniroute_compression_status` فشردهسازی توضیحات MCP را بهصورت جداگانه در
+`pusula_compression_status` فشردهسازی توضیحات MCP را بهصورت جداگانه در
 `analytics.mcpDescriptionCompression` گزارش میکند. این مقادیر، برآوردهایی از اندازه فراداده برای توضیحات قابلفهرستشدن MCP
 (`tools`، `prompts`، `resources` و `resourceTemplates`) هستند؛ این مقادیر رسیدهای مصرف ارائهدهنده
 نیستند و با `source: "mcp_metadata_estimate"` علامتگذاری میشوند.
 
 ### فیلتر درخت دسترسپذیری MCP (v3.8.0)
 
-جدا از ابزارهای فشردهسازی بالا، OmniRoute شامل یک فیلتر پس از اجرا است که
+جدا از ابزارهای فشردهسازی بالا، Pusula شامل یک فیلتر پس از اجرا است که
 **نتایج ابزار** مربوط به ابزارهای مرورگر/دسترسپذیری MCP را پیش از بازگرداندن آنها به
 عامل، فشرده میکند. این فیلتر خود یک ابزار نیست — بلکه بهصورت شفاف روی هر نتیجه ابزاری اجرا میشود که
 حاوی متن طولانی درخت دسترسپذیری یا تصویر لحظهای مرورگر باشد (≥2000 نویسه).
@@ -175,9 +175,9 @@ curl -i \
 
 | ابزار                       | محدودهها       | توضیحات                                                                         |
 | :-------------------------- | :------------- | :------------------------------------------------------------------------------ |
-| `omniroute_oneproxy_fetch`  | `read:proxies` | دریافت پراکسیهای رایگان از بازار 1proxy (فیلترهای پروتکل/کشور/کیفیت/تعداد)      |
-| `omniroute_oneproxy_rotate` | `read:proxies` | دریافت پراکسی دردسترس بعدی بر اساس راهبرد (`random` / `quality` / `sequential`) |
-| `omniroute_oneproxy_stats`  | `read:proxies` | آمار مخزن، وضعیت همگامسازی و توزیع بر اساس پروتکل و کشور                        |
+| `pusula_oneproxy_fetch`  | `read:proxies` | دریافت پراکسیهای رایگان از بازار 1proxy (فیلترهای پروتکل/کشور/کیفیت/تعداد)      |
+| `pusula_oneproxy_rotate` | `read:proxies` | دریافت پراکسی دردسترس بعدی بر اساس راهبرد (`random` / `quality` / `sequential`) |
+| `pusula_oneproxy_stats`  | `read:proxies` | آمار مخزن، وضعیت همگامسازی و توزیع بر اساس پروتکل و کشور                        |
 
 ## ابزارهای حافظه (3)
 
@@ -185,9 +185,9 @@ curl -i \
 
 | ابزار                     | محدودهها       | توضیحات                                                                            |
 | :------------------------ | :------------- | :--------------------------------------------------------------------------------- |
-| `omniroute_memory_search` | `read:memory`  | جستوجوی حافظهها بر اساس پرسوجو / نوع / کلید API با اعمال محدودیت بودجه توکن        |
-| `omniroute_memory_add`    | `write:memory` | افزودن یک ورودی حافظه جدید (`factual` / `episodic` / `procedural` / `semantic`)    |
-| `omniroute_memory_clear`  | `write:memory` | پاککردن حافظههای یک کلید API، با امکان فیلتر بر اساس نوع یا مُهر زمانی `olderThan` |
+| `pusula_memory_search` | `read:memory`  | جستوجوی حافظهها بر اساس پرسوجو / نوع / کلید API با اعمال محدودیت بودجه توکن        |
+| `pusula_memory_add`    | `write:memory` | افزودن یک ورودی حافظه جدید (`factual` / `episodic` / `procedural` / `semantic`)    |
+| `pusula_memory_clear`  | `write:memory` | پاککردن حافظههای یک کلید API، با امکان فیلتر بر اساس نوع یا مُهر زمانی `olderThan` |
 
 ## ابزارهای مهارت (4)
 
@@ -195,10 +195,10 @@ curl -i \
 
 | ابزار                         | محدودهها         | توضیحات                                                                          |
 | :---------------------------- | :--------------- | :------------------------------------------------------------------------------- |
-| `omniroute_skills_list`       | `read:skills`    | فهرستکردن مهارتهای ثبتشده با امکان فیلتر بر اساس کلید API، نام یا وضعیت فعالبودن |
-| `omniroute_skills_enable`     | `write:skills`   | فعال یا غیرفعالکردن یک مهارت مشخص بر اساس ID                                     |
-| `omniroute_skills_execute`    | `execute:skills` | اجرای یک مهارت با ورودی ارائهشده و بازگرداندن رکورد اجرا                         |
-| `omniroute_skills_executions` | `read:skills`    | فهرستکردن تاریخچه اجرای اخیر مهارتها                                             |
+| `pusula_skills_list`       | `read:skills`    | فهرستکردن مهارتهای ثبتشده با امکان فیلتر بر اساس کلید API، نام یا وضعیت فعالبودن |
+| `pusula_skills_enable`     | `write:skills`   | فعال یا غیرفعالکردن یک مهارت مشخص بر اساس ID                                     |
+| `pusula_skills_execute`    | `execute:skills` | اجرای یک مهارت با ورودی ارائهشده و بازگرداندن رکورد اجرا                         |
+| `pusula_skills_executions` | `read:skills`    | فهرستکردن تاریخچه اجرای اخیر مهارتها                                             |
 
 ## منبع زمینه Notion (6)
 
@@ -234,9 +234,9 @@ curl -X DELETE http://localhost:20128/api/settings/notion
 
 | ابزار                             | دامنهها        | توضیحات                                                                                                                                        |
 | :-------------------------------- | :------------- | :--------------------------------------------------------------------------------------------------------------------------------------------- |
-| `omniroute_agent_skills_list`     | `read:catalog` | فهرستکردن هر 45 مهارت عامل با فیلترهای اختیاری `category` (api\|cli) و `area`؛ فراداده و پوشش را برمیگرداند                                    |
-| `omniroute_agent_skills_get`      | `read:catalog` | دریافت فراداده کامل و محتوای SKILL.md برای یک مهارت، بر اساس `id` کانونی                                                                       |
-| `omniroute_agent_skills_coverage` | `read:catalog` | آمار پوشش: تعداد مهارتهای دارای فایل SKILL.md در سیستم فایل، از میان 23 مهارت API، 21 مهارت CLI و 1 مهارت پیکربندی، در مقایسه با مجموع کاتالوگ |
+| `pusula_agent_skills_list`     | `read:catalog` | فهرستکردن هر 45 مهارت عامل با فیلترهای اختیاری `category` (api\|cli) و `area`؛ فراداده و پوشش را برمیگرداند                                    |
+| `pusula_agent_skills_get`      | `read:catalog` | دریافت فراداده کامل و محتوای SKILL.md برای یک مهارت، بر اساس `id` کانونی                                                                       |
+| `pusula_agent_skills_coverage` | `read:catalog` | آمار پوشش: تعداد مهارتهای دارای فایل SKILL.md در سیستم فایل، از میان 23 مهارت API، 21 مهارت CLI و 1 مهارت پیکربندی، در مقایسه با مجموع کاتالوگ |
 
 برای مشاهده کاتالوگ کامل و نحوه استفاده عاملهای خارجی از آن، به [AGENT-SKILLS.md](./AGENT-SKILLS.md) مراجعه کنید.
 
@@ -249,7 +249,7 @@ curl -X DELETE http://localhost:20128/api/settings/notion
 ### عاملهای ابری
 
 عاملهای ابری، عاملهای کدنویسی هوش مصنوعی خارج از فرایند (codex-cloud، cursor-cloud، devin، jules) هستند که از طریق
-همان مدل اتصال مورد استفاده برای ارائهدهندگان LLM به OmniRoute متصل شدهاند. این عاملها از طریق
+همان مدل اتصال مورد استفاده برای ارائهدهندگان LLM به Pusula متصل شدهاند. این عاملها از طریق
 سطح REST اختصاصی خود (`/api/v1/agents/*`) ارائه میشوند و بخشی از کاتالوگ ابزار MCP
 **نیستند** — فراخوانی یک عامل ابری هیچ دامنه MCPای را مصرف نمیکند.
 
@@ -303,7 +303,7 @@ curl -X DELETE http://localhost:20128/api/settings/notion
 | :------------------ | :------------------------------------------------------------------------------ | :-------------------------- | :------------------------------------------------- |
 | مدیریت کلید API     | `api_keys.scopes`                                                               | `hasManageScope`            | REST مدیریتی برای آن کلید Bearer                   |
 | افزودنی کلید API    | همان آرایه، یک رشته دقیق                                                        | کمکی که در زیر نام برده شده | فقط همان یک قابلیت                                 |
-| محدودههای ابزار MCP | همان آرایه، در غیر این صورت MCP `_meta`، در غیر این صورت `OMNIROUTE_MCP_SCOPES` | `scopeMatches`              | آن ابزار، پس از فعال شدن اجبار                     |
+| محدودههای ابزار MCP | همان آرایه، در غیر این صورت MCP `_meta`، در غیر این صورت `PUSULA_MCP_SCOPES` | `scopeMatches`              | آن ابزار، پس از فعال شدن اجبار                     |
 | توکن دسترسی         | `oma_live_…`                                                                    | `scopeSatisfies`            | مسیر مدیریتی که متد و مسیر آن به آن رتبه نیاز دارد |
 
 ساخت هر اعتبارنامه در [احراز هویت مدیریت](../guides/MANAGEMENT-AUTH.md) پوشش داده شده است.
@@ -335,7 +335,7 @@ curl -X DELETE http://localhost:20128/api/settings/notion
 
 یک کلید که محدودههای آن `["manage"]` است، برای `read:compression` در `scopeMatches` شکست میخورد. همان فراخوانی برای `admin`، `mcp:connect`، `read` و `write` زمانی که اینها تنها رشتههای اعطا شده هستند، شکست میخورد. هیچ سلسله مراتبی بین محدودههای ابزار MCP فراتر از `*` انتهایی وجود ندارد.
 
-اجرا خاموش است مگر اینکه `OMNIROUTE_MCP_ENFORCE_SCOPES=true` (پیشفرض `false`). در حالی که خاموش است، `evaluateToolScopes` فراخوانی را مجاز میکند و از کاتالوگ صرف نظر میکند. در حالی که روشن است، HTTP از `api_keys.scopes` کلید Bearer به عنوان `authInfo` استفاده میکند (به [اتصال محدوده HTTP به ازای هر کلید](#اتصال-محدوده-http-به-ازای-هر-کلید-7895) مراجعه کنید). هنگامی که هیچ محدوده کلیدی حل نمیشود، مجموعه اعطا شده به `_meta` MCP، سپس `OMNIROUTE_MCP_SCOPES` میرسد.
+اجرا خاموش است مگر اینکه `PUSULA_MCP_ENFORCE_SCOPES=true` (پیشفرض `false`). در حالی که خاموش است، `evaluateToolScopes` فراخوانی را مجاز میکند و از کاتالوگ صرف نظر میکند. در حالی که روشن است، HTTP از `api_keys.scopes` کلید Bearer به عنوان `authInfo` استفاده میکند (به [اتصال محدوده HTTP به ازای هر کلید](#اتصال-محدوده-http-به-ازای-هر-کلید-7895) مراجعه کنید). هنگامی که هیچ محدوده کلیدی حل نمیشود، مجموعه اعطا شده به `_meta` MCP، سپس `PUSULA_MCP_SCOPES` میرسد.
 
 #### محدودههای توکن دسترسی
 
@@ -385,8 +385,8 @@ curl -X DELETE http://localhost:20128/api/settings/notion
 | `نوشتن:مهارتها`      | `skills_enable`                                                                                                                                                                |
 | `اجرا:مهارتها`       | `skills_execute`                                                                                                                                                               |
 | `خواندن:کاتالوگ`     | `agent_skills_list`, `agent_skills_get`, `agent_skills_coverage`                                                                                                               |
-| `خواندن:ابزارها`     | `omniroute_tool_search`                                                                                                                                                        |
-| `خواندن:رادار`       | `omniroute_radar_catalog`                                                                                                                                                      |
+| `خواندن:ابزارها`     | `pusula_tool_search`                                                                                                                                                        |
+| `خواندن:رادار`       | `pusula_radar_catalog`                                                                                                                                                      |
 | `خواندن:بازیسازی`    | `gamification_profile`, `gamification_rank`, `gamification_leaderboard`, `gamification_badges`, `gamification_servers`, `gamification_anomalies`                               |
 | `write:gamification` | `gamification_invite`, `gamification_transfer`                                                                                                                                 |
 | `read:plugins`       | `plugin_list`, `plugin_executions`                                                                                                                                             |
@@ -403,7 +403,7 @@ curl -X DELETE http://localhost:20128/api/settings/notion
 
 ### اتصال اسکوپ HTTP به ازای هر کلید (#7895)
 
-از طریق HTTP/SSE، `open-sse/mcp-server/httpTransport.ts` اکنون `api_keys.scopes` واقعی تماسگیرنده را از طریق `resolveMcpCallerAuthInfo()` (`open-sse/mcp-server/httpAuthContext.ts`) حل میکند و آن را به `transport.handleRequest(req, { authInfo })` در MCP SDK ارسال میکند، بنابراین `extra.authInfo.scopes` که به هر فراخوانی ابزار میرسد، اسکوپهای خود کلید Bearer را منعکس میکند. `resolveCallerScopeContext()` در `scopeEnforcement.ts` قبلاً `authInfo` را بر `_meta` و بازگشت به متغیر محیطی `OMNIROUTE_MCP_SCOPES` اولویت داده بود — این تغییر فقط آن منبع اول و با بالاترین اولویت را پر میکند، که قبلاً از طریق HTTP تغذیه نمیشد. هنگامی که هیچ کلید API حل نمیشود (بدون هدر، کلید نامعتبر)، `authInfo` به صورت `undefined` باقی میماند و حل و فصل بدون تغییر به زنجیره `meta`/env موجود منتقل میشود. این تغییر پیشفرض `OMNIROUTE_MCP_ENFORCE_SCOPES` را برعکس نمیکند — اعمال همچنان باید به صراحت فعال شود؛ این تغییر فقط باعث میشود که مسیر به ازای هر کلید، پس از فعال شدن، اولویت پیدا کند. stdio هویت به ازای هر تماسگیرنده ندارد (به `mcpCallerIdentity.ts` مراجعه کنید) و تحت تأثیر قرار نمیگیرد — و در زنجیره بازگشت `_meta`/env باقی میماند.
+از طریق HTTP/SSE، `open-sse/mcp-server/httpTransport.ts` اکنون `api_keys.scopes` واقعی تماسگیرنده را از طریق `resolveMcpCallerAuthInfo()` (`open-sse/mcp-server/httpAuthContext.ts`) حل میکند و آن را به `transport.handleRequest(req, { authInfo })` در MCP SDK ارسال میکند، بنابراین `extra.authInfo.scopes` که به هر فراخوانی ابزار میرسد، اسکوپهای خود کلید Bearer را منعکس میکند. `resolveCallerScopeContext()` در `scopeEnforcement.ts` قبلاً `authInfo` را بر `_meta` و بازگشت به متغیر محیطی `PUSULA_MCP_SCOPES` اولویت داده بود — این تغییر فقط آن منبع اول و با بالاترین اولویت را پر میکند، که قبلاً از طریق HTTP تغذیه نمیشد. هنگامی که هیچ کلید API حل نمیشود (بدون هدر، کلید نامعتبر)، `authInfo` به صورت `undefined` باقی میماند و حل و فصل بدون تغییر به زنجیره `meta`/env موجود منتقل میشود. این تغییر پیشفرض `PUSULA_MCP_ENFORCE_SCOPES` را برعکس نمیکند — اعمال همچنان باید به صراحت فعال شود؛ این تغییر فقط باعث میشود که مسیر به ازای هر کلید، پس از فعال شدن، اولویت پیدا کند. stdio هویت به ازای هر تماسگیرنده ندارد (به `mcpCallerIdentity.ts` مراجعه کنید) و تحت تأثیر قرار نمیگیرد — و در زنجیره بازگشت `_meta`/env باقی میماند.
 
 ---
 
@@ -411,17 +411,17 @@ curl -X DELETE http://localhost:20128/api/settings/notion
 
 | متغیر                                   | مقدار پیشفرض                            | هدف                                                                                                                               |
 | :-------------------------------------- | :-------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
-| `OMNIROUTE_BASE_URL`                    | `http://localhost:20128`                | URL پایهای که سرور MCP هنگام فراخوانی APIهای داخلی OmniRoute استفاده میکند                                                        |
-| `OMNIROUTE_API_KEY`                     | (خالی)                                  | کلید API که بهصورت `Authorization: Bearer` به فراخوانیهای API داخلی ارسال میشود                                                   |
-| `OMNIROUTE_MCP_ENFORCE_SCOPES`          | `false` (فقط `"true"` آن را فعال میکند) | در صورت فعالبودن، نبود scopeهای لازم باعث رد فراخوانی ابزار و ثبت `scope_denied:<reason>` در گزارش ممیزی میشود                    |
-| `OMNIROUTE_MCP_SCOPES`                  | (خالی)                                  | فهرست مجاز scopeها با جداکننده ویرگول که بهطور پیشفرض «در دسترس» در نظر گرفته میشوند (وقتی فراخواننده scopeهای خود را ارائه نکند) |
-| `OMNIROUTE_MCP_COMPRESS_DESCRIPTIONS`   | (تنظیمنشده = روشن)                      | اگر روی `0/false/off/no` تنظیم شود، فشردهسازی توضیحات MCP را هنگام ثبت غیرفعال میکند                                              |
-| `OMNIROUTE_MCP_DESCRIPTION_COMPRESSION` | (تنظیمنشده = روشن)                      | نام مستعار جایگزین برای همان گزینه بالا                                                                                           |
-| `OMNIROUTE_MCP_FETCH_TIMEOUT_MS`        | `10000`                                 | مهلت لغو برای خواندنهای مدیریتی داخلی (سلامت، تابآوری، ترکیبها، سهمیه و میزان استفاده)                                            |
-| `OMNIROUTE_MCP_UPSTREAM_TIMEOUT_MS`     | `60000`                                 | مهلت لغو برای گامهایی که منتظر یک ارائهدهنده میمانند (`route_request`، `web_search`، `web_fetch`)                                 |
+| `PUSULA_BASE_URL`                    | `http://localhost:20128`                | URL پایهای که سرور MCP هنگام فراخوانی APIهای داخلی Pusula استفاده میکند                                                        |
+| `PUSULA_API_KEY`                     | (خالی)                                  | کلید API که بهصورت `Authorization: Bearer` به فراخوانیهای API داخلی ارسال میشود                                                   |
+| `PUSULA_MCP_ENFORCE_SCOPES`          | `false` (فقط `"true"` آن را فعال میکند) | در صورت فعالبودن، نبود scopeهای لازم باعث رد فراخوانی ابزار و ثبت `scope_denied:<reason>` در گزارش ممیزی میشود                    |
+| `PUSULA_MCP_SCOPES`                  | (خالی)                                  | فهرست مجاز scopeها با جداکننده ویرگول که بهطور پیشفرض «در دسترس» در نظر گرفته میشوند (وقتی فراخواننده scopeهای خود را ارائه نکند) |
+| `PUSULA_MCP_COMPRESS_DESCRIPTIONS`   | (تنظیمنشده = روشن)                      | اگر روی `0/false/off/no` تنظیم شود، فشردهسازی توضیحات MCP را هنگام ثبت غیرفعال میکند                                              |
+| `PUSULA_MCP_DESCRIPTION_COMPRESSION` | (تنظیمنشده = روشن)                      | نام مستعار جایگزین برای همان گزینه بالا                                                                                           |
+| `PUSULA_MCP_FETCH_TIMEOUT_MS`        | `10000`                                 | مهلت لغو برای خواندنهای مدیریتی داخلی (سلامت، تابآوری، ترکیبها، سهمیه و میزان استفاده)                                            |
+| `PUSULA_MCP_UPSTREAM_TIMEOUT_MS`     | `60000`                                 | مهلت لغو برای گامهایی که منتظر یک ارائهدهنده میمانند (`route_request`، `web_search`، `web_fetch`)                                 |
 | `MCP_TOOL_DENY`                         | (تنظیمنشده = بدون فیلتر)                | نام ابزارها با جداکننده ویرگول برای حذف از `tools/list` (کاهش تعداد ابزارها — پایین را ببینید)                                    |
 | `MCP_TOOL_ALLOW`                        | (تنظیمنشده = بدون فیلتر)                | نام ابزارها با جداکننده ویرگول که باید منحصراً نگه داشته شوند (حالت فهرست مجاز — پایین را ببینید)                                 |
-| `DATA_DIR`                              | `~/.omniroute`                          | فایل ضربان حیات در `${DATA_DIR}/runtime/mcp-heartbeat.json` نوشته میشود                                                           |
+| `DATA_DIR`                              | `~/.pusula`                          | فایل ضربان حیات در `${DATA_DIR}/runtime/mcp-heartbeat.json` نوشته میشود                                                           |
 
 ---
 
@@ -431,8 +431,8 @@ curl -X DELETE http://localhost:20128/api/settings/notion
 
 - فشردهسازی با استفاده از مجموعهقواعد Caveman (`getRulesForContext("all", "full")`) و استخراج بلوکهای محافظتشده (قطعهکدهای درونخطی، بلوکهای محصورشده و غیره) روی متن توضیحات اجرا میشود تا محتوای ساختاری تغییر نکند.
 - برای هر استقرار، از طریق مقدار `compression.mcpDescriptionCompressionEnabled` در جدول تنظیمات `key_value` آن را تغییر دهید (پیشفرض: فعال) — این گزینه در رابط کاربری با عنوان **تحلیلها → فشردهسازی توضیحات MCP** ارائه میشود.
-- در سطح کل فرایند، از طریق `OMNIROUTE_MCP_COMPRESS_DESCRIPTIONS=false` یا `OMNIROUTE_MCP_DESCRIPTION_COMPRESSION=false` آن را تغییر دهید.
-- آمار بلادرنگ از طریق `omniroute_compression_status` در مسیر `analytics.mcpDescriptionCompression` ارائه میشود و با `source: "mcp_metadata_estimate"` برچسبگذاری میشود تا از رسیدهای واقعی استفاده از ارائهدهنده متمایز باشد.
+- در سطح کل فرایند، از طریق `PUSULA_MCP_COMPRESS_DESCRIPTIONS=false` یا `PUSULA_MCP_DESCRIPTION_COMPRESSION=false` آن را تغییر دهید.
+- آمار بلادرنگ از طریق `pusula_compression_status` در مسیر `analytics.mcpDescriptionCompression` ارائه میشود و با `source: "mcp_metadata_estimate"` برچسبگذاری میشود تا از رسیدهای واقعی استفاده از ارائهدهنده متمایز باشد.
 
 ---
 
@@ -451,10 +451,10 @@ curl -X DELETE http://localhost:20128/api/settings/notion
 
 ```bash
 # دو ابزار را از فهرست ابزارها حذف کنید
-MCP_TOOL_DENY="omniroute_get_health,omniroute_list_combos" omniroute --mcp
+MCP_TOOL_DENY="pusula_get_health,pusula_list_combos" pusula --mcp
 
 # فقط ابزارهای مسیریابی و سهمیه را اعلام کنید (حالت فهرست مجاز)
-MCP_TOOL_ALLOW="omniroute_route_request,omniroute_check_quota" omniroute --mcp
+MCP_TOOL_ALLOW="pusula_route_request,pusula_check_quota" pusula --mcp
 ```
 
 **نحوهٔ حذف ابزارهای فیلترشده:** ثبت همیشه با موفقیت انجام میشود؛ سپس ابزاری که پروفایل رد میکند، روی هندل MCP SDK با `.disable()` غیرفعال میشود؛ بنابراین هرگز در `tools/list` ظاهر نمیشود، اما اتصال داخلی آن دستنخورده باقی میماند (فعالسازی/غیرفعالسازی تمیز، بدون ثبت مجدد). تجزیهگر پروفایل `readMcpToolProfileFromEnv(process.env)` است که وقتی هر دو متغیر خالی باشند، `null` (بدون فیلتر) برمیگرداند.

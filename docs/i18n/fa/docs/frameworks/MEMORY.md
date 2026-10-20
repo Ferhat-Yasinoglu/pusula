@@ -7,7 +7,7 @@
 > **منبع حقیقت:** `src/lib/memory/` و `src/app/api/memory/`
 > **آخرین بهروزرسانی:** 2026-06-28 — v3.8.40 (غیرفعال بهصورت پیشفرض + تکمیل کوانتیزهسازی int8)
 
-OmniRoute حافظهٔ مکالمهای پایداری را ارائه میدهد که بر اساس کلید API (و
+Pusula حافظهٔ مکالمهای پایداری را ارائه میدهد که بر اساس کلید API (و
 در صورت تمایل، شناسهٔ نشست) کلیدگذاری میشود. حافظهها بهطور خودکار از پاسخهای LLM
 از طریق تطبیق سبکوزن الگوهای regex استخراج شده و بهعنوان یک پیام system ابتدایی
 (یا برای ارائهدهندگانی که نقش system را رد میکنند، بهعنوان نخستین پیام user)
@@ -19,7 +19,7 @@ OmniRoute حافظهٔ مکالمهای پایداری را ارائه میده�
 > هزینهٔ آن محاسبه میشود — هزینهای غیرمنتظره برای نصبهای جدید و کلاینتهایی که
 > زمینهٔ خود را مدیریت میکنند. آن را بهطور صریح از مسیر **Settings → Memory**
 > فعال کنید (`MemorySkillsTab` هنگام فعالبودن حافظه، هشدار هزینهٔ توکن را نمایش میدهد).
-> یک کلاینت میتواند با هدر درخواست `x-omniroute-no-memory`
+> یک کلاینت میتواند با هدر درخواست `x-pusula-no-memory`
 > (`true`/`1`/`yes`) حافظه را برای یک درخواست منفرد غیرفعال کند — جدول هدرهای درخواست را در
 > [API_REFERENCE.md](../reference/API_REFERENCE.md) ببینید. یک درخواست بدون حافظه،
 > `memoryOwnerId = null` را تنظیم میکند که **هم** تزریق حافظه و **هم** تزریق مهارت را برای
@@ -254,7 +254,7 @@ Engine، **هر دو** گزینهٔ `qdrantEnabled` و `memoryVectorStore` را 
 
 - `upsertSemanticMemoryPoint()` — با استفاده از مدل embedding پیکربندیشده، `key + content` را embed میکند، از وجود collection اطمینان حاصل میکند (در نخستین استفاده، بردارهایی با فاصلهٔ کسینوسی ایجاد میکند) و یک point را با payload برابر با `{memoryId,
 apiKeyId, sessionId, key, content, metadata, createdAtUnix, expiresAtUnix}` درج یا بهروزرسانی میکند.
-- `searchSemanticMemory(query, topK, scope)` — query را embed میکند و collection را با فیلتر `kind = "omniroute_memory"` و در صورت نیاز بر اساس `apiKeyId` / `sessionId` جستوجو میکند. مقدار `topK` را به بازهٔ `[1, 20]` محدود میکند.
+- `searchSemanticMemory(query, topK, scope)` — query را embed میکند و collection را با فیلتر `kind = "pusula_memory"` و در صورت نیاز بر اساس `apiKeyId` / `sessionId` جستوجو میکند. مقدار `topK` را به بازهٔ `[1, 20]` محدود میکند.
 - `deleteSemanticMemoryPoint(id)` — یک point را حذف میکند. پس از حذف ردیف SQLite توسط `deleteMemory()` فراخوانی میشود (D15).
 - `cleanupSemanticMemoryPoints({retentionDays})` — pointهایی را که `expiresAtUnix` آنها در گذشته است یا `createdAtUnix` آنها از حد آستانهٔ نگهداری قدیمیتر است، بهصورت گروهی حذف میکند. ابتدا آنها را میشمارد تا داشبورد بتواند اعداد واقعی را نمایش دهد.
 - `checkQdrantHealth()` — بررسی سلامت با `GET /readyz` همراه با سنجش تأخیر.
@@ -355,7 +355,7 @@ apiKeyId, sessionId, key, content, metadata, createdAtUnix, expiresAtUnix}` در
    وجود هرگونه تطبیق، همیشه حداقل یک ورودی بازمیگرداند.
 
 `estimateTokens` export شده است و در بازیابی، خلاصهسازی و ابزار MCP با نام
-`omniroute_memory_search` استفاده میشود.
+`pusula_memory_search` استفاده میشود.
 
 ## تزریق (`injection.ts`)
 
@@ -411,7 +411,7 @@ apiKeyId, sessionId, key, content, metadata, createdAtUnix, expiresAtUnix}` در
 | `memoryVectorStore`         | `vectorStore`            | `"auto"` |
 
 کلیدهای DB مرتبط با Qdrant (`qdrantEnabled`، `qdrantHost`، `qdrantPort`،
-`qdrantApiKey`، `qdrantCollection` با مقدار پیشفرض `"omniroute_memory"`،
+`qdrantApiKey`، `qdrantCollection` با مقدار پیشفرض `"pusula_memory"`،
 `qdrantEmbeddingModel` با مقدار پیشفرض `"openai/text-embedding-3-small"`) توسط
 `normalizeQdrantConfig()` در `qdrant.ts` خوانده میشوند.
 
@@ -480,15 +480,15 @@ apiKeyId, sessionId, key, content, metadata, createdAtUnix, expiresAtUnix}` در
 
 هنگامی که سرور MCP فعال است، سه ابزار حافظه ثبت میشوند:
 
-- `omniroute_memory_search` — `{apiKeyId, query?, type?, maxTokens?, limit?}`
+- `pusula_memory_search` — `{apiKeyId, query?, type?, maxTokens?, limit?}`
   → تابع `retrieveMemories()` را پوشش میدهد. از نسخهٔ v3.8.6 (D16)، مقدار `strategy`
   بهجای اینکه بهصورت ثابت روی `"exact"` تنظیم شود، از `getMemorySettings()`
   خوانده میشود. اگر `query` ارائه شده باشد و `strategy` برابر با `semantic` یا
   `hybrid` باشد، در صورت موجود بودن، از مخزن برداری استفاده میشود.
-- `omniroute_memory_add` — `{apiKeyId, sessionId?, type, key, content,
+- `pusula_memory_add` — `{apiKeyId, sessionId?, type, key, content,
 metadata?}` → تابع `createMemory()` را پوشش میدهد. فقط ۴ نوع استاندارد را
   میپذیرد: `factual`، `episodic`، `procedural`، `semantic` (D17).
-- `omniroute_memory_clear` — `{apiKeyId, type?, olderThan?}` → ورودیهای منطبق
+- `pusula_memory_clear` — `{apiKeyId, type?, olderThan?}` → ورودیهای منطبق
   را فهرست میکند، در صورت نیاز آنها را بر اساس برچسب زمانیِ ایجاد پیش از یک
   زمان مشخص فیلتر میکند و سپس هرکدام را از طریق `deleteMemory()` حذف میکند
   (این تابع بردارها را نیز از sqlite-vec و Qdrant حذف میکند).
@@ -553,7 +553,7 @@ metadata?}` → تابع `createMemory()` را پوشش میدهد. فقط ۴ ن
 - ورودیهایی که `expires_at` آنها در آینده است، از نتایج بازیابی حذف میشوند؛
   ورودیهای قدیمیتر از `retentionDays` نیز توسط عبارت
   `created_at >= cutoff` در `retrieveMemories` کنار گذاشته میشوند.
-- برای حذف دائمی، از `DELETE /api/memory/[id]` یا `omniroute_memory_clear` استفاده کنید.
+- برای حذف دائمی، از `DELETE /api/memory/[id]` یا `pusula_memory_clear` استفاده کنید.
 - استخراج بهصورت بدون انتظار برای نتیجه، از طریق `setImmediate` انجام میشود؛ خطاها با
   `memory.extraction.background.failed` ثبت میشوند و هرگز به فراخواننده نمایش داده
   نمیشوند.
@@ -598,7 +598,7 @@ metadata?}` → تابع `createMemory()` را پوشش میدهد. فقط ۴ ن
 
 ## انتخاب ارائهدهندهٔ تعبیهسازی (v3.8.16+)
 
-موتور حافظهٔ OmniRoute از **چهار منبع تعبیهسازی** (`src/lib/memory/embedding/`) پشتیبانی میکند. هرکدام از نظر **تأخیر، هزینه، کیفیت مدل و پیچیدگی راهاندازی** موازنههای متفاوتی دارند.
+موتور حافظهٔ Pusula از **چهار منبع تعبیهسازی** (`src/lib/memory/embedding/`) پشتیبانی میکند. هرکدام از نظر **تأخیر، هزینه، کیفیت مدل و پیچیدگی راهاندازی** موازنههای متفاوتی دارند.
 
 ### منابع تعبیهسازی
 
@@ -844,7 +844,7 @@ RRF(d) = 1/(k + rank_vector) + 1/(k + rank_fts)
 
 ```bash
 curl -X POST http://localhost:20128/api/memory/summarize \
-  -H "Authorization: Bearer $OMNIROUTE_KEY"
+  -H "Authorization: Bearer $PUSULA_KEY"
 ```
 
 برای غیرفعال نگهداشتن آن، کافی است `autoSummarize` را روی مقدار پیشفرضش (`false`) نگه دارید.
@@ -859,7 +859,7 @@ curl -X POST http://localhost:20128/api/memory/summarize \
 ```bash
 # به سبک Cron: خلاصهسازی روزانه در ساعت ۳ بامداد
 0 3 * * * curl -X POST http://localhost:20128/api/memory/summarize \
-  -H "Authorization: Bearer $OMNIROUTE_KEY"
+  -H "Authorization: Bearer $PUSULA_KEY"
 ```
 
 ---

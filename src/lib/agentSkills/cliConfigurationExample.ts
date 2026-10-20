@@ -8,8 +8,8 @@ export function buildCliConfigurationExample(operation: {
   if (method === "GET" && path === "/api/cli-tools/config") {
     return [
       `curl https://localhost:20128${path} \\`,
-      '  -H "Authorization: Bearer $OMNIROUTE_TOKEN" \\',
-      '  -H "x-omniroute-config-api-key: <configuration-api-key>"',
+      '  -H "Authorization: Bearer $PUSULA_TOKEN" \\',
+      '  -H "x-pusula-config-api-key: <configuration-api-key>"',
     ];
   }
   if (method !== "POST") return;
@@ -20,7 +20,7 @@ export function buildCliConfigurationExample(operation: {
   };
   return [
     `curl -X POST https://localhost:20128${path} \\`,
-    '  -H "Authorization: Bearer $OMNIROUTE_TOKEN" \\',
+    '  -H "Authorization: Bearer $PUSULA_TOKEN" \\',
     '  -H "Content-Type: application/json" \\',
     `  -d '${JSON.stringify(body)}'`,
   ];

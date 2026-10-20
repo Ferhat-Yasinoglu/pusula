@@ -4,7 +4,7 @@
 
 ---
 
-OmniRoute, sohbetle aynı sağlayıcı kimliği üzerinden `POST /v1/images/generations` uç noktasında Cursor planı **görsel oluşturma** özelliğini sunar: `cursor` (`cu` diğer adıyla).
+Pusula, sohbetle aynı sağlayıcı kimliği üzerinden `POST /v1/images/generations` uç noktasında Cursor planı **görsel oluşturma** özelliğini sunar: `cursor` (`cu` diğer adıyla).
 
 | Alan                      | Değer                                                                                      |
 | ------------------------- | ------------------------------------------------------------------------------------------ |
@@ -15,7 +15,7 @@ OmniRoute, sohbetle aynı sağlayıcı kimliği üzerinden `POST /v1/images/gene
 
 ## Neden Agent CLI
 
-OmniRoute'taki Cursor sohbeti `agent.v1.AgentService/Run` (protobuf) kullanır. Bu yol, yerleşik istemci araçlarını (shell, write, …) **reddeder**. Görsel oluşturma, lisans üzerinden **`agent` CLI** tarafından yürütülen Cursor'a özgü bir araçtır. Bu nedenle görsel işleyicisi, kilitlenmiş bir istem ve istek başına geçici bir çalışma alanıyla `agent` sürecini başlatır (topluluk lisans köprüleriyle aynı yapıda) ve ardından OpenAI uyumlu `b64_json` döndürür.
+Pusula'taki Cursor sohbeti `agent.v1.AgentService/Run` (protobuf) kullanır. Bu yol, yerleşik istemci araçlarını (shell, write, …) **reddeder**. Görsel oluşturma, lisans üzerinden **`agent` CLI** tarafından yürütülen Cursor'a özgü bir araçtır. Bu nedenle görsel işleyicisi, kilitlenmiş bir istem ve istek başına geçici bir çalışma alanıyla `agent` sürecini başlatır (topluluk lisans köprüleriyle aynı yapıda) ve ardından OpenAI uyumlu `b64_json` döndürür.
 
 ## Erişim kısıtlaması (Katı Kurallar #15 + #17)
 
@@ -36,7 +36,7 @@ herhangi bir kimlik bilgisi araması veya süreç başlatma gerçekleşmeden ön
 
 `CURSOR_IMG_MAX_CONCURRENT`, Node modülü örneği kapsamında tutulan bellek içi bir
 sayaç/kuyruk tarafından uygulanır (`open-sse/handlers/imageGeneration/providers/cursorAgentImage.ts`).
-Tek bir OmniRoute süreci içindeki eşzamanlı `agent` süreç başlatmalarını doğru biçimde
+Tek bir Pusula süreci içindeki eşzamanlı `agent` süreç başlatmalarını doğru biçimde
 sınırlar ancak aynı Cursor lisansını paylaşan birden fazla süreç/örnek arasında
 (ör. çok replikalı bir dağıtımda) koordinasyon **sağlamaz** — her örnek kendi bağımsız
 sınırını uygular. Tek örnekli bir dağıtımda (varsayılan) bu sınır kesindir; yatay olarak
@@ -46,7 +46,7 @@ tutmalı veya Cursor görsel trafiğini tek bir örneğe yönlendirmelidir.
 ## Gereksinimler
 
 1. Kontrol panelinde bağlı bir Cursor hesabı (OAuth veya `crsr_…` API anahtarı).
-2. Cursor Agent ikili dosyasının OmniRoute süreci tarafından kullanılabilir olması:
+2. Cursor Agent ikili dosyasının Pusula süreci tarafından kullanılabilir olması:
    - env `CURSOR_AGENT_BIN=/path/to/agent`, veya
    - `~/.local/bin/agent`, veya
    - Cursor bağlantısında `providerSpecificData.agentBin`.
@@ -72,4 +72,4 @@ Oluşturma işlemi genellikle 1–2 dakika sürer. Dahili bir ağ yolunu tercih 
 
 ## LiteLLM
 
-`mode: image_generation`, `api_base: http://omniroute:20128/v1` ve `model: openai/cursor/auto` (veya LiteLLM sürümünüze bağlı olarak yalın `cursor/auto`) ile bir görsel modeli kaydedin.
+`mode: image_generation`, `api_base: http://pusula:20128/v1` ve `model: openai/cursor/auto` (veya LiteLLM sürümünüze bağlı olarak yalın `cursor/auto`) ile bir görsel modeli kaydedin.

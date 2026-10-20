@@ -148,7 +148,7 @@ describe("C. catalog cross-check (derived from FREE_MODEL_BUDGETS)", () => {
 });
 
 describe("D. auth bypass lock", () => {
-  const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-free-badge-gate-"));
+  const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-free-badge-gate-"));
   process.env.DATA_DIR = TEST_DATA_DIR;
 
   let core: typeof import("../../src/lib/db/core.ts");

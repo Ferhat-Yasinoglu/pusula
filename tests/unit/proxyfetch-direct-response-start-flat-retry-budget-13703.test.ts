@@ -15,9 +15,9 @@ import assert from "node:assert/strict";
 import { proxyFetch } from "../../open-sse/utils/proxyFetch.ts";
 
 function withFastTimeout<T>(ms: number, fn: () => Promise<T>): Promise<T> {
-  process.env.OMNIROUTE_DIRECT_HEADERS_TIMEOUT_MS = String(ms);
+  process.env.PUSULA_DIRECT_HEADERS_TIMEOUT_MS = String(ms);
   return fn().finally(() => {
-    delete process.env.OMNIROUTE_DIRECT_HEADERS_TIMEOUT_MS;
+    delete process.env.PUSULA_DIRECT_HEADERS_TIMEOUT_MS;
   });
 }
 

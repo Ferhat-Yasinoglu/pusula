@@ -7,7 +7,7 @@
 // resolved a streamed Responses `function_call` item's `{namespace, name}`
 // from the CURRENT request's own `requestToolIdentityMap`, built solely from
 // that request's own `tools: [{type:"namespace", ...}]` declarations.
-// OmniRoute is a stateless-upstream-by-default proxy for the Responses API
+// Pusula is a stateless-upstream-by-default proxy for the Responses API
 // (see open-sse/utils/responsesStatePolicy.ts), so nothing persists the
 // namespace identity across separate top-level HTTP requests — every
 // follow-up turn re-enters translation with a fresh, request-scoped map.

@@ -15,7 +15,7 @@ Kota Paylaşım Motoru, bir sağlayıcının zamana dayalı kotasını (ör. Cod
 5 saatlik pencere, Kimi 1500 istek/saat), aynı bağlantıyı paylaşan birden fazla
 API anahtarı arasında adil şekilde dağıtır.
 
-**Çözdüğü sorun:** OmniRoute, birçok API anahtarını aynı üst sağlayıcı hesabı
+**Çözdüğü sorun:** Pusula, birçok API anahtarını aynı üst sağlayıcı hesabı
 üzerinden yönlendirir. Paylaşım mantığı olmadan A anahtarından gelen yoğun bir
 istek akışı, sağlayıcının saatlik kotasını tüketebilir ve pencere sıfırlanana
 kadar B ve C anahtarlarının engellenmesine neden olabilir. Motor bunu şu şekilde önler:
@@ -120,7 +120,7 @@ Redis sürücüsü: Atomik artırma için Lua EVAL betiği — tek bir Redis kom
 
 - Tablo: `quota_consumption` (`073_quota_pools.sql` / `074_quota_consumption.sql` migrasyonlarına bakın).
 - Tek örnekli dağıtımlar için en uygunudur.
-- Tüm kalıcı veriler mevcut OmniRoute SQLite veritabanında bulunur (`DATA_DIR/storage.sqlite`).
+- Tüm kalıcı veriler mevcut Pusula SQLite veritabanında bulunur (`DATA_DIR/storage.sqlite`).
 
 ### Redis (isteğe bağlı, çok örnekli)
 
@@ -327,7 +327,7 @@ gösterir.
 `/dashboard/costs/quota-share` ilk kez yüklendiğinde, `useLocalStoragePoolMigration` hook'u
 şunları kontrol eder:
 
-1. `localStorage.getItem("omniroute:quota-share:pools")` boş değildir.
+1. `localStorage.getItem("pusula:quota-share:pools")` boş değildir.
 2. `GET /api/quota/pools`, `[]` döndürür (DB boştur).
 
 Her ikisi de doğruysa, eski havuzların her birini toplu olarak `POST /api/quota/pools`

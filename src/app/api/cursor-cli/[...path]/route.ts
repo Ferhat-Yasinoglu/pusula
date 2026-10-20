@@ -1,4 +1,4 @@
-import { handleCursorCliProxy } from "@omniroute/open-sse/handlers/cursorCliProxy.ts";
+import { handleCursorCliProxy } from "@pusula/open-sse/handlers/cursorCliProxy.ts";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";

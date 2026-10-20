@@ -5,14 +5,14 @@
 ---
 
 > **Einzeilige Beschreibung für jedes Verzeichnis und jede Datei im Stammverzeichnis.**
-> Zuletzt aktualisiert: 2026-06-28 — OmniRoute v3.8.40
+> Zuletzt aktualisiert: 2026-06-28 — Pusula v3.8.40
 >
 > Verwenden Sie diese Übersicht, um sich schnell in der Codebasis zurechtzufinden. Für ausführliche Informationen folgen Sie den Links zu den entsprechenden Dokumentationen.
 
 ## Verzeichnisstruktur der obersten Ebene
 
 ```
-OmniRoute/
+Pusula/
 ├── src/                  # Next.js-16-Anwendung (UI + API-Routen + Bibliotheken + Domäne + Server)
 ├── open-sse/             # Workspace der Streaming-Engine (Handler, Executors, Übersetzer, MCP-Server)
 ├── electron/             # Desktop-Wrapper (Electron 41 + electron-builder 26.10)
@@ -23,9 +23,9 @@ OmniRoute/
 ├── public/               # Statische Next.js-Assets, PWA-Manifest, Service Worker und Symbole
 ├── config/               # Statische Konfiguration + Quality-Gate-Status (i18n, payloadRules, quality/)
 ├── images/               # Bild-Assets für Marketing und README
-├── @omniroute/           # Veröffentlichbare Begleitpakete (opencode-plugin, opencode-provider)
+├── @pusula/           # Veröffentlichbare Begleitpakete (opencode-plugin, opencode-provider)
 ├── skills/               # Skill-Pakete für CLI/Agenten (cli-* + omni-* + config-codex-cli)
-├── examples/             # Beispiel-Plug-ins + Starter für omniroute-cmd-hello
+├── examples/             # Beispiel-Plug-ins + Starter für pusula-cmd-hello
 ├── contrib/              # Beiträge der Community (podman/)
 ├── .source/              # Fumadocs-Quellkonfiguration (source.config.mjs + server/browser/dynamic)
 ├── .github/              # GitHub-Actions-Workflows + Issue-Vorlagen + PR-Vorlage
@@ -257,7 +257,7 @@ src/
 
 ## `open-sse/` — Arbeitsbereich der Streaming-Engine
 
-Separater npm-Arbeitsbereich (`@omniroute/open-sse`). Übernimmt die Anfrageverarbeitung und die Ausführung durch Anbieter.
+Separater npm-Arbeitsbereich (`@pusula/open-sse`). Übernimmt die Anfrageverarbeitung und die Ausführung durch Anbieter.
 
 ```
 open-sse/
@@ -299,7 +299,7 @@ open-sse/
 | Datei            | Zweck                                                                                                  |
 | ---------------- | ------------------------------------------------------------------------------------------------------ |
 | `main.js`        | Electron-Hauptprozess (BrowserWindow, eingebetteter Next.js-Server, Tray, automatische Aktualisierung) |
-| `preload.js`     | IPC-Bridge (contextBridge → `window.omniroute`)                                                        |
+| `preload.js`     | IPC-Bridge (contextBridge → `window.pusula`)                                                        |
 | `package.json`   | electron-builder-Konfiguration + Abhängigkeiten Electron 41 + electron-builder 26.10                   |
 | `assets/`        | App-Symbole (Windows .ico, macOS .icns, Linux .png)                                                    |
 | `dist-electron/` | Build-Ausgabe (von Git ignoriert)                                                                      |
@@ -312,7 +312,7 @@ open-sse/
 
 | Datei                                                                                                       | Zweck                                                                                                                               |
 | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `omniroute.mjs`                                                                                             | Haupt-CLI-Einstiegspunkt — `omniroute serve`, `omniroute setup`, `omniroute doctor`, `omniroute providers`, `omniroute combos` usw. |
+| `pusula.mjs`                                                                                             | Haupt-CLI-Einstiegspunkt — `pusula serve`, `pusula setup`, `pusula doctor`, `pusula providers`, `pusula combos` usw. |
 | `reset-password.mjs`                                                                                        | Eigenständige CLI zum Zurücksetzen des Passworts                                                                                    |
 | `cli/commands/setup.mjs`                                                                                    | Interaktiver und nicht interaktiver Einrichtungsassistent                                                                           |
 | `cli/commands/doctor.mjs`                                                                                   | Systemdiagnose (8+ Prüfungen)                                                                                                       |
@@ -332,7 +332,7 @@ open-sse/
 
 | Datei                        | Zweck                                                                              |
 | ---------------------------- | ---------------------------------------------------------------------------------- |
-| `skills/omniroute*/SKILL.md` | 10 Skill-Manifeste für externe KI-Agenten (Claude Desktop, ChatGPT, Cursor, Cline) |
+| `skills/pusula*/SKILL.md` | 10 Skill-Manifeste für externe KI-Agenten (Claude Desktop, ChatGPT, Cursor, Cline) |
 
 ---
 
@@ -393,7 +393,7 @@ open-sse/
 | `RELEASE_CHECKLIST.md`      | Vollständiger Release-Ablauf (Skills, Husky, Conventional Commits, Bereitstellung)                      |
 | `COVERAGE_PLAN.md`          | Abdeckungsziele und aktueller Stand                                                                     |
 | `FREE_TIERS.md`             | Kuratierte Anbieter mit kostenlosen Tarifen (48+ kostenlos + 11 OAuth)                                  |
-| `CLI-TOOLS.md`              | Externe CLI-Integrationen + interne OmniRoute-CLI                                                       |
+| `CLI-TOOLS.md`              | Externe CLI-Integrationen + interne Pusula-CLI                                                       |
 | `I18N.md`                   | i18n-Architektur, Hinzufügen einer Sprache, 42 Gebietsschemata                                          |
 | `UNINSTALL.md`              | Schritte zur vollständigen Deinstallation                                                               |
 | `PROVIDER_REFERENCE.md`     | **Automatisch generierter** Katalog mit 355 Anbietern (Regenerierung: `npm run gen:provider-reference`) |
@@ -545,7 +545,7 @@ Ausgelieferte Konfigurationsvorlagen sowie die eingecheckten Quality-Gate-Baseli
 Diese mit einem Unterstrich beginnenden Verzeichnisse enthalten Inhalte, die nicht ausgeliefert werden:
 
 - **`_ideia/`** — Designnotizen (Kategorien „defer“ / „notfit“ / „viable“)
-- **`_mono_repo/`** — historische Unterprojekte (omnirouteCloud, omnirouteSite, vscode-extension)
+- **`_mono_repo/`** — historische Unterprojekte (pusulaCloud, pusulaSite, vscode-extension)
 - **`_references/`** — schreibgeschützte Klone verwandter OSS-Projekte (LiteLLM, 9router, ClawRouter, CLIProxyAPI, modelrelay, new-api usw.) zum projektübergreifenden Nachschlagen während der Entwicklung
 - **`_tasks/`** — informelle Dateien zur Aufgabenverfolgung je Release
 

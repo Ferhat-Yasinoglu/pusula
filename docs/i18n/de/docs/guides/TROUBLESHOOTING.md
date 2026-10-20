@@ -8,17 +8,17 @@
 
 🌐 **Languages:** 🇺🇸 [English](../../../../guides/TROUBLESHOOTING.md) · 🇪🇹 [am](../../../am/docs/guides/TROUBLESHOOTING.md) · 🇸🇦 [ar](../../../ar/docs/guides/TROUBLESHOOTING.md) · 🇦🇿 [az](../../../az/docs/guides/TROUBLESHOOTING.md) · 🇧🇬 [bg](../../../bg/docs/guides/TROUBLESHOOTING.md) · 🇧🇩 [bn](../../../bn/docs/guides/TROUBLESHOOTING.md) · 🇧🇦 [bs](../../../bs/docs/guides/TROUBLESHOOTING.md) · 🇨🇿 [cs](../../../cs/docs/guides/TROUBLESHOOTING.md) · 🇩🇰 [da](../../../da/docs/guides/TROUBLESHOOTING.md) · 🇬🇷 [el](../../../el/docs/guides/TROUBLESHOOTING.md) · 🇪🇸 [es](../../../es/docs/guides/TROUBLESHOOTING.md) · 🇪🇪 [et](../../../et/docs/guides/TROUBLESHOOTING.md) · 🇮🇷 [fa](../../../fa/docs/guides/TROUBLESHOOTING.md) · 🇫🇮 [fi](../../../fi/docs/guides/TROUBLESHOOTING.md) · 🇫🇷 [fr](../../../fr/docs/guides/TROUBLESHOOTING.md) · 🇮🇪 [ga](../../../ga/docs/guides/TROUBLESHOOTING.md) · 🇮🇳 [gu](../../../gu/docs/guides/TROUBLESHOOTING.md) · 🇳🇬 [ha](../../../ha/docs/guides/TROUBLESHOOTING.md) · 🇮🇱 [he](../../../he/docs/guides/TROUBLESHOOTING.md) · 🇮🇳 [hi](../../../hi/docs/guides/TROUBLESHOOTING.md) · 🇭🇷 [hr](../../../hr/docs/guides/TROUBLESHOOTING.md) · 🇭🇺 [hu](../../../hu/docs/guides/TROUBLESHOOTING.md) · 🇦🇲 [hy](../../../hy/docs/guides/TROUBLESHOOTING.md) · 🇮🇩 [id](../../../id/docs/guides/TROUBLESHOOTING.md) · 🇳🇬 [ig](../../../ig/docs/guides/TROUBLESHOOTING.md) · 🇮🇹 [it](../../../it/docs/guides/TROUBLESHOOTING.md) · 🇯🇵 [ja](../../../ja/docs/guides/TROUBLESHOOTING.md) · 🇬🇪 [ka](../../../ka/docs/guides/TROUBLESHOOTING.md) · 🇰🇭 [km](../../../km/docs/guides/TROUBLESHOOTING.md) · 🇮🇳 [kn](../../../kn/docs/guides/TROUBLESHOOTING.md) · 🇰🇷 [ko](../../../ko/docs/guides/TROUBLESHOOTING.md) · 🇱🇹 [lt](../../../lt/docs/guides/TROUBLESHOOTING.md) · 🇱🇻 [lv](../../../lv/docs/guides/TROUBLESHOOTING.md) · 🇮🇳 [ml](../../../ml/docs/guides/TROUBLESHOOTING.md) · 🇮🇳 [mr](../../../mr/docs/guides/TROUBLESHOOTING.md) · 🇲🇾 [ms](../../../ms/docs/guides/TROUBLESHOOTING.md) · 🇲🇹 [mt](../../../mt/docs/guides/TROUBLESHOOTING.md) · 🇲🇲 [my](../../../my/docs/guides/TROUBLESHOOTING.md) · 🇳🇵 [ne](../../../ne/docs/guides/TROUBLESHOOTING.md) · 🇳🇱 [nl](../../../nl/docs/guides/TROUBLESHOOTING.md) · 🇳🇴 [no](../../../no/docs/guides/TROUBLESHOOTING.md) · 🇮🇳 [or](../../../or/docs/guides/TROUBLESHOOTING.md) · 🇮🇳 [pa](../../../pa/docs/guides/TROUBLESHOOTING.md) · 🇵🇭 [phi](../../../phi/docs/guides/TROUBLESHOOTING.md) · 🇵🇱 [pl](../../../pl/docs/guides/TROUBLESHOOTING.md) · 🇵🇹 [pt](../../../pt/docs/guides/TROUBLESHOOTING.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/guides/TROUBLESHOOTING.md) · 🇷🇴 [ro](../../../ro/docs/guides/TROUBLESHOOTING.md) · 🇷🇺 [ru](../../../ru/docs/guides/TROUBLESHOOTING.md) · 🇱🇰 [si](../../../si/docs/guides/TROUBLESHOOTING.md) · 🇸🇰 [sk](../../../sk/docs/guides/TROUBLESHOOTING.md) · 🇸🇮 [sl](../../../sl/docs/guides/TROUBLESHOOTING.md) · 🇷🇸 [sr](../../../sr/docs/guides/TROUBLESHOOTING.md) · 🇸🇪 [sv](../../../sv/docs/guides/TROUBLESHOOTING.md) · 🇰🇪 [sw](../../../sw/docs/guides/TROUBLESHOOTING.md) · 🇮🇳 [ta](../../../ta/docs/guides/TROUBLESHOOTING.md) · 🇮🇳 [te](../../../te/docs/guides/TROUBLESHOOTING.md) · 🇹🇭 [th](../../../th/docs/guides/TROUBLESHOOTING.md) · 🇹🇷 [tr](../../../tr/docs/guides/TROUBLESHOOTING.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/guides/TROUBLESHOOTING.md) · 🇵🇰 [ur](../../../ur/docs/guides/TROUBLESHOOTING.md) · 🇺🇿 [uz](../../../uz/docs/guides/TROUBLESHOOTING.md) · 🇻🇳 [vi](../../../vi/docs/guides/TROUBLESHOOTING.md) · 🇳🇬 [yo](../../../yo/docs/guides/TROUBLESHOOTING.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/guides/TROUBLESHOOTING.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/guides/TROUBLESHOOTING.md)
 
-Häufige Probleme und Lösungen für OmniRoute.
+Häufige Probleme und Lösungen für Pusula.
 
 ---
 
 ## Kurzreferenz
 
-**Neu bei OmniRoute?** Beginnen Sie hier — damit lassen sich 90 % aller Probleme lösen:
+**Neu bei Pusula?** Beginnen Sie hier — damit lassen sich 90 % aller Probleme lösen:
 
 | Das wird angezeigt            | Bedeutung                                             | Vorgehensweise                                                                                                    |
 | ----------------------------- | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| "Can't connect"               | OmniRoute läuft nicht                                 | Führen Sie `omniroute` oder `docker restart omniroute` aus                                                        |
+| "Can't connect"               | Pusula läuft nicht                                 | Führen Sie `pusula` oder `docker restart pusula` aus                                                        |
 | "Invalid API key"             | Ihr Schlüssel ist falsch oder abgelaufen              | Kopieren Sie den Schlüssel erneut von der Website des Anbieters                                                   |
 | "Rate limit exceeded"         | Sie senden zu viele Anfragen                          | Warten Sie 1 Minute oder verwenden Sie `model: "auto"` für einen automatischen Fallback                           |
 | "Quota exceeded"              | Ihr kostenloses/bezahltes Kontingent ist aufgebraucht | Verbinden Sie weitere Anbieter oder verwenden Sie kostenlose Anbieter (Kiro, Pollinations)                        |
@@ -26,7 +26,7 @@ Häufige Probleme und Lösungen für OmniRoute.
 | "Wrong provider used"         | `auto` hat einen anderen Anbieter ausgewählt          | Das ist normal! `auto` wählt den besten aus. Erzwingen Sie mit `model: "openai/gpt-4o"` einen bestimmten Anbieter |
 | "502 Bad Gateway"             | Der Anbieter ist ausgefallen                          | Warten Sie und versuchen Sie es erneut oder verwenden Sie `model: "auto"`, um den Anbieter zu wechseln            |
 | "401 Unauthorized"            | Ihre Anmeldedaten sind falsch                         | Überprüfen Sie Ihren API-Schlüssel oder authentifizieren Sie sich erneut über OAuth                               |
-| "omniroute is not recognized" | Im Windows-PATH fehlen globale node-Module            | Fügen Sie Ihr globales npm-Präfix zum Windows-PATH hinzu. Ermitteln Sie es mit `npm config get prefix`.           |
+| "pusula is not recognized" | Im Windows-PATH fehlen globale node-Module            | Fügen Sie Ihr globales npm-Präfix zum Windows-PATH hinzu. Ermitteln Sie es mit `npm config get prefix`.           |
 | "429 Too Many Requests"       | Die Anfragerate wurde begrenzt                        | Warten Sie 1 Minute oder verbinden Sie weitere Anbieter                                                           |
 
 **Problem weiterhin ungelöst?** Lesen Sie unten die [ausführliche Fehlerbehebung](#detailed-troubleshooting) oder fragen Sie auf [Discord](https://discord.gg/U47eFqAXCn).
@@ -50,18 +50,18 @@ Häufige Probleme und Lösungen für OmniRoute.
 **Bestätigte Lösung (von der Community gemeldet, 2026-08-10)**: Passen Sie drei Umgebungsvariablen so an, dass Rotation, Parallelität und Fallback die Schwankungen der kostenlosen Tarife abfangen, anstatt daran zu scheitern:
 
 ```bash
-export OMNIROUTE_ROTATE_ON_400=true           # bei 400/401 zu einem anderen Modell/Anbieter wechseln (überspringt defekte Passthrough-Modelle)
-export OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT=4   # explizite Obergrenze für die Zulassung rechenintensiver Anfragen (standardmäßig nicht gesetzt: keine Begrenzung der Anfrageanzahl, siehe Hinweis unten)
-export OMNIROUTE_CHAT_ADMISSION_QUEUE_MS=5000 # längere begrenzte Wartezeit auf Kapazität für rechenintensive Anfragen statt eines sofortigen, wiederholbaren 503-Fehlers
+export PUSULA_ROTATE_ON_400=true           # bei 400/401 zu einem anderen Modell/Anbieter wechseln (überspringt defekte Passthrough-Modelle)
+export PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT=4   # explizite Obergrenze für die Zulassung rechenintensiver Anfragen (standardmäßig nicht gesetzt: keine Begrenzung der Anfrageanzahl, siehe Hinweis unten)
+export PUSULA_CHAT_ADMISSION_QUEUE_MS=5000 # längere begrenzte Wartezeit auf Kapazität für rechenintensive Anfragen statt eines sofortigen, wiederholbaren 503-Fehlers
 ```
 
-Legen Sie diese in der Prozessumgebung von OmniRoute fest (dem Daemon, z. B. über die LaunchAgent-plist oder `systemctl edit`) und starten Sie OmniRoute anschließend neu. Das Rotations-Flag hat die größte Hebelwirkung: Es verwandelt einen endgültigen Fehler in einen transparenten Wiederholungsversuch bei einem funktionsfähigen Anbieter im Pool.
+Legen Sie diese in der Prozessumgebung von Pusula fest (dem Daemon, z. B. über die LaunchAgent-plist oder `systemctl edit`) und starten Sie Pusula anschließend neu. Das Rotations-Flag hat die größte Hebelwirkung: Es verwandelt einen endgültigen Fehler in einen transparenten Wiederholungsversuch bei einem funktionsfähigen Anbieter im Pool.
 
-**Hinweis**: `OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT` begrenzt, wie viele rechenintensive Anfragen — also Anfragen mit langem Kontext — gleichzeitig ausgeführt werden; diese Grenze ist eine Zulassungsschranke und keine Ratenbegrenzung des Anbieters. **Aktualisierung zum #503-Fan-out:** Diese Variable wird nicht mehr standardmäßig gesetzt (sie greift jetzt nur, wenn sie wie oben ausdrücklich konfiguriert wurde) — stattdessen wird die Zulassung rechenintensiver Anfragen durch ein automatisch abgeleitetes Byte-Budget (`OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES`) gesteuert, das sich anhand der tatsächlichen Speicherobergrenze des Hosts skaliert. Daher sollten bei einer neuen Bereitstellung deutlich weniger Ablehnungen des Typs `503 chat_admission_busy` auftreten, ohne dass diese Variable überhaupt gesetzt werden muss; wenn sie hier explizit gesetzt wird, funktioniert sie weiterhin genau wie dokumentiert. Explizite Überschreibungen des Byte-Budgets werden auf 8 MiB bis 2 GiB begrenzt. Ein `413 body_exceeds_budget` ist kein vorübergehender Fehler: Erhöhen Sie dieses Byte-Budget, verringern Sie `OMNIROUTE_CHAT_HARD_MAX_BODY_BYTES` oder erhöhen Sie die Speicherobergrenze des Prozesses. Eine Lastabweisung des Typs `inflight_bytes_budget` weist auf eine vorübergehende Ressourcenkonkurrenz hin und kann weiterhin durch einen erneuten Versuch behoben werden. Die Ratenbegrenzung pro Anbieter (`open-sse/services/rateLimitManager.ts`) wird separat durch `RATE_LIMIT_MAX_WAIT_MS`, `RATE_LIMIT_MAX_QUEUE_DEPTH` und `RATE_LIMIT_AUTO_ENABLE` gesteuert — siehe `.env.example`.
+**Hinweis**: `PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT` begrenzt, wie viele rechenintensive Anfragen — also Anfragen mit langem Kontext — gleichzeitig ausgeführt werden; diese Grenze ist eine Zulassungsschranke und keine Ratenbegrenzung des Anbieters. **Aktualisierung zum #503-Fan-out:** Diese Variable wird nicht mehr standardmäßig gesetzt (sie greift jetzt nur, wenn sie wie oben ausdrücklich konfiguriert wurde) — stattdessen wird die Zulassung rechenintensiver Anfragen durch ein automatisch abgeleitetes Byte-Budget (`PUSULA_CHAT_MAX_INFLIGHT_BYTES`) gesteuert, das sich anhand der tatsächlichen Speicherobergrenze des Hosts skaliert. Daher sollten bei einer neuen Bereitstellung deutlich weniger Ablehnungen des Typs `503 chat_admission_busy` auftreten, ohne dass diese Variable überhaupt gesetzt werden muss; wenn sie hier explizit gesetzt wird, funktioniert sie weiterhin genau wie dokumentiert. Explizite Überschreibungen des Byte-Budgets werden auf 8 MiB bis 2 GiB begrenzt. Ein `413 body_exceeds_budget` ist kein vorübergehender Fehler: Erhöhen Sie dieses Byte-Budget, verringern Sie `PUSULA_CHAT_HARD_MAX_BODY_BYTES` oder erhöhen Sie die Speicherobergrenze des Prozesses. Eine Lastabweisung des Typs `inflight_bytes_budget` weist auf eine vorübergehende Ressourcenkonkurrenz hin und kann weiterhin durch einen erneuten Versuch behoben werden. Die Ratenbegrenzung pro Anbieter (`open-sse/services/rateLimitManager.ts`) wird separat durch `RATE_LIMIT_MAX_WAIT_MS`, `RATE_LIMIT_MAX_QUEUE_DEPTH` und `RATE_LIMIT_AUTO_ENABLE` gesteuert — siehe `.env.example`.
 
 **So überprüfen Sie, ob es funktioniert hat**: Führen Sie Ihren Agenten/cron zweimal kurz hintereinander aus und vergewissern Sie sich, dass beide Ausführungen erfolgreich sind. Vor der Fehlerbehebung gibt die zweite Ausführung typischerweise `429`/`401` zurück. Nach der Fehlerbehebung werden Fehler (falls vorhanden) transparent erneut versucht und der Aufruf wird abgeschlossen. Sie können außerdem `curl /monitoring/health` ausführen und bei den Provider-Verbindungen das Feld `rateLimitedUntil` sowie für die betroffenen Provider `circuitBreakers.providerBreakers[].state` beobachten — der Status ist entweder `CLOSED`, `DEGRADED`, `OPEN` oder `HALF_OPEN` (siehe `src/shared/utils/circuitBreaker.ts`). Ein Provider, bei dem weiterhin Fehler auftreten, wechselt von `CLOSED → DEGRADED → OPEN`, bevor nach Ablauf des Rücksetzungszeitfensters eine Testanfrage zugelassen wird (`HALF_OPEN`).
 
-**Falls weiterhin 429 angezeigt wird**: Das aktive Konto für diesen Provider hat sein _Kontingent_ tatsächlich ausgeschöpft (nicht nur das Ratenlimit erreicht). Fügen Sie im OmniRoute-Dashboard unter Providers → Accounts ein zweites Konto für denselben Provider hinzu oder verwenden Sie zusätzlich einen anderen kostenlosen Provider (z. B. `routeway`, `auggie`). Die Rotation hilft nur bei vorübergehenden Ratenbegrenzungen sowie 400-/401-Fehlern; bei einer vollständigen Ausschöpfung des Kontingents sind zweite Anmeldedaten oder ein anderer Provider erforderlich.
+**Falls weiterhin 429 angezeigt wird**: Das aktive Konto für diesen Provider hat sein _Kontingent_ tatsächlich ausgeschöpft (nicht nur das Ratenlimit erreicht). Fügen Sie im Pusula-Dashboard unter Providers → Accounts ein zweites Konto für denselben Provider hinzu oder verwenden Sie zusätzlich einen anderen kostenlosen Provider (z. B. `routeway`, `auggie`). Die Rotation hilft nur bei vorübergehenden Ratenbegrenzungen sowie 400-/401-Fehlern; bei einer vollständigen Ausschöpfung des Kontingents sind zweite Anmeldedaten oder ein anderer Provider erforderlich.
 
 **Falls bei Vision-Modellen (`auto/vision`, `bazaarlink/*`) 403 angezeigt wird**: Das verbundene Konto verfügt nicht über einen kostenpflichtigen Tarif, der Vision umfasst, oder der API-Schlüssel besitzt nicht die erforderlichen Berechtigungen. Überprüfen Sie im Provider-Dashboard, ob der Schlüsselbereich Vision/Multimodal umfasst, oder verbinden Sie ein Konto mit kostenpflichtigem Tarif und verwenden Sie dieses weiterhin als Vision-Ziel.
 
@@ -69,17 +69,17 @@ Legen Sie diese in der Prozessumgebung von OmniRoute fest (dem Daemon, z. B. üb
 
 ## Warnungen bei npm install (ERESOLVE / Peer-Abhängigkeiten / veraltet)
 
-Wenn Sie `npm install -g omniroute` ausführen, wird möglicherweise eine ganze Reihe von Warnungen wie `npm warn ERESOLVE`, Hinweise zu Peer-Abhängigkeiten und `deprecated`-Meldungen angezeigt. **Diese sind zu erwarten und harmlos.** Ihre Installation war erfolgreich, wenn in der Ausgabe `added <N> packages` angezeigt wird.
+Wenn Sie `npm install -g pusula` ausführen, wird möglicherweise eine ganze Reihe von Warnungen wie `npm warn ERESOLVE`, Hinweise zu Peer-Abhängigkeiten und `deprecated`-Meldungen angezeigt. **Diese sind zu erwarten und harmlos.** Ihre Installation war erfolgreich, wenn in der Ausgabe `added <N> packages` angezeigt wird.
 
-Verwenden Sie die von OmniRoute unterstützte Installationsform, um Warnungen zur Auflösung von Peer-Abhängigkeiten zu unterdrücken:
+Verwenden Sie die von Pusula unterstützte Installationsform, um Warnungen zur Auflösung von Peer-Abhängigkeiten zu unterdrücken:
 
 ```bash
-npm install -g omniroute --legacy-peer-deps
+npm install -g pusula --legacy-peer-deps
 ```
 
 `--legacy-peer-deps` unterdrückt nur `ERESOLVE`- und Peer-Abhängigkeitshinweise. Hinweise zu veralteten Paketen bleiben sichtbar, da sie von transitiven Drittanbieterpaketen stammen; sie bedeuten nicht, dass die Installation fehlgeschlagen ist.
 
-Die Warnungen stammen von veralteten Peer-Abhängigkeitsbereichen in Drittanbieterpaketen, über die OmniRoute keine Kontrolle hat:
+Die Warnungen stammen von veralteten Peer-Abhängigkeitsbereichen in Drittanbieterpaketen, über die Pusula keine Kontrolle hat:
 
 1. **`marked-terminal` erfordert `marked >=1 <16`, gefunden wurde `marked@18`** — funktioniert in der Praxis problemlos; der Peer-Abhängigkeitsbereich des Upstream-Pakets ist lediglich veraltet.
 2. **`deprecated prebuild-install@7.1.3`** — ein transitives Hilfsprogramm zum Abrufen nativer Binärdateien. Es wird nicht
@@ -98,15 +98,15 @@ Playwright hält Browser-Downloads bewusst von der Installation des npm-Pakets
 getrennt, daher ist diese Antwort zu erwarten, bis der Browser installiert wurde.
 
 Installieren Sie Chromium bei einer globalen npm-Installation aus dem Verzeichnis des
-OmniRoute-Pakets, damit der Browser-Cache zur selben Playwright-Installation gehört:
+Pusula-Pakets, damit der Browser-Cache zur selben Playwright-Installation gehört:
 
 ```bash
-cd "$(npm root -g)/omniroute"
+cd "$(npm root -g)/pusula"
 npx playwright install chromium
 ```
 
-Starten Sie OmniRoute nach der Installation neu und versuchen Sie dann die Gemini-Web-Anfrage erneut. Wenn Sie
-OmniRoute über ein Docker-Image ausführen, verwenden Sie das `-web`-Image (oder das Build-Ziel `runner-web`),
+Starten Sie Pusula nach der Installation neu und versuchen Sie dann die Gemini-Web-Anfrage erneut. Wenn Sie
+Pusula über ein Docker-Image ausführen, verwenden Sie das `-web`-Image (oder das Build-Ziel `runner-web`),
 das Chromium und seine Abhängigkeiten enthält; das Basis-Image enthält
 diese nicht.
 
@@ -119,10 +119,10 @@ diese nicht.
 | Erste Anmeldung funktioniert nicht                         | Legen Sie `INITIAL_PASSWORD` in `.env` fest (kein fest codierter Standardwert)                                                                                                                  |
 | Dashboard wird am falschen Port geöffnet                   | Legen Sie `PORT=20128` und `NEXT_PUBLIC_BASE_URL=http://localhost:20128` fest                                                                                                                   |
 | Es werden keine Protokolle auf die Festplatte geschrieben  | Legen Sie `APP_LOG_TO_FILE=true` fest und überprüfen Sie, ob die Erfassung von Aufrufprotokollen aktiviert ist                                                                                  |
-| EACCES: Berechtigung verweigert                            | Legen Sie `DATA_DIR=/path/to/writable/dir` fest, um `~/.omniroute` zu überschreiben                                                                                                             |
+| EACCES: Berechtigung verweigert                            | Legen Sie `DATA_DIR=/path/to/writable/dir` fest, um `~/.pusula` zu überschreiben                                                                                                             |
 | Routingstrategie wird nicht gespeichert                    | Aktualisieren Sie auf die neueste v3.x-Version (die Korrektur des Zod-Schemas zur dauerhaften Speicherung der Einstellungen wurde in früheren Versionen veröffentlicht)                         |
 | Absturz bei der Anmeldung / leere Seite                    | Überprüfen Sie die Node.js-Version — siehe unten [Node.js-Kompatibilität](#nodejs-compatibility)                                                                                                |
-| `dlopen` / `slice is not valid mach-o file` (macOS)        | Führen Sie `cd $(npm root -g)/omniroute/app && npm rebuild better-sqlite3 && omniroute` aus — siehe unten [Neuerstellung des nativen macOS-Moduls](#macos-native-module-rebuild)                |
+| `dlopen` / `slice is not valid mach-o file` (macOS)        | Führen Sie `cd $(npm root -g)/pusula/app && npm rebuild better-sqlite3 && pusula` aus — siehe unten [Neuerstellung des nativen macOS-Moduls](#macos-native-module-rebuild)                |
 | Proxy: „fetch failed“                                      | Stellen Sie sicher, dass die Proxy-Konfiguration auf der richtigen Ebene festgelegt ist — siehe unten [Proxy-Probleme](#proxy-issues)                                                           |
 | Docker `curl: (56) Recv failure: Connection reset by peer` | Die Docker-Portbindung erfolgt möglicherweise über IPv6. Verwenden Sie `-p 127.0.0.1:20128:20128`, um IPv4 zu erzwingen, oder testen Sie mit `curl -4`. Siehe unten [Docker-IPv6](#docker-ipv6) |
 | Virenschutz stellt `README.md` unter Quarantäne            | Fehlalarm — siehe unten [Fehlalarme von Virenschutzprogrammen](#antivirus-false-positives)                                                                                                      |
@@ -139,9 +139,9 @@ diese nicht.
 **Dies ist ein Fehlalarm. Nichts ist infiziert und es sind keine Maßnahmen erforderlich.**
 
 Avast und AVG verwenden eine Heuristik, die reine Text-/Markdown-Dateien kennzeichnet, die
-viele Links enthalten, die wie HTTP-Anfragen aussehen. OmniRoutes `README.md` ist im
+viele Links enthalten, die wie HTTP-Anfragen aussehen. Pusulas `README.md` ist im
 npm-Paket enthalten (sie ist in `package.json` → `files` aufgeführt), sodass sie bei einer
-globalen Installation unter `node_modules/omniroute/README.md` landet — und sie enthält etwa
+globalen Installation unter `node_modules/pusula/README.md` landet — und sie enthält etwa
 15 Beispiele mit `http://localhost:20128/...` (die MCP-HTTP-/SSE-Endpunkte, die
 A2A-`.well-known`-URL und `curl`-Ausschnitte). Diese Linkdichte reicht aus, um die Heuristik
 auszulösen.
@@ -157,8 +157,8 @@ bedenkenlos aus der Quarantäne wiederherstellen.
 
 1. **Benachrichtigungen deaktivieren** — schließen Sie das Installationsverzeichnis in
    Ihrem Antivirusprogramm aus (Avast: Einstellungen → Ausnahmen), indem Sie den Pfad Ihres
-   globalen `node_modules`-Verzeichnisses und/oder das OmniRoute-Datenverzeichnis
-   (`~/.omniroute/`) hinzufügen.
+   globalen `node_modules`-Verzeichnisses und/oder das Pusula-Datenverzeichnis
+   (`~/.pusula/`) hinzufügen.
 2. **Den Fehlalarm melden** — <https://www.avast.com/false-positive-file-form.php>,
    und die unter Quarantäne gestellte `README.md` anhängen. Dies ist die Lösung, die allen
    hilft, da hier die Heuristik des Anbieters bei einer Textdatei überreagiert.
@@ -193,7 +193,7 @@ Open-Source-Abhängigkeiten, die mit der Desktop-App gebündelt werden, zum Beis
 codesigniert**, sodass ein unsigniertes NSIS-Installationsprogramm keinerlei Reputation
 besitzt und verhaltensbasierte Heuristiken mit maximaler Aggressivität ausgeführt werden.
 In Kombination mit einer gebündelten nativen DLL und Hunderten von `.js`-Dateien, die unter
-`%LOCALAPPDATA%\Programs\OmniRoute` geschrieben werden (einschließlich Paketverzeichnissen
+`%LOCALAPPDATA%\Programs\Pusula` geschrieben werden (einschließlich Paketverzeichnissen
 mit Hash-Suffix aus dem eigenständigen Next.js-Build), reicht dies aus, um die Heuristik
 auszulösen. Eine Codesignierung ist geplant; bis sie umgesetzt ist, kann dies bei neuen
 Versionen erneut auftreten.
@@ -202,20 +202,20 @@ Versionen erneut auftreten.
 
 1. **Überprüfen Sie zuerst Ihren Download** (dadurch wird eine manipulierte Datei
    ausgeschlossen). Jede Veröffentlichung enthält `latest.yml`, deren Feld `sha512`
-   (base64) das Installationsprogramm `OmniRoute.Setup.<version>.exe` abdeckt. Führen Sie
+   (base64) das Installationsprogramm `Pusula.Setup.<version>.exe` abdeckt. Führen Sie
    in PowerShell aus dem Ordner, der das Installationsprogramm enthält, Folgendes aus:
    ```powershell
    $b = [System.Security.Cryptography.SHA512]::Create().ComputeHash(
-     [System.IO.File]::ReadAllBytes("$PWD\OmniRoute.Setup.<version>.exe"))
+     [System.IO.File]::ReadAllBytes("$PWD\Pusula.Setup.<version>.exe"))
    [Convert]::ToBase64String($b)
    ```
    Die Ausgabe muss mit `latest.yml` → `sha512` übereinstimmen. Ist dies nicht der Fall,
    löschen Sie die Datei und laden Sie sie ausschließlich von der
-   [GitHub-Veröffentlichungsseite](https://github.com/diegosouzapw/OmniRoute/releases)
+   [GitHub-Veröffentlichungsseite](https://github.com/Ferhat-Yasinoglu/pusula/releases)
    erneut herunter.
 2. **Wiederherstellen + ausschließen** — stellen Sie die rückgängig gemachten Elemente aus
    der Quarantäne wieder her, fügen Sie eine Ausnahme für
-   `%LOCALAPPDATA%\Programs\OmniRoute` hinzu (Kaspersky → Einstellungen → Bedrohungen und
+   `%LOCALAPPDATA%\Programs\Pusula` hinzu (Kaspersky → Einstellungen → Bedrohungen und
    Ausnahmen) und installieren Sie die App anschließend erneut.
 3. **Den Fehlalarm melden** — <https://opentip.kaspersky.com/>. Von Benutzern eingereichte
    Fehlalarmmeldungen beschleunigen die Aufnahme in die Positivliste tatsächlich.
@@ -228,7 +228,7 @@ Versionen erneut auftreten.
 
 ### Anmeldeseite stürzt ab oder zeigt den Fehler „Module self-registration“ an
 
-**Ursache:** Sie verwenden eine Node.js-Version außerhalb der von OmniRoute freigegebenen sicheren Laufzeitversionen. Am häufigsten wird eine ältere Patch-Version von Node 22 oder 24 verwendet, die unterhalb der von OmniRoute vorausgesetzten Sicherheitsschwelle liegt.
+**Ursache:** Sie verwenden eine Node.js-Version außerhalb der von Pusula freigegebenen sicheren Laufzeitversionen. Am häufigsten wird eine ältere Patch-Version von Node 22 oder 24 verwendet, die unterhalb der von Pusula vorausgesetzten Sicherheitsschwelle liegt.
 
 **Symptome:**
 
@@ -244,8 +244,8 @@ Versionen erneut auftreten.
    nvm use 24
    ```
 2. Überprüfen Sie Ihre Version: `node --version` sollte in der LTS-Versionsreihe 24.x `v24.0.0` oder neuer anzeigen
-3. Installieren Sie OmniRoute erneut: `npm install -g omniroute`
-4. Starten Sie neu: `omniroute`
+3. Installieren Sie Pusula erneut: `npm install -g pusula`
+4. Starten Sie neu: `pusula`
 
 > **Unterstützte sichere Versionen:** `>=22.22.2 <23` oder `>=24.0.0 <27`. Node.js 24.x LTS (Krypton) und Node.js 26 werden vollständig unterstützt.
 
@@ -281,7 +281,7 @@ Versionen erneut auftreten.
 
 <a name="macos-native-module-rebuild"></a>
 
-**Ursache:** Nach einem globalen `npm install -g omniroute` wurde die native Binärdatei von `better-sqlite3` innerhalb des Pakets möglicherweise für eine andere Architektur oder Node.js-ABI kompiliert als die lokal ausgeführte. Dies tritt unter macOS häufig auf (sowohl bei Apple Silicon als auch bei Intel), wenn die vorkompilierte Binärdatei nicht zu Ihrer Umgebung passt.
+**Ursache:** Nach einem globalen `npm install -g pusula` wurde die native Binärdatei von `better-sqlite3` innerhalb des Pakets möglicherweise für eine andere Architektur oder Node.js-ABI kompiliert als die lokal ausgeführte. Dies tritt unter macOS häufig auf (sowohl bei Apple Silicon als auch bei Intel), wenn die vorkompilierte Binärdatei nicht zu Ihrer Umgebung passt.
 
 **Symptome:**
 
@@ -290,15 +290,15 @@ Versionen erneut auftreten.
 - Vollständiges Beispiel:
 
 ```
-dlopen(/Users/<user>/.nvm/versions/node/v24.14.1/lib/node_modules/omniroute/app/node_modules/better-sqlite3/build/Release/better_sqlite3.node, 0x0001): tried: '...' (slice is not valid mach-o file)
+dlopen(/Users/<user>/.nvm/versions/node/v24.14.1/lib/node_modules/pusula/app/node_modules/better-sqlite3/build/Release/better_sqlite3.node, 0x0001): tried: '...' (slice is not valid mach-o file)
 ```
 
 **Behebung — für Ihre lokale Umgebung neu kompilieren (kein Node.js-Downgrade erforderlich):**
 
 ```bash
-cd $(npm root -g)/omniroute/app
+cd $(npm root -g)/pusula/app
 npm rebuild better-sqlite3
-omniroute
+pusula
 ```
 
 > **Hinweis:** Dadurch wird das native Binding für Ihre lokale Node.js-Version und CPU-Architektur neu kompiliert und die Binärinkompatibilität behoben. Der offiziell unterstützte Laufzeitbereich ist **`>=22.22.2 <23` oder `>=24.0.0 <27`** (`SUPPORTED_NODE_RANGE` in `src/shared/utils/nodeRuntimeSupport.ts`, abgestimmt auf das Feld `engines` in `package.json`). Node.js 24.x LTS (Krypton) und Node.js 26 werden mit `better-sqlite3` v12.x vollständig unterstützt.
@@ -325,13 +325,13 @@ omniroute
 
 **Ursache:** Unter Node.js 22 ist der Dispatcher von undici@8 nicht mit der integrierten `fetch()`-Implementierung von Node kompatibel.
 
-**Behebung (v3.5.5+):** OmniRoute verwendet jetzt die eigene `fetch()`-Funktion von undici, wenn ein Proxy-Dispatcher aktiv ist, und gewährleistet so ein konsistentes Verhalten. Aktualisieren Sie auf v3.5.5+.
+**Behebung (v3.5.5+):** Pusula verwendet jetzt die eigene `fetch()`-Funktion von undici, wenn ein Proxy-Dispatcher aktiv ist, und gewährleistet so ein konsistentes Verhalten. Aktualisieren Sie auf v3.5.5+.
 
 ### MITM-Proxy unter WSL: Desktop-Apps auf dem Windows-Host werden nicht abgefangen
 
-**Ursache:** Der MITM-Proxy und sein CA-Zertifikat werden in der Umgebung installiert, in der OmniRoute ausgeführt wird. Unter WSL ist diese Umgebung das Linux-Gastsystem, während die KI-Desktop-Apps (Kiro, Trae, Copilot, Zed, …) auf dem Windows-Host ausgeführt werden. Die Host-Apps vertrauen dem Zertifikatsspeicher des Gastsystems nicht und leiten ihren Datenverkehr nicht über den System-Proxy des Gastsystems, sodass das Abfangen von Desktop-Datenverkehr dort nicht funktioniert.
+**Ursache:** Der MITM-Proxy und sein CA-Zertifikat werden in der Umgebung installiert, in der Pusula ausgeführt wird. Unter WSL ist diese Umgebung das Linux-Gastsystem, während die KI-Desktop-Apps (Kiro, Trae, Copilot, Zed, …) auf dem Windows-Host ausgeführt werden. Die Host-Apps vertrauen dem Zertifikatsspeicher des Gastsystems nicht und leiten ihren Datenverkehr nicht über den System-Proxy des Gastsystems, sodass das Abfangen von Desktop-Datenverkehr dort nicht funktioniert.
 
-**Empfehlung:** Führen Sie OmniRoute nativ auf demselben Betriebssystem aus wie die Desktop-Apps, die Sie abfangen möchten (Windows für Windows-Apps; entsprechend macOS/Linux). Wenn OmniRoute innerhalb von WSL verbleibt und gleichzeitig Host-Apps abgefangen werden sollen, müssen Sie dem generierten CA-Zertifikat auf dem Windows-Host manuell vertrauen und die Netzwerk-/Proxy-Einstellungen jeder Host-App auf den WSL-Proxy-Endpunkt verweisen lassen — eine nicht unterstützte und fehleranfällige Konfiguration.
+**Empfehlung:** Führen Sie Pusula nativ auf demselben Betriebssystem aus wie die Desktop-Apps, die Sie abfangen möchten (Windows für Windows-Apps; entsprechend macOS/Linux). Wenn Pusula innerhalb von WSL verbleibt und gleichzeitig Host-Apps abgefangen werden sollen, müssen Sie dem generierten CA-Zertifikat auf dem Windows-Host manuell vertrauen und die Netzwerk-/Proxy-Einstellungen jeder Host-App auf den WSL-Proxy-Endpunkt verweisen lassen — eine nicht unterstützte und fehleranfällige Konfiguration.
 
 ---
 
@@ -358,7 +358,7 @@ omniroute
 
 ### OAuth-Token abgelaufen
 
-OmniRoute aktualisiert Tokens automatisch. Falls weiterhin Probleme auftreten:
+Pusula aktualisiert Tokens automatisch. Falls weiterhin Probleme auftreten:
 
 1. Dashboard → Anbieter → Erneut verbinden
 2. Löschen Sie die Anbieterverbindung und fügen Sie sie erneut hinzu
@@ -390,7 +390,7 @@ finden Sie unter [`docs/guides/KIRO_SETUP.md`](./KIRO_SETUP.md).
 ### Cloud-Synchronisierungsfehler
 
 1. Stellen Sie sicher, dass `BASE_URL` auf Ihre laufende Instanz verweist (z. B. `http://localhost:20128`)
-2. Stellen Sie sicher, dass `CLOUD_URL` auf Ihren Cloud-Endpunkt verweist (z. B. `https://omniroute.dev`)
+2. Stellen Sie sicher, dass `CLOUD_URL` auf Ihren Cloud-Endpunkt verweist (z. B. `https://pusula.dev`)
 3. Halten Sie die `NEXT_PUBLIC_*`-Werte mit den serverseitigen Werten synchron
 
 ### Cloud gibt bei `stream=false` den Statuscode 500 zurück
@@ -424,8 +424,8 @@ finden Sie unter [`docs/guides/KIRO_SETUP.md`](./KIRO_SETUP.md).
 1. **Schnelldiagnose:** Führen Sie `curl -4 http://localhost:20128/v1/models` aus. Wenn es mit `-4` funktioniert, aber ohne fehlschlägt, liegt eine Abweichung bei der IPv6-Bindung vor.
 2. **Dauerhafte Lösung:** Binden Sie explizit an IPv4, indem Sie `-p 127.0.0.1:20128:20128` in Ihrem `docker run`-Befehl verwenden:
    ```bash
-   docker run -d --name omniroute --restart unless-stopped --stop-timeout 40 \
-     -p 127.0.0.1:20128:20128 -v omniroute-data:/app/data diegosouzapw/omniroute:latest
+   docker run -d --name pusula --restart unless-stopped --stop-timeout 40 \
+     -p 127.0.0.1:20128:20128 -v pusula-data:/app/data ferhat-yasinoglu/pusula:latest
    ```
    Dadurch wird die IPv4-Bindung erzwungen und außerdem verhindert, dass der Proxy auf allen Host-Schnittstellen verfügbar gemacht wird.
 
@@ -571,7 +571,7 @@ Anbieterprofile unterstützen diese Einstellungen:
 
 ### Schutz vor Thundering-Herd-Problemen
 
-Wenn viele gleichzeitige Anfragen auf einen ratenbegrenzten Anbieter treffen, verwendet OmniRoute Mutex-Sperren und automatische Ratenbegrenzung, um Anfragen zu serialisieren und kaskadierende Fehler zu verhindern. Dies erfolgt bei Anbietern mit API-Schlüssel automatisch.
+Wenn viele gleichzeitige Anfragen auf einen ratenbegrenzten Anbieter treffen, verwendet Pusula Mutex-Sperren und automatische Ratenbegrenzung, um Anfragen zu serialisieren und kaskadierende Fehler zu verhindern. Dies erfolgt bei Anbietern mit API-Schlüssel automatisch.
 
 ### Chat-Anfragen schlagen mit 503 / chat_admission_busy fehl
 
@@ -580,7 +580,7 @@ Wenn viele gleichzeitige Anfragen auf einen ratenbegrenzten Anbieter treffen, ve
 - Der Endpunkt für Chat-Vervollständigungen gibt eine wiederholbare `503`-Antwort mit dem Fehlercode
   `chat_admission_busy` zurück.
 - Die Antwort enthält `Retry-After`. Seit #12135 wird der Wert aus der beobachteten
-  Auslastung abgeleitet — dem größeren Wert aus dem `OMNIROUTE_CHAT_ADMISSION_QUEUE_MS`-Zeitfenster, das die Anfrage bereits
+  Auslastung abgeleitet — dem größeren Wert aus dem `PUSULA_CHAT_ADMISSION_QUEUE_MS`-Zeitfenster, das die Anfrage bereits
   gewartet hat, und der Zeit, die die aktuellen Heavyweight-Leases gehalten wurden — auf volle
   Sekunden aufgerundet und auf 60 begrenzt. Bei einem inaktiven Gate gelten weiterhin die bisherigen Mindestwerte: 2 Sekunden beim
   bytebasierten Pfad und 1 Sekunde beim strukturbasierten Pfad (der außerdem
@@ -607,23 +607,23 @@ Bei den Standardschwellenwerten gilt eine Anfrage als strukturell aufwendig, wen
 mindestens `64` Tools oder mindestens `32,000` geschätzte Token umfasst oder wenn die begrenzte Strukturschätzung
 ihre Grenzen von `10,000` besuchten Knoten oder einer Tiefe von `12` ausschöpft.
 
-**Ursache:** Hierbei handelt es sich um eine beabsichtigte Lastabweisung innerhalb von OmniRoute und nicht um einen Fehler des Upstream-Anbieters.
+**Ursache:** Hierbei handelt es sich um eine beabsichtigte Lastabweisung innerhalb von Pusula und nicht um einen Fehler des Upstream-Anbieters.
 Jeder Prozess verwendet einen prozesslokalen Schutzmechanismus, um begrenzte Heavyweight-Kapazität zu reservieren, bevor
 ein großer Anfragekörper im Speicher gehalten und geparst wird. Eine Heavyweight-Lease bleibt für die gesamte Lebensdauer einer SSE-
 Antwort bestehen.
 
 **#503-Fan-out:** Vor diesem Fix begrenzte der Schutzmechanismus die Parallelität unabhängig vom Hostspeicher auf eine feste Anzahl von Anfragen
-(`OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT`, Standard `1`), sodass der Fan-out von Coding-Agenten
+(`PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT`, Standard `1`), sodass der Fan-out von Coding-Agenten
 (mehrere Subagenten/CLIs, Anfragekörper regelmäßig > 256 KB) auf eine effektive
 Parallelität von etwa 1 reduziert wurde und unter völlig normaler Last 503-Fehler erzeugte. Der Schutzmechanismus stimmt sich nun selbst ab: Er wird
-durch ein automatisch abgeleitetes BYTE-Budget für die Aufnahme (`OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES`) gesteuert, dessen Größe anhand des
+durch ein automatisch abgeleitetes BYTE-Budget für die Aufnahme (`PUSULA_CHAT_MAX_INFLIGHT_BYTES`) gesteuert, dessen Größe anhand des
 tatsächlichen Speicherlimits des Prozesses bestimmt wird, und berücksichtigt außerdem ein aktuelles Signal für Ressourcendruck — sodass er
 Last nur dann abweist, wenn der Host tatsächlich unter Speicherdruck steht, und nicht nur, weil mehr als eine
-aufwendige Anfrage gleichzeitig eingetroffen ist. Die alte Anzahlbegrenzung (`OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT`) wird
+aufwendige Anfrage gleichzeitig eingetroffen ist. Die alte Anzahlbegrenzung (`PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT`) wird
 weiterhin berücksichtigt, jedoch nur, wenn Sie sie ausdrücklich festlegen.
 
 Wenn die Kapazität ausgelastet ist, wartet eine Heavyweight-Anfrage zunächst bis zu
-`OMNIROUTE_CHAT_ADMISSION_QUEUE_MS` (Standard `2000`, `0` deaktiviert das Warten) darauf, dass ein Platz frei wird,
+`PUSULA_CHAT_ADMISSION_QUEUE_MS` (Standard `2000`, `0` deaktiviert das Warten) darauf, dass ein Platz frei wird,
 bevor sie mit dem wiederholbaren `503` antwortet. Die begrenzte Wartezeit sorgt dafür, dass agentenbasierte Clients
 (OpenCode, Claude Code, Cursor), die aufwendige Unteranfragen gleichzeitig auffächern, den Anfragestoß serialisieren,
 anstatt ihr gesamtes Wiederholungsbudget durch sofortige Ablehnungen aufzubrauchen und während einer Aufgabe abzubrechen.
@@ -643,7 +643,7 @@ false` und ein großzügiger Wert für `maxInflightBytes` bedeuten, dass das aut
    dies lässt sich nicht durch eine Umgebungsvariable für die Zulassungssteuerung beheben, sondern erfordert mehr RAM oder eine kleinere Arbeitslast.
 3. Nur wenn `/api/monitoring/health` zeigt, dass das automatisch abgeleitete Budget für
    Ihren Host tatsächlich zu klein ist (selten — es skaliert bereits von Containern bis hin zu Bare-Metal-Systemen), sollten Sie es direkt mit
-   `OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES` überschreiben, anstatt auf die alte Begrenzung anhand der Anfrageanzahl zurückzugreifen.
+   `PUSULA_CHAT_MAX_INFLIGHT_BYTES` überschreiben, anstatt auf die alte Begrenzung anhand der Anfrageanzahl zurückzugreifen.
 
 Die maßgeblichen Einstellungen für die Zulassungssteuerung finden Sie in der [Referenz zu Umgebungsvariablen](../reference/ENVIRONMENT.md#4-security--authentication).
 
@@ -651,7 +651,7 @@ Die maßgeblichen Einstellungen für die Zulassungssteuerung finden Sie in der [
 
 ## Optionale RAG-/LLM-Fehlertaxonomie (16 Probleme)
 
-Einige OmniRoute-Benutzer platzieren das Gateway vor RAG- oder Agenten-Stacks. In solchen Konfigurationen tritt häufig ein merkwürdiges Muster auf: OmniRoute scheint fehlerfrei zu funktionieren (Provider verfügbar, Routing-Profile in Ordnung, keine Ratenbegrenzungswarnungen), aber die endgültige Antwort ist dennoch falsch.
+Einige Pusula-Benutzer platzieren das Gateway vor RAG- oder Agenten-Stacks. In solchen Konfigurationen tritt häufig ein merkwürdiges Muster auf: Pusula scheint fehlerfrei zu funktionieren (Provider verfügbar, Routing-Profile in Ordnung, keine Ratenbegrenzungswarnungen), aber die endgültige Antwort ist dennoch falsch.
 
 In der Praxis werden diese Vorfälle normalerweise durch die nachgelagerte RAG-Pipeline und nicht durch das Gateway selbst verursacht.
 
@@ -670,17 +670,17 @@ Die Idee ist einfach:
 
 1. Erfassen Sie bei der Untersuchung einer fehlerhaften Antwort Folgendes:
    - Benutzeraufgabe und Anfrage
-   - Route oder Provider-Kombination in OmniRoute
+   - Route oder Provider-Kombination in Pusula
    - jeglichen nachgelagert verwendeten RAG-Kontext (abgerufene Dokumente, Tool-Aufrufe usw.)
 2. Ordnen Sie den Vorfall einer oder zwei Nummern der WFGY ProblemMap (`No.1` … `No.16`) zu.
-3. Speichern Sie die Nummer in Ihrem eigenen Dashboard, Runbook oder Incident-Tracker neben den OmniRoute-Protokollen.
+3. Speichern Sie die Nummer in Ihrem eigenen Dashboard, Runbook oder Incident-Tracker neben den Pusula-Protokollen.
 4. Verwenden Sie die entsprechende WFGY-Seite, um zu entscheiden, ob Sie Ihren RAG-Stack, Retriever oder Ihre Routing-Strategie ändern müssen.
 
 Der vollständige Text und konkrete Anleitungen sind hier verfügbar (MIT-Lizenz, nur Text):
 
 [README der WFGY ProblemMap](https://github.com/onestardao/WFGY/blob/main/ProblemMap/README.md)
 
-Sie können diesen Abschnitt ignorieren, wenn Sie hinter OmniRoute keine RAG- oder Agenten-Pipelines betreiben.
+Sie können diesen Abschnitt ignorieren, wenn Sie hinter Pusula keine RAG- oder Agenten-Pipelines betreiben.
 
 ---
 
@@ -704,7 +704,7 @@ Probleme, die speziell die Version v3.8.0 betreffen, sowie die derzeit verfügba
 
 1. Installieren Sie die Devin CLI für Ihre Plattform
 2. Legen Sie in `.env` den Wert `CLI_DEVIN_BIN=/usr/local/bin/devin` (oder den tatsächlichen Pfad) fest
-3. Starten Sie OmniRoute neu und führen Sie den Test erneut über **Dashboard → CLI-Tools** durch
+3. Starten Sie Pusula neu und führen Sie den Test erneut über **Dashboard → CLI-Tools** durch
 
 ### Modell bleibt im Cooldown hängen (manuelles Zurücksetzen)
 
@@ -729,7 +729,7 @@ Probleme, die speziell die Version v3.8.0 betreffen, sowie die derzeit verfügba
 
 **Lösung:**
 
-- Führen Sie `omniroute providers` über die CLI aus, um den OAuth-Ablauf erneut auszulösen, oder
+- Führen Sie `pusula providers` über die CLI aus, um den OAuth-Ablauf erneut auszulösen, oder
 - führen Sie OAuth erneut über **Dashboard → Provider → Command Code → Erneut verbinden** aus
 
 ### ModelScope gibt aggressive 429-Cooldowns zurück
@@ -746,20 +746,20 @@ Probleme, die speziell die Version v3.8.0 betreffen, sowie die derzeit verfügba
 - Stellen Sie sicher, dass Sie v3.8.0 oder höher verwenden
 - Überprüfen Sie, ob der Schalter `useUpstream429BreakerHints` unter **Einstellungen → Resilienz** aktiviert ist
 
-### OMNIROUTE_WS_BRIDGE_SECRET fehlt in der Produktionsumgebung
+### PUSULA_WS_BRIDGE_SECRET fehlt in der Produktionsumgebung
 
 **Symptome:**
 
 - 401 bei jeder WebSocket-Bridge-Anfrage von Codex/Responses, wenn die Anwendung auf einem entfernten Produktionshost ausgeführt wird
 - Der WebSocket-Bridge-Handshake wird unmittelbar nach dem Verbindungsaufbau beendet
 
-**Ursache:** Die Umgebungsvariable `OMNIROUTE_WS_BRIDGE_SECRET` fehlt in der Produktionsumgebung.
+**Ursache:** Die Umgebungsvariable `PUSULA_WS_BRIDGE_SECRET` fehlt in der Produktionsumgebung.
 
 **Lösung:**
 
 1. Generieren Sie ein zufälliges Geheimnis: `openssl rand -hex 32`
-2. Legen Sie `OMNIROUTE_WS_BRIDGE_SECRET=<random-secret>` in der Umgebung des Produktionsservers fest (sowie in jedem Client, der mit der Bridge kommuniziert)
-3. Starten Sie OmniRoute neu
+2. Legen Sie `PUSULA_WS_BRIDGE_SECRET=<random-secret>` in der Umgebung des Produktionsservers fest (sowie in jedem Client, der mit der Bridge kommuniziert)
+3. Starten Sie Pusula neu
 
 ### Responses API: Hintergrundmodus auf synchrone Ausführung herabgestuft
 
@@ -789,24 +789,24 @@ mit hoher Arbeitslast beim Start auf.
 
 ```bash
 # Über eine Umgebungsvariable (bleibt über mehrere Starts hinweg bestehen):
-export OMNIROUTE_READY_TIMEOUT_MS=180000   # 3 Minuten
-omniroute serve
+export PUSULA_READY_TIMEOUT_MS=180000   # 3 Minuten
+pusula serve
 
 # Über ein CLI-Flag (einmalig):
-omniroute serve --ready-timeout 180000
+pusula serve --ready-timeout 180000
 ```
 
 Der Standardwert beträgt 60 000 ms (60 s). Die Warnung dient nur zur Information; der Server
 wird im Hintergrund weiter gestartet und ist erreichbar, sobald der Startvorgang abgeschlossen ist.
 
-Vollständige Informationen zu `OMNIROUTE_READY_TIMEOUT_MS` finden Sie unter
+Vollständige Informationen zu `PUSULA_READY_TIMEOUT_MS` finden Sie unter
 [`docs/reference/ENVIRONMENT.md`](../reference/ENVIRONMENT.md).
 
 ---
 
 ## Immer noch Probleme?
 
-- **GitHub-Issues**: [github.com/diegosouzapw/OmniRoute/issues](https://github.com/diegosouzapw/OmniRoute/issues)
+- **GitHub-Issues**: [github.com/Ferhat-Yasinoglu/pusula/issues](https://github.com/Ferhat-Yasinoglu/pusula/issues)
 - **Architektur**: Interne Details finden Sie unter [`docs/architecture/ARCHITECTURE.md`](../architecture/ARCHITECTURE.md)
 - **API-Referenz**: Alle Endpunkte finden Sie unter [`docs/reference/API_REFERENCE.md`](../reference/API_REFERENCE.md)
 - **Zustandsübersicht**: Den Systemstatus in Echtzeit finden Sie unter **Dashboard → Health**

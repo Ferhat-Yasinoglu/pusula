@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 // #10460 pattern: DATA_DIR must be assigned BEFORE any transitive DB import.
 // accountFallback.ts statically imports `@/lib/db/providers` -> `src/lib/db/core.ts`,
 // whose DATA_DIR is captured once at module-load time.
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-quota-errortext-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-quota-errortext-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = process.env.API_KEY_SECRET || "quota-errortext-test-secret";
 

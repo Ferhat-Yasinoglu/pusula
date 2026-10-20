@@ -7,7 +7,7 @@
 > **Verbindliche Quelle:** `src/lib/memory/` und `src/app/api/memory/`
 > **Zuletzt aktualisiert:** 2026-06-28 — v3.8.40 (standardmäßig deaktiviert + Nachholung der int8-Quantisierung)
 
-OmniRoute bietet einen dauerhaften Konversationsspeicher, der nach API-Schlüssel
+Pusula bietet einen dauerhaften Konversationsspeicher, der nach API-Schlüssel
 (und optional nach Sitzungs-ID) getrennt ist. Erinnerungen werden mittels
 leichtgewichtiger Regex-Mustererkennung automatisch aus LLM-Antworten extrahiert
 und als vorangestellte Systemnachricht wieder in nachfolgende Anfragen eingefügt
@@ -21,7 +21,7 @@ und als vorangestellte Systemnachricht wieder in nachfolgende Anfragen eingefüg
 > explizit unter **Einstellungen → Speicher** (der `MemorySkillsTab` zeigt bei
 > aktiviertem Speicher einen Warnhinweis zu Token-Kosten an). Ein Client kann den
 > Speicher für eine einzelne Anfrage über den Anfrage-Header
-> `x-omniroute-no-memory` (`true`/`1`/`yes`) deaktivieren — siehe die
+> `x-pusula-no-memory` (`true`/`1`/`yes`) deaktivieren — siehe die
 > Anfrage-Header-Tabelle in [API_REFERENCE.md](../reference/API_REFERENCE.md).
 > Eine Anfrage ohne Speicher setzt `memoryOwnerId = null`, wodurch für diese
 > Anfrage **sowohl** die Speicher- als auch die Skill-Injektion deaktiviert wird
@@ -261,7 +261,7 @@ auf sqlite-vec → FTS5 zurück.
   der Payload `{memoryId, apiKeyId, sessionId, key, content, metadata, createdAtUnix, expiresAtUnix}`
   ein oder aktualisiert ihn.
 - `searchSemanticMemory(query, topK, scope)` — bettet die Abfrage ein, durchsucht
-  die Collection, gefiltert nach `kind = "omniroute_memory"` und optional nach
+  die Collection, gefiltert nach `kind = "pusula_memory"` und optional nach
   `apiKeyId` / `sessionId`. Begrenzt `topK` auf `[1, 20]`.
 - `deleteSemanticMemoryPoint(id)` — löscht einen einzelnen Punkt. Wird von
   `deleteMemory()` aufgerufen, nachdem die SQLite-Zeile entfernt wurde (D15).
@@ -409,7 +409,7 @@ strukturierten Fakten zurück, ohne sie zu speichern.
    mindestens einen Treffer gibt.
 
 `estimateTokens` wird exportiert und vom Abruf, von der Zusammenfassung und vom
-MCP-Tool `omniroute_memory_search` verwendet.
+MCP-Tool `pusula_memory_search` verwendet.
 
 ## Injektion (`injection.ts`)
 
@@ -465,7 +465,7 @@ Siehe auch den obigen Abschnitt „Erweiterung der Einstellungen“ für Feldbes
 | `memoryVectorStore`         | `vectorStore`            | `"auto"` |
 
 Qdrant-bezogene DB-Schlüssel (`qdrantEnabled`, `qdrantHost`, `qdrantPort`,
-`qdrantApiKey`, `qdrantCollection` mit dem Standardwert `"omniroute_memory"`,
+`qdrantApiKey`, `qdrantCollection` mit dem Standardwert `"pusula_memory"`,
 `qdrantEmbeddingModel` mit dem Standardwert `"openai/text-embedding-3-small"`) werden von
 `normalizeQdrantConfig()` in `qdrant.ts` gelesen.
 
@@ -545,15 +545,15 @@ vorhanden ist, hat es Vorrang, und für die Antwortstruktur wird ein abgeleitete
 
 Wenn der MCP-Server aktiviert ist, werden drei Speicher-Tools registriert:
 
-- `omniroute_memory_search` — `{apiKeyId, query?, type?, maxTokens?, limit?}`
+- `pusula_memory_search` — `{apiKeyId, query?, type?, maxTokens?, limit?}`
   → umschließt `retrieveMemories()`. Seit v3.8.6 (D16) wird die `strategy`
   aus `getMemorySettings()` gelesen, anstatt fest auf `"exact"` codiert zu sein. Wenn
   `query` angegeben ist und `strategy` den Wert `semantic` oder `hybrid` hat, wird
   der Vektorspeicher verwendet, sofern er verfügbar ist.
-- `omniroute_memory_add` — `{apiKeyId, sessionId?, type, key, content,
+- `pusula_memory_add` — `{apiKeyId, sessionId?, type, key, content,
 metadata?}` → umschließt `createMemory()`. Akzeptiert nur die 4 kanonischen Typen:
   `factual`, `episodic`, `procedural`, `semantic` (D17).
-- `omniroute_memory_clear` — `{apiKeyId, type?, olderThan?}` → listet passende
+- `pusula_memory_clear` — `{apiKeyId, type?, olderThan?}` → listet passende
   Einträge auf, filtert optional nach einem „erstellt vor“-Zeitstempel und löscht anschließend jeden
   über `deleteMemory()` (wodurch auch Vektoren aus sqlite-vec + Qdrant entfernt werden).
 
@@ -617,7 +617,7 @@ Standard-TTL 5 min).
   herausgefiltert; alte Einträge, die über `retentionDays` hinausgehen, werden
   durch die Klausel `created_at >= cutoff` in `retrieveMemories` ausgeschlossen.
 - Verwenden Sie für die endgültige Löschung `DELETE /api/memory/[id]` oder
-  `omniroute_memory_clear`.
+  `pusula_memory_clear`.
 - Die Extraktion erfolgt nach dem Fire-and-Forget-Prinzip über `setImmediate`;
   Fehler werden unter `memory.extraction.background.failed` protokolliert und
   niemals an den Aufrufer weitergegeben.
@@ -662,7 +662,7 @@ Standard-TTL 5 min).
 
 ## Auswahl eines Einbettungsanbieters (v3.8.16+)
 
-Die Speicher-Engine von OmniRoute unterstützt **vier Einbettungsquellen** (`src/lib/memory/embedding/`). Jede bietet unterschiedliche Vor- und Nachteile hinsichtlich **Latenz, Kosten, Modellqualität und Einrichtungsaufwand**.
+Die Speicher-Engine von Pusula unterstützt **vier Einbettungsquellen** (`src/lib/memory/embedding/`). Jede bietet unterschiedliche Vor- und Nachteile hinsichtlich **Latenz, Kosten, Modellqualität und Einrichtungsaufwand**.
 
 ### Die Einbettungsquellen
 
@@ -908,7 +908,7 @@ standardmäßig `false`, sodass nichts automatisch komprimiert wird. Lösen Sie 
 
 ```bash
 curl -X POST http://localhost:20128/api/memory/summarize \
-  -H "Authorization: Bearer $OMNIROUTE_KEY"
+  -H "Authorization: Bearer $PUSULA_KEY"
 ```
 
 Um sie deaktiviert zu lassen, belassen Sie `autoSummarize` einfach auf dem Standardwert (`false`).
@@ -923,7 +923,7 @@ Um sie deaktiviert zu lassen, belassen Sie `autoSummarize` einfach auf dem Stand
 ```bash
 # Cron-Stil: täglich um 3 Uhr zusammenfassen
 0 3 * * * curl -X POST http://localhost:20128/api/memory/summarize \
-  -H "Authorization: Bearer $OMNIROUTE_KEY"
+  -H "Authorization: Bearer $PUSULA_KEY"
 ```
 
 ---

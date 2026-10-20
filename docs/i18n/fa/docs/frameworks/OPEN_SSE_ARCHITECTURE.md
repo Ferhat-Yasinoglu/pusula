@@ -4,7 +4,7 @@
 
 ---
 
-> **خلاصه**: `open-sse/` موتور اصلی استریم است که تمام درخواستهای LLM در OmniRoute را اجرا میکند. این بخش شامل حدود ۱٬۴۰۰ فایل است که خط لولهٔ درخواست، اجراگرها، سرویسها، سرور MCP و لایهٔ ترجمه را پیادهسازی میکنند. این راهنما توضیح میدهد که این اجزا چگونه در کنار یکدیگر کار میکنند.
+> **خلاصه**: `open-sse/` موتور اصلی استریم است که تمام درخواستهای LLM در Pusula را اجرا میکند. این بخش شامل حدود ۱٬۴۰۰ فایل است که خط لولهٔ درخواست، اجراگرها، سرویسها، سرور MCP و لایهٔ ترجمه را پیادهسازی میکنند. این راهنما توضیح میدهد که این اجزا چگونه در کنار یکدیگر کار میکنند.
 
 **منبع:** `open-sse/` (بستهٔ workspace، حدود ۱٬۴۴۰ فایل غیرآزمایشی `.ts`)
 
@@ -12,10 +12,10 @@
 
 ## چرا یک بستهٔ Workspace جداگانه؟
 
-`open-sse/` به چند دلیل یک **workspace مستقل** در monorepo مربوط به OmniRoute است:
+`open-sse/` به چند دلیل یک **workspace مستقل** در monorepo مربوط به Pusula است:
 
-1. **قابلیت استفادهٔ مجدد** — `open-sse` با نام `@omniroute/open-sse` در npm منتشر میشود؛ بنابراین پروژههای دیگر میتوانند بهطور مستقل از آن استفاده کنند
-2. **مرزبندی شفاف** — موتور استریم از لایهٔ UI/DB مختص OmniRoute جدا شده است
+1. **قابلیت استفادهٔ مجدد** — `open-sse` با نام `@pusula/open-sse` در npm منتشر میشود؛ بنابراین پروژههای دیگر میتوانند بهطور مستقل از آن استفاده کنند
+2. **مرزبندی شفاف** — موتور استریم از لایهٔ UI/DB مختص Pusula جدا شده است
 3. **کارایی** — این موتور هیچ وابستگیای به Next.js ندارد و در نتیجه شروع سرد سریعتری را در محیطهای CLI/serverless ممکن میکند
 4. **نسخهبندی** — `open-sse` میتواند با چرخهٔ زمانی مستقل خود منتشر شود
 
@@ -32,7 +32,7 @@
 open-sse/
 ├── index.ts              # نقطهٔ ورود عمومی
 ├── types.d.ts            # خروجیهای عمومی نوعها
-├── package.json          # @omniroute/open-sse
+├── package.json          # @pusula/open-sse
 ├── config/               # پیکربندیهای ارائهدهندگان، ثابتها و رجیستریها
 ├── executors/            # اجراگرهای HTTP مختص هر ارائهدهنده (۶۷ عدد بهعلاوهٔ base.ts/index.ts)
 ├── handlers/             # هندلرهای درخواست (chatCore، responses و غیره)
@@ -357,7 +357,7 @@ export default {
 `executors/index.ts` تابع `getExecutor(providerId)` را صادر میکند:
 
 ```ts
-import { getExecutor } from "@omniroute/open-sse/executors";
+import { getExecutor } from "@pusula/open-sse/executors";
 
 const executor = getExecutor("anthropic");
 const result = await executor.execute({
@@ -377,7 +377,7 @@ const result = await executor.execute({
 ### زمان انجام ترجمه
 
 ```ts
-import { needsTranslation, translateRequest } from "@omniroute/open-sse/translator";
+import { needsTranslation, translateRequest } from "@pusula/open-sse/translator";
 
 if (needsTranslation(sourceFormat, targetFormat)) {
   body = translateRequest(body, sourceFormat, targetFormat);
@@ -416,7 +416,7 @@ if (needsTranslation(sourceFormat, targetFormat)) {
 // open-sse/mcp-server/tools/getHealth.ts
 import { z } from "zod";
 export default {
-  name: "omniroute_get_health",
+  name: "pusula_get_health",
   description: "Get system health snapshot",
   scope: "read:health",
   inputSchema: z.object({}),
@@ -457,7 +457,7 @@ if (!hasScope(apiKey, "providers:read")) {
 
 ### چرا یک تبدیلکننده جداگانه؟
 
-Responses API قالب جدید OpenAI با **مکالمات دارای وضعیت** (`previous_response_id`) است. هنگامی که یک کلاینت درخواستی با قالب Responses ارسال میکند، OmniRoute:
+Responses API قالب جدید OpenAI با **مکالمات دارای وضعیت** (`previous_response_id`) است. هنگامی که یک کلاینت درخواستی با قالب Responses ارسال میکند، Pusula:
 
 1. در داخل، Responses را به Chat Completions تبدیل میکند
 2. آن را به ارائهدهنده ارسال میکند (هر ارائهدهندهای که از Chat Completions پشتیبانی کند)

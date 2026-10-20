@@ -24,7 +24,7 @@ const POLL_INTERVAL_MS = 2_000;
 const BOOT_DEADLINE_MS = 240_000;
 const MAX_SERVER_OUTPUT_CHARS = 1_000_000;
 const SQLJS_STARTUP_MARKER = "Pre-initializing sql.js WASM";
-const DEFAULT_CLI_SALT = "omniroute-cli-auth-v1";
+const DEFAULT_CLI_SALT = "pusula-cli-auth-v1";
 
 // Dependency-based packaging (#11242): the tarball can never contain a node_modules
 // path (files[] has "!**/node_modules/**" and check:pack-artifact fails on the
@@ -88,7 +88,7 @@ export function evaluateMachineTokenAuth({
   unauthenticatedStatus,
   invalidStatus,
   authenticatedStatus,
-  salt = process.env.OMNIROUTE_CLI_SALT || DEFAULT_CLI_SALT,
+  salt = process.env.PUSULA_CLI_SALT || DEFAULT_CLI_SALT,
 }) {
   const failures = [];
   if (!/^[0-9a-f]{64}$/.test(cliToken || "")) {
@@ -155,7 +155,7 @@ async function readJsonResponse(url, options) {
 }
 
 async function verifySettingsRoundTrip(baseUrl, startupOutput, cliToken) {
-  const authHeaders = { "x-omniroute-cli-token": cliToken };
+  const authHeaders = { "x-pusula-cli-token": cliToken };
   const initial = await readJsonResponse(`${baseUrl}/api/settings`, { headers: authHeaders });
   if (initial.response.status !== 200 || !initial.body || typeof initial.body !== "object") {
     return {
@@ -288,9 +288,9 @@ function spawnServer(binPath, port, dataDir) {
       JWT_SECRET: "pack-boot-smoke-secret-with-sufficient-length-000",
       API_KEY_SECRET: "pack-boot-smoke-api-key-secret-long",
       DISABLE_SQLITE_AUTO_BACKUP: "true",
-      OMNIROUTE_SKIP_SYSTEM_TRUST: "1",
-      OMNIROUTE_PACK_BOOT_SMOKE: "1",
-      OMNIROUTE_PACK_BOOT_FORCE_SQLJS: "1",
+      PUSULA_SKIP_SYSTEM_TRUST: "1",
+      PUSULA_PACK_BOOT_SMOKE: "1",
+      PUSULA_PACK_BOOT_FORCE_SQLJS: "1",
       INITIAL_PASSWORD: "pack-boot-machine-token-auth-required",
     },
     stdio: ["ignore", "pipe", "pipe"],
@@ -331,10 +331,10 @@ async function verifyMachineTokenAuth(baseUrl, cliToken) {
   const endpoint = `${baseUrl}/api/cli/whoami`;
   const unauthenticatedStatus = (await fetch(endpoint)).status;
   const invalidStatus = (
-    await fetch(endpoint, { headers: { "x-omniroute-cli-token": "0".repeat(64) } })
+    await fetch(endpoint, { headers: { "x-pusula-cli-token": "0".repeat(64) } })
   ).status;
   const authenticatedStatus = (
-    await fetch(endpoint, { headers: { "x-omniroute-cli-token": cliToken } })
+    await fetch(endpoint, { headers: { "x-pusula-cli-token": cliToken } })
   ).status;
   return evaluateMachineTokenAuth({
     cliToken,
@@ -368,7 +368,7 @@ async function waitForHealthy(port, child, expectedVersion, cliToken) {
       }
       try {
         const res = await fetch(`http://127.0.0.1:${port}/api/monitoring/health`, {
-          headers: { "x-omniroute-cli-token": cliToken },
+          headers: { "x-pusula-cli-token": cliToken },
         });
         const body = await res.json().catch(() => null);
         verdict = evaluateBoot(res.status, body, expectedVersion);
@@ -391,7 +391,7 @@ async function waitForHealthy(port, child, expectedVersion, cliToken) {
  */
 async function readSettingsDebugMode(baseUrl, cliToken) {
   const { response, body } = await readJsonResponse(`${baseUrl}/api/settings`, {
-    headers: { "x-omniroute-cli-token": cliToken },
+    headers: { "x-pusula-cli-token": cliToken },
   });
   if (response.status !== 200 || !body || typeof body !== "object") {
     throw new Error(`settings GET HTTP ${response.status} or non-JSON body`);
@@ -413,7 +413,7 @@ async function main() {
   const expectedVersion = JSON.parse(
     fs.readFileSync(path.join(ROOT, "package.json"), "utf8")
   ).version;
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-pack-boot-"));
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-pack-boot-"));
   let child = null;
   let tail = [];
   let exitCode = 1;
@@ -434,7 +434,7 @@ async function main() {
       encoding: "utf8",
       maxBuffer: 64 * 1024 * 1024,
     });
-    const packageRoot = path.join(prefix, "lib", "node_modules", "omniroute");
+    const packageRoot = path.join(prefix, "lib", "node_modules", "pusula");
     const missingSqlJsFiles = findMissingSqlJsRuntimeFiles(packageRoot);
     if (missingSqlJsFiles.length > 0) {
       throw new Error(
@@ -453,7 +453,7 @@ async function main() {
     const port = pickPort();
     const dataDir = path.join(tmp, "data");
     fs.mkdirSync(dataDir, { recursive: true });
-    const binPath = path.join(prefix, "bin", "omniroute");
+    const binPath = path.join(prefix, "bin", "pusula");
     const packagedCliToken = derivePackagedCliToken(packageRoot);
 
     // BOOT #1 — boot, prove the forced sql.js tier, PATCH a setting, then shut down cleanly

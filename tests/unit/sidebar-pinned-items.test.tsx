@@ -3,7 +3,7 @@ import React, { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-process.env.NEXT_PUBLIC_OMNIROUTE_E2E_MODE = "1";
+process.env.NEXT_PUBLIC_PUSULA_E2E_MODE = "1";
 
 vi.mock("next-intl", () => ({
   useTranslations: () => {

@@ -4,8 +4,8 @@
  * while the handler waits on upstream first-byte (reasoning models, combo failover).
  *
  * @changes
- * - [2026-07-28] [Cursor Grok 4.5] - Scrub omniroute from client-facing keepalive id/model/comment frames
- * - [2026-07-28] [Cursor Grok 4.5] - Neutralize Responses startup thinking text (no OmniRoute brand leak)
+ * - [2026-07-28] [Cursor Grok 4.5] - Scrub pusula from client-facing keepalive id/model/comment frames
+ * - [2026-07-28] [Cursor Grok 4.5] - Neutralize Responses startup thinking text (no Pusula brand leak)
  *
  * Strict HTTP clients (notably Codex CLI's `reqwest`, which has a ~5s idle-read
  * timeout) drop the connection if no bytes arrive shortly after the request.
@@ -98,11 +98,11 @@ const MAX_RETRY_AFTER_SECONDS = 3600;
 
 /**
  * Seconds a client should wait before retrying, from the handler's error response:
- * `Retry-After` (delta-seconds or HTTP-date) first, then OmniRoute's
- * `x-omniroute-retry-after-seconds`. Clamped to 0..3600; null when neither is usable.
+ * `Retry-After` (delta-seconds or HTTP-date) first, then Pusula's
+ * `x-pusula-retry-after-seconds`. Clamped to 0..3600; null when neither is usable.
  */
 function readRetryAfterSeconds(headers: Headers): number | null {
-  for (const name of ["retry-after", "x-omniroute-retry-after-seconds"]) {
+  for (const name of ["retry-after", "x-pusula-retry-after-seconds"]) {
     const raw = headers.get(name)?.trim();
     if (!raw) continue;
     let seconds: number | null = null;

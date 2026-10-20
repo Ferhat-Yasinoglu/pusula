@@ -1,7 +1,7 @@
 /**
  * Self-hosted unified OpenAI-compatible entry (D4 — 接入即用).
  *
- * Exposes OmniRoute's existing /v1/chat/completions route as a self-hosted
+ * Exposes Pusula's existing /v1/chat/completions route as a self-hosted
  * gateway: one OpenAI-compatible contract in, auto-route to the runtime-selected
  * provider, standard OpenAI error shape out.
  *
@@ -13,8 +13,8 @@
  *    the file/env at runtime and are never logged or persisted (RIC-737 contract).
  *  - Auto-route = header override -> model-prefix match -> deterministic strategy
  *    (`routingStrategies.ts`, M2/RIC-740). Every decision is explainable via the
- *    `x-omniroute-route-decision` response header — no predictive model.
- *  - The optional `OMNIROUTE_SELF_HOSTED_API_KEY` shared-secret check here is a
+ *    `x-pusula-route-decision` response header — no predictive model.
+ *  - The optional `PUSULA_SELF_HOSTED_API_KEY` shared-secret check here is a
  *    scaffold reserved for the D5 quota-key system: when unset the route is open
  *    (loopback / trusted-network deployment), exactly like the existing
  *    self-hosted local providers; when set, it is compared with a constant-time
@@ -44,17 +44,17 @@ import {
 } from "./routingStrategies.ts";
 
 /** Env var holding the inline YAML provider config (runtime-only credentials). */
-export const CONFIG_ENV = "OMNIROUTE_SELF_HOSTED_PROVIDERS";
+export const CONFIG_ENV = "PUSULA_SELF_HOSTED_PROVIDERS";
 /** Env var pointing at a YAML file with the provider config. */
-export const CONFIG_FILE_ENV = "OMNIROUTE_SELF_HOSTED_PROVIDERS_FILE";
+export const CONFIG_FILE_ENV = "PUSULA_SELF_HOSTED_PROVIDERS_FILE";
 /** Optional shared API key for the unified entry (D5 reserved). */
-export const API_KEY_ENV = "OMNIROUTE_SELF_HOSTED_API_KEY";
+export const API_KEY_ENV = "PUSULA_SELF_HOSTED_API_KEY";
 /** Provider-selector header recognized by the unified entry. */
-export const PROVIDER_SELECTOR_HEADER = "x-omniroute-provider";
+export const PROVIDER_SELECTOR_HEADER = "x-pusula-provider";
 /** Marker header added to responses routed through the unified entry. */
-export const ROUTED_BY_HEADER = "x-omniroute-routed-by";
+export const ROUTED_BY_HEADER = "x-pusula-routed-by";
 /** Explainability header carrying the deterministic route decision one-liner. */
-export const ROUTE_DECISION_HEADER = "x-omniroute-route-decision";
+export const ROUTE_DECISION_HEADER = "x-pusula-route-decision";
 const ROUTED_BY_VALUE = "self-hosted-openai-compat";
 
 export interface SelfHostedOptions {
@@ -208,7 +208,7 @@ export function splitProviderModel(value: unknown): { provider?: string; model?:
  * Select the provider to route a request to (single-attempt, no fallback).
  *
  * Precedence (deterministic, documented in the README):
- *  1. `x-omniroute-provider` header (exact provider id) — remote client control.
+ *  1. `x-pusula-provider` header (exact provider id) — remote client control.
  *  2. `model` prefix match (`provider/model` or `provider::model`).
  *  3. First configured provider (`ProviderRouter.select()` default).
  *

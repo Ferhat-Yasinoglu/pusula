@@ -167,7 +167,7 @@ export function registerResilience(program) {
       ])
     )
     .action(async (name, opts, cmd) => {
-      await mcpCallTool("omniroute_set_resilience_profile", { profile: name });
+      await mcpCallTool("pusula_set_resilience_profile", { profile: name });
       process.stdout.write(`Profile: ${name}\n`);
     });
 

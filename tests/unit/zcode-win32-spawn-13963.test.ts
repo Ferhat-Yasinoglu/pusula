@@ -23,7 +23,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 
 const { shouldUseShellForZcodeCommand } =
-  await import("@omniroute/open-sse/executors/zcodeProtocol");
+  await import("@pusula/open-sse/executors/zcodeProtocol");
 
 /** Temporarily override process.platform for the duration of `fn`. */
 function withPlatform<T>(platform: string, fn: () => T): T {

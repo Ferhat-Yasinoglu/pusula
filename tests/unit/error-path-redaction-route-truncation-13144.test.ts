@@ -87,14 +87,14 @@ test("a determinable extension pins the endpoint, so the tail survives", () => {
     ["at C:\\Program Files\\secret\\a.ts and more", "at <path> and more"],
     ["failed at /Users/alice/My Project/app.ts and more", "failed at <path> and more"],
     [
-      "Provider failed in /srv/omniroute/src/private/provider.ts:42:7 with api_key='x'",
+      "Provider failed in /srv/pusula/src/private/provider.ts:42:7 with api_key='x'",
       "Provider failed in <path> with api_key='x'",
     ],
   ];
   for (const [input, expected] of cases) {
     const out = redactErrorPaths(input);
     assert.equal(out, expected);
-    assert.ok(!/secret|alice|omniroute/.test(out), `must not expose a path suffix: ${out}`);
+    assert.ok(!/secret|alice|pusula/.test(out), `must not expose a path suffix: ${out}`);
   }
 });
 

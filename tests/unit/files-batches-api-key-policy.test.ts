@@ -36,7 +36,7 @@
  *
  * Self-isolating: DATA_DIR points at a fresh temp dir BEFORE any `@/lib/db/*`
  * module loads (dynamic imports below), so this file never touches
- * ~/.omniroute.
+ * ~/.pusula.
  */
 import { describe, it, after } from "node:test";
 import assert from "node:assert";

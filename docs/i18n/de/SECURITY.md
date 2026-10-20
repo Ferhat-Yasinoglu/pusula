@@ -6,10 +6,10 @@
 
 ## Melden von Schwachstellen
 
-Wenn Sie eine Sicherheitslücke in OmniRoute entdecken, melden Sie diese bitte verantwortungsvoll:
+Wenn Sie eine Sicherheitslücke in Pusula entdecken, melden Sie diese bitte verantwortungsvoll:
 
 1. Erstellen Sie **KEIN** öffentliches GitHub-Issue
-2. Verwenden Sie [GitHub Security Advisories](https://github.com/diegosouzapw/OmniRoute/security/advisories/new)
+2. Verwenden Sie [GitHub Security Advisories](https://github.com/Ferhat-Yasinoglu/pusula/security/advisories/new)
 3. Geben Sie Folgendes an: Beschreibung, Schritte zur Reproduktion und potenzielle Auswirkungen
 
 ## Reaktionszeitplan
@@ -32,7 +32,7 @@ Wenn Sie eine Sicherheitslücke in OmniRoute entdecken, melden Sie diese bitte v
 
 ## Sicherheitsarchitektur
 
-OmniRoute implementiert ein mehrschichtiges Sicherheitsmodell:
+Pusula implementiert ein mehrschichtiges Sicherheitsmodell:
 
 ```
 Anfrage → CORS → Authz-Pipeline (klassifizieren → Richtlinien → durchsetzen)
@@ -69,7 +69,7 @@ STORAGE_ENCRYPTION_KEY=$(openssl rand -hex 32)
 
 ### 🛡️ Framework für Schutzmechanismen
 
-OmniRoute enthält eine zur Laufzeit neu ladbare **Registrierung für Schutzmechanismen** (`src/lib/guardrails/`) mit 3 integrierten, nach Priorität geordneten Schutzmechanismen:
+Pusula enthält eine zur Laufzeit neu ladbare **Registrierung für Schutzmechanismen** (`src/lib/guardrails/`) mit 3 integrierten, nach Priorität geordneten Schutzmechanismen:
 
 | Schutzmechanismus  | Priorität | Zweck                                                                                               |
 | ------------------ | --------- | --------------------------------------------------------------------------------------------------- |
@@ -77,7 +77,7 @@ OmniRoute enthält eine zur Laufzeit neu ladbare **Registrierung für Schutzmech
 | `pii-masker`       | 10        | PII-Unkenntlichmachung vor und nach Aufrufen (E-Mails, Telefon, CPF, CNPJ, Kreditkarten, SSN)       |
 | `prompt-injection` | 20        | Erkennt Muster für Überschreibungen, Rollenübernahmen, Jailbreaks und Datenlecks                    |
 
-Benutzerdefinierte Schutzmechanismen werden über `registerGuardrail(new MyGuardrail())` registriert. Das Modell arbeitet nach dem Fail-open-Prinzip (Ausnahmen blockieren niemals den Datenverkehr). Eine Deaktivierung pro Anfrage ist über den Header `x-omniroute-disabled-guardrails` möglich. → Siehe [`docs/security/GUARDRAILS.md`](docs/security/GUARDRAILS.md).
+Benutzerdefinierte Schutzmechanismen werden über `registerGuardrail(new MyGuardrail())` registriert. Das Modell arbeitet nach dem Fail-open-Prinzip (Ausnahmen blockieren niemals den Datenverkehr). Eine Deaktivierung pro Anfrage ist über den Header `x-pusula-disabled-guardrails` möglich. → Siehe [`docs/security/GUARDRAILS.md`](docs/security/GUARDRAILS.md).
 
 ### 🧠 Schutz vor Prompt-Injection
 
@@ -182,15 +182,15 @@ Der Server lehnt bekanntermaßen schwache Werte wie `changeme`, `secret` oder `p
 
 ```bash
 docker run -d \
-  --name omniroute \
+  --name pusula \
   --restart unless-stopped \
   --read-only \
   -p 20128:20128 \
-  -v omniroute-data:/app/data \
+  -v pusula-data:/app/data \
   -e JWT_SECRET="$(openssl rand -base64 48)" \
   -e API_KEY_SECRET="$(openssl rand -hex 32)" \
   -e STORAGE_ENCRYPTION_KEY="$(openssl rand -hex 32)" \
-  diegosouzapw/omniroute:latest
+  ferhat-yasinoglu/pusula:latest
 ```
 
 ---
@@ -224,7 +224,7 @@ Diese Regeln werden durch Werkzeuge und Reviewer durchgesetzt:
 
 > **Hinweis zum Geltungsbereich:** `socket.yml` im Repository-Stammverzeichnis legt lediglich `projectIgnorePaths` für den Registry-seitigen Post-Publish-Scan des veröffentlichten npm-Artefakts durch Socket.dev fest — sie ist kein erzwungenes CI-/PR-Merge-Gate. Weder ein Workflow in `.github/workflows` noch ein `package.json`-Skript oder ein `Makefile`-Target ruft Socket.dev auf.
 
-Das veröffentlichte npm-Artefakt `omniroute` enthält den Next.js-Build mit `output: "standalone"`. Das bedeutet, dass jeder Route-Handler — einschließlich dokumentierter privilegierter Funktionen (MITM, Zed-Import, Cloud Sync, eingebetteter Service-Supervisor) — in minimierten Chunks unter `.next/server/*.js` landet. Heuristische Supply-Chain-Scanner gleichen diese Chunks häufig anhand von Mustern mit Malware-Signaturen ab.
+Das veröffentlichte npm-Artefakt `pusula` enthält den Next.js-Build mit `output: "standalone"`. Das bedeutet, dass jeder Route-Handler — einschließlich dokumentierter privilegierter Funktionen (MITM, Zed-Import, Cloud Sync, eingebetteter Service-Supervisor) — in minimierten Chunks unter `.next/server/*.js` landet. Heuristische Supply-Chain-Scanner gleichen diese Chunks häufig anhand von Mustern mit Malware-Signaturen ab.
 
 Die von uns verwendete Scanner-Konfiguration befindet sich in [`socket.yml`](socket.yml) im Repository-Stammverzeichnis (Socket.dev-GitHub-App-Format v2 — siehe <https://docs.socket.dev/docs/socket-yml>). Sie schließt nicht ausgelieferte Verzeichnisse (`tests/`, `_tasks/`, `_references/`, `_ideia/`, `_mono_repo/`, `docs/` usw.) explizit aus, sodass der Scanner nur Codepfade meldet, die tatsächlich veröffentlichte Benutzer erreichen — der Scan selbst wird dadurch angestoßen, dass die Socket-GitHub-App diese Datei liest, und nicht durch einen Workflow in diesem Repository.
 
@@ -234,7 +234,7 @@ Für jede Ergebniskategorie pflegen wir eine individuelle Bestätigung durch die
   Zuordnung pro Ergebnis: Quelldatei ↔ markierter Chunk ↔ Verhalten ↔ in v3.8.6 angewandte Abhilfemaßnahme.
 - `SECURITY-AUDITOR-NOTE:`-Blöcke im Quellcode an jeder markierten Funktion verweisen auf dasselbe Dokument.
 
-Benutzer, deren Pipeline die Warnmeldung nicht lockern kann, können den Build mit `OMNIROUTE_BUILD_PROFILE=minimal npm run build` erstellen. Dadurch werden die vier sensiblen Module durch Stubs ersetzt, die zur Laufzeit HTTP 503 `feature-disabled` zurückgeben, sodass die privilegierten Codepfade physisch nicht im Bundle enthalten sind. Das Veröffentlichungsrezept finden Sie unter [`docs/security/SOCKET_DEV_FINDINGS.md`](docs/security/SOCKET_DEV_FINDINGS.md).
+Benutzer, deren Pipeline die Warnmeldung nicht lockern kann, können den Build mit `PUSULA_BUILD_PROFILE=minimal npm run build` erstellen. Dadurch werden die vier sensiblen Module durch Stubs ersetzt, die zur Laufzeit HTTP 503 `feature-disabled` zurückgeben, sodass die privilegierten Codepfade physisch nicht im Bundle enthalten sind. Das Veröffentlichungsrezept finden Sie unter [`docs/security/SOCKET_DEV_FINDINGS.md`](docs/security/SOCKET_DEV_FINDINGS.md).
 
 ## Referenzen
 

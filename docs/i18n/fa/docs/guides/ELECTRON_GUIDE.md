@@ -7,7 +7,7 @@
 > **منبع اصلی حقیقت:** فضای کاری `electron/`
 > **آخرین بهروزرسانی:** 2026-06-28 — v3.8.40
 
-OmniRoute یک برنامه دسکتاپ چندسکویی (Windows / macOS / Linux) ارائه میکند که بر پایه
+Pusula یک برنامه دسکتاپ چندسکویی (Windows / macOS / Linux) ارائه میکند که بر پایه
 **Electron 41** و **electron-builder 26.10** ساخته شده است. برنامه دسکتاپ، سرور مستقل Next.js
 را بهعنوان یک فرایند فرزند اجرا میکند، یک `BrowserWindow` را به آن متصل میکند و
 سینی سیستم، بهروزرسان خودکار، پل IPC و راهاندازی اولیه اسرار بدون نیاز به پیکربندی را اضافه میکند.
@@ -44,8 +44,8 @@ OmniRoute یک برنامه دسکتاپ چندسکویی (Windows / macOS / Lin
 | `electron-updater` | `^6.8.9`                                                                |
 | `better-sqlite3`   | ریشه `^13.0.2` (نسخههای ازپیشساختهشده Node-API — بدون بازسازی Electron) |
 | نسخه برنامه        | `3.8.0`                                                                 |
-| شناسه برنامه       | `online.omniroute.desktop`                                              |
-| نام محصول          | `OmniRoute`                                                             |
+| شناسه برنامه       | `online.pusula.desktop`                                              |
+| نام محصول          | `Pusula`                                                             |
 
 ## اسکریپتها (`package.json` ریشه)
 
@@ -162,28 +162,28 @@ spawn(process.execPath, [serverScript], {
 
 در `<DATA_DIR>/server.env` ذخیره میشوند. `DATA_DIR` به مسیرهای زیر نگاشت میشود:
 
-- Windows: `%APPDATA%\omniroute`
-- Linux: `$XDG_CONFIG_HOME/omniroute` یا `~/.omniroute`
-- macOS: `~/.omniroute`
+- Windows: `%APPDATA%\pusula`
+- Linux: `$XDG_CONFIG_HOME/pusula` یا `~/.pusula`
+- macOS: `~/.pusula`
 
 ## پنجره و سینی سیستم
 
 - `BrowserWindow`: ابعاد 1400×900 (حداقل 1024×700)، با `backgroundColor: "#0a0a0a"`.
 - macOS: مقدار `titleBarStyle: "hiddenInset"` و دکمههای کنترل پنجره در `{ x: 16, y: 16 }`.
 - Windows/Linux: نوار عنوان بومی سیستمعامل.
-- دکمهٔ بستن، برنامه را به سینی سیستم میفرستد؛ منوی سینی شامل **باز کردن OmniRoute**، **باز کردن داشبورد** (در مرورگر خارجی)، زیرمنوی **درگاه سرور**، **بررسی بهروزرسانیها** و **خروج** است.
+- دکمهٔ بستن، برنامه را به سینی سیستم میفرستد؛ منوی سینی شامل **باز کردن Pusula**، **باز کردن داشبورد** (در مرورگر خارجی)، زیرمنوی **درگاه سرور**، **بررسی بهروزرسانیها** و **خروج** است.
 
 ## سیاست امنیت محتوا
 
 از طریق `session.defaultSession.webRequest.onHeadersReceived` تنظیم میشود. دستورالعملهای مهم:
 
 - `frame-ancestors 'none'`، `object-src 'none'`، `child-src 'none'`
-- `connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:* https://*.omniroute.online https://*.omniroute.dev`
+- `connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:* https://*.pusula.online https://*.pusula.dev`
 - حالت توسعه فقط `'unsafe-eval'` را به `script-src` اضافه میکند
 
 ## بهروزرسانی خودکار
 
-از `electron-updater` همراه با ارائهدهندهٔ GitHub (`diegosouzapw/OmniRoute`) استفاده میکند.
+از `electron-updater` همراه با ارائهدهندهٔ GitHub (`Ferhat-Yasinoglu/pusula`) استفاده میکند.
 
 - `autoDownload = false`، `autoInstallOnAppQuit = true`
 - رویدادها از طریق IPC با نام `update-status` به رندرر ارسال میشوند:
@@ -255,11 +255,11 @@ npm run electron:build:win
 
 خروجیها در `electron/dist-electron/` قرار میگیرند:
 
-- `OmniRoute.Setup.X.Y.Z.exe`، `OmniRoute X.Y.Z.exe` (Windows)
-- `OmniRoute-X.Y.Z-mac.dmg`، `OmniRoute-X.Y.Z-arm64-mac.dmg` (macOS)
-- `OmniRoute-X.Y.Z.AppImage`، `omniroute-desktop_X.Y.Z_amd64.deb` (Linux)
+- `Pusula.Setup.X.Y.Z.exe`، `Pusula X.Y.Z.exe` (Windows)
+- `Pusula-X.Y.Z-mac.dmg`، `Pusula-X.Y.Z-arm64-mac.dmg` (macOS)
+- `Pusula-X.Y.Z.AppImage`، `pusula-desktop_X.Y.Z_amd64.deb` (Linux)
 
-انتشارها در GitHub Releases (`diegosouzapw/OmniRoute`) منتشر میشوند؛ `electron-updater` نیز نسخههای جدید را در همین محل بررسی میکند.
+انتشارها در GitHub Releases (`Ferhat-Yasinoglu/pusula`) منتشر میشوند؛ `electron-updater` نیز نسخههای جدید را در همین محل بررسی میکند.
 
 ## عیبیابی
 

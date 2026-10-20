@@ -1,6 +1,6 @@
 import { handleChat } from "@/sse/handlers/chat";
-import { initTranslators } from "@omniroute/open-sse/translator/index.ts";
-import { transformToOllama } from "@omniroute/open-sse/utils/ollamaTransform.ts";
+import { initTranslators } from "@pusula/open-sse/translator/index.ts";
+import { transformToOllama } from "@pusula/open-sse/utils/ollamaTransform.ts";
 import { withChatAdmission } from "@/shared/middleware/withChatAdmission";
 
 let initialized = false;

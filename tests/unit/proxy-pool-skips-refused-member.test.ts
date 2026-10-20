@@ -10,7 +10,7 @@ import path from "node:path";
 // pool (#13575) and skips a set-aside member on top of that. With every member set aside, or
 // the flag off (the default), set-aside skipping does not apply but rotation continues.
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-pool-skip-refused-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-pool-skip-refused-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = "test-secret";
 

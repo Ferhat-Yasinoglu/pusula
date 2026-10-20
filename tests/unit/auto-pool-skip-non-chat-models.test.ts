@@ -8,7 +8,7 @@ import path from "node:path";
 // (x.ai /v1/models lists grok-imagine-* next to grok-4.x; local nodes sync TTS/ASR/video)
 // must not put the media models into auto/* chat pools: they can only ever fail there.
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-auto-non-chat-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-auto-non-chat-"));
 const ORIGINAL_DATA_DIR = process.env.DATA_DIR;
 process.env.DATA_DIR = TEST_DATA_DIR;
 

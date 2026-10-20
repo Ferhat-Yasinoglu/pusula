@@ -10,7 +10,7 @@ import os from "node:os";
 import path from "node:path";
 
 process.env.TZ = "UTC";
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-daily-reset-13440-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-daily-reset-13440-"));
 const ORIGINAL_DATA_DIR = process.env.DATA_DIR;
 process.env.DATA_DIR = TEST_DATA_DIR;
 

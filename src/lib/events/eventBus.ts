@@ -23,7 +23,7 @@ import {
 // ── State (globalThis singleton) ──────────────────────────────────────────
 
 declare global {
-  var __omnirouteEventBus:
+  var __pusulaEventBus:
     | {
         initialized: boolean;
         listeners: Map<DashboardEventName, Set<Function>>;
@@ -36,8 +36,8 @@ declare global {
 }
 
 function getBusState() {
-  if (!globalThis.__omnirouteEventBus) {
-    globalThis.__omnirouteEventBus = {
+  if (!globalThis.__pusulaEventBus) {
+    globalThis.__pusulaEventBus = {
       initialized: false,
       listeners: new Map(),
       wildcardListeners: new Set(),
@@ -46,7 +46,7 @@ function getBusState() {
       emitCount: 0,
     };
   }
-  return globalThis.__omnirouteEventBus;
+  return globalThis.__pusulaEventBus;
 }
 
 // ── Event History ─────────────────────────────────────────────────────────

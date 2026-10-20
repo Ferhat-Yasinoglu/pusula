@@ -1,16 +1,16 @@
 ---
-title: "🗜️ Prompt Compression Guide — OmniRoute"
+title: "🗜️ Prompt Compression Guide — Pusula"
 version: 3.8.40
 lastUpdated: 2026-06-28
 ---
 
-# 🗜️ Prompt Compression Guide — OmniRoute
+# 🗜️ Prompt Compression Guide — Pusula
 
 > Save 15-95% on eligible context automatically. For a quick overview, see the [README Compression section](../README.md#%EF%B8%8F-prompt-compression--save-15-95-eligible-tokens-automatically).
 
 ## Overview
 
-OmniRoute implements a modular prompt compression pipeline that runs **proactively** before requests hit upstream providers. This means your token savings happen transparently — no changes needed to your workflow.
+Pusula implements a modular prompt compression pipeline that runs **proactively** before requests hit upstream providers. This means your token savings happen transparently — no changes needed to your workflow.
 
 ```
 Client Request
@@ -120,15 +120,15 @@ compression combos assigned to routing combos.
 
 ## Upstream Savings Math
 
-OmniRoute documents compression savings from two sources: upstream project benchmarks and
-OmniRoute's own engine composition.
+Pusula documents compression savings from two sources: upstream project benchmarks and
+Pusula's own engine composition.
 
 | Source  | Upstream README number used here                                                                                      |
 | ------- | --------------------------------------------------------------------------------------------------------------------- |
 | Caveman | `~75%` fewer output tokens, `65%` benchmark average output savings, `22-87%` range, and `~46%` input compression tool |
 | RTK     | `60-90%` command-output savings; sample session `~118,000 -> ~23,900` tokens, or `79.7%` saved (`~80%`)               |
 
-For overlapping tool/context payloads, the default OmniRoute combo stacks the engines:
+For overlapping tool/context payloads, the default Pusula combo stacks the engines:
 
 ```txt
 RTK -> Caveman
@@ -220,7 +220,7 @@ documented above. Both surfaces persist through the same `PUT /api/combos/{id}` 
 
 ### Per-request override
 
-Send the `x-omniroute-compression` request header to override the compression plan for a single
+Send the `x-pusula-compression` request header to override the compression plan for a single
 request. It has the highest precedence — it beats the routing-combo override, the active profile,
 auto-trigger, and the panel Default. Unknown values are ignored (the request is never rejected) and
 the global master switch still gates everything: when compression is off globally, the header cannot
@@ -238,7 +238,7 @@ turn it on. Values:
 Without `allow-lossy`, `engine:<id>`, or a named combo, lossy engines are not applied. The
 request still gets session dedup and whitespace folding when compression is on.
 
-The applied plan is echoed back in the `X-OmniRoute-Compression: <mode>; source=<source>` response
+The applied plan is echoed back in the `X-Pusula-Compression: <mode>; source=<source>` response
 header, where `<source>` is one of `request-header`, `routing-override`, `active-profile`,
 `auto-trigger`, `default`, or `off`.
 
@@ -328,7 +328,7 @@ RTK mode is inspired by **[RTK - Rust Token Killer](https://github.com/rtk-ai/rt
 
 ## Advanced Compression Systems
 
-Beyond the 7 standard modes, OmniRoute includes several advanced compression
+Beyond the 7 standard modes, Pusula includes several advanced compression
 systems that work automatically based on context.
 
 ### Cache-Aware Compression
@@ -355,7 +355,7 @@ The `cachingAware.ts` module solves this by **detecting caching context** and
 import {
   detectCachingContext,
   getCacheAwareStrategy,
-} from "@omniroute/open-sse/services/compression/cachingAware";
+} from "@pusula/open-sse/services/compression/cachingAware";
 
 const body = {
   model: "anthropic/claude-sonnet-4.5",
@@ -391,7 +391,7 @@ relevant. The `progressiveAging.ts` module **degrades messages by turn distance*
 #### Code example
 
 ```ts
-import { applyAging } from "@omniroute/open-sse/services/compression/progressiveAging";
+import { applyAging } from "@pusula/open-sse/services/compression/progressiveAging";
 
 const messages = [
   { role: "system", content: "You are a helpful assistant" },
@@ -477,7 +477,7 @@ error strings, URLs and identifiers verbatim.
 the selection against the catalog (unknown ids and locale-mismatched styles are
 dropped, never an error), concatenates the selected instructions in catalog order,
 appends the boundaries clause **once**, and starts the block with a single idempotency
-marker (`[OmniRoute Output Styles]`), so re-applying is a no-op. When the resolved
+marker (`[Pusula Output Styles]`), so re-applying is a no-op. When the resolved
 language (see Language selection below) has a translation, the localized instruction is
 injected instead of English.
 

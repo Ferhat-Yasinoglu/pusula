@@ -8,7 +8,7 @@
 
 ## شروع سریع — استفاده از ارائهدهنده بومی `agentrouter` (توصیهشده)
 
-برای اکثر کاربران، **هیچ راهاندازی ویژهای لازم نیست**. OmniRoute با یک ارائهدهنده داخلی `agentrouter` عرضه میشود که الگوی ارتباطی کامل Claude Code از قبل در آن تعبیه شده است (`open-sse/config/providerRegistry.ts` ← `agentrouter`). برای استفاده از آن:
+برای اکثر کاربران، **هیچ راهاندازی ویژهای لازم نیست**. Pusula با یک ارائهدهنده داخلی `agentrouter` عرضه میشود که الگوی ارتباطی کامل Claude Code از قبل در آن تعبیه شده است (`open-sse/config/providerRegistry.ts` ← `agentrouter`). برای استفاده از آن:
 
 1. به **داشبورد ← ارائهدهندگان ← افزودن ارائهدهنده** بروید.
 2. از فهرست، **AgentRouter** را انتخاب کنید.
@@ -22,18 +22,18 @@
 
 ## پیشرفته: اتصال از طریق نوع ارائهدهنده سازگار با Claude Code
 
-OmniRoute همچنین از AgentRouter (و رلههای مشابه) از طریق نوع ارائهدهنده **سازگار با Claude Code** (`anthropic-compatible-cc-*`) پشتیبانی میکند که با الگوی ارتباطی صحیح، از Anthropic Messages API استفاده میکند. یک ارائهدهنده عمومی `openai-compatible-chat` که به `https://agentrouter.org` اشاره کند، **کار نخواهد کرد** — WAF بالادستی درخواستهایی را که شبیه Claude Code نباشند رد میکند.
+Pusula همچنین از AgentRouter (و رلههای مشابه) از طریق نوع ارائهدهنده **سازگار با Claude Code** (`anthropic-compatible-cc-*`) پشتیبانی میکند که با الگوی ارتباطی صحیح، از Anthropic Messages API استفاده میکند. یک ارائهدهنده عمومی `openai-compatible-chat` که به `https://agentrouter.org` اشاره کند، **کار نخواهد کرد** — WAF بالادستی درخواستهایی را که شبیه Claude Code نباشند رد میکند.
 
 ---
 
 ## پیشنیازها
 
 - یک حساب AgentRouter و کلید API. ثبتنامهای جدید از طریق لینک همکاری در [README](../README.md) اعتبار رایگان دریافت میکنند.
-- اجرای OmniRoute با فعال بودن فلگ قابلیت `ENABLE_CC_COMPATIBLE_PROVIDER` (بخش زیر را ببینید).
+- اجرای Pusula با فعال بودن فلگ قابلیت `ENABLE_CC_COMPATIBLE_PROVIDER` (بخش زیر را ببینید).
 
 ## 1. فعالسازی نوع ارائهدهنده سازگار با CC
 
-نوع ارائهدهنده سازگار با Claude Code پشت یک فلگ قابلیت قرار دارد، زیرا ترافیکی ارسال میکند که شباهت زیادی به کلاینت رسمی Claude Code دارد. برای فعالسازی آن، پیش از شروع OmniRoute یک متغیر محیطی تنظیم کنید:
+نوع ارائهدهنده سازگار با Claude Code پشت یک فلگ قابلیت قرار دارد، زیرا ترافیکی ارسال میکند که شباهت زیادی به کلاینت رسمی Claude Code دارد. برای فعالسازی آن، پیش از شروع Pusula یک متغیر محیطی تنظیم کنید:
 
 ```bash
 ENABLE_CC_COMPATIBLE_PROVIDER=true
@@ -42,12 +42,12 @@ ENABLE_CC_COMPATIBLE_PROVIDER=true
 نمونه Docker:
 
 ```bash
-docker run -d --name omniroute \
+docker run -d --name pusula \
   --restart unless-stopped \
   -p 20128:20128 \
-  -v omniroute-data:/app/data \
+  -v pusula-data:/app/data \
   -e ENABLE_CC_COMPATIBLE_PROVIDER=true \
-  diegosouzapw/omniroute:latest
+  ferhat-yasinoglu/pusula:latest
 ```
 
 پس از راهاندازی مجدد، داشبورد علاوه بر فرایندهای موجودِ سازگار با OpenAI و سازگار با Anthropic، گزینه **افزودن ارائهدهنده سازگار با Claude Code** را نیز نمایش میدهد.
@@ -138,7 +138,7 @@ AgentRouter یک کلید جدید ایجاد کرده و اتصال را بهر
 با وجود معتبر بودن کلید، `unauthorized_client_error` برمیگردانند. در داشبورد
 AgentRouter بررسی کنید که طرح شما کدام مدلها را پوشش میدهد.
 
-**`Invalid JSON response from provider (reset after Ns)` در لاگهای omniroute** —
+**`Invalid JSON response from provider (reset after Ns)` در لاگهای pusula** —
 بالادست بدنهای غیر JSON برگردانده است (معمولاً یک صفحهٔ خطای HTML از WAF).
 این وضعیت معمولاً به این معناست که درخواست هرگز به بکاند AgentRouter نرسیده است — دوباره
 بررسی کنید که شناسهٔ ارائهدهنده با `anthropic-compatible-cc-` شروع میشود (به خط تیرهٔ
@@ -153,7 +153,7 @@ AgentRouter از قبل وجود دارد** — احتمالاً **بیش از �
 (و ترکیبها نیز ممکن است با شناسهٔ گره به آن ارجاع دهند)، بنابراین ترافیک به آن ارائهدهنده
 هدایت میشود — که یک User-Agent عمومی ارسال میکند و رد میشود — نه به ارائهدهندهٔ
 داخلی `agentrouter` که از قبل با الگوی صحیح ترافیک شبکه ارائه میشود. در لاگهای
-omniroute بررسی کنید که مدل واقعاً به کجا نگاشت میشود (تگ `ROUTING` مقدار
+pusula بررسی کنید که مدل واقعاً به کجا نگاشت میشود (تگ `ROUTING` مقدار
 `agentrouter/<model> → <providerId>/<model>` را نشان میدهد)؛ اگر `<providerId>`
 برابر با `agentrouter` نیست، همهچیز را روی ارائهدهندهٔ بومی یکپارچه کنید: ترکیبها را
 به `agentrouter/<model>` (با providerId برابر با `agentrouter`) متصل کرده و

@@ -8,14 +8,14 @@ import path from "node:path";
 /**
  * Container-guard homologation for POST /api/cli-tools/apply.
  *
- * Both runtime modes are exercised by SCOPED `OMNIROUTE_CONTAINER` overrides
+ * Both runtime modes are exercised by SCOPED `PUSULA_CONTAINER` overrides
  * (set per test, restored in finally). The override is the documented test
  * seam of `isRunningInContainer()`; it is never forced globally — forcing it
  * off for the whole suite would hide a regression in the guard itself.
  */
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-apply-guard-data-"));
-const TEST_XDG_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-apply-guard-xdg-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-apply-guard-data-"));
+const TEST_XDG_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-apply-guard-xdg-"));
 const originalDataDir = process.env.DATA_DIR;
 const originalXdg = process.env.XDG_CONFIG_HOME;
 // Fresh DB without a configured password → management auth is open, so these
@@ -68,17 +68,17 @@ function applyRequest(body: Record<string, unknown>): Request {
 }
 
 async function withContainerMode<T>(mode: "1" | "0", run: () => Promise<T>): Promise<T> {
-  const original = process.env.OMNIROUTE_CONTAINER;
-  const originalAllow = process.env.OMNIROUTE_ALLOW_CONTAINER_CONFIG_WRITE;
-  process.env.OMNIROUTE_CONTAINER = mode;
-  delete process.env.OMNIROUTE_ALLOW_CONTAINER_CONFIG_WRITE;
+  const original = process.env.PUSULA_CONTAINER;
+  const originalAllow = process.env.PUSULA_ALLOW_CONTAINER_CONFIG_WRITE;
+  process.env.PUSULA_CONTAINER = mode;
+  delete process.env.PUSULA_ALLOW_CONTAINER_CONFIG_WRITE;
   try {
     return await run();
   } finally {
-    if (original === undefined) delete process.env.OMNIROUTE_CONTAINER;
-    else process.env.OMNIROUTE_CONTAINER = original;
+    if (original === undefined) delete process.env.PUSULA_CONTAINER;
+    else process.env.PUSULA_CONTAINER = original;
     if (originalAllow !== undefined) {
-      process.env.OMNIROUTE_ALLOW_CONTAINER_CONFIG_WRITE = originalAllow;
+      process.env.PUSULA_ALLOW_CONTAINER_CONFIG_WRITE = originalAllow;
     }
   }
 }
@@ -112,7 +112,7 @@ describe("POST /api/cli-tools/apply — container guard", () => {
     assert.strictEqual(res.status, 422);
     const body = await res.json();
     assert.ok(body.containerEphemeralTarget, "422 must be keyed as containerEphemeralTarget");
-    assert.strictEqual(body.hostSetupCommand, "omniroute setup-opencode");
+    assert.strictEqual(body.hostSetupCommand, "pusula setup-opencode");
     assert.ok(typeof body.error === "string" && body.error.length > 0);
     assert.ok(!body.error.includes("at /"), "error must not leak a stack trace");
     assert.ok(!body.error.includes("sk-test-guard"), "error must not leak the API key");
@@ -236,7 +236,7 @@ describe("POST /api/cli-tools/apply — container guard", () => {
 
     const res = await GET_CONFIG(
       new Request(url, {
-        headers: { "x-omniroute-config-api-key": credential },
+        headers: { "x-pusula-config-api-key": credential },
       })
     );
 
@@ -253,7 +253,7 @@ describe("POST /api/cli-tools/apply — container guard", () => {
 
     const res = await GET_CONFIG(
       new Request(url, {
-        headers: { "x-omniroute-config-api-key": "sentinel-invalid-url-secret" },
+        headers: { "x-pusula-config-api-key": "sentinel-invalid-url-secret" },
       })
     );
 
@@ -307,8 +307,8 @@ describe("POST /api/cli-tools/apply — container guard", () => {
   });
 
   it("preserves the configured default base URL for preview requests", async () => {
-    const originalBase = process.env.OMNIROUTE_BASE_URL;
-    process.env.OMNIROUTE_BASE_URL = "http://127.0.0.1:23456/v1";
+    const originalBase = process.env.PUSULA_BASE_URL;
+    process.env.PUSULA_BASE_URL = "http://127.0.0.1:23456/v1";
     try {
       const response = await POST_CONFIG(applyRequest({ toolId: "claude", apiKey: "sentinel" }));
       assert.strictEqual(response.status, 200);
@@ -316,8 +316,8 @@ describe("POST /api/cli-tools/apply — container guard", () => {
       assert.strictEqual(config.env.ANTHROPIC_BASE_URL, "http://127.0.0.1:23456");
       assert.strictEqual(config.env.ANTHROPIC_AUTH_TOKEN, "[redacted]");
     } finally {
-      if (originalBase === undefined) delete process.env.OMNIROUTE_BASE_URL;
-      else process.env.OMNIROUTE_BASE_URL = originalBase;
+      if (originalBase === undefined) delete process.env.PUSULA_BASE_URL;
+      else process.env.PUSULA_BASE_URL = originalBase;
     }
   });
 });

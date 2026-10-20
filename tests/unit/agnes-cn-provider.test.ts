@@ -13,7 +13,7 @@ function readRepo(rel: string): string {
   return fs.readFileSync(path.join(REPO_ROOT, rel), "utf8");
 }
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-agnes-cn-provider-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-agnes-cn-provider-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const { REGISTRY } = await import("../../open-sse/config/providerRegistry.ts");

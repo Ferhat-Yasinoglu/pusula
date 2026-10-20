@@ -8,7 +8,7 @@
 // What it checks:
 //   1. /api/... endpoint paths        → must match a route.ts file under src/app/api/
 //   2. UPPER_SNAKE env var names        → must have a process.env.X or env.X read
-//   3. CLI commands `omniroute ...`     → must exist in bin/cli/commands/ or bin/
+//   3. CLI commands `pusula ...`     → must exist in bin/cli/commands/ or bin/
 //   4. BUILTIN_EVENTS hook names        → must be exported from hooks.ts
 //   5. `src/.../foo.ts` file refs       → must exist (relative to repo root)
 //   6. `open-sse/.../bar.ts` file refs  → must exist
@@ -89,35 +89,35 @@ const ENV_VAR_ALLOWLIST = new Set([
   "DEBUG",
   "VERBOSE",
   "LOG_LEVEL",
-  "PORT", // generic, not OmniRoute-specific
+  "PORT", // generic, not Pusula-specific
   "DATA_DIR",
   "REQUIRE_API_KEY",
-  "OMNIROUTE_BUILD_PROFILE", // build-time only
+  "PUSULA_BUILD_PROFILE", // build-time only
   // Docker builder-stage knobs. Both are documented in docs/guides/DOCKER_GUIDE.md
   // because they are the two levers for a memory-constrained build host, but
-  // neither is read through process.env in this repo: OMNIROUTE_BUILD_WORKERS is
+  // neither is read through process.env in this repo: PUSULA_BUILD_WORKERS is
   // a Dockerfile ARG that only feeds CIRCLE_NODE_TOTAL, and CIRCLE_NODE_TOTAL is
   // read by Next itself (node_modules) to size the page-data worker pool. Pinned
   // by tests/unit/docker-build-memory-budget.test.ts.
-  "OMNIROUTE_BUILD_WORKERS",
+  "PUSULA_BUILD_WORKERS",
   "CIRCLE_NODE_TOTAL",
-  "OMNIROUTE_BUILD_SHA",
-  "OMNIROUTE_URL", // used by ad-hoc tooling, validated elsewhere
-  "OMNIROUTE_KEY", // ditto
+  "PUSULA_BUILD_SHA",
+  "PUSULA_URL", // used by ad-hoc tooling, validated elsewhere
+  "PUSULA_KEY", // ditto
   "OPENCODE_API_KEY", // ditto
   // ── External-tool / spawn-injected / ops env vars ────────────────────────
   // Real environment variables, but they belong to an UPSTREAM CLI/tool, a
   // docker-compose/electron-build pipeline, or are injected into a spawned
-  // subprocess — never read via `process.env.X` in OmniRoute's own source, so the
+  // subprocess — never read via `process.env.X` in Pusula's own source, so the
   // code-read index can't see them. Documented (correctly) in the relevant guides.
   "COPILOT_PROVIDER_BASE_URL", // GitHub Copilot CLI ≥v1.0.19's own env var (AGENTBRIDGE.md)
-  "OPENAI_BASE_URL", // env var OmniRoute passes to downstream CLIs (AGENT_PROTOCOLS_GUIDE.md)
+  "OPENAI_BASE_URL", // env var Pusula passes to downstream CLIs (AGENT_PROTOCOLS_GUIDE.md)
   "NINEROUTER_API_KEY", // injected into the 9router subprocess at spawn (EMBEDDED-SERVICES.md)
   "CLAUDE_CODE_MAX_OUTPUT_TOKENS", // Claude Code CLI's own env var (CODEX-CLI-CONFIGURATION.md)
   "CODEX_HOME", // Codex CLI's own config-home env var (CODEX-CLI-CONFIGURATION.md)
-  // Gemini CLI's own auth-routing env vars. `omniroute run gemini` DELETES them
+  // Gemini CLI's own auth-routing env vars. `pusula run gemini` DELETES them
   // from the spawned child's env (bin/cli/commands/run.mjs) so a stored Vertex /
-  // Code Assist session cannot override the OmniRoute-directed launch — a delete
+  // Code Assist session cannot override the Pusula-directed launch — a delete
   // on a copied env object, never a `process.env.X` read. (CLI-INTEGRATIONS.md)
   "GOOGLE_GENAI_USE_VERTEXAI",
   "GOOGLE_GENAI_USE_GCA",
@@ -368,7 +368,7 @@ const ENDPOINT_ALLOWLIST = new Set([
   "/api/mcp/sse", // SSE MCP transport
   "/api/health",
   // Upstream/external provider endpoints documented in provider guides — these are
-  // paths on the UPSTREAM service (Claude.ai web, Blackbox), not OmniRoute routes.
+  // paths on the UPSTREAM service (Claude.ai web, Blackbox), not Pusula routes.
   "/api/organizations/{orgId}/chat_conversations/{convId}/completion", // claude-web upstream
   "/api/chat", // Blackbox Web upstream (validated-token target)
 ]);
@@ -417,7 +417,7 @@ function allScanFiles(root = ROOT) {
 
 // ── Codebase index ─────────────────────────────────────────────────────────
 
-// Env var helper wrappers used across OmniRoute — envInt(NAME, 5), envBool(NAME),
+// Env var helper wrappers used across Pusula — envInt(NAME, 5), envBool(NAME),
 // envStr(NAME), … — read the named var from the environment, so a string-literal
 // argument is a genuine env-var read, equivalent to a direct process.env member read.
 // (Comment avoids a literal `process.env.<NAME>` token so the sibling env-doc-sync
@@ -554,7 +554,7 @@ export function buildCodebaseIndex(root = ROOT) {
 
   // Env contract maintained by the sibling gate (check-env-doc-sync.mjs): a var
   // listed in .env.example or docs/reference/ENVIRONMENT.md is, by definition, a
-  // documented OmniRoute env var (including external-CLI / docker / electron vars
+  // documented Pusula env var (including external-CLI / docker / electron vars
   // that are not read via process.env in our own source).
   function readEnvContract() {
     try {
@@ -593,7 +593,7 @@ export function buildCodebaseIndex(root = ROOT) {
   }
   readFeatureFlagContract();
 
-  // Set of `omniroute <subcommand>` strings that exist in bin/
+  // Set of `pusula <subcommand>` strings that exist in bin/
   const cliCommands = new Set();
   function walkCli(dir) {
     const abs = path.join(root, dir);
@@ -633,8 +633,8 @@ const COARSE_PATTERNS = {
   apiPath: /(?<!\w)\/api\/[A-Za-z0-9_\-\/\[\]\{\}]+(?!\w)/g,
   // Catches ALL_CAPS env var names of length >= 3
   envVar: /\b([A-Z][A-Z0-9_]{2,})\b/g,
-  // omniroute <verb> <sub> ... — only on the same line, captures first 2 tokens
-  cliCmd: /\bomniroute\s+([a-z][a-z0-9-]+)(?:\s+([a-z][a-z0-9-]+))?/g,
+  // pusula <verb> <sub> ... — only on the same line, captures first 2 tokens
+  cliCmd: /\bpusula\s+([a-z][a-z0-9-]+)(?:\s+([a-z][a-z0-9-]+))?/g,
   // Built-in event names like onRequest, onFoo
   hookName: /\b(on[A-Z][a-zA-Z]+)\b/g,
   // File references like src/lib/foo.ts, open-sse/handlers/bar.ts, bin/cli/baz.mjs
@@ -748,9 +748,9 @@ export function scanDocFile(absPath, index, root = ROOT) {
     });
   }
 
-  // 3) CLI commands: `omniroute foo bar` — only flag when the line is in
+  // 3) CLI commands: `pusula foo bar` — only flag when the line is in
   //    a code-like context (inside backticks or a shell block). Bare prose
-  //    like "we use omniroute and..." is not a command claim.
+  //    like "we use pusula and..." is not a command claim.
   for (const m of textNoCode.matchAll(COARSE_PATTERNS.cliCmd)) {
     const sub = m[1];
     if (index.cliCommands.has(sub)) continue;
@@ -760,14 +760,14 @@ export function scanDocFile(absPath, index, root = ROOT) {
     const lineText = text.split("\n")[ln - 1] || "";
     // Only flag when on a line that looks like a shell command (starts with $, or
     // inside a shell block, or wrapped in `code`)
-    const isShellLike = /^[ \t]*\$\s|^```sh|^```bash|^```shell|`omniroute/.test(lineText);
+    const isShellLike = /^[ \t]*\$\s|^```sh|^```bash|^```shell|`pusula/.test(lineText);
     if (!isShellLike) continue;
     if (/example|placeholder|tbd/i.test(lineText)) continue;
     findings.push({
       kind: "cli-cmd",
-      value: `omniroute ${sub}`,
+      value: `pusula ${sub}`,
       line: ln,
-      msg: `omniroute subcommand '${sub}' not registered in bin/`,
+      msg: `pusula subcommand '${sub}' not registered in bin/`,
     });
   }
 
@@ -804,7 +804,7 @@ export function scanDocFile(absPath, index, root = ROOT) {
     // the fileRef regex anchors on the `src`/`open-sse`/… token, so a leading `/`
     // means the real reference is `<something>/src/...` — either a relative example
     // path (`./src/index.ts`, a PII-pattern sample) or a workspace-package path
-    // (`@omniroute/opencode-provider/src/index.ts`). Neither resolves from repo root.
+    // (`@pusula/opencode-provider/src/index.ts`). Neither resolves from repo root.
     if (m.index > 0 && textNoCode[m.index - 1] === "/") continue;
     const ln = lineOf(text, m.index);
     findings.push({
@@ -871,7 +871,7 @@ export function formatHumanReport(result) {
   const KIND_LABELS = {
     "api-path": "API endpoint paths not in src/app/api/",
     "env-var": "Env vars never read in code",
-    "cli-cmd": "omniroute subcommands not registered",
+    "cli-cmd": "pusula subcommands not registered",
     hook: "Hook names not in BUILTIN_EVENTS",
     "file-ref": "File references that don't exist",
   };

@@ -16,7 +16,7 @@ import path from "node:path";
 const CLINE_401 =
   "[401]: Unauthorized: Please make sure you're using the latest version of Cline and re-authenticate your Cline account.";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-12594-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-12594-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = process.env.API_KEY_SECRET || "12594-test-secret";
 

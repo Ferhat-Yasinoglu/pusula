@@ -25,9 +25,9 @@ jobs:
       - name: Build CLI bundle
         env:
           JWT_SECRET: ci-build-secret-with-sufficient-length-for-validation
-          OMNIROUTE_BUILD_BACKEND_ONLY: "1"
+          PUSULA_BUILD_BACKEND_ONLY: "1"
         run: npm run build:cli
-      - name: Start OmniRoute (background)
+      - name: Start Pusula (background)
         env:
           JWT_SECRET: ci-build-secret-with-sufficient-length-for-validation
           PORT: "20128"

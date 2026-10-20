@@ -9,7 +9,7 @@ import http from "node:http";
 // emptying the pool. Tests use real 127.0.0.1 servers; loopback fetch targets
 // are allowed by the local-first policy.
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-sub-lastgood-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-sub-lastgood-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../src/lib/db/core.ts");

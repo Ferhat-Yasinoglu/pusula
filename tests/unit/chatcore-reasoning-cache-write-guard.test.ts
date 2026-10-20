@@ -21,7 +21,7 @@ import path from "node:path";
 import { cleanupTempDataDir } from "../_setup/tempDataDir.ts";
 
 const TEST_DATA_DIR = fs.mkdtempSync(
-  path.join(os.tmpdir(), "omniroute-chatcore-reasoning-cache-write-guard-")
+  path.join(os.tmpdir(), "pusula-chatcore-reasoning-cache-write-guard-")
 );
 process.env.DATA_DIR = TEST_DATA_DIR;
 

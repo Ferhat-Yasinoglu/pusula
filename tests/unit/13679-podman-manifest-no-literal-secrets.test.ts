@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 /**
- * Regression test for issue #13679 (PR D, item #4) — `contrib/podman/omniroute.container`
+ * Regression test for issue #13679 (PR D, item #4) — `contrib/podman/pusula.container`
  * used to ship copy-pasteable placeholder secrets:
  *   JWT_SECRET=change-me-to-a-random-base64-string
  *   API_KEY_SECRET=change-me-to-a-random-base64-string
@@ -22,11 +22,11 @@ const MANIFEST_PATH = path.join(
   "..",
   "contrib",
   "podman",
-  "omniroute.container"
+  "pusula.container"
 );
 const README_PATH = path.join(import.meta.dirname, "..", "..", "contrib", "podman", "README.md");
 
-test("omniroute.container no longer ships a literal placeholder secret value", () => {
+test("pusula.container no longer ships a literal placeholder secret value", () => {
   const content = fs.readFileSync(MANIFEST_PATH, "utf8");
 
   assert.ok(

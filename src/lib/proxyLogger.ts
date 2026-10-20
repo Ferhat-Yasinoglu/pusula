@@ -7,7 +7,7 @@
  * Pattern follows callLogs.js (T-15 decomposition).
  */
 import { v4 as uuidv4 } from "uuid";
-import { sanitizeErrorMessage } from "@omniroute/open-sse/utils/errorSanitization.ts";
+import { sanitizeErrorMessage } from "@pusula/open-sse/utils/errorSanitization.ts";
 import { getDbInstance, isCloud, isBuildPhase } from "./db/core";
 import { ensureProxyLogsColumns } from "./db/schemaColumns";
 
@@ -314,7 +314,7 @@ export function flushProxyLogsSync() {
           const client = (store as any)?.client;
           if (client && typeof client.publish === "function") {
             for (const entry of batch) {
-              client.publish("omniroute:proxy_logs", JSON.stringify(entry)).catch(() => {});
+              client.publish("pusula:proxy_logs", JSON.stringify(entry)).catch(() => {});
             }
           }
         })

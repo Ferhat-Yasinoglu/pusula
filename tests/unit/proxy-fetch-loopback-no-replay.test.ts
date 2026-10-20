@@ -54,7 +54,7 @@ test("a slow loopback target is neither cut short nor replayed", async () => {
   const { port } = server.address() as AddressInfo;
 
   try {
-    await withEnv({ OMNIROUTE_DIRECT_HEADERS_TIMEOUT_MS: "250" }, async () => {
+    await withEnv({ PUSULA_DIRECT_HEADERS_TIMEOUT_MS: "250" }, async () => {
       const response = await proxyFetch(`http://127.0.0.1:${port}/api/providers/abc/sync-models`);
 
       assert.equal(response.status, 200, "loopback request completes past the egress bound");
@@ -75,7 +75,7 @@ test("a non-loopback target keeps the bounded response-start policy", async () =
   // confirming the helper's boundary through an ordinary private-LAN host that
   // must NOT be treated as loopback. Connecting is not required — an immediate
   // connection error still proves the loopback short-circuit was not taken.
-  await withEnv({ OMNIROUTE_DIRECT_HEADERS_TIMEOUT_MS: "250" }, async () => {
+  await withEnv({ PUSULA_DIRECT_HEADERS_TIMEOUT_MS: "250" }, async () => {
     await assert.rejects(
       () => proxyFetch("http://192.0.2.1:9/never-routable"),
       "a non-loopback target still goes through the egress path"

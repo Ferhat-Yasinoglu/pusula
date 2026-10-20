@@ -1,12 +1,12 @@
 <?php
 /**
- * OmniRoute Quickstart — PHP (cURL)
+ * Pusula Quickstart — PHP (cURL)
  * ===================================
  * Run:  php php_curl.php
  * Requires: PHP 7.4+ with cURL extension enabled
  */
 
-// Your local OmniRoute server — started with: npx omniroute
+// Your local Pusula server — started with: npx pusula
 $api_url = "http://localhost:20128/v1/chat/completions";
 
 $headers = [

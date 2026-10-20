@@ -3,7 +3,7 @@ import { getApiKeyMetadata, validateApiKey } from "@/lib/db/apiKeys";
 import { extractApiKey } from "@/sse/services/auth";
 import { isDashboardSessionAuthenticated } from "@/shared/utils/apiAuth";
 import { CORS_HEADERS } from "@/shared/utils/cors";
-import { buildErrorBody } from "@omniroute/open-sse/utils/error";
+import { buildErrorBody } from "@pusula/open-sse/utils/error";
 
 /**
  * Why `apiKeyId` is null — the lifecycle outcome `getApiKeyRequestScope` already

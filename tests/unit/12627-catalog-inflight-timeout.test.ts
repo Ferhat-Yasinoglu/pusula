@@ -6,7 +6,7 @@ import test from "node:test";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-12627-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-12627-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const catalogCache = await import("../../src/app/api/v1/models/catalogCache.ts");
@@ -38,7 +38,7 @@ test("#12627 cold hung rebuild returns retryable 503", async () => {
   );
   assert.equal(res.status, 503);
   assert.equal(res.headers.get("Retry-After"), "1");
-  assert.equal(res.headers.get("x-omniroute-catalog"), "build-timeout");
+  assert.equal(res.headers.get("x-pusula-catalog"), "build-timeout");
   const body = await res.json();
   assert.equal(body.error.message, "catalog_build_timeout");
   assert.equal(body.error.code, "service_unavailable");
@@ -60,7 +60,7 @@ test("#12627 timeout serves last-good 200 when a prior build succeeded", async (
   );
   assert.equal(second.status, 200);
   assert.equal(await second.text(), "good");
-  assert.equal(second.headers.get("x-omniroute-catalog"), "last-good");
+  assert.equal(second.headers.get("x-pusula-catalog"), "last-good");
 });
 
 test("cold real build error still rejects (never masked as 503)", async () => {
@@ -96,11 +96,11 @@ test("rapid retry joins the orphaned build (one builder run, two 503s)", async (
 test("diagnostic header merges without case duplicates", async () => {
   const res = await catalogCache.resolveCachedCatalogResponse(
     request(),
-    { corsHeaders: { "X-Omniroute-Catalog": "stale-value" }, diagnosticHeaders: {} },
+    { corsHeaders: { "X-Pusula-Catalog": "stale-value" }, diagnosticHeaders: {} },
     neverResolves as (req: Request) => Promise<catalogCache.CatalogPayload>
   );
   assert.equal(res.status, 503);
-  const raw = [...res.headers.entries()].filter(([k]) => k.toLowerCase() === "x-omniroute-catalog");
+  const raw = [...res.headers.entries()].filter(([k]) => k.toLowerCase() === "x-pusula-catalog");
   assert.equal(raw.length, 1);
   assert.equal(raw[0][1], "build-timeout");
 });

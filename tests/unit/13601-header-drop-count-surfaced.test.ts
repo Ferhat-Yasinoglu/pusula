@@ -23,7 +23,7 @@ function budgetBustingHeaders(): Headers {
 test("#13601.2: a drop count header surfaces silent header drops to the caller", () => {
   resetDroppedHeaderWarnFingerprints();
   const headers = buildStreamingResponseHeaders(budgetBustingHeaders(), meta, silentLog);
-  const countHeader = headers["X-OmniRoute-Dropped-Upstream-Headers"];
+  const countHeader = headers["X-Pusula-Dropped-Upstream-Headers"];
   assert.ok(countHeader !== undefined, "expected a dropped-headers count header");
   assert.ok(Number.parseInt(countHeader, 10) >= 1, `expected count >= 1, got ${countHeader}`);
 });
@@ -43,5 +43,5 @@ test("#13601.2: no drops means no count header", () => {
     meta,
     silentLog
   );
-  assert.equal(headers["X-OmniRoute-Dropped-Upstream-Headers"], undefined);
+  assert.equal(headers["X-Pusula-Dropped-Upstream-Headers"], undefined);
 });

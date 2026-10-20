@@ -6,7 +6,7 @@
 
 ## Genel Bakış
 
-Tüm OmniRoute yönetim API rotaları, üç koruma katmanından biri altında sınıflandırılır.
+Tüm Pusula yönetim API rotaları, üç koruma katmanından biri altında sınıflandırılır.
 Sınıflandırma statiktir, `src/server/authz/routeGuard.ts` içinde tanımlanır
 ve diğer tüm kimlik doğrulama dalları çalıştırılmadan önce değerlendirilir.
 
@@ -28,10 +28,10 @@ tanır; bu, bilinen bir CVE sınıfıdır
 **GHSA-fhh6-4qxv-rpqj nedir (saldırı sınıfı):** Bir yönetim/aracı sunucusu,
 bir alt süreç (`npm install`, `node`, bir tarayıcı, bir proxy, `git`, `tar`, …)
 başlatan bir uç nokta sunar. Bu uç noktaya ana makine dışından erişilebiliyorsa
-— işletmeci OmniRoute'u bir nginx/Cloudflare/Tailscale tünelinin arkasına
+— işletmeci Pusula'u bir nginx/Cloudflare/Tailscale tünelinin arkasına
 yerleştirdiği ve bir JWT sızdığı ya da kimlik doğrulama yanlış yapılandırıldığı
 için — saldırgan, "bir API çağırma" işlemini "ana makinede bir komut çalıştırma"
-işlemine (uzaktan kod yürütme) dönüştürür. OmniRoute, süreç başlatabilen her
+işlemine (uzaktan kod yürütme) dönüştürür. Pusula, süreç başlatabilen her
 rotada **herhangi bir kimlik doğrulama denetiminden önce, koşulsuz olarak bir geri
 döngü ana makine denetimi** uygulayarak bunu engeller: Bir tünel üzerinden sızan
 belirteç bile süreç başlatma işlevine erişemez.
@@ -124,7 +124,7 @@ alternatiftir.
 
 #### Operatör kılavuzu ve denetim
 
-OmniRoute'u bir ters proxy veya tünelin (nginx, Caddy, Cloudflare Tunnel,
+Pusula'u bir ters proxy veya tünelin (nginx, Caddy, Cloudflare Tunnel,
 Tailscale, Ngrok) arkasında çalıştırıyorsanız loopback denetimi, yukarıdaki
 süreç başlatabilen rotaları korumaya devam eder — istemci adresi loopback
 olmayan bir istek, **kimlik doğrulama çalışmadan önce** `403 LOCAL_ONLY` ile
@@ -161,7 +161,7 @@ Operatörlerin iki sorumluluğu devam etmektedir:
   bir istemci adresi bulunan kayıtları grep ile arayın. `403 LOCAL_ONLY` yerine `200`
   döndüren herhangi bir istek, proxy'nin gerçek istemci IP'sini maskelediği anlamına gelir —
   proxy'yi düzeltin.
-- Bu yollardan biri için OmniRoute günlüklerinde görülen `403 LOCAL_ONLY`, engelin
+- Bu yollardan biri için Pusula günlüklerinde görülen `403 LOCAL_ONLY`, engelin
   amaçlandığı gibi çalıştığını gösterir; bastırılması gereken bir hata değildir.
 
 ### Katman 2 — ALWAYS_PROTECTED
@@ -201,7 +201,7 @@ Yönetim parolası yapılandırılmadığında (ve `INITIAL_PASSWORD` olmadığ�
 döngü eşleri için** açık tutar. Geri döngü durumu, güvenilir eş sinyallerine göre şu sırayla
 belirlenir: token ile damgalanmış gerçek TCP eşi (`PEER_IP_HEADER` + `VIA_PROXY_HEADER`,
 politikanın gördüğü değer), işlem hattının kendi `AUTHZ_HEADER_PEER_LOCALITY` kararı
-(`OMNIROUTE_PEER_STAMP_TOKEN` yalnızca ayarlanmışken güvenilen ve rota işleyicilerinin gördüğü
+(`PUSULA_PEER_STAMP_TOKEN` yalnızca ayarlanmışken güvenilen ve rota işleyicilerinin gördüğü
 değer) veya doğrudan çağıranlar için gerçek bir soket eşi. `Host` / `nextUrl.hostname` hiçbir
 zaman dikkate alınmaz ve ilk parola yazma işlemi (`POST /api/settings/require-login`), tüm ağ
 eşlerine açık olmak yerine aynı kısıtlamaya tabidir (GHSA-7pq4-8pvv-rx7r).

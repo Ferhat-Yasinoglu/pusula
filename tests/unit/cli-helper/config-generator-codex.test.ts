@@ -23,7 +23,7 @@ interface ParsedCodexToml {
 
 const tmpDirs: string[] = [];
 function tempCodexHome(): string {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-codex-gen-"));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-codex-gen-"));
   tmpDirs.push(dir);
   return dir;
 }
@@ -51,10 +51,10 @@ describe("config-generator codex (TOML)", () => {
     assert.ok(!content.includes("sk_live_secret_value"), "API key must not be written");
     const parsed = parse(content) as unknown as ParsedCodexToml;
     assert.strictEqual(parsed.model, "glm/glm-5.2");
-    assert.strictEqual(parsed.model_provider, "omniroute");
-    assert.strictEqual(parsed.model_providers.omniroute.base_url, "http://localhost:20128/v1");
-    assert.strictEqual(parsed.model_providers.omniroute.env_key, "OMNIROUTE_API_KEY");
-    assert.strictEqual(parsed.model_providers.omniroute.requires_openai_auth, false);
+    assert.strictEqual(parsed.model_provider, "pusula");
+    assert.strictEqual(parsed.model_providers.pusula.base_url, "http://localhost:20128/v1");
+    assert.strictEqual(parsed.model_providers.pusula.env_key, "PUSULA_API_KEY");
+    assert.strictEqual(parsed.model_providers.pusula.requires_openai_auth, false);
   });
 
   it("normalizes a baseUrl that already ends in /v1", async () => {
@@ -65,7 +65,7 @@ describe("config-generator codex (TOML)", () => {
       configPath: path.join(home, "config.toml"),
     });
     const parsed = parse(content) as unknown as ParsedCodexToml;
-    assert.strictEqual(parsed.model_providers.omniroute.base_url, "https://relay.example.test/v1");
+    assert.strictEqual(parsed.model_providers.pusula.base_url, "https://relay.example.test/v1");
     assert.ok(!("model" in parsed), "model key is omitted when no model is chosen");
   });
 
@@ -95,8 +95,8 @@ describe("config-generator codex (TOML)", () => {
     assert.strictEqual(parsed.tool_output_token_limit, 32768, "unrelated key preserved");
     assert.strictEqual(parsed.model_providers.other.name, "Other", "other provider preserved");
     assert.strictEqual(parsed.model, "glm/glm-5.2", "model updated");
-    assert.strictEqual(parsed.model_provider, "omniroute");
-    assert.ok(parsed.model_providers.omniroute, "omniroute provider added");
+    assert.strictEqual(parsed.model_provider, "pusula");
+    assert.ok(parsed.model_providers.pusula, "pusula provider added");
   });
 
   it("refuses to overwrite an existing config.toml that is not valid TOML", async () => {
@@ -136,7 +136,7 @@ describe("config-generator codex (TOML)", () => {
     // the path contract is what must hold either way.
     assert.ok(result.configPath.endsWith(path.join(".codex", "config.toml")));
     if (result.success) {
-      assert.ok(String(result.content).includes("[model_providers.omniroute]"));
+      assert.ok(String(result.content).includes("[model_providers.pusula]"));
       assert.ok(!String(result.content).includes("sk-test"));
     }
   });

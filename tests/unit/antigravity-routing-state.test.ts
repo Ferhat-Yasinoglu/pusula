@@ -5,7 +5,7 @@ import os from "node:os";
 import path from "node:path";
 
 // Any module reachable from src/lib/db opens a real SQLite file and runs migrations.
-process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-agy-lease-state-"));
+process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-agy-lease-state-"));
 
 const state = await import("../../src/sse/services/antigravityRoutingState.ts");
 

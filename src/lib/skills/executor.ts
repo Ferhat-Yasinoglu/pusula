@@ -1,7 +1,7 @@
 import {
   sanitizeErrorMessage,
   sanitizeUpstreamDetails,
-} from "@omniroute/open-sse/utils/errorSanitization.ts";
+} from "@pusula/open-sse/utils/errorSanitization.ts";
 
 import { skillRegistry } from "./registry";
 import { SkillExecution, SkillStatus, SkillHandler } from "./types";

@@ -13,7 +13,7 @@
 
 ## چیست
 
-OmniRoute به یک مخزن **Obsidian** بهعنوان **منبع زمینه** متصل میشود — یک پایگاه دانش
+Pusula به یک مخزن **Obsidian** بهعنوان **منبع زمینه** متصل میشود — یک پایگاه دانش
 محلی Markdown که عاملها از طریق سرور داخلی MCP آن را میخوانند و در آن مینویسند.
 این یکپارچهسازی با افزونهٔ عمومی **Obsidian Local REST API** که درون برنامهٔ دسکتاپ
 اجرا میشود ارتباط برقرار میکند؛ بنابراین عاملها میتوانند یادداشتها را جستوجو کنند،
@@ -77,7 +77,7 @@ curl -X DELETE http://localhost:20128/api/settings/obsidian
 ### همگامسازی مخزن با WebDAV
 
 `src/app/api/settings/obsidian/webdav/route.ts` یک همگامسازی اختیاری مخزن مبتنی بر
-WebDAV را مدیریت میکند (با راهبری `src/lib/obsidianSync.ts`). فعالسازی آن OmniRoute
+WebDAV را مدیریت میکند (با راهبری `src/lib/obsidianSync.ts`). فعالسازی آن Pusula
 را به یک پوشهٔ مخزن محلی متصل میکند و یک جفت نام کاربری/گذرواژهٔ تصادفی WebDAV میسازد:
 
 ```bash
@@ -103,7 +103,7 @@ curl -X DELETE http://localhost:20128/api/settings/obsidian/webdav
 
 ## ابزارهای MCP (22)
 
-در `open-sse/mcp-server/tools/obsidianTools.ts` تعریف شدهاند. توکن/نشانی URL پایه در هر فراخوانی تعیین میشود (ابتدا بر اساس کلید API و سپس بهصورت سراسری). ابزارهایی که به **سرور همگامسازی** OmniRoute متصل میشوند (چهار ابزار `obsidian_sync_*`)، علاوه بر این به توکن احراز هویت همگامسازی که در تنظیمات OmniRoute پیکربندی شده است نیاز دارند.
+در `open-sse/mcp-server/tools/obsidianTools.ts` تعریف شدهاند. توکن/نشانی URL پایه در هر فراخوانی تعیین میشود (ابتدا بر اساس کلید API و سپس بهصورت سراسری). ابزارهایی که به **سرور همگامسازی** Pusula متصل میشوند (چهار ابزار `obsidian_sync_*`)، علاوه بر این به توکن احراز هویت همگامسازی که در تنظیمات Pusula پیکربندی شده است نیاز دارند.
 
 ### ابزارهای خواندن (`read:obsidian`)
 
@@ -120,7 +120,7 @@ curl -X DELETE http://localhost:20128/api/settings/obsidian/webdav
 | `obsidian_get_periodic_note` | دریافت یادداشت دورهای روزانه/هفتگی/ماهانه برای یک تاریخ (در صورت حذف، امروز).                         |
 | `obsidian_get_tags`          | فهرستکردن همه برچسبهای vault همراه با تعداد تکرار آنها.                                               |
 | `obsidian_list_commands`     | فهرستکردن شناسههای فرمان موجود Obsidian (برای استفاده با `obsidian_execute_command`).                 |
-| `obsidian_sync_status`       | وضعیت سرور همگامسازی OmniRoute: در حال اجرا بودن، نام vault، درگاه، مدتزمان فعالیت و آخرین همگامسازی. |
+| `obsidian_sync_status`       | وضعیت سرور همگامسازی Pusula: در حال اجرا بودن، نام vault، درگاه، مدتزمان فعالیت و آخرین همگامسازی. |
 | `obsidian_sync_conflicts`    | فهرستکردن تعارضهای حلنشده همگامسازی (مسیر، مسیر تعارض و زمان شناسایی).                                |
 
 ### ابزارهای نوشتن (`write:obsidian`)
@@ -147,8 +147,8 @@ curl -X DELETE http://localhost:20128/api/settings/obsidian/webdav
 
 ابزارهای خواندن به `read:obsidian` و ابزارهای نوشتن به `write:obsidian` نیاز دارند. اعمال محدودیت
 همانند Notion است — توسط `withScopeEnforcement()` در
-`open-sse/mcp-server/server.ts` مدیریت میشود، با `OMNIROUTE_MCP_ENFORCE_SCOPES=true` فعال
-میشود و دامنههای مجاز از `OMNIROUTE_MCP_SCOPES` یا زمینه دامنه کلید API گرفته میشوند. به
+`open-sse/mcp-server/server.ts` مدیریت میشود، با `PUSULA_MCP_ENFORCE_SCOPES=true` فعال
+میشود و دامنههای مجاز از `PUSULA_MCP_SCOPES` یا زمینه دامنه کلید API گرفته میشوند. به
 [MCP-SERVER.md](./MCP-SERVER.md) مراجعه کنید.
 
 ## نقاط پایانی

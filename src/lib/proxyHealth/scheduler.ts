@@ -33,7 +33,7 @@ import {
   createProxyDispatcher,
   clearDispatcherCache,
   proxyConfigToUrl,
-} from "@omniroute/open-sse/utils/proxyDispatcher";
+} from "@pusula/open-sse/utils/proxyDispatcher";
 import { fetch as undiciFetch } from "undici";
 import {
   classifyProbeError,
@@ -54,7 +54,7 @@ import {
   noteProxyRefusal,
   proxyEgressKey,
   type ProxyRefusalKind,
-} from "@omniroute/open-sse/utils/proxyRefusalMemory";
+} from "@pusula/open-sse/utils/proxyRefusalMemory";
 import { isProxyHealthBlockedResetsStreakEnabled } from "@/shared/utils/featureFlags";
 
 // #6246: a HEAD to the public probe target through a legit (often loaded) proxy
@@ -206,7 +206,7 @@ function isBuildProcess(): boolean {
 }
 
 function isBackgroundServicesDisabled(): boolean {
-  const raw = process.env.OMNIROUTE_DISABLE_BACKGROUND_SERVICES;
+  const raw = process.env.PUSULA_DISABLE_BACKGROUND_SERVICES;
   if (!raw) return false;
   return ["1", "true", "yes", "on"].includes(raw.trim().toLowerCase());
 }
@@ -276,7 +276,7 @@ async function testOneProxy(proxy: {
       method,
       signal: controller.signal,
       dispatcher,
-      headers: { "User-Agent": "OmniRoute/1.0" },
+      headers: { "User-Agent": "Pusula/1.0" },
     });
     return { outcome: classifyProbeStatus(resp.status), status: resp.status };
   } catch (error) {

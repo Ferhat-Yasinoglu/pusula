@@ -49,16 +49,16 @@ jobs:
           npm run build:release
         env:
           NODE_OPTIONS: "--max-old-space-size=12288"
-          OMNIROUTE_BUILD_MEMORY_MB: "12288"
-          OMNIROUTE_USE_TURBOPACK: "1"
+          PUSULA_BUILD_MEMORY_MB: "12288"
+          PUSULA_USE_TURBOPACK: "1"
 
       - name: Archive build outputs
         run: |
-          tar -czf omniroute-build.tar.gz .build dist
+          tar -czf pusula-build.tar.gz .build dist
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: omniroute-build
-          path: omniroute-build.tar.gz
+          name: pusula-build
+          path: pusula-build.tar.gz
           retention-days: 7

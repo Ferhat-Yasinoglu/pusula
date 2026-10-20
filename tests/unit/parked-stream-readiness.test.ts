@@ -139,7 +139,7 @@ test("parked marked stream without data past the ceiling still times out", async
     status: 200,
     headers: {
       "Content-Type": "text/event-stream",
-      "x-omniroute-parked-stream": "transient",
+      "x-pusula-parked-stream": "transient",
     },
   });
   const result = await ensureStreamReadiness(response, { timeoutMs: 50, maxTimeoutMs: 80 });
@@ -182,7 +182,7 @@ test("marker survives header rebuild and is stripped from the ready response", a
     try {
       assert.equal(result.ok, true);
       if (!result.ok) assert.fail("rebuilt parked stream must pass readiness");
-      assert.equal(result.response.headers.get("x-omniroute-parked-stream"), null);
+      assert.equal(result.response.headers.get("x-pusula-parked-stream"), null);
       await result.response.body?.cancel().catch(() => {});
     } finally {
       if (!result.ok) await result.response.body?.cancel().catch(() => {});

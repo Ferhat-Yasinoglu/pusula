@@ -17,7 +17,7 @@ export function buildExecutorClientHeaders(
   const normalized: Record<string, string> = {};
   const isLeaseControlHeader = (key: string) => {
     const lowerKey = key.toLowerCase();
-    return lowerKey === "x-omniroute-lease-owner" || lowerKey === "x-omniroute-lease-generation";
+    return lowerKey === "x-pusula-lease-owner" || lowerKey === "x-pusula-lease-generation";
   };
 
   if (headers instanceof Headers) {

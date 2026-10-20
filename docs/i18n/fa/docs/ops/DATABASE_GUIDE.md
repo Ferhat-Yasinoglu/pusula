@@ -4,7 +4,7 @@
 
 ---
 
-> **خلاصه**: OmniRoute از **SQLite با ژورنالنویسی WAL** بهعنوان مخزن اصلی خود استفاده میکند و برای فیلدهای حساس، رمزنگاری **AES-256-GCM** در حالت سکون را بهکار میگیرد. این راهنما طرحواره، مهاجرتها، پشتیبانگیری/بازیابی و دستورالعملهای عملیاتی را پوشش میدهد.
+> **خلاصه**: Pusula از **SQLite با ژورنالنویسی WAL** بهعنوان مخزن اصلی خود استفاده میکند و برای فیلدهای حساس، رمزنگاری **AES-256-GCM** در حالت سکون را بهکار میگیرد. این راهنما طرحواره، مهاجرتها، پشتیبانگیری/بازیابی و دستورالعملهای عملیاتی را پوشش میدهد.
 
 **منابع:**
 
@@ -19,7 +19,7 @@
 
 ## چرا SQLite؟
 
-OmniRoute به دلایل مختلفی SQLite را به PostgreSQL/MySQL ترجیح داده است:
+Pusula به دلایل مختلفی SQLite را به PostgreSQL/MySQL ترجیح داده است:
 
 | عامل             | SQLite                                | PostgreSQL                           |
 | ---------------- | ------------------------------------- | ------------------------------------ |
@@ -30,7 +30,7 @@ OmniRoute به دلایل مختلفی SQLite را به PostgreSQL/MySQL ترج�
 | **پشتیبانگیری**  | کپی یک فایل                           | `pg_dump` یا اسنپشات فایلسیستم       |
 | **مورد استفاده** | نصب برای هر کاربر، توکار              | SaaS چندمستاجری                      |
 
-برای استقرارهای **تککاربره و تکنمونهای** (مورد استفاده اصلی OmniRoute)، SQLite سادهتر و سریعتر است.
+برای استقرارهای **تککاربره و تکنمونهای** (مورد استفاده اصلی Pusula)، SQLite سادهتر و سریعتر است.
 
 ### ژورنالنویسی WAL
 
@@ -50,7 +50,7 @@ WAL امکان **خواندن همزمان** حین نوشتن را فراهم �
 `cache_size` را بهعنوان یک حد بالای تقریبی بر حسب KiB تفسیر میکند و صفحهها را در صورت نیاز تخصیص میدهد.
 بخش **تنظیمات > سیستم و فضای ذخیرهسازی > اندازه کش** مقادیر صحیح بین **۱ تا
 ۱٬۰۰۰٬۰۰۰ KiB** را میپذیرد؛ ذخیره تنظیمات، آن را روی اتصال فعال پایگاه داده اعمال میکند
-و OmniRoute مقدار ذخیرهشده را هنگام راهاندازی بازیابی میکند.
+و Pusula مقدار ذخیرهشده را هنگام راهاندازی بازیابی میکند.
 
 ---
 
@@ -60,9 +60,9 @@ WAL امکان **خواندن همزمان** حین نوشتن را فراهم �
 
 | سیستمعامل | مسیر                                                          |
 | --------- | ------------------------------------------------------------- |
-| Linux     | `~/.omniroute/storage.sqlite`                                 |
-| macOS     | `~/.omniroute/storage.sqlite`                                 |
-| Windows   | `%USERPROFILE%\.omniroute\storage.sqlite`                     |
+| Linux     | `~/.pusula/storage.sqlite`                                 |
+| macOS     | `~/.pusula/storage.sqlite`                                 |
+| Windows   | `%USERPROFILE%\.pusula\storage.sqlite`                     |
 | Docker    | `/app/data/storage.sqlite` (قابل پیکربندی از طریق `DATA_DIR`) |
 
 فایلهای همراه:
@@ -74,14 +74,14 @@ WAL امکان **خواندن همزمان** حین نوشتن را فراهم �
 **بازنویسی محل ذخیرهسازی:**
 
 ```bash
-DATA_DIR=/custom/path omniroute
+DATA_DIR=/custom/path pusula
 ```
 
 ---
 
 ## معماری ماژولهای دامنه
 
-پایگاه داده OmniRoute دارای **110 ماژول سطحبالای TypeScript** در `src/lib/db/` است. هر ماژول دامنه:
+پایگاه داده Pusula دارای **110 ماژول سطحبالای TypeScript** در `src/lib/db/` است. هر ماژول دامنه:
 
 - مالک یک یا چند جدول مشخص است
 - توابع CRUD نوعدار را export میکند
@@ -90,7 +90,7 @@ DATA_DIR=/custom/path omniroute
 
 ### 110 ماژول سطحبالای پایگاه داده
 
-OmniRoute دارای **110 فایل سطحبالای TypeScript** در `src/lib/db/` است. در ادامه نمونهای از ماژولهای اصلی آمده است؛ برای مشاهده فهرست کامل، به فهرست دایرکتوری مراجعه کنید:
+Pusula دارای **110 فایل سطحبالای TypeScript** در `src/lib/db/` است. در ادامه نمونهای از ماژولهای اصلی آمده است؛ برای مشاهده فهرست کامل، به فهرست دایرکتوری مراجعه کنید:
 
 | ماژول                   | جداول                                                          | مسئولیت                                                                    |
 | ----------------------- | -------------------------------------------------------------- | -------------------------------------------------------------------------- |
@@ -186,7 +186,7 @@ const providers = await listProviders();
 
 ## مهاجرتها
 
-OmniRoute از **مهاجرتهای نسخهبندیشده و همتوان** در `src/lib/db/migrations/` استفاده میکند. هر مهاجرت یک فایل SQL واحد با نام `NNN_description.sql` است.
+Pusula از **مهاجرتهای نسخهبندیشده و همتوان** در `src/lib/db/migrations/` استفاده میکند. هر مهاجرت یک فایل SQL واحد با نام `NNN_description.sql` است.
 
 ### نامگذاری مهاجرتها
 
@@ -202,7 +202,7 @@ OmniRoute از **مهاجرتهای نسخهبندیشده و همتوان** د�
 
 هنگام راهاندازی، `migrationRunner.ts`:
 
-1. در صورت عدم وجود، جدول `_omniroute_migrations` را ایجاد میکند
+1. در صورت عدم وجود، جدول `_pusula_migrations` را ایجاد میکند
 2. مهاجرتهایی را که قبلاً اعمال شدهاند، واکشی میکند
 3. مهاجرتهای جدید را بهترتیب و هرکدام را در یک تراکنش اعمال میکند
 4. هر مهاجرت اعمالشده را همراه با برچسب زمانی ثبت میکند
@@ -256,7 +256,7 @@ UPDATE combos SET priority = 100 WHERE priority IS NULL;
 CREATE INDEX IF NOT EXISTS idx_combos_priority ON combos(priority);
 ```
 
-> **تغییرات ناسازگار با نسخههای قبلی** (برای مثال، حذف ستونها) پیچیده هستند. OmniRoute از بازگشت به نسخه قبلی پشتیبانی نمیکند — پس از اعمال یک مهاجرت، تغییر شِما دائمی است. متناسب با این موضوع برنامهریزی کنید.
+> **تغییرات ناسازگار با نسخههای قبلی** (برای مثال، حذف ستونها) پیچیده هستند. Pusula از بازگشت به نسخه قبلی پشتیبانی نمیکند — پس از اعمال یک مهاجرت، تغییر شِما دائمی است. متناسب با این موضوع برنامهریزی کنید.
 
 ---
 
@@ -310,7 +310,7 @@ STORAGE_ENCRYPTION_KEY=<کلید-شما>
 
 ## ملاحظات رمزنگاری (v3.8.16+)
 
-OmniRoute برای مدیریت شفاف دو طرح رمزنگاری از **`migrateLegacyEncryptedString()`** استفاده میکند:
+Pusula برای مدیریت شفاف دو طرح رمزنگاری از **`migrateLegacyEncryptedString()`** استفاده میکند:
 
 - **قدیمی** (پیش از v3.5.0): «رمزنگاری» مبتنی بر XOR (رمزنگاری واقعی نیست)
 - **فعلی**: AES-256-GCM با IV و برچسب احراز اصالت مناسب
@@ -346,7 +346,7 @@ const fresh = await listProviders(); // کند، با دسترسی به پایگ
 
 ```bash
 # برای ایجاد یک نسخه پشتیبان محلی از CLI استفاده کنید
-omniroute backup create --name pre-migration
+pusula backup create --name pre-migration
 
 # یا از طریق API
 curl -X PUT http://localhost:20128/api/db-backups \
@@ -366,7 +366,7 @@ curl -X PUT http://localhost:20128/api/db-backups \
 
 ```bash
 # از طریق CLI
-omniroute restore pre-migration
+pusula restore pre-migration
 
 # از طریق API
 curl -X POST http://localhost:20128/api/db-backups/restore \
@@ -381,7 +381,7 @@ curl -X POST http://localhost:20128/api/db-backups/restore \
 
 ```bash
 # پشتیبانگیری خودکار روزانه را از طریق CLI فعال کنید
-omniroute backup auto enable --cron "0 2 * * *" --retention 7
+pusula backup auto enable --cron "0 2 * * *" --retention 7
 ```
 
 زمانبندی در سمت سرور توسط یک کار پسزمینه اجرا میشود که هر ۳۰ ثانیه
@@ -389,17 +389,17 @@ omniroute backup auto enable --cron "0 2 * * *" --retention 7
 
 | متغیر                                       | پیشفرض  | توضیحات                                                                                                                     |
 | ------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `OMNIROUTE_BACKUP_SCHEDULE_JOB_INTERVAL_MS` | `30000` | فاصله زمانی اجرا بر حسب میلیثانیه (حداقل `5000`). برای قرار گرفتن مطمئن در دقیقه منطبق cron، باید کوتاهتر از ۶۰ ثانیه باشد. |
+| `PUSULA_BACKUP_SCHEDULE_JOB_INTERVAL_MS` | `30000` | فاصله زمانی اجرا بر حسب میلیثانیه (حداقل `5000`). برای قرار گرفتن مطمئن در دقیقه منطبق cron، باید کوتاهتر از ۶۰ ثانیه باشد. |
 
 ### پشتیبانگیری داغ SQLite
 
 برای پشتیبانگیری بدون قطعی از یک پایگاه داده فعال:
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite ".backup /backups/omniroute-hot.db"
+sqlite3 ~/.pusula/storage.sqlite ".backup /backups/pusula-hot.db"
 ```
 
-این دستور از API پشتیبانگیری آنلاین SQLite استفاده میکند — اجرای آن هنگام فعال بودن OmniRoute ایمن است.
+این دستور از API پشتیبانگیری آنلاین SQLite استفاده میکند — اجرای آن هنگام فعال بودن Pusula ایمن است.
 
 ---
 
@@ -442,10 +442,10 @@ PRAGMA mmap_size = 268435456;  -- 256MB
 
 ### فشردهسازی
 
-نمونههای OmniRoute که برای مدت طولانی اجرا میشوند، از اجرای گاهبهگاه `VACUUM` سود میبرند:
+نمونههای Pusula که برای مدت طولانی اجرا میشوند، از اجرای گاهبهگاه `VACUUM` سود میبرند:
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite "VACUUM;"
+sqlite3 ~/.pusula/storage.sqlite "VACUUM;"
 ```
 
 این دستور را ماهانه و در بازههای کمترافیک اجرا کنید. (حالت WAL نیاز به آن را کاهش میدهد، اما از بین نمیبرد.)
@@ -496,12 +496,12 @@ POST /api/db/health   # عیبیابی + تعمیر
 | `driver.name`     | درایور SQLite که پایگاه داده بررسیشده را ارائه میکند.                                                                                                                            |
 | `driver.degraded` | هنگامی `true` است که نوشتنها بهصورت ماندگار توسط فایل پایگاه داده پشتیبانی نشوند — یعنی در حالت جایگزین WASM مبتنی بر `sql.js` (ماندگاری کل فایل) یا یک پایگاه داده درونحافظهای. |
 
-همین محتوای پاسخ توسط ابزار MCP با نام `omniroute_db_health_check` نیز بازگردانده میشود.
+همین محتوای پاسخ توسط ابزار MCP با نام `pusula_db_health_check` نیز بازگردانده میشود.
 
 برای شناسایی خرابی، `PRAGMA integrity_check` را اجرا کنید:
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite "PRAGMA integrity_check;"
+sqlite3 ~/.pusula/storage.sqlite "PRAGMA integrity_check;"
 # باید چاپ شود: ok
 ```
 
@@ -517,15 +517,15 @@ sqlite3 ~/.omniroute/storage.sqlite "PRAGMA integrity_check;"
 
 ```bash
 # هنگام باز کردن بعدی بهطور خودکار بازیابی میشود
-omniroute
+pusula
 ```
 
 اگر SQLite نتواند بهطور خودکار بازیابی کند:
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite ".recover" > recovered.sql
+sqlite3 ~/.pusula/storage.sqlite ".recover" > recovered.sql
 sqlite3 recovered.db < recovered.sql
-mv recovered.db ~/.omniroute/storage.sqlite
+mv recovered.db ~/.pusula/storage.sqlite
 ```
 
 ### سناریوی 2: فایل اصلی پایگاه داده خراب شده است
@@ -533,7 +533,7 @@ mv recovered.db ~/.omniroute/storage.sqlite
 از نسخه پشتیبان بازیابی کنید:
 
 ```bash
-omniroute sync pull --merge   # یا: omniroute backup restore <backup-id>
+pusula sync pull --merge   # یا: pusula backup restore <backup-id>
 ```
 
 ### سناریوی 3: کلید رمزنگاری از دست رفته است
@@ -548,7 +548,7 @@ SQLite خطاهای `SQLITE_FULL` را برمیگرداند. فضای دیسک �
 
 ```bash
 # برای آزاد کردن فضا، از WAL نقطهبازرسی بگیرید
-sqlite3 ~/.omniroute/storage.sqlite "PRAGMA wal_checkpoint(TRUNCATE);"
+sqlite3 ~/.pusula/storage.sqlite "PRAGMA wal_checkpoint(TRUNCATE);"
 ```
 
 ---
@@ -558,13 +558,13 @@ sqlite3 ~/.omniroute/storage.sqlite "PRAGMA wal_checkpoint(TRUNCATE);"
 ### بررسی یک جدول
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite "SELECT * FROM api_keys LIMIT 5;"
+sqlite3 ~/.pusula/storage.sqlite "SELECT * FROM api_keys LIMIT 5;"
 ```
 
 ### شمارش ردیفهای همه جدولها
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite <<EOF
+sqlite3 ~/.pusula/storage.sqlite <<EOF
 SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';
 EOF
 ```
@@ -572,14 +572,14 @@ EOF
 ### بازنشانی (پاکسازی) همه دادهها
 
 ```bash
-# ابتدا OmniRoute را متوقف کنید
-omniroute stop
+# ابتدا Pusula را متوقف کنید
+pusula stop
 
 # فایل پایگاه داده را حذف کنید
-rm ~/.omniroute/storage.sqlite*
+rm ~/.pusula/storage.sqlite*
 
 # راهاندازی مجدد کنید (یک پایگاه داده خالی دوباره ایجاد میشود)
-omniroute
+pusula
 ```
 
 برای بازنشانی **انتخابی** (حفظ ارائهدهندگان و پاکسازی دادههای مصرف):
@@ -593,7 +593,7 @@ DELETE FROM proxy_logs WHERE timestamp < datetime('now', '-30 day');
 ### خروجی گرفتن از یک جدول
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite <<EOF
+sqlite3 ~/.pusula/storage.sqlite <<EOF
 .mode csv
 .output api_keys.csv
 SELECT * FROM api_keys;
@@ -610,7 +610,7 @@ EOF
 
 - منتظر بمانید تا فرایند دیگر تمام شود (`lsof | grep storage.sqlite` را بررسی کنید)
 - فرایند دیگر را خاتمه دهید
-- اگر مشکل ادامه داشت، OmniRoute را مجدداً راهاندازی کنید
+- اگر مشکل ادامه داشت، Pusula را مجدداً راهاندازی کنید
 
 ### «محدودیت کلید خارجی نقض شد»
 
@@ -640,10 +640,10 @@ PRAGMA mmap_size = 0;
 
 مهاجرت درون یک تراکنش اجرا شده است، بنابراین باید بازگردانی شده باشد. اگر چنین نشده است:
 
-1. **OmniRoute را متوقف کنید** (برای جلوگیری از تلاشهای بیشتر)
+1. **Pusula را متوقف کنید** (برای جلوگیری از تلاشهای بیشتر)
 2. **وضعیت پایگاه داده را** با `sqlite3` **بررسی کنید**
 3. مهاجرت ناقص را **بهصورت دستی اصلاح کنید**
-4. OmniRoute را **دوباره اجرا کنید** (مهاجرت مجدداً امتحان خواهد شد)
+4. Pusula را **دوباره اجرا کنید** (مهاجرت مجدداً امتحان خواهد شد)
 
 برای جلوگیری از این مشکل، همیشه ابتدا مهاجرتها را روی یک کپی آزمایش کنید.
 

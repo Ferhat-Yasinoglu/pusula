@@ -5,7 +5,7 @@
  * caller, across the /v1/files and /v1/batches routes.
  *
  * Self-isolating: DATA_DIR points at a fresh temp dir BEFORE any `@/lib/db/*`
- * module loads, so this file never touches ~/.omniroute.
+ * module loads, so this file never touches ~/.pusula.
  */
 import { describe, it, after } from "node:test";
 import assert from "node:assert";

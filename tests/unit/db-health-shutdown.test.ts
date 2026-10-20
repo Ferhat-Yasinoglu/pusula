@@ -6,7 +6,7 @@ import path from "node:path";
 
 const dir = fs.mkdtempSync(path.join(os.tmpdir(), "health-shutdown-"));
 process.env.DATA_DIR = dir;
-process.env.OMNIROUTE_SKIP_DB_HEALTHCHECK = "1";
+process.env.PUSULA_SKIP_DB_HEALTHCHECK = "1";
 const core = await import("../../src/lib/db/core.ts");
 const shutdown = await import("../../src/lib/gracefulShutdown.ts");
 

@@ -3,8 +3,8 @@ import assert from "node:assert/strict";
 import {
   ANTIGRAVITY_REQUIRES_MANUAL_PROJECT,
   isUsableAntigravityProjectId,
-} from "@omniroute/open-sse/services/antigravityProjectBootstrap.ts";
-import { preferAntigravityConnectionsWithStoredProject } from "@omniroute/open-sse/services/antigravityProjectPersist.ts";
+} from "@pusula/open-sse/services/antigravityProjectBootstrap.ts";
+import { preferAntigravityConnectionsWithStoredProject } from "@pusula/open-sse/services/antigravityProjectPersist.ts";
 
 test("the manual-project sentinel is never a usable project id", () => {
   assert.equal(isUsableAntigravityProjectId(ANTIGRAVITY_REQUIRES_MANUAL_PROJECT), false);

@@ -4,7 +4,7 @@
 
 ---
 
-OmniRoute, birbirinden farklı ancak ilişkili üç dayanıklılık mekanizmasına sahiptir. Her birinin kapsamı ve amacı farklıdır. Yönlendirme davranışındaki hataları ayıklarken bunları birbirinden ayrı tutun.
+Pusula, birbirinden farklı ancak ilişkili üç dayanıklılık mekanizmasına sahiptir. Her birinin kapsamı ve amacı farklıdır. Yönlendirme davranışındaki hataları ayıklarken bunları birbirinden ayrı tutun.
 
 ![3 katmanlı dayanıklılık modeli](../diagrams/exported/resilience-3layers.svg)
 
@@ -58,7 +58,7 @@ Dördüncü ve **isteğe bağlı** bir katman (`PROVIDER_COOLDOWN_ENABLED`, vars
 | API anahtarı |                                                     `15` |                                    `30min` |                                       `10min` |
 
 Eşiğin altında sağlayıcı **bekleme durumunda** kabul edilmez; başarılı bir sonuç pencereyi temizler. Bağlantı düzeyindeki girdiler (`provider:connectionId`) bunun yerine üstel `minRetryCooldownMs → maxRetryCooldownMs` geri çekilmesini korur. Geçersiz kılmalar:
-`OMNIROUTE_PROVIDER_BREAKER_{OAUTH,API_KEY}_{FAILURE_THRESHOLD,FAILURE_WINDOW_MS,COOLDOWN_MS}`.
+`PUSULA_PROVIDER_BREAKER_{OAUTH,API_KEY}_{FAILURE_THRESHOLD,FAILURE_WINDOW_MS,COOLDOWN_MS}`.
 Regresyon koruması: `tests/unit/provider-cooldown-window-gate.test.ts`.
 
 ## 2. Bağlantı Bekleme Süresi
@@ -165,7 +165,7 @@ Regresyon korumaları: `tests/unit/claude-low-priority-mode.test.ts`,
 
 ### Oturum yakınlığı (#7274)
 
-**Kapsam:** **herhangi bir** sağlayıcı için tek bir bağlantıya sabitlenmiş bir istemci oturumu (`X-Session-Id` / `x-codex-session-id` / `x-omniroute-session` üstbilgisi).
+**Kapsam:** **herhangi bir** sağlayıcı için tek bir bağlantıya sabitlenmiş bir istemci oturumu (`X-Session-Id` / `x-codex-session-id` / `x-pusula-session` üstbilgisi).
 
 **Amaç:** çok turlu bir aracıyı (Claude Code, aider, özel aracılar) istekler arasında aynı hesapta tutarak hesaplar arası bağlam kaybını ve hesap başına oturum durumuna sahip sağlayıcılarda tekrarlanan soğuk başlangıç 429 hatalarını azaltmak.
 
@@ -183,15 +183,15 @@ Regresyon korumaları: `tests/unit/claude-low-priority-mode.test.ts`,
 
 ### Özel yönetilen oturum bağlantısı kiraları
 
-**Kapsam:** bir etkin yönetilen HTTP istemcisi/oturumu, uygun bir OmniRoute bağlantısının sahibi olur.
+**Kapsam:** bir etkin yönetilen HTTP istemcisi/oturumu, uygun bir Pusula bağlantısının sahibi olur.
 
 **Amaç:** istekler arasında katı bir yönlendirme sınırına ihtiyaç duyan istemciler için dayanıklı ve özel bağlantı sahipliği sağlamak. Bu, esnek bir süreklilik tercihi olan oturum benzeşiminden farklıdır: özel bir kira, yaşam döngüsü durumunu SQLite'ta kalıcı hâle getirir, etkin sahip ve etkin bağlantı için genel benzersizlik uygular ve sağlayıcıya gönderimden önce eski bir nesli reddeder.
 
 Özellik, API anahtarı bazında isteğe bağlı olarak etkinleştirilir. Yönetilen bir anahtarın `lease:exclusive` kapsamına ve açıkça belirtilmiş, boş olmayan bir `allowedConnections` listesine sahip olması gerekir. Herhangi bir HTTP istemcisi yaşam döngüsü uç noktasını kullanabilir; istemci adı, user-agent, sağlayıcı, OAuth yöntemi veya model gerekli değildir. Kira bir modelin değil, bir bağlantının sahibidir; bu nedenle bağlantı olağan şekilde uygun kaldığı sürece model değişikliği bağlantıyı korur. Normal model, kota, sağlık, bekleme süresi ve izin listesi kuralları belirleyici olmaya devam eder ve aynı nesli başka bir boş ve uygun bağlantıya geçirebilir.
 
-Yaşam döngüsü, `acquire`, `renew` ve `release` JSON eylemleriyle `POST /api/v1/session-leases` üzerinden yönetilir. Yönetilen çıkarım istekleri, opak `X-OmniRoute-Lease-Owner` değerini ve tam `X-OmniRoute-Lease-Generation` değerini sunar. Sahip değeri, `vlo_` önekinin ardından gelen 43 base64url karakterinden oluşur; yalnızca SHA-256 özeti saklanır. Her nihai gönderim sınırı ayrıca kimliği doğrulanmış API anahtarı kimliğini ve etkin bağlantı kimliğini bağlar. Kira denetim başlıkları günlüklerden, saklanan istek anlık görüntülerinden ve yukarı akış yürütücü başlıklarından kaldırılır.
+Yaşam döngüsü, `acquire`, `renew` ve `release` JSON eylemleriyle `POST /api/v1/session-leases` üzerinden yönetilir. Yönetilen çıkarım istekleri, opak `X-Pusula-Lease-Owner` değerini ve tam `X-Pusula-Lease-Generation` değerini sunar. Sahip değeri, `vlo_` önekinin ardından gelen 43 base64url karakterinden oluşur; yalnızca SHA-256 özeti saklanır. Her nihai gönderim sınırı ayrıca kimliği doğrulanmış API anahtarı kimliğini ve etkin bağlantı kimliğini bağlar. Kira denetim başlıkları günlüklerden, saklanan istek anlık görüntülerinden ve yukarı akış yürütücü başlıklarından kaldırılır.
 
-Olağan yönlendirmede uygun yönetilen adaylar bulunmasına rağmen tüm boş adaylar yabancı bir etkin kira tarafından tutuluyorsa OmniRoute; HTTP `429`, lease-capacity-unavailable kodu, kapasite bekleme durumu ve ilgili en erken sona erme zamanından türetilen, sınırlandırılmış bir `Retry-After` değeri döndürür. Olağan uygunluk kümesinin boş olması kira çekişmesi değildir ve mevcut yönlendirme hatası semantiğini korur.
+Olağan yönlendirmede uygun yönetilen adaylar bulunmasına rağmen tüm boş adaylar yabancı bir etkin kira tarafından tutuluyorsa Pusula; HTTP `429`, lease-capacity-unavailable kodu, kapasite bekleme durumu ve ilgili en erken sona erme zamanından türetilen, sınırlandırılmış bir `Retry-After` değeri döndürür. Olağan uygunluk kümesinin boş olması kira çekişmesi değildir ve mevcut yönlendirme hatası semantiğini korur.
 
 İlgili mekanizmalar birbirinden ayrı kalır:
 
@@ -213,7 +213,7 @@ içindeki `resolveLockoutScope()`):
   codex için bağlantının tüm `codex` / `spark` kapsamı (bağlantıdaki her
   `gpt-5*` modeli), diğer sağlayıcılar için `getQuotaScopedModelForProvider()`.
 - `404`, yalın modeli kilitler (`getModelLockKey()`, `not_found` kapsamını daraltır).
-- Diğer tüm durumlar — `5xx` aktarım/sunucu hataları ve OmniRoute'un kalite
+- Diğer tüm durumlar — `5xx` aktarım/sunucu hataları ve Pusula'un kalite
   doğrulamasından kaynaklanan, kendi oluşturduğu `502` — yalnızca **tam**
   sağlayıcı/bağlantı/model üçlüsünü kilitler. Bir modeldeki bozuk akış, hesabın
   kotası hakkında kanıt değildir; bu kuraldan önce `codex/gpt-5.6-luna`
@@ -549,7 +549,7 @@ bir hesap durumuyla eşleştiren bir kurala karşı savunma). İki tüketici bun
   `open-sse/services/combo/comboPredicates.ts`, `exhaustedConnections`
   aramasından önce `if (provider && connectionId)`) — kardeş hedeflerin
   kendilerine sabitlenmiş bir `connectionId` taşımadığı ve bağlantının yalnızca
-  yanıtın `X-OmniRoute-Selected-Connection-Id` üstbilgisinden her gönderim
+  yanıtın `X-Pusula-Selected-Connection-Id` üstbilgisinden her gönderim
   başına çözümlendiği düz bir model listesi birleşimi, bu anahtar eşleşmesine
   hiçbir zaman ulaşmaz. Bu yaygın durumda, kalan bir ayağın az önce kotası
   tükenen hesabı yeniden kullanmasına karşı gerçek koruma bu Set DEĞİLDİR —
@@ -742,7 +742,7 @@ sınırı, tükenmiş kota ile aynı sinyaldir. Gerçek sınırlar:
 - **Sıfırlama duyarlı yönlendirme** (v3.8.0) — bağlantıları kota sıfırlama zamanına göre önceliklendirir.
 - **Arka plan modu indirgemesi** — Responses API `background: true`, bir uyarıyla senkron moda indirgenir.
 - **Dinamik araç sınırı algılama** — araç sayısı sınırlarına ulaşıldığında sağlayıcıları geri çeker.
-- **Acil durum yedeği** — `OMNIROUTE_EMERGENCY_FALLBACK` tarafından kontrol edilir; operatörler yeniden başlatma gerekmeksizin Özellik Bayrakları sayfasından bunu geçersiz kılabilir.
+- **Acil durum yedeği** — `PUSULA_EMERGENCY_FALLBACK` tarafından kontrol edilir; operatörler yeniden başlatma gerekmeksizin Özellik Bayrakları sayfasından bunu geçersiz kılabilir.
 
 ---
 

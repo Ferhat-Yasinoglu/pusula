@@ -13,7 +13,7 @@
 
 ## Was es ist
 
-OmniRoute bindet einen **Obsidian**-Tresor als **Kontextquelle** ein — eine lokale
+Pusula bindet einen **Obsidian**-Tresor als **Kontextquelle** ein — eine lokale
 Markdown-Wissensdatenbank, die Agenten über den integrierten MCP-Server lesen und
 bearbeiten können. Die Integration kommuniziert mit dem Community-Plugin
 **Obsidian Local REST API**, das innerhalb der Desktop-App ausgeführt wird. Dadurch
@@ -84,7 +84,7 @@ Local REST API, bevor es gespeichert wird.
 
 `src/app/api/settings/obsidian/webdav/route.ts` verwaltet eine optionale
 WebDAV-gestützte Tresorsynchronisierung (gesteuert durch
-`src/lib/obsidianSync.ts`). Bei der Aktivierung wird OmniRoute auf ein lokales
+`src/lib/obsidianSync.ts`). Bei der Aktivierung wird Pusula auf ein lokales
 Tresorverzeichnis ausgerichtet und ein zufälliges Paar aus WebDAV-Benutzername und
 -Passwort erzeugt:
 
@@ -113,9 +113,9 @@ Konfiguration (`source: "global"`) zurückgegriffen.
 ## MCP-Tools (22)
 
 Definiert in `open-sse/mcp-server/tools/obsidianTools.ts`. Token und Basis-URL werden
-für jeden Aufruf aufgelöst (zuerst pro API-Schlüssel, dann global). Tools, die auf den OmniRoute-**Sync-Server**
+für jeden Aufruf aufgelöst (zuerst pro API-Schlüssel, dann global). Tools, die auf den Pusula-**Sync-Server**
 zugreifen (die vier `obsidian_sync_*`-Tools), benötigen zusätzlich das in den
-OmniRoute-Einstellungen konfigurierte Sync-Authentifizierungstoken.
+Pusula-Einstellungen konfigurierte Sync-Authentifizierungstoken.
 
 ### Lese-Tools (`read:obsidian`)
 
@@ -132,7 +132,7 @@ OmniRoute-Einstellungen konfigurierte Sync-Authentifizierungstoken.
 | `obsidian_get_periodic_note` | Ruft die tägliche/wöchentliche/monatliche periodische Notiz für ein Datum ab (heute, falls nicht angegeben).                 |
 | `obsidian_get_tags`          | Listet alle Vault-Tags mit ihrer Häufigkeit auf.                                                                             |
 | `obsidian_list_commands`     | Listet verfügbare Obsidian-Befehls-IDs auf (zur Verwendung mit `obsidian_execute_command`).                                  |
-| `obsidian_sync_status`       | Status des OmniRoute-Sync-Servers: Ausführung, Vault-Name, Port, Betriebszeit, letzte Synchronisierung.                      |
+| `obsidian_sync_status`       | Status des Pusula-Sync-Servers: Ausführung, Vault-Name, Port, Betriebszeit, letzte Synchronisierung.                      |
 | `obsidian_sync_conflicts`    | Listet ungelöste Synchronisierungskonflikte auf (Pfad, Konfliktpfad, Erkennungszeitpunkt).                                   |
 
 ### Schreib-Tools (`write:obsidian`)
@@ -159,8 +159,8 @@ OmniRoute-Einstellungen konfigurierte Sync-Authentifizierungstoken.
 
 Lese-Tools benötigen `read:obsidian`; Schreib-Tools benötigen `write:obsidian`. Die Durchsetzung
 ist identisch mit Notion — sie wird von `withScopeEnforcement()` in
-`open-sse/mcp-server/server.ts` übernommen, durch `OMNIROUTE_MCP_ENFORCE_SCOPES=true` aktiviert und
-bezieht die zulässigen Berechtigungsbereiche aus `OMNIROUTE_MCP_SCOPES` oder dem Berechtigungsbereichskontext des API-Schlüssels. Siehe
+`open-sse/mcp-server/server.ts` übernommen, durch `PUSULA_MCP_ENFORCE_SCOPES=true` aktiviert und
+bezieht die zulässigen Berechtigungsbereiche aus `PUSULA_MCP_SCOPES` oder dem Berechtigungsbereichskontext des API-Schlüssels. Siehe
 [MCP-SERVER.md](./MCP-SERVER.md).
 
 ## Endpunkte

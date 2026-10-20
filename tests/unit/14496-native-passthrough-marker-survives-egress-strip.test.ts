@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
  * Regression for the #14252 fallout found while draining #14496.
  *
  * #14252 started calling `stripInternalBodyFields()` at the shared pre-executor
- * boundary (`normalizeAttemptBody`) so `_omniroute*` routing markers cannot leak
+ * boundary (`normalizeAttemptBody`) so `_pusula*` routing markers cannot leak
  * upstream. Correct intent — but the same helper also deletes the four
  * `_native*Passthrough` markers, and those are **not** consumed by routing: they
  * are read INSIDE the executor (`codex.ts:1259`, `xai.ts:130`), which deletes
@@ -17,7 +17,7 @@ import assert from "node:assert/strict";
  * which drops client fields the native path is supposed to forward verbatim
  * (`metadata` was how this surfaced — `chatcore-translation-paths` caught it).
  *
- * The split below keeps the leak fix intact: `_omniroute*` (and anything routing
+ * The split below keeps the leak fix intact: `_pusula*` (and anything routing
  * owns) still goes at the boundary; executor-owned markers survive to their
  * reader and are removed at serialization, where `applyFingerprint()` runs the
  * full strip anyway.
@@ -38,7 +38,7 @@ test("the pre-executor boundary keeps the markers the executor itself reads", ()
       model: "gpt-5.6-sol",
       metadata: { source: "codex-client" },
       [marker]: true,
-      _omnirouteSkipContextRelay: true,
+      _pusulaSkipContextRelay: true,
     };
 
     stripInternalBodyFields(body, { keepExecutorMarkers: true });
@@ -50,7 +50,7 @@ test("the pre-executor boundary keeps the markers the executor itself reads", ()
       "client payload must not be touched by the marker strip"
     );
     assert.equal(
-      "_omnirouteSkipContextRelay" in body,
+      "_pusulaSkipContextRelay" in body,
       false,
       "routing-owned markers must still be stripped at the boundary (#14252)"
     );
@@ -62,7 +62,7 @@ test("the serialization strip still removes every internal marker", () => {
     model: "gpt-5.6-sol",
     _nativeCodexPassthrough: true,
     _claudeCodeRequiresLowercaseToolNames: true,
-    _omnirouteInternalRequest: true,
+    _pusulaInternalRequest: true,
     metadata: { source: "codex-client" },
   };
 

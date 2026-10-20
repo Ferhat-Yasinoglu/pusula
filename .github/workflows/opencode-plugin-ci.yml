@@ -4,13 +4,13 @@ on:
   push:
     branches: [main, "release/**"]
     paths:
-      - "@omniroute/opencode-plugin/**"
-      - "@omniroute/opencode-plugin-v2/**"
+      - "@pusula/opencode-plugin/**"
+      - "@pusula/opencode-plugin-v2/**"
   pull_request:
     branches: [main, "release/**"]
     paths:
-      - "@omniroute/opencode-plugin/**"
-      - "@omniroute/opencode-plugin-v2/**"
+      - "@pusula/opencode-plugin/**"
+      - "@pusula/opencode-plugin-v2/**"
     types: [opened, synchronize, reopened, ready_for_review]
   workflow_dispatch:
 
@@ -23,7 +23,7 @@ permissions:
 
 defaults:
   run:
-    working-directory: "@omniroute/opencode-plugin"
+    working-directory: "@pusula/opencode-plugin"
 
 jobs:
   test:
@@ -41,7 +41,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: npm
-          cache-dependency-path: "@omniroute/opencode-plugin/package-lock.json"
+          cache-dependency-path: "@pusula/opencode-plugin/package-lock.json"
       - run: npm install --no-audit --no-fund
       - run: npm run build
       - run: npm test
@@ -55,7 +55,7 @@ jobs:
         node: ["22", "24"]
     defaults:
       run:
-        working-directory: "@omniroute/opencode-plugin-v2"
+        working-directory: "@pusula/opencode-plugin-v2"
     steps:
       - uses: actions/checkout@v7
         with:
@@ -64,7 +64,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: npm
-          cache-dependency-path: "@omniroute/opencode-plugin-v2/package-lock.json"
+          cache-dependency-path: "@pusula/opencode-plugin-v2/package-lock.json"
       - run: npm ci --no-audit --no-fund
       - run: npm run build
       - run: npm test
@@ -81,10 +81,10 @@ jobs:
         with:
           node-version: "22"
       - name: Build plugin-v2 artifact
-        working-directory: "@omniroute/opencode-plugin-v2"
+        working-directory: "@pusula/opencode-plugin-v2"
         run: npm ci --no-audit --no-fund && npm run build
       - uses: actions/upload-artifact@v7
         with:
           name: opencode-plugin-v2-dist
-          path: "@omniroute/opencode-plugin-v2/dist"
+          path: "@pusula/opencode-plugin-v2/dist"
           retention-days: 7

@@ -4,7 +4,7 @@
 
 ---
 
-> **Özet**: OmniRoute; yerleşik sağlık izleme, sağlayıcı otomatik pilotu, kota takibi ve gözlemlenebilirlik kancalarıyla birlikte gelir. Bu kılavuz; kontrol panelini, uyarıları ve sorun gidermeyi kapsar.
+> **Özet**: Pusula; yerleşik sağlık izleme, sağlayıcı otomatik pilotu, kota takibi ve gözlemlenebilirlik kancalarıyla birlikte gelir. Bu kılavuz; kontrol panelini, uyarıları ve sorun gidermeyi kapsar.
 
 **Kaynaklar:**
 
@@ -20,7 +20,7 @@
 
 ## Genel Bakış
 
-OmniRoute, **3 izleme katmanına** sahiptir:
+Pusula, **3 izleme katmanına** sahiptir:
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
@@ -37,7 +37,7 @@ OmniRoute, **3 izleme katmanına** sahiptir:
 │  Katman 3: Canlı Gözlemlenebilirlik (çalışma zamanı anlık görüntüleri) │
 │  ├─ observability.ts — devre kesiciler, oturumlar, kota        │
 │  ├─ tokenHealthCheck.ts — OAuth belirteci yenileme sağlığı     │
-│  └─ MCP araçları: omniroute_get_health, omniroute_get_session_snapshot │
+│  └─ MCP araçları: pusula_get_health, pusula_get_session_snapshot │
 └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -101,7 +101,7 @@ Her kombinasyon için:
 
 ## Sağlık Kontrolü API'si
 
-OmniRoute **iki** HTTP sağlık yüzeyi sunar. Bunlar orkestratörler için birbirinin yerine kullanılamaz.
+Pusula **iki** HTTP sağlık yüzeyi sunar. Bunlar orkestratörler için birbirinin yerine kullanılamaz.
 
 | Yol                          | Amaç                                                                      | Yük                                | Kullanım amacı                                                             |
 | ---------------------------- | ------------------------------------------------------------------------- | ---------------------------------- | -------------------------------------------------------------------------- |
@@ -180,7 +180,7 @@ kalıcı yapışkan durum sayısına ihtiyaç duyduğunuzda ise `staleDbNonOkCou
 
 ### Kubernetes yoklama önerileri
 
-OmniRoute **tek bir Node işlemidir** (tek olay döngüsü). Standart Docker `HEALTHCHECK`, hafif `/healthz` uç noktasını hedefler. `/api/monitoring/health`, kubelet canlılık aralıkları için **fazla ağırdır**.
+Pusula **tek bir Node işlemidir** (tek olay döngüsü). Standart Docker `HEALTHCHECK`, hafif `/healthz` uç noktasını hedefler. `/api/monitoring/health`, kubelet canlılık aralıkları için **fazla ağırdır**.
 
 | Yoklama          | Önerilen hedef                                                                      | Notlar                                                                                                                                                                                                                                                                                                                                                                                         |
 | ---------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -223,7 +223,7 @@ livenessProbe:
 
 Kubelet **canlılık** yoklamasını `/api/monitoring/health` yoluna **yönlendirmeyin**. Bu yol gerçek DB/izleme işleri gerçekleştirir ve yük altında yanlış pozitif sonuç verir.
 
-İlgili: [#10052](https://github.com/diegosouzapw/OmniRoute/issues/10052) (olay döngüsü meşgulken yoklamalar), [#9685](https://github.com/diegosouzapw/OmniRoute/issues/9685) / [#10055](https://github.com/diegosouzapw/OmniRoute/pull/10055) (katalog fiyatlandırmasının kaynakları tekeline alması), [#10117](https://github.com/diegosouzapw/OmniRoute/issues/10117) (sıkıştırma token sayımının kaynakları tekeline alması).
+İlgili: [#10052](https://github.com/Ferhat-Yasinoglu/pusula/issues/10052) (olay döngüsü meşgulken yoklamalar), [#9685](https://github.com/Ferhat-Yasinoglu/pusula/issues/9685) / [#10055](https://github.com/Ferhat-Yasinoglu/pusula/pull/10055) (katalog fiyatlandırmasının kaynakları tekeline alması), [#10117](https://github.com/Ferhat-Yasinoglu/pusula/issues/10117) (sıkıştırma token sayımının kaynakları tekeline alması).
 
 ### İsteğe bağlı istek yolu işlemleri (bellek, beceriler, token yenileme)
 
@@ -412,7 +412,7 @@ Token sağlığı kontrolü yapılandırması, `tokenHealthCheck.ts` tarafından
 
 ### Yerleşik Kanallar
 
-OmniRoute, **3 uyarı kanalını** destekler:
+Pusula, **3 uyarı kanalını** destekler:
 
 | Kanal                   | Kurulum             | Kullanım alanı                        |
 | ----------------------- | ------------------- | ------------------------------------- |
@@ -493,7 +493,7 @@ v3.9 için planlanmaktadır: Prometheus, OpenTelemetry ve Datadog'a yerel dışa
 
 ### Sistem Durumu Panosunu Özelleştirme
 
-Bir `~/.omniroute/dashboard.json` dosyası oluşturun:
+Bir `~/.pusula/dashboard.json` dosyası oluşturun:
 
 ```json
 {
@@ -528,7 +528,7 @@ Bir `~/.omniroute/dashboard.json` dosyası oluşturun:
 ### "Kota sağlıklı görünüyor ancak 429 hataları alıyorum"
 
 - 429, sağlayıcının kotanızı tükettiğinizi bildirdiği anlamına gelir
-- OmniRoute'un kota takibi **güncelliğini yitirmiş** olabilir; geçerli bilgi sağlayıcının üst sistemindedir
+- Pusula'un kota takibi **güncelliğini yitirmiş** olabilir; geçerli bilgi sağlayıcının üst sistemindedir
 - Kota verileri, dahili kota izleyicisi aracılığıyla otomatik olarak yenilenir
 
 ### "Kombinasyon başarısız oluyor ancak tüm hedefler sağlıklı görünüyor"
@@ -539,9 +539,9 @@ Bir `~/.omniroute/dashboard.json` dosyası oluşturun:
 
 ### "Veritabanı sistem durumu denetimi başarısız oluyor"
 
-- `sqlite3 ~/.omniroute/storage.sqlite "PRAGMA integrity_check;"` komutunu çalıştırın
+- `sqlite3 ~/.pusula/storage.sqlite "PRAGMA integrity_check;"` komutunu çalıştırın
 - Sonuç "ok" ise yanlış alarmdır; sistem durumu denetimi gereğinden katı davranıyordur
-- Başka bir sonuç alırsanız **OmniRoute'u durdurun** ve [felaket kurtarma kılavuzunu](./DATABASE_GUIDE.md#disaster-recovery) izleyin
+- Başka bir sonuç alırsanız **Pusula'u durdurun** ve [felaket kurtarma kılavuzunu](./DATABASE_GUIDE.md#disaster-recovery) izleyin
 
 ### "Bellek yığın baskısı kritik düzeyde"
 

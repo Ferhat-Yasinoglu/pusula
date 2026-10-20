@@ -22,7 +22,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { PEER_IP_HEADER, VIA_PROXY_HEADER } from "../../src/server/authz/headers.ts";
 
-process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "omniroute-freetier-leak-"));
+process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "pusula-freetier-leak-"));
 
 const { GET } = await import("../../src/app/api/free-tier/summary/route.ts");
 
@@ -35,7 +35,7 @@ const STAMP_TOKEN = "issue-13679-free-tier-stamp-token";
  * verdict is deterministic and not dependent on real socket info.
  */
 function remoteUnauthenticatedRequest(): Request {
-  process.env.OMNIROUTE_PEER_STAMP_TOKEN = STAMP_TOKEN;
+  process.env.PUSULA_PEER_STAMP_TOKEN = STAMP_TOKEN;
   const headers = new Headers();
   headers.set(PEER_IP_HEADER, `${STAMP_TOKEN}|203.0.113.5`);
   headers.set(VIA_PROXY_HEADER, `${STAMP_TOKEN}|0`);
@@ -69,5 +69,5 @@ test("issue #13679: unauthenticated remote GET must not leak the operator's loca
 });
 
 test.after(() => {
-  delete process.env.OMNIROUTE_PEER_STAMP_TOKEN;
+  delete process.env.PUSULA_PEER_STAMP_TOKEN;
 });

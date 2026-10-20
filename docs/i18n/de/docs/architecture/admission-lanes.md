@@ -4,7 +4,7 @@
 
 ---
 
-OmniRoute verfügt über **zwei** prozesslokale Lane-Systeme mit unterschiedlichen Geltungsbereichen. Sie ergänzen sich; Betreiber sollten wissen, welches davon sie gerade betrachten.
+Pusula verfügt über **zwei** prozesslokale Lane-Systeme mit unterschiedlichen Geltungsbereichen. Sie ergänzen sich; Betreiber sollten wissen, welches davon sie gerade betrachten.
 
 ## 1. Prozessweite Zulassungssteuerung auf Byte-Ebene (`chatBodyAdmission.ts`)
 
@@ -23,8 +23,8 @@ OmniRoute verfügt über **zwei** prozesslokale Lane-Systeme mit unterschiedlich
   dieser Korrektur standardmäßig `1`) reduzierte den Fan-out von Coding-Agenten (mehrere Subagenten/CLIs,
   Bodies regelmäßig > 256 KB) auf eine effektive Parallelität von ~1, was
   unter völlig normaler Last zu 503-Fehlern führte. Sie greift jetzt nur, wenn ein Betreiber
-  `OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT` ausdrücklich festlegt. Bleibt die Variable ungesetzt, wird die Zulassung stattdessen
-  durch `OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES` gesteuert — ein Budget, das automatisch aus der
+  `PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT` ausdrücklich festlegt. Bleibt die Variable ungesetzt, wird die Zulassung stattdessen
+  durch `PUSULA_CHAT_MAX_INFLIGHT_BYTES` gesteuert — ein Budget, das automatisch aus der
   tatsächlichen Speicherobergrenze des Prozesses abgeleitet wird (`src/shared/middleware/admissionBudget.ts`):
   25 % des kleineren Werts aus dem V8-Heap-Limit und einem etwaigen cgroup-/Container-Limit,
   geteilt durch einen Faktor von 8 für die vorübergehende Verstärkung und begrenzt auf einen Bereich zwischen 8 MiB und
@@ -41,11 +41,11 @@ OmniRoute verfügt über **zwei** prozesslokale Lane-Systeme mit unterschiedlich
   hostweit und dient nur auf Bare-Metal-Systemen bzw. unter cgroup v1 als Rückfalloption, sodass ein auslagernder
   Host nicht zu 503-Fehlern in einem inaktiven Container führen kann.
 - **Konfiguration:**
-  - `OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES` — Überschreibung für das automatisch abgeleitete Byte-Budget
-  - `OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT` — veraltete Begrenzung der Anfrageanzahl, nur bei expliziter Aktivierung
-  - `OMNIROUTE_CHAT_ADMISSION_QUEUE_MS` — Wartezeit in der Warteschlange vor einem 503-Fehler (Standardwert: 2000)
-  - `OMNIROUTE_CHAT_ADMISSION_MAX_QUEUED_BYTES` — Heap-Ventil für Bytes in der Warteschlange (Standardwert: 4 MB)
-  - `OMNIROUTE_CHAT_VIRTUAL_TTL_MS` / `OMNIROUTE_CHAT_VIRTUAL_MAX_SESSIONS` — seit #10110 veraltete
+  - `PUSULA_CHAT_MAX_INFLIGHT_BYTES` — Überschreibung für das automatisch abgeleitete Byte-Budget
+  - `PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT` — veraltete Begrenzung der Anfrageanzahl, nur bei expliziter Aktivierung
+  - `PUSULA_CHAT_ADMISSION_QUEUE_MS` — Wartezeit in der Warteschlange vor einem 503-Fehler (Standardwert: 2000)
+  - `PUSULA_CHAT_ADMISSION_MAX_QUEUED_BYTES` — Heap-Ventil für Bytes in der Warteschlange (Standardwert: 4 MB)
+  - `PUSULA_CHAT_VIRTUAL_TTL_MS` / `PUSULA_CHAT_VIRTUAL_MAX_SESSIONS` — seit #10110 veraltete
     No-ops (aus Gründen der Konfigurationskompatibilität akzeptiert, aber ignoriert)
 - **Berichte:** `GET /api/monitoring/health` → `chatAdmission` (#11244) — einschließlich
   der Ergänzungen aus #503-fanout: `inflightBytes`, `maxInflightBytes`, `budgetSource`
@@ -57,10 +57,10 @@ OmniRoute verfügt über **zwei** prozesslokale Lane-Systeme mit unterschiedlich
 
 - **Umfang:** Tenant-Key-Zulassung für den Provider-Dispatch — Warteschlangenkosten, latenzgesteuerte
   Limitanpassung, Lane-Warteschlangen und Lane-Metriken.
-- **Gate:** **Opt-in.** Deaktiviert, sofern nicht `OMNIROUTE_CHAT_VIRTUAL_LANES=true` gesetzt ist. Ohne diese Einstellung
+- **Gate:** **Opt-in.** Deaktiviert, sofern nicht `PUSULA_CHAT_VIRTUAL_LANES=true` gesetzt ist. Ohne diese Einstellung
   behält der adaptive Controller das Verhalten mit gemeinsamer Warteschlange bei (Kriterium 1 von #9654
   gilt erst, sobald ein Operator Lanes aktiviert).
-- **Abstimmung:** `OMNIROUTE_CHAT_VIRTUAL_LANES` + adaptive Konfiguration (`maxQueueCount`,
+- **Abstimmung:** `PUSULA_CHAT_VIRTUAL_LANES` + adaptive Konfiguration (`maxQueueCount`,
   `maxQueueCost`, `defaultMaxWaitMs`, …).
 - **Berichte:** `GET /api/monitoring/health` → `adaptiveAdmission` → `laneCount`,
   `laneQueuedCount`, `laneQueuedCost`, `laneTenants` (undurchsichtige Lane-IDs, niemals rohe
@@ -75,7 +75,7 @@ gegen die Tenant-Lane der **übergeordneten** Anfrage.
 
 - **Umfang:** jedes Fan-out-Ziel, das von Combo, Fusion und der Chaos-Engine dispatcht wird.
   System 1 (auf Byte-Ebene) ist davon nicht betroffen — es prüft Fan-out-Ziele niemals.
-- **Gate:** **Opt-in zusammen mit System 2.** Eine No-op-Operation, wenn `OMNIROUTE_CHAT_VIRTUAL_LANES`
+- **Gate:** **Opt-in zusammen mit System 2.** Eine No-op-Operation, wenn `PUSULA_CHAT_VIRTUAL_LANES`
   nicht gesetzt ist — die übergeordnete Anfrage hält in diesem Modus bereits die Lease der gemeinsamen Warteschlange,
   sodass eine Probe doppelt zählen und Combo-Ziele ablehnen würde.
 - **Semantik:**
@@ -111,7 +111,7 @@ gegen die Tenant-Lane der **übergeordneten** Anfrage.
 - `adaptiveAdmission.laneCount` / `laneTenants` → **adaptive virtuelle Lanes** (System 2).
 - `adaptiveAdmission.virtualLanes === true` → die Fan-out-Probes aus Abschnitt 3 sind
   ebenfalls aktiv. Fehlt `virtualLanes` in einem Payload oder ist der Wert `false`, bedeutet dies,
-  dass `OMNIROUTE_CHAT_VIRTUAL_LANES` nicht gesetzt ist — die Lanes auf Byte-Ebene (System 1) sind
+  dass `PUSULA_CHAT_VIRTUAL_LANES` nicht gesetzt ist — die Lanes auf Byte-Ebene (System 1) sind
   weiterhin aktiv, aber unter `adaptiveAdmission` ist nichts wirksam (und es findet kein Fan-out-Gating statt),
   bis die Option aktiviert wird.
 
@@ -123,15 +123,15 @@ für eine andere“) wird von System 1 bedingungslos und von System 2 nach Aktiv
 
 ## 4. Lange `/v1/responses` in einem Prozess (gesunde Heap-Reserve)
 
-Mit [#10437](https://github.com/diegosouzapw/OmniRoute/pull/10437) wurde
+Mit [#10437](https://github.com/Ferhat-Yasinoglu/pusula/pull/10437) wurde
 `tryAcquireHealthyHeadroom` hinzugefügt, sodass eine zweite strukturell aufwendige Anfrage zugelassen wird,
-wenn die Heap-Auslastung unter `OMNIROUTE_CHAT_ADMISSION_HEAP_SHED_RATIO` liegt. Der von
-`admitChatRequest` verwendete BYTE-Pfad (Bodies ≥ `OMNIROUTE_CHAT_LARGE_BODY_BYTES`,
+wenn die Heap-Auslastung unter `PUSULA_CHAT_ADMISSION_HEAP_SHED_RATIO` liegt. Der von
+`admitChatRequest` verwendete BYTE-Pfad (Bodies ≥ `PUSULA_CHAT_LARGE_BODY_BYTES`,
 standardmäßig 256 KiB, einschließlich `POST /v1/responses`) nutzt **denselben** Ausweichmechanismus.
 
 Dies ist das unterstützte Rezept für **einen Prozess**, um mehr als zwei gleichzeitige lange
 SSE-`/v1/responses` zu ermöglichen: Erhöhen Sie das primäre Limit und die gesunde Heap-Reserve nur so weit, wie es der Heap
-und das prozessweite Budget für gleichzeitig verarbeitete Bytes (`OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES`
+und das prozessweite Budget für gleichzeitig verarbeitete Bytes (`PUSULA_CHAT_MAX_INFLIGHT_BYTES`
 / #10110) zulassen. Dutzende lange SSE-Clients (40–50) sind eine Frage dieses Speicherbudgets
 und keine feste Produktbeschränkung von „maximal 2“. Ein unter Druck stehender Heap lehnt weiterhin Anfragen mit einem
 wiederholbaren `503` ab, damit #7849 nicht erneut auftritt.

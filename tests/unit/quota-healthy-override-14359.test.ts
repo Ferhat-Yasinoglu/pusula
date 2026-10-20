@@ -70,9 +70,9 @@ test("#14359 the healthy override expires after the park window", () => {
   }
   const state: QuotaCacheTestState | undefined = (
     globalThis as {
-      __omnirouteQuotaCacheState?: QuotaCacheTestState;
+      __pusulaQuotaCacheState?: QuotaCacheTestState;
     }
-  ).__omnirouteQuotaCacheState;
+  ).__pusulaQuotaCacheState;
   assert.ok(state?.healthyUntil.has("ho-exp-14359"), "override armed in shared state");
   assert.ok(
     (state!.healthyUntil.get("ho-exp-14359") ?? 0) - Date.now() <= MAX_PARK_MS,

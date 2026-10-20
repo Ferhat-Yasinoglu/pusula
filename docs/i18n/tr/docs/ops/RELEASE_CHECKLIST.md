@@ -44,8 +44,8 @@ Bu, 2FA'yı atlayan token'ların kullanımdan kaldırılmasıyla birlikte npm'in
 atlatma yöntemidir; WS1.3 garantisini korurken projenin v3.8.48'e kadar sahip olduğu tamamen
 otomatik akışı geri getirir (sızdırılmış bir token tek başına yayım yapamaz — çünkü token yoktur).
 
-**Tek seferlik kurulum (sahip):** npmjs.com → `omniroute` paketi → Settings → _Trusted
-Publisher_ → GitHub: owner `diegosouzapw`, repo `OmniRoute`, workflow `npm-publish.yml`
+**Tek seferlik kurulum (sahip):** npmjs.com → `pusula` paketi → Settings → _Trusted
+Publisher_ → GitHub: owner `diegosouzapw`, repo `Pusula`, workflow `npm-publish.yml`
 (environment: none). Bu yapılandırma mevcut olana kadar otomatik adım `ENEEDAUTH` ile başarısız
 olur: `publish_mode=staged` (aşağıda) veya `direct` ile yeniden tetikleyin.
 
@@ -58,7 +58,7 @@ kayıt defterinde bekletilir ve sahip onaylayana kadar **kurulamaz**. İnsan tar
 
 **İş akışı yeşile döndükten sonra sahip tarafından izlenecek akış:**
 
-1. `npm stage list omniroute` — aşama kimliğini bulun (iş akışı özetinde de yazdırılır).
+1. `npm stage list pusula` — aşama kimliğini bulun (iş akışı özetinde de yazdırılır).
 2. Aşamalı baytları doğrulayın (önerilir): `npm stage download <id>`, ardından indirilen
    tarball'u geçici bir prefix içine kurup başlatın (`npm run check:pack-boot`, CI'da aynı
    paketle→kur→başlat sonucunu otomatikleştirir).
@@ -70,13 +70,13 @@ kayıt defterinde bekletilir ve sahip onaylayana kadar **kurulamaz**. İnsan tar
 `npm publish` davranışını geri getirir (yalnızca aşamalı yayımlamanın kendisi hatalı çalışırsa
 kullanın; nedenini kaydedin).
 
-**Tek seferlik sağlamlaştırma (sahip, npmjs.com):** `omniroute` için Trusted Publisher'ı
+**Tek seferlik sağlamlaştırma (sahip, npmjs.com):** `pusula` için Trusted Publisher'ı
 yalnızca aşamalı modda yapılandırın; böylece sızdırılmış uzun ömürlü bir token herhangi bir
 yerden doğrudan `npm publish` çalıştıramaz — CI yalnızca aşamalandırabilir; yalnızca sahibin
 2FA'sı yayıma izin verir.
 
 **Bozuk yapıt çalışma planı (değişmedi):** varsayılan refleks olarak
-`npm deprecate omniroute@<bad> "<reason> — use <fixed>"` kullanın (dakikalar içinde uygulanır,
+`npm deprecate pusula@<bad> "<reason> — use <fixed>"` kullanın (dakikalar içinde uygulanır,
 geri alınabilir); `npm unpublish` komutunu yalnızca 72 saat/bağımlısı olmayanlar aralığında ve
 asla ilk hamle olarak kullanmayın. Docker: bir sürüm etiketini asla yeniden yazmayın — geri alma,
 `latest` etiketini son iyi digest'e yeniden yönlendirmektir.
@@ -195,7 +195,7 @@ Geriye dönük uyumsuz değişiklikler: `BREAKING CHANGE:` altbilgisi veya kapsa
 - [ ] `npm run i18n:check` 0 koduyla sonlanıyor — çeviri durumu (`.i18n-state.json`) kaynak belgelerle senkronize (katı modda sapmış kaynak yok; son dakika belge rötuşları için uyarı modu tavsiyesi kabul edilebilir, ancak etiketlemeden önce 0 olmalıdır)
 - [ ] `npm run i18n:check-ui-coverage` 0 koduyla sonlanıyor — her kullanıcı arayüzü yerel ayarı %80 kapsam alt sınırında veya üzerinde
 - [ ] `npm run i18n:sync-ui:dry`, 42 yerel ayarın tamamında 0 eksik anahtar bildiriyor
-- [ ] İngilizce kaynak belgeler değiştiyse etiketlemeden önce `npm run i18n:run` komutunu çalıştırın (`.env` içinde `OMNIROUTE_TRANSLATION_API_KEY` gerektirir)
+- [ ] İngilizce kaynak belgeler değiştiyse etiketlemeden önce `npm run i18n:run` komutunu çalıştırın (`.env` içinde `PUSULA_TRANSLATION_API_KEY` gerektirir)
 - [ ] Küçük çaplıysa çeviri katkıları bir sonraki sürüme ertelenebilir (CHANGELOG içinde takip edin)
 
 ### Veritabanı Geçişleri
@@ -204,7 +204,7 @@ Geriye dönük uyumsuz değişiklikler: `BREAKING CHANGE:` altbilgisi veya kapsa
   - [ ] Her geçiş idempotent (`CREATE TABLE IF NOT EXISTS` vb.)
   - [ ] Geçişler işlemler içine alınmış
   - [ ] Doğru numaralandırılmış (sıralamada boşluk yok)
-- [ ] Temiz kurulumda test edin: `~/.omniroute/omniroute.db` dosyasını silin ve `npm run dev` komutunu çalıştırın
+- [ ] Temiz kurulumda test edin: `~/.pusula/pusula.db` dosyasını silin ve `npm run dev` komutunu çalıştırın
 - [ ] Mevcut kurulumda test edin: Veritabanını yedekleyin, geçişi çalıştırın ve şemayı doğrulayın
 - [ ] Geçiş tabloları yeniden yazıyorsa WAL dosyaları (`-wal`, `-shm`) doğru şekilde işlenmiş
 
@@ -239,7 +239,7 @@ Depo üç farklı çıktı dizini kullanır — bunları asla birbirine karışt
 | `.build/` | Derleme ara dosyaları — `next build` çıktısı (`distDir`)       | Hayır (gitignored) |
 | `dist/`   | Dağıtılabilir npm paketi — `assembleStandalone` ile hazırlanır | Hayır (gitignored) |
 
-> **Operatör notu:** uzak VPS görüntü dizini `/usr/lib/node_modules/omniroute/app/` olarak kalır.
+> **Operatör notu:** uzak VPS görüntü dizini `/usr/lib/node_modules/pusula/app/` olarak kalır.
 > Yalnızca **depo içindeki** derleme çıktısı taşındı (`app/` → `dist/`). Dağıtım becerileri, `dist/`
 > içeriğini uzaktaki `app/` dizinine rsync ile aktarır — VPS yollarında değişiklik gerekmez.
 
@@ -358,12 +358,12 @@ Gömülü hizmet değişiklikleri içeren herhangi bir sürümü yayımlamadan �
 
 Herhangi bir v3.8.x sürümünü yayımlamadan önce şu ek öğeleri doğrulayın:
 
-- [ ] `omniroute --tray`, macOS'te başlatılır (systray2, `~/.omniroute/runtime/` içine kurulmuş olmalıdır)
-- [ ] `omniroute --tray`, Linux'ta başlatılır (DISPLAY gerektirir; ayarlanmamışsa düzgün bir hata verir)
-- [ ] `omniroute --tray`, Windows'ta başlatılır (PowerShell NotifyIcon, ek ikili dosya yoktur)
-- [ ] `omniroute config tray enable`, otomatik başlatma girdisi oluşturur; devre dışı bırakma işlemi girdiyi kaldırır
-- [ ] `npm install -g omniroute@<this-version>`, kurulum sonrası işlemini ölümcül bir çıkış olmadan çalıştırır
-- [ ] Güncelleme yolu isteğe bağlı bağımlılıkları korur: `omniroute update --apply` ve otomatik güncelleyici,
+- [ ] `pusula --tray`, macOS'te başlatılır (systray2, `~/.pusula/runtime/` içine kurulmuş olmalıdır)
+- [ ] `pusula --tray`, Linux'ta başlatılır (DISPLAY gerektirir; ayarlanmamışsa düzgün bir hata verir)
+- [ ] `pusula --tray`, Windows'ta başlatılır (PowerShell NotifyIcon, ek ikili dosya yoktur)
+- [ ] `pusula config tray enable`, otomatik başlatma girdisi oluşturur; devre dışı bırakma işlemi girdiyi kaldırır
+- [ ] `npm install -g pusula@<this-version>`, kurulum sonrası işlemini ölümcül bir çıkış olmadan çalıştırır
+- [ ] Güncelleme yolu isteğe bağlı bağımlılıkları korur: `pusula update --apply` ve otomatik güncelleyici,
       `optionalDependencies` (better-sqlite3, keytar, tls-client ve llmlingua SLM yığını:
       `@atjsh/llmlingua-2@2.0.5`, `js-tiktoken`) güncellemeden sonra korunacak şekilde
       `npm install -g … --include=optional` çalıştırır. Ultra `modelPath` SLM katmanı ayrıca ilk
@@ -373,13 +373,13 @@ Herhangi bir v3.8.x sürümünü yayımlamadan önce şu ek öğeleri doğrulay�
       TEK bir `@huggingface/transformers` ^4.2.0 örneğini çözümler — bağımsız iz yalnızca transformers'ı
       paketler, dinamik olarak içe aktarılan isteğe bağlı bağımlılıkları paketlemez; dolayısıyla bu işlem
       olmadan worker, llmlingua-2'yi kökteki transformers ile yükler ve SLM katmanı sessizce açık geçiş yapar.
-- [ ] `omniroute status`, `.env` olmadan çalışır (CLI belirteç yolu, yalnızca geri döngü)
+- [ ] `pusula status`, `.env` olmadan çalışır (CLI belirteç yolu, yalnızca geri döngü)
 - [ ] `curl http://localhost:20128/api/shutdown`, 401 döndürür (her zaman korunan rota)
 - [ ] `curl -H "host: evil.com" http://localhost:20128/api/mcp/sse`, 401 döndürür (geri döngü koruması)
 - [ ] SQLite çalışma zamanı ilk çalıştırmada `bundled` olarak çözümlenir (paketlenmiş ikili dosya platform için geçerlidir)
 - [ ] `node_modules/better-sqlite3` silindiğinde SQLite çalışma zamanı `runtime` seçeneğine geri döner
 - [ ] Akıllı MCP filtresi, gerçek `playwright-mcp browser_snapshot` çıktısını sıkıştırır (≥%50 azalma)
-- [ ] 10 `skills/omniroute*/SKILL.md` dosyasının tümüne ham GitHub URL'si üzerinden herkese açık biçimde erişilebilir
+- [ ] 10 `skills/pusula*/SKILL.md` dosyasının tümüne ham GitHub URL'si üzerinden herkese açık biçimde erişilebilir
 - [ ] İlk kurulumda başlangıç sihirbazı "Nasıl Çalışır?" katman tanıtım adımını gösterir
 - [ ] Ana pano katman kapsamı bileşeni, yapılandırılmış/etkin sayıları gösterir
 

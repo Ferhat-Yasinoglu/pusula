@@ -10,7 +10,7 @@ import path from "node:path";
  * `auto/chat` and provider-prefixed catalog labels duplicated the provider
  * name. `buildModelEntry()`'s name precedence (highest to lowest) is:
  *   1. an existing custom name already set by the user in opencode.json
- *   2. a readable label for `auto/*` ids (OmniRoute's own virtual routing ids)
+ *   2. a readable label for `auto/*` ids (Pusula's own virtual routing ids)
  *   3. the catalog's `display_name` (falling back to `name`), with a leading
  *      `owned_by/` prefix stripped once
  *   4. the raw catalog/model id, when nothing else is known
@@ -46,7 +46,7 @@ describe("opencode config generator — catalog display-name precedence (#13168)
   it("1. an existing custom name wins over any catalog name", async () => {
     const configPath = writeTempConfig({
       provider: {
-        omniroute: {
+        pusula: {
           models: {
             "vendor/model-a": { name: "My Custom Label" },
           },
@@ -67,7 +67,7 @@ describe("opencode config generator — catalog display-name precedence (#13168)
         configPath,
       });
       const cfg = JSON.parse(out);
-      assert.strictEqual(cfg.provider.omniroute.models["vendor/model-a"].name, "My Custom Label");
+      assert.strictEqual(cfg.provider.pusula.models["vendor/model-a"].name, "My Custom Label");
     } finally {
       stub.restore();
       fs.rmSync(path.dirname(configPath), { recursive: true, force: true });
@@ -96,7 +96,7 @@ describe("opencode config generator — catalog display-name precedence (#13168)
         configPath,
       });
       const cfg = JSON.parse(out);
-      assert.strictEqual(cfg.provider.omniroute.models["vendor/model-b"].name, "Pretty Name");
+      assert.strictEqual(cfg.provider.pusula.models["vendor/model-b"].name, "Pretty Name");
     } finally {
       stub.restore();
       fs.rmSync(tmpDir, { recursive: true, force: true });
@@ -120,7 +120,7 @@ describe("opencode config generator — catalog display-name precedence (#13168)
         configPath,
       });
       const cfg = JSON.parse(out);
-      assert.strictEqual(cfg.provider.omniroute.models["vendor/model-c"].name, "Native Label");
+      assert.strictEqual(cfg.provider.pusula.models["vendor/model-c"].name, "Native Label");
     } finally {
       stub.restore();
       fs.rmSync(tmpDir, { recursive: true, force: true });
@@ -140,7 +140,7 @@ describe("opencode config generator — catalog display-name precedence (#13168)
         configPath,
       });
       const cfg = JSON.parse(out);
-      assert.strictEqual(cfg.provider.omniroute.models["auto/chat-turbo"].name, "Auto Chat Turbo");
+      assert.strictEqual(cfg.provider.pusula.models["auto/chat-turbo"].name, "Auto Chat Turbo");
     } finally {
       stub.restore();
       fs.rmSync(tmpDir, { recursive: true, force: true });
@@ -161,7 +161,7 @@ describe("opencode config generator — catalog display-name precedence (#13168)
       });
       const cfg = JSON.parse(out);
       assert.strictEqual(
-        cfg.provider.omniroute.models["custom-vendor/raw-model-id"].name,
+        cfg.provider.pusula.models["custom-vendor/raw-model-id"].name,
         "custom-vendor/raw-model-id"
       );
     } finally {

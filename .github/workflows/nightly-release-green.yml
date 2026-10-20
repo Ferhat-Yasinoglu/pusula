@@ -56,7 +56,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  OMNIROUTE_SKIP_SYSTEM_TRUST: "1"
+  PUSULA_SKIP_SYSTEM_TRUST: "1"
 
 jobs:
   release-green:
@@ -65,7 +65,7 @@ jobs:
     # main-green job below. Schedule/dispatch always run (they validate the highest release).
     if: ${{ github.event_name != 'push' || startsWith(github.ref_name, 'release/') }}
     # Dynamic runner: with USE_VPS_RUNNER=true (release window / on-demand pre-flight)
-    # this runs on the dedicated VPS runner — clean env (no operator OMNIROUTE_API_KEY,
+    # this runs on the dedicated VPS runner — clean env (no operator PUSULA_API_KEY,
     # no local noauth CLIs => zero machine-specific false positives) and no contention.
     # Nightly cron normally finds the var false (VM off) and falls back to hosted.
     runs-on: ${{ (vars.USE_VPS_RUNNER == 'true' && fromJSON('["self-hosted","omni-build"]')) || 'ubuntu-latest' }}

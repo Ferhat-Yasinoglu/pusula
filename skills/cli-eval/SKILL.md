@@ -11,8 +11,8 @@ Create and run evaluation suites, watch live benchmark progress, view scorecards
 ## Quick install
 
 ```bash
-npm install -g omniroute   # or: npx omniroute
-omniroute --version
+npm install -g pusula   # or: npx pusula
+pusula --version
 ```
 
 ## Subcommands
@@ -22,7 +22,7 @@ omniroute --version
 **Example:**
 
 ```bash
-omniroute eval
+pusula eval
 ```
 
 ### `eval suites`
@@ -30,7 +30,7 @@ omniroute eval
 **Example:**
 
 ```bash
-omniroute eval suites
+pusula eval suites
 ```
 
 ### `eval list`
@@ -38,7 +38,7 @@ omniroute eval suites
 **Example:**
 
 ```bash
-omniroute eval list
+pusula eval list
 ```
 
 ### `eval get <suiteId>`
@@ -46,7 +46,7 @@ omniroute eval list
 **Example:**
 
 ```bash
-omniroute eval get <suiteId>
+pusula eval get <suiteId>
 ```
 
 ### `eval create`
@@ -58,7 +58,7 @@ omniroute eval get <suiteId>
 **Example:**
 
 ```bash
-omniroute eval create
+pusula eval create
 ```
 
 ### `eval run <suiteId>`
@@ -74,7 +74,7 @@ omniroute eval create
 **Example:**
 
 ```bash
-omniroute eval run <suiteId>
+pusula eval run <suiteId>
 ```
 
 ### `eval list`
@@ -89,7 +89,7 @@ omniroute eval run <suiteId>
 **Example:**
 
 ```bash
-omniroute eval list
+pusula eval list
 ```
 
 ### `eval get <runId>`
@@ -97,7 +97,7 @@ omniroute eval list
 **Example:**
 
 ```bash
-omniroute eval get <runId>
+pusula eval get <runId>
 ```
 
 ### `eval results <runId>`
@@ -109,7 +109,7 @@ omniroute eval get <runId>
 **Example:**
 
 ```bash
-omniroute eval results <runId>
+pusula eval results <runId>
 ```
 
 ### `eval cancel <runId>`
@@ -121,7 +121,7 @@ omniroute eval results <runId>
 **Example:**
 
 ```bash
-omniroute eval cancel <runId>
+pusula eval cancel <runId>
 ```
 
 ### `eval scorecard <runId>`
@@ -129,7 +129,7 @@ omniroute eval cancel <runId>
 **Example:**
 
 ```bash
-omniroute eval scorecard <runId>
+pusula eval scorecard <runId>
 ```
 
 ### `simulate [prompt]`
@@ -146,33 +146,33 @@ omniroute eval scorecard <runId>
 **Example:**
 
 ```bash
-omniroute simulate [prompt]
+pusula simulate [prompt]
 ```
 
 <!-- skill:custom-start -->
-<!-- Migrated from skills/omniroute-cli-eval/SKILL.md (preserved curated content) -->
+<!-- Migrated from skills/pusula-cli-eval/SKILL.md (preserved curated content) -->
 
-# OmniRoute — CLI Evals
+# Pusula — CLI Evals
 
-Requires the `omniroute` CLI. See [CLI entry-point skill](https://raw.githubusercontent.com/diegosouzapw/OmniRoute/main/skills/omniroute-cli/SKILL.md) for install + global flags.
+Requires the `pusula` CLI. See [CLI entry-point skill](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-cli/SKILL.md) for install + global flags.
 
 ## What are evals?
 
-Evals are automated test suites that score LLM outputs against expected answers or rubrics. OmniRoute stores suites and run results in its local database.
+Evals are automated test suites that score LLM outputs against expected answers or rubrics. Pusula stores suites and run results in its local database.
 
 ## Eval suites
 
 ```bash
-omniroute eval suites list                       # List all eval suites
-omniroute eval suites list --json                # JSON output
+pusula eval suites list                       # List all eval suites
+pusula eval suites list --json                # JSON output
 
-omniroute eval suites get <suiteId>              # Full suite definition
+pusula eval suites get <suiteId>              # Full suite definition
 ```
 
 ### Create a suite
 
 ```bash
-omniroute eval suites create \
+pusula eval suites create \
   --name "code-quality" \
   --rubric "exact-match" \
   --samples-file ./samples.jsonl                 # JSONL: {input, expected_output}
@@ -190,10 +190,10 @@ Rubric options: `exact-match`, `contains`, `llm-judge`, `regex`.
 ## Run an eval
 
 ```bash
-omniroute eval suites run <suiteId> \
+pusula eval suites run <suiteId> \
   --model claude-sonnet-4-6                      # Run suite against a specific model
 
-omniroute eval suites run <suiteId> \
+pusula eval suites run <suiteId> \
   --model gpt-4o \
   --watch                                        # Live TUI progress (EvalWatch)
 ```
@@ -201,26 +201,26 @@ omniroute eval suites run <suiteId> \
 The run is asynchronous. Use `--watch` for a live terminal dashboard or poll manually:
 
 ```bash
-RUN_ID=$(omniroute eval suites run <suiteId> --model claude-sonnet-4-6 --output json | jq -r '.id')
-omniroute eval get $RUN_ID
+RUN_ID=$(pusula eval suites run <suiteId> --model claude-sonnet-4-6 --output json | jq -r '.id')
+pusula eval get $RUN_ID
 ```
 
 ## Manage runs
 
 ```bash
-omniroute eval list                              # List all eval runs
-omniroute eval list --json
+pusula eval list                              # List all eval runs
+pusula eval list --json
 
-omniroute eval get <runId>                       # Run details (status, model, score)
-omniroute eval results <runId>                   # Per-sample results
-omniroute eval scorecard <runId>                 # Full scorecard with pass/fail per sample
-omniroute eval cancel <runId>                    # Cancel a running eval
+pusula eval get <runId>                       # Run details (status, model, score)
+pusula eval results <runId>                   # Per-sample results
+pusula eval scorecard <runId>                 # Full scorecard with pass/fail per sample
+pusula eval cancel <runId>                    # Cancel a running eval
 ```
 
 ## Scorecard output
 
 ```bash
-omniroute eval scorecard <runId> --output json
+pusula eval scorecard <runId> --output json
 ```
 
 Response fields per sample:
@@ -242,7 +242,7 @@ Run the same suite against multiple models and compare:
 
 ```bash
 for MODEL in claude-sonnet-4-6 gpt-4o gemini-2.0-flash; do
-  omniroute eval suites run $SUITE_ID --model $MODEL --output json | jq '{model: .model, score: .score}'
+  pusula eval suites run $SUITE_ID --model $MODEL --output json | jq '{model: .model, score: .score}'
 done
 ```
 
@@ -250,14 +250,14 @@ done
 
 ```bash
 # Run and fail CI if score drops below threshold
-SCORE=$(omniroute eval suites run $SUITE_ID --model claude-sonnet-4-6 --output json | jq -r '.score')
+SCORE=$(pusula eval suites run $SUITE_ID --model claude-sonnet-4-6 --output json | jq -r '.score')
 python3 -c "import sys; score=float('$SCORE'); sys.exit(0 if score >= 0.90 else 1)"
 ```
 
 ## Errors
 
 - `suites create` fails with `invalid rubric` → use one of: `exact-match`, `contains`, `llm-judge`, `regex`
-- `suites run` returns `model not found` → verify model ID with `omniroute models --search <name>`
-- `eval get` shows `status: failed` → check `omniroute logs --search eval` for error details
-- `scorecard` returns empty results → the run may still be `running`; poll `omniroute eval get <runId>` until `status` is `completed`
+- `suites run` returns `model not found` → verify model ID with `pusula models --search <name>`
+- `eval get` shows `status: failed` → check `pusula logs --search eval` for error details
+- `scorecard` returns empty results → the run may still be `running`; poll `pusula eval get <runId>` until `status` is `completed`
 <!-- skill:custom-end -->

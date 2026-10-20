@@ -79,7 +79,7 @@ test("AntigravityExecutor.buildUrl always targets the streaming endpoint", () =>
   );
 });
 
-test("AntigravityExecutor.buildHeaders includes native headers without OmniRoute internals", () => {
+test("AntigravityExecutor.buildHeaders includes native headers without Pusula internals", () => {
   const executor = new AntigravityExecutor();
   seedAntigravityIdeVersionCache("2.1.1");
   const headers = executor.buildHeaders({ accessToken: "ag-token" }, false);
@@ -87,20 +87,20 @@ test("AntigravityExecutor.buildHeaders includes native headers without OmniRoute
   assert.equal(headers.Authorization, "Bearer ag-token");
   assert.equal(headers.Accept, "text/event-stream");
   assert.equal(headers["User-Agent"], antigravityIdeUserAgent("2.1.1"));
-  assert.equal(headers["X-OmniRoute-Source"], undefined);
+  assert.equal(headers["X-Pusula-Source"], undefined);
 });
 
-test("Antigravity header scrub removes OmniRoute internal headers", () => {
+test("Antigravity header scrub removes Pusula internal headers", () => {
   const headers = scrubProxyAndFingerprintHeaders({
     Authorization: "Bearer ag-token",
-    "X-OmniRoute-Source": "omniroute",
-    "X-OmniRoute-No-Cache": "true",
+    "X-Pusula-Source": "pusula",
+    "X-Pusula-No-Cache": "true",
     "X-Forwarded-For": "127.0.0.1",
   });
 
   assert.equal(headers.Authorization, "Bearer ag-token");
-  assert.equal(headers["X-OmniRoute-Source"], undefined);
-  assert.equal(headers["X-OmniRoute-No-Cache"], undefined);
+  assert.equal(headers["X-Pusula-Source"], undefined);
+  assert.equal(headers["X-Pusula-No-Cache"], undefined);
   assert.equal(headers["X-Forwarded-For"], undefined);
   assert.equal(headers["Accept-Encoding"], "gzip, deflate, br");
 });
@@ -401,7 +401,7 @@ test("AntigravityExecutor.transformRequest treats whitespace-only project values
 test("AntigravityExecutor.transformRequest allows body project overrides when the env flag is enabled", async () => {
   const executor = new AntigravityExecutor();
 
-  await withEnv("OMNIROUTE_ALLOW_BODY_PROJECT_OVERRIDE", "1", async () => {
+  await withEnv("PUSULA_ALLOW_BODY_PROJECT_OVERRIDE", "1", async () => {
     const result = await executor.transformRequest(
       "antigravity/gemini-2.5-pro",
       {
@@ -559,7 +559,7 @@ test("AntigravityExecutor.collectStreamToResponse converts textual tool call SSE
   assert.deepEqual(JSON.parse(choice.message.tool_calls[0].function.arguments), {
     file_glob: "*gemini*",
     output_mode: "files_only",
-    path: "/opt/OmniRoute",
+    path: "/opt/Pusula",
     target: "files",
   });
 });

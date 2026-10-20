@@ -23,7 +23,7 @@ const route = readFileSync(new URL("../../src/app/api/db/health/route.ts", impor
 function loadCheck(skipEnv, authenticated = true) {
   const calls = [];
   const context = vm.createContext({
-    process: { env: { OMNIROUTE_SKIP_DB_HEALTHCHECK: skipEnv } },
+    process: { env: { PUSULA_SKIP_DB_HEALTHCHECK: skipEnv } },
     AbortController,
     createDbHealthCoordinator,
     getPagerCorruption: () => null,

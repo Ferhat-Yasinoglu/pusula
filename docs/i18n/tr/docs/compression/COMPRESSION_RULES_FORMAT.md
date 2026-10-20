@@ -168,7 +168,7 @@ Proje güven dosyası:
 }
 ```
 
-`OMNIROUTE_RTK_TRUST_PROJECT_FILTERS=1` ortam geçersiz kılma ayarı, proje filtrelerine karma olmadan
+`PUSULA_RTK_TRUST_PROJECT_FILTERS=1` ortam geçersiz kılma ayarı, proje filtrelerine karma olmadan
 güvenir ve yalnızca denetimli yerel geliştirme ortamlarıyla sınırlandırılmalıdır.
 
 ## Güvenlik Kuralları

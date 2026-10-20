@@ -39,7 +39,7 @@ der Zeitpunkt, zu dem die Ausführung den größten Nutzen bringt.
 
 `quality.yml` enthält jetzt `Build (advisory)` für Code-PRs, die keine Entwürfe sind, sowie für Mergify-Queue-Branches.
 Er bildet das Produktions-Build-Rezept aus `ci.yml` nach: Node 24, `npm-ci-retry`,
-`check:node-runtime` und `npm run build` mit `OMNIROUTE_USE_TURBOPACK=1`. Es wird bewusst
+`check:node-runtime` und `npm run build` mit `PUSULA_USE_TURBOPACK=1`. Es wird bewusst
 kein Build-Artefakt hochgeladen, da in diesem Workflow kein nachgelagerter Quality-Job eines verwendet.
 Entferne `continue-on-error` nach einer Woche stabiler Release-PR-Durchläufe, damit das Signal zu einem
 blockierenden PR-to-Release-Gate wird.

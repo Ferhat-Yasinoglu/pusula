@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-agy-lease-lifecycle-"));
+process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-agy-lease-lifecycle-"));
 
 const state = await import("../../src/sse/services/antigravityRoutingState.ts");
 const lifecycle = await import("../../src/sse/services/antigravityLeaseLifecycle.ts");

@@ -1,4 +1,4 @@
-// Regression for GitHub issue #13012 (Bug 2): `omniroute mcp restart` POSTs to
+// Regression for GitHub issue #13012 (Bug 2): `pusula mcp restart` POSTs to
 // /api/mcp/restart, but that route never existed — every call 404d. This test
 // boots the route handler directly and pins its behavior across the three
 // states the CLI can hit: disabled, enabled+stdio, enabled+http-family.

@@ -6,7 +6,7 @@ import {
   isOpenAICompatibleProvider,
   NOAUTH_PROVIDERS,
 } from "@/shared/constants/providers";
-import { getRegistryEntry } from "@omniroute/open-sse/config/providerRegistry.ts";
+import { getRegistryEntry } from "@pusula/open-sse/config/providerRegistry.ts";
 import { getModelsByProviderId } from "@/shared/constants/models";
 import { resolveAlibabaProviderModelsUrl } from "@/shared/constants/alibabaProviderRegions";
 import { getStaticModelsForProvider } from "@/lib/providers/staticModels";
@@ -25,67 +25,67 @@ import {
   getProviderOutboundGuard,
   getProviderValidationGuard,
 } from "@/shared/network/outboundUrlGuardPolicy";
-import { errorResponse, sanitizeErrorMessage } from "@omniroute/open-sse/utils/error";
-import { getStaticQoderModels } from "@omniroute/open-sse/services/qoderCli.ts";
+import { errorResponse, sanitizeErrorMessage } from "@pusula/open-sse/utils/error";
+import { getStaticQoderModels } from "@pusula/open-sse/services/qoderCli.ts";
 import { deriveConfigFromRegistryModelsUrl } from "./discoveryConfig";
 import {
   buildTokenPlanCatalogRequest,
   isTokenPlanCatalogProvider,
   parseTokenPlanCatalog,
 } from "@/lib/providerModels/tokenPlanModelDiscovery";
-import { resolveZedModels } from "@omniroute/open-sse/shared/zedAuth.ts";
+import { resolveZedModels } from "@pusula/open-sse/shared/zedAuth.ts";
 import {
   fetchGitHubCopilotModels,
   fetchGheCopilotModels,
-} from "@omniroute/open-sse/services/githubCopilotModels.ts";
-import { fetchKiroAvailableModels } from "@omniroute/open-sse/services/kiroModels.ts";
+} from "@pusula/open-sse/services/githubCopilotModels.ts";
+import { fetchKiroAvailableModels } from "@pusula/open-sse/services/kiroModels.ts";
 import {
   buildGlmCodingHeaders,
   buildGlmModelsUrl,
-} from "@omniroute/open-sse/config/glmProvider.ts";
-import { getImageProvider } from "@omniroute/open-sse/config/imageRegistry.ts";
-import { getVideoProvider } from "@omniroute/open-sse/config/videoRegistry.ts";
+} from "@pusula/open-sse/config/glmProvider.ts";
+import { getImageProvider } from "@pusula/open-sse/config/imageRegistry.ts";
+import { getVideoProvider } from "@pusula/open-sse/config/videoRegistry.ts";
 import {
   discoverBedrockNativeModels,
   isBedrockNativeApiError,
-} from "@omniroute/open-sse/services/bedrock.ts";
+} from "@pusula/open-sse/services/bedrock.ts";
 import {
   discoverPromptQlModels,
   PROMPTQL_FALLBACK_MODELS,
-} from "@omniroute/open-sse/services/promptqlModels.ts";
+} from "@pusula/open-sse/services/promptqlModels.ts";
 import {
   discoverNotionWebModels,
   NOTION_WEB_FALLBACK_MODELS,
-} from "@omniroute/open-sse/services/notionWebModels.ts";
+} from "@pusula/open-sse/services/notionWebModels.ts";
 import {
   discoverMaxaiModels,
   MAXAI_REGISTRY_MODELS,
-} from "@omniroute/open-sse/services/maxaiModels.ts";
+} from "@pusula/open-sse/services/maxaiModels.ts";
 import {
   AZURE_AI_DEFAULT_BASE_URL,
   buildAzureAiModelsUrl,
-} from "@omniroute/open-sse/config/azureAi.ts";
+} from "@pusula/open-sse/config/azureAi.ts";
 import {
   DATAROBOT_DEFAULT_BASE_URL,
   buildDataRobotCatalogUrl,
   isDataRobotDeploymentUrl,
-} from "@omniroute/open-sse/config/datarobot.ts";
-import { OCI_DEFAULT_BASE_URL, buildOciModelsUrl } from "@omniroute/open-sse/config/oci.ts";
+} from "@pusula/open-sse/config/datarobot.ts";
+import { OCI_DEFAULT_BASE_URL, buildOciModelsUrl } from "@pusula/open-sse/config/oci.ts";
 import {
   SAP_DEFAULT_BASE_URL,
   buildSapModelsUrl,
   getSapResourceGroup,
-} from "@omniroute/open-sse/config/sap.ts";
+} from "@pusula/open-sse/config/sap.ts";
 import {
   WATSONX_DEFAULT_BASE_URL,
   buildWatsonxModelsUrl,
-} from "@omniroute/open-sse/config/watsonx.ts";
-import { getEmbeddingProvider } from "@omniroute/open-sse/config/embeddingRegistry.ts";
-import { getRerankProvider } from "@omniroute/open-sse/config/rerankRegistry.ts";
+} from "@pusula/open-sse/config/watsonx.ts";
+import { getEmbeddingProvider } from "@pusula/open-sse/config/embeddingRegistry.ts";
+import { getRerankProvider } from "@pusula/open-sse/config/rerankRegistry.ts";
 import {
   getSpeechProvider,
   getTranscriptionProvider,
-} from "@omniroute/open-sse/config/audioRegistry.ts";
+} from "@pusula/open-sse/config/audioRegistry.ts";
 import {
   getCachedDiscoveredModels,
   isAutoFetchModelsEnabled,
@@ -158,7 +158,7 @@ export async function GET(
     const includeCandidates = searchParams.get("includeCandidates") === "true";
     const chatOnly =
       searchParams.get("chatOnly") === "true" ||
-      request.headers.get("x-omniroute-model-surface")?.toLowerCase() === "chat";
+      request.headers.get("x-pusula-model-surface")?.toLowerCase() === "chat";
 
     const connection = await getCachedProviderConnectionById(id);
     const connectionProvider =
@@ -2310,11 +2310,11 @@ export async function GET(
 
     if (getProviderConnectionFamilyIds("alibaba").includes(provider)) {
       const { shouldUseLiveAlibabaFreeModelDiscovery } =
-        await import("@omniroute/open-sse/services/alibabaFreeTier.ts");
+        await import("@pusula/open-sse/services/alibabaFreeTier.ts");
       const { scheduleAlibabaFreeTierProbeRefresh } =
-        await import("@omniroute/open-sse/services/alibabaFreeTierDiscovery.ts");
+        await import("@pusula/open-sse/services/alibabaFreeTierDiscovery.ts");
       const { scheduleAlibabaFreeTierQuotaRefresh, hasAlibabaConsoleFreeTierAuth } =
-        await import("@omniroute/open-sse/services/alibabaFreeTierQuotaFetcher.ts");
+        await import("@pusula/open-sse/services/alibabaFreeTierQuotaFetcher.ts");
       const { resolveAlibabaProviderBaseUrl } =
         await import("@/shared/constants/alibabaProviderRegions.ts");
       const providerSpecificData = connection.providerSpecificData as Record<

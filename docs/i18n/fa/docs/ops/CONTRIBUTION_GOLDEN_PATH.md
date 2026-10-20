@@ -92,7 +92,7 @@ npm run lint
 
 - `src/i18n/messages/en.json` منبع رابط کاربری است؛ `config/i18n.json` منبع locale است.
 - کاتالوگهای CLI بهصورت جداگانه در `bin/cli/locales/` قرار دارند.
-- placeholderها و tagهای ICU را دقیقاً حفظ کنید. نام محصولات/ارائهدهندگان/مدلها، نام protocolها و headerها، فرمانها، identifierهای code/JSON، URLها، environment variableها یا اصطلاحات محافظتشدهای مانند `OmniRoute`، `OAuth`، `MCP` و `A2A` را ترجمه نکنید. فهرست منبع فعلی
+- placeholderها و tagهای ICU را دقیقاً حفظ کنید. نام محصولات/ارائهدهندگان/مدلها، نام protocolها و headerها، فرمانها، identifierهای code/JSON، URLها، environment variableها یا اصطلاحات محافظتشدهای مانند `Pusula`، `OAuth`، `MCP` و `A2A` را ترجمه نکنید. فهرست منبع فعلی
   `scripts/i18n/glossary/protected-terms.json` است.
 
 **چرخه متمرکز**

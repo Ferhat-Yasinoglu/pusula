@@ -1,10 +1,10 @@
-# 📖 Setup Guide — OmniRoute (Türkçe)
+# 📖 Setup Guide — Pusula (Türkçe)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../guides/SETUP_GUIDE.md) · 🇪🇹 [am](../../../am/docs/guides/SETUP_GUIDE.md) · 🇸🇦 [ar](../../../ar/docs/guides/SETUP_GUIDE.md) · 🇦🇿 [az](../../../az/docs/guides/SETUP_GUIDE.md) · 🇧🇬 [bg](../../../bg/docs/guides/SETUP_GUIDE.md) · 🇧🇩 [bn](../../../bn/docs/guides/SETUP_GUIDE.md) · 🇧🇦 [bs](../../../bs/docs/guides/SETUP_GUIDE.md) · 🇨🇿 [cs](../../../cs/docs/guides/SETUP_GUIDE.md) · 🇩🇰 [da](../../../da/docs/guides/SETUP_GUIDE.md) · 🇩🇪 [de](../../../de/docs/guides/SETUP_GUIDE.md) · 🇬🇷 [el](../../../el/docs/guides/SETUP_GUIDE.md) · 🇪🇸 [es](../../../es/docs/guides/SETUP_GUIDE.md) · 🇪🇪 [et](../../../et/docs/guides/SETUP_GUIDE.md) · 🇮🇷 [fa](../../../fa/docs/guides/SETUP_GUIDE.md) · 🇫🇮 [fi](../../../fi/docs/guides/SETUP_GUIDE.md) · 🇫🇷 [fr](../../../fr/docs/guides/SETUP_GUIDE.md) · 🇮🇪 [ga](../../../ga/docs/guides/SETUP_GUIDE.md) · 🇮🇳 [gu](../../../gu/docs/guides/SETUP_GUIDE.md) · 🇳🇬 [ha](../../../ha/docs/guides/SETUP_GUIDE.md) · 🇮🇱 [he](../../../he/docs/guides/SETUP_GUIDE.md) · 🇮🇳 [hi](../../../hi/docs/guides/SETUP_GUIDE.md) · 🇭🇷 [hr](../../../hr/docs/guides/SETUP_GUIDE.md) · 🇭🇺 [hu](../../../hu/docs/guides/SETUP_GUIDE.md) · 🇦🇲 [hy](../../../hy/docs/guides/SETUP_GUIDE.md) · 🇮🇩 [id](../../../id/docs/guides/SETUP_GUIDE.md) · 🇳🇬 [ig](../../../ig/docs/guides/SETUP_GUIDE.md) · 🇮🇹 [it](../../../it/docs/guides/SETUP_GUIDE.md) · 🇯🇵 [ja](../../../ja/docs/guides/SETUP_GUIDE.md) · 🇬🇪 [ka](../../../ka/docs/guides/SETUP_GUIDE.md) · 🇰🇭 [km](../../../km/docs/guides/SETUP_GUIDE.md) · 🇮🇳 [kn](../../../kn/docs/guides/SETUP_GUIDE.md) · 🇰🇷 [ko](../../../ko/docs/guides/SETUP_GUIDE.md) · 🇱🇹 [lt](../../../lt/docs/guides/SETUP_GUIDE.md) · 🇱🇻 [lv](../../../lv/docs/guides/SETUP_GUIDE.md) · 🇮🇳 [ml](../../../ml/docs/guides/SETUP_GUIDE.md) · 🇮🇳 [mr](../../../mr/docs/guides/SETUP_GUIDE.md) · 🇲🇾 [ms](../../../ms/docs/guides/SETUP_GUIDE.md) · 🇲🇹 [mt](../../../mt/docs/guides/SETUP_GUIDE.md) · 🇲🇲 [my](../../../my/docs/guides/SETUP_GUIDE.md) · 🇳🇵 [ne](../../../ne/docs/guides/SETUP_GUIDE.md) · 🇳🇱 [nl](../../../nl/docs/guides/SETUP_GUIDE.md) · 🇳🇴 [no](../../../no/docs/guides/SETUP_GUIDE.md) · 🇮🇳 [or](../../../or/docs/guides/SETUP_GUIDE.md) · 🇮🇳 [pa](../../../pa/docs/guides/SETUP_GUIDE.md) · 🇵🇭 [phi](../../../phi/docs/guides/SETUP_GUIDE.md) · 🇵🇱 [pl](../../../pl/docs/guides/SETUP_GUIDE.md) · 🇵🇹 [pt](../../../pt/docs/guides/SETUP_GUIDE.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/guides/SETUP_GUIDE.md) · 🇷🇴 [ro](../../../ro/docs/guides/SETUP_GUIDE.md) · 🇷🇺 [ru](../../../ru/docs/guides/SETUP_GUIDE.md) · 🇱🇰 [si](../../../si/docs/guides/SETUP_GUIDE.md) · 🇸🇰 [sk](../../../sk/docs/guides/SETUP_GUIDE.md) · 🇸🇮 [sl](../../../sl/docs/guides/SETUP_GUIDE.md) · 🇷🇸 [sr](../../../sr/docs/guides/SETUP_GUIDE.md) · 🇸🇪 [sv](../../../sv/docs/guides/SETUP_GUIDE.md) · 🇰🇪 [sw](../../../sw/docs/guides/SETUP_GUIDE.md) · 🇮🇳 [ta](../../../ta/docs/guides/SETUP_GUIDE.md) · 🇮🇳 [te](../../../te/docs/guides/SETUP_GUIDE.md) · 🇹🇭 [th](../../../th/docs/guides/SETUP_GUIDE.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/guides/SETUP_GUIDE.md) · 🇵🇰 [ur](../../../ur/docs/guides/SETUP_GUIDE.md) · 🇺🇿 [uz](../../../uz/docs/guides/SETUP_GUIDE.md) · 🇻🇳 [vi](../../../vi/docs/guides/SETUP_GUIDE.md) · 🇳🇬 [yo](../../../yo/docs/guides/SETUP_GUIDE.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/guides/SETUP_GUIDE.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/guides/SETUP_GUIDE.md)
 
 ---
 
-> OmniRoute için eksiksiz kurulum başvurusu. Hızlı sürüm için [README'deki Hızlı Başlangıç](../README.md#-quick-start) bölümüne bakın.
+> Pusula için eksiksiz kurulum başvurusu. Hızlı sürüm için [README'deki Hızlı Başlangıç](../README.md#-quick-start) bölümüne bakın.
 
 ## İçindekiler
 
@@ -23,8 +23,8 @@
 ### npm (önerilen)
 
 ```bash
-npm install -g omniroute
-omniroute
+npm install -g pusula
+pusula
 ```
 
 Kontrol paneli `http://localhost:20128` adresinde açılır ve API temel URL'si `http://localhost:20128/v1` olur.
@@ -32,8 +32,8 @@ Kontrol paneli `http://localhost:20128` adresinde açılır ve API temel URL'si 
 ### pnpm
 
 ```bash
-pnpm add -g omniroute@latest --allow-build=better-sqlite3 --allow-build=@swc/core
-omniroute
+pnpm add -g pusula@latest --allow-build=better-sqlite3 --allow-build=@swc/core
+pusula
 ```
 
 > **pnpm kullanıcıları:** `better-sqlite3` ve `@swc/core` için yerel derleme betiklerini etkinleştirmek üzere `--allow-build` bayrağı gereklidir. `pnpm approve-builds -g` komutu, pnpm v11'de genel kurulumlar için desteklenmez.
@@ -41,11 +41,11 @@ omniroute
 ### Arch Linux (AUR)
 
 ```bash
-yay -S omniroute-bin
-systemctl --user enable --now omniroute.service
+yay -S pusula-bin
+systemctl --user enable --now pusula.service
 ```
 
-[AUR paketi](https://aur.archlinux.org/packages/omniroute-bin), OmniRoute'u kurar ve bir systemd kullanıcı hizmeti sağlar.
+[AUR paketi](https://aur.archlinux.org/packages/pusula-bin), Pusula'u kurar ve bir systemd kullanıcı hizmeti sağlar.
 
 ### Kaynaktan
 
@@ -54,7 +54,7 @@ npm install
 PORT=20128 DASHBOARD_PORT=20129 NEXT_PUBLIC_BASE_URL=http://localhost:20129 npm run dev
 ```
 
-> **Windows notu:** Eski `%USERPROFILE%\.omniroute` dizini mevcut değilse OmniRoute varsayılan olarak `%APPDATA%\omniroute` dizinini kullanır. Farklı bir veri dizini konumu seçmek için `DATA_DIR` değişkenini ayarlayın.
+> **Windows notu:** Eski `%USERPROFILE%\.pusula` dizini mevcut değilse Pusula varsayılan olarak `%APPDATA%\pusula` dizinini kullanır. Farklı bir veri dizini konumu seçmek için `DATA_DIR` değişkenini ayarlayın.
 
 > **Not:** `npm install`, ilk çalıştırmada `.env.example` dosyasından otomatik olarak `.env` oluşturur. Sonraki kurulumlar mevcut bir `.env` dosyasının üzerine yazmaz; böylece özelleştirmeler korunur. Yeniden oluşturmak için komutu tekrar çalıştırmadan önce `.env` dosyasını silin.
 
@@ -64,7 +64,7 @@ Compose profilleri ve Caddy HTTPS dahil eksiksiz Docker kurulumu için [Docker K
 
 ### Masaüstü Uygulaması (Electron)
 
-OmniRoute, Electron 41 + electron-builder 26.10 üzerine kurulu bir masaüstü sarmalayıcısıyla birlikte gelir. Kullanılabilir betikler (çalışma alanı kökü):
+Pusula, Electron 41 + electron-builder 26.10 üzerine kurulu bir masaüstü sarmalayıcısıyla birlikte gelir. Kullanılabilir betikler (çalışma alanı kökü):
 
 ```bash
 npm run electron:dev          # Masaüstü uygulamasını çalışırken yeniden yüklemeyle çalıştır
@@ -82,56 +82,56 @@ Masaüstü yükleyicilerinin sürümleri GitHub Releases sayfasına eklenir. Ele
 Gözetimsiz kurulumlar (Docker, Kubernetes, CI) için şunları kullanın:
 
 ```bash
-omniroute setup --non-interactive
-omniroute providers test-batch
+pusula setup --non-interactive
+pusula providers test-batch
 ```
 
-Ortam değişkenleriyle (`INITIAL_PASSWORD`, `OMNIROUTE_WS_BRIDGE_SECRET` vb.) birlikte kullanıldığında bu, tamamen betiklerle yönetilebilen bir OmniRoute örneği başlatmanıza olanak tanır.
+Ortam değişkenleriyle (`INITIAL_PASSWORD`, `PUSULA_WS_BRIDGE_SECRET` vb.) birlikte kullanıldığında bu, tamamen betiklerle yönetilebilen bir Pusula örneği başlatmanıza olanak tanır.
 
 ### CLI Seçenekleri
 
 | Komut                   | Açıklama                                                                              |
 | ----------------------- | ------------------------------------------------------------------------------------- |
-| `omniroute`             | Sunucuyu başlat (`PORT=20128`, API ve kontrol paneli aynı portta)                     |
-| `omniroute setup`       | Parola ve ilk sağlayıcı için rehberli CLI başlangıç kurulumu                          |
-| `omniroute doctor`      | Sunucuyu başlatmadan yerel sistem durumu denetimlerini çalıştır                       |
-| `omniroute providers`   | Sağlayıcıları CLI üzerinden keşfet, listele, doğrula ve test et                       |
-| `omniroute config`      | CLI aracı yapılandırması — yapılandırmaları listele, al, ayarla ve doğrula            |
-| `omniroute status`      | Çevrimdışı durum paneli — sürüm, DB, araçlar ve yapılandırma                          |
-| `omniroute logs`        | API'den kullanım günlüklerini akışla (`--follow` desteklenir)                         |
-| `omniroute update`      | OmniRoute güncellemelerini denetle veya uygula                                        |
-| `omniroute provider`    | Sağlayıcı bağlantılarını yönet — ekle, listele, kaldır, test et ve varsayılanı ayarla |
-| `omniroute --port 3000` | Standart/API portunu 3000 olarak ayarla                                               |
-| `omniroute --mcp`       | MCP sunucusunu başlat (stdio aktarımı)                                                |
-| `omniroute --no-open`   | Tarayıcıyı otomatik olarak açma                                                       |
-| `omniroute --help`      | Yardımı göster                                                                        |
+| `pusula`             | Sunucuyu başlat (`PORT=20128`, API ve kontrol paneli aynı portta)                     |
+| `pusula setup`       | Parola ve ilk sağlayıcı için rehberli CLI başlangıç kurulumu                          |
+| `pusula doctor`      | Sunucuyu başlatmadan yerel sistem durumu denetimlerini çalıştır                       |
+| `pusula providers`   | Sağlayıcıları CLI üzerinden keşfet, listele, doğrula ve test et                       |
+| `pusula config`      | CLI aracı yapılandırması — yapılandırmaları listele, al, ayarla ve doğrula            |
+| `pusula status`      | Çevrimdışı durum paneli — sürüm, DB, araçlar ve yapılandırma                          |
+| `pusula logs`        | API'den kullanım günlüklerini akışla (`--follow` desteklenir)                         |
+| `pusula update`      | Pusula güncellemelerini denetle veya uygula                                        |
+| `pusula provider`    | Sağlayıcı bağlantılarını yönet — ekle, listele, kaldır, test et ve varsayılanı ayarla |
+| `pusula --port 3000` | Standart/API portunu 3000 olarak ayarla                                               |
+| `pusula --mcp`       | MCP sunucusunu başlat (stdio aktarımı)                                                |
+| `pusula --no-open`   | Tarayıcıyı otomatik olarak açma                                                       |
+| `pusula --help`      | Yardımı göster                                                                        |
 
 Başsız kurulum, bayraklar veya ortam değişkenleri kullanılarak betikleştirilebilir:
 
 ```bash
-omniroute setup --non-interactive --password "$OMNIROUTE_PASSWORD"
-omniroute setup --non-interactive --add-provider --provider openai --api-key "$OPENAI_API_KEY"
-omniroute setup --non-interactive --add-provider --provider openai --api-key "$OPENAI_API_KEY" --test-provider
+pusula setup --non-interactive --password "$PUSULA_PASSWORD"
+pusula setup --non-interactive --add-provider --provider openai --api-key "$OPENAI_API_KEY"
+pusula setup --non-interactive --add-provider --provider openai --api-key "$OPENAI_API_KEY" --test-provider
 ```
 
 Kontrol panelini açmadan yerel tanılamaları çalıştırın:
 
 ```bash
-omniroute doctor
-omniroute doctor --json
-omniroute doctor --no-liveness
+pusula doctor
+pusula doctor --json
+pusula doctor --no-liveness
 ```
 
 Kontrol panelini açmadan sağlayıcıları SSH veya betikler üzerinden yönetin:
 
 ```bash
-omniroute providers available
-omniroute providers available --search openai
-omniroute providers available --category api-key
-omniroute providers list
-omniroute providers test <id-or-name>
-omniroute providers test-all
-omniroute providers validate
+pusula providers available
+pusula providers available --search openai
+pusula providers available --category api-key
+pusula providers list
+pusula providers test <id-or-name>
+pusula providers test-all
+pusula providers validate
 ```
 
 ---
@@ -165,29 +165,29 @@ Claude Code, Codex CLI, Cursor, Cline, OpenClaw, OpenCode ve OpenAI uyumlu SDK'l
 
 #### `setup-*` ile otomatik yapılandırma
 
-Temel URL'yi ve anahtarı elle yapıştırmak yerine OmniRoute'un canlı model kataloğundan her aracın
+Temel URL'yi ve anahtarı elle yapıştırmak yerine Pusula'un canlı model kataloğundan her aracın
 kendi yapılandırmasını yazmasına izin verin. Her araç için bir komut:
 
 ```bash
-omniroute setup-codex        # ~/.codex/<name>.config.toml profilleri
-omniroute setup-claude       # ~/.claude/profiles/<name>/settings.json
-omniroute setup-opencode     # ~/.config/opencode/opencode.json (OpenAI uyumlu)
-omniroute setup-cline        # Cline CLI + VS Code uzantısı ayarları
-omniroute setup-kilo         # Kilo Code
-omniroute setup-continue     # ~/.continue/config.yaml (Continue / cn)
-omniroute setup-cursor       # Cursor'ın uygulama içi adımlarını yazdırır
-omniroute setup-roo          # Roo Code içe aktarma + autoImport işaretçisi
-omniroute setup-crush        # ~/.config/crush/crush.json
-omniroute setup-goose        # ~/.config/goose/config.yaml
-omniroute setup-aider        # ~/.aider.conf.yml
-omniroute setup-qwen         # ~/.qwen/settings.json + ~/.qwen/.env
+pusula setup-codex        # ~/.codex/<name>.config.toml profilleri
+pusula setup-claude       # ~/.claude/profiles/<name>/settings.json
+pusula setup-opencode     # ~/.config/opencode/opencode.json (OpenAI uyumlu)
+pusula setup-cline        # Cline CLI + VS Code uzantısı ayarları
+pusula setup-kilo         # Kilo Code
+pusula setup-continue     # ~/.continue/config.yaml (Continue / cn)
+pusula setup-cursor       # Cursor'ın uygulama içi adımlarını yazdırır
+pusula setup-roo          # Roo Code içe aktarma + autoImport işaretçisi
+pusula setup-crush        # ~/.config/crush/crush.json
+pusula setup-goose        # ~/.config/goose/config.yaml
+pusula setup-aider        # ~/.aider.conf.yml
+pusula setup-qwen         # ~/.qwen/settings.json + ~/.qwen/.env
 ```
 
-Her biri, yerel bir aracı **uzak** bir OmniRoute'a göre yapılandırmak için `--remote <url> --api-key <key>` parametrelerini ve önizleme için `--dry-run` parametresini kabul eder. Doğru
+Her biri, yerel bir aracı **uzak** bir Pusula'a göre yapılandırmak için `--remote <url> --api-key <key>` parametrelerini ve önizleme için `--dry-run` parametresini kabul eder. Doğru
 ortam değişkenleri eklenmiş ve hiçbir yapılandırma yazılmamış şekilde bir CLI başlatmak için genel başlatıcı
-`omniroute run <target>` (claude, codex, aider, goose, opencode, qwen, gemini) komutunu kullanın;
-eski araç başına başlatıcılar olan `omniroute launch` (Claude Code) ve
-`omniroute launch-codex` (Codex) kullanılabilir olmaya devam eder.
+`pusula run <target>` (claude, codex, aider, goose, opencode, qwen, gemini) komutunu kullanın;
+eski araç başına başlatıcılar olan `pusula launch` (Claude Code) ve
+`pusula launch-codex` (Codex) kullanılabilir olmaya devam eder.
 
 Tam tablo (her komutun ne yazdığı, tüm parametreler, yerel ve uzak kullanım, temel URL
 `/v1` kuralları) için **[CLI Entegrasyonları](./CLI-INTEGRATIONS.md)** bölümüne bakın.
@@ -203,18 +203,18 @@ Araç bazında ayrıntılı yapılandırma (Claude Code, Codex CLI, Cursor, Clin
 MCP aktarımını stdio modunda başlatın:
 
 ```bash
-omniroute --mcp
+pusula --mcp
 ```
 
 Önerilen doğrulama akışı:
 
 ```bash
 # 1. MCP sunucusunu başlatın
-omniroute --mcp
+pusula --mcp
 
 # 2. MCP istemcinizden şunları çağırın:
-omniroute_get_health        # Sistem durumunu döndürmelidir
-omniroute_list_combos       # Etkin kombinasyonları döndürmelidir
+pusula_get_health        # Sistem durumunu döndürmelidir
+pusula_list_combos       # Etkin kombinasyonları döndürmelidir
 
 # 3. Veya E2E paketinin tamamını çalıştırın:
 npm run test:protocols:e2e
@@ -225,7 +225,7 @@ npm run test:protocols:e2e
 **Claude Code:**
 
 ```bash
-claude mcp add-server omniroute --type http --url http://localhost:20128/api/mcp/stream
+claude mcp add-server pusula --type http --url http://localhost:20128/api/mcp/stream
 ```
 
 **Cursor / Cline:**
@@ -235,8 +235,8 @@ MCP ayarlarınıza ekleyin:
 ```json
 {
   "mcpServers": {
-    "omniroute": {
-      "command": "omniroute",
+    "pusula": {
+      "command": "pusula",
       "args": ["--mcp"],
       "env": {}
     }
@@ -275,15 +275,15 @@ curl -X POST http://localhost:20128/a2a \
 | Değişken                 | Varsayılan                             | Amaç                                                                                                                                                            |
 | ------------------------ | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `REQUEST_TIMEOUT_MS`     | `600000`                               | Üst kaynak yanıt başlangıcı zaman aşımı, gizli Undici zaman aşımları, TLS parmak izi istekleri ve API köprüsü istek/proxy zaman aşımları için ortak temel değer |
-| `STREAM_IDLE_TIMEOUT_MS` | `REQUEST_TIMEOUT_MS` değerini devralır | OmniRoute'un SSE akışını sonlandırmasından önce akış parçaları arasında izin verilen maksimum süre                                                              |
+| `STREAM_IDLE_TIMEOUT_MS` | `REQUEST_TIMEOUT_MS` değerini devralır | Pusula'un SSE akışını sonlandırmasından önce akış parçaları arasında izin verilen maksimum süre                                                              |
 
 Geriye dönük uyumluluk korunur: mevcut `FETCH_TIMEOUT_MS`, `API_BRIDGE_PROXY_TIMEOUT_MS` ve katmana özgü diğer zaman aşımı değişkenleri çalışmaya devam eder ve ortak temel değeri geçersiz kılar.
 
 ### Sağlayıcıya Özgü Notlar
 
-Claude Code uyumlu üst kaynaklar (`anthropic-compatible-cc-*`) için OmniRoute, sağlayıcı tarafındaki okuma zaman aşımlarının ortam yapılandırmanızla uyumlu kalması amacıyla giden `X-Stainless-Timeout` üst bilgisini çözümlenen getirme zaman aşımından türetir.
+Claude Code uyumlu üst kaynaklar (`anthropic-compatible-cc-*`) için Pusula, sağlayıcı tarafındaki okuma zaman aşımlarının ortam yapılandırmanızla uyumlu kalması amacıyla giden `X-Stainless-Timeout` üst bilgisini çözümlenen getirme zaman aşımından türetir.
 
-Üçüncü taraf Claude Code uyumlu ters proxy'ler için OmniRoute, varsayılan `anthropic-beta` kümesini ölçülü tutar ve `Client Cache Control`, `Auto` olarak bırakıldığında yalnızca istemci tarafından sağlanan `cache_control` işaretleyicilerini iletir. Bağlantı başına "Redact-thinking beta'yı etkinleştir" seçeneğini yalnızca üst kaynak özellikle redakte edilmiş Claude düşünme akışlarını gerektiriyorsa etkinleştirin.
+Üçüncü taraf Claude Code uyumlu ters proxy'ler için Pusula, varsayılan `anthropic-beta` kümesini ölçülü tutar ve `Client Cache Control`, `Auto` olarak bırakıldığında yalnızca istemci tarafından sağlanan `cache_control` işaretleyicilerini iletir. Bağlantı başına "Redact-thinking beta'yı etkinleştir" seçeneğini yalnızca üst kaynak özellikle redakte edilmiş Claude düşünme akışlarını gerektiriyorsa etkinleştirin.
 
 ### Gelişmiş Zaman Aşımı Geçersiz Kılmaları
 
@@ -301,11 +301,11 @@ Claude Code uyumlu üst kaynaklar (`anthropic-compatible-cc-*`) için OmniRoute,
 | `API_BRIDGE_SERVER_KEEPALIVE_TIMEOUT_MS` | `5000`                                               | API köprüsü sunucusundaki kalıcı bağlantı zaman aşımı                                       |
 | `API_BRIDGE_SERVER_SOCKET_TIMEOUT_MS`    | `0`                                                  | API köprüsü sunucusundaki soket hareketsizliği zaman aşımı (`0` bunu devre dışı bırakır)    |
 
-> **Not:** Akış istekleri için `FETCH_TIMEOUT_MS` yalnızca bağlantı kurulumunu / ilk üst kaynak yanıtını bekleme süresini kapsar. Akış etkin hâle geldiğinde OmniRoute yalnızca gerçek bir duraklama (`STREAM_IDLE_TIMEOUT_MS`) veya Undici gövde hareketsizliği (`FETCH_BODY_TIMEOUT_MS`) durumunda akışı sonlandırır.
+> **Not:** Akış istekleri için `FETCH_TIMEOUT_MS` yalnızca bağlantı kurulumunu / ilk üst kaynak yanıtını bekleme süresini kapsar. Akış etkin hâle geldiğinde Pusula yalnızca gerçek bir duraklama (`STREAM_IDLE_TIMEOUT_MS`) veya Undici gövde hareketsizliği (`FETCH_BODY_TIMEOUT_MS`) durumunda akışı sonlandırır.
 
 ### Ters Proxy Uyumluluğu
 
-OmniRoute'u Nginx, Caddy, Cloudflare veya başka bir ters proxy arkasında çalıştırıyorsanız proxy zaman aşımlarının da OmniRoute akış/getirme zaman aşımlarınızdan daha yüksek olduğundan emin olun.
+Pusula'u Nginx, Caddy, Cloudflare veya başka bir ters proxy arkasında çalıştırıyorsanız proxy zaman aşımlarının da Pusula akış/getirme zaman aşımlarınızdan daha yüksek olduğundan emin olun.
 
 ---
 
@@ -314,7 +314,7 @@ OmniRoute'u Nginx, Caddy, Cloudflare veya başka bir ters proxy arkasında çal�
 Gelişmiş senaryolar (ters proxy, konteyner ağları) için API'yi ve Dashboard'u ayrı portlarda çalıştırın:
 
 ```bash
-PORT=20128 DASHBOARD_PORT=20129 omniroute
+PORT=20128 DASHBOARD_PORT=20129 pusula
 # API:       http://localhost:20128/v1
 # Dashboard: http://localhost:20129
 ```
@@ -323,11 +323,11 @@ PORT=20128 DASHBOARD_PORT=20129 omniroute
 
 ## Void Linux (xbps-src) Şablonu
 
-Void Linux kullanıcıları, `xbps-src` kullanarak yerel bir paket oluşturabilir. Bu bloğu `srcpkgs/omniroute/template` olarak kaydedin:
+Void Linux kullanıcıları, `xbps-src` kullanarak yerel bir paket oluşturabilir. Bu bloğu `srcpkgs/pusula/template` olarak kaydedin:
 
 ```bash
-# 'omniroute' için şablon dosyası
-pkgname=omniroute
+# 'pusula' için şablon dosyası
+pkgname=pusula
 version=3.8.0
 revision=1
 hostmakedepends="nodejs python3 make"
@@ -335,13 +335,13 @@ depends="openssl"
 short_desc="Universal AI gateway with smart routing for multiple LLM providers"
 maintainer="zenobit <zenobit@disroot.org>"
 license="MIT"
-homepage="https://github.com/diegosouzapw/OmniRoute"
-distfiles="https://github.com/diegosouzapw/OmniRoute/archive/refs/tags/v${version}.tar.gz"
+homepage="https://github.com/Ferhat-Yasinoglu/pusula"
+distfiles="https://github.com/Ferhat-Yasinoglu/pusula/archive/refs/tags/v${version}.tar.gz"
 # Her sürüm için sağlama toplamını şu komutla yeniden oluşturun:
-#   curl -L -o /tmp/omniroute.tar.gz "https://github.com/diegosouzapw/OmniRoute/archive/refs/tags/v${version}.tar.gz" && sha256sum /tmp/omniroute.tar.gz
+#   curl -L -o /tmp/pusula.tar.gz "https://github.com/Ferhat-Yasinoglu/pusula/archive/refs/tags/v${version}.tar.gz" && sha256sum /tmp/pusula.tar.gz
 checksum=PLACEHOLDER_REGENERATE_PER_RELEASE
-system_accounts="_omniroute"
-omniroute_homedir="/var/lib/omniroute"
+system_accounts="_pusula"
+pusula_homedir="/var/lib/pusula"
 export NODE_ENV=production
 export npm_config_engine_strict=false
 export npm_config_loglevel=error
@@ -381,25 +381,25 @@ do_check() {
 }
 
 do_install() {
-	vmkdir usr/lib/omniroute/.next
-	vcopy .next/standalone/. usr/lib/omniroute/.next/standalone
+	vmkdir usr/lib/pusula/.next
+	vcopy .next/standalone/. usr/lib/pusula/.next/standalone
 
 	for _d in \
 		.next/standalone/.next/server/app/dashboard \
 		.next/standalone/.next/server/app/dashboard/settings \
 		.next/standalone/.next/server/app/dashboard/providers; do
-		touch "${DESTDIR}/usr/lib/omniroute/${_d}/.keep"
+		touch "${DESTDIR}/usr/lib/pusula/${_d}/.keep"
 	done
 
-	cat > "${WRKDIR}/omniroute" <<'EOF'
+	cat > "${WRKDIR}/pusula" <<'EOF'
 #!/bin/sh
 export PORT="${PORT:-20128}"
-export DATA_DIR="${DATA_DIR:-${XDG_DATA_HOME:-${HOME}/.local/share}/omniroute}"
+export DATA_DIR="${DATA_DIR:-${XDG_DATA_HOME:-${HOME}/.local/share}/pusula}"
 export APP_LOG_TO_FILE="${APP_LOG_TO_FILE:-false}"
 mkdir -p "${DATA_DIR}"
-exec node /usr/lib/omniroute/.next/standalone/server.js "$@"
+exec node /usr/lib/pusula/.next/standalone/server.js "$@"
 EOF
-	vbin "${WRKDIR}/omniroute"
+	vbin "${WRKDIR}/pusula"
 }
 
 post_install() {
@@ -413,7 +413,7 @@ post_install() {
 
 | Komut                    | İşlem                                                                                                        |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------ |
-| `npm run uninstall`      | Sistem uygulamasını kaldırır ancak `~/.omniroute` içindeki **veritabanınızı ve yapılandırmalarınızı korur**. |
+| `npm run uninstall`      | Sistem uygulamasını kaldırır ancak `~/.pusula` içindeki **veritabanınızı ve yapılandırmalarınızı korur**. |
 | `npm run uninstall:full` | Uygulamayı kaldırır VE **tüm yapılandırmaları, anahtarları ve veritabanlarını kalıcı olarak siler**.         |
 
 > Tüm yöntemlere ilişkin ayrıntılı kaldırma talimatları için [UNINSTALL.md](./UNINSTALL.md) dosyasına bakın.

@@ -141,7 +141,7 @@ describe("Semantic Cache Live Integration with Lemonade & Redis", () => {
 
     const redisStore = new RedisVectorStore({
       redisUrl: REDIS_URL,
-      keyPrefix: `omniroute:test:it:${Date.now()}:`,
+      keyPrefix: `pusula:test:it:${Date.now()}:`,
     });
 
     const generator = createDefaultEmbeddingGenerator({

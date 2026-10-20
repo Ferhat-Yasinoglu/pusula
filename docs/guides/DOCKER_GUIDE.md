@@ -1,10 +1,10 @@
 ---
-title: "🐳 Docker Guide — OmniRoute"
+title: "🐳 Docker Guide — Pusula"
 version: 3.8.51
 lastUpdated: 2026-09-18
 ---
 
-# 🐳 Docker Guide — OmniRoute
+# 🐳 Docker Guide — Pusula
 
 > Complete Docker deployment reference. For a quick start, see the [README Docker section](../README.md#-docker).
 
@@ -14,7 +14,7 @@ lastUpdated: 2026-09-18
 - [With Environment File](#with-environment-file)
 - [Docker Compose](#docker-compose)
 - [Available Profiles](#available-profiles)
-- [Configuring host CLI tools when OmniRoute runs in Docker](#configuring-host-cli-tools-when-omniroute-runs-in-docker)
+- [Configuring host CLI tools when Pusula runs in Docker](#configuring-host-cli-tools-when-pusula-runs-in-docker)
 - [Redis Sidecar](#redis-sidecar)
 - [Production Compose](#production-compose)
 - [Dockerfile Stages](#dockerfile-stages)
@@ -37,12 +37,12 @@ lastUpdated: 2026-09-18
 
 ```bash
 docker run -d \
-  --name omniroute \
+  --name pusula \
   --restart unless-stopped \
   --stop-timeout 40 \
   -p 20128:20128 \
-  -v omniroute-data:/app/data \
-  diegosouzapw/omniroute:latest
+  -v pusula-data:/app/data \
+  ferhat-yasinoglu/pusula:latest
 ```
 
 ## With Environment File
@@ -52,13 +52,13 @@ docker run -d \
 cp .env.example .env
 
 docker run -d \
-  --name omniroute \
+  --name pusula \
   --restart unless-stopped \
   --stop-timeout 40 \
   --env-file .env \
   -p 20128:20128 \
-  -v omniroute-data:/app/data \
-  diegosouzapw/omniroute:latest
+  -v pusula-data:/app/data \
+  ferhat-yasinoglu/pusula:latest
 ```
 
 ## Docker Compose
@@ -82,41 +82,41 @@ docker compose --profile cli --profile cliproxyapi up -d
 
 ## Available Profiles
 
-OmniRoute ships Compose profiles for the main deployment shapes. Pick the one that matches your environment.
+Pusula ships Compose profiles for the main deployment shapes. Pick the one that matches your environment.
 
 | Profile          | Service          | When to use                                                                                                                        | Command                                      |
 | ---------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| `base` (default) | `omniroute-base` | Headless server / minimal runtime, no provider CLIs bundled                                                                        | `docker compose --profile base up -d`        |
-| `cli`            | `omniroute-cli`  | Agentic workflows that call `omniroute providers/setup/doctor` and bundled CLIs (Codex, Claude Code, Droid, OpenClaw)              | `docker compose --profile cli up -d`         |
-| `host`           | `omniroute-host` | Linux hosts that want `network_mode`-like access to host CLIs by mounting `~/.local/bin`, `~/.codex`, `~/.claude`, etc. read-only  | `docker compose --profile host up -d`        |
+| `base` (default) | `pusula-base` | Headless server / minimal runtime, no provider CLIs bundled                                                                        | `docker compose --profile base up -d`        |
+| `cli`            | `pusula-cli`  | Agentic workflows that call `pusula providers/setup/doctor` and bundled CLIs (Codex, Claude Code, Droid, OpenClaw)              | `docker compose --profile cli up -d`         |
+| `host`           | `pusula-host` | Linux hosts that want `network_mode`-like access to host CLIs by mounting `~/.local/bin`, `~/.codex`, `~/.claude`, etc. read-only  | `docker compose --profile host up -d`        |
 | `cliproxyapi`    | `cliproxyapi`    | Run the [CLIProxyAPI](https://github.com/router-for-me/CLIProxyAPI) sidecar on port `8317` for upstream CLI proxying               | `docker compose --profile cliproxyapi up -d` |
-| `web`            | `omniroute-web`  | Web-session providers that need a browser: `gemini-web`, `claude-web`, `claude-turnstile` (builds `runner-web`, Chromium included) | `docker compose --profile web up -d`         |
+| `web`            | `pusula-web`  | Web-session providers that need a browser: `gemini-web`, `claude-web`, `claude-turnstile` (builds `runner-web`, Chromium included) | `docker compose --profile web up -d`         |
 
 > Multiple profiles can be combined: `docker compose --profile cli --profile cliproxyapi up -d`.
 
-## Configuring host CLI tools when OmniRoute runs in Docker
+## Configuring host CLI tools when Pusula runs in Docker
 
-`omniroute setup-codex`, `setup-claude`, `config set <tool>` and the dashboard's
+`pusula setup-codex`, `setup-claude`, `config set <tool>` and the dashboard's
 **Save config** button all write files like `~/.codex/*.config.toml`. Those paths
 only mean something on the machine where the CLI actually runs. Run them inside
 the container and the write lands in the container's own home (`/home/node` —
 the image runs `USER node`), where no host CLI will ever read it and where it is
 discarded the moment the container is recreated.
 
-OmniRoute detects this and refuses the write with instructions instead of
+Pusula detects this and refuses the write with instructions instead of
 reporting a success you cannot use: the CLI exits `2`, and the API answers `422`
 with `containerEphemeralTarget: true`.
 
-### Recommended: run the CLI on the host, OmniRoute in Docker
+### Recommended: run the CLI on the host, Pusula in Docker
 
 The container serves the API; the CLI configures your host tools.
 
 ```bash
 docker compose --profile base up -d
 
-npm install -g omniroute
-omniroute connect http://localhost:20128   # point the CLI at the container
-omniroute setup-codex                      # writes the real ~/.codex on your host
+npm install -g pusula
+pusula connect http://localhost:20128   # point the CLI at the container
+pusula setup-codex                      # writes the real ~/.codex on your host
 ```
 
 This is the right choice when Codex, Claude Code, Cursor or similar run on your
@@ -137,7 +137,7 @@ volumes:
   - ~/.claude:/host-home/.claude:rw
 ```
 
-A bind mount is what makes the path trustworthy: OmniRoute reads
+A bind mount is what makes the path trustworthy: Pusula reads
 `/proc/self/mountinfo` and allows writes to mounted paths (and to directories
 whose children are mounts, which is exactly the `/host-home` shape above) while
 still refusing unmounted ones.
@@ -146,7 +146,7 @@ still refusing unmounted ones.
 
 When the CLIs genuinely live inside the container (the `cli` profile), the write
 is intentional. Pass `--allow-container-write` to any `setup-*` command, or set
-`OMNIROUTE_ALLOW_CONTAINER_CONFIG_WRITE=true` for the server. The write proceeds
+`PUSULA_ALLOW_CONTAINER_CONFIG_WRITE=true` for the server. The write proceeds
 with a warning that it will not survive the container.
 
 > **Security warning — `cli` profile + `docker.sock` mount.**
@@ -178,16 +178,16 @@ with a warning that it will not survive the container.
 
 ## Redis Sidecar
 
-OmniRoute relies on Redis to back the distributed rate limiter and shared cache. The `redis` service is **always defined** in `docker-compose.yml` (it has no profile gate) and starts alongside any other profile.
+Pusula relies on Redis to back the distributed rate limiter and shared cache. The `redis` service is **always defined** in `docker-compose.yml` (it has no profile gate) and starts alongside any other profile.
 
 | Detail               | Value                                       |
 | -------------------- | ------------------------------------------- |
 | Image                | `redis:7-alpine`                            |
-| Container name       | `omniroute-redis`                           |
+| Container name       | `pusula-redis`                           |
 | Internal port        | `6379`                                      |
 | Host port (override) | `REDIS_PORT` (defaults to `6379`)           |
 | Host bind (override) | `REDIS_BIND_HOST` (defaults to `127.0.0.1`) |
-| Volume               | `omniroute-redis-data` → `/data`            |
+| Volume               | `pusula-redis-data` → `/data`            |
 | Healthcheck          | `redis-cli ping` (10s interval)             |
 
 Related environment variables:
@@ -217,9 +217,9 @@ For an isolated production snapshot running alongside dev, use `docker-compose.p
 | File                   | `docker-compose.prod.yml`                                                          |
 | Default dashboard port | `PROD_DASHBOARD_PORT=20130` (mapped to internal `${DASHBOARD_PORT:-20128}`)        |
 | Default API port       | `PROD_API_PORT=20131`                                                              |
-| Image                  | `omniroute:prod` (built from `runner-cli` target)                                  |
-| Redis container        | `omniroute-redis-prod` (`redis:8.6.2`, dedicated `redis-prod-data` volume)         |
-| Data volume            | `omniroute-prod-data` (named, persisted across rebuilds)                           |
+| Image                  | `pusula:prod` (built from `runner-cli` target)                                  |
+| Redis container        | `pusula-redis-prod` (`redis:8.6.2`, dedicated `redis-prod-data` volume)         |
+| Data volume            | `pusula-prod-data` (named, persisted across rebuilds)                           |
 | Healthchecks           | `node healthcheck.mjs` + `redis-cli ping`, with `depends_on` gated on Redis health |
 
 How to use:
@@ -251,23 +251,23 @@ The repository ships a multi-stage Dockerfile (`Dockerfile`). Four stages are ex
 Build a specific target manually:
 
 ```bash
-docker build --target runner-base -t omniroute:base .
-docker build --target runner-cli  -t omniroute:cli  .
-docker build --target runner-web  -t omniroute:web  .
+docker build --target runner-base -t pusula:base .
+docker build --target runner-cli  -t pusula:cli  .
+docker build --target runner-web  -t pusula:web  .
 ```
 
 ### Build-time resources
 
 Three build args control what the `builder` stage costs. They are build-time only —
-`OMNIROUTE_MEMORY_MB` (below) is a separate, runtime knob.
+`PUSULA_MEMORY_MB` (below) is a separate, runtime knob.
 
 | Build arg                   | Default | Effect                                                                              |
 | --------------------------- | ------- | ----------------------------------------------------------------------------------- |
-| `OMNIROUTE_USE_TURBOPACK`   | `0`     | `0` builds with webpack: lower peak memory, slower. `1` opts into Turbopack.        |
-| `OMNIROUTE_BUILD_MEMORY_MB` | `6144`  | V8 heap ceiling (`--max-old-space-size`) for the spawned `next build`.              |
-| `OMNIROUTE_BUILD_WORKERS`   | `2`     | Feeds `CIRCLE_NODE_TOTAL`; Next derives `workers = N - 1` for page-data collection. |
+| `PUSULA_USE_TURBOPACK`   | `0`     | `0` builds with webpack: lower peak memory, slower. `1` opts into Turbopack.        |
+| `PUSULA_BUILD_MEMORY_MB` | `6144`  | V8 heap ceiling (`--max-old-space-size`) for the spawned `next build`.              |
+| `PUSULA_BUILD_WORKERS`   | `2`     | Feeds `CIRCLE_NODE_TOTAL`; Next derives `workers = N - 1` for page-data collection. |
 
-`OMNIROUTE_BUILD_WORKERS` is the one to raise on a big builder and the one to
+`PUSULA_BUILD_WORKERS` is the one to raise on a big builder and the one to
 suspect when a constrained build dies **after** `✓ Compiled successfully`. Each
 page-data worker is its own process, and so is the parent `next build` itself;
 a live VPS reproduction (issue #7518) measured each process's peak RSS at
@@ -282,28 +282,28 @@ does the arithmetic against the measured figure and fails if either knob
 outgrows the runner.
 
 Turbopack compiles in native Rust memory that lives **outside** the V8 heap, so
-`OMNIROUTE_BUILD_MEMORY_MB` does not bound it. On a host with a memory ceiling the
+`PUSULA_BUILD_MEMORY_MB` does not bound it. On a host with a memory ceiling the
 build is then SIGKILLed by the OOM killer with no error text at all — it simply
 stops mid-`Creating an optimized production build`, which reads like a hang rather
 than an out-of-memory. That is why the `Dockerfile` defaults to webpack
-(`OMNIROUTE_USE_TURBOPACK=0`), unlike `npm run dev` / `npm run build`, where
+(`PUSULA_USE_TURBOPACK=0`), unlike `npm run dev` / `npm run build`, where
 Turbopack is the code default: a bare `docker build .` with no build args (what
 Railway and other one-click hosts run) must not die silently on a memory-capped
-builder. The published images already pass `OMNIROUTE_USE_TURBOPACK=0`
+builder. The published images already pass `PUSULA_USE_TURBOPACK=0`
 explicitly in `docker-publish.yml`. On a builder with plenty of RAM, opt into
 Turbopack for a faster build:
 
 ```bash
 docker build --target runner-base \
-  --build-arg OMNIROUTE_USE_TURBOPACK=1 \
-  -t omniroute:base .
+  --build-arg PUSULA_USE_TURBOPACK=1 \
+  -t pusula:base .
 ```
 
 `webpackBuildWorker` is enabled, so `next build` runs a parent **and** a worker
-process and each honours `OMNIROUTE_BUILD_MEMORY_MB` separately. Size the container
+process and each honours `PUSULA_BUILD_MEMORY_MB` separately. Size the container
 ceiling above roughly twice that value, not once.
 
-Measured on this tree (`--target runner-base`, `OMNIROUTE_BUILD_MEMORY_MB=6144`):
+Measured on this tree (`--target runner-base`, `PUSULA_BUILD_MEMORY_MB=6144`):
 
 | Bundler   | Container ceiling | Result                        |
 | --------- | ----------------- | ----------------------------- |
@@ -313,34 +313,34 @@ Measured on this tree (`--target runner-base`, `OMNIROUTE_BUILD_MEMORY_MB=6144`)
 
 ### Runtime defaults
 
-Defaults exported by `runner-base`: `PORT=20128`, `HOSTNAME=0.0.0.0`, `OMNIROUTE_MEMORY_MB=1024`, `NODE_OPTIONS=--max-old-space-size=1024`, `DATA_DIR=/app/data`, `OMNIROUTE_MIGRATIONS_DIR=/app/migrations`.
+Defaults exported by `runner-base`: `PORT=20128`, `HOSTNAME=0.0.0.0`, `PUSULA_MEMORY_MB=1024`, `NODE_OPTIONS=--max-old-space-size=1024`, `DATA_DIR=/app/data`, `PUSULA_MIGRATIONS_DIR=/app/migrations`.
 
 Memory behavior in Docker:
 
-- The image sets `OMNIROUTE_MEMORY_MB=1024` and derives `NODE_OPTIONS=--max-old-space-size=1024` from it.
-- The actual server process is started by the standalone launcher, which reads `OMNIROUTE_MEMORY_MB` and appends `--max-old-space-size=<OMNIROUTE_MEMORY_MB>`.
-- Node uses the last repeated `--max-old-space-size` value, so setting `OMNIROUTE_MEMORY_MB` controls the effective Docker heap limit.
+- The image sets `PUSULA_MEMORY_MB=1024` and derives `NODE_OPTIONS=--max-old-space-size=1024` from it.
+- The actual server process is started by the standalone launcher, which reads `PUSULA_MEMORY_MB` and appends `--max-old-space-size=<PUSULA_MEMORY_MB>`.
+- Node uses the last repeated `--max-old-space-size` value, so setting `PUSULA_MEMORY_MB` controls the effective Docker heap limit.
 - Because the image always sets it, the launcher's own RAM-calibrated fallback never applies under Docker. Raise it explicitly for the workload (table below). `2048` is still too small for coding-agent `/v1/responses`.
 
 ### Runtime RAM for coding agents
 
-The 1 GiB Docker default is a dashboard/light-chat floor, not a production size. Long `POST /v1/responses` bodies (hundreds of messages, tens of tools) retain multiple in-memory graphs during compression. Two overlapping ~3 MiB / ~750k-token requests have aborted V8 at a **12 GiB** old-space (`FATAL ERROR: Reached heap limit`) and also hit a 16 GiB cgroup OOM. See [#7849](https://github.com/diegosouzapw/OmniRoute/issues/7849).
+The 1 GiB Docker default is a dashboard/light-chat floor, not a production size. Long `POST /v1/responses` bodies (hundreds of messages, tens of tools) retain multiple in-memory graphs during compression. Two overlapping ~3 MiB / ~750k-token requests have aborted V8 at a **12 GiB** old-space (`FATAL ERROR: Reached heap limit`) and also hit a 16 GiB cgroup OOM. See [#7849](https://github.com/Ferhat-Yasinoglu/pusula/issues/7849).
 
 Size **cgroup `--memory` above the heap** — native buffers, SQLite, and compression intermediates sit outside V8.
 
-| Workload                             | `OMNIROUTE_MEMORY_MB`  | Container / cgroup   | Notes                                                                                       |
+| Workload                             | `PUSULA_MEMORY_MB`  | Container / cgroup   | Notes                                                                                       |
 | ------------------------------------ | ---------------------- | -------------------- | ------------------------------------------------------------------------------------------- |
 | Dashboard, one light chat            | `1024` (image default) | ≥2 GiB               |                                                                                             |
 | One coding agent (Claude/Codex/Grok) | `8192`                 | ≥10 GiB              | Typical single-session `/v1/responses`                                                      |
 | Two concurrent long `/v1/responses`  | `10240`–`12288`        | ≥12–16 GiB           | Measured V8 abort at ~12 GiB heap                                                           |
 | Three+ concurrent long contexts      | do not on one process  | serialize / more RAM | Default heavyweight admission is 1 in-flight; raising it without RAM reintroduces the abort |
 
-`omniroute serve` on bare metal calibrates ~35% of RAM (clamped `[512, 4096]`) when `OMNIROUTE_MEMORY_MB` is **unset**. Docker always sets `1024`, so that calibration never runs in the official image.
+`pusula serve` on bare metal calibrates ~35% of RAM (clamped `[512, 4096]`) when `PUSULA_MEMORY_MB` is **unset**. Docker always sets `1024`, so that calibration never runs in the official image.
 
 ```bash
-docker run -d --name omniroute --restart unless-stopped --stop-timeout 40 \
-  -e OMNIROUTE_MEMORY_MB=8192 --memory=10g \
-  -p 127.0.0.1:20128:20128 -v omniroute-data:/app/data diegosouzapw/omniroute:latest
+docker run -d --name pusula --restart unless-stopped --stop-timeout 40 \
+  -e PUSULA_MEMORY_MB=8192 --memory=10g \
+  -p 127.0.0.1:20128:20128 -v pusula-data:/app/data ferhat-yasinoglu/pusula:latest
 ```
 
 ## Critical Environment Variables
@@ -349,27 +349,27 @@ Beyond the defaults documented in [ENVIRONMENT.md](../reference/ENVIRONMENT.md),
 
 | Variable                      | Purpose                                                                                                                                                                                                                                              | Default                  |
 | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
-| `OMNIROUTE_WS_BRIDGE_SECRET`  | Shared secret for the WebSocket bridge. **Required in production** — set to a strong random string.                                                                                                                                                  | unset (must be provided) |
+| `PUSULA_WS_BRIDGE_SECRET`  | Shared secret for the WebSocket bridge. **Required in production** — set to a strong random string.                                                                                                                                                  | unset (must be provided) |
 | `REDIS_URL`                   | Connection string for the rate limiter / cache backend                                                                                                                                                                                               | `redis://redis:6379`     |
 | `REDIS_PORT`                  | Host-side port for the bundled Redis container                                                                                                                                                                                                       | `6379`                   |
 | `REDIS_BIND_HOST`             | Host interface the bundled Redis port is published on (loopback unless you add AUTH)                                                                                                                                                                 | `127.0.0.1`              |
-| `AUTO_UPDATE_HOST_REPO_DIR`   | Host path mounted into `cli` profile at `/workspace/omniroute` for self-update workflows                                                                                                                                                             | `.` (current directory)  |
-| `OMNIROUTE_MEMORY_MB`         | Runtime Node heap ceiling for the Docker standalone server; overrides the image default above. Coding agents: `8192`+ (see [runtime RAM](#runtime-ram-for-coding-agents)).                                                                           | `1024`                   |
+| `AUTO_UPDATE_HOST_REPO_DIR`   | Host path mounted into `cli` profile at `/workspace/pusula` for self-update workflows                                                                                                                                                             | `.` (current directory)  |
+| `PUSULA_MEMORY_MB`         | Runtime Node heap ceiling for the Docker standalone server; overrides the image default above. Coding agents: `8192`+ (see [runtime RAM](#runtime-ram-for-coding-agents)).                                                                           | `1024`                   |
 | `DASHBOARD_PORT` / `API_PORT` | Override exposed ports for dashboard (20128) and API (20129)                                                                                                                                                                                         | `20128` / `20129`        |
 | `APP_BIND_HOST`               | Host interface docker-compose publishes the dashboard/API/live-WS ports on. With `REQUIRE_API_KEY=false` (the default), `0.0.0.0` exposes the anonymous `/v1` proxy to the LAN — only widen with `REQUIRE_API_KEY=true` or a reverse proxy in front. | `127.0.0.1`              |
 | `CLIPROXY_BIND_HOST`          | Host interface docker-compose publishes the `cliproxyapi` sidecar on — its data volume holds provider credentials.                                                                                                                                   | `127.0.0.1`              |
-| `OMNIROUTE_PLUGINS_DIR`       | Directory the runtime plugin scanner reads and installs into. Set it when plugins are bind-mounted: the default follows `HOME`, which an image need not export.                                                                                      | `~/.omniroute/plugins`   |
-| `OMNIROUTE_BASE_PATH`         | URL subpath when the app is published behind a reverse proxy (e.g. `/omniroute`)                                                                                                                                                                     | _(empty = root)_         |
-| `NEXT_PUBLIC_BASE_URL`        | Public browser origin including the subpath (e.g. `https://host/omniroute`)                                                                                                                                                                          | unset                    |
+| `PUSULA_PLUGINS_DIR`       | Directory the runtime plugin scanner reads and installs into. Set it when plugins are bind-mounted: the default follows `HOME`, which an image need not export.                                                                                      | `~/.pusula/plugins`   |
+| `PUSULA_BASE_PATH`         | URL subpath when the app is published behind a reverse proxy (e.g. `/pusula`)                                                                                                                                                                     | _(empty = root)_         |
+| `NEXT_PUBLIC_BASE_URL`        | Public browser origin including the subpath (e.g. `https://host/pusula`)                                                                                                                                                                          | unset                    |
 | `PROD_DASHBOARD_PORT`         | Host-side dashboard port for `docker-compose.prod.yml`                                                                                                                                                                                               | `20130`                  |
 | `CLIPROXYAPI_PORT`            | Host-side port for the `cliproxyapi` sidecar                                                                                                                                                                                                         | `8317`                   |
 
 ## Reverse Proxy on a Subpath (Traefik / nginx)
 
-Next.js `basePath` is compiled into the standalone bundle. OmniRoute records the baked
+Next.js `basePath` is compiled into the standalone bundle. Pusula records the baked
 value in a sentinel file at the app root (written during `npm run build`; read by
 `scripts/docker/ensure-docker-base-path.mjs`) and compares it with
-`OMNIROUTE_BASE_PATH` when the container starts. When they differ and the image was
+`PUSULA_BASE_PATH` when the container starts. When they differ and the image was
 built for the domain root, the entrypoint rewrites the standalone manifests, the
 embedded `basePath`/`assetPrefix` literals (Next 16 renders SSR asset URLs from
 `assetPrefix` alone — the patcher mirrors the subpath into it), the baked
@@ -383,41 +383,41 @@ Set both variables in `.env`, then rebuild so the image and runtime agree:
 
 ```bash
 # .env
-OMNIROUTE_BASE_PATH=/omniroute
-NEXT_PUBLIC_BASE_URL=https://myhostname.example.com/omniroute
+PUSULA_BASE_PATH=/pusula
+NEXT_PUBLIC_BASE_URL=https://myhostname.example.com/pusula
 ```
 
 ```bash
 docker compose --profile base up -d --build
 ```
 
-`docker-compose.yml` forwards `OMNIROUTE_BASE_PATH` as a Docker build-arg and as a
+`docker-compose.yml` forwards `PUSULA_BASE_PATH` as a Docker build-arg and as a
 runtime environment variable.
 
 ### Pre-built root image + runtime subpath
 
-Published `diegosouzapw/omniroute:*` images are built for the domain root. You can still
-set `OMNIROUTE_BASE_PATH` at runtime; the container patches the bundle once on startup.
+Published `ferhat-yasinoglu/pusula:*` images are built for the domain root. You can still
+set `PUSULA_BASE_PATH` at runtime; the container patches the bundle once on startup.
 Pair it with the matching public origin:
 
 ```yaml
 services:
-  omniroute:
-    image: diegosouzapw/omniroute:latest
+  pusula:
+    image: ferhat-yasinoglu/pusula:latest
     environment:
-      OMNIROUTE_BASE_PATH: /omniroute
-      NEXT_PUBLIC_BASE_URL: https://myhostname.example.com/omniroute
+      PUSULA_BASE_PATH: /pusula
+      NEXT_PUBLIC_BASE_URL: https://myhostname.example.com/pusula
 ```
 
 Configure the reverse proxy to forward the **full** external path (do not strip the
-prefix). Traefik should route `PathPrefix(`/omniroute`)` to the container without
-`StripPrefix`, so Next.js receives `/omniroute/...` and serves assets from
-`/omniroute/_next/...`.
+prefix). Traefik should route `PathPrefix(`/pusula`)` to the container without
+`StripPrefix`, so Next.js receives `/pusula/...` and serves assets from
+`/pusula/_next/...`.
 
 The Docker healthcheck probes the lightweight `/healthz` lifecycle endpoint prefixed
-with the active `OMNIROUTE_BASE_PATH`. `/api/monitoring/health` remains available for
+with the active `PUSULA_BASE_PATH`. `/api/monitoring/health` remains available for
 human/dashboard diagnostics; to point the container HEALTHCHECK back at it (for example
-for deep health enforcement), set `OMNIROUTE_HEALTHCHECK_PATH=/api/monitoring/health`.
+for deep health enforcement), set `PUSULA_HEALTHCHECK_PATH=/api/monitoring/health`.
 That path is a **deep** check (DB + monitoring summary) — appropriate for Docker's
 infrequent `HEALTHCHECK` if you opt back in, but **not** for Kubernetes `livenessProbe`
 intervals.
@@ -439,22 +439,22 @@ liveness if HTTP probes time out. Full probe guidance:
 
 ## Docker Compose with Caddy (HTTPS Auto-TLS)
 
-OmniRoute can be securely exposed using Caddy's automatic SSL provisioning. Ensure your domain's DNS A record points to your server's IP.
+Pusula can be securely exposed using Caddy's automatic SSL provisioning. Ensure your domain's DNS A record points to your server's IP.
 
 ```yaml
 services:
-  omniroute:
-    image: diegosouzapw/omniroute:latest
-    container_name: omniroute
+  pusula:
+    image: ferhat-yasinoglu/pusula:latest
+    container_name: pusula
     restart: unless-stopped
     volumes:
-      - omniroute-data:/app/data
+      - pusula-data:/app/data
     environment:
       - PORT=20128
       # Browser-facing origin for OAuth callbacks, dashboard links, and generated public URLs.
       - NEXT_PUBLIC_BASE_URL=https://your-domain.com
       # Internal server-to-server URL for scheduled jobs / self-fetches.
-      - BASE_URL=http://omniroute:20128
+      - BASE_URL=http://pusula:20128
       - AUTH_COOKIE_SECURE=true
 
   caddy:
@@ -464,17 +464,17 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    command: caddy reverse-proxy --from https://your-domain.com --to http://omniroute:20128
+    command: caddy reverse-proxy --from https://your-domain.com --to http://pusula:20128
 
 volumes:
-  omniroute-data:
+  pusula-data:
 ```
 
-Caddy sets the standard forwarding headers for the upstream container. OmniRoute uses
+Caddy sets the standard forwarding headers for the upstream container. Pusula uses
 `NEXT_PUBLIC_BASE_URL` as the canonical public origin for OAuth callbacks and generated public
 links; authenticated dashboard writes use same-origin requests plus session-bound CSRF
-protection. Only enable `OMNIROUTE_TRUST_PROXY` for advanced deployments where you intentionally
-want OmniRoute to derive the public origin from trusted forwarded headers instead of explicit
+protection. Only enable `PUSULA_TRUST_PROXY` for advanced deployments where you intentionally
+want Pusula to derive the public origin from trusted forwarded headers instead of explicit
 configuration.
 
 ## Cloudflare Quick Tunnel
@@ -486,24 +486,24 @@ Endpoint tunnel panels (Cloudflare, Tailscale, ngrok) can be shown or hidden fro
 ### Tunnel Notes
 
 - Quick Tunnel URLs are temporary and change after every restart.
-- Quick Tunnels are not auto-restored after an OmniRoute or container restart. Re-enable them from the dashboard when needed.
+- Quick Tunnels are not auto-restored after an Pusula or container restart. Re-enable them from the dashboard when needed.
 - Managed install currently supports Linux, macOS, and Windows on `x64` / `arm64`.
 - Managed Quick Tunnels default to HTTP/2 transport to avoid noisy QUIC UDP buffer warnings in constrained container environments. Set `CLOUDFLARED_PROTOCOL=quic` or `auto` if you want a different transport.
 - Docker images bundle system CA roots and pass them to managed `cloudflared`, which avoids TLS trust failures when the tunnel bootstraps inside the container.
-- Set `CLOUDFLARED_BIN=/absolute/path/to/cloudflared` if you want OmniRoute to use an existing binary instead of downloading one.
+- Set `CLOUDFLARED_BIN=/absolute/path/to/cloudflared` if you want Pusula to use an existing binary instead of downloading one.
 
 ## Image Tags
 
 | Image                    | Tag      | Size   | Description                                          |
 | ------------------------ | -------- | ------ | ---------------------------------------------------- |
-| `diegosouzapw/omniroute` | `latest` | ~250MB | Highest **published** stable SemVer (not git `main`) |
-| `diegosouzapw/omniroute` | `3.8.0`  | ~250MB | Pin this class of tag for GitOps                     |
+| `ferhat-yasinoglu/pusula` | `latest` | ~250MB | Highest **published** stable SemVer (not git `main`) |
+| `ferhat-yasinoglu/pusula` | `3.8.0`  | ~250MB | Pin this class of tag for GitOps                     |
 
 Multi-platform manifest: `linux/amd64` + `linux/arm64` native (Apple Silicon, AWS Graviton, Raspberry Pi). Docker selects the matching architecture automatically; pass `--platform linux/amd64` if you need to force AMD64 emulation on ARM hosts.
 
 ### Release Channels
 
-OmniRoute publishes separate Docker channels for stable releases, active release-branch testing, and development builds.
+Pusula publishes separate Docker channels for stable releases, active release-branch testing, and development builds.
 
 | Channel                         | Source                              | Mutability                  | Recommended use                                                                                                       |
 | ------------------------------- | ----------------------------------- | --------------------------- | --------------------------------------------------------------------------------------------------------------------- |
@@ -530,16 +530,16 @@ If you use those providers, pull the `-web` tag of the channel you are already o
 The `next` channel is rebuilt on every push to the current default `release/v*` branch and is published for both AMD64 and ARM64. Older maintenance branches cannot overwrite it. The channel provides a pullable image for fixes that have merged into the active release branch before the next stable tag is cut.
 
 ```bash
-docker pull diegosouzapw/omniroute:next
-docker pull diegosouzapw/omniroute:next-web
+docker pull ferhat-yasinoglu/pusula:next
+docker pull ferhat-yasinoglu/pusula:next-web
 ```
 
 For Docker Compose, override the image tag used by the selected profile, then pull and recreate the service:
 
 ```yaml
 services:
-  omniroute:
-    image: diegosouzapw/omniroute:next
+  pusula:
+    image: ferhat-yasinoglu/pusula:next
 ```
 
 ```bash
@@ -552,14 +552,14 @@ docker compose up -d
 `next` is a floating pre-release channel. It may change on any push to the active release branch and is **not supported for production use**. Pin the image digest while evaluating a specific build:
 
 ```bash
-docker pull diegosouzapw/omniroute:next
-docker image inspect diegosouzapw/omniroute:next --format '{{index .RepoDigests 0}}'
+docker pull ferhat-yasinoglu/pusula:next
+docker image inspect ferhat-yasinoglu/pusula:next --format '{{index .RepoDigests 0}}'
 ```
 
-Before testing, back up the OmniRoute data volume or bind-mounted data directory. To roll back, restore the previously used stable version or digest and recreate the container:
+Before testing, back up the Pusula data volume or bind-mounted data directory. To roll back, restore the previously used stable version or digest and recreate the container:
 
 ```bash
-docker pull diegosouzapw/omniroute:<stable-version>
+docker pull ferhat-yasinoglu/pusula:<stable-version>
 docker compose up -d
 ```
 
@@ -576,12 +576,12 @@ A release-branch build can never move `latest`; only an eligible stable semantic
 
 ## Availability: default SQLite is single-replica
 
-Stock Docker / Kubernetes OmniRoute is **one Node process + one SQLite writer**. High availability is **not supported** on that topology.
+Stock Docker / Kubernetes Pusula is **one Node process + one SQLite writer**. High availability is **not supported** on that topology.
 
 | Constraint                            | Consequence                                                                                                                                                                                                                                                                                             |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Single writer                         | Do **not** run multiple replicas against the same SQLite file. That corrupts the DB.                                                                                                                                                                                                                    |
-| Recreate / restart / HEALTHCHECK kill | **Full outage** of in-flight SSE, dashboard sessions, and in-memory state. Every connected client drops. New requests during the empty-endpoint window get a reverse-proxy **`502 Bad Gateway: Unknown error`**, not OmniRoute JSON — clients cannot distinguish this from a provider failure (#11015). |
+| Recreate / restart / HEALTHCHECK kill | **Full outage** of in-flight SSE, dashboard sessions, and in-memory state. Every connected client drops. New requests during the empty-endpoint window get a reverse-proxy **`502 Bad Gateway: Unknown error`**, not Pusula JSON — clients cannot distinguish this from a provider failure (#11015). |
 | Same event loop as `/healthz`         | A busy catalog or compression tick can delay probes; a short timeout then restarts the **only** replica.                                                                                                                                                                                                |
 
 **Probe matrix** (see also [Kubernetes probe recommendations](../ops/MONITORING_GUIDE.md#kubernetes-probe-recommendations)):
@@ -605,7 +605,7 @@ spec:
     spec:
       terminationGracePeriodSeconds: 90
       containers:
-        - name: omniroute
+        - name: pusula
           lifecycle:
             preStop:
               exec:
@@ -623,15 +623,15 @@ spec:
 
 `preStop` sleep lets kube drop Service endpoints before SIGTERM so **new** traffic stops hitting the dying process. In-flight `/v1/responses` SSE is drained up to `SHUTDOWN_TIMEOUT_MS` (default 30s) via heavyweight admission leases (#11015). New requests that still reach the process get `503` + `Retry-After: 5`. The Recreate empty-endpoint gap until the replacement is Ready remains a hard outage — that is the SQLite topology, not a probe misconfig.
 
-External Postgres / multi-writer HA is **not** a documented stock path. If you need HA, keep a single replica or run a topology the project has tested and documented separately. The Postgres/MySQL work lives in [#8075](https://github.com/diegosouzapw/OmniRoute/issues/8075). Until that ships, the only supported way to multiply **large** `/v1/responses` capacity is N independent processes (next section), not `replicas > 1` on one volume.
+External Postgres / multi-writer HA is **not** a documented stock path. If you need HA, keep a single replica or run a topology the project has tested and documented separately. The Postgres/MySQL work lives in [#8075](https://github.com/Ferhat-Yasinoglu/pusula/issues/8075). Until that ships, the only supported way to multiply **large** `/v1/responses` capacity is N independent processes (next section), not `replicas > 1` on one volume.
 
 ## Scale-out: N independent processes
 
-One Node process is **one V8 heap**. Two overlapping ~3 MiB / ~750k-token coding-agent `POST /v1/responses` (RTK + Caveman) abort that heap at ~12 Gi (`FATAL ERROR: Reached heap limit`) and can OOM a 16 Gi cgroup. See [#7849](https://github.com/diegosouzapw/OmniRoute/issues/7849). That measurement is a **memory-budget** warning, not a product hard-max of two concurrent long `/v1/responses`. Heavyweight chat admission is gated by an auto-derived ingest byte budget (`OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES`, `src/shared/middleware/admissionBudget.ts`) sized from that same V8/cgroup ceiling — overriding it upward (or setting the legacy `OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT` request-count cap) on an already-sized process reintroduces the abort. Small chats, `/healthz`, `/v1/models`, and MCP are **not** in that cap.
+One Node process is **one V8 heap**. Two overlapping ~3 MiB / ~750k-token coding-agent `POST /v1/responses` (RTK + Caveman) abort that heap at ~12 Gi (`FATAL ERROR: Reached heap limit`) and can OOM a 16 Gi cgroup. See [#7849](https://github.com/Ferhat-Yasinoglu/pusula/issues/7849). That measurement is a **memory-budget** warning, not a product hard-max of two concurrent long `/v1/responses`. Heavyweight chat admission is gated by an auto-derived ingest byte budget (`PUSULA_CHAT_MAX_INFLIGHT_BYTES`, `src/shared/middleware/admissionBudget.ts`) sized from that same V8/cgroup ceiling — overriding it upward (or setting the legacy `PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT` request-count cap) on an already-sized process reintroduces the abort. Small chats, `/healthz`, `/v1/models`, and MCP are **not** in that cap.
 
 ### One-process: more than two long `/v1/responses`
 
-A **healthy** process (heap below `OMNIROUTE_CHAT_ADMISSION_HEAP_SHED_RATIO`, default `0.75`) **may** run more than two concurrent long `POST /v1/responses` when the process-wide inflight-byte budget (`OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES` / #10110) still has room. Bodies at or above `OMNIROUTE_CHAT_LARGE_BODY_BYTES` (default 256 KiB) take the same heavyweight lease as structure-heavy requests and use the same [#10437](https://github.com/diegosouzapw/OmniRoute/pull/10437) `tryAcquireHealthyHeadroom` escape (`OMNIROUTE_CHAT_ADMISSION_HEALTHY_HEADROOM`). Tens of concurrent long SSE clients (operators often need 40–50) is a **memory-budget** question — size heap + primary/headroom slots + `OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES` — not a hard “max 2” product limit. A pressured heap still sheds with retryable `503` so #7849 does not return.
+A **healthy** process (heap below `PUSULA_CHAT_ADMISSION_HEAP_SHED_RATIO`, default `0.75`) **may** run more than two concurrent long `POST /v1/responses` when the process-wide inflight-byte budget (`PUSULA_CHAT_MAX_INFLIGHT_BYTES` / #10110) still has room. Bodies at or above `PUSULA_CHAT_LARGE_BODY_BYTES` (default 256 KiB) take the same heavyweight lease as structure-heavy requests and use the same [#10437](https://github.com/Ferhat-Yasinoglu/pusula/pull/10437) `tryAcquireHealthyHeadroom` escape (`PUSULA_CHAT_ADMISSION_HEALTHY_HEADROOM`). Tens of concurrent long SSE clients (operators often need 40–50) is a **memory-budget** question — size heap + primary/headroom slots + `PUSULA_CHAT_MAX_INFLIGHT_BYTES` — not a hard “max 2” product limit. A pressured heap still sheds with retryable `503` so #7849 does not return.
 
 To **multiply heaps** (independent V8 old-spaces) **today**:
 
@@ -649,34 +649,34 @@ Compose sketch (two heaps, two volumes — not `deploy.replicas: 2`):
 
 ```yaml
 services:
-  omniroute-a:
-    image: diegosouzapw/omniroute:3.8.49
+  pusula-a:
+    image: ferhat-yasinoglu/pusula:3.8.49
     environment:
       DATA_DIR: /app/data
-      OMNIROUTE_MEMORY_MB: "12288"
+      PUSULA_MEMORY_MB: "12288"
       QUOTA_STORE_DRIVER: redis
       QUOTA_STORE_REDIS_URL: redis://redis:6379
-    volumes: [omniroute-a-data:/app/data]
+    volumes: [pusula-a-data:/app/data]
     ports: ["20128:20128"]
-  omniroute-b:
-    image: diegosouzapw/omniroute:3.8.49
+  pusula-b:
+    image: ferhat-yasinoglu/pusula:3.8.49
     environment:
       DATA_DIR: /app/data
-      OMNIROUTE_MEMORY_MB: "12288"
+      PUSULA_MEMORY_MB: "12288"
       QUOTA_STORE_DRIVER: redis
       QUOTA_STORE_REDIS_URL: redis://redis:6379
-    volumes: [omniroute-b-data:/app/data]
+    volumes: [pusula-b-data:/app/data]
     ports: ["20138:20128"]
 volumes:
-  omniroute-a-data:
-  omniroute-b-data:
+  pusula-a-data:
+  pusula-b-data:
 ```
 
-In-process density (compression off the HTTP isolate) is [#11023](https://github.com/diegosouzapw/OmniRoute/issues/11023). One logical cluster on shared durable state is [#8075](https://github.com/diegosouzapw/OmniRoute/issues/8075).
+In-process density (compression off the HTTP isolate) is [#11023](https://github.com/Ferhat-Yasinoglu/pusula/issues/11023). One logical cluster on shared durable state is [#8075](https://github.com/Ferhat-Yasinoglu/pusula/issues/8075).
 
 ## Important Notes
 
-- **SQLite WAL Mode:** `docker stop` should be allowed to finish so OmniRoute can checkpoint the latest changes back into `storage.sqlite`. The bundled Compose files already set a 40s stop grace period. If you run the image directly, keep `--stop-timeout 40`.
+- **SQLite WAL Mode:** `docker stop` should be allowed to finish so Pusula can checkpoint the latest changes back into `storage.sqlite`. The bundled Compose files already set a 40s stop grace period. If you run the image directly, keep `--stop-timeout 40`.
 - **`DISABLE_SQLITE_AUTO_BACKUP`:** Set to `true` if routine/pre-write backups are managed externally. Existing-database migrations still require their own durable safety snapshot and mass-migration guard.
 - **Data Persistence:** Always mount a volume to `/app/data` to persist your database, keys, and configurations across container restarts.
 - **Port Configuration:** Override `PORT` environment variable to change the default `20128` port.

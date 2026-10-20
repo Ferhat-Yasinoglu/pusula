@@ -92,12 +92,12 @@ export function tokensMatch(provided: string, expected: string): boolean {
 }
 
 /**
- * Mesma semântica de auth do JSON-RPC A2A (src/app/a2a/route.ts): Bearer vs OMNIROUTE_API_KEY; aberto se não configurada.
+ * Mesma semântica de auth do JSON-RPC A2A (src/app/a2a/route.ts): Bearer vs PUSULA_API_KEY; aberto se não configurada.
  *
  * Exported as a test seam only — not part of the route contract.
  */
 export function authenticateA2A(request: Request): boolean {
-  const configuredKey = process.env.OMNIROUTE_API_KEY;
+  const configuredKey = process.env.PUSULA_API_KEY;
   if (!configuredKey) return true;
   const token = (request.headers.get("authorization") || "").replace(/^Bearer\s+/i, "");
   return tokensMatch(token, configuredKey);

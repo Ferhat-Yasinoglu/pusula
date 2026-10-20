@@ -8,17 +8,17 @@
 
 🌐 **Languages:** 🇺🇸 [English](../../../../guides/TROUBLESHOOTING.md) · 🇪🇹 [am](../../../am/docs/guides/TROUBLESHOOTING.md) · 🇸🇦 [ar](../../../ar/docs/guides/TROUBLESHOOTING.md) · 🇦🇿 [az](../../../az/docs/guides/TROUBLESHOOTING.md) · 🇧🇬 [bg](../../../bg/docs/guides/TROUBLESHOOTING.md) · 🇧🇩 [bn](../../../bn/docs/guides/TROUBLESHOOTING.md) · 🇧🇦 [bs](../../../bs/docs/guides/TROUBLESHOOTING.md) · 🇨🇿 [cs](../../../cs/docs/guides/TROUBLESHOOTING.md) · 🇩🇰 [da](../../../da/docs/guides/TROUBLESHOOTING.md) · 🇩🇪 [de](../../../de/docs/guides/TROUBLESHOOTING.md) · 🇬🇷 [el](../../../el/docs/guides/TROUBLESHOOTING.md) · 🇪🇸 [es](../../../es/docs/guides/TROUBLESHOOTING.md) · 🇪🇪 [et](../../../et/docs/guides/TROUBLESHOOTING.md) · 🇮🇷 [fa](../../../fa/docs/guides/TROUBLESHOOTING.md) · 🇫🇮 [fi](../../../fi/docs/guides/TROUBLESHOOTING.md) · 🇫🇷 [fr](../../../fr/docs/guides/TROUBLESHOOTING.md) · 🇮🇪 [ga](../../../ga/docs/guides/TROUBLESHOOTING.md) · 🇮🇳 [gu](../../../gu/docs/guides/TROUBLESHOOTING.md) · 🇳🇬 [ha](../../../ha/docs/guides/TROUBLESHOOTING.md) · 🇮🇱 [he](../../../he/docs/guides/TROUBLESHOOTING.md) · 🇮🇳 [hi](../../../hi/docs/guides/TROUBLESHOOTING.md) · 🇭🇷 [hr](../../../hr/docs/guides/TROUBLESHOOTING.md) · 🇭🇺 [hu](../../../hu/docs/guides/TROUBLESHOOTING.md) · 🇦🇲 [hy](../../../hy/docs/guides/TROUBLESHOOTING.md) · 🇮🇩 [id](../../../id/docs/guides/TROUBLESHOOTING.md) · 🇳🇬 [ig](../../../ig/docs/guides/TROUBLESHOOTING.md) · 🇮🇹 [it](../../../it/docs/guides/TROUBLESHOOTING.md) · 🇯🇵 [ja](../../../ja/docs/guides/TROUBLESHOOTING.md) · 🇬🇪 [ka](../../../ka/docs/guides/TROUBLESHOOTING.md) · 🇰🇭 [km](../../../km/docs/guides/TROUBLESHOOTING.md) · 🇮🇳 [kn](../../../kn/docs/guides/TROUBLESHOOTING.md) · 🇰🇷 [ko](../../../ko/docs/guides/TROUBLESHOOTING.md) · 🇱🇹 [lt](../../../lt/docs/guides/TROUBLESHOOTING.md) · 🇱🇻 [lv](../../../lv/docs/guides/TROUBLESHOOTING.md) · 🇮🇳 [ml](../../../ml/docs/guides/TROUBLESHOOTING.md) · 🇮🇳 [mr](../../../mr/docs/guides/TROUBLESHOOTING.md) · 🇲🇾 [ms](../../../ms/docs/guides/TROUBLESHOOTING.md) · 🇲🇹 [mt](../../../mt/docs/guides/TROUBLESHOOTING.md) · 🇲🇲 [my](../../../my/docs/guides/TROUBLESHOOTING.md) · 🇳🇵 [ne](../../../ne/docs/guides/TROUBLESHOOTING.md) · 🇳🇱 [nl](../../../nl/docs/guides/TROUBLESHOOTING.md) · 🇳🇴 [no](../../../no/docs/guides/TROUBLESHOOTING.md) · 🇮🇳 [or](../../../or/docs/guides/TROUBLESHOOTING.md) · 🇮🇳 [pa](../../../pa/docs/guides/TROUBLESHOOTING.md) · 🇵🇭 [phi](../../../phi/docs/guides/TROUBLESHOOTING.md) · 🇵🇱 [pl](../../../pl/docs/guides/TROUBLESHOOTING.md) · 🇵🇹 [pt](../../../pt/docs/guides/TROUBLESHOOTING.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/guides/TROUBLESHOOTING.md) · 🇷🇴 [ro](../../../ro/docs/guides/TROUBLESHOOTING.md) · 🇷🇺 [ru](../../../ru/docs/guides/TROUBLESHOOTING.md) · 🇱🇰 [si](../../../si/docs/guides/TROUBLESHOOTING.md) · 🇸🇰 [sk](../../../sk/docs/guides/TROUBLESHOOTING.md) · 🇸🇮 [sl](../../../sl/docs/guides/TROUBLESHOOTING.md) · 🇷🇸 [sr](../../../sr/docs/guides/TROUBLESHOOTING.md) · 🇸🇪 [sv](../../../sv/docs/guides/TROUBLESHOOTING.md) · 🇰🇪 [sw](../../../sw/docs/guides/TROUBLESHOOTING.md) · 🇮🇳 [ta](../../../ta/docs/guides/TROUBLESHOOTING.md) · 🇮🇳 [te](../../../te/docs/guides/TROUBLESHOOTING.md) · 🇹🇭 [th](../../../th/docs/guides/TROUBLESHOOTING.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/guides/TROUBLESHOOTING.md) · 🇵🇰 [ur](../../../ur/docs/guides/TROUBLESHOOTING.md) · 🇺🇿 [uz](../../../uz/docs/guides/TROUBLESHOOTING.md) · 🇻🇳 [vi](../../../vi/docs/guides/TROUBLESHOOTING.md) · 🇳🇬 [yo](../../../yo/docs/guides/TROUBLESHOOTING.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/guides/TROUBLESHOOTING.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/guides/TROUBLESHOOTING.md)
 
-OmniRoute için yaygın sorunlar ve çözümleri.
+Pusula için yaygın sorunlar ve çözümleri.
 
 ---
 
 ## Hızlı Başvuru
 
-**OmniRoute'u yeni mi kullanıyorsunuz?** Buradan başlayın — bunlar sorunların %90'ını çözer:
+**Pusula'u yeni mi kullanıyorsunuz?** Buradan başlayın — bunlar sorunların %90'ını çözer:
 
 | Bunu görüyorum                | Anlamı                                          | Yapılması gereken                                                                                    |
 | ----------------------------- | ----------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| "Bağlanılamıyor"              | OmniRoute çalışmıyor                            | `omniroute` komutunu çalıştırın veya `docker restart omniroute` komutunu kullanın                    |
+| "Bağlanılamıyor"              | Pusula çalışmıyor                            | `pusula` komutunu çalıştırın veya `docker restart pusula` komutunu kullanın                    |
 | "Geçersiz API anahtarı"       | Anahtarınız yanlış veya süresi dolmuş           | Anahtarı sağlayıcının web sitesinden yeniden kopyalayın                                              |
 | "Hız sınırı aşıldı"           | Çok fazla istek gönderiyorsunuz                 | 1 dakika bekleyin veya otomatik yedek sağlayıcıya geçiş için `model: "auto"` kullanın                |
 | "Kota aşıldı"                 | Ücretsiz/ücretli kotanızı tükettiniz            | Daha fazla sağlayıcı bağlayın veya ücretsiz sağlayıcıları (Kiro, Pollinations) kullanın              |
@@ -26,7 +26,7 @@ OmniRoute için yaygın sorunlar ve çözümleri.
 | "Yanlış sağlayıcı kullanıldı" | `auto` farklı bir sağlayıcı seçti               | Bu normaldir! `auto` en iyisini seçer. `model: "openai/gpt-4o"` ile belirli bir sağlayıcıyı zorlayın |
 | "502 Hatalı Ağ Geçidi"        | Sağlayıcı devre dışı                            | Bekleyip yeniden deneyin veya sağlayıcı değiştirmek için `model: "auto"` kullanın                    |
 | "401 Yetkisiz"                | Kimlik bilgileriniz yanlış                      | API anahtarınızı kontrol edin veya OAuth ile yeniden kimlik doğrulaması yapın                        |
-| "omniroute tanınmıyor"        | Windows PATH içinde global node modülleri eksik | npm global ön ekinizi Windows PATH'e ekleyin. `npm config get prefix` ile bulun.                     |
+| "pusula tanınmıyor"        | Windows PATH içinde global node modülleri eksik | npm global ön ekinizi Windows PATH'e ekleyin. `npm config get prefix` ile bulun.                     |
 | "429 Çok Fazla İstek"         | Hız sınırına takıldınız                         | 1 dakika bekleyin veya daha fazla sağlayıcı bağlayın                                                 |
 
 **Hâlâ çözemediniz mi?** Aşağıdaki [ayrıntılı sorun giderme](#detailed-troubleshooting) bölümüne bakın veya [Discord](https://discord.gg/U47eFqAXCn) üzerinden sorun.
@@ -50,18 +50,18 @@ OmniRoute için yaygın sorunlar ve çözümleri.
 **Doğrulanmış çözüm (topluluk tarafından bildirildi, 2026-08-10)**: Döndürme, eşzamanlılık ve yedek sağlayıcıya geçiş mekanizmalarının ücretsiz katmandaki dalgalanmaları hata vererek durmak yerine absorbe etmesi için üç ortam değişkenini ayarlayın:
 
 ```bash
-export OMNIROUTE_ROTATE_ON_400=true           # 400/401 durumunda başka bir modele/sağlayıcıya geçer (bozuk doğrudan geçiş modellerini atlar)
-export OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT=4   # ağır istekler için açık kabul üst sınırı (varsayılan olarak ayarlanmamıştır: istek sayısı sınırı yoktur, aşağıdaki nota bakın)
-export OMNIROUTE_CHAT_ADMISSION_QUEUE_MS=5000 # anında yeniden denenebilir bir 503 yerine ağır istek kapasitesi için daha uzun, sınırlı bekleme
+export PUSULA_ROTATE_ON_400=true           # 400/401 durumunda başka bir modele/sağlayıcıya geçer (bozuk doğrudan geçiş modellerini atlar)
+export PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT=4   # ağır istekler için açık kabul üst sınırı (varsayılan olarak ayarlanmamıştır: istek sayısı sınırı yoktur, aşağıdaki nota bakın)
+export PUSULA_CHAT_ADMISSION_QUEUE_MS=5000 # anında yeniden denenebilir bir 503 yerine ağır istek kapasitesi için daha uzun, sınırlı bekleme
 ```
 
-Bunları OmniRoute işleminin ortamında (arka plan programında, ör. LaunchAgent plist veya `systemctl edit` aracılığıyla) ayarlayın, ardından OmniRoute'u yeniden başlatın. Döndürme bayrağı tek başına en yüksek etkiye sahip ayardır: Kesin bir hatayı, havuzdaki sağlıklı bir sağlayıcı üzerinden şeffaf bir yeniden denemeye dönüştürür.
+Bunları Pusula işleminin ortamında (arka plan programında, ör. LaunchAgent plist veya `systemctl edit` aracılığıyla) ayarlayın, ardından Pusula'u yeniden başlatın. Döndürme bayrağı tek başına en yüksek etkiye sahip ayardır: Kesin bir hatayı, havuzdaki sağlıklı bir sağlayıcı üzerinden şeffaf bir yeniden denemeye dönüştürür.
 
-**Not**: `OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT`, aynı anda kaç ağır — uzun bağlamlı — isteğin çalışacağını sınırlar; bu sınır bir kabul geçididir, sağlayıcı hız sınırlayıcısı değildir. **#503-dağılım güncellemesi:** Bu değişken artık varsayılan olarak ayarlanmamaktadır (artık yalnızca yukarıdaki gibi açıkça yapılandırıldığında bağlayıcı olur) — bunun yerine ağır isteklerin kabulü, ana makinenin gerçek bellek sınırına göre kendini ölçeklendiren ve otomatik olarak türetilen bir bayt bütçesi (`OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES`) tarafından denetlenir. Bu nedenle yeni bir dağıtımda, bu değişken hiç ayarlanmadan çok daha az `503 chat_admission_busy` reddi görülmelidir; değişkenin burada açıkça ayarlanması hâlâ tam olarak belgelendiği şekilde çalışır. Açık bayt bütçesi geçersiz kılmaları 8 MiB–2 GiB aralığıyla sınırlandırılır. `413 body_exceeds_budget` geçici bir durum değildir: Bu bayt bütçesini artırın, `OMNIROUTE_CHAT_HARD_MAX_BODY_BYTES` değerini düşürün veya işlemin bellek sınırını artırın. Bir `inflight_bytes_budget` yük azaltması geçici bir çekişmedir ve yeniden denenebilir olmaya devam eder. Sağlayıcı başına hız sınırlaması (`open-sse/services/rateLimitManager.ts`) ayrı olarak `RATE_LIMIT_MAX_WAIT_MS`, `RATE_LIMIT_MAX_QUEUE_DEPTH` ve `RATE_LIMIT_AUTO_ENABLE` tarafından yönetilir — `.env.example` dosyasına bakın.
+**Not**: `PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT`, aynı anda kaç ağır — uzun bağlamlı — isteğin çalışacağını sınırlar; bu sınır bir kabul geçididir, sağlayıcı hız sınırlayıcısı değildir. **#503-dağılım güncellemesi:** Bu değişken artık varsayılan olarak ayarlanmamaktadır (artık yalnızca yukarıdaki gibi açıkça yapılandırıldığında bağlayıcı olur) — bunun yerine ağır isteklerin kabulü, ana makinenin gerçek bellek sınırına göre kendini ölçeklendiren ve otomatik olarak türetilen bir bayt bütçesi (`PUSULA_CHAT_MAX_INFLIGHT_BYTES`) tarafından denetlenir. Bu nedenle yeni bir dağıtımda, bu değişken hiç ayarlanmadan çok daha az `503 chat_admission_busy` reddi görülmelidir; değişkenin burada açıkça ayarlanması hâlâ tam olarak belgelendiği şekilde çalışır. Açık bayt bütçesi geçersiz kılmaları 8 MiB–2 GiB aralığıyla sınırlandırılır. `413 body_exceeds_budget` geçici bir durum değildir: Bu bayt bütçesini artırın, `PUSULA_CHAT_HARD_MAX_BODY_BYTES` değerini düşürün veya işlemin bellek sınırını artırın. Bir `inflight_bytes_budget` yük azaltması geçici bir çekişmedir ve yeniden denenebilir olmaya devam eder. Sağlayıcı başına hız sınırlaması (`open-sse/services/rateLimitManager.ts`) ayrı olarak `RATE_LIMIT_MAX_WAIT_MS`, `RATE_LIMIT_MAX_QUEUE_DEPTH` ve `RATE_LIMIT_AUTO_ENABLE` tarafından yönetilir — `.env.example` dosyasına bakın.
 
 **Çalıştığını doğrulama**: agent/cron işleminizi hızlı bir şekilde art arda iki kez çalıştırın ve her ikisinin de başarılı olduğunu doğrulayın. Düzeltmeden önce ikinci çalıştırma genellikle `429`/`401` hatası verir. Düzeltmeden sonra hatalar (varsa) şeffaf bir şekilde yeniden denenir ve çağrı tamamlanır. Ayrıca `curl /monitoring/health` komutunu çalıştırabilir ve sağlayıcı bağlantılarındaki `rateLimitedUntil` alanını ve etkilenen sağlayıcılar için `circuitBreakers.providerBreakers[].state` değerini izleyebilirsiniz — durum `CLOSED`, `DEGRADED`, `OPEN` veya `HALF_OPEN` değerlerinden biridir (bkz. `src/shared/utils/circuitBreaker.ts`) ve hata vermeye devam eden bir sağlayıcı, sıfırlama penceresi bir yoklama isteğine izin vermeden (`HALF_OPEN`) önce `CLOSED → DEGRADED → OPEN` durumlarına geçer.
 
-**Hâlâ 429 görüyorsanız**: söz konusu sağlayıcının etkin hesabı, yalnızca hız sınırını değil, gerçekten _kotasını_ tüketmiştir. OmniRoute kontrol panelinde Providers → Accounts bölümünden aynı sağlayıcı için ikinci bir hesap ekleyin veya başka bir ücretsiz sağlayıcıyı (ör. `routeway`, `auggie`) kullanıma dahil edin. Rotasyon yalnızca geçici hız sınırı/400/401 hatalarında yardımcı olur; kotanın tamamen tükenmesi ikinci bir kimlik bilgisi veya farklı bir sağlayıcı gerektirir.
+**Hâlâ 429 görüyorsanız**: söz konusu sağlayıcının etkin hesabı, yalnızca hız sınırını değil, gerçekten _kotasını_ tüketmiştir. Pusula kontrol panelinde Providers → Accounts bölümünden aynı sağlayıcı için ikinci bir hesap ekleyin veya başka bir ücretsiz sağlayıcıyı (ör. `routeway`, `auggie`) kullanıma dahil edin. Rotasyon yalnızca geçici hız sınırı/400/401 hatalarında yardımcı olur; kotanın tamamen tükenmesi ikinci bir kimlik bilgisi veya farklı bir sağlayıcı gerektirir.
 
 **Görsel modellerde (`auto/vision`, `bazaarlink/*`) 403 görüyorsanız**: bağlı hesap, görsel özelliklerini içeren ücretli bir plana sahip değildir veya API anahtarının izinleri yetersizdir. Sağlayıcı kontrol panelinde anahtar kapsamının görsel/çok modlu özellikleri içerdiğini doğrulayın veya ücretli katmandaki bir hesabı bağlayıp görsel hedefi olarak kullanmaya devam edin.
 
@@ -69,17 +69,17 @@ Bunları OmniRoute işleminin ortamında (arka plan programında, ör. LaunchAge
 
 ## npm install Uyarıları (ERESOLVE / eş bağımlılık / kullanım dışı)
 
-`npm install -g omniroute` komutunu çalıştırdığınızda `npm warn ERESOLVE`, eş bağımlılık bildirimleri ve `deprecated` mesajları gibi çok sayıda uyarı görebilirsiniz. **Bunlar beklenen ve zararsız uyarılardır.** Çıktıda `added <N> packages` ifadesini görüyorsanız kurulumunuz başarıyla tamamlanmıştır.
+`npm install -g pusula` komutunu çalıştırdığınızda `npm warn ERESOLVE`, eş bağımlılık bildirimleri ve `deprecated` mesajları gibi çok sayıda uyarı görebilirsiniz. **Bunlar beklenen ve zararsız uyarılardır.** Çıktıda `added <N> packages` ifadesini görüyorsanız kurulumunuz başarıyla tamamlanmıştır.
 
-Eş bağımlılık çözümleme uyarılarını engellemek için OmniRoute'un desteklediği kurulum biçimini kullanın:
+Eş bağımlılık çözümleme uyarılarını engellemek için Pusula'un desteklediği kurulum biçimini kullanın:
 
 ```bash
-npm install -g omniroute --legacy-peer-deps
+npm install -g pusula --legacy-peer-deps
 ```
 
 `--legacy-peer-deps` yalnızca `ERESOLVE` ve eş bağımlılık bildirimlerini engeller. Kullanımdan kaldırma bildirimleri, geçişli üçüncü taraf paketlerinden geldikleri için görünmeye devam eder; bunlar kurulumun başarısız olduğunu göstermez.
 
-Uyarılar, OmniRoute'un denetimi dışındaki üçüncü taraf paketlerinde bulunan güncelliğini yitirmiş eş bağımlılık aralıklarından kaynaklanır:
+Uyarılar, Pusula'un denetimi dışındaki üçüncü taraf paketlerinde bulunan güncelliğini yitirmiş eş bağımlılık aralıklarından kaynaklanır:
 
 1. **`marked-terminal`, `marked >=1 <16` istiyor ancak `marked@18` bulundu** — pratikte sorunsuz çalışır; üst kaynaklı eş bağımlılık aralığı yalnızca güncelliğini yitirmiştir.
 2. **`deprecated prebuild-install@7.1.3`** — geçişli bir yerel ikili dosya indirme yardımcısıdır. Sabitlenmiş `wreq-js` taşıma bağlamasını
@@ -97,16 +97,16 @@ Bir Gemini Web isteği, Playwright Chromium'un yüklü olmadığını belirten b
 Playwright, tarayıcı indirmelerini kasıtlı olarak npm paketi kurulumundan
 ayrı tutar; bu nedenle tarayıcı yüklenene kadar bu yanıtın alınması beklenir.
 
-Genel bir npm kurulumu için Chromium'u OmniRoute paketinin
+Genel bir npm kurulumu için Chromium'u Pusula paketinin
 dizininden yükleyin; böylece tarayıcı önbelleği aynı Playwright kurulumuna ait olur:
 
 ```bash
-cd "$(npm root -g)/omniroute"
+cd "$(npm root -g)/pusula"
 npx playwright install chromium
 ```
 
-Kurulumdan sonra OmniRoute'u yeniden başlatın ve ardından Gemini Web isteğini yeniden deneyin.
-OmniRoute'u bir Docker imajından çalıştırıyorsanız Chromium'u ve bağımlılıklarını içeren
+Kurulumdan sonra Pusula'u yeniden başlatın ve ardından Gemini Web isteğini yeniden deneyin.
+Pusula'u bir Docker imajından çalıştırıyorsanız Chromium'u ve bağımlılıklarını içeren
 `-web` imajını (veya `runner-web` derleme hedefini) kullanın; temel imaj
 bunları içermez.
 
@@ -119,10 +119,10 @@ bunları içermez.
 | İlk oturum açma işlemi çalışmıyor                             | `.env` içinde `INITIAL_PASSWORD` değerini ayarlayın (sabit kodlanmış varsayılan değer yoktur)                                                                                                                        |
 | Pano yanlış bağlantı noktasında açılıyor                      | `PORT=20128` ve `NEXT_PUBLIC_BASE_URL=http://localhost:20128` değerlerini ayarlayın                                                                                                                                  |
 | Günlükler diske yazılmıyor                                    | `APP_LOG_TO_FILE=true` değerini ayarlayın ve çağrı günlüğü yakalamanın etkinleştirildiğini doğrulayın                                                                                                                |
-| EACCES: izin reddedildi                                       | `~/.omniroute` değerini geçersiz kılmak için `DATA_DIR=/path/to/writable/dir` değerini ayarlayın                                                                                                                     |
+| EACCES: izin reddedildi                                       | `~/.pusula` değerini geçersiz kılmak için `DATA_DIR=/path/to/writable/dir` değerini ayarlayın                                                                                                                     |
 | Yönlendirme stratejisi kaydedilmiyor                          | En son v3.x sürümüne güncelleyin (ayarların kalıcı tutulmasına yönelik Zod şeması düzeltmesi önceki sürümlerde yayımlandı)                                                                                           |
 | Oturum açma çöküyor / boş sayfa                               | Node.js sürümünü kontrol edin — aşağıdaki [Node.js Uyumluluğu](#nodejs-compatibility) bölümüne bakın                                                                                                                 |
-| `dlopen` / `slice is not valid mach-o file` (macOS)           | `cd $(npm root -g)/omniroute/app && npm rebuild better-sqlite3 && omniroute` komutunu çalıştırın — aşağıdaki [macOS yerel modülünü yeniden derleme](#macos-native-module-rebuild) bölümüne bakın                     |
+| `dlopen` / `slice is not valid mach-o file` (macOS)           | `cd $(npm root -g)/pusula/app && npm rebuild better-sqlite3 && pusula` komutunu çalıştırın — aşağıdaki [macOS yerel modülünü yeniden derleme](#macos-native-module-rebuild) bölümüne bakın                     |
 | Proxy "fetch failed"                                          | Proxy yapılandırmasının doğru düzeyde ayarlandığından emin olun — aşağıdaki [Proxy Sorunları](#proxy-issues) bölümüne bakın                                                                                          |
 | Docker `curl: (56) Recv failure: Connection reset by peer`    | Docker bağlantı noktası bağlamanız IPv6 üzerinde gerçekleşiyor olabilir. IPv4'ü zorlamak için `-p 127.0.0.1:20128:20128` kullanın veya `curl -4` ile test edin. Aşağıdaki [Docker IPv6](#docker-ipv6) bölümüne bakın |
 | Antivirüs `README.md` dosyasını karantinaya alıyor            | Yanlış pozitif — aşağıdaki [Antivirüs yanlış pozitifleri](#antivirus-false-positives) bölümüne bakın                                                                                                                 |
@@ -138,7 +138,7 @@ bunları içermez.
 
 **Bu bir yanlış pozitiftir. Hiçbir dosyaya virüs bulaşmamıştır ve herhangi bir işlem yapılması gerekmez.**
 
-Avast ve AVG, çok sayıda HTTP isteğine benzeyen bağlantı içeren düz metin/Markdown dosyalarını işaretleyen sezgisel bir yöntem kullanır. OmniRoute'un `README.md` dosyası npm paketine dahildir (`package.json` → `files` altında listelenir), dolayısıyla genel kurulumda `node_modules/omniroute/README.md` konumuna yerleştirilir ve yaklaşık 15 adet `http://localhost:20128/...` örneği (MCP HTTP/SSE uç noktaları, A2A `.well-known` URL'si ve `curl` parçacıkları) içerir. Bu bağlantı yoğunluğu, sezgisel yöntemin tetiklenmesi için yeterlidir.
+Avast ve AVG, çok sayıda HTTP isteğine benzeyen bağlantı içeren düz metin/Markdown dosyalarını işaretleyen sezgisel bir yöntem kullanır. Pusula'un `README.md` dosyası npm paketine dahildir (`package.json` → `files` altında listelenir), dolayısıyla genel kurulumda `node_modules/pusula/README.md` konumuna yerleştirilir ve yaklaşık 15 adet `http://localhost:20128/...` örneği (MCP HTTP/SSE uç noktaları, A2A `.well-known` URL'si ve `curl` parçacıkları) içerir. Bu bağlantı yoğunluğu, sezgisel yöntemin tetiklenmesi için yeterlidir.
 
 Bu durum yakın zamanda başladıysa: dosyanın türünde bir değişiklik olmadı. README'nin uç noktalar tablosu genişletildi (MCP HTTP + SSE + A2A eklendi) ve daha fazla `curl` örneği eklendi; bu da dosyanın eşiği aşmasına neden oldu.
 
@@ -148,7 +148,7 @@ Dosya, hiçbir çalıştırılabilir içerik barındırmayan etkisiz bir doküma
 
 1. **Bildirimleri durdurun** — kurulum dizinini antivirüsünüzde hariç tutun
    (Avast: Ayarlar → İstisnalar); genel `node_modules` yolunuzu ve/veya
-   OmniRoute veri dizinini (`~/.omniroute/`) ekleyin.
+   Pusula veri dizinini (`~/.pusula/`) ekleyin.
 2. **Yanlış pozitifi bildirin** — <https://www.avast.com/false-positive-file-form.php>,
    karantinaya alınan `README.md` dosyasını ekleyin. Sorun, üreticinin sezgisel yönteminin
    bir metin dosyasına aşırı tepki vermesinden kaynaklandığı için herkese yardımcı olacak
@@ -169,23 +169,23 @@ Dosya, hiçbir çalıştırılabilir içerik barındırmayan etkisiz bir doküma
   — web çerezi sağlayıcılarında tarayıcı parmak izli HTTP için kullanılan sabitlenmiş
   `wreq-js` yerel bağlaması (`<arch>`, `x64` veya `arm64` değeridir).
 
-**Neden tetikleniyor:** Windows yükleyicisi **henüz kod imzalı değildir**, dolayısıyla imzasız bir NSIS yükleyicisinin itibarı sıfırdır ve davranışsal sezgisel yöntemler en yüksek hassasiyetle çalışır. Paketlenmiş yerel bir DLL ve `%LOCALAPPDATA%\Programs\OmniRoute` altına yazılan yüzlerce `.js` dosyasıyla (Next.js bağımsız derlemesindeki karma değer ekli paket dizinleri dâhil) birleştiğinde, bu durum sezgisel yöntemi tetiklemek için yeterlidir. Kod imzalama planlanmaktadır; uygulanana kadar yeni sürümlerde bu durum tekrarlanabilir.
+**Neden tetikleniyor:** Windows yükleyicisi **henüz kod imzalı değildir**, dolayısıyla imzasız bir NSIS yükleyicisinin itibarı sıfırdır ve davranışsal sezgisel yöntemler en yüksek hassasiyetle çalışır. Paketlenmiş yerel bir DLL ve `%LOCALAPPDATA%\Programs\Pusula` altına yazılan yüzlerce `.js` dosyasıyla (Next.js bağımsız derlemesindeki karma değer ekli paket dizinleri dâhil) birleştiğinde, bu durum sezgisel yöntemi tetiklemek için yeterlidir. Kod imzalama planlanmaktadır; uygulanana kadar yeni sürümlerde bu durum tekrarlanabilir.
 
 **Yapılması gerekenler:**
 
 1. **Önce indirdiğiniz dosyayı doğrulayın** (dosyanın değiştirilmiş olma ihtimalini eler). Her sürüm,
-   `sha512` alanı (base64) `OmniRoute.Setup.<version>.exe` yükleyicisini kapsayan
+   `sha512` alanı (base64) `Pusula.Setup.<version>.exe` yükleyicisini kapsayan
    `latest.yml` dosyasını yayımlar. PowerShell'de, yükleyicinin bulunduğu klasörden:
    ```powershell
    $b = [System.Security.Cryptography.SHA512]::Create().ComputeHash(
-     [System.IO.File]::ReadAllBytes("$PWD\OmniRoute.Setup.<version>.exe"))
+     [System.IO.File]::ReadAllBytes("$PWD\Pusula.Setup.<version>.exe"))
    [Convert]::ToBase64String($b)
    ```
    Çıktı, `latest.yml` → `sha512` değeriyle eşleşmelidir. Eşleşmiyorsa dosyayı silin ve
-   yalnızca [GitHub sürümler sayfasından](https://github.com/diegosouzapw/OmniRoute/releases)
+   yalnızca [GitHub sürümler sayfasından](https://github.com/Ferhat-Yasinoglu/pusula/releases)
    yeniden indirin.
 2. **Geri yükleyin + hariç tutun** — geri alınan öğeleri karantinadan geri yükleyin,
-   `%LOCALAPPDATA%\Programs\OmniRoute` için bir hariç tutma kuralı ekleyin
+   `%LOCALAPPDATA%\Programs\Pusula` için bir hariç tutma kuralı ekleyin
    (Kaspersky → Ayarlar → Tehditler ve Hariç Tutmalar), ardından yeniden kurun.
 3. **Yanlış pozitifi bildirin** — <https://opentip.kaspersky.com/>. Kullanıcılar tarafından
    gönderilen yanlış pozitif raporları, izin listesine alınma sürecini gerçekten hızlandırır.
@@ -198,7 +198,7 @@ Dosya, hiçbir çalıştırılabilir içerik barındırmayan etkisiz bir doküma
 
 ### Giriş sayfası çöküyor veya "Module self-registration" hatası gösteriyor
 
-**Neden:** OmniRoute'un onayladığı güvenli çalışma zamanı alt sınırının dışında kalan bir Node.js sürümü kullanıyorsunuz. En yaygın durum, OmniRoute'un gerektirdiği güvenlik yamalı alt sınırın altında kalan eski bir Node 22 veya 24 yama sürümünün kullanılmasıdır.
+**Neden:** Pusula'un onayladığı güvenli çalışma zamanı alt sınırının dışında kalan bir Node.js sürümü kullanıyorsunuz. En yaygın durum, Pusula'un gerektirdiği güvenlik yamalı alt sınırın altında kalan eski bir Node 22 veya 24 yama sürümünün kullanılmasıdır.
 
 **Belirtiler:**
 
@@ -214,8 +214,8 @@ Dosya, hiçbir çalıştırılabilir içerik barındırmayan etkisiz bir doküma
    nvm use 24
    ```
 2. Sürümünüzü doğrulayın: `node --version`, 24.x LTS serisinde `v24.0.0` veya daha yeni bir sürüm göstermelidir
-3. OmniRoute'u yeniden yükleyin: `npm install -g omniroute`
-4. Yeniden başlatın: `omniroute`
+3. Pusula'u yeniden yükleyin: `npm install -g pusula`
+4. Yeniden başlatın: `pusula`
 
 > **Desteklenen güvenli sürümler:** `>=22.22.2 <23` veya `>=24.0.0 <27`. Node.js 24.x LTS (Krypton) ve Node.js 26 tam olarak desteklenir.
 
@@ -253,7 +253,7 @@ altında listelendiğinden ve yerel derleme (`node-gyp rebuild`) gerektirdiğind
 
 <a name="macos-native-module-rebuild"></a>
 
-**Neden:** Genel bir `npm install -g omniroute` kurulumundan sonra, paketin içindeki yerel `better-sqlite3` ikili dosyası yerel olarak çalışan ortamdan farklı bir mimari veya Node.js ABI'si için derlenmiş olabilir. Bu durum, önceden derlenmiş ikili dosya ortamınızla eşleşmediğinde macOS'te (hem Apple Silicon hem de Intel) yaygın olarak görülür.
+**Neden:** Genel bir `npm install -g pusula` kurulumundan sonra, paketin içindeki yerel `better-sqlite3` ikili dosyası yerel olarak çalışan ortamdan farklı bir mimari veya Node.js ABI'si için derlenmiş olabilir. Bu durum, önceden derlenmiş ikili dosya ortamınızla eşleşmediğinde macOS'te (hem Apple Silicon hem de Intel) yaygın olarak görülür.
 
 **Belirtiler:**
 
@@ -262,15 +262,15 @@ altında listelendiğinden ve yerel derleme (`node-gyp rebuild`) gerektirdiğind
 - Tam örnek:
 
 ```
-dlopen(/Users/<user>/.nvm/versions/node/v24.14.1/lib/node_modules/omniroute/app/node_modules/better-sqlite3/build/Release/better_sqlite3.node, 0x0001): tried: '...' (slice is not valid mach-o file)
+dlopen(/Users/<user>/.nvm/versions/node/v24.14.1/lib/node_modules/pusula/app/node_modules/better-sqlite3/build/Release/better_sqlite3.node, 0x0001): tried: '...' (slice is not valid mach-o file)
 ```
 
 **Çözüm — yerel ortamınız için yeniden derleyin (Node.js sürümünü düşürmek gerekmez):**
 
 ```bash
-cd $(npm root -g)/omniroute/app
+cd $(npm root -g)/pusula/app
 npm rebuild better-sqlite3
-omniroute
+pusula
 ```
 
 > **Not:** Bu işlem, yerel bağlamayı yerel Node.js sürümünüze ve CPU mimarinize göre yeniden derleyerek ikili dosya uyumsuzluğunu giderir. Resmî olarak desteklenen çalışma zamanı aralığı **`>=22.22.2 <23` veya `>=24.0.0 <27`** şeklindedir (`src/shared/utils/nodeRuntimeSupport.ts` içindeki `SUPPORTED_NODE_RANGE`; `package.json` dosyasındaki `engines` alanıyla uyumludur). Node.js 24.x LTS (Krypton) ve Node.js 26, `better-sqlite3` v12.x ile tam olarak desteklenir.
@@ -297,13 +297,13 @@ omniroute
 
 **Neden:** Node.js 22'de undici@8 dağıtıcısı, Node'un yerleşik `fetch()` uygulamasıyla uyumlu değildir.
 
-**Düzeltme (v3.5.5+):** OmniRoute artık bir proxy dağıtıcısı etkin olduğunda undici'nin kendi `fetch()` fonksiyonunu kullanarak tutarlı davranış sağlıyor. v3.5.5+ sürümüne güncelleyin.
+**Düzeltme (v3.5.5+):** Pusula artık bir proxy dağıtıcısı etkin olduğunda undici'nin kendi `fetch()` fonksiyonunu kullanarak tutarlı davranış sağlıyor. v3.5.5+ sürümüne güncelleyin.
 
 ### WSL altında MITM proxy: Windows ana makinesindeki masaüstü uygulamalarına müdahale edilmiyor
 
-**Neden:** MITM proxy ve CA sertifikası, OmniRoute'un çalıştığı ortama kurulur. WSL altında bu ortam Linux konuk sistemidir; AI masaüstü uygulamaları (Kiro, Trae, Copilot, Zed, …) ise Windows ana makinesinde çalışır. Ana makine uygulamaları, konuk sistemin sertifika deposuna güvenmez ve konuk sistemin sistem proxy'si üzerinden yönlendirilmez; dolayısıyla masaüstü trafiğine müdahale gerçekleşmez.
+**Neden:** MITM proxy ve CA sertifikası, Pusula'un çalıştığı ortama kurulur. WSL altında bu ortam Linux konuk sistemidir; AI masaüstü uygulamaları (Kiro, Trae, Copilot, Zed, …) ise Windows ana makinesinde çalışır. Ana makine uygulamaları, konuk sistemin sertifika deposuna güvenmez ve konuk sistemin sistem proxy'si üzerinden yönlendirilmez; dolayısıyla masaüstü trafiğine müdahale gerçekleşmez.
 
-**Öneri:** OmniRoute'u, müdahale etmek istediğiniz masaüstü uygulamalarıyla aynı işletim sisteminde yerel olarak çalıştırın (Windows uygulamaları için Windows; macOS/Linux için de aynı şekilde). Ana makine uygulamalarını hedeflerken OmniRoute'u WSL içinde tutmak; oluşturulan CA sertifikasına Windows ana makinesinde manuel olarak güvenilmesini ve her ana makine uygulamasının ağ/proxy ayarlarının WSL proxy uç noktasına yönlendirilmesini gerektirir. Bu, desteklenmeyen ve güvenilir olmayan bir yapılandırmadır.
+**Öneri:** Pusula'u, müdahale etmek istediğiniz masaüstü uygulamalarıyla aynı işletim sisteminde yerel olarak çalıştırın (Windows uygulamaları için Windows; macOS/Linux için de aynı şekilde). Ana makine uygulamalarını hedeflerken Pusula'u WSL içinde tutmak; oluşturulan CA sertifikasına Windows ana makinesinde manuel olarak güvenilmesini ve her ana makine uygulamasının ağ/proxy ayarlarının WSL proxy uç noktasına yönlendirilmesini gerektirir. Bu, desteklenmeyen ve güvenilir olmayan bir yapılandırmadır.
 
 ---
 
@@ -330,7 +330,7 @@ omniroute
 
 ### OAuth Token'ının Süresi Doldu
 
-OmniRoute, token'ları otomatik olarak yeniler. Sorunlar devam ederse:
+Pusula, token'ları otomatik olarak yeniler. Sorunlar devam ederse:
 
 1. Kontrol Paneli → Sağlayıcı → Yeniden Bağlan
 2. Sağlayıcı bağlantısını silip yeniden ekleyin
@@ -362,7 +362,7 @@ Tüm ayrıntılar ve iki Kiro hesabını yan yana eklemeye yönelik adım adım 
 ### Bulut Senkronizasyonu Hataları
 
 1. `BASE_URL` değerinin çalışan örneğinizi gösterdiğini doğrulayın (ör. `http://localhost:20128`)
-2. `CLOUD_URL` değerinin bulut uç noktanızı gösterdiğini doğrulayın (ör. `https://omniroute.dev`)
+2. `CLOUD_URL` değerinin bulut uç noktanızı gösterdiğini doğrulayın (ör. `https://pusula.dev`)
 3. `NEXT_PUBLIC_*` değerlerini sunucu tarafındaki değerlerle uyumlu tutun
 
 ### Bulutta `stream=false` 500 Hatası Döndürüyor
@@ -396,8 +396,8 @@ Tüm ayrıntılar ve iki Kiro hesabını yan yana eklemeye yönelik adım adım 
 1. **Hızlı tanılama:** `curl -4 http://localhost:20128/v1/models` komutunu çalıştırın. `-4` ile çalışıyor ancak onsuz başarısız oluyorsa IPv6 bağlama uyuşmazlığınız vardır.
 2. **Kalıcı çözüm:** `docker run` komutunuzda `-p 127.0.0.1:20128:20128` kullanarak açıkça IPv4'e bağlayın:
    ```bash
-   docker run -d --name omniroute --restart unless-stopped --stop-timeout 40 \
-     -p 127.0.0.1:20128:20128 -v omniroute-data:/app/data diegosouzapw/omniroute:latest
+   docker run -d --name pusula --restart unless-stopped --stop-timeout 40 \
+     -p 127.0.0.1:20128:20128 -v pusula-data:/app/data ferhat-yasinoglu/pusula:latest
    ```
    Bu, IPv4 bağlamasını zorunlu kılar ve ayrıca proxy'nin tüm ana makine arayüzlerinde açığa çıkmasını önler.
 
@@ -541,7 +541,7 @@ Sağlayıcı profilleri şu ayarları destekler:
 
 ### Ani istek yığılmasını önleme
 
-Çok sayıda eşzamanlı istek, hız sınırlamasına tabi bir sağlayıcıya ulaştığında OmniRoute, istekleri sıraya koymak ve zincirleme hataları önlemek için mutex + otomatik hız sınırlama kullanır. Bu, API anahtarı sağlayıcıları için otomatik olarak gerçekleşir.
+Çok sayıda eşzamanlı istek, hız sınırlamasına tabi bir sağlayıcıya ulaştığında Pusula, istekleri sıraya koymak ve zincirleme hataları önlemek için mutex + otomatik hız sınırlama kullanır. Bu, API anahtarı sağlayıcıları için otomatik olarak gerçekleşir.
 
 ### Sohbet istekleri 503 / chat_admission_busy hatasıyla başarısız oluyor
 
@@ -550,7 +550,7 @@ Sağlayıcı profilleri şu ayarları destekler:
 - Sohbet tamamlamaları uç noktası, hata kodu
   `chat_admission_busy` olan yeniden denenebilir bir `503` yanıtı döndürür.
 - Yanıt `Retry-After` içerir. #12135 itibarıyla değer, gözlemlenen
-  doluluk durumundan türetilir — isteğin hâlihazırda beklediği `OMNIROUTE_CHAT_ADMISSION_QUEUE_MS` penceresi
+  doluluk durumundan türetilir — isteğin hâlihazırda beklediği `PUSULA_CHAT_ADMISSION_QUEUE_MS` penceresi
   ile mevcut ağır iş yükü kiralarının elde tutulduğu süreden büyük olanı alınır — tam
   saniyeye yukarı yuvarlanır ve 60 ile sınırlandırılır. Boş bir geçitte geçmişteki alt sınırlar korunur:
   bayt tabanlı yol için 2 saniye, yapı tabanlı yol için 1 saniye (bu yol ayrıca
@@ -577,23 +577,23 @@ Varsayılan eşiklerde bir istek; en az `200` mesaj, en az `64` araç veya en az
 tahmini token içerdiğinde ya da sınırlı yapı tahmini `10,000` ziyaret edilen düğüm veya `12`
 derinlik sınırlarını tükettiğinde yapısal olarak ağır kabul edilir.
 
-**Neden:** Bu, yukarı akış sağlayıcısındaki bir hata değil, OmniRoute içindeki kasıtlı yük azaltma işlemidir.
+**Neden:** Bu, yukarı akış sağlayıcısındaki bir hata değil, Pusula içindeki kasıtlı yük azaltma işlemidir.
 Her işlem, büyük bir istek gövdesini bellekte tutup ayrıştırmadan önce sınırlı ağır iş yükü kapasitesini ayırmak
 için işleme özel bir koruma kullanır. Ağır iş yükü kirası, bir SSE
 yanıtının ömrü boyunca elde tutulur.
 
 **#503-yayılımı:** bu düzeltmeden önce koruma, ana makine belleğinden bağımsız olarak eşzamanlılığı sabit bir istek SAYISI
-(`OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT`, varsayılan `1`) ile sınırlıyordu; bu nedenle kodlama ajanlarının
+(`PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT`, varsayılan `1`) ile sınırlıyordu; bu nedenle kodlama ajanlarının
 yayılımı (birden fazla alt ajan/CLI, düzenli olarak > 256 KB boyutunda gövdeler) etkin
 eşzamanlılığı yaklaşık 1'e düşürüyor ve tamamen normal yük altında 503 hatalarına yol açıyordu. Koruma artık kendini
 otomatik olarak ayarlar: işlemin gerçek bellek sınırına göre boyutlandırılan, otomatik türetilmiş bir veri alımı BAYT
-bütçesi (`OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES`) tarafından yönetilir ve ayrıca canlı bir kaynak baskısı sinyalini
+bütçesi (`PUSULA_CHAT_MAX_INFLIGHT_BYTES`) tarafından yönetilir ve ayrıca canlı bir kaynak baskısı sinyalini
 dikkate alır — böylece yalnızca ana makine gerçekten bellek baskısı altındayken yük azaltır,
-birden fazla ağır istek aynı anda geldiği için değil. Eski sayı sınırı (`OMNIROUTE_CHAT_MAX_HEAVY_IN_FLIGHT`)
+birden fazla ağır istek aynı anda geldiği için değil. Eski sayı sınırı (`PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT`)
 hâlâ uygulanır, ancak yalnızca bunu açıkça ayarlarsanız.
 
 Kapasite dolu olduğunda ağır iş yüküne sahip bir istek, yeniden denenebilir `503` yanıtını vermeden önce
-bir yerin boşalması için `OMNIROUTE_CHAT_ADMISSION_QUEUE_MS` süresine kadar (varsayılan `2000`, `0` beklemeyi devre dışı bırakır)
+bir yerin boşalması için `PUSULA_CHAT_ADMISSION_QUEUE_MS` süresine kadar (varsayılan `2000`, `0` beklemeyi devre dışı bırakır)
 bekler. Bu sınırlı bekleme, ağır alt istekleri eşzamanlı olarak yayan ajan tarzı istemcilerin
 (OpenCode, Claude Code, Cursor), anında reddedilmeler nedeniyle tüm yeniden deneme bütçelerini tüketip görevin
 ortasında başarısız olmak yerine istek yığınını sıraya koymasını sağlar.
@@ -613,7 +613,7 @@ false` ve yüksek bir `maxInflightBytes`, otomatik türetilen bütçenin zaten g
    bu durum bir kabul ortam değişkeniyle düzeltilemez; daha fazla RAM veya daha küçük bir iş yükü gerekir.
 3. Yalnızca `/api/monitoring/health`, otomatik türetilen bütçenin ana makineniz için gerçekten çok küçük olduğunu
    gösteriyorsa (nadiren görülür — zaten konteynerden fiziksel sunucuya kadar ölçeklenir), eski istek sayısı sınırına geri dönmek yerine
-   doğrudan `OMNIROUTE_CHAT_MAX_INFLIGHT_BYTES` ile geçersiz kılın.
+   doğrudan `PUSULA_CHAT_MAX_INFLIGHT_BYTES` ile geçersiz kılın.
 
 Geçerli kabul ayarları için [ortam değişkeni referansına](../reference/ENVIRONMENT.md#4-security--authentication)
 bakın.
@@ -622,7 +622,7 @@ bakın.
 
 ## İsteğe bağlı RAG / LLM hata sınıflandırması (16 sorun)
 
-Bazı OmniRoute kullanıcıları ağ geçidini RAG veya ajan yığınlarının önüne yerleştirir. Bu kurulumlarda tuhaf bir örüntüyle karşılaşmak yaygındır: OmniRoute sağlıklı görünür (sağlayıcılar çalışır durumda, yönlendirme profilleri sorunsuz, hız sınırı uyarısı yoktur), ancak nihai yanıt yine de yanlıştır.
+Bazı Pusula kullanıcıları ağ geçidini RAG veya ajan yığınlarının önüne yerleştirir. Bu kurulumlarda tuhaf bir örüntüyle karşılaşmak yaygındır: Pusula sağlıklı görünür (sağlayıcılar çalışır durumda, yönlendirme profilleri sorunsuz, hız sınırı uyarısı yoktur), ancak nihai yanıt yine de yanlıştır.
 
 Pratikte bu olaylar genellikle ağ geçidinin kendisinden değil, sonraki aşamadaki RAG işlem hattından kaynaklanır.
 
@@ -641,17 +641,17 @@ Fikir basittir:
 
 1. Hatalı bir yanıtı incelerken şunları kaydedin:
    - kullanıcı görevi ve isteği
-   - OmniRoute'taki rota veya sağlayıcı kombinasyonu
+   - Pusula'taki rota veya sağlayıcı kombinasyonu
    - sonraki aşamada kullanılan tüm RAG bağlamı (getirilen belgeler, araç çağrıları vb.)
 2. Olayı bir veya iki WFGY ProblemMap numarasıyla (`No.1` … `No.16`) eşleştirin.
-3. Numarayı OmniRoute günlüklerinin yanında kendi panonuzda, operasyon kılavuzunuzda veya olay takip sisteminizde saklayın.
+3. Numarayı Pusula günlüklerinin yanında kendi panonuzda, operasyon kılavuzunuzda veya olay takip sisteminizde saklayın.
 4. RAG yığınınızı, getiricinizi veya yönlendirme stratejinizi değiştirmeniz gerekip gerekmediğine karar vermek için ilgili WFGY sayfasını kullanın.
 
 Tam metin ve somut tarifler burada yer almaktadır (MIT lisansı, yalnızca metin):
 
 [WFGY ProblemMap README](https://github.com/onestardao/WFGY/blob/main/ProblemMap/README.md)
 
-OmniRoute'un arkasında RAG veya ajan işlem hatları çalıştırmıyorsanız bu bölümü yok sayabilirsiniz.
+Pusula'un arkasında RAG veya ajan işlem hatları çalıştırmıyorsanız bu bölümü yok sayabilirsiniz.
 
 ---
 
@@ -675,7 +675,7 @@ v3.8.0 sürümüne özgü sorunlar ve bunların mevcut geçici çözümleri. Bir
 
 1. Platformunuz için Devin CLI'ı yükleyin
 2. `.env` içinde `CLI_DEVIN_BIN=/usr/local/bin/devin` (veya gerçek yol) olarak ayarlayın
-3. OmniRoute'u yeniden başlatın ve **Dashboard → CLI Tools** üzerinden yeniden test edin
+3. Pusula'u yeniden başlatın ve **Dashboard → CLI Tools** üzerinden yeniden test edin
 
 ### Model bekleme süresi takılı kalıyor (manuel sıfırlama)
 
@@ -700,7 +700,7 @@ v3.8.0 sürümüne özgü sorunlar ve bunların mevcut geçici çözümleri. Bir
 
 **Çözüm:**
 
-- OAuth akışını yeniden tetiklemek için CLI'dan `omniroute providers` komutunu çalıştırın veya
+- OAuth akışını yeniden tetiklemek için CLI'dan `pusula providers` komutunu çalıştırın veya
 - OAuth'u **Dashboard → Providers → Command Code → Reconnect** üzerinden yeniden çalıştırın
 
 ### ModelScope agresif 429 bekleme süreleri döndürüyor
@@ -717,20 +717,20 @@ v3.8.0 sürümüne özgü sorunlar ve bunların mevcut geçici çözümleri. Bir
 - v3.8.0 veya sonraki bir sürümde olduğunuzdan emin olun
 - **Settings → Resilience** altında `useUpstream429BreakerHints` anahtarının etkin olduğunu doğrulayın
 
-### Üretim ortamında OMNIROUTE_WS_BRIDGE_SECRET eksik
+### Üretim ortamında PUSULA_WS_BRIDGE_SECRET eksik
 
 **Belirtiler:**
 
 - Uzak bir üretim ana makinesinde çalışırken her Codex/Responses WebSocket köprüsü isteğinde 401 hatası
 - WebSocket köprüsü el sıkışması, bağlantının hemen ardından kapanır
 
-**Neden:** `OMNIROUTE_WS_BRIDGE_SECRET` ortam değişkeni üretim ortamında eksik.
+**Neden:** `PUSULA_WS_BRIDGE_SECRET` ortam değişkeni üretim ortamında eksik.
 
 **Çözüm:**
 
 1. Rastgele bir gizli değer oluşturun: `openssl rand -hex 32`
-2. Üretim sunucusu ortamında (ve köprüyle iletişim kuran tüm istemcilerde) `OMNIROUTE_WS_BRIDGE_SECRET=<random-secret>` olarak ayarlayın
-3. OmniRoute'u yeniden başlatın
+2. Üretim sunucusu ortamında (ve köprüyle iletişim kuran tüm istemcilerde) `PUSULA_WS_BRIDGE_SECRET=<random-secret>` olarak ayarlayın
+3. Pusula'u yeniden başlatın
 
 ### Responses API: arka plan modu eşzamanlı moda indirgeniyor
 
@@ -760,24 +760,24 @@ başlatma iş yüklerine sahip konteynerlerde görülür.
 
 ```bash
 # Ortam değişkeni aracılığıyla (başlatmalar arasında kalıcıdır):
-export OMNIROUTE_READY_TIMEOUT_MS=180000   # 3 dakika
-omniroute serve
+export PUSULA_READY_TIMEOUT_MS=180000   # 3 dakika
+pusula serve
 
 # CLI bayrağı aracılığıyla (tek seferlik):
-omniroute serve --ready-timeout 180000
+pusula serve --ready-timeout 180000
 ```
 
 Varsayılan değer 60.000 ms'dir (60 sn). Uyarı yalnızca bilgilendirme amaçlıdır; sunucu
 arka planda başlatılmaya devam eder ve önyükleme tamamlandığında erişilebilir hâle gelir.
 
-`OMNIROUTE_READY_TIMEOUT_MS` hakkında tüm ayrıntılar için
+`PUSULA_READY_TIMEOUT_MS` hakkında tüm ayrıntılar için
 [`docs/reference/ENVIRONMENT.md`](../reference/ENVIRONMENT.md) belgesine bakın.
 
 ---
 
 ## Hâlâ Takıldınız mı?
 
-- **GitHub Sorunları**: [github.com/diegosouzapw/OmniRoute/issues](https://github.com/diegosouzapw/OmniRoute/issues)
+- **GitHub Sorunları**: [github.com/Ferhat-Yasinoglu/pusula/issues](https://github.com/Ferhat-Yasinoglu/pusula/issues)
 - **Mimari**: Dahili ayrıntılar için [`docs/architecture/ARCHITECTURE.md`](../architecture/ARCHITECTURE.md) belgesine bakın
 - **API Referansı**: Tüm uç noktalar için [`docs/reference/API_REFERENCE.md`](../reference/API_REFERENCE.md) belgesine bakın
 - **Sistem Durumu Panosu**: Gerçek zamanlı sistem durumu için **Dashboard → Health** bölümünü kontrol edin

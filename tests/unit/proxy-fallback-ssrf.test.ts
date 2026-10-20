@@ -6,7 +6,7 @@ import path from "node:path";
 import { cleanupTempDataDir } from "../_setup/tempDataDir.ts";
 
 // Isolate DATA_DIR before importing validation.ts (it initializes the DB on load)
-// so the test never touches the developer's real ~/.omniroute database.
+// so the test never touches the developer's real ~/.pusula database.
 const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omr-proxy-ssrf-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 

@@ -1,13 +1,13 @@
 // tests/unit/extract-zip-14482-exposure.test.ts
 // Probe for issue #14482 — extract-zip GHSA-7pqw-9j4j-h8q3 / GHSA-jmr9-qjv8-65gv.
 //
-// This is NOT a functional-bug repro (there is no OmniRoute code path that calls the
+// This is NOT a functional-bug repro (there is no Pusula code path that calls the
 // vulnerable npm package). It is a reachability/exposure proof: it asserts the two
 // premises the triage relies on to call this "accepted risk, doc-only fix" rather than
 // "code bug, needs a patch":
 //   1. extract-zip is reachable ONLY through the promptfoo (devDependency) ->
 //      @openai/codex-security chain — never through a production dependency.
-//   2. OmniRoute's own source (src/, open-sse/, bin/, electron/ *code*, not its
+//   2. Pusula's own source (src/, open-sse/, bin/, electron/ *code*, not its
 //      package-lock.json) never imports the "extract-zip" npm package directly.
 // If either assertion ever breaks (e.g. a future PR adds extract-zip as a direct or
 // production dependency, or a production module starts importing it), this test goes
@@ -96,7 +96,7 @@ test("extract-zip (GHSA-7pqw-9j4j-h8q3 / GHSA-jmr9-qjv8-65gv) is reachable only 
   );
 });
 
-test("OmniRoute's own production/runtime code never imports the extract-zip npm package", () => {
+test("Pusula's own production/runtime code never imports the extract-zip npm package", () => {
   const scanDirs = ["src", "open-sse", "bin"].map((d) => path.join(ROOT, d));
   const offenders: string[] = [];
 

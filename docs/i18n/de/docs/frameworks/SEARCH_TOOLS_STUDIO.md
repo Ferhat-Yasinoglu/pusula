@@ -114,7 +114,7 @@ sich derzeit alle Schlüssel in einer Abklingzeit befinden.
 
 `ExportCodeModal` (aus Playground Studio importiert) und `codeExport.ts` generieren
 curl-/Python-/TypeScript-Codeausschnitte für Aufrufe von `/v1/search` und `/v1/web/fetch`.
-Der Platzhalter für den API-Schlüssel ist immer `$OMNIROUTE_API_KEY` (D11, gemeinsam mit Playground Studio verwendet).
+Der Platzhalter für den API-Schlüssel ist immer `$PUSULA_API_KEY` (D11, gemeinsam mit Playground Studio verwendet).
 
 ---
 

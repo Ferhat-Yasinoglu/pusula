@@ -82,7 +82,7 @@ test("the maintenance scheduler is cleared on close, like the health-check sched
   );
 });
 
-test("a positive OMNIROUTE_WAL_TRUNCATE_INTERVAL_MS logs a one-time deprecation warning", async () => {
+test("a positive PUSULA_WAL_TRUNCATE_INTERVAL_MS logs a one-time deprecation warning", async () => {
   const mod = await import("../../src/lib/db/walMaintenance.ts");
   mod.__resetForTests();
   const warnings: string[] = [];
@@ -104,11 +104,11 @@ test("a positive OMNIROUTE_WAL_TRUNCATE_INTERVAL_MS logs a one-time deprecation 
         throw new Error("gated test must never reach exec()");
       },
     };
-    const env = { OMNIROUTE_WAL_TRUNCATE_INTERVAL_MS: "60000" } as NodeJS.ProcessEnv;
+    const env = { PUSULA_WAL_TRUNCATE_INTERVAL_MS: "60000" } as NodeJS.ProcessEnv;
     mod.startWalMaintenance(db as never, "/tmp/fake.sqlite", env);
     mod.startWalMaintenance(db as never, "/tmp/fake.sqlite", env);
     assert.equal(warnings.length, 1, `warn exactly once, got: ${JSON.stringify(warnings)}`);
-    assert.match(warnings[0], /OMNIROUTE_WAL_TRUNCATE_INTERVAL_MS/);
+    assert.match(warnings[0], /PUSULA_WAL_TRUNCATE_INTERVAL_MS/);
     assert.match(warnings[0], /no longer used and has no effect/);
     assert.match(warnings[0], /#13973/);
 
@@ -121,7 +121,7 @@ test("a positive OMNIROUTE_WAL_TRUNCATE_INTERVAL_MS logs a one-time deprecation 
     mod.__resetForTests();
     warnings.length = 0;
     mod.startWalMaintenance(db as never, "/tmp/fake.sqlite", {
-      OMNIROUTE_WAL_TRUNCATE_INTERVAL_MS: "0",
+      PUSULA_WAL_TRUNCATE_INTERVAL_MS: "0",
     } as NodeJS.ProcessEnv);
     assert.equal(warnings.length, 0, "0 was the documented off switch, so it must stay silent");
     mod.startWalMaintenance(db as never, "/tmp/fake.sqlite", {} as NodeJS.ProcessEnv);
@@ -143,13 +143,13 @@ test("the removed env var is documented as removed", () => {
   const docs = readSource("docs/reference/ENVIRONMENT.md");
   const row = docs
     .split("\n")
-    .find((line) => line.includes("OMNIROUTE_WAL_TRUNCATE_INTERVAL_MS") && line.startsWith("|"));
+    .find((line) => line.includes("PUSULA_WAL_TRUNCATE_INTERVAL_MS") && line.startsWith("|"));
   assert.ok(row, "docs/reference/ENVIRONMENT.md must keep a row for the removed variable");
   assert.match(row ?? "", /removed/i);
   const envExample = readSource(".env.example");
   const block = envExample
     .split("\n\n")
-    .find((paragraph) => paragraph.includes("OMNIROUTE_WAL_TRUNCATE_INTERVAL_MS"));
+    .find((paragraph) => paragraph.includes("PUSULA_WAL_TRUNCATE_INTERVAL_MS"));
   assert.ok(block, ".env.example must keep a commented entry for the removed variable");
   assert.match(block ?? "", /[Rr]emoved/);
 });

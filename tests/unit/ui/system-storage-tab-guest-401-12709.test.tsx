@@ -45,7 +45,7 @@ describe("#12709 - SystemStorageTab guest-session 401 on /api/settings/database"
         return new Response(
           JSON.stringify({
             driver: "sqlite",
-            dbPath: "~/.omniroute/storage.sqlite",
+            dbPath: "~/.pusula/storage.sqlite",
             sizeBytes: 0,
             retentionDays: { app: 7, call: 7 },
             tableMaxRows: { callLogs: 100000, proxyLogs: 100000 },

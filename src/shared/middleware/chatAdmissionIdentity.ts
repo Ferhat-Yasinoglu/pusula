@@ -1,11 +1,11 @@
 import { createHmac, randomBytes } from "crypto";
-import { isOwnListenerSelfHop, SELF_HOP_HEADER } from "@omniroute/open-sse/utils/selfHop.ts";
+import { isOwnListenerSelfHop, SELF_HOP_HEADER } from "@pusula/open-sse/utils/selfHop.ts";
 import { timingSafeCompare } from "@/shared/utils/timingSafeCompare";
 
 const ADMISSION_BYPASS_VALUE = "internal";
-const FINGERPRINT_KEY = "omniroute-admission-fingerprint-v1";
+const FINGERPRINT_KEY = "pusula-admission-fingerprint-v1";
 
-export const ADMISSION_BYPASS_HEADER = "x-omniroute-admission-bypass";
+export const ADMISSION_BYPASS_HEADER = "x-pusula-admission-bypass";
 
 export function resolveSessionId(request: Request): string {
   const authHeader = request.headers.get("authorization") || "";
@@ -21,8 +21,8 @@ export function resolveSessionId(request: Request): string {
 
 // Lazily generated, held in memory only for the lifetime of this process — never
 // persisted, never logged. Used ONLY as the last-resort self-loop bearer when the
-// operator hasn't set OMNIROUTE_API_KEY/ROUTER_API_KEY (#13679: the previous fallback
-// was the checked-in literal "sk_omniroute", a predictable shared secret anyone reading
+// operator hasn't set PUSULA_API_KEY/ROUTER_API_KEY (#13679: the previous fallback
+// was the checked-in literal "sk_pusula", a predictable shared secret anyone reading
 // the source could forge). Both the in-process caller (audioBridgeHelpers /
 // visionBridgeHelpers) and the verifier (isInternalAdmissionBypass) call this same
 // function, so they always agree on the value within one process.
@@ -37,7 +37,7 @@ function getGeneratedSelfLoopSecret(): string {
 
 export function resolveSelfLoopBearer(): string {
   return (
-    process.env.OMNIROUTE_API_KEY?.trim() ||
+    process.env.PUSULA_API_KEY?.trim() ||
     process.env.ROUTER_API_KEY?.trim() ||
     getGeneratedSelfLoopSecret()
   );

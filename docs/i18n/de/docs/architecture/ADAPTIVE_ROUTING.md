@@ -5,7 +5,7 @@
 ---
 
 Dieses Dokument beschreibt die Grundlage für feedbackgesteuertes adaptives Routing, die
-OmniRoute hinzugefügt wurde. Sie ist bewusst schlank gehalten: Sie führt einen typisierten
+Pusula hinzugefügt wurde. Sie ist bewusst schlank gehalten: Sie führt einen typisierten
 Kanal für Routing-Ergebnisse, ein Online-Qualitätssignal zur Einspeisung in den bestehenden
 Auto-Combo-Scorer, einen optionalen OpenTelemetry-Exporter und einen Endpunkt zur
 Erklärbarkeit ein. Sie ersetzt **nicht** den bestehenden Resilienz-Stack (Circuit Breaker,
@@ -13,7 +13,7 @@ Connection Cooldown, Model Lockout, Health Matrix, Autopilot), sondern ergänzt 
 
 ## 1. Architekturkontext
 
-OmniRoute ist eine Datenebene mit einem **Request-Hot-Path** und einer
+Pusula ist eine Datenebene mit einem **Request-Hot-Path** und einer
 **Steuerungs-/Intelligenzebene**. Der Hot Path muss schnell, speichereffizient, asynchron,
 resilient und vorhersehbar bleiben. Evaluierung, Qualitätsbewertung, Experimente und
 historische Analysen gehören zur Steuerungsebene.
@@ -23,7 +23,7 @@ KI-Agent / IDE
       │
       ▼
 ┌─────────────────────┐
-│    OmniRoute        │   Datenebene (schnell, synchron, In-Memory)
+│    Pusula        │   Datenebene (schnell, synchron, In-Memory)
 │ Routing / Failover  │
 │ Zustand / Leitplanke│
 │ Cache / Streaming   │
@@ -122,7 +122,7 @@ Standard-Sinks:
 - `MemoryRoutingEventStore` — begrenzter Ringpuffer (500), neueste zuerst, für den
   Explain-Endpunkt.
 - `QualityTracker`-Consumer — aktualisiert die EWMA-Qualitätsschätzung.
-- `OtlpHttpsEventSink` — optional, nur aktiviert, wenn `OMNIROUTE_OTEL_ENDPOINT`
+- `OtlpHttpsEventSink` — optional, nur aktiviert, wenn `PUSULA_OTEL_ENDPOINT`
   (oder `OTEL_EXPORTER_OTLP_ENDPOINT`) gesetzt ist.
 
 ### Gemessener Overhead (ehrlicher Vergleich)
@@ -232,7 +232,7 @@ der in `createSSEStream` (`open-sse/utils/stream.ts`) eingebunden ist:
 - `avgItlMs()` = mittlerer Abstand zwischen Chunks (ein Chunk-Latenz-Proxy für ITL).
 
 TTFT/ITL/Unterbrechungsstatus fließen in das `RoutingEvent` (`ttftMs`, `itlMs`) ein und werden
-von der OTel-Senke als GenAI-/OmniRoute-Span-Attribute exportiert.
+von der OTel-Senke als GenAI-/Pusula-Span-Attribute exportiert.
 
 ## 4. OpenTelemetry-/GenAI-Beobachtbarkeit
 
@@ -242,13 +242,13 @@ Dateien: `open-sse/services/routing/otel.ts`
   `@opentelemetry/*`-SDK).
 - Spans folgen den semantischen GenAI-Konventionen (`gen_ai.provider.name`,
   `gen_ai.request.model`, `gen_ai.usage.input_tokens/output_tokens`,
-  `gen_ai.completion.finish_reason`, `gen_ai.system`) sowie den OmniRoute-Routing-
+  `gen_ai.completion.finish_reason`, `gen_ai.system`) sowie den Pusula-Routing-
   Attributen (Ergebnis, Status, TTFT, Wiederholungsversuche, Fallback).
 - `record()` reiht Elemente lediglich in einen begrenzten Puffer ein (O(1)); ein Hintergrund-Timer
   überträgt sie asynchron mittels `POST {endpoint}/v1/traces`. Bei Überlast werden die
   ältesten Ereignisse verworfen (`dropped`-Zähler) — die Datenebene wird niemals durch
   Backpressure belastet.
-- **Deaktiviert, sofern nicht konfiguriert.** `OMNIROUTE_OTEL_ENDPOINT` (oder
+- **Deaktiviert, sofern nicht konfiguriert.** `PUSULA_OTEL_ENDPOINT` (oder
   `OTEL_EXPORTER_OTLP_ENDPOINT`) muss gesetzt sein; andernfalls wird die Senke nicht
   registriert und es wird kein OTel-Code ausgeführt.
 
@@ -259,13 +259,13 @@ Dateien: `open-sse/services/routing/otel.ts`
 - Die Authentifizierung entspricht `/v1/combos` (Bearer-API-Schlüssel oder Dashboard-Sitzung;
   anonymer Zugriff bei lokalen Einzelbenutzer-Bereitstellungen mit `REQUIRE_API_KEY=false`).
 - Aufrufbezogene Traces auf Combo-Ebene bleiben über die bestehende
-  `decisionTrace.ts` verfügbar (Header `X-OmniRoute-Combo-Trace`).
+  `decisionTrace.ts` verfügbar (Header `X-Pusula-Combo-Trace`).
 - Sicherheit: Ereignisse enthalten ausschließlich Routing-Metadaten, niemals Prompts,
   Request-Bodys oder Zugangsdaten.
 
 ## 6. Integration der Evaluierungsebene (Vorbereitung auf Future AGI)
 
-OmniRoute behandelt Future AGI (oder jeden anderen Evaluator) als **potenzielles
+Pusula behandelt Future AGI (oder jeden anderen Evaluator) als **potenzielles
 Intelligenz-/Evaluierungs-Backend, nicht als Abhängigkeit**. Die Integrationspunkte:
 
 - Eine `RoutingEventSink` kann Ereignisse asynchron an einen Evaluator weiterleiten.
@@ -327,9 +327,9 @@ funktioniert auch ohne Evaluator vollständig.
 
 | Variable                      | Standardwert  | Auswirkung                                                                             |
 | ----------------------------- | ------------- | -------------------------------------------------------------------------------------- |
-| `OMNIROUTE_OTEL_ENDPOINT`     | nicht gesetzt | Aktiviert, wenn gesetzt, den OTLP/HTTP-Trace-Exporter (z. B. `http://collector:4318`). |
+| `PUSULA_OTEL_ENDPOINT`     | nicht gesetzt | Aktiviert, wenn gesetzt, den OTLP/HTTP-Trace-Exporter (z. B. `http://collector:4318`). |
 | `OTEL_EXPORTER_OTLP_ENDPOINT` | nicht gesetzt | Fallback-Alias für den OTLP-Endpunkt.                                                  |
-| `OTEL_SERVICE_NAME`           | `omniroute`   | Ressourcenattribut `service.name`.                                                     |
+| `OTEL_SERVICE_NAME`           | `pusula`   | Ressourcenattribut `service.name`.                                                     |
 
 ## 9. Tests
 

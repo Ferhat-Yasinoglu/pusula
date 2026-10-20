@@ -79,8 +79,8 @@ test("Intel sync gates before fetch and only accepts exact signed live bytes", a
     fetch: (async (_input, init) => {
       authorization = new Headers(init?.headers).get("authorization") ?? "";
       return response(bytes, {
-        "x-omniroute-feed-signature": sign(bytes),
-        "x-omniroute-feed-tier": "live",
+        "x-pusula-feed-signature": sign(bytes),
+        "x-pusula-feed-tier": "live",
       });
     }) as typeof fetch,
     now: () => new Date("2026-08-09T12:05:00.000Z"),
@@ -127,8 +127,8 @@ test("Intel sync preserves the good cache on signature, tier, schema, replay, an
       },
       fetch: (async () =>
         response(item.body, {
-          "x-omniroute-feed-signature": signature,
-          "x-omniroute-feed-tier": item.tier,
+          "x-pusula-feed-signature": signature,
+          "x-pusula-feed-tier": item.tier,
         })) as typeof fetch,
     });
     assert.equal(result.status, item.expected);
@@ -151,8 +151,8 @@ test("Intel sync preserves the good cache on signature, tier, schema, replay, an
     },
     fetch: (async () =>
       response(bytes, {
-        "x-omniroute-feed-signature": validSignature,
-        "x-omniroute-feed-tier": "live",
+        "x-pusula-feed-signature": validSignature,
+        "x-pusula-feed-tier": "live",
       })) as typeof fetch,
   });
   assert.equal(stale.status, "stale");
@@ -200,7 +200,7 @@ test("Intel sync enforces the byte cap while reading streamed chunks", async () 
     fetch: (async () =>
       new Response(body, {
         status: 200,
-        headers: { "x-omniroute-feed-tier": "live" },
+        headers: { "x-pusula-feed-tier": "live" },
       })) as typeof fetch,
   });
 

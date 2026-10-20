@@ -78,7 +78,7 @@ export default function SystemStorageTab() {
   const tc = useTranslations("common");
   const [storageHealth, setStorageHealth] = useState({
     driver: "sqlite",
-    dbPath: "~/.omniroute/storage.sqlite",
+    dbPath: "~/.pusula/storage.sqlite",
     sizeBytes: 0,
     retentionDays: {
       app: 7,
@@ -539,7 +539,7 @@ export default function SystemStorageTab() {
     try {
       await fetchAndDownload(
         "/api/settings/export-json",
-        `omniroute-legacy-backup-${new Date().toISOString().replace(/[:.]/g, "-")}.json`,
+        `pusula-legacy-backup-${new Date().toISOString().replace(/[:.]/g, "-")}.json`,
         t("jsonExportFailed")
       );
     } catch (err) {
@@ -606,7 +606,7 @@ export default function SystemStorageTab() {
     try {
       await fetchAndDownload(
         "/api/db-backups/export",
-        `omniroute-backup-${new Date().toISOString().replace(/[:.]/g, "-")}.sqlite`,
+        `pusula-backup-${new Date().toISOString().replace(/[:.]/g, "-")}.sqlite`,
         t("exportFailed")
       );
     } catch (err) {
@@ -1285,7 +1285,7 @@ export default function SystemStorageTab() {
             {t("databasePath")}
           </p>
           <p className="text-sm font-mono text-text-main break-all">
-            {storageHealth.dbPath || "~/.omniroute/storage.sqlite"}
+            {storageHealth.dbPath || "~/.pusula/storage.sqlite"}
           </p>
         </div>
       </div>
@@ -1318,7 +1318,7 @@ export default function SystemStorageTab() {
               try {
                 await fetchAndDownload(
                   "/api/db-backups/exportAll",
-                  "omniroute-full-backup.tar.gz",
+                  "pusula-full-backup.tar.gz",
                   t("exportFailed")
                 );
               } catch (err) {

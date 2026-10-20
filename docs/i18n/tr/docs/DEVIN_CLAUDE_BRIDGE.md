@@ -4,15 +4,15 @@
 
 ---
 
-`devin-cli-agentic`, resmi Devin CLI model yanıtlarını ACP stdio üzerinden sağlarken gerçek Claude Code çalışma zamanının OmniRoute'un yerel Anthropic Messages uç noktasını kullanmasına olanak tanır. Mevcut Anthropic, Claude OAuth, Claude Web veya `devin-cli` sağlayıcılarını değiştirmez.
+`devin-cli-agentic`, resmi Devin CLI model yanıtlarını ACP stdio üzerinden sağlarken gerçek Claude Code çalışma zamanının Pusula'un yerel Anthropic Messages uç noktasını kullanmasına olanak tanır. Mevcut Anthropic, Claude OAuth, Claude Web veya `devin-cli` sağlayıcılarını değiştirmez.
 
-> **Geçerli durum: Claude Code `2.1.258` sürümüne sabitlenmiştir; çevrimdışı ve canlı doğrulama en son `2.1.220` üzerinde kaydedilmiştir.** `2.1.220` sabitlemesi, Devin CLI `3000.2.17` ve `swe-1-7-lightning` modeli üzerinden üç yalıtılmış senaryoyu tamamladı; bu son canlı çalıştırma, istemcinin yönettiği `Read`, `Edit` ve `Bash` adımlarını, başarılı `npm test` sonuçlarını, proje komutu ve beceri keşfini, yalnızca Devin'e yönelik yönlendirmeyi ve Claude'a sıfır çıkışı kanıtladı. Ardından sabitleme `2.1.258` sürümüne yükseltildi (OmniRoute'un Claude kimliğinin taklit ettiği CLI nesli ve Fable 5.1 katmanını yerel olarak sunan ilk seri). Yeni sabitlemede, sabitlenmiş temel imaj üzerinde kurulum katmanı ve `claude --version` doğrulandı; köprü birim test paketi, `compose config` ve statik yalıtım kanıtı başarılı oldu — ancak çevrimdışı sahte senaryo ve canlı üç senaryolu test paketi henüz yeniden çalıştırılmadı. Bu sabitlemeyle köprüye güvenmeden önce bunları yeniden çalıştırın (bkz. "Sabitlenmiş araçları güncelleme").
+> **Geçerli durum: Claude Code `2.1.258` sürümüne sabitlenmiştir; çevrimdışı ve canlı doğrulama en son `2.1.220` üzerinde kaydedilmiştir.** `2.1.220` sabitlemesi, Devin CLI `3000.2.17` ve `swe-1-7-lightning` modeli üzerinden üç yalıtılmış senaryoyu tamamladı; bu son canlı çalıştırma, istemcinin yönettiği `Read`, `Edit` ve `Bash` adımlarını, başarılı `npm test` sonuçlarını, proje komutu ve beceri keşfini, yalnızca Devin'e yönelik yönlendirmeyi ve Claude'a sıfır çıkışı kanıtladı. Ardından sabitleme `2.1.258` sürümüne yükseltildi (Pusula'un Claude kimliğinin taklit ettiği CLI nesli ve Fable 5.1 katmanını yerel olarak sunan ilk seri). Yeni sabitlemede, sabitlenmiş temel imaj üzerinde kurulum katmanı ve `claude --version` doğrulandı; köprü birim test paketi, `compose config` ve statik yalıtım kanıtı başarılı oldu — ancak çevrimdışı sahte senaryo ve canlı üç senaryolu test paketi henüz yeniden çalıştırılmadı. Bu sabitlemeyle köprüye güvenmeden önce bunları yeniden çalıştırın (bkz. "Sabitlenmiş araçları güncelleme").
 
 ## Mimari
 
 ```text
 Claude Code 2.1.258 (yalıtılmış, root olmayan Linux konteyneri)
-  -> http://omniroute:20128/v1/messages
+  -> http://pusula:20128/v1/messages
   -> devin-cli-agentic (Claude biçimi, kimlik doğrulamasız sağlayıcı)
   -> devin acp --agent-type summarizer (resmi ACP stdio, Devin araçları yok)
   -> ayrılmış devin-auth birimindeki Devin hesabı
@@ -22,20 +22,20 @@ Resmi CLI'ın varsayılan ACP aracısı kendi araçlarını çalıştırabildiğ
 
 `open-sse/executors/devin-agentic/serializer.ts` içindeki serileştirici; `system`, `text`, `tool_use`, `tool_result`, `thinking`, `redacted_thinking`, `tool_choice` ve Claude Code tarafından sağlanan araçları korur. Görseller ve bilinmeyen bloklar açıkça başarısız olur. Büyük araç sonuçlarında görünür bir kırpma işareti kullanılır.
 
-Ayrıştırıcı, model adımı başına bağımsız bir `<tool>{...}</tool>` zarfı kabul eder. Adı isteğin araç listesine göre denetler, bağımsız değişkenleri ilgili aracın JSON Schema'sına göre doğrular, anlatı ile eylemlerin karıştırılmasını reddeder ve sınırlandırılmış tek bir düzeltmeye izin verir. Ardından Claude Code, ortaya çıkan Anthropic `tool_use` öğesini yerel olarak çalıştırır ve `tool_result` sonucunu OmniRoute üzerinden geri gönderir.
+Ayrıştırıcı, model adımı başına bağımsız bir `<tool>{...}</tool>` zarfı kabul eder. Adı isteğin araç listesine göre denetler, bağımsız değişkenleri ilgili aracın JSON Schema'sına göre doğrular, anlatı ile eylemlerin karıştırılmasını reddeder ve sınırlandırılmış tek bir düzeltmeye izin verir. Ardından Claude Code, ortaya çıkan Anthropic `tool_use` öğesini yerel olarak çalıştırır ve `tool_result` sonucunu Pusula üzerinden geri gönderir.
 
 ## Yalıtım ve tehdit modeli
 
 Ana makinedeki Claude kurulumu, hesabı ve yapılandırması kapsam dışıdır ve yasaklı kabul edilir. Compose hizmetleri:
 
 - UID/GID `10001:10001` olarak, salt okunur kök dosya sistemi, kaldırılmış yetenekler ve `no-new-privileges` ile çalışır;
-- özel bir `/home/bridge`, ayrılmış bir Claude yapılandırma birimi, yalıtılmış OmniRoute verileri ve ayrı bir `devin-auth` birimi kullanır;
+- özel bir `/home/bridge`, ayrılmış bir Claude yapılandırma birimi, yalıtılmış Pusula verileri ve ayrı bir `devin-auth` birimi kullanır;
 - yalnızca tek kullanımlık `.sandbox` çalışma alanlarını/kanıtlarını bağlar;
 - ana makinenin ev dizinini, Keychain'i, SSH'yi, bulut kimlik bilgilerini veya Docker soketini bağlamaz;
 - açık ortamlar oluşturur ve Anthropic API/OAuth/yönlendirme değişkenlerini kaldırır;
-- Claude Code çıkarımını yalnızca yerel bir anahtarla `http://omniroute:20128` adresine yönlendirir.
+- Claude Code çıkarımını yalnızca yerel bir anahtarla `http://pusula:20128` adresine yönlendirir.
 
-Çevrimdışı profil dahili bir ağ kullanır. Canlı profilde OmniRoute, resmi Devin uç noktalarına yalnızca `network-guard` üzerinden erişir; ilgisiz hedefler reddedilir. Claude Code'un tüm çıkışları reddeden ayrı bir çıkış koruması vardır ve yalnızca `NO_PROXY` üzerinden yerel OmniRoute hizmetine erişebilir. Koruma denetim dosyaları yalnızca ilgili koruma süreci tarafından bağlanır. Betikler, belirteç içermeyen kanıtları dışa aktarmadan önce dosya sahipliğini, modunu, bağlantı sayısını ve her kararı doğrular.
+Çevrimdışı profil dahili bir ağ kullanır. Canlı profilde Pusula, resmi Devin uç noktalarına yalnızca `network-guard` üzerinden erişir; ilgisiz hedefler reddedilir. Claude Code'un tüm çıkışları reddeden ayrı bir çıkış koruması vardır ve yalnızca `NO_PROXY` üzerinden yerel Pusula hizmetine erişebilir. Koruma denetim dosyaları yalnızca ilgili koruma süreci tarafından bağlanır. Betikler, belirteç içermeyen kanıtları dışa aktarmadan önce dosya sahipliğini, modunu, bağlantı sayısını ve her kararı doğrular.
 
 Yalıtım kanıtını bağımsız olarak çalıştırın:
 
@@ -108,7 +108,7 @@ Her iki CLI'yi de ana makineye global olarak kurmayın veya sağlama toplamı do
 
 ## Tanılama ve temizleme
 
-- `docker compose -f docker/devin-bridge/compose.yml --profile offline logs omniroute`
+- `docker compose -f docker/devin-bridge/compose.yml --profile offline logs pusula`
   yerel yönlendirmeyi ve hassas bilgilerden arındırılmış yürütücü hatalarını gösterir.
 - `.sandbox/evidence/mock-acp.jsonl`, deterministik sahte ACP eylemlerini kaydeder.
 - `.sandbox/evidence/claude-stream.jsonl`, gerçek Claude Code çevrimdışı çalışmasını kaydeder.

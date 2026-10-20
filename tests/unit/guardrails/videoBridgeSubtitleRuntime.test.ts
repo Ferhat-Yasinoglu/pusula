@@ -21,7 +21,7 @@ const CONTAINER_PROBE_STDOUT = JSON.stringify({
 // Per-run temp dir, never a fixed /tmp name: on a shared self-hosted runner a leftover file
 // owned by another user makes a fixed path unwritable (EACCES under /tmp's sticky bit, even
 // for root with fs.protected_regular), and parallel shards would race on the same name.
-const TEMP_DIR = await mkdtemp(path.join(os.tmpdir(), "omniroute-subtitle-runtime-"));
+const TEMP_DIR = await mkdtemp(path.join(os.tmpdir(), "pusula-subtitle-runtime-"));
 test.after(() => rm(TEMP_DIR, { recursive: true, force: true }));
 
 function isSubtitleStreamProbe(args: readonly string[]): boolean {
@@ -126,7 +126,7 @@ test("full bytes-to-WebVTT pipeline probes the container once, extracts up to tw
   );
   assert.equal(calls.filter((name) => name === "ffmpeg").length, 2);
 
-  assert.ok(capturedInputPath.includes("omniroute-video-subtitle-"));
+  assert.ok(capturedInputPath.includes("pusula-video-subtitle-"));
   const temporaryDirectory = capturedInputPath.slice(0, capturedInputPath.lastIndexOf("/"));
   await assert.rejects(() => access(temporaryDirectory));
 });
@@ -177,7 +177,7 @@ test("temp directory is removed even when the container probe itself fails", asy
       timeoutMs: 5_000,
     })
   );
-  assert.ok(capturedInputPath.includes("omniroute-video-subtitle-"));
+  assert.ok(capturedInputPath.includes("pusula-video-subtitle-"));
   const temporaryDirectory = capturedInputPath.slice(0, capturedInputPath.lastIndexOf("/"));
   await assert.rejects(() => access(temporaryDirectory));
 });

@@ -1,6 +1,6 @@
 /**
  * `scripts/i18n/retranslate-site.mjs` — the site catalog retranslator
- * (omnirouteSite/lang/<code>.json vs lang/_source.en.json).
+ * (pusulaSite/lang/<code>.json vs lang/_source.en.json).
  *
  * `findSiteIdenticalKeys` is the pure selector behind it: the keys of a locale
  * catalog whose value is still a verbatim copy of the English source, outside
@@ -14,7 +14,7 @@ import { findSiteIdenticalKeys } from "../../scripts/i18n/retranslate-site.mjs";
 
 const source = {
   "hero.title": "Route every model",
-  brand: "OmniRoute",
+  brand: "Pusula",
   cta: "Get started",
   n: "66 languages",
 };
@@ -22,7 +22,7 @@ const source = {
 test("keys still equal to the English source are listed, allowlisted ones are not", () => {
   const target = {
     "hero.title": "Route every model",
-    brand: "OmniRoute",
+    brand: "Pusula",
     cta: "Começar",
     n: "66 idiomas",
   };
@@ -30,7 +30,7 @@ test("keys still equal to the English source are listed, allowlisted ones are no
 });
 
 test("a key missing from the target is not an identical copy (that is a sync problem, not ours)", () => {
-  assert.deepEqual(findSiteIdenticalKeys(source, { brand: "OmniRoute" }, new Set(["brand"])), []);
+  assert.deepEqual(findSiteIdenticalKeys(source, { brand: "Pusula" }, new Set(["brand"])), []);
 });
 
 test("empty source strings are ignored", () => {

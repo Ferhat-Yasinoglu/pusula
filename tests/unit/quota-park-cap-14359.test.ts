@@ -137,9 +137,9 @@ test("#14359 an expired park unblocks both predicates without waiting for a refr
   }
   const state: QuotaCacheTestState | undefined = (
     globalThis as {
-      __omnirouteQuotaCacheState?: QuotaCacheTestState;
+      __pusulaQuotaCacheState?: QuotaCacheTestState;
     }
-  ).__omnirouteQuotaCacheState;
+  ).__pusulaQuotaCacheState;
   const entry = state?.cache.get("exp-14359");
   assert.ok(entry, "cache entry present");
   entry!.nextResetAt = new Date(Date.now() - 1_000).toISOString();

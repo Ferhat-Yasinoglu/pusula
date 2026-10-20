@@ -116,9 +116,9 @@ describe("compressToolResults", () => {
     assert.equal(result.body.messages![0].content, "x".repeat(1500));
   });
 
-  it("reads OMNIROUTE_LITE_MAX_TOOL_LENGTH when no option is passed", () => {
-    const previous = process.env.OMNIROUTE_LITE_MAX_TOOL_LENGTH;
-    process.env.OMNIROUTE_LITE_MAX_TOOL_LENGTH = "400";
+  it("reads PUSULA_LITE_MAX_TOOL_LENGTH when no option is passed", () => {
+    const previous = process.env.PUSULA_LITE_MAX_TOOL_LENGTH;
+    process.env.PUSULA_LITE_MAX_TOOL_LENGTH = "400";
     try {
       const body = { messages: [{ role: "tool", content: "x".repeat(800) }] };
       const result = compressToolResults(body);
@@ -127,21 +127,21 @@ describe("compressToolResults", () => {
       assert.ok(content.endsWith("\n...[truncated]"));
       assert.ok(content.length <= 400 + "\n...[truncated]".length);
     } finally {
-      if (previous === undefined) delete process.env.OMNIROUTE_LITE_MAX_TOOL_LENGTH;
-      else process.env.OMNIROUTE_LITE_MAX_TOOL_LENGTH = previous;
+      if (previous === undefined) delete process.env.PUSULA_LITE_MAX_TOOL_LENGTH;
+      else process.env.PUSULA_LITE_MAX_TOOL_LENGTH = previous;
     }
   });
 
   it("an explicit maxToolLength wins over the env fallback", () => {
-    const previous = process.env.OMNIROUTE_LITE_MAX_TOOL_LENGTH;
-    process.env.OMNIROUTE_LITE_MAX_TOOL_LENGTH = "400";
+    const previous = process.env.PUSULA_LITE_MAX_TOOL_LENGTH;
+    process.env.PUSULA_LITE_MAX_TOOL_LENGTH = "400";
     try {
       const body = { messages: [{ role: "tool", content: "x".repeat(800) }] };
       const result = compressToolResults(body, { maxToolLength: 4000 });
       assert.equal(result.applied, false);
     } finally {
-      if (previous === undefined) delete process.env.OMNIROUTE_LITE_MAX_TOOL_LENGTH;
-      else process.env.OMNIROUTE_LITE_MAX_TOOL_LENGTH = previous;
+      if (previous === undefined) delete process.env.PUSULA_LITE_MAX_TOOL_LENGTH;
+      else process.env.PUSULA_LITE_MAX_TOOL_LENGTH = previous;
     }
   });
 });
@@ -340,8 +340,8 @@ describe("stacked Lite precedence (global config vs explicit step)", () => {
   });
 
   it("an out-of-range step maxToolLength does not hide a valid global cap", () => {
-    const previous = process.env.OMNIROUTE_LITE_MAX_TOOL_LENGTH;
-    process.env.OMNIROUTE_LITE_MAX_TOOL_LENGTH = "400";
+    const previous = process.env.PUSULA_LITE_MAX_TOOL_LENGTH;
+    process.env.PUSULA_LITE_MAX_TOOL_LENGTH = "400";
     try {
       const longTool = "x".repeat(3000);
       const result = applyCompression(
@@ -359,8 +359,8 @@ describe("stacked Lite precedence (global config vs explicit step)", () => {
       assert.equal(messages[0].content, longTool);
       assert.ok(!result.stats?.techniquesUsed.includes("tool-compress"));
     } finally {
-      if (previous === undefined) delete process.env.OMNIROUTE_LITE_MAX_TOOL_LENGTH;
-      else process.env.OMNIROUTE_LITE_MAX_TOOL_LENGTH = previous;
+      if (previous === undefined) delete process.env.PUSULA_LITE_MAX_TOOL_LENGTH;
+      else process.env.PUSULA_LITE_MAX_TOOL_LENGTH = previous;
     }
   });
 });

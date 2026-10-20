@@ -4,19 +4,19 @@
 
 ---
 
-CLIِ `omniroute` را روی لپتاپ خود اجرا کنید، درحالیکه خود OmniRoute در جایی دیگر اجرا میشود
+CLIِ `pusula` را روی لپتاپ خود اجرا کنید، درحالیکه خود Pusula در جایی دیگر اجرا میشود
 (یک VPS، سرور خانگی یا دستگاهی دیگر در Tailnet شما). کافی است یکبار با
-`omniroute connect` وارد شوید؛ از آن پس **تمام** فرمانهای CLI همان سرور راهدور
+`pusula connect` وارد شوید؛ از آن پس **تمام** فرمانهای CLI همان سرور راهدور
 را هدف میگیرند — همان فرمانها و همان خروجی، فقط روی سرور راهدور اجرا میشوند.
 
-نیازی به نصب ابزار دومی نیست: حالت راهدور همان CLI معمولی `omniroute`
+نیازی به نصب ابزار دومی نیست: حالت راهدور همان CLI معمولی `pusula`
 بههمراه **توکنهای دسترسی** دارای دامنهٔ مجوز است.
 
 ```bash
-npm install -g omniroute                 # CLI معمولی
-omniroute connect 192.168.0.15           # ورود به سیستم (گذرواژه ← توکن دارای دامنهٔ مجوز)
-omniroute models list                    # ← اکنون مدلهای سرور راهدور را فهرست میکند
-omniroute configure codex                # ← یک پروفایل محلی Codex را از کاتالوگ راهدور مینویسد
+npm install -g pusula                 # CLI معمولی
+pusula connect 192.168.0.15           # ورود به سیستم (گذرواژه ← توکن دارای دامنهٔ مجوز)
+pusula models list                    # ← اکنون مدلهای سرور راهدور را فهرست میکند
+pusula configure codex                # ← یک پروفایل محلی Codex را از کاتالوگ راهدور مینویسد
 ```
 
 ---
@@ -24,9 +24,9 @@ omniroute configure codex                # ← یک پروفایل محلی Code
 ## نحوهٔ کار
 
 ```
-لپتاپ شما                               OmniRoute راهدور (VPS)
+لپتاپ شما                               Pusula راهدور (VPS)
 ┌────────────────────┐                   ┌───────────────────────────────┐
-│ CLIِ omniroute     │  POST /api/cli/connect  (گذرواژه ← توکن)           │
+│ CLIِ pusula     │  POST /api/cli/connect  (گذرواژه ← توکن)           │
 │  زمینه: vps        │ ───────────────►  │ یک توکن دسترسی دارای دامنه میسازد │
 │  baseUrl، توکن     │  Authorization: Bearer oma_live_…                  │
 │                    │ ───────────────►  │ هر مسیر مدیریتی، بررسی دامنهٔ  │
@@ -35,8 +35,8 @@ omniroute configure codex                # ← یک پروفایل محلی Code
 └────────────────────┘
 ```
 
-- **زمینهها** هرکدام اطلاعات یک سرور را ذخیره میکنند (`~/.omniroute/config.json`، `chmod 600`).
-  دستور `omniroute contexts use <name>` سرور فعال را تغییر میدهد؛ `default` محلی است.
+- **زمینهها** هرکدام اطلاعات یک سرور را ذخیره میکنند (`~/.pusula/config.json`، `chmod 600`).
+  دستور `pusula contexts use <name>` سرور فعال را تغییر میدهد؛ `default` محلی است.
 - **توکنهای دسترسی** (`oma_live_…`) به فرمانهای مدیریتی مجوز میدهند. آنها
   با کلیدهای API استنتاج (`sk-…` که برای `/v1/chat/completions` استفاده میشوند) متفاوتاند.
 - فقط هش SHA-256 توکن در سمت سرور ذخیره میشود. متن سادهٔ آن فقط
@@ -49,7 +49,7 @@ omniroute configure codex                # ← یک پروفایل محلی Code
 ### با گذرواژهٔ مدیریتی (راهاندازی اولیه)
 
 ```bash
-omniroute connect 192.168.0.15
+pusula connect 192.168.0.15
 # گذرواژهٔ مدیریتی برای http://192.168.0.15:20128: ********
 # ✔ اتصال به http://192.168.0.15:20128 برقرار شد — زمینهٔ '192.168.0.15' (دامنهٔ مجوز: admin)
 ```
@@ -58,20 +58,20 @@ omniroute connect 192.168.0.15
 از قبل کنترل کامل دارید). با `--scope` دامنهٔ مجوز را محدود کنید:
 
 ```bash
-omniroute connect 192.168.0.15 --scope write
+pusula connect 192.168.0.15 --scope write
 ```
 
 گزینهها: `--port <p>` (وقتی میزبان فاقد پورت است)، `--name <ctx>` (نام زمینه)،
 `--scope read|write|admin`. یک URL کامل بدون تغییر استفاده میشود:
-`omniroute connect https://omni.example.com`.
+`pusula connect https://omni.example.com`.
 
 ### با یک توکن ازپیشتولیدشده
 
-یک توکن دارای دامنهٔ مجوز را در داشبورد (یا با `omniroute tokens create`) ایجاد و
+یک توکن دارای دامنهٔ مجوز را در داشبورد (یا با `pusula tokens create`) ایجاد و
 آن را جایگذاری کنید — نیازی به گذرواژه نیست:
 
 ```bash
-omniroute connect 192.168.0.15 --key oma_live_xxxxxxxx
+pusula connect 192.168.0.15 --key oma_live_xxxxxxxx
 ```
 
 CLI اعتبار آن را ازطریق `GET /api/cli/whoami` بررسی میکند و آن را بهعنوان زمینهٔ فعال ذخیره میکند.
@@ -107,7 +107,7 @@ Antigravity از صفحهٔ رضایت firstparty/nativeapp گوگل استفا�
 بنابراین صفحهٔ رضایت **برای همیشه معلق میماند و هیچگاه کدی صادر نمیکند** — در
 راهکار جایگزین معمولِ «جایگذاری URL مربوط به callback» چیزی برای جایگذاری وجود
 ندارد. (این محدودیتی از سمت گوگل است: همین وضعیت تعلیق در هر پراکسیای که از
-کلاینت دسکتاپ همراه Antigravity استفاده کند رخ میدهد، نه فقط OmniRoute.)
+کلاینت دسکتاپ همراه Antigravity استفاده کند رخ میدهد، نه فقط Pusula.)
 
 داشبورد پیش از آنکه در این وضعیت گیر کنید، آن را تشخیص میدهد: باز کردن
 **Providers → Antigravity → Connect** از نشانیای غیر از localhost، اعلان عمومی
@@ -116,7 +116,7 @@ Antigravity از صفحهٔ رضایت firstparty/nativeapp گوگل استفا�
 تا آنجا که به این callback مربوط میشود، `192.168.x.x` یک localhost محسوب
 نمیشود.)
 
-برای اتصال Antigravity به یک OmniRoute راه دور، دو روش پشتیبانیشده وجود دارد.
+برای اتصال Antigravity به یک Pusula راه دور، دو روش پشتیبانیشده وجود دارد.
 
 ### گزینهٔ A — ابزار کمکی ورود محلی (پیشنهادشده)
 
@@ -124,13 +124,13 @@ OAuth را روی **رایانهٔ خودتان** اجرا کنید؛ جایی �
 ابزار کمکی مستقیماً با گوگل ارتباط برقرار میکند، بنابراین فرایند رضایت در جایی
 تکمیل میشود که نسخهٔ داشبورد قادر به تکمیل آن نیست.
 
-**اگر از قبل متصل هستید** (`omniroute connect <host>`)، لازم نیست چیزی را کپی
+**اگر از قبل متصل هستید** (`pusula connect <host>`)، لازم نیست چیزی را کپی
 کنید — ابزار کمکی اطلاعات اعتبارسنجی را برای شما به همان نصب تحویل میدهد:
 
 ```bash
 # روی دستگاه محلی شما (به Node.js و یک مرورگر نیاز دارد):
-omniroute connect 192.168.0.15        # یکبار — یک توکن زمینه با سطح دسترسی مدیر صادر میکند
-npx omniroute login antigravity
+pusula connect 192.168.0.15        # یکبار — یک توکن زمینه با سطح دسترسی مدیر صادر میکند
+npx pusula login antigravity
 #   ↳ صفحهٔ رضایت گوگل را باز میکند، callback را روی یک پورت loopback محلی دریافت میکند،
 #     آن را مبادله میکند و اطلاعات اعتبارسنجی را با POST به زمینهٔ فعال میفرستد:
 #
@@ -149,13 +149,13 @@ _نیاز_ دارد گوگل است. از `--no-push` استفاده کنید، 
 blob بازمیگردد.
 
 ```bash
-npx omniroute login antigravity --no-push
-#   omniroute-cred-v1.eyJ2IjoxLCJ...
+npx pusula login antigravity --no-push
+#   pusula-cred-v1.eyJ2IjoxLCJ...
 ```
 
 سپس در داشبورد **راه دور**، به **Providers → Antigravity → Connect** بروید و
-blob با قالب `omniroute-cred-v1.…` را در فیلد **Step 2** جایگذاری کنید (این فیلد
-URL مربوط به callback یا blob اطلاعات اعتبارسنجی را میپذیرد). OmniRoute آن را
+blob با قالب `pusula-cred-v1.…` را در فیلد **Step 2** جایگذاری کنید (این فیلد
+URL مربوط به callback یا blob اطلاعات اعتبارسنجی را میپذیرد). Pusula آن را
 رمزگشایی میکند، فرایند راهاندازی Cloud Code را در سمت سرور اجرا میکند و اتصال
 را بهصورت پایدار ذخیره میکند.
 
@@ -198,7 +198,7 @@ ssh -L 20128:127.0.0.1:20128 user@your-vps
 
 ## اتصال Codex / Grok در نصب راهدور (ارائهدهندگان با loopback ثابت)
 
-Codex،‏ xAI (`xai-oauth`) و Grok CLI (`grok-cli`) یک `redirect_uri` **ثابت** از نوع loopback را در برنامهٔ OAuth بالادستی خود ثبت میکنند. OmniRoute نمیتواند آن را تغییر دهد — ارائهدهنده همیشه مرورگر را به همان نشانی ثابت هدایت میکند:
+Codex،‏ xAI (`xai-oauth`) و Grok CLI (`grok-cli`) یک `redirect_uri` **ثابت** از نوع loopback را در برنامهٔ OAuth بالادستی خود ثبت میکنند. Pusula نمیتواند آن را تغییر دهد — ارائهدهنده همیشه مرورگر را به همان نشانی ثابت هدایت میکند:
 
 | ارائهدهنده  | callback ثابتی که ارائهدهنده به آن هدایت میکند |
 | ----------- | ---------------------------------------------- |
@@ -206,7 +206,7 @@ Codex،‏ xAI (`xai-oauth`) و Grok CLI (`grok-cli`) یک `redirect_uri` **ثا
 | `xai-oauth` | `http://127.0.0.1:56121/callback`              |
 | `grok-cli`  | `http://127.0.0.1:56122/callback`              |
 
-در اینجا `localhost` به معنای **دستگاهی است که مرورگر روی آن اجرا میشود**، درحالیکه سرور callback مربوط به PKCE در OmniRoute روی loopback **سرور** گوش میدهد. اگر داشبورد را با یک نشانی LAN مانند `http://192.168.0.15:20128` باز کنید، این دو هرگز به یکدیگر نمیرسند: کد مجوز به `localhost:1455` لپتاپ خودتان تحویل داده میشود؛ جایی که هیچ چیزی در حال گوشدادن نیست، و ورود به سیستم بدون نمایش هیچ خطایی از سوی ارائهدهنده شکست میخورد.
+در اینجا `localhost` به معنای **دستگاهی است که مرورگر روی آن اجرا میشود**، درحالیکه سرور callback مربوط به PKCE در Pusula روی loopback **سرور** گوش میدهد. اگر داشبورد را با یک نشانی LAN مانند `http://192.168.0.15:20128` باز کنید، این دو هرگز به یکدیگر نمیرسند: کد مجوز به `localhost:1455` لپتاپ خودتان تحویل داده میشود؛ جایی که هیچ چیزی در حال گوشدادن نیست، و ورود به سیستم بدون نمایش هیچ خطایی از سوی ارائهدهنده شکست میخورد.
 
 داشبورد پیش از بازکردن پنجرهٔ بازشو این وضعیت را تشخیص میدهد و بهجای اینکه ورود بیسروصدا شکست بخورد، فرمان tunnel را نمایش میدهد (#8046).
 
@@ -220,7 +220,7 @@ ssh -L 20128:127.0.0.1:20128 -L 1455:127.0.0.1:1455 <user>@192.168.0.15
 
 دو forward لازم است و forward کردن فقط یکی از آنها همچنان با شکست مواجه میشود:
 
-- **`20128`** (درگاه داشبورد) باعث میشود origin واقعاً localhost باشد؛ همین موضوع باعث میشود OmniRoute اساساً سرور callback مربوط به PKCE را راهاندازی کند — یک origin از نوع LAN هرگز به آن شاخه نمیرسد.
+- **`20128`** (درگاه داشبورد) باعث میشود origin واقعاً localhost باشد؛ همین موضوع باعث میشود Pusula اساساً سرور callback مربوط به PKCE را راهاندازی کند — یک origin از نوع LAN هرگز به آن شاخه نمیرسد.
 - **`1455`** (درگاه callback ثابت ارائهدهنده) جایی است که مرورگر به آن بازگردانده میشود؛ این درگاه باید از طریق tunnel به loopback سرور متصل شود.
 
 هنگام اتصال xAI یا Grok CLI،‏ `1455` را با `56121`/`56122` جایگزین کنید و بهجای `20128` درگاه واقعی داشبورد خود را قرار دهید. tunnel را تا زمانی که وضعیت اتصال فعال نمایش داده شود، باز نگه دارید.
@@ -232,11 +232,11 @@ ssh -L 20128:127.0.0.1:20128 -L 1455:127.0.0.1:1455 <user>@192.168.0.15
 ## مدیریت tokenها
 
 ```bash
-omniroute tokens create --name "laptop" --scope write [--expires 30]
+pusula tokens create --name "laptop" --scope write [--expires 30]
 #   ↳ مقدار محرمانه را فقط یکبار نمایش میدهد — همین حالا آن را کپی کنید
-omniroute tokens list                 # پنهانشده: شناسه، نام، scope، پیشوند، وضعیت، انقضا
-omniroute tokens revoke <id|prefix>   # لغو فوری
-omniroute tokens scopes               # توضیح سه scope
+pusula tokens list                 # پنهانشده: شناسه، نام، scope، پیشوند، وضعیت، انقضا
+pusula tokens revoke <id|prefix>   # لغو فوری
+pusula tokens scopes               # توضیح سه scope
 ```
 
 فرمانهای `tokens` به یک اعتبارنامهٔ **admin** نیاز دارند. همچنین میتوانید tokenها را در داشبورد و از مسیر **Settings → Access Tokens** مدیریت کنید (ایجاد، لغو، کپی فقط برای یکبار).
@@ -245,10 +245,10 @@ omniroute tokens scopes               # توضیح سه scope
 
 ## پیکربندی یک CLI برنامهنویسی از catalog راهدور
 
-`omniroute configure`،‏ catalog زندهٔ مدلها را از **سرور فعال** میخواند و یک پیکربندی روی دستگاه **شما** مینویسد.
+`pusula configure`،‏ catalog زندهٔ مدلها را از **سرور فعال** میخواند و یک پیکربندی روی دستگاه **شما** مینویسد.
 
 ```bash
-omniroute configure codex
+pusula configure codex
 #   ارائهدهندگان: glm، kmc، ollamacloud، opencode-go، …
 #   ارائهدهنده: glm
 #   شناسهٔ مدل: glm/glm-5.2
@@ -256,28 +256,28 @@ omniroute configure codex
 #   استفاده:  codex --profile glm52
 
 # غیرتعاملی
-omniroute configure codex --provider glm --model glm/glm-5.2 --name glm52
+pusula configure codex --provider glm --model glm/glm-5.2 --name glm52
 
 # نگهداشتن یک مدل پراستفاده در بالای انتخابگر تعاملی
-omniroute configure codex --provider glm --model glm/glm-5.2 --favorite --yes
+pusula configure codex --provider glm --model glm/glm-5.2 --favorite --yes
 ```
 
 انتخابگر فقط شناسههای مدل را (و هرگز URLها یا اعتبارنامهها را) در فایل محلی `model-preferences.json` نگه میدارد که براساس context و مقصد CLI تفکیک شدهاند. موارد دلخواه پیش از انتخابهای اخیر نمایش داده میشوند؛ برای حذف مدل انتخابشده از فهرست آن context/مقصد، از `--unfavorite` استفاده کنید.
 
-پروفایل نوشتهشده از طریق env var به کلید inference ارجاع میدهد (`OMNIROUTE_API_KEY`) — مقدار محرمانه هرگز روی دیسک نوشته نمیشود. برای راهاندازی پایهٔ یکبارهٔ Codex (بلوک `[model_providers.omniroute]`)، به [CODEX-CLI-CONFIGURATION.md](./CODEX-CLI-CONFIGURATION.md) مراجعه کنید.
+پروفایل نوشتهشده از طریق env var به کلید inference ارجاع میدهد (`PUSULA_API_KEY`) — مقدار محرمانه هرگز روی دیسک نوشته نمیشود. برای راهاندازی پایهٔ یکبارهٔ Codex (بلوک `[model_providers.pusula]`)، به [CODEX-CLI-CONFIGURATION.md](./CODEX-CLI-CONFIGURATION.md) مراجعه کنید.
 
 ### اجرای یک CLI روی مقصد راهدور (بدون نوشتن پیکربندی)
 
-`omniroute run <target>` نیز context فعال را در نظر میگیرد: URL پایهٔ راهدور و اعتبارنامهٔ context فقط به فرایند ایجادشده تزریق میشوند.
+`pusula run <target>` نیز context فعال را در نظر میگیرد: URL پایهٔ راهدور و اعتبارنامهٔ context فقط به فرایند ایجادشده تزریق میشوند.
 
 ```bash
-omniroute connect 192.168.0.15
-omniroute run claude   --model openai/gpt-5.4          # Claude Code ← راهدور
-omniroute run gemini   --model glm/glm-5.2 -- --skip-trust -p "hello"
-omniroute run opencode --model glm/glm-5.2 -- run "reply OK"
+pusula connect 192.168.0.15
+pusula run claude   --model openai/gpt-5.4          # Claude Code ← راهدور
+pusula run gemini   --model glm/glm-5.2 -- --skip-trust -p "hello"
+pusula run opencode --model glm/glm-5.2 -- run "reply OK"
 
 # پیشنمایش دقیق چیزی که اجرا خواهد شد (فقط نامهای KEYهای env، نه مقادیر آنها):
-omniroute run codex --dry-run --json
+pusula run codex --dry-run --json
 ```
 
 مقصدها: `claude`،‏ `codex`،‏ `aider`،‏ `goose`،‏ `opencode`،‏ `qwen`،‏ `gemini` (منبع واحد: `bin/cli/cli-manifest.mjs`). Qwen و Gemini با یک home موقت و ایزوله اجرا میشوند که هنگام خروج حذف میشود؛ بنابراین اجرا هرگز پیکربندی شخصی ابزار شما را تغییر نمیدهد — یا چیزی را به داخل آن نشت نمیدهد.
@@ -288,32 +288,32 @@ omniroute run codex --dry-run --json
 
 | CLI         | فرمان                      | آنچه مینویسد                                                                                                                                                                                                    |
 | ----------- | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Codex       | `omniroute setup-codex`    | پروفایلهای `~/.codex/<name>.config.toml` (برای هر مدل)                                                                                                                                                          |
-| Claude Code | `omniroute setup-claude`   | `~/.claude/profiles/<name>/settings.json` (برای هر مدل)                                                                                                                                                         |
-| OpenCode    | `omniroute setup-opencode` | `~/.config/opencode/opencode.json` — ارائهدهندهٔ سازگار با openai با نام `omniroute` و همهٔ مدلهای کاتالوگ (`opencode -m omniroute/<model>` را اجرا کنید)                                                       |
-| Cline       | `omniroute setup-cline`    | `~/.cline/data/{globalState,secrets}.json` (حالت CLI) + تنظیمات افزونهٔ VS Code را برای جایگذاری چاپ میکند (سازگار با OpenAI، نشانی پایه **بدون** `/v1`)                                                        |
-| Kilo Code   | `omniroute setup-kilo`     | `~/.local/share/kilo/auth.json` (CLI) + تنظیمات `kilocode.*` در VS Code — سازگار با OpenAI، نشانی پایه **همراه با** `/v1`                                                                                       |
-| Continue    | `omniroute setup-continue` | `~/.continue/config.yaml` (VS Code/JetBrains + رابط خط فرمان `cn`) — `provider: openai`، مقدار `apiBase` **همراه با** `/v1`، کلید از طریق `${{ secrets.OMNIROUTE_API_KEY }}`                                    |
-| Cursor      | `omniroute setup-cursor`   | مراحل درونبرنامهای را چاپ میکند (Settings → Models → بازنویسی نشانی پایهٔ OpenAI **همراه با** `/v1` + کلید + مدل). پیکربندی Cursor یک SQLite مبهم است — فقط پنل گفتوگو                                          |
-| Roo Code    | `omniroute setup-roo`      | یک JSON قابلدرونریزی برای Roo (`~/.omniroute/roo-settings.json`) مینویسد + `roo-cline.autoImportSettingsPath` را تنظیم میکند + مراحل رابط کاربری را چاپ میکند (سازگار با OpenAI، نشانی پایه **همراه با** `/v1`) |
-| Crush       | `omniroute setup-crush`    | `~/.config/crush/crush.json` — ارائهدهندهٔ `openai-compat`، مقدار `base_url` **همراه با** `/v1`، کلید از طریق `$OMNIROUTE_API_KEY`                                                                              |
-| Goose       | `omniroute setup-goose`    | `~/.config/goose/config.yaml` (`GOOSE_PROVIDER=openai` + `OPENAI_HOST` **بدون** `/v1` + `GOOSE_MODEL`) + دستورالعمل متغیرهای محیطی                                                                              |
-| Aider       | `omniroute setup-aider`    | `~/.aider.conf.yml` (مقدار `openai-api-base` **بدون** `/v1` + `model: openai/<id>`) + دستورالعمل متغیرهای محیطی (`aider --message --yes`)                                                                       |
-| Qwen Code   | `omniroute setup-qwen`     | ورودی V4 با نام `modelProviders.openai` در `~/.qwen/settings.json` + متغیر `OMNIROUTE_API_KEY` در `~/.qwen/.env`                                                                                                |
+| Codex       | `pusula setup-codex`    | پروفایلهای `~/.codex/<name>.config.toml` (برای هر مدل)                                                                                                                                                          |
+| Claude Code | `pusula setup-claude`   | `~/.claude/profiles/<name>/settings.json` (برای هر مدل)                                                                                                                                                         |
+| OpenCode    | `pusula setup-opencode` | `~/.config/opencode/opencode.json` — ارائهدهندهٔ سازگار با openai با نام `pusula` و همهٔ مدلهای کاتالوگ (`opencode -m pusula/<model>` را اجرا کنید)                                                       |
+| Cline       | `pusula setup-cline`    | `~/.cline/data/{globalState,secrets}.json` (حالت CLI) + تنظیمات افزونهٔ VS Code را برای جایگذاری چاپ میکند (سازگار با OpenAI، نشانی پایه **بدون** `/v1`)                                                        |
+| Kilo Code   | `pusula setup-kilo`     | `~/.local/share/kilo/auth.json` (CLI) + تنظیمات `kilocode.*` در VS Code — سازگار با OpenAI، نشانی پایه **همراه با** `/v1`                                                                                       |
+| Continue    | `pusula setup-continue` | `~/.continue/config.yaml` (VS Code/JetBrains + رابط خط فرمان `cn`) — `provider: openai`، مقدار `apiBase` **همراه با** `/v1`، کلید از طریق `${{ secrets.PUSULA_API_KEY }}`                                    |
+| Cursor      | `pusula setup-cursor`   | مراحل درونبرنامهای را چاپ میکند (Settings → Models → بازنویسی نشانی پایهٔ OpenAI **همراه با** `/v1` + کلید + مدل). پیکربندی Cursor یک SQLite مبهم است — فقط پنل گفتوگو                                          |
+| Roo Code    | `pusula setup-roo`      | یک JSON قابلدرونریزی برای Roo (`~/.pusula/roo-settings.json`) مینویسد + `roo-cline.autoImportSettingsPath` را تنظیم میکند + مراحل رابط کاربری را چاپ میکند (سازگار با OpenAI، نشانی پایه **همراه با** `/v1`) |
+| Crush       | `pusula setup-crush`    | `~/.config/crush/crush.json` — ارائهدهندهٔ `openai-compat`، مقدار `base_url` **همراه با** `/v1`، کلید از طریق `$PUSULA_API_KEY`                                                                              |
+| Goose       | `pusula setup-goose`    | `~/.config/goose/config.yaml` (`GOOSE_PROVIDER=openai` + `OPENAI_HOST` **بدون** `/v1` + `GOOSE_MODEL`) + دستورالعمل متغیرهای محیطی                                                                              |
+| Aider       | `pusula setup-aider`    | `~/.aider.conf.yml` (مقدار `openai-api-base` **بدون** `/v1` + `model: openai/<id>`) + دستورالعمل متغیرهای محیطی (`aider --message --yes`)                                                                       |
+| Qwen Code   | `pusula setup-qwen`     | ورودی V4 با نام `modelProviders.openai` در `~/.qwen/settings.json` + متغیر `PUSULA_API_KEY` در `~/.qwen/.env`                                                                                                |
 
 ```bash
 # OpenCode (ارائهدهندهٔ سازگار با openai، همهٔ مدلهای کاتالوگ، VPS راهدور)
-omniroute setup-opencode --remote http://192.168.0.15:20128 --api-key oma_live_xxx
-omniroute setup-opencode --only glm,kimi        # فقط مدلهای منطبق را نگه دارید
-opencode -m omniroute/glm/glm-5.2 "..."          # ابتدا OMNIROUTE_API_KEY را export کنید
+pusula setup-opencode --remote http://192.168.0.15:20128 --api-key oma_live_xxx
+pusula setup-opencode --only glm,kimi        # فقط مدلهای منطبق را نگه دارید
+opencode -m pusula/glm/glm-5.2 "..."          # ابتدا PUSULA_API_KEY را export کنید
 ```
 
-> OpenCode همچنین یک یکپارچهسازی غنیتر از طریق **افزونه** دارد: `omniroute setup opencode`
-> (که اکنون از طریق `--remote` از حالت راهدور آگاه است) بستهٔ `@omniroute/opencode-plugin` را نصب میکند.
+> OpenCode همچنین یک یکپارچهسازی غنیتر از طریق **افزونه** دارد: `pusula setup opencode`
+> (که اکنون از طریق `--remote` از حالت راهدور آگاه است) بستهٔ `@pusula/opencode-plugin` را نصب میکند.
 > `setup-opencode` جایگزین سبکوزن و سازگار با openai است. کلید API
-> از طریق `{env:OMNIROUTE_API_KEY}` ارجاع داده میشود — و هرگز روی دیسک نوشته نمیشود.
+> از طریق `{env:PUSULA_API_KEY}` ارجاع داده میشود — و هرگز روی دیسک نوشته نمیشود.
 >
-> در OpenCode v2، بهجای آن از `@omniroute/opencode-plugin-v2` استفاده کنید: همان کاتالوگ،
+> در OpenCode v2، بهجای آن از `@pusula/opencode-plugin-v2` استفاده کنید: همان کاتالوگ،
 > با قرارداد بارگذاری متفاوت. هنگامی که یکپارچهسازی متصل باشد، کلید را از مخزن اعتبارنامهٔ
 > خود OpenCode میخواند؛ بنابراین یک درگاه راهدور اصلاً به کلید در
 > `opencode.json` نیاز ندارد.
@@ -322,57 +322,57 @@ opencode -m omniroute/glm/glm-5.2 "..."          # ابتدا OMNIROUTE_API_KEY 
 
 ## مدیریت زمینهها (جابجایی بین سرورها)
 
-یک **زمینه** (context) یک سرور ذخیره شده است (baseUrl + credential + scope). `omniroute connect`
-یکی از آنها را ایجاد کرده و فعال میکند؛ از آن پس هر دستوری آن را هدف قرار میدهد. آنها را با `omniroute contexts` مدیریت و بینشان جابجا شوید:
+یک **زمینه** (context) یک سرور ذخیره شده است (baseUrl + credential + scope). `pusula connect`
+یکی از آنها را ایجاد کرده و فعال میکند؛ از آن پس هر دستوری آن را هدف قرار میدهد. آنها را با `pusula contexts` مدیریت و بینشان جابجا شوید:
 
 ```bash
-omniroute contexts list            # all contexts; the active one is marked ●
-omniroute contexts current         # the active server, auth status, scope
+pusula contexts list            # all contexts; the active one is marked ●
+pusula contexts current         # the active server, auth status, scope
 ```
 
 ```text
   | Name    | Base URL                  | Auth  | Scope | Description
-● | vps     | http://100.67.86.91:20128 | token | admin | Remote OmniRoute (…)
+● | vps     | http://100.67.86.91:20128 | token | admin | Remote Pusula (…)
   | default | http://localhost:20128    | ✗     |       |
 ```
 
 **جابجایی سرورها** — هر دستور بعدی از زمینه فعال پیروی میکند:
 
 ```bash
-omniroute contexts use vps         # → all commands now hit the remote VPS
-omniroute tokens list              #   (runs against the VPS)
+pusula contexts use vps         # → all commands now hit the remote VPS
+pusula tokens list              #   (runs against the VPS)
 
-omniroute contexts use default     # → back to localhost
-omniroute tokens list              #   (runs against the local server)
+pusula contexts use default     # → back to localhost
+pusula tokens list              #   (runs against the local server)
 ```
 
 **افزودن یک زمینه به صورت دستی** (به جای `connect`)، بررسی، یا تغییر نام:
 
 ```bash
-omniroute contexts add staging --url https://staging.example.com:20128 \
+pusula contexts add staging --url https://staging.example.com:20128 \
   --access-token oma_live_xxxx --scope write --description "staging box"
-omniroute contexts show staging    # full details for one context
-omniroute contexts rename staging stg
+pusula contexts show staging    # full details for one context
+pusula contexts rename staging stg
 ```
 
 **حذف یک زمینه** — درخواست تأیید میکند؛ برای رد شدن از آن، `--yes` را ارسال کنید
 (برای اسکریپتها / شلهای غیرتعاملی که در غیر این صورت به طور ایمن رد میشوند، لازم است):
 
 ```bash
-omniroute contexts remove stg --yes
+pusula contexts remove stg --yes
 ```
 
 > `default` (localhost) قابل حذف نیست. حذف زمینه فعال به `default` بازمیگردد. نکته: حذف یک زمینه فقط اعتبارنامه ذخیره شده **محلی** را حذف میکند —
-> برای از بین بردن واقعی دسترسی، توکن را در سرور با `omniroute tokens revoke <id>` لغو کنید.
+> برای از بین بردن واقعی دسترسی، توکن را در سرور با `pusula tokens revoke <id>` لغو کنید.
 
 **خروجی / ورودی گرفتن** از زمینهها (مثلاً برای انتقال آنها بین ماشینها). خروجیها به طور پیشفرض اعتبارنامهها را حذف میکنند، از جمله اعتبارنامههای ذخیره شده توسط فایل جایگزین.
 هنگامی که یک پشتیبان قابل حمل حاوی اعتبارنامه مورد نیاز است، به صراحت از `--include-secrets` استفاده کنید:
 
 ```bash
-omniroute contexts export --out contexts.json     # redacted; default destination: stdout
-omniroute contexts export --include-secrets --out private-contexts.json
-omniroute contexts import contexts.json            # overwrite; --merge to keep existing
-omniroute contexts migrate --yes                  # move legacy plaintext tokens to keychain
+pusula contexts export --out contexts.json     # redacted; default destination: stdout
+pusula contexts export --include-secrets --out private-contexts.json
+pusula contexts import contexts.json            # overwrite; --merge to keep existing
+pusula contexts migrate --yes                  # move legacy plaintext tokens to keychain
 ```
 
 `--include-secrets` قبل از خروجی گرفتن، ارجاعات keychain را حل میکند و در صورتی که هر اعتبارنامه ارجاع داده شده قابل خواندن نباشد، با شکست مواجه میشود. `--no-secrets` همیشه اولویت دارد.
@@ -389,22 +389,22 @@ token با scope مشخص، هدایت یک دستور، بازگشت و پاک�
 
 ```bash
 # ۱. اتصال (گذرواژه ← token مدیر، ذخیرهشده بهعنوان context که فعال میشود)
-omniroute connect 192.168.0.15                 # یا: --key oma_live_xxxx  (بدون گذرواژه)
-omniroute contexts current                     # سرور راهدور + scope را نمایش میدهد
+pusula connect 192.168.0.15                 # یا: --key oma_live_xxxx  (بدون گذرواژه)
+pusula contexts current                     # سرور راهدور + scope را نمایش میدهد
 
 # ۲. استفاده از آن — اکنون دستورهای مدیریتی روی سرور راهدور اجرا میشوند
-omniroute tokens create --name laptop --scope read   # ایجاد یک token با scope محدودتر
-omniroute tokens list                                 # فهرست پوشاندهشده، از سرور راهدور
+pusula tokens create --name laptop --scope read   # ایجاد یک token با scope محدودتر
+pusula tokens list                                 # فهرست پوشاندهشده، از سرور راهدور
 
 # ۳. جابهجایی رفتوبرگشتی
-omniroute contexts use default                 # ← محلی
-omniroute contexts use 192-168-0-15            # ← دوباره راهدور (نام از `contexts list`)
+pusula contexts use default                 # ← محلی
+pusula contexts use 192-168-0-15            # ← دوباره راهدور (نام از `contexts list`)
 
 # ۴. پاکسازی. توجه: `contexts remove` فقط اعتبارنامهٔ محلی را حذف میکند —
 #    این دستور token روی سرور را باطل نمیکند. اگر میخواهید واقعاً دسترسی را قطع کنید،
 #    ابتدا آن را در سمت سرور باطل کنید.
-omniroute tokens revoke <id|prefix>            # دسترسی روی سرور را قطع میکند
-omniroute contexts remove 192-168-0-15 --yes   # حذف context محلی (حتی اگر فعال باشد ← بازگشت به default)، بدون درخواست تأیید
+pusula tokens revoke <id|prefix>            # دسترسی روی سرور را قطع میکند
+pusula contexts remove 192-168-0-15 --yes   # حذف context محلی (حتی اگر فعال باشد ← بازگشت به default)، بدون درخواست تأیید
 ```
 
 > گزینهٔ `--yes` دستور `contexts remove` را غیرتعاملی میکند (در اسکریپتها/CI الزامی است؛ بدون
@@ -416,9 +416,9 @@ omniroute contexts remove 192-168-0-15 --yes   # حذف context محلی (حتی
 ## نکات امنیتی
 
 - متن سادهٔ توکن فقط یکبار نمایش داده میشود؛ تنها هش SHA-256 آن ذخیره میشود (مانند کلیدهای API).
-- `omniroute connect` از همان سازوکار قفلکردن در برابر حملات جستوجوی فراگیرِ ورود و ثبت رویدادهای ممیزی استفاده میکند.
+- `pusula connect` از همان سازوکار قفلکردن در برابر حملات جستوجوی فراگیرِ ورود و ثبت رویدادهای ممیزی استفاده میکند.
 - برای انتقال، HTTPS یا یک Tailnet را ترجیح دهید؛ یک میزبانِ بدون پروتکل، برای سهولت استفاده در LAN/Tailscale بهطور پیشفرض از `http://` استفاده میکند — برای TLS یک URL کامل با قالب `https://…` وارد کنید.
-- فایل ترجیحیِ زمینهٔ محلی `~/.omniroute/config.json` (`chmod 600`) است که فقط یک `credentialRef` دارد؛ خود توکن در زنجیرهکلید سیستمعامل (`keytar`) ذخیره میشود و هرگز در گزارشها چاپ نمیشود. نصبهای بدون رابط کاربری که زنجیرهکلید بومیِ فعال ندارند، بهطور صریح از همان فایل با مجوز `0600` بهعنوان راهکار جایگزین استفاده میکنند و یکبار هشدار میدهند. پس از نصب یک بکاند زنجیرهکلید، از `omniroute contexts migrate --yes` استفاده کنید.
+- فایل ترجیحیِ زمینهٔ محلی `~/.pusula/config.json` (`chmod 600`) است که فقط یک `credentialRef` دارد؛ خود توکن در زنجیرهکلید سیستمعامل (`keytar`) ذخیره میشود و هرگز در گزارشها چاپ نمیشود. نصبهای بدون رابط کاربری که زنجیرهکلید بومیِ فعال ندارند، بهطور صریح از همان فایل با مجوز `0600` بهعنوان راهکار جایگزین استفاده میکنند و یکبار هشدار میدهند. پس از نصب یک بکاند زنجیرهکلید، از `pusula contexts migrate --yes` استفاده کنید.
 
 ---
 

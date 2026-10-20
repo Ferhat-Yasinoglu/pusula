@@ -16,7 +16,7 @@ let tmpDir: string;
 let origDataDir: string | undefined;
 
 test.before(() => {
-  tmpDir = mkdtempSync(join(tmpdir(), "omniroute-ctx-test-"));
+  tmpDir = mkdtempSync(join(tmpdir(), "pusula-ctx-test-"));
   origDataDir = process.env.DATA_DIR;
   process.env.DATA_DIR = tmpDir;
 });
@@ -128,7 +128,7 @@ test("saveContextsSecure guarda tokens no keychain e resolve pela referência", 
 
   const persisted = JSON.parse(readFileSync(join(tmpDir, "config.json"), "utf8"));
   assert.equal(persisted.contexts.secure.accessToken, undefined);
-  assert.match(persisted.contexts.secure.credentialRef, /^omniroute-cli:context:/);
+  assert.match(persisted.contexts.secure.credentialRef, /^pusula-cli:context:/);
   assert.equal(resolveActiveContext("secure").accessToken, "oma_test_secret");
   assert.ok(entries.size >= 1);
 
@@ -169,7 +169,7 @@ test("confirm() declines cleanly on non-interactive stdin (no hung await)", asyn
 });
 
 test("registerContexts registers the singular `context` alias", async () => {
-  // The connect output and older docs say `omniroute context current` (singular);
+  // The connect output and older docs say `pusula context current` (singular);
   // the command is `contexts`. An alias keeps the singular muscle-memory working.
   const { registerContexts } = await import("../../bin/cli/commands/contexts.mjs");
   let aliasName: string | undefined;
@@ -229,7 +229,7 @@ test("context export --no-secrets overrides explicit inclusion through the real 
   try {
     await createProgram().parseAsync([
       "node",
-      "omniroute",
+      "pusula",
       "context",
       "export",
       "--no-secrets",
@@ -281,7 +281,7 @@ test("context export --include-secrets resolves keychain-backed credentials", as
   try {
     await createProgram().parseAsync([
       "node",
-      "omniroute",
+      "pusula",
       "context",
       "export",
       "--include-secrets",
@@ -306,7 +306,7 @@ test("secret-bearing context export fails closed when a keychain reference is un
     contexts: {
       missingKeychain: {
         baseUrl: "https://keychain.example.com",
-        credentialRef: "omniroute-cli:context:missingKeychain",
+        credentialRef: "pusula-cli:context:missingKeychain",
       },
     },
   });
@@ -344,7 +344,7 @@ test("context export defaults to a redacted atomic private output file", async (
   }) as typeof process.stdout.write;
 
   try {
-    await createProgram().parseAsync(["node", "omniroute", "context", "export", "--out", output]);
+    await createProgram().parseAsync(["node", "pusula", "context", "export", "--out", output]);
   } finally {
     process.stdout.write = originalWrite;
   }

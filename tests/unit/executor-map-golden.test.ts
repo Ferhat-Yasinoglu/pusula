@@ -15,7 +15,7 @@ import { cleanupTempDataDir } from "../_setup/tempDataDir.ts";
 // byte-identical: any drift in keys, classes, provider identity or guard behavior
 // is a golden diff, not a silent routing change.
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-executor-golden-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-executor-golden-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 // Dynamic imports AFTER DATA_DIR is set so db/core.ts picks up the temp path.

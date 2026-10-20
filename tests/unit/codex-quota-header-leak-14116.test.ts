@@ -4,7 +4,7 @@ import { test } from "node:test";
 import {
   buildStreamingResponseHeaders,
   type StreamingResponseHeadersMeta,
-} from "@omniroute/open-sse/handlers/chatCore/responseHeaders.ts";
+} from "@pusula/open-sse/handlers/chatCore/responseHeaders.ts";
 
 // Regression guard for issue #14116:
 // When combo/pool routing serves a request through a Codex connection that is

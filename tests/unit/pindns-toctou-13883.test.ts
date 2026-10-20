@@ -5,7 +5,7 @@ import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "omniroute-pindns-13883-"));
+process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "pusula-pindns-13883-"));
 
 // #13883 — security: pinDns off at the three new public-only image fetch sites let a
 // DNS-rebinding hostname (public at validation time, private at real connect time) bypass

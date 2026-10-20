@@ -1,16 +1,16 @@
-# Providers Guide: Connect AI Models to OmniRoute (Deutsch)
+# Providers Guide: Connect AI Models to Pusula (Deutsch)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../getting-started/PROVIDERS-GUIDE.md) · 🇪🇹 [am](../../../am/docs/getting-started/PROVIDERS-GUIDE.md) · 🇸🇦 [ar](../../../ar/docs/getting-started/PROVIDERS-GUIDE.md) · 🇦🇿 [az](../../../az/docs/getting-started/PROVIDERS-GUIDE.md) · 🇧🇬 [bg](../../../bg/docs/getting-started/PROVIDERS-GUIDE.md) · 🇧🇩 [bn](../../../bn/docs/getting-started/PROVIDERS-GUIDE.md) · 🇧🇦 [bs](../../../bs/docs/getting-started/PROVIDERS-GUIDE.md) · 🇨🇿 [cs](../../../cs/docs/getting-started/PROVIDERS-GUIDE.md) · 🇩🇰 [da](../../../da/docs/getting-started/PROVIDERS-GUIDE.md) · 🇬🇷 [el](../../../el/docs/getting-started/PROVIDERS-GUIDE.md) · 🇪🇸 [es](../../../es/docs/getting-started/PROVIDERS-GUIDE.md) · 🇪🇪 [et](../../../et/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇷 [fa](../../../fa/docs/getting-started/PROVIDERS-GUIDE.md) · 🇫🇮 [fi](../../../fi/docs/getting-started/PROVIDERS-GUIDE.md) · 🇫🇷 [fr](../../../fr/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇪 [ga](../../../ga/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [gu](../../../gu/docs/getting-started/PROVIDERS-GUIDE.md) · 🇳🇬 [ha](../../../ha/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇱 [he](../../../he/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [hi](../../../hi/docs/getting-started/PROVIDERS-GUIDE.md) · 🇭🇷 [hr](../../../hr/docs/getting-started/PROVIDERS-GUIDE.md) · 🇭🇺 [hu](../../../hu/docs/getting-started/PROVIDERS-GUIDE.md) · 🇦🇲 [hy](../../../hy/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇩 [id](../../../id/docs/getting-started/PROVIDERS-GUIDE.md) · 🇳🇬 [ig](../../../ig/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇹 [it](../../../it/docs/getting-started/PROVIDERS-GUIDE.md) · 🇯🇵 [ja](../../../ja/docs/getting-started/PROVIDERS-GUIDE.md) · 🇬🇪 [ka](../../../ka/docs/getting-started/PROVIDERS-GUIDE.md) · 🇰🇭 [km](../../../km/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [kn](../../../kn/docs/getting-started/PROVIDERS-GUIDE.md) · 🇰🇷 [ko](../../../ko/docs/getting-started/PROVIDERS-GUIDE.md) · 🇱🇹 [lt](../../../lt/docs/getting-started/PROVIDERS-GUIDE.md) · 🇱🇻 [lv](../../../lv/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [ml](../../../ml/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [mr](../../../mr/docs/getting-started/PROVIDERS-GUIDE.md) · 🇲🇾 [ms](../../../ms/docs/getting-started/PROVIDERS-GUIDE.md) · 🇲🇹 [mt](../../../mt/docs/getting-started/PROVIDERS-GUIDE.md) · 🇲🇲 [my](../../../my/docs/getting-started/PROVIDERS-GUIDE.md) · 🇳🇵 [ne](../../../ne/docs/getting-started/PROVIDERS-GUIDE.md) · 🇳🇱 [nl](../../../nl/docs/getting-started/PROVIDERS-GUIDE.md) · 🇳🇴 [no](../../../no/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [or](../../../or/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [pa](../../../pa/docs/getting-started/PROVIDERS-GUIDE.md) · 🇵🇭 [phi](../../../phi/docs/getting-started/PROVIDERS-GUIDE.md) · 🇵🇱 [pl](../../../pl/docs/getting-started/PROVIDERS-GUIDE.md) · 🇵🇹 [pt](../../../pt/docs/getting-started/PROVIDERS-GUIDE.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/getting-started/PROVIDERS-GUIDE.md) · 🇷🇴 [ro](../../../ro/docs/getting-started/PROVIDERS-GUIDE.md) · 🇷🇺 [ru](../../../ru/docs/getting-started/PROVIDERS-GUIDE.md) · 🇱🇰 [si](../../../si/docs/getting-started/PROVIDERS-GUIDE.md) · 🇸🇰 [sk](../../../sk/docs/getting-started/PROVIDERS-GUIDE.md) · 🇸🇮 [sl](../../../sl/docs/getting-started/PROVIDERS-GUIDE.md) · 🇷🇸 [sr](../../../sr/docs/getting-started/PROVIDERS-GUIDE.md) · 🇸🇪 [sv](../../../sv/docs/getting-started/PROVIDERS-GUIDE.md) · 🇰🇪 [sw](../../../sw/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [ta](../../../ta/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [te](../../../te/docs/getting-started/PROVIDERS-GUIDE.md) · 🇹🇭 [th](../../../th/docs/getting-started/PROVIDERS-GUIDE.md) · 🇹🇷 [tr](../../../tr/docs/getting-started/PROVIDERS-GUIDE.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/getting-started/PROVIDERS-GUIDE.md) · 🇵🇰 [ur](../../../ur/docs/getting-started/PROVIDERS-GUIDE.md) · 🇺🇿 [uz](../../../uz/docs/getting-started/PROVIDERS-GUIDE.md) · 🇻🇳 [vi](../../../vi/docs/getting-started/PROVIDERS-GUIDE.md) · 🇳🇬 [yo](../../../yo/docs/getting-started/PROVIDERS-GUIDE.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/getting-started/PROVIDERS-GUIDE.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/getting-started/PROVIDERS-GUIDE.md)
 
 ---
 
-> **Kurzfassung**: Ein Anbieter stellt eine Verbindung zu einem KI-Dienst (wie OpenAI, Anthropic oder Google) her. Sie benötigen mindestens einen Anbieter, um OmniRoute zu verwenden.
+> **Kurzfassung**: Ein Anbieter stellt eine Verbindung zu einem KI-Dienst (wie OpenAI, Anthropic oder Google) her. Sie benötigen mindestens einen Anbieter, um Pusula zu verwenden.
 
 ---
 
 ## Was ist ein Anbieter?
 
-Stellen Sie sich einen Anbieter wie einen **Mobilfunkanbieter** vor. So wie Sie zum Telefonieren einen Mobilfunkanbieter benötigen, brauchen Sie einen KI-Anbieter, um KI-Modelle zu verwenden. OmniRoute ist wie ein Telefon, das mit **allen Anbietern** funktioniert — Sie können automatisch zwischen ihnen wechseln.
+Stellen Sie sich einen Anbieter wie einen **Mobilfunkanbieter** vor. So wie Sie zum Telefonieren einen Mobilfunkanbieter benötigen, brauchen Sie einen KI-Anbieter, um KI-Modelle zu verwenden. Pusula ist wie ein Telefon, das mit **allen Anbietern** funktioniert — Sie können automatisch zwischen ihnen wechseln.
 
 ### Anbietertypen
 
@@ -31,8 +31,8 @@ Allgemeine Einrichtungsanweisungen, Einschränkungen, Informationen zur Fehlerbe
 ### Optionale Einrichtung kostenloser Anbieter beim ersten Start
 
 Der Assistent für den ersten Start bietet eine eigene Karte **Kostenlose Anbieter einrichten**. Er ermittelt die aktuelle
-Liste geeigneter Anbieter aus der Registrierung von OmniRoute für Anbieter ohne Authentifizierung und ermöglicht Ihnen anschließend, jeden
-Anbieter vor der Bestätigung zu prüfen und abzuwählen. OmniRoute zeigt den Warnhinweis des Anbieters sowie einen Link zu dessen Website an,
+Liste geeigneter Anbieter aus der Registrierung von Pusula für Anbieter ohne Authentifizierung und ermöglicht Ihnen anschließend, jeden
+Anbieter vor der Bestätigung zu prüfen und abzuwählen. Pusula zeigt den Warnhinweis des Anbieters sowie einen Link zu dessen Website an,
 damit Sie zunächst die Bedingungen, Datenschutzbestimmungen, Verfügbarkeit und Ratenbegrenzungen des Drittanbieters prüfen können.
 
 Diese Aktion ist optional: Beim Abschließen des Assistenten werden niemals unbemerkt Verbindungen zu kostenlosen Anbietern erstellt.
@@ -81,7 +81,7 @@ bedenkenlos nur die fehlgeschlagenen Vorgänge erneut versuchen.
 
 ### Option D: Lokale MLX-Modelle (Apple Silicon)
 
-Für Apple-Silicon-Macs mit gemeinsamem Arbeitsspeicher unterstützt OmniRoute die Verbindung zu lokalen MLX-Modellen, die über `mlx-lm.server` ausgeführt werden, als reguläre OpenAI-kompatible lokale Anbieter.
+Für Apple-Silicon-Macs mit gemeinsamem Arbeitsspeicher unterstützt Pusula die Verbindung zu lokalen MLX-Modellen, die über `mlx-lm.server` ausgeführt werden, als reguläre OpenAI-kompatible lokale Anbieter.
 
 #### Voraussetzungen
 
@@ -111,16 +111,16 @@ Für Apple-Silicon-Macs mit gemeinsamem Arbeitsspeicher unterstützt OmniRoute d
    uv run mlx_lm.server --model maglun/Qwen3.8-27B-MLX-Mixed-3.80bpw --port 11436 --host 127.0.0.1
    ```
 
-3. **Im OmniRoute-Dashboard verbinden**:
+3. **Im Pusula-Dashboard verbinden**:
    - Gehen Sie zu **Anbieter** → **Anbieter hinzufügen**
    - Wählen Sie **MLX Gemma 26B** oder **MLX Qwen 3.8 27B**
    - Klicken Sie auf **Verbinden** (kein API-Schlüssel erforderlich)
 
 4. **Mit OpenCode verwenden**:
    ```bash
-   # OpenCode für die Verwendung von OmniRoute konfigurieren
+   # OpenCode für die Verwendung von Pusula konfigurieren
    opencode config set api.base_url http://localhost:20128/v1
-   opencode config set api.key <your-omniroute-api-key>
+   opencode config set api.key <your-pusula-api-key>
 
    # MLX-Modelle verwenden
    opencode run --model mlx-gemma/gemma-4-26b
@@ -140,7 +140,7 @@ Sie müssen dies manuell verwalten:
 - führen Sie beide auf separaten Rechnern aus oder
 - stoppen Sie einen, bevor Sie den anderen starten
 
-OmniRoute verwaltet MLX-Serverprozesse nicht automatisch — es leitet lediglich Anfragen an die von Ihnen konfigurierten OpenAI-kompatiblen Endpunkte weiter.
+Pusula verwaltet MLX-Serverprozesse nicht automatisch — es leitet lediglich Anfragen an die von Ihnen konfigurierten OpenAI-kompatiblen Endpunkte weiter.
 
 #### Unterstützung für Tool-Aufrufe
 
@@ -165,7 +165,7 @@ curl -X POST http://localhost:20128/v1/chat/completions \
 | Nicht genügend Speicher  | Sicherstellen, dass nur ein Modell ausgeführt wird; andere Apps schließen; Aktivitätsanzeige prüfen           |
 | Verbindung abgelehnt     | Überprüfen, ob der Server am richtigen Port (11435/11436) ausgeführt wird                                     |
 | Langsame Antworten       | Bei der ersten Anfrage wird das Modell in den Speicher geladen (~30–60 s); nachfolgende Anfragen sind schnell |
-| Tool-Aufruf schlägt fehl | Sicherstellen, dass das Modell Tools unterstützt; OmniRoute-Protokolle auf Übersetzungsfehler prüfen          |
+| Tool-Aufruf schlägt fehl | Sicherstellen, dass das Modell Tools unterstützt; Pusula-Protokolle auf Übersetzungsfehler prüfen          |
 
 ---
 
@@ -239,12 +239,12 @@ Ihr Anbieter ist jetzt verbunden. Sie können ihn mit `model: "auto"` verwenden 
 
 ## Mehrere Anbieter verwenden
 
-OmniRoute funktioniert am besten mit **mehreren Anbietern**. Dies bietet Ihnen:
+Pusula funktioniert am besten mit **mehreren Anbietern**. Dies bietet Ihnen:
 
-- **Automatisches Fallback** — Wenn ein Anbieter ausfällt, versucht OmniRoute den nächsten
-- **Kostenoptimierung** — OmniRoute wählt für jede Anfrage den günstigsten Anbieter
-- **Geschwindigkeitsoptimierung** — OmniRoute wählt für jede Anfrage den schnellsten Anbieter
-- **Qualitätsoptimierung** — OmniRoute wählt für jede Aufgabe den besten Anbieter
+- **Automatisches Fallback** — Wenn ein Anbieter ausfällt, versucht Pusula den nächsten
+- **Kostenoptimierung** — Pusula wählt für jede Anfrage den günstigsten Anbieter
+- **Geschwindigkeitsoptimierung** — Pusula wählt für jede Anfrage den schnellsten Anbieter
+- **Qualitätsoptimierung** — Pusula wählt für jede Aufgabe den besten Anbieter
 
 ### Empfohlene Einrichtung
 
@@ -254,7 +254,7 @@ Verbinden Sie mindestens **3 Anbieter**, um die bestmögliche Erfahrung zu erzie
 2. **Einen schnellen Anbieter** (Groq, Cerebras) — Für schnelle Antworten
 3. **Einen Qualitätsanbieter** (OpenAI, Anthropic, Google) — Für komplexe Aufgaben
 
-Verwenden Sie anschließend `model: "auto"`, und OmniRoute wählt automatisch für jede Anfrage den besten Anbieter aus.
+Verwenden Sie anschließend `model: "auto"`, und Pusula wählt automatisch für jede Anfrage den besten Anbieter aus.
 
 ---
 
@@ -263,40 +263,40 @@ Verwenden Sie anschließend `model: "auto"`, und OmniRoute wählt automatisch f�
 ### OpenAI
 
 1. API-Schlüssel abrufen: https://platform.openai.com/api-keys
-2. In OmniRoute: Anbieter → Anbieter hinzufügen → OpenAI
+2. In Pusula: Anbieter → Anbieter hinzufügen → OpenAI
 3. API-Schlüssel einfügen → Verbinden
 
 ### Anthropic
 
 1. API-Schlüssel abrufen: https://console.anthropic.com/
-2. In OmniRoute: Anbieter → Anbieter hinzufügen → Anthropic
+2. In Pusula: Anbieter → Anbieter hinzufügen → Anthropic
 3. API-Schlüssel einfügen → Verbinden
 
 ### Google (Gemini)
 
 1. API-Schlüssel abrufen: https://aistudio.google.com/apikey
-2. In OmniRoute: Anbieter → Anbieter hinzufügen → Gemini
+2. In Pusula: Anbieter → Anbieter hinzufügen → Gemini
 3. API-Schlüssel einfügen → Verbinden
 
 ### DeepSeek
 
 1. API-Schlüssel abrufen: https://platform.deepseek.com/
-2. In OmniRoute: Anbieter → Anbieter hinzufügen → DeepSeek
+2. In Pusula: Anbieter → Anbieter hinzufügen → DeepSeek
 3. API-Schlüssel einfügen → Verbinden
 
 ### Groq
 
 1. API-Schlüssel abrufen: https://console.groq.com/
-2. In OmniRoute: Anbieter → Anbieter hinzufügen → Groq
+2. In Pusula: Anbieter → Anbieter hinzufügen → Groq
 3. API-Schlüssel einfügen → Verbinden
 
 ---
 
 ## Häufig gestellte Fragen
 
-### „Muss ich für die Nutzung von OmniRoute bezahlen?“
+### „Muss ich für die Nutzung von Pusula bezahlen?“
 
-**Nein!** OmniRoute ist kostenlos und quelloffen. Sie können kostenlose Anbieter (Kiro, OpenCode Free, Pollinations) nutzen, ohne etwas zu bezahlen. Kosten entstehen nur, wenn Sie kostenpflichtige Anbieter verwenden.
+**Nein!** Pusula ist kostenlos und quelloffen. Sie können kostenlose Anbieter (Kiro, OpenCode Free, Pollinations) nutzen, ohne etwas zu bezahlen. Kosten entstehen nur, wenn Sie kostenpflichtige Anbieter verwenden.
 
 ### „Mit welchem Anbieter sollte ich beginnen?“
 
@@ -304,11 +304,11 @@ Beginnen Sie mit **Kiro AI** — der Anbieter ist kostenlos, erfordert keinen AP
 
 ### „Kann ich mehrere Anbieter gleichzeitig nutzen?“
 
-**Ja!** Genau das ist der Zweck von OmniRoute. Verbinden Sie mehrere Anbieter und verwenden Sie `model: "auto"`, damit OmniRoute für jede Anfrage den besten auswählt.
+**Ja!** Genau das ist der Zweck von Pusula. Verbinden Sie mehrere Anbieter und verwenden Sie `model: "auto"`, damit Pusula für jede Anfrage den besten auswählt.
 
 ### „Was passiert, wenn ein Anbieter ausfällt?“
 
-OmniRoute überspringt fehlgeschlagene Anbieter automatisch und versucht es mit dem nächsten. Sie müssen nichts tun.
+Pusula überspringt fehlgeschlagene Anbieter automatisch und versucht es mit dem nächsten. Sie müssen nichts tun.
 
 ### „Wie trenne ich die Verbindung zu einem Anbieter?“
 
@@ -316,13 +316,13 @@ Gehen Sie zu Anbieter → klicken Sie auf den Anbieter → klicken Sie auf **Ver
 
 ### „Kann ich meine vorhandenen API-Schlüssel verwenden?“
 
-**Ja!** Wenn Sie bereits API-Schlüssel für OpenAI, Anthropic, Google usw. haben, können Sie diese in OmniRoute verwenden. Fügen Sie sie einfach beim Verbinden des Anbieters ein.
+**Ja!** Wenn Sie bereits API-Schlüssel für OpenAI, Anthropic, Google usw. haben, können Sie diese in Pusula verwenden. Fügen Sie sie einfach beim Verbinden des Anbieters ein.
 
 ---
 
 ## Wie geht es weiter?
 
-- **[Anleitung zur automatischen Kombination](./AUTO-COMBO-GUIDE.md)** — Lassen Sie OmniRoute die beste KI für Sie auswählen
+- **[Anleitung zur automatischen Kombination](./AUTO-COMBO-GUIDE.md)** — Lassen Sie Pusula die beste KI für Sie auswählen
 - **[Leitfaden zu kostenlosen Kontingenten](./FREE-TIERS-GUIDE.md)** — Nutzen Sie kostenlose KI ohne Kreditkarte
 - **[Fehlerbehebung](../guides/TROUBLESHOOTING.md)** — Beheben Sie häufige Probleme
 - **[Anbieterreferenz](../reference/PROVIDER_REFERENCE.md)** — Vollständige Liste mit 226 Anbietern

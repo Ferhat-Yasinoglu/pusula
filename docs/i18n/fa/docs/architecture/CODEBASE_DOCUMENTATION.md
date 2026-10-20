@@ -1,4 +1,4 @@
-# OmniRoute Codebase Documentation (فارسی)
+# Pusula Codebase Documentation (فارسی)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../architecture/CODEBASE_DOCUMENTATION.md) · 🇪🇹 [am](../../../am/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇸🇦 [ar](../../../ar/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇦🇿 [az](../../../az/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇧🇬 [bg](../../../bg/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇧🇩 [bn](../../../bn/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇧🇦 [bs](../../../bs/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇨🇿 [cs](../../../cs/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇩🇰 [da](../../../da/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇩🇪 [de](../../../de/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇬🇷 [el](../../../el/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇪🇸 [es](../../../es/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇪🇪 [et](../../../et/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇫🇮 [fi](../../../fi/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇫🇷 [fr](../../../fr/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇪 [ga](../../../ga/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [gu](../../../gu/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇳🇬 [ha](../../../ha/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇱 [he](../../../he/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [hi](../../../hi/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇭🇷 [hr](../../../hr/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇭🇺 [hu](../../../hu/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇦🇲 [hy](../../../hy/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇩 [id](../../../id/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇳🇬 [ig](../../../ig/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇹 [it](../../../it/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇯🇵 [ja](../../../ja/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇬🇪 [ka](../../../ka/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇰🇭 [km](../../../km/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [kn](../../../kn/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇰🇷 [ko](../../../ko/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇱🇹 [lt](../../../lt/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇱🇻 [lv](../../../lv/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [ml](../../../ml/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [mr](../../../mr/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇲🇾 [ms](../../../ms/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇲🇹 [mt](../../../mt/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇲🇲 [my](../../../my/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇳🇵 [ne](../../../ne/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇳🇱 [nl](../../../nl/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇳🇴 [no](../../../no/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [or](../../../or/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [pa](../../../pa/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇵🇭 [phi](../../../phi/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇵🇱 [pl](../../../pl/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇵🇹 [pt](../../../pt/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇷🇴 [ro](../../../ro/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇷🇺 [ru](../../../ru/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇱🇰 [si](../../../si/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇸🇰 [sk](../../../sk/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇸🇮 [sl](../../../sl/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇷🇸 [sr](../../../sr/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇸🇪 [sv](../../../sv/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇰🇪 [sw](../../../sw/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [ta](../../../ta/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [te](../../../te/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇹🇭 [th](../../../th/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇹🇷 [tr](../../../tr/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇵🇰 [ur](../../../ur/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇺🇿 [uz](../../../uz/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇻🇳 [vi](../../../vi/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇳🇬 [yo](../../../yo/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/architecture/CODEBASE_DOCUMENTATION.md)
 
@@ -6,7 +6,7 @@
 
 > **نسخه:** v3.8.51
 > **آخرین بهروزرسانی:** 2026-06-28
-> **مخاطبان:** مهندسانی که در توسعه OmniRoute مشارکت میکنند یا یکپارچهسازیهایی را بر بستر آن میسازند.
+> **مخاطبان:** مهندسانی که در توسعه Pusula مشارکت میکنند یا یکپارچهسازیهایی را بر بستر آن میسازند.
 >
 > برای نمودارهای سطحبالای معماری و منطق پشت هر زیرسیستم، فایل
 > [ARCHITECTURE.md](./ARCHITECTURE.md) را مطالعه کنید. برای بررسی عمیق زیرسیستمهای مجزا
@@ -37,22 +37,22 @@
 نامهای مستعار مسیر (`tsconfig.json`):
 
 - `@/*` → `src/*`
-- `@omniroute/open-sse` → `open-sse/index.ts`
-- `@omniroute/open-sse/*` → `open-sse/*`
+- `@pusula/open-sse` → `open-sse/index.ts`
+- `@pusula/open-sse/*` → `open-sse/*`
 
 پورت پیشفرض HTTP: **`20128`** (API و داشبورد فرایند یکسانی را به اشتراک میگذارند). پوشه
-دادهها متغیر محیطی `DATA_DIR` است که مقدار پیشفرض آن `~/.omniroute/` است.
+دادهها متغیر محیطی `DATA_DIR` است که مقدار پیشفرض آن `~/.pusula/` است.
 
 ---
 
 ## 2. ساختار مخزن
 
 ```
-OmniRoute/
+Pusula/
 ├── src/                  برنامه Next.js (App Router، کتابخانهها، دامنه، سرور، اجزای مشترک)
-├── open-sse/             فضای کاری موتور استریم (@omniroute/open-sse)
+├── open-sse/             فضای کاری موتور استریم (@pusula/open-sse)
 ├── electron/             پوشش دسکتاپ (فرایند اصلی Electron 41 + preload)
-├── bin/                  نقاط ورود CLI (omniroute، reset-password)
+├── bin/                  نقاط ورود CLI (pusula، reset-password)
 ├── tests/                آزمونهای واحد، یکپارچهسازی، e2e، protocols-e2e، مترجم، امنیت و دادههای آزمون
 ├── scripts/              اسکریپتهای کمکی ساخت، همگامسازی، بررسی، مهاجرت و زمان اجرا
 ├── docs/                 مستندات عمومی (این پوشه)
@@ -298,7 +298,7 @@ v1/
 | `runtime/`        | تشخیص قابلیتها در زمان اجرا                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | `search/`         | `executeWebSearch.ts`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | `services/`       | چارچوب سرویسهای تعبیهشده:‏ `ServiceSupervisor.ts` (ناظر عمومی فرایند فرزند با قفل عملیات، بافر حلقوی و بررسیکننده سلامت)، `bootstrap.ts` (ثبت در سطح فرایند و شروع خودکار)، `registry.ts` (نگاشت ابزار ← ناظر)، `apiKey.ts` (مخزن کلید AES-256-GCM)، `modelSync.ts` (همگامسازی دورهای مدل)، `ringBuffer.ts` (بافر حلقوی گزارش ۵ مگابایتی)، `healthCheck.ts` (کاوش سلامت HTTP)، `types.ts`، `embedWsProxy.ts` (پراکسی WebSocket)، `installers/{ninerouter,cliproxy}.ts`. نگاه کنید به `docs/frameworks/EMBEDDED-SERVICES.md`                                                                                                                                                                                                       |
-| `agentSkills/`    | کاتالوگ + مولد مهارتهای عامل:‏ `catalog.ts` ‏(getCatalog/getSkillById/filterCatalog/computeCoverage)، `generator.ts` ‏(generateAgentSkills → در `skills/{id}/SKILL.md` مینویسد)، `openapiParser.ts` (نقاط پایانی REST را از مشخصات OpenAPI استخراج میکند)، `cliRegistryParser.ts` (زیرفرمانهای CLI را از bin/cli-registry استخراج میکند)، `schemas.ts` ‏(Zod: AgentSkillSchema، SkillCoverageSchema، ListQuerySchema، GenerateBodySchema)، `types.ts` ‏(AgentSkill، SkillCoverage، SkillMarkdown، GeneratorReport). مسیرهای REST ‏(`/api/agent-skills/*`)، ابزارهای MCP ‏(`omniroute_agent_skills_*`) و مهارت A2A با نام `list-capabilities` از آن استفاده میکنند. نگاه کنید به [AGENT-SKILLS.md](../frameworks/AGENT-SKILLS.md). |
+| `agentSkills/`    | کاتالوگ + مولد مهارتهای عامل:‏ `catalog.ts` ‏(getCatalog/getSkillById/filterCatalog/computeCoverage)، `generator.ts` ‏(generateAgentSkills → در `skills/{id}/SKILL.md` مینویسد)، `openapiParser.ts` (نقاط پایانی REST را از مشخصات OpenAPI استخراج میکند)، `cliRegistryParser.ts` (زیرفرمانهای CLI را از bin/cli-registry استخراج میکند)، `schemas.ts` ‏(Zod: AgentSkillSchema، SkillCoverageSchema، ListQuerySchema، GenerateBodySchema)، `types.ts` ‏(AgentSkill، SkillCoverage، SkillMarkdown، GeneratorReport). مسیرهای REST ‏(`/api/agent-skills/*`)، ابزارهای MCP ‏(`pusula_agent_skills_*`) و مهارت A2A با نام `list-capabilities` از آن استفاده میکنند. نگاه کنید به [AGENT-SKILLS.md](../frameworks/AGENT-SKILLS.md). |
 | `skills/`         | چارچوب مهارت:‏ `registry.ts`، `executor.ts`، `interception.ts`، `injection.ts`، `sandbox.ts`، `custom.ts`، `hybrid.ts`، `builtins.ts`، `a2a.ts`، `providerSettings.ts`، `schemas.ts`، `skillssh.ts`، `types.ts`، بهعلاوه `builtin/browser.ts`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `spend/`          | `batchWriter.ts` (بافر نوشتن با تأخیر)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | `sync/`           | `bundle.ts`، `tokens.ts` (همگامسازی ابری)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
@@ -384,7 +384,7 @@ v1/
 | `degradation.ts`                           | گذارهای حالت تنزلیافته                          |
 | `providerExpiration.ts`                    | تشخیص حساب/کلید منقضیشده                        |
 | `quotaCache.ts`                            | تصمیمهای cacheشدهٔ سهمیه                        |
-| `responses.ts`, `omnirouteResponseMeta.ts` | ابزارهای کمکی ساختار پاسخ                       |
+| `responses.ts`, `pusulaResponseMeta.ts` | ابزارهای کمکی ساختار پاسخ                       |
 | `configAudit.ts`                           | ممیزی تغییرات پیکربندی                          |
 | `assessment/`                              | ارزیابی مدل (طبق RFC، بهطور جزئی پیادهسازی شده) |
 | `types.ts`                                 | typeهای مشترک دامنه                             |
@@ -436,7 +436,7 @@ server/
 
 ## 4. `open-sse/` — فضای کاری موتور استریم
 
-یک فضای کاری npm مستقل که با نام `@omniroute/open-sse` منتشر میشود. مالک پردازش
+یک فضای کاری npm مستقل که با نام `@pusula/open-sse` منتشر میشود. مالک پردازش
 درخواست، اجراکنندهها، مترجمها، سرویسها، تبدیلکننده و سرور MCP است.
 
 ```
@@ -599,7 +599,7 @@ electron/
 
 ```
 bin/
-├── omniroute.mjs           ورودی اصلی رابط خط فرمان (Node ESM)
+├── pusula.mjs           ورودی اصلی رابط خط فرمان (Node ESM)
 ├── reset-password.mjs      بازنشانی گذرواژهٔ مدیریت از طریق رابط خط فرمان
 ├── mcp-server.mjs          راهانداز سرور MCP (stdio)
 ├── nodeRuntimeSupport.mjs  محافظ نسخهٔ Node
@@ -622,8 +622,8 @@ bin/
 
 دو فایل اجرایی در `package.json` ← `bin` ارائه میشوند:
 
-- `omniroute` ← `bin/omniroute.mjs`
-- `omniroute-reset-password` ← `bin/reset-password.mjs`
+- `pusula` ← `bin/pusula.mjs`
+- `pusula-reset-password` ← `bin/reset-password.mjs`
 
 ---
 
@@ -779,7 +779,7 @@ bin/
 
 - **سبک کد**: تورفتگی ۲ فاصلهای، نقلقول دوتایی، عرض ۱۰۰ نویسه، نقطهویرگول،
   ویرگول انتهایی `es5` — بهوسیله Prettier و از طریق `lint-staged` اعمال میشود.
-- **ایمپورتها**: خارجی ← داخلی (`@/`، `@omniroute/open-sse`) ← نسبی.
+- **ایمپورتها**: خارجی ← داخلی (`@/`، `@pusula/open-sse`) ← نسبی.
 - **نامگذاری**: فایلها بهصورت `camelCase` یا `kebab-case`، مؤلفهها بهصورت `PascalCase`،
   ثابتها بهصورت `UPPER_SNAKE`.
 - **ESLint**: قوانین `no-eval`، `no-implied-eval` و `no-new-func` در همهجا برابر `error` هستند؛

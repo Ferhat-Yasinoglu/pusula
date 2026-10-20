@@ -1,16 +1,16 @@
-# Providers Guide: Connect AI Models to OmniRoute (فارسی)
+# Providers Guide: Connect AI Models to Pusula (فارسی)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../getting-started/PROVIDERS-GUIDE.md) · 🇪🇹 [am](../../../am/docs/getting-started/PROVIDERS-GUIDE.md) · 🇸🇦 [ar](../../../ar/docs/getting-started/PROVIDERS-GUIDE.md) · 🇦🇿 [az](../../../az/docs/getting-started/PROVIDERS-GUIDE.md) · 🇧🇬 [bg](../../../bg/docs/getting-started/PROVIDERS-GUIDE.md) · 🇧🇩 [bn](../../../bn/docs/getting-started/PROVIDERS-GUIDE.md) · 🇧🇦 [bs](../../../bs/docs/getting-started/PROVIDERS-GUIDE.md) · 🇨🇿 [cs](../../../cs/docs/getting-started/PROVIDERS-GUIDE.md) · 🇩🇰 [da](../../../da/docs/getting-started/PROVIDERS-GUIDE.md) · 🇩🇪 [de](../../../de/docs/getting-started/PROVIDERS-GUIDE.md) · 🇬🇷 [el](../../../el/docs/getting-started/PROVIDERS-GUIDE.md) · 🇪🇸 [es](../../../es/docs/getting-started/PROVIDERS-GUIDE.md) · 🇪🇪 [et](../../../et/docs/getting-started/PROVIDERS-GUIDE.md) · 🇫🇮 [fi](../../../fi/docs/getting-started/PROVIDERS-GUIDE.md) · 🇫🇷 [fr](../../../fr/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇪 [ga](../../../ga/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [gu](../../../gu/docs/getting-started/PROVIDERS-GUIDE.md) · 🇳🇬 [ha](../../../ha/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇱 [he](../../../he/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [hi](../../../hi/docs/getting-started/PROVIDERS-GUIDE.md) · 🇭🇷 [hr](../../../hr/docs/getting-started/PROVIDERS-GUIDE.md) · 🇭🇺 [hu](../../../hu/docs/getting-started/PROVIDERS-GUIDE.md) · 🇦🇲 [hy](../../../hy/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇩 [id](../../../id/docs/getting-started/PROVIDERS-GUIDE.md) · 🇳🇬 [ig](../../../ig/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇹 [it](../../../it/docs/getting-started/PROVIDERS-GUIDE.md) · 🇯🇵 [ja](../../../ja/docs/getting-started/PROVIDERS-GUIDE.md) · 🇬🇪 [ka](../../../ka/docs/getting-started/PROVIDERS-GUIDE.md) · 🇰🇭 [km](../../../km/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [kn](../../../kn/docs/getting-started/PROVIDERS-GUIDE.md) · 🇰🇷 [ko](../../../ko/docs/getting-started/PROVIDERS-GUIDE.md) · 🇱🇹 [lt](../../../lt/docs/getting-started/PROVIDERS-GUIDE.md) · 🇱🇻 [lv](../../../lv/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [ml](../../../ml/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [mr](../../../mr/docs/getting-started/PROVIDERS-GUIDE.md) · 🇲🇾 [ms](../../../ms/docs/getting-started/PROVIDERS-GUIDE.md) · 🇲🇹 [mt](../../../mt/docs/getting-started/PROVIDERS-GUIDE.md) · 🇲🇲 [my](../../../my/docs/getting-started/PROVIDERS-GUIDE.md) · 🇳🇵 [ne](../../../ne/docs/getting-started/PROVIDERS-GUIDE.md) · 🇳🇱 [nl](../../../nl/docs/getting-started/PROVIDERS-GUIDE.md) · 🇳🇴 [no](../../../no/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [or](../../../or/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [pa](../../../pa/docs/getting-started/PROVIDERS-GUIDE.md) · 🇵🇭 [phi](../../../phi/docs/getting-started/PROVIDERS-GUIDE.md) · 🇵🇱 [pl](../../../pl/docs/getting-started/PROVIDERS-GUIDE.md) · 🇵🇹 [pt](../../../pt/docs/getting-started/PROVIDERS-GUIDE.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/getting-started/PROVIDERS-GUIDE.md) · 🇷🇴 [ro](../../../ro/docs/getting-started/PROVIDERS-GUIDE.md) · 🇷🇺 [ru](../../../ru/docs/getting-started/PROVIDERS-GUIDE.md) · 🇱🇰 [si](../../../si/docs/getting-started/PROVIDERS-GUIDE.md) · 🇸🇰 [sk](../../../sk/docs/getting-started/PROVIDERS-GUIDE.md) · 🇸🇮 [sl](../../../sl/docs/getting-started/PROVIDERS-GUIDE.md) · 🇷🇸 [sr](../../../sr/docs/getting-started/PROVIDERS-GUIDE.md) · 🇸🇪 [sv](../../../sv/docs/getting-started/PROVIDERS-GUIDE.md) · 🇰🇪 [sw](../../../sw/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [ta](../../../ta/docs/getting-started/PROVIDERS-GUIDE.md) · 🇮🇳 [te](../../../te/docs/getting-started/PROVIDERS-GUIDE.md) · 🇹🇭 [th](../../../th/docs/getting-started/PROVIDERS-GUIDE.md) · 🇹🇷 [tr](../../../tr/docs/getting-started/PROVIDERS-GUIDE.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/getting-started/PROVIDERS-GUIDE.md) · 🇵🇰 [ur](../../../ur/docs/getting-started/PROVIDERS-GUIDE.md) · 🇺🇿 [uz](../../../uz/docs/getting-started/PROVIDERS-GUIDE.md) · 🇻🇳 [vi](../../../vi/docs/getting-started/PROVIDERS-GUIDE.md) · 🇳🇬 [yo](../../../yo/docs/getting-started/PROVIDERS-GUIDE.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/getting-started/PROVIDERS-GUIDE.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/getting-started/PROVIDERS-GUIDE.md)
 
 ---
 
-> **خلاصه**: ارائهدهنده، اتصالی به یک سرویس هوش مصنوعی (مانند OpenAI، Anthropic یا Google) است. برای استفاده از OmniRoute، حداقل به یک ارائهدهنده نیاز دارید.
+> **خلاصه**: ارائهدهنده، اتصالی به یک سرویس هوش مصنوعی (مانند OpenAI، Anthropic یا Google) است. برای استفاده از Pusula، حداقل به یک ارائهدهنده نیاز دارید.
 
 ---
 
 ## ارائهدهنده چیست؟
 
-ارائهدهنده را مانند یک **اپراتور تلفن همراه** در نظر بگیرید. همانطور که برای برقراری تماس به اپراتور تلفن همراه نیاز دارید، برای استفاده از مدلهای هوش مصنوعی نیز به یک ارائهدهنده هوش مصنوعی نیاز دارید. OmniRoute مانند تلفنی است که با **همه اپراتورها** کار میکند — میتوانید بهصورت خودکار بین آنها جابهجا شوید.
+ارائهدهنده را مانند یک **اپراتور تلفن همراه** در نظر بگیرید. همانطور که برای برقراری تماس به اپراتور تلفن همراه نیاز دارید، برای استفاده از مدلهای هوش مصنوعی نیز به یک ارائهدهنده هوش مصنوعی نیاز دارید. Pusula مانند تلفنی است که با **همه اپراتورها** کار میکند — میتوانید بهصورت خودکار بین آنها جابهجا شوید.
 
 ### انواع ارائهدهندگان
 
@@ -30,7 +30,7 @@
 
 ### راهاندازی اختیاری ارائهدهندگان رایگان هنگام اولین اجرا
 
-جادوگر اولین اجرا، کارت مستقلی با عنوان **راهاندازی ارائهدهندگان رایگان** ارائه میدهد. این جادوگر فهرست واجد شرایط فعلی را از رجیستری ارائهدهندگان بدون نیاز به احراز هویت OmniRoute استخراج میکند و سپس به شما امکان میدهد پیش از تأیید، هر ارائهدهنده را بررسی کرده و موارد دلخواه را از حالت انتخاب خارج کنید. OmniRoute هشدار احتیاطی ارائهدهنده و پیوندی به وبسایت آن را نمایش میدهد تا ابتدا شرایط استفاده اشخاص ثالث، حریم خصوصی، دسترسپذیری و محدودیتهای نرخ را بررسی کنید.
+جادوگر اولین اجرا، کارت مستقلی با عنوان **راهاندازی ارائهدهندگان رایگان** ارائه میدهد. این جادوگر فهرست واجد شرایط فعلی را از رجیستری ارائهدهندگان بدون نیاز به احراز هویت Pusula استخراج میکند و سپس به شما امکان میدهد پیش از تأیید، هر ارائهدهنده را بررسی کرده و موارد دلخواه را از حالت انتخاب خارج کنید. Pusula هشدار احتیاطی ارائهدهنده و پیوندی به وبسایت آن را نمایش میدهد تا ابتدا شرایط استفاده اشخاص ثالث، حریم خصوصی، دسترسپذیری و محدودیتهای نرخ را بررسی کنید.
 
 این اقدام اختیاری است: تکمیل جادوگر هرگز بهصورت پنهانی اتصالهای ارائهدهندگان رایگان را ایجاد نمیکند.
 تنها ارائهدهندگانی را ایجاد میکند که هنوز وجود ندارند، اتصالهای سفارشیشده موجود را بدون تغییر باقی میگذارد و ارائهدهندگان ایجادشده، ازپیش پیکربندیشده و ناموفق را بهصورت جداگانه گزارش میکند. پس از دریافت نتیجهای جزئی، میتوانید با خیال راحت فقط موارد ناموفق را دوباره امتحان کنید.
@@ -76,7 +76,7 @@
 
 ### گزینه D: مدلهای محلی MLX (Apple Silicon)
 
-OmniRoute برای رایانههای Mac مجهز به Apple Silicon و حافظه یکپارچه، از اتصال به مدلهای محلی MLX که از طریق `mlx-lm.server` اجرا میشوند، بهعنوان ارائهدهندگان محلی معمولی و سازگار با OpenAI پشتیبانی میکند.
+Pusula برای رایانههای Mac مجهز به Apple Silicon و حافظه یکپارچه، از اتصال به مدلهای محلی MLX که از طریق `mlx-lm.server` اجرا میشوند، بهعنوان ارائهدهندگان محلی معمولی و سازگار با OpenAI پشتیبانی میکند.
 
 #### پیشنیازها
 
@@ -106,16 +106,16 @@ OmniRoute برای رایانههای Mac مجهز به Apple Silicon و حاف�
    uv run mlx_lm.server --model maglun/Qwen3.8-27B-MLX-Mixed-3.80bpw --port 11436 --host 127.0.0.1
    ```
 
-3. **در داشبورد OmniRoute متصل شوید**:
+3. **در داشبورد Pusula متصل شوید**:
    - به **ارائهدهندگان** → **افزودن ارائهدهنده** بروید
    - **MLX Gemma 26B** یا **MLX Qwen 3.8 27B** را انتخاب کنید
    - روی **اتصال** کلیک کنید (نیازی به کلید API نیست)
 
 4. **با OpenCode استفاده کنید**:
    ```bash
-   # OpenCode را برای استفاده از OmniRoute پیکربندی کنید
+   # OpenCode را برای استفاده از Pusula پیکربندی کنید
    opencode config set api.base_url http://localhost:20128/v1
-   opencode config set api.key <your-omniroute-api-key>
+   opencode config set api.key <your-pusula-api-key>
 
    # از مدلهای MLX استفاده کنید
    opencode run --model mlx-gemma/gemma-4-26b
@@ -135,7 +135,7 @@ OmniRoute برای رایانههای Mac مجهز به Apple Silicon و حاف�
 - هر دو را روی دستگاههای جداگانه اجرا کنید، یا
 - پیش از راهاندازی یکی، دیگری را متوقف کنید
 
-OmniRoute فرایندهای سرور MLX را بهصورت خودکار مدیریت نمیکند — فقط درخواستها را به نقاط پایانی سازگار با OpenAI که پیکربندی کردهاید هدایت میکند.
+Pusula فرایندهای سرور MLX را بهصورت خودکار مدیریت نمیکند — فقط درخواستها را به نقاط پایانی سازگار با OpenAI که پیکربندی کردهاید هدایت میکند.
 
 #### پشتیبانی از فراخوانی ابزار
 
@@ -160,7 +160,7 @@ curl -X POST http://localhost:20128/v1/chat/completions \
 | کمبود حافظه               | مطمئن شوید فقط یک مدل اجرا میشود؛ سایر برنامهها را ببندید؛ Activity Monitor را بررسی کنید    |
 | اتصال رد میشود            | بررسی کنید که سرور روی پورت صحیح (11435/11436) در حال اجرا باشد                              |
 | پاسخدهی کند است           | درخواست اول مدل را در حافظه بارگذاری میکند (~30-60s)؛ درخواستهای بعدی سریع هستند             |
-| فراخوانی ابزار ناموفق است | مطمئن شوید مدل از ابزارها پشتیبانی میکند؛ گزارشهای OmniRoute را برای خطاهای ترجمه بررسی کنید |
+| فراخوانی ابزار ناموفق است | مطمئن شوید مدل از ابزارها پشتیبانی میکند؛ گزارشهای Pusula را برای خطاهای ترجمه بررسی کنید |
 
 ---
 
@@ -234,12 +234,12 @@ curl -X POST http://localhost:20128/v1/chat/completions \
 
 ## استفاده از چندین ارائهدهنده
 
-OmniRoute با **چندین ارائهدهنده** بهترین عملکرد را دارد. این قابلیت مزایای زیر را فراهم میکند:
+Pusula با **چندین ارائهدهنده** بهترین عملکرد را دارد. این قابلیت مزایای زیر را فراهم میکند:
 
-- **جایگزینی خودکار** — اگر یک ارائهدهنده با مشکل مواجه شود، OmniRoute ارائهدهنده بعدی را امتحان میکند
-- **بهینهسازی هزینه** — OmniRoute برای هر درخواست، ارزانترین ارائهدهنده را انتخاب میکند
-- **بهینهسازی سرعت** — OmniRoute برای هر درخواست، سریعترین ارائهدهنده را انتخاب میکند
-- **بهینهسازی کیفیت** — OmniRoute برای هر وظیفه، بهترین ارائهدهنده را انتخاب میکند
+- **جایگزینی خودکار** — اگر یک ارائهدهنده با مشکل مواجه شود، Pusula ارائهدهنده بعدی را امتحان میکند
+- **بهینهسازی هزینه** — Pusula برای هر درخواست، ارزانترین ارائهدهنده را انتخاب میکند
+- **بهینهسازی سرعت** — Pusula برای هر درخواست، سریعترین ارائهدهنده را انتخاب میکند
+- **بهینهسازی کیفیت** — Pusula برای هر وظیفه، بهترین ارائهدهنده را انتخاب میکند
 
 ### پیکربندی پیشنهادی
 
@@ -249,7 +249,7 @@ OmniRoute با **چندین ارائهدهنده** بهترین عملکرد ر�
 2. **یک ارائهدهنده سریع** (Groq، Cerebras) — برای پاسخهای سریع
 3. **یک ارائهدهنده باکیفیت** (OpenAI، Anthropic، Google) — برای وظایف پیچیده
 
-سپس از `model: "auto"` استفاده کنید تا OmniRoute بهطور خودکار بهترین گزینه را برای هر درخواست انتخاب کند.
+سپس از `model: "auto"` استفاده کنید تا Pusula بهطور خودکار بهترین گزینه را برای هر درخواست انتخاب کند.
 
 ---
 
@@ -258,40 +258,40 @@ OmniRoute با **چندین ارائهدهنده** بهترین عملکرد ر�
 ### OpenAI
 
 1. دریافت کلید API: https://platform.openai.com/api-keys
-2. در OmniRoute: ارائهدهندگان → افزودن ارائهدهنده → OpenAI
+2. در Pusula: ارائهدهندگان → افزودن ارائهدهنده → OpenAI
 3. کلید API را جایگذاری کنید → اتصال
 
 ### Anthropic
 
 1. دریافت کلید API: https://console.anthropic.com/
-2. در OmniRoute: ارائهدهندگان → افزودن ارائهدهنده → Anthropic
+2. در Pusula: ارائهدهندگان → افزودن ارائهدهنده → Anthropic
 3. کلید API را جایگذاری کنید → اتصال
 
 ### Google (Gemini)
 
 1. دریافت کلید API: https://aistudio.google.com/apikey
-2. در OmniRoute: ارائهدهندگان → افزودن ارائهدهنده → Gemini
+2. در Pusula: ارائهدهندگان → افزودن ارائهدهنده → Gemini
 3. کلید API را جایگذاری کنید → اتصال
 
 ### DeepSeek
 
 1. دریافت کلید API: https://platform.deepseek.com/
-2. در OmniRoute: ارائهدهندگان → افزودن ارائهدهنده → DeepSeek
+2. در Pusula: ارائهدهندگان → افزودن ارائهدهنده → DeepSeek
 3. کلید API را جایگذاری کنید → اتصال
 
 ### Groq
 
 1. دریافت کلید API: https://console.groq.com/
-2. در OmniRoute: ارائهدهندگان → افزودن ارائهدهنده → Groq
+2. در Pusula: ارائهدهندگان → افزودن ارائهدهنده → Groq
 3. کلید API را جایگذاری کنید → اتصال
 
 ---
 
 ## پرسشهای متداول
 
-### «آیا برای استفاده از OmniRoute باید هزینهای پرداخت کنم؟»
+### «آیا برای استفاده از Pusula باید هزینهای پرداخت کنم؟»
 
-**خیر!** OmniRoute رایگان و متنباز است. میتوانید بدون پرداخت هیچ هزینهای از ارائهدهندگان رایگان (Kiro، OpenCode Free، Pollinations) استفاده کنید. تنها در صورتی هزینه پرداخت میکنید که ارائهدهندگان پولی را انتخاب کنید.
+**خیر!** Pusula رایگان و متنباز است. میتوانید بدون پرداخت هیچ هزینهای از ارائهدهندگان رایگان (Kiro، OpenCode Free، Pollinations) استفاده کنید. تنها در صورتی هزینه پرداخت میکنید که ارائهدهندگان پولی را انتخاب کنید.
 
 ### «کار را با کدام ارائهدهنده شروع کنم؟»
 
@@ -299,11 +299,11 @@ OmniRoute با **چندین ارائهدهنده** بهترین عملکرد ر�
 
 ### «آیا میتوانم همزمان از چند ارائهدهنده استفاده کنم؟»
 
-**بله!** هدف اصلی OmniRoute همین است. چندین ارائهدهنده را متصل کنید و از `model: "auto"` استفاده کنید تا OmniRoute بهترین گزینه را برای هر درخواست انتخاب کند.
+**بله!** هدف اصلی Pusula همین است. چندین ارائهدهنده را متصل کنید و از `model: "auto"` استفاده کنید تا Pusula بهترین گزینه را برای هر درخواست انتخاب کند.
 
 ### «اگر یک ارائهدهنده از دسترس خارج شود چه اتفاقی میافتد؟»
 
-OmniRoute بهطور خودکار ارائهدهندگان ناموفق را نادیده میگیرد و ارائهدهنده بعدی را امتحان میکند. لازم نیست کاری انجام دهید.
+Pusula بهطور خودکار ارائهدهندگان ناموفق را نادیده میگیرد و ارائهدهنده بعدی را امتحان میکند. لازم نیست کاری انجام دهید.
 
 ### «چگونه اتصال یک ارائهدهنده را قطع کنم؟»
 
@@ -311,13 +311,13 @@ OmniRoute بهطور خودکار ارائهدهندگان ناموفق را ن�
 
 ### «آیا میتوانم از کلیدهای API فعلی خود استفاده کنم؟»
 
-**بله!** اگر از قبل برای OpenAI، Anthropic، Google و غیره کلید API دارید، میتوانید از آنها در OmniRoute استفاده کنید. کافی است هنگام اتصال ارائهدهنده، آنها را جایگذاری کنید.
+**بله!** اگر از قبل برای OpenAI، Anthropic، Google و غیره کلید API دارید، میتوانید از آنها در Pusula استفاده کنید. کافی است هنگام اتصال ارائهدهنده، آنها را جایگذاری کنید.
 
 ---
 
 ## مرحله بعد چیست؟
 
-- **[راهنمای Auto-Combo](./AUTO-COMBO-GUIDE.md)** — اجازه دهید OmniRoute بهترین هوش مصنوعی را برای شما انتخاب کند
+- **[راهنمای Auto-Combo](./AUTO-COMBO-GUIDE.md)** — اجازه دهید Pusula بهترین هوش مصنوعی را برای شما انتخاب کند
 - **[راهنمای سطوح رایگان](./FREE-TIERS-GUIDE.md)** — بدون کارت اعتباری به هوش مصنوعی رایگان دسترسی پیدا کنید
 - **[عیبیابی](../guides/TROUBLESHOOTING.md)** — مشکلات رایج را برطرف کنید
 - **[مرجع ارائهدهندگان](../reference/PROVIDER_REFERENCE.md)** — فهرست کامل ۲۲۶ ارائهدهنده

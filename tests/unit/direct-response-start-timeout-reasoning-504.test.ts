@@ -2,7 +2,7 @@
 // "fix(network): bound direct-path response-start timeout".
 //
 // Root cause: directResponseStartTimeout resolved a FLAT timeout
-// (OMNIROUTE_DIRECT_HEADERS_TIMEOUT_MS or 30s default) with zero
+// (PUSULA_DIRECT_HEADERS_TIMEOUT_MS or 30s default) with zero
 // awareness of reasoning effort. GLM-5.2 reasoning.effort=max has ~78s
 // TTFB; the stream-readiness layer already allows 180s for reasoning
 // models (streamReadinessPolicy claude_format_heavy_reasoning /
@@ -35,21 +35,21 @@ const NON_REASONING_BODY = JSON.stringify({
 
 test("flat default is 30s when no body and no env override", () => {
   assert.equal(
-    resolveDirectHeadersTimeoutMs({ OMNIROUTE_DIRECT_HEADERS_TIMEOUT_MS: undefined }),
+    resolveDirectHeadersTimeoutMs({ PUSULA_DIRECT_HEADERS_TIMEOUT_MS: undefined }),
     30_000
   );
 });
 
 test("env override is honored when no reasoning body is present", () => {
   assert.equal(
-    resolveDirectHeadersTimeoutMs({ OMNIROUTE_DIRECT_HEADERS_TIMEOUT_MS: "90000" }),
+    resolveDirectHeadersTimeoutMs({ PUSULA_DIRECT_HEADERS_TIMEOUT_MS: "90000" }),
     90_000
   );
 });
 
 test("reasoning_effort=high body raises TTFB budget to the readiness ceiling (180s)", () => {
   const got = resolveDirectHeadersTimeoutMs(
-    { OMNIROUTE_DIRECT_HEADERS_TIMEOUT_MS: undefined },
+    { PUSULA_DIRECT_HEADERS_TIMEOUT_MS: undefined },
     REASONING_HIGH_BODY
   );
   assert.equal(got, 180_000, "high reasoning must align with the 180s readiness ceiling");
@@ -57,7 +57,7 @@ test("reasoning_effort=high body raises TTFB budget to the readiness ceiling (18
 
 test("reasoning.effort=max nested body raises TTFB budget to the readiness ceiling (180s)", () => {
   const got = resolveDirectHeadersTimeoutMs(
-    { OMNIROUTE_DIRECT_HEADERS_TIMEOUT_MS: undefined },
+    { PUSULA_DIRECT_HEADERS_TIMEOUT_MS: undefined },
     REASONING_MAX_BODY
   );
   assert.equal(got, 180_000, "max reasoning must align with the 180s readiness ceiling");
@@ -66,7 +66,7 @@ test("reasoning.effort=max nested body raises TTFB budget to the readiness ceili
 test("reasoning body never yields a budget BELOW an explicit env override above the ceiling", () => {
   // Operator override is a floor; reasoning awareness only raises, never lowers.
   const got = resolveDirectHeadersTimeoutMs(
-    { OMNIROUTE_DIRECT_HEADERS_TIMEOUT_MS: "240000" },
+    { PUSULA_DIRECT_HEADERS_TIMEOUT_MS: "240000" },
     REASONING_HIGH_BODY
   );
   assert.equal(got, 240_000, "explicit override above ceiling is preserved");
@@ -74,7 +74,7 @@ test("reasoning body never yields a budget BELOW an explicit env override above 
 
 test("non-reasoning body keeps the flat default (zombie-socket detection preserved)", () => {
   const got = resolveDirectHeadersTimeoutMs(
-    { OMNIROUTE_DIRECT_HEADERS_TIMEOUT_MS: undefined },
+    { PUSULA_DIRECT_HEADERS_TIMEOUT_MS: undefined },
     NON_REASONING_BODY
   );
   assert.equal(got, 30_000, "non-reasoning requests keep 30s to detect zombie sockets");
@@ -82,7 +82,7 @@ test("non-reasoning body keeps the flat default (zombie-socket detection preserv
 
 test("non-reasoning body keeps the env override (no reasoning bump applied)", () => {
   const got = resolveDirectHeadersTimeoutMs(
-    { OMNIROUTE_DIRECT_HEADERS_TIMEOUT_MS: "90000" },
+    { PUSULA_DIRECT_HEADERS_TIMEOUT_MS: "90000" },
     NON_REASONING_BODY
   );
   assert.equal(got, 90_000);

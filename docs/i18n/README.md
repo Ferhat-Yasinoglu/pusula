@@ -1,4 +1,4 @@
-# 🌐 Multilingual Documentation — OmniRoute
+# 🌐 Multilingual Documentation — Pusula
 
 Translations of documentation into 66 languages; together with the English source, the UI supports 67 locales. Code blocks remain in English.
 

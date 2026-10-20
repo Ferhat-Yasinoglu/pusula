@@ -143,37 +143,37 @@ describe("useDisplayBaseUrl", () => {
     );
   });
 
-  it("appends OMNIROUTE basePath when resolving a public browser origin", () => {
+  it("appends PUSULA basePath when resolving a public browser origin", () => {
     expect(
       resolveDisplayBaseUrl(
         "https://old.example.com",
         "https://api.example.com/",
-        "/omniroute/dashboard",
-        "/omniroute"
+        "/pusula/dashboard",
+        "/pusula"
       )
-    ).toBe("https://api.example.com/omniroute");
+    ).toBe("https://api.example.com/pusula");
   });
 
   it("keeps a configured public URL that already includes the basePath", () => {
     expect(
       resolveDisplayBaseUrl(
-        "https://api.example.com/omniroute",
+        "https://api.example.com/pusula",
         "https://api.example.com",
-        "/omniroute/dashboard",
-        "/omniroute"
+        "/pusula/dashboard",
+        "/pusula"
       )
-    ).toBe("https://api.example.com/omniroute");
+    ).toBe("https://api.example.com/pusula");
   });
 
   it("derives basePath from NEXT_PUBLIC_BASE_URL when env basePath is unset", () => {
     expect(
-      resolveDisplayBaseUrl("https://api.example.com/omniroute", "https://api.example.com", "/")
-    ).toBe("https://api.example.com/omniroute");
+      resolveDisplayBaseUrl("https://api.example.com/pusula", "https://api.example.com", "/")
+    ).toBe("https://api.example.com/pusula");
   });
 
   it("normalizes basePath values without a leading slash", () => {
-    expect(normalizeBasePath("omniroute")).toBe("/omniroute");
-    expect(normalizeBasePath("/omniroute/")).toBe("/omniroute");
+    expect(normalizeBasePath("pusula")).toBe("/pusula");
+    expect(normalizeBasePath("/pusula/")).toBe("/pusula");
     expect(normalizeBasePath("")).toBe("");
     expect(normalizeBasePath("/")).toBe("");
   });

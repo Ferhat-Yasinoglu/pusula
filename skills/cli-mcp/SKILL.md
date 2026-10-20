@@ -11,8 +11,8 @@ Inspect the MCP server status, list registered tools and scopes, run tool invoca
 ## Quick install
 
 ```bash
-npm install -g omniroute   # or: npx omniroute
-omniroute --version
+npm install -g pusula   # or: npx pusula
+pusula --version
 ```
 
 ## Subcommands
@@ -22,7 +22,7 @@ omniroute --version
 **Example:**
 
 ```bash
-omniroute mcp
+pusula mcp
 ```
 
 ### `mcp status`
@@ -36,7 +36,7 @@ Show MCP server status
 **Example:**
 
 ```bash
-omniroute mcp status
+pusula mcp status
 ```
 
 ### `mcp restart`
@@ -46,7 +46,7 @@ Restart the MCP server
 **Example:**
 
 ```bash
-omniroute mcp restart
+pusula mcp restart
 ```
 
 ### `mcp enable`
@@ -58,7 +58,7 @@ omniroute mcp restart
 **Example:**
 
 ```bash
-omniroute mcp enable
+pusula mcp enable
 ```
 
 ### `mcp disable`
@@ -66,7 +66,7 @@ omniroute mcp enable
 **Example:**
 
 ```bash
-omniroute mcp disable
+pusula mcp disable
 ```
 
 ### `mcp call <tool> [argsJson]`
@@ -81,7 +81,7 @@ omniroute mcp disable
 **Example:**
 
 ```bash
-omniroute mcp call <tool> [argsJson]
+pusula mcp call <tool> [argsJson]
 ```
 
 ### `mcp scopes`
@@ -93,5 +93,5 @@ omniroute mcp call <tool> [argsJson]
 **Example:**
 
 ```bash
-omniroute mcp scopes
+pusula mcp scopes
 ```

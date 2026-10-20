@@ -75,7 +75,7 @@
 
 ```bash
 curl -X POST http://localhost:20128/api/skills/collect/chaos \
-  -H "Authorization: Bearer $OMNIROUTE_API_KEY" \
+  -H "Authorization: Bearer $PUSULA_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"task":"Compare approaches to X","mode":"parallel"}'
 ```

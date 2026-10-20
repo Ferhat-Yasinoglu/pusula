@@ -8,7 +8,7 @@ let tmpDir: string;
 let origAppData: string | undefined;
 
 test.before(() => {
-  tmpDir = mkdtempSync(join(tmpdir(), "omniroute-autostart-win-"));
+  tmpDir = mkdtempSync(join(tmpdir(), "pusula-autostart-win-"));
   origAppData = process.env.APPDATA;
   process.env.APPDATA = tmpDir;
 });
@@ -34,7 +34,7 @@ test("Windows enable/disable writes and removes VBS in Startup folder", async ()
     await import("../../../bin/cli/tray/autostart.mjs");
 
   const startupDir = join(tmpDir, "Microsoft", "Windows", "Start Menu", "Programs", "Startup");
-  const vbsPath = join(startupDir, "OmniRoute.vbs");
+  const vbsPath = join(startupDir, "Pusula.vbs");
 
   // Should start clean.
   assert.equal(existsSync(vbsPath), false);
@@ -48,7 +48,7 @@ test("Windows enable/disable writes and removes VBS in Startup folder", async ()
   const vbs = readFileSync(vbsPath, "utf8");
   assert.match(vbs, /WScript\.Shell/, "creates WScript.Shell COM object");
   assert.match(vbs, /WshShell\.Run/, "calls Run method");
-  assert.match(vbs, /serve --no-open --tray/, "launches OmniRoute tray server");
+  assert.match(vbs, /serve --no-open --tray/, "launches Pusula tray server");
   assert.match(vbs, /, 0, False/, "uses SW_HIDE (0) and no wait");
   assert.equal(vbs.endsWith("\n"), true, "trailing newline");
 
@@ -78,10 +78,10 @@ test("Windows path resolution skips the POSIX command lookup", () => {
     /if \(process\.platform !== "win32"\) \{([\s\S]*?)\n  \}/
   );
   assert.ok(nonWindowsGuard, "resolveCliPath should have a non-Windows guard");
-  assert.match(nonWindowsGuard[1], /command -v omniroute/);
+  assert.match(nonWindowsGuard[1], /command -v pusula/);
   assert.doesNotMatch(
     resolveCliPath[1].replace(nonWindowsGuard[0], ""),
-    /command -v omniroute/,
+    /command -v pusula/,
     "the POSIX PATH probe must only appear inside the non-Windows guard"
   );
 });

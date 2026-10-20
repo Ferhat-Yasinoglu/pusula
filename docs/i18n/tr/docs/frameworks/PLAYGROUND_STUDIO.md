@@ -107,7 +107,7 @@ geçiş yapıldığında yapılandırma durumu korunur.
 ## Kodu Dışa Aktarma Modalı
 
 `ExportCodeModal.tsx`, mevcut `PlaygroundState` üzerinden curl / Python / TypeScript kod parçacıkları
-oluşturmak için `codeExport.ts` kullanır. API anahtarı yer tutucusu her zaman `$OMNIROUTE_API_KEY` değeridir (D11).
+oluşturmak için `codeExport.ts` kullanır. API anahtarı yer tutucusu her zaman `$PUSULA_API_KEY` değeridir (D11).
 
 ---
 
@@ -197,7 +197,7 @@ Kimlik doğrulama: isteğe bağlı (`REQUIRE_API_KEY`). Hatalar `buildErrorBody(
 | Metrikler `null` TTFT gösteriyor                    | İlk parça işleyicisi bağlanmamış    | SSE okuyucu döngüsünde `useStreamMetrics.onFirstChunk()` çağrıldığını kontrol edin                                   |
 | Ön ayar kalıcı olmuyor                              | DB geçişi çalıştırılmamış           | `npm run db:migrate` komutunu çalıştırın veya sunucuyu yeniden başlatın (geçiş, başlangıçta otomatik olarak çalışır) |
 | İstemi iyileştirme işlemi 502 döndürüyor            | Config bölümünde model ayarlanmamış | İyileştirme işleminden önce kullanıcı Config paneline bir model adı girmelidir                                       |
-| Dışa aktarılan kod `MISSING_API_KEY` gösteriyor     | Yer tutucu eklenmemiş               | `codeExport.ts` her zaman `API_KEY_PLACEHOLDER = "$OMNIROUTE_API_KEY"` kullanır                                      |
+| Dışa aktarılan kod `MISSING_API_KEY` gösteriyor     | Yer tutucu eklenmemiş               | `codeExport.ts` her zaman `API_KEY_PLACEHOLDER = "$PUSULA_API_KEY"` kullanır                                      |
 
 ---
 

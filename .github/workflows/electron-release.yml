@@ -104,7 +104,7 @@ jobs:
         env:
           JWT_SECRET: ci-build-secret-with-sufficient-length-for-validation
           NODE_OPTIONS: "--max_old_space_size=6144"
-          OMNIROUTE_USE_TURBOPACK: "0"
+          PUSULA_USE_TURBOPACK: "0"
         run: npm run build
 
       - name: Pack standalone bundle
@@ -198,8 +198,8 @@ jobs:
           npm install --no-save --ignore-scripts --force --legacy-peer-deps \
             @wreq-js/binding-linux-arm64-gnu@3.2.0
           git diff --exit-code -- package.json package-lock.json
-          mkdir -p "$RUNNER_TEMP/omniroute-wreq-verify"
-          DATA_DIR="$RUNNER_TEMP/omniroute-wreq-verify" node --import tsx/esm --test \
+          mkdir -p "$RUNNER_TEMP/pusula-wreq-verify"
+          DATA_DIR="$RUNNER_TEMP/pusula-wreq-verify" node --import tsx/esm --test \
             --test-name-pattern='wreq-js 3.2 manifest pins all nine' \
             tests/unit/wreq-native-manifest.test.ts
 
@@ -232,7 +232,7 @@ jobs:
           # the project's documented escape hatch for RAM-constrained machines
           # (docs/reference/ENVIRONMENT.md, #6409) and is the same remedy already
           # applied to nightly-compat's Node 26 build (#8090).
-          OMNIROUTE_USE_TURBOPACK: ${{ matrix.platform == 'linux' && '0' || '1' }}
+          PUSULA_USE_TURBOPACK: ${{ matrix.platform == 'linux' && '0' || '1' }}
         run: npm run build
 
       - name: Download shared web bundle
@@ -335,12 +335,12 @@ jobs:
               [ -f "$file" ] && cp "$file" ../../release-assets/
             done
           fi
-          # Windows: also copy portable standalone exe as OmniRoute.exe
+          # Windows: also copy portable standalone exe as Pusula.exe
           if [ "${{ matrix.platform }}" = "windows" ]; then
             for file in *.exe; do
               # Skip the NSIS installer (contains "Setup")
               case "$file" in *Setup*) continue ;; esac
-              [ -f "$file" ] && cp "$file" "../../release-assets/OmniRoute.exe" && break
+              [ -f "$file" ] && cp "$file" "../../release-assets/Pusula.exe" && break
             done
           fi
           # electron-updater manifests (latest.yml / latest-mac.yml / latest-linux.yml)
@@ -418,12 +418,12 @@ jobs:
           VERSION: ${{ needs.validate.outputs.version }}
         run: |
           # Create source code archives (excluding dev dependencies and build artifacts)
-          export TARBALL="OmniRoute-${VERSION}.source.tar.gz"
-          export ZIPBALL="OmniRoute-${VERSION}.source.zip"
+          export TARBALL="Pusula-${VERSION}.source.tar.gz"
+          export ZIPBALL="Pusula-${VERSION}.source.zip"
 
           # Use git archive for clean source export
-          git archive --format=tar.gz --prefix="OmniRoute-${VERSION}/" HEAD -o "release-assets/$TARBALL"
-          git archive --format=zip --prefix="OmniRoute-${VERSION}/" HEAD -o "release-assets/$ZIPBALL"
+          git archive --format=tar.gz --prefix="Pusula-${VERSION}/" HEAD -o "release-assets/$TARBALL"
+          git archive --format=zip --prefix="Pusula-${VERSION}/" HEAD -o "release-assets/$ZIPBALL"
 
           echo "✓ Created source archives:"
           ls -lh "release-assets/$TARBALL" "release-assets/$ZIPBALL"

@@ -35,9 +35,9 @@ test("registerGenericQuotaFetchers wires a preflight quota fetcher for ollama-cl
 
 test("getUsageForProvider returns helpful message when Ollama Cloud has no usage cookie", async () => {
   const originalCookie = process.env.OLLAMA_USAGE_COOKIE;
-  const originalOmniCookie = process.env.OMNIROUTE_OLLAMA_USAGE_COOKIE;
+  const originalOmniCookie = process.env.PUSULA_OLLAMA_USAGE_COOKIE;
   delete process.env.OLLAMA_USAGE_COOKIE;
-  delete process.env.OMNIROUTE_OLLAMA_USAGE_COOKIE;
+  delete process.env.PUSULA_OLLAMA_USAGE_COOKIE;
 
   let called = false;
   const originalFetch = globalThis.fetch;
@@ -60,17 +60,17 @@ test("getUsageForProvider returns helpful message when Ollama Cloud has no usage
     globalThis.fetch = originalFetch;
     if (originalCookie === undefined) delete process.env.OLLAMA_USAGE_COOKIE;
     else process.env.OLLAMA_USAGE_COOKIE = originalCookie;
-    if (originalOmniCookie === undefined) delete process.env.OMNIROUTE_OLLAMA_USAGE_COOKIE;
-    else process.env.OMNIROUTE_OLLAMA_USAGE_COOKIE = originalOmniCookie;
+    if (originalOmniCookie === undefined) delete process.env.PUSULA_OLLAMA_USAGE_COOKIE;
+    else process.env.PUSULA_OLLAMA_USAGE_COOKIE = originalOmniCookie;
   }
 });
 
 test("getUsageForProvider scrapes Ollama Cloud settings quota", async () => {
   const originalFetch = globalThis.fetch;
   const originalCookie = process.env.OLLAMA_USAGE_COOKIE;
-  const originalOmniCookie = process.env.OMNIROUTE_OLLAMA_USAGE_COOKIE;
+  const originalOmniCookie = process.env.PUSULA_OLLAMA_USAGE_COOKIE;
   delete process.env.OLLAMA_USAGE_COOKIE;
-  process.env.OMNIROUTE_OLLAMA_USAGE_COOKIE = "__Secure-session=test-cookie";
+  process.env.PUSULA_OLLAMA_USAGE_COOKIE = "__Secure-session=test-cookie";
 
   let requestUrl = "";
   let requestHeaders: Headers | null = null;
@@ -115,17 +115,17 @@ test("getUsageForProvider scrapes Ollama Cloud settings quota", async () => {
     globalThis.fetch = originalFetch;
     if (originalCookie === undefined) delete process.env.OLLAMA_USAGE_COOKIE;
     else process.env.OLLAMA_USAGE_COOKIE = originalCookie;
-    if (originalOmniCookie === undefined) delete process.env.OMNIROUTE_OLLAMA_USAGE_COOKIE;
-    else process.env.OMNIROUTE_OLLAMA_USAGE_COOKIE = originalOmniCookie;
+    if (originalOmniCookie === undefined) delete process.env.PUSULA_OLLAMA_USAGE_COOKIE;
+    else process.env.PUSULA_OLLAMA_USAGE_COOKIE = originalOmniCookie;
   }
 });
 
 test("getUsageForProvider keeps Ollama Cloud reset times aligned to usage tracks", async () => {
   const originalFetch = globalThis.fetch;
   const originalCookie = process.env.OLLAMA_USAGE_COOKIE;
-  const originalOmniCookie = process.env.OMNIROUTE_OLLAMA_USAGE_COOKIE;
+  const originalOmniCookie = process.env.PUSULA_OLLAMA_USAGE_COOKIE;
   delete process.env.OLLAMA_USAGE_COOKIE;
-  process.env.OMNIROUTE_OLLAMA_USAGE_COOKIE = "test-cookie";
+  process.env.PUSULA_OLLAMA_USAGE_COOKIE = "test-cookie";
 
   globalThis.fetch = async () =>
     new Response(
@@ -159,8 +159,8 @@ test("getUsageForProvider keeps Ollama Cloud reset times aligned to usage tracks
     globalThis.fetch = originalFetch;
     if (originalCookie === undefined) delete process.env.OLLAMA_USAGE_COOKIE;
     else process.env.OLLAMA_USAGE_COOKIE = originalCookie;
-    if (originalOmniCookie === undefined) delete process.env.OMNIROUTE_OLLAMA_USAGE_COOKIE;
-    else process.env.OMNIROUTE_OLLAMA_USAGE_COOKIE = originalOmniCookie;
+    if (originalOmniCookie === undefined) delete process.env.PUSULA_OLLAMA_USAGE_COOKIE;
+    else process.env.PUSULA_OLLAMA_USAGE_COOKIE = originalOmniCookie;
   }
 });
 
@@ -193,9 +193,9 @@ test("getUsageForProvider reports expired Ollama Cloud cookies on redirect", asy
 test("getUsageForProvider parses the current $X-of-$Y aria-label with nested width style (#12749)", async () => {
   const originalFetch = globalThis.fetch;
   const originalCookie = process.env.OLLAMA_USAGE_COOKIE;
-  const originalOmniCookie = process.env.OMNIROUTE_OLLAMA_USAGE_COOKIE;
+  const originalOmniCookie = process.env.PUSULA_OLLAMA_USAGE_COOKIE;
   delete process.env.OLLAMA_USAGE_COOKIE;
-  process.env.OMNIROUTE_OLLAMA_USAGE_COOKIE = "__Secure-session=test-cookie";
+  process.env.PUSULA_OLLAMA_USAGE_COOKIE = "__Secure-session=test-cookie";
 
   globalThis.fetch = async () =>
     new Response(
@@ -225,17 +225,17 @@ test("getUsageForProvider parses the current $X-of-$Y aria-label with nested wid
     globalThis.fetch = originalFetch;
     if (originalCookie === undefined) delete process.env.OLLAMA_USAGE_COOKIE;
     else process.env.OLLAMA_USAGE_COOKIE = originalCookie;
-    if (originalOmniCookie === undefined) delete process.env.OMNIROUTE_OLLAMA_USAGE_COOKIE;
-    else process.env.OMNIROUTE_OLLAMA_USAGE_COOKIE = originalOmniCookie;
+    if (originalOmniCookie === undefined) delete process.env.PUSULA_OLLAMA_USAGE_COOKIE;
+    else process.env.PUSULA_OLLAMA_USAGE_COOKIE = originalOmniCookie;
   }
 });
 
 test("getUsageForProvider still finds width style on a nested child when no aria-label percent exists (#12749)", async () => {
   const originalFetch = globalThis.fetch;
   const originalCookie = process.env.OLLAMA_USAGE_COOKIE;
-  const originalOmniCookie = process.env.OMNIROUTE_OLLAMA_USAGE_COOKIE;
+  const originalOmniCookie = process.env.PUSULA_OLLAMA_USAGE_COOKIE;
   delete process.env.OLLAMA_USAGE_COOKIE;
-  process.env.OMNIROUTE_OLLAMA_USAGE_COOKIE = "__Secure-session=test-cookie";
+  process.env.PUSULA_OLLAMA_USAGE_COOKIE = "__Secure-session=test-cookie";
 
   globalThis.fetch = async () =>
     new Response(
@@ -261,7 +261,7 @@ test("getUsageForProvider still finds width style on a nested child when no aria
     globalThis.fetch = originalFetch;
     if (originalCookie === undefined) delete process.env.OLLAMA_USAGE_COOKIE;
     else process.env.OLLAMA_USAGE_COOKIE = originalCookie;
-    if (originalOmniCookie === undefined) delete process.env.OMNIROUTE_OLLAMA_USAGE_COOKIE;
-    else process.env.OMNIROUTE_OLLAMA_USAGE_COOKIE = originalOmniCookie;
+    if (originalOmniCookie === undefined) delete process.env.PUSULA_OLLAMA_USAGE_COOKIE;
+    else process.env.PUSULA_OLLAMA_USAGE_COOKIE = originalOmniCookie;
   }
 });

@@ -21,14 +21,14 @@ const gracefulShutdownUrl = pathToFileURL(join(process.cwd(), "src/lib/gracefulS
 // the *ordering* contract the fix depends on: process.exit(0) must not fire in the same
 // microtask turn the cleanup promise resolves in, it must be deferred to a later macrotask.
 test("graceful shutdown defers process.exit(0) to a macrotask after cleanup resolves (#13306)", async () => {
-  const previousState = globalThis.__omnirouteShutdown;
-  const previousRequestShutdown = globalThis.__omnirouteRequestShutdown;
-  const previousCustomServerOwner = globalThis.__omnirouteCustomServerOwnsShutdown;
+  const previousState = globalThis.__pusulaShutdown;
+  const previousRequestShutdown = globalThis.__pusulaRequestShutdown;
+  const previousCustomServerOwner = globalThis.__pusulaCustomServerOwnsShutdown;
   const previousExit = process.exit;
   const listenersBefore = process.listeners("SIGTERM");
 
-  delete globalThis.__omnirouteShutdown;
-  delete globalThis.__omnirouteCustomServerOwnsShutdown;
+  delete globalThis.__pusulaShutdown;
+  delete globalThis.__pusulaCustomServerOwnsShutdown;
 
   const exitCalls: Array<number | undefined> = [];
   process.exit = ((code?: number) => {
@@ -40,7 +40,7 @@ test("graceful shutdown defers process.exit(0) to a macrotask after cleanup reso
   const cleanupPromise = new Promise<void>((resolve) => {
     resolveCleanup = resolve;
   });
-  globalThis.__omnirouteRequestShutdown = () => cleanupPromise;
+  globalThis.__pusulaRequestShutdown = () => cleanupPromise;
 
   try {
     const shutdownModule = (await import(
@@ -77,14 +77,14 @@ test("graceful shutdown defers process.exit(0) to a macrotask after cleanup reso
     for (const listener of process.listeners("SIGTERM")) {
       if (!listenersBefore.includes(listener)) process.removeListener("SIGTERM", listener);
     }
-    if (previousState === undefined) delete globalThis.__omnirouteShutdown;
-    else globalThis.__omnirouteShutdown = previousState;
-    if (previousRequestShutdown === undefined) delete globalThis.__omnirouteRequestShutdown;
-    else globalThis.__omnirouteRequestShutdown = previousRequestShutdown;
+    if (previousState === undefined) delete globalThis.__pusulaShutdown;
+    else globalThis.__pusulaShutdown = previousState;
+    if (previousRequestShutdown === undefined) delete globalThis.__pusulaRequestShutdown;
+    else globalThis.__pusulaRequestShutdown = previousRequestShutdown;
     if (previousCustomServerOwner === undefined) {
-      delete globalThis.__omnirouteCustomServerOwnsShutdown;
+      delete globalThis.__pusulaCustomServerOwnsShutdown;
     } else {
-      globalThis.__omnirouteCustomServerOwnsShutdown = previousCustomServerOwner;
+      globalThis.__pusulaCustomServerOwnsShutdown = previousCustomServerOwner;
     }
   }
 });

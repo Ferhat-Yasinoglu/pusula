@@ -4,12 +4,12 @@
 
 ---
 
-OmniRoute bietet **zwei** Möglichkeiten, OpenAI Codex zu verwenden:
+Pusula bietet **zwei** Möglichkeiten, OpenAI Codex zu verwenden:
 
 | Anbieter               | Art der Kommunikation mit OpenAI                                                                                                                                                                               | Nutzungseinschränkung                                                                    |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | **`codex`**            | Leitet dein ChatGPT-/OpenAI-OAuth-Token direkt an die Responses API weiter                                                                                                                                     | **Ja** — die offizielle Sitzung ist nicht für die Nutzung über Proxys/Router autorisiert |
-| **`codex-app-server`** | Steuert den **CLI-eigenen `codex app-server` von Codex** über JSON-RPC/WebSocket; die CLI verwaltet und aktualisiert ihr OAuth (`~/.codex/auth.json`) selbst, genau wie bei einer interaktiven `codex`-Sitzung | **Nein** — OmniRoute leitet niemals ein Token an die API weiter                          |
+| **`codex-app-server`** | Steuert den **CLI-eigenen `codex app-server` von Codex** über JSON-RPC/WebSocket; die CLI verwaltet und aktualisiert ihr OAuth (`~/.codex/auth.json`) selbst, genau wie bei einer interaktiven `codex`-Sitzung | **Nein** — Pusula leitet niemals ein Token an die API weiter                          |
 
 Da `codex-app-server` niemals ein Token weiterleitet, gilt für ihn die
 Nutzungseinschränkung bezüglich der Sitzungsweiterleitung nicht. Er erfordert
@@ -21,7 +21,7 @@ ist**, und diese CLI muss **angemeldet** sein.
 ## 1. Architektur
 
 ```
-┌─ OmniRoute-App ──────────────────┐        ┌─ codex-app-server-Sidecar ─────────┐
+┌─ Pusula-App ──────────────────┐        ┌─ codex-app-server-Sidecar ─────────┐
 │  CodexAppServerExecutor          │  WS    │  codex app-server                   │
 │  ws://codex-app-server:1456 ─────┼───────▶│  --listen ws://0.0.0.0:1456         │
 │  (+ Berechtigungstoken)           │  JSON  │  --ws-auth capability-token         │
@@ -38,7 +38,7 @@ ist**, und diese CLI muss **angemeldet** sein.
 - Der Sidecar lauscht **nur** im internen Compose-Netzwerk
   (`ws://codex-app-server:1456`) und ist durch ein Berechtigungstoken geschützt.
   Er wird **niemals** für den Host oder das Internet veröffentlicht.
-- Die Codex CLI ist in `omniroute:base` integriert, sodass bei Verwendung des
+- Die Codex CLI ist in `pusula:base` integriert, sodass bei Verwendung des
   Sidecars keine Codex-Installation auf dem Host oder dem Rechner des Benutzers
   erforderlich ist.
 
@@ -52,7 +52,7 @@ docker compose --profile base --profile codex-app-server up -d
 
 Der Sidecar erstellt beim ersten Start sein WS-Berechtigungstoken (im gemeinsam
 genutzten Volume `codex-appserver-token`), und die App liest dasselbe Token über
-`OMNIROUTE_CODEX_APPSERVER_WS_TOKEN_FILE`. Eine manuelle Token-Konfiguration ist
+`PUSULA_CODEX_APPSERVER_WS_TOKEN_FILE`. Eine manuelle Token-Konfiguration ist
 nicht erforderlich.
 
 ## 3. Verbinden + anmelden
@@ -84,8 +84,8 @@ veraltet ist (es wird immer eine Sicherung erstellt).
 - **Öffentlicher Benutzer ohne lokal installiertes Codex** — irrelevant: Der
   Sidecar enthält die CLI. Der Benutzer authentifiziert sich lediglich über das
   Dashboard.
-- **Bare-Metal-OmniRoute (kein Sidecar, Codex auf dem Host)** — setze
-  `OMNIROUTE_CODEX_APPSERVER_WS` auf deinen eigenen `codex app-server` und stelle
+- **Bare-Metal-Pusula (kein Sidecar, Codex auf dem Host)** — setze
+  `PUSULA_CODEX_APPSERVER_WS` auf deinen eigenen `codex app-server` und stelle
   sicher, dass Codex auf dem Host angemeldet ist; der Hinweis „Codex ist nicht
   installiert“ erscheint, wenn die Binärdatei fehlt.
 

@@ -112,15 +112,15 @@ RUN --mount=type=cache,id=s/92ca8a61-c1ba-421f-a389-d48ac7258c2d-npm-cache,targe
   && node -e "const wreq=require('wreq-js'); if(typeof wreq.createTransport!=='function') process.exit(1)"
 
 # Bundler for the image build. The DOCKERFILE default is webpack
-# (OMNIROUTE_USE_TURBOPACK=0), deliberately different from the repo's code
+# (PUSULA_USE_TURBOPACK=0), deliberately different from the repo's code
 # default for local dev and non-Docker builds (Turbopack, =1 — read by
 # scripts/dev/run-next.mjs and scripts/build/build-next-isolated.mjs). A bare
 # `docker build .` with no build args is what one-click hosts (Railway and
 # similar) and ad-hoc self-hosters run, usually on memory-capped builders, and
 # Turbopack is the bundler that gets OOM-killed silently there (see the ARG+ENV
 # note below). The official images are unaffected: docker-publish.yml already
-# pins OMNIROUTE_USE_TURBOPACK=0 explicitly. On a big builder, opt back into
-# Turbopack with `--build-arg OMNIROUTE_USE_TURBOPACK=1`: the v3.8.27-era
+# pins PUSULA_USE_TURBOPACK=0 explicitly. On a big builder, opt back into
+# Turbopack with `--build-arg PUSULA_USE_TURBOPACK=1`: the v3.8.27-era
 # TurbopackInternalError panic ("entered unreachable code: there must be a path
 # to a root" in ImportTracer::get_traces) no longer reproduces on Next 16.2.9 —
 # validated 2026-07-05 with clean amd64 (12min14s, image smoke-tested:
@@ -129,18 +129,18 @@ RUN --mount=type=cache,id=s/92ca8a61-c1ba-421f-a389-d48ac7258c2d-npm-cache,targe
 # 32-core box. See docs/ops/QUALITY_GATE_PLAYBOOK.md Parte 6.
 #
 # Declared as ARG+ENV, not a bare ENV: a bare ENV shadows any same-named ARG for
-# the rest of the stage, so `--build-arg OMNIROUTE_USE_TURBOPACK=0` was silently
+# the rest of the stage, so `--build-arg PUSULA_USE_TURBOPACK=0` was silently
 # ignored and the webpack escape hatch only ever worked via `-e` at runtime,
 # never at build time. Turbopack compiles in native Rust memory that lives outside the
-# V8 heap, so OMNIROUTE_BUILD_MEMORY_MB cannot bound it and a memory-constrained
+# V8 heap, so PUSULA_BUILD_MEMORY_MB cannot bound it and a memory-constrained
 # build host gets SIGKILLed by the cgroup OOM killer with no error message.
-ARG OMNIROUTE_USE_TURBOPACK=0
-ENV OMNIROUTE_USE_TURBOPACK="${OMNIROUTE_USE_TURBOPACK}"
+ARG PUSULA_USE_TURBOPACK=0
+ENV PUSULA_USE_TURBOPACK="${PUSULA_USE_TURBOPACK}"
 
-# Next.js basePath is fixed at build time; pass OMNIROUTE_BASE_PATH here when the
+# Next.js basePath is fixed at build time; pass PUSULA_BASE_PATH here when the
 # image should serve under a reverse-proxy subpath without a runtime patch.
-ARG OMNIROUTE_BASE_PATH=""
-ENV OMNIROUTE_BASE_PATH=$OMNIROUTE_BASE_PATH
+ARG PUSULA_BASE_PATH=""
+ENV PUSULA_BASE_PATH=$PUSULA_BASE_PATH
 
 # #10273: the dashboard's `frame-ancestors` policy is compiled into the route
 # manifest by next.config.mjs (via scripts/build/dashboardEmbed.mjs), so it is
@@ -157,7 +157,7 @@ ENV DASHBOARD_ALLOW_EMBED=$DASHBOARD_ALLOW_EMBED
 # Docker containers cannot run the MITM/Agent-Bridge stack (no host DNS/cert
 # access), so keep @/mitm/manager on the graceful stub (#3390). This flag is
 # Docker-only: npm/Electron/VPS builds must bundle the REAL manager (#6344).
-ENV OMNIROUTE_MITM_STUB=1
+ENV PUSULA_MITM_STUB=1
 
 # Raise the V8 heap ceiling for the build. The webpack production optimization
 # pass needs more than V8's default ceiling (~2 GB) for a codebase this size; a
@@ -167,11 +167,11 @@ ENV OMNIROUTE_MITM_STUB=1
 # on V8, so keep the ceiling. NODE_OPTIONS propagates to the spawned `next build`
 # child (build-next-isolated.mjs → resolveNextBuildEnv spreads process.env).
 # Build-only; the runtime heap is set separately on the runner stage
-# (OMNIROUTE_MEMORY_MB). Override: `--build-arg OMNIROUTE_BUILD_MEMORY_MB=6144`.
+# (PUSULA_MEMORY_MB). Override: `--build-arg PUSULA_BUILD_MEMORY_MB=6144`.
 # Default raised 4096 → 6144 (#10060): the Next 16 production pass on a codebase
 # this size intermittently OOMs a build worker at 4 GB on memory-tight hosts.
-ARG OMNIROUTE_BUILD_MEMORY_MB=6144
-ENV NODE_OPTIONS="--max-old-space-size=${OMNIROUTE_BUILD_MEMORY_MB}"
+ARG PUSULA_BUILD_MEMORY_MB=6144
+ENV NODE_OPTIONS="--max-old-space-size=${PUSULA_BUILD_MEMORY_MB}"
 
 # Cap Next.js build worker pools. Next 16 defaults to `os.cpus().length - 1`
 # workers for page-data collection (31 on a 32-core builder); on memory-tight
@@ -201,9 +201,9 @@ ENV NODE_OPTIONS="--max-old-space-size=${OMNIROUTE_BUILD_MEMORY_MB}"
 # tests/unit/docker-build-memory-budget.test.ts does the arithmetic against
 # the measured figure and fails if either knob is raised past what a 16 GB
 # runner holds. Override for a big builder: `--build-arg
-# OMNIROUTE_BUILD_WORKERS=8`.
-ARG OMNIROUTE_BUILD_WORKERS=2
-ENV CIRCLE_NODE_TOTAL=${OMNIROUTE_BUILD_WORKERS}
+# PUSULA_BUILD_WORKERS=8`.
+ARG PUSULA_BUILD_WORKERS=2
+ENV CIRCLE_NODE_TOTAL=${PUSULA_BUILD_WORKERS}
 
 COPY . ./
 RUN --mount=type=cache,id=s/92ca8a61-c1ba-421f-a389-d48ac7258c2d-next-cache,target=/app/.build/next/cache \
@@ -214,10 +214,10 @@ RUN --mount=type=cache,id=s/92ca8a61-c1ba-421f-a389-d48ac7258c2d-next-cache,targ
 # ── Runner base ────────────────────────────────────────────────────────────
 FROM base AS runner-base
 
-LABEL org.opencontainers.image.title="omniroute" \
+LABEL org.opencontainers.image.title="pusula" \
   org.opencontainers.image.description="Unified AI proxy — route any LLM through one endpoint" \
-  org.opencontainers.image.url="https://omniroute.online" \
-  org.opencontainers.image.source="https://github.com/diegosouzapw/OmniRoute" \
+  org.opencontainers.image.url="https://github.com/Ferhat-Yasinoglu/pusula" \
+  org.opencontainers.image.source="https://github.com/Ferhat-Yasinoglu/pusula" \
   org.opencontainers.image.licenses="MIT"
 
 ENV NODE_ENV=production
@@ -227,17 +227,17 @@ ENV HOSTNAME=0.0.0.0
 # for large fusion-combo panels (many models fanned out in parallel, each
 # response buffered in full — see open-sse/services/fusion.ts::FUSION_DEFAULTS
 # .maxPanel, issue #1905). Override at `docker run` time with
-# `-e OMNIROUTE_MEMORY_MB=2048` (or higher) if you raise fusionTuning.maxPanel
+# `-e PUSULA_MEMORY_MB=2048` (or higher) if you raise fusionTuning.maxPanel
 # above the default cap.
-ENV OMNIROUTE_MEMORY_MB=1024
-ENV NODE_OPTIONS="--max-old-space-size=${OMNIROUTE_MEMORY_MB}"
+ENV PUSULA_MEMORY_MB=1024
+ENV NODE_OPTIONS="--max-old-space-size=${PUSULA_MEMORY_MB}"
 
 # Data directory inside Docker — must match the volume mount in docker-compose.yml
 ENV DATA_DIR=/app/data
 RUN mkdir -p /app/data && chown node:node /app /app/data
 
 # #13679: default the PUBLISHED image to requiring an API key. A bare
-# `docker run -p 20128:20128 … diegosouzapw/omniroute` (README/QUICK-START
+# `docker run -p 20128:20128 … ferhat-yasinoglu/pusula` (README/QUICK-START
 # one-liners) does not pass `--env-file .env`, so without this default the
 # anonymous /v1 LLM proxy would be both keyless AND world-reachable on the
 # published container. This does NOT change the npm/CLI local-dev default
@@ -264,7 +264,7 @@ COPY --chown=node:node --from=builder /app/.build/next/standalone ./
 COPY --chown=node:node --from=builder /app/node_modules/better-sqlite3 ./node_modules/better-sqlite3
 RUN test -f /app/node_modules/better-sqlite3/build/Release/better_sqlite3.node
 # migrations land at <standalone>/migrations via assembleStandalone; point the runtime at them.
-ENV OMNIROUTE_MIGRATIONS_DIR=/app/migrations
+ENV PUSULA_MIGRATIONS_DIR=/app/migrations
 
 # Docker healthcheck script — not traced by Next.js standalone output, so copy
 # it explicitly. The HEALTHCHECK CMD references it as `node healthcheck.mjs`.
@@ -293,14 +293,14 @@ CMD ["node", "dev/run-standalone.mjs"]
 # ── Runner Web (web-cookie providers: Gemini Web, Claude Turnstile) ───────────
 #
 #  Two image flavors:
-#    runner-base  →  omniroute:VERSION        Lean base (~500 MB). No browsers.
-#    runner-web   →  omniroute:VERSION-web    +Chromium/Playwright (~800 MB).
+#    runner-base  →  pusula:VERSION        Lean base (~500 MB). No browsers.
+#    runner-web   →  pusula:VERSION-web    +Chromium/Playwright (~800 MB).
 #
 #  Use runner-web when you need web-cookie providers (gemini-web, claude-web,
 #  claude-turnstile). For all other providers runner-base is sufficient.
 #
 #  Build:
-#    docker build --target runner-web -t omniroute:web .
+#    docker build --target runner-web -t pusula:web .
 #  Compose:
 #    build:
 #      context: .

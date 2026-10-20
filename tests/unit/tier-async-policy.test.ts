@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { after, beforeEach, test } from "node:test";
 
-const testDataDir = mkdtempSync(join(tmpdir(), "omniroute-tier-async-policy-"));
+const testDataDir = mkdtempSync(join(tmpdir(), "pusula-tier-async-policy-"));
 const previousDataDir = process.env.DATA_DIR;
 process.env.DATA_DIR = testDataDir;
 

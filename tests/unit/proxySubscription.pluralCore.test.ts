@@ -10,7 +10,7 @@ import net from "node:net";
 // servers stand in for reachable cores; a port closed after binding stands in
 // for an unreachable one. No ESM stubbing — every verdict is a real probe.
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-sub-plural-core-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-sub-plural-core-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../src/lib/db/core.ts");

@@ -6,9 +6,9 @@
 
 > **Kapsam notu:** `socket.yml`, Socket.dev'in npm artefaktı üzerinde kayıt defteri tarafında gerçekleştirdiği yayın sonrası taramayı yapılandırır (ör. `tests/`, `docs/` ve derleme raporları gibi yayımlanmayan içerikler için yok sayılacak yollar). Bir CI/PR birleştirme geçidi oluşturmaz — `.github/workflows` içinde hiçbir iş akışı, hiçbir `package.json` betiği ve hiçbir `Makefile` hedefi Socket.dev'i çağırmaz.
 
-Bu belge, `omniroute@3.8.5` için bildirilen altı
+Bu belge, `pusula@3.8.5` için bildirilen altı
 `AI tarafından algılanan potansiyel kötü amaçlı yazılım` bulgusuna ve
-`omniroute@3.8.6` sürümünde uygulanan azaltıcı önlemlere ilişkin, bakım sorumluları tarafından hazırlanmış tasdiktir. Şu amaçlarla mevcuttur:
+`pusula@3.8.6` sürümünde uygulanan azaltıcı önlemlere ilişkin, bakım sorumluları tarafından hazırlanmış tasdiktir. Şu amaçlarla mevcuttur:
 
 1. Güvenlik işlem hattı operatörlerinin, bulguları gerçek kaynak kodla
    karşılaştırarak değerlendirmeleri gerektiğinde başvurabilecekleri tek bir referans sunmak.
@@ -48,7 +48,7 @@ içindeki 17 numaralı katı kurala ve `src/server/authz/routeGuard.ts::isLocalO
 | Linux+Firefox/Chromium | `certutil -d sql:<profile>` aracılığıyla profil başına NSS DB güncellemesi                                        |
 
 Bunlar `mitmproxy`, Charles Proxy, Fiddler ve Caddy tarafından kullanılan
-komutlarla aynıdır. Bu komutların OmniRoute içinde bulunduğu
+komutlarla aynıdır. Bu komutların Pusula içinde bulunduğu
 `docs/security/STEALTH_GUIDE.md` dosyasında belgelenmiştir.
 
 **v3.8.6 azaltımı**:
@@ -98,12 +98,12 @@ kaldırılması agent-bridge özellik kümesini bozardı.
    bir belirteci kaydetmesini sağlayamaz — canlı belirteç keşif işleminden bu
    yana değişmişse parmak izi artık eşleşmez ve kimlik bilgisi atlanır.
 
-`OMNIROUTE_ZED_IMPORT_LEGACY_ONE_STEP=true` ortam bayrağı, otomasyonlarını
+`PUSULA_ZED_IMPORT_LEGACY_ONE_STEP=true` ortam bayrağı, otomasyonlarını
 henüz güncellememiş operatörler için v3.8.5 davranışını korur. Bu bayrak v3.9
 sürümünde kaldırılacaktır.
 
 **Neden koruyoruz**: Zed içe aktarma, hâlihazırda Zed kullanan ve sağlayıcı
-anahtarlarını yeniden yapıştırmadan OmniRoute'a yansıtmak isteyen kullanıcılar
+anahtarlarını yeniden yapıştırmadan Pusula'a yansıtmak isteyen kullanıcılar
 için en kullanıcı dostu ilk kullanım yoludur.
 
 ---
@@ -116,7 +116,7 @@ için en kullanıcı dostu ilk kullanım yoludur.
 `runElevatedPowerShell` ve paylaşılan `quotePowerShell` yardımcısını yeniden
 dışa aktarır. Socket.dev'in yapay zekâ sınıflandırıcısı bunları genel amaçlı
 bir "ana makinede yürütme + ayrıcalık yükseltme araç seti" olarak algılar.
-OmniRoute içinde bunlar yalnızca MITM sertifikası kurulum yolu (§1) ve `sudo`
+Pusula içinde bunlar yalnızca MITM sertifikası kurulum yolu (§1) ve `sudo`
 komutlarını yürütmek üzere `execFileWithPassword` tarafından kullanılır.
 
 **v3.8.6 azaltımı**:
@@ -161,7 +161,7 @@ sayfasında "Yükle" / "Başlat" seçeneğine tıklar.
   yazma yapılmaz.
 
 **v3.8.6 azaltımı**: İşlevsel bir değişiklik yoktur. Minimal derleme profili
-(`OMNIROUTE_BUILD_PROFILE=minimal`), ayrıcalıklı yolların paketten fiziksel
+(`PUSULA_BUILD_PROFILE=minimal`), ayrıcalıklı yolların paketten fiziksel
 olarak kaldırılmasını isteyen kullanıcılar için
 `src/lib/services/installers/ninerouter.ts` dosyasını bir taslak uygulamayla
 değiştirir.
@@ -172,7 +172,7 @@ gerektirir.
 
 ---
 
-## §5 — OmniRoute Cloud Sync kimlik bilgilerinin geri yazılması (`api/keys/[id]/route.js`)
+## §5 — Pusula Cloud Sync kimlik bilgilerinin geri yazılması (`api/keys/[id]/route.js`)
 
 **Kaynak dosyalar**:
 
@@ -195,19 +195,19 @@ kanaldaki bir MITM), sağlayıcının OAuth belirteçlerini sessizce değiştire
 
 1. **HMAC doğrulaması**: `verifyCloudSignature(rawBody, sigHeader)`, JSON'ı
    ayrıştırmadan önce `X-Cloud-Sig` üstbilgisini
-   (`HMAC-SHA256(OMNIROUTE_CLOUD_SYNC_SECRET, rawBody)`) denetler. Gizli anahtar
+   (`HMAC-SHA256(PUSULA_CLOUD_SYNC_SECRET, rawBody)`) denetler. Gizli anahtar
    ayarlanmışsa imza zorunludur. Ayarlanmamışsa (eski uyumluluk modu) bir uyarı
    günlüğe kaydedilir ve yanıt kabul edilir — gizli anahtar v3.9'da zorunlu
    olacaktır.
 2. **Gizli alanlar için açık onay**: `accessToken` / `refreshToken` /
    `providerSpecificData` değerlerinin üzerine **yalnızca**
-   `OMNIROUTE_CLOUD_SYNC_SECRETS=true` olduğunda yazılır. Varsayılan mod yalnızca
+   `PUSULA_CLOUD_SYNC_SECRETS=true` olduğunda yazılır. Varsayılan mod yalnızca
    kimlik bilgisi olmayan meta verileri (`expiresAt`, `status`, `lastError*`,
    `rateLimitedUntil`, `updatedAt`) eşitler. Bu, uzaktan belirteç eşitlemeye
    güvenen kullanıcılar için **geriye dönük uyumluluğu bozan bir değişikliktir**
    — açıkça etkinleştirmeleri gerekir.
 
-**Neden bunu koruyoruz**: Cloud Sync, bir OmniRoute Cloud kiracısının ekip
+**Neden bunu koruyoruz**: Cloud Sync, bir Pusula Cloud kiracısının ekip
 kimlik bilgilerini merkezîleştirmesinin tek yoludur. Düzeltme, tehdit modelini
 açıkça ortaya koyar: "sunucu imzalar, istemci doğrular, operatör açıkça onay verir."
 
@@ -218,7 +218,7 @@ açıkça ortaya koyar: "sunucu imzalar, istemci doğrular, operatör açıkça 
 Socket ile uyumlu bir yapıya ihtiyaç duyan kullanıcılar şu komutla derleyebilir:
 
 ```bash
-OMNIROUTE_BUILD_PROFILE=minimal npm run build
+PUSULA_BUILD_PROFILE=minimal npm run build
 ```
 
 webpack `NormalModuleReplacementPlugin`, dört modülü takma adlarla stub'lara yönlendirir:
@@ -235,7 +235,7 @@ Her stub aynı arayüzü dışa aktarır, ancak her işlev çalışma zamanında
 bağlı rotalar, hassas kod yolunu etkinleştirmek yerine açık bir mesajla HTTP
 503 döndürür.
 
-Ortaya çıkan paketin `omniroute-secure` adıyla yayımlanması amaçlanmıştır.
+Ortaya çıkan paketin `pusula-secure` adıyla yayımlanması amaçlanmıştır.
 Yayımlama tarifi için `docs/ops/PUBLISHING_SECURE.md` belgesine bakın.
 
 ---

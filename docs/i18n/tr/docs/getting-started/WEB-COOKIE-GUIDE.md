@@ -4,7 +4,7 @@
 
 ---
 
-Web Cookie sağlayıcıları, OmniRoute'un bir API anahtarı yerine mevcut tarayıcı oturumunuz üzerinden bir yapay zekâ hizmetini kullanmasına olanak tanır. Bir hizmete web sitesi üzerinden zaten erişiminiz olduğunda ve OmniRoute'un aynı kimliği doğrulanmış oturumu kullanmasını istediğinizde kullanışlıdırlar.
+Web Cookie sağlayıcıları, Pusula'un bir API anahtarı yerine mevcut tarayıcı oturumunuz üzerinden bir yapay zekâ hizmetini kullanmasına olanak tanır. Bir hizmete web sitesi üzerinden zaten erişiminiz olduğunda ve Pusula'un aynı kimliği doğrulanmış oturumu kullanmasını istediğinizde kullanışlıdırlar.
 
 API anahtarı sağlayıcılarından farklı olarak Web Cookie sağlayıcıları, tarayıcınızın web sitesine gönderdiği kimlik bilgilerini kullanarak kimlik doğrulaması yapar.
 
@@ -49,7 +49,7 @@ DevTools
 
 `Cookie` istek başlığı, tarayıcınızın başarıyla kullandığı kimlik doğrulama bilgilerinin tam hâlini içerir.
 
-Çoğu Web Cookie sağlayıcısı için OmniRoute'a yapıştırılması gereken değer budur.
+Çoğu Web Cookie sağlayıcısı için Pusula'a yapıştırılması gereken değer budur.
 
 ---
 
@@ -63,7 +63,7 @@ Kurulum süreci çoğu Web Cookie sağlayıcısı için aynıdır.
 4. Sayfayı yenileyin.
 5. Kimliği doğrulanmış bir sohbet veya konuşma isteğini açın.
 6. Gerekli kimlik doğrulama bilgilerini kopyalayın.
-7. OmniRoute'u açın.
+7. Pusula'u açın.
 8. **Providers → Add Provider** bölümüne gidin.
 9. Web Cookie sağlayıcınızı seçin.
 10. Kimlik bilgilerini yapıştırın.
@@ -148,7 +148,7 @@ Application
 
 ---
 
-## Çerez Tarayıcıda Çalışıyor ancak OmniRoute'ta Çalışmıyor
+## Çerez Tarayıcıda Çalışıyor ancak Pusula'ta Çalışmıyor
 
 Bazı sağlayıcılar, yalnızca kimliği doğrulanmış istekler sırasında gönderilen çerezler içerir.
 

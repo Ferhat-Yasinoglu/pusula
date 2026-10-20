@@ -6,7 +6,7 @@
 
 🌐 **Languages:** 🇺🇸 [English](../../../../reference/API_REFERENCE.md) · 🇪🇹 [am](../../../am/docs/reference/API_REFERENCE.md) · 🇸🇦 [ar](../../../ar/docs/reference/API_REFERENCE.md) · 🇦🇿 [az](../../../az/docs/reference/API_REFERENCE.md) · 🇧🇬 [bg](../../../bg/docs/reference/API_REFERENCE.md) · 🇧🇩 [bn](../../../bn/docs/reference/API_REFERENCE.md) · 🇧🇦 [bs](../../../bs/docs/reference/API_REFERENCE.md) · 🇨🇿 [cs](../../../cs/docs/reference/API_REFERENCE.md) · 🇩🇰 [da](../../../da/docs/reference/API_REFERENCE.md) · 🇬🇷 [el](../../../el/docs/reference/API_REFERENCE.md) · 🇪🇸 [es](../../../es/docs/reference/API_REFERENCE.md) · 🇪🇪 [et](../../../et/docs/reference/API_REFERENCE.md) · 🇮🇷 [fa](../../../fa/docs/reference/API_REFERENCE.md) · 🇫🇮 [fi](../../../fi/docs/reference/API_REFERENCE.md) · 🇫🇷 [fr](../../../fr/docs/reference/API_REFERENCE.md) · 🇮🇪 [ga](../../../ga/docs/reference/API_REFERENCE.md) · 🇮🇳 [gu](../../../gu/docs/reference/API_REFERENCE.md) · 🇳🇬 [ha](../../../ha/docs/reference/API_REFERENCE.md) · 🇮🇱 [he](../../../he/docs/reference/API_REFERENCE.md) · 🇮🇳 [hi](../../../hi/docs/reference/API_REFERENCE.md) · 🇭🇷 [hr](../../../hr/docs/reference/API_REFERENCE.md) · 🇭🇺 [hu](../../../hu/docs/reference/API_REFERENCE.md) · 🇦🇲 [hy](../../../hy/docs/reference/API_REFERENCE.md) · 🇮🇩 [id](../../../id/docs/reference/API_REFERENCE.md) · 🇳🇬 [ig](../../../ig/docs/reference/API_REFERENCE.md) · 🇮🇹 [it](../../../it/docs/reference/API_REFERENCE.md) · 🇯🇵 [ja](../../../ja/docs/reference/API_REFERENCE.md) · 🇬🇪 [ka](../../../ka/docs/reference/API_REFERENCE.md) · 🇰🇭 [km](../../../km/docs/reference/API_REFERENCE.md) · 🇮🇳 [kn](../../../kn/docs/reference/API_REFERENCE.md) · 🇰🇷 [ko](../../../ko/docs/reference/API_REFERENCE.md) · 🇱🇹 [lt](../../../lt/docs/reference/API_REFERENCE.md) · 🇱🇻 [lv](../../../lv/docs/reference/API_REFERENCE.md) · 🇮🇳 [ml](../../../ml/docs/reference/API_REFERENCE.md) · 🇮🇳 [mr](../../../mr/docs/reference/API_REFERENCE.md) · 🇲🇾 [ms](../../../ms/docs/reference/API_REFERENCE.md) · 🇲🇹 [mt](../../../mt/docs/reference/API_REFERENCE.md) · 🇲🇲 [my](../../../my/docs/reference/API_REFERENCE.md) · 🇳🇵 [ne](../../../ne/docs/reference/API_REFERENCE.md) · 🇳🇱 [nl](../../../nl/docs/reference/API_REFERENCE.md) · 🇳🇴 [no](../../../no/docs/reference/API_REFERENCE.md) · 🇮🇳 [or](../../../or/docs/reference/API_REFERENCE.md) · 🇮🇳 [pa](../../../pa/docs/reference/API_REFERENCE.md) · 🇵🇭 [phi](../../../phi/docs/reference/API_REFERENCE.md) · 🇵🇱 [pl](../../../pl/docs/reference/API_REFERENCE.md) · 🇵🇹 [pt](../../../pt/docs/reference/API_REFERENCE.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/reference/API_REFERENCE.md) · 🇷🇴 [ro](../../../ro/docs/reference/API_REFERENCE.md) · 🇷🇺 [ru](../../../ru/docs/reference/API_REFERENCE.md) · 🇱🇰 [si](../../../si/docs/reference/API_REFERENCE.md) · 🇸🇰 [sk](../../../sk/docs/reference/API_REFERENCE.md) · 🇸🇮 [sl](../../../sl/docs/reference/API_REFERENCE.md) · 🇷🇸 [sr](../../../sr/docs/reference/API_REFERENCE.md) · 🇸🇪 [sv](../../../sv/docs/reference/API_REFERENCE.md) · 🇰🇪 [sw](../../../sw/docs/reference/API_REFERENCE.md) · 🇮🇳 [ta](../../../ta/docs/reference/API_REFERENCE.md) · 🇮🇳 [te](../../../te/docs/reference/API_REFERENCE.md) · 🇹🇭 [th](../../../th/docs/reference/API_REFERENCE.md) · 🇹🇷 [tr](../../../tr/docs/reference/API_REFERENCE.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/reference/API_REFERENCE.md) · 🇵🇰 [ur](../../../ur/docs/reference/API_REFERENCE.md) · 🇺🇿 [uz](../../../uz/docs/reference/API_REFERENCE.md) · 🇻🇳 [vi](../../../vi/docs/reference/API_REFERENCE.md) · 🇳🇬 [yo](../../../yo/docs/reference/API_REFERENCE.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/reference/API_REFERENCE.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/reference/API_REFERENCE.md)
 
-Zentrale Referenz für die OmniRoute-API. Sie beschreibt die öffentliche `/v1`-Schnittstelle und die am häufigsten verwendeten Verwaltungsendpunkte; die maschinenlesbare Datei [`docs/openapi.yaml`](../openapi.yaml) und der Routenbaum unter `src/app/api/` sind die vollständigen Quellen.
+Zentrale Referenz für die Pusula-API. Sie beschreibt die öffentliche `/v1`-Schnittstelle und die am häufigsten verwendeten Verwaltungsendpunkte; die maschinenlesbare Datei [`docs/openapi.yaml`](../openapi.yaml) und der Routenbaum unter `src/app/api/` sind die vollständigen Quellen.
 
 ---
 
@@ -63,33 +63,33 @@ Content-Type: application/json
 
 | Header                   | Richtung | Beschreibung                                                                                                                                                                                                                                                |
 | ------------------------ | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `X-OmniRoute-No-Cache`   | Anfrage  | Auf `true` setzen, um den Cache zu umgehen                                                                                                                                                                                                                  |
-| `x-omniroute-no-memory`  | Anfrage  | Auf `true` setzen, um die Einspeisung von Speicher + Fähigkeiten für diese Anfrage zu überspringen (entspricht no-cache; vermeidet den Token-/Kostenaufwand pro Aufruf)                                                                                     |
-| `X-OmniRoute-Progress`   | Anfrage  | Für Fortschrittsereignisse auf `true` setzen                                                                                                                                                                                                                |
+| `X-Pusula-No-Cache`   | Anfrage  | Auf `true` setzen, um den Cache zu umgehen                                                                                                                                                                                                                  |
+| `x-pusula-no-memory`  | Anfrage  | Auf `true` setzen, um die Einspeisung von Speicher + Fähigkeiten für diese Anfrage zu überspringen (entspricht no-cache; vermeidet den Token-/Kostenaufwand pro Aufruf)                                                                                     |
+| `X-Pusula-Progress`   | Anfrage  | Für Fortschrittsereignisse auf `true` setzen                                                                                                                                                                                                                |
 | `X-Session-Id`           | Anfrage  | Persistenter Sitzungsschlüssel für externe Sitzungsaffinität                                                                                                                                                                                                |
 | `x_session_id`           | Anfrage  | Variante mit Unterstrichen wird ebenfalls akzeptiert (direktes HTTP)                                                                                                                                                                                        |
-| `X-OmniRoute-Session-Id` | Anfrage  | Vom Aufrufer bereitgestelltes Sitzungs-/Konversations-Tag (wird auch dem Speicher zugeführt). Wenn vorhanden, wird es unverändert in `call_logs.session_tag` zur sitzungsbezogenen Kostenzuordnung (#8249) gespeichert — bei Fehlen wird es niemals erzeugt |
+| `X-Pusula-Session-Id` | Anfrage  | Vom Aufrufer bereitgestelltes Sitzungs-/Konversations-Tag (wird auch dem Speicher zugeführt). Wenn vorhanden, wird es unverändert in `call_logs.session_tag` zur sitzungsbezogenen Kostenzuordnung (#8249) gespeichert — bei Fehlen wird es niemals erzeugt |
 | `Idempotency-Key`        | Anfrage  | Deduplizierungsschlüssel (5-Sekunden-Fenster)                                                                                                                                                                                                               |
 | `X-Request-Id`           | Anfrage  | Alternativer Deduplizierungsschlüssel                                                                                                                                                                                                                       |
-| `X-OmniRoute-Cache`      | Antwort  | `HIT` oder `MISS` (ohne Streaming)                                                                                                                                                                                                                          |
-| `X-OmniRoute-Idempotent` | Antwort  | `true`, wenn dedupliziert                                                                                                                                                                                                                                   |
-| `X-OmniRoute-Progress`   | Antwort  | `enabled`, wenn die Fortschrittsverfolgung aktiviert ist                                                                                                                                                                                                    |
-| `X-OmniRoute-Session-Id` | Antwort  | Von OmniRoute verwendete effektive Sitzungs-ID                                                                                                                                                                                                              |
-| `X-OmniRoute-Request-Id` | Antwort  | Korrelations-ID der Anfrage (sofern bekannt)                                                                                                                                                                                                                |
-| `X-OmniRoute-Version`    | Antwort  | OmniRoute-Build-Version (immer vorhanden)                                                                                                                                                                                                                   |
-| `X-OmniRoute-Cost-Saved` | Antwort  | Durch den Cache bei einem HIT vermiedene Kosten in USD (nur Cache-Treffer)                                                                                                                                                                                  |
-| `X-OmniRoute-Decision`   | Antwort  | Routing-Ablauf: `strategy=<name>; provider=<alias>; latency_ms=<n>` (`<name>` ist die Kombinationsstrategie oder `single` für eine Anfrage ohne Kombination) — bei Abschlussantworten immer vorhanden                                                       |
+| `X-Pusula-Cache`      | Antwort  | `HIT` oder `MISS` (ohne Streaming)                                                                                                                                                                                                                          |
+| `X-Pusula-Idempotent` | Antwort  | `true`, wenn dedupliziert                                                                                                                                                                                                                                   |
+| `X-Pusula-Progress`   | Antwort  | `enabled`, wenn die Fortschrittsverfolgung aktiviert ist                                                                                                                                                                                                    |
+| `X-Pusula-Session-Id` | Antwort  | Von Pusula verwendete effektive Sitzungs-ID                                                                                                                                                                                                              |
+| `X-Pusula-Request-Id` | Antwort  | Korrelations-ID der Anfrage (sofern bekannt)                                                                                                                                                                                                                |
+| `X-Pusula-Version`    | Antwort  | Pusula-Build-Version (immer vorhanden)                                                                                                                                                                                                                   |
+| `X-Pusula-Cost-Saved` | Antwort  | Durch den Cache bei einem HIT vermiedene Kosten in USD (nur Cache-Treffer)                                                                                                                                                                                  |
+| `X-Pusula-Decision`   | Antwort  | Routing-Ablauf: `strategy=<name>; provider=<alias>; latency_ms=<n>` (`<name>` ist die Kombinationsstrategie oder `single` für eine Anfrage ohne Kombination) — bei Abschlussantworten immer vorhanden                                                       |
 
 > Nginx-Hinweis: Wenn Sie Header mit Unterstrichen verwenden (zum Beispiel `x_session_id`), aktivieren Sie `underscores_in_headers on;`.
 
-> **Header zur Kostentelemetrie:** Nicht-streamende erfolgreiche Antworten enthalten ebenfalls den Kostentelemetrie-Satz `X-OmniRoute-*` — `X-OmniRoute-Response-Cost` (USD, fest auf 10 Dezimalstellen; `0.0000000000` für kostenlose/nicht bepreiste Anfragen), `X-OmniRoute-Tokens-In` / `X-OmniRoute-Tokens-Out`, `X-OmniRoute-Model`, `X-OmniRoute-Provider`, `X-OmniRoute-Latency-Ms`, `X-OmniRoute-Cache-Hit` und `X-OmniRoute-Fallback-Attempts` (nur wenn > 0) sowie `X-OmniRoute-Request-Id` und `X-OmniRoute-Version`. Diese werden von Chat Completions, `/v1/responses`, `/v1/messages` **und den Medienendpunkten** ausgegeben — `/v1/embeddings`, `/v1/images/generations`, `/v1/audio/speech`, `/v1/audio/transcriptions`, `/v1/rerank`, `/v1/videos/generations`, `/v1/music/generations` und `/v1/moderations` (Kosten stets `0`). Die Medienkosten werden, sofern Preisinformationen verfügbar sind, je nach Modalität pro Bild, pro Sekunde, pro Zeichen oder pro Sucheinheit berechnet, andernfalls `0` (Fail-Open).
+> **Header zur Kostentelemetrie:** Nicht-streamende erfolgreiche Antworten enthalten ebenfalls den Kostentelemetrie-Satz `X-Pusula-*` — `X-Pusula-Response-Cost` (USD, fest auf 10 Dezimalstellen; `0.0000000000` für kostenlose/nicht bepreiste Anfragen), `X-Pusula-Tokens-In` / `X-Pusula-Tokens-Out`, `X-Pusula-Model`, `X-Pusula-Provider`, `X-Pusula-Latency-Ms`, `X-Pusula-Cache-Hit` und `X-Pusula-Fallback-Attempts` (nur wenn > 0) sowie `X-Pusula-Request-Id` und `X-Pusula-Version`. Diese werden von Chat Completions, `/v1/responses`, `/v1/messages` **und den Medienendpunkten** ausgegeben — `/v1/embeddings`, `/v1/images/generations`, `/v1/audio/speech`, `/v1/audio/transcriptions`, `/v1/rerank`, `/v1/videos/generations`, `/v1/music/generations` und `/v1/moderations` (Kosten stets `0`). Die Medienkosten werden, sofern Preisinformationen verfügbar sind, je nach Modalität pro Bild, pro Sekunde, pro Zeichen oder pro Sucheinheit berechnet, andernfalls `0` (Fail-Open).
 
-> **Kostenberechnung bei Cache-Treffern:** Bei einem TREFFER im semantischen Cache (`X-OmniRoute-Cache-Hit: true`) erfolgt kein Upstream-Aufruf, daher beträgt `X-OmniRoute-Response-Cost` `0.0000000000` (die **inkrementellen** Kosten für die Bereitstellung des Treffers). Die ursprünglichen beziehungsweise andernfalls angefallenen Kosten werden separat in `X-OmniRoute-Cost-Saved` ausgewiesen. Abrechnungssysteme sollten `X-OmniRoute-Response-Cost` summieren (Treffer verursachen keine Kosten); für Cache-Analysen kann `X-OmniRoute-Cost-Saved` aggregiert werden.
+> **Kostenberechnung bei Cache-Treffern:** Bei einem TREFFER im semantischen Cache (`X-Pusula-Cache-Hit: true`) erfolgt kein Upstream-Aufruf, daher beträgt `X-Pusula-Response-Cost` `0.0000000000` (die **inkrementellen** Kosten für die Bereitstellung des Treffers). Die ursprünglichen beziehungsweise andernfalls angefallenen Kosten werden separat in `X-Pusula-Cost-Saved` ausgewiesen. Abrechnungssysteme sollten `X-Pusula-Response-Cost` summieren (Treffer verursachen keine Kosten); für Cache-Analysen kann `X-Pusula-Cost-Saved` aggregiert werden.
 
 ## Exklusive verwaltete Sitzungs-Leases
 
 Das exklusive Leasing verwalteter Sitzungen ist ein optionaler, clientneutraler Routing-Vertrag: Ein aktiver Besitzer
-hält eine geeignete OmniRoute-Verbindung. Es wird weder ein Modell geleast noch OAuth vorausgesetzt, ein
+hält eine geeignete Pusula-Verbindung. Es wird weder ein Modell geleast noch OAuth vorausgesetzt, ein
 bestimmter Client identifiziert oder ein bestimmter Anbieter verlangt.
 
 Der zur Authentifizierung verwendete API-Schlüssel muss über den Scope `lease:exclusive` und eine explizite, nicht leere
@@ -100,7 +100,7 @@ Schlüsselerstellung und bei partiellen Aktualisierungen.
 POST /api/v1/session-leases
 Authorization: Bearer <managed-api-key>
 Content-Type: application/json
-X-OmniRoute-Lease-Owner: vlo_<43-base64url-characters>
+X-Pusula-Lease-Owner: vlo_<43-base64url-characters>
 
 {"action":"acquire","model":"glm/glm-4.6"}
 ```
@@ -139,7 +139,7 @@ Ein aktiver Lease-Besitzer kann explizit datenschutzkonforme Anzeigemetadaten f�
 
 Diese optionale Statusaktion wird innerhalb einer einzelnen Datenbanktransaktion durch den undurchsichtigen Besitzer, den authentifizierten verwalteten API-Schlüssel und die exakte
 aktive Generation abgesichert. `displayName` ist ausschließlich der bereinigte konfigurierte
-Verbindungsname; er ist `null`, wenn kein sicherer konfigurierter Name vorhanden ist. OmniRoute ersetzt ihn niemals durch eine
+Verbindungsname; er ist `null`, wenn kein sicherer konfigurierter Name vorhanden ist. Pusula ersetzt ihn niemals durch eine
 E-Mail-Adresse oder eine generierte Kontoidentität. Der Anbieterwert ist eine nicht sensible Anzeigebezeichnung und niemals
 eine generierte Kennung eines kompatiblen Anbieters. Anmeldedaten, Token, Cookies, unformatierte Verbindungs- oder API-
 Schlüssel-IDs, Besitzer-Hashes, Fencing-Geheimnisse und interne Routing-Daten sind ausgeschlossen.
@@ -159,8 +159,8 @@ Anbieterkontometadaten dar; eine spätere Clientintegration muss diese Aktion au
 Jede verwaltete Inferenzanfrage übermittelt anschließend beide Kontrollheader:
 
 ```http
-X-OmniRoute-Lease-Owner: vlo_<43-base64url-characters>
-X-OmniRoute-Lease-Generation: 1
+X-Pusula-Lease-Owner: vlo_<43-base64url-characters>
+X-Pusula-Lease-Generation: 1
 ```
 
 Der exakte Besitzer, die Generation, die aktive Verbindung und der authentifizierte API-Schlüssel werden unmittelbar
@@ -181,9 +181,9 @@ Vorübergehende Ressourcenkonflikte geben HTTP `429` mit `Retry-After` und Folge
 
 Diese Antwort bedeutet lediglich, dass die reguläre geeignete Menge nicht leer war und jeder freie Kandidat
 von einer fremden aktiven Lease gehalten wurde. Nicht unterstützte Modelle/Anbieter, Richtlinienabweichungen, Abklingzeiten, Kontingente,
-Integritätszustände und andere reguläre Eignungsfehler behalten ihre bestehenden OmniRoute-Antworten bei.
+Integritätszustände und andere reguläre Eignungsfehler behalten ihre bestehenden Pusula-Antworten bei.
 
-### `x-omniroute-compression`
+### `x-pusula-compression`
 
 Anfragebezogene Überschreibung des Komprimierungsplans. Höchste Priorität — setzt sich gegenüber der Routing-Kombinations-
 überschreibung, dem aktiven Profil, der automatischen Auslösung und dem Standardwert des Panels durch. Werte:
@@ -207,7 +207,7 @@ Hinweise:
 Der angewendete Plan wird im Antwortheader zurückgegeben:
 
 ```
-X-OmniRoute-Compression: <mode>; source=<source>
+X-Pusula-Compression: <mode>; source=<source>
 ```
 
 wobei `<source>` einer der Werte `request-header`, `routing-override`, `active-profile`, `auto-trigger`, `default` oder `off` ist.
@@ -256,7 +256,7 @@ EmbeddingsV5Request-Dokumente von Jina und **leitet sie unverändert** an `https
 ```
 
 Native `{ image | audio | video | pdf }`-Werte können eine öffentliche HTTPS-URL, eine `data:`-URI oder rohe
-Base64-Daten sein. OmniRoute wandelt diese Objekte nicht in Strings um und ruft native Bild-URLs nicht ab — Jina ruft
+Base64-Daten sein. Pusula wandelt diese Objekte nicht in Strings um und ruft native Bild-URLs nicht ab — Jina ruft
 öffentliche Medien selbst ab. Zusätzliche Jina-Felder (`task`, `normalized`, `truncate`, `embedding_type`) werden
 weitergeleitet. Jina-SKUs, die ausschließlich Text unterstützen, lehnen weiterhin Dokumente ab, die nicht aus Text bestehen.
 
@@ -373,7 +373,7 @@ sodass der Clientcode den Anbieter nicht gesondert behandeln muss.
 
 ### Authentifizierung und Endpunktauflösung für Vertex AI DeepSeek OCR
 
-`vertex-deepseek-ocr` verwendet dieselbe Vertex-AI-Authentifizierung wieder, die OmniRoute bereits für
+`vertex-deepseek-ocr` verwendet dieselbe Vertex-AI-Authentifizierung wieder, die Pusula bereits für
 Chat-/Bilddatenverkehr unterstützt (`open-sse/executors/vertex.ts`): Der API-Schlüssel der Verbindung ist entweder eine
 Service-Account-JSON-Anmeldeinformation (die über den JWT-Bearer-Ablauf gegen ein kurzlebiges OAuth-Zugriffstoken
 ausgetauscht wird) oder ein bereits ausgestelltes OAuth-Zugriffstoken, das unverändert verwendet wird. Die URL des Upstream-Endpunkts ist der
@@ -417,10 +417,10 @@ Clients, die eine Modellauswahl darstellen, sollten `?prefix=alias` anfordern �
 
 ### Modellvarianten ohne Denkmodus
 
-Für denkfähige Claude-Modelle bietet `/v1/models` außerdem eine **No-Thinking-Variante** an, deren ID das Präfix `claude-3-omniroute-no-thinking/` trägt:
+Für denkfähige Claude-Modelle bietet `/v1/models` außerdem eine **No-Thinking-Variante** an, deren ID das Präfix `claude-3-pusula-no-thinking/` trägt:
 
 ```
-claude-3-omniroute-no-thinking/<provider>/<model>
+claude-3-pusula-no-thinking/<provider>/<model>
 ```
 
 Bei Auswahl dieser ID (z. B. in einer Claude-Code-Konfiguration, die immer einen `thinking`-Block anhängt) wird sie wieder zum tatsächlichen `<provider>/<model>` aufgelöst, wobei das Reasoning unterdrückt wird — durch `thinking:{type:"disabled"}` für den Pfad `/v1/messages` oder durch Entfernen der Felder `reasoning`/`reasoning_effort` für den Pfad `/v1/chat/completions`. Die Variante wird nur für Modelle der Claude-Familie aufgeführt, die den Denkmodus unterstützen **und** `disabled` berücksichtigen (d. h. beispielsweise Modelle, die nur den adaptiven Modus unterstützen und `disabled` ablehnen, sind ausgeschlossen). Betreiber können die Variante über `ModelSpec.noThinkingAlias` für jedes Modell erzwingen oder deaktivieren.
@@ -471,7 +471,7 @@ Verwenden Sie diesen Endpunkt, wenn ein Sidecar außerhalb des Prozesses ausgef�
 
 Alle POST-Routen folgen dem gleichen Schema: `Bearer your-api-key` + Zod-validierter JSON-Body (`v1RerankSchema`, `v1ModerationSchema`, `v1AudioSpeechSchema`, etc., siehe `src/shared/validation/schemas.ts`). Bei Schemafehlern wird 4xx zurückgegeben.
 
-Für Clients, die `Authorization: Bearer ...` nicht anhängen können, akzeptiert OmniRoute API-Schlüssel auch in der URL, entweder über Query-String-Kompatibilität (`?token=...`, `?apiKey=...`, `?api_key=...`, `?key=...`) oder über die unten dokumentierten dedizierten `/api/v1/vscode/{token}/...` Endpunkte.
+Für Clients, die `Authorization: Bearer ...` nicht anhängen können, akzeptiert Pusula API-Schlüssel auch in der URL, entweder über Query-String-Kompatibilität (`?token=...`, `?apiKey=...`, `?api_key=...`, `?key=...`) oder über die unten dokumentierten dedizierten `/api/v1/vscode/{token}/...` Endpunkte.
 
 ```bash
 # Rerank (Cloud-Registry-Anbieter oder ein OpenAI-kompatibler Provider-Knoten als "<Präfix>/<Modell>")
@@ -505,7 +505,7 @@ POST /v1/music/generations  { "model": "kie/suno-v4.0",   "prompt": "..." }
 > (`localhost`, `127.0.0.1`, `172.16.0.0/12`) sind immer zulässig. Knoten auf jedem anderen
 > Host – einer LAN-Box oder einem Tailscale-Peer – sind nur zulässig, wenn der Operator das
 > Feature-Flag `RERANK_REMOTE_PROVIDER_NODES` aktiviert **und** die Basis-URL des Knotens die
-> Outbound-URL-Richtlinie des Providers (`OMNIROUTE_ALLOW_LOCAL_PROVIDER_URLS` / `OMNIROUTE_ALLOW_PRIVATE_PROVIDER_URLS`) erfüllt;
+> Outbound-URL-Richtlinie des Providers (`PUSULA_ALLOW_LOCAL_PROVIDER_URLS` / `PUSULA_ALLOW_PRIVATE_PROVIDER_URLS`) erfüllt;
 > Cloud-Metadaten-Hosts werden niemals weitergeleitet. Der Rerank-Schritt der Memory-Engine ruft diese Route über
 > Loopback auf, daher gilt dieselbe Regel für `rerankProviderModel` in den Memory-Einstellungen.
 >
@@ -630,8 +630,8 @@ Validiert einen WebSocket-Upgrade-Handshake und gibt Beispielnachrichten des Wir
 
 ```bash
 # Derselbe Host und Port wie bei der HTTP-API (standardmäßig 20128); Verbindung aktualisieren:
-wscat -c "ws://localhost:20128/v1/responses?api_key=<OMNIROUTE_API_KEY>"
-# (oder: -H "Authorization: Bearer <OMNIROUTE_API_KEY>")
+wscat -c "ws://localhost:20128/v1/responses?api_key=<PUSULA_API_KEY>"
+# (oder: -H "Authorization: Bearer <PUSULA_API_KEY>")
 
 # Der erste Frame MUSS response.create sein:
 { "type": "response.create", "model": "gpt-5.5", "input": [ { "role": "user", "content": "hi" } ] }
@@ -657,36 +657,36 @@ Die OpenAI **Codex CLI** validiert den Modellnamen clientseitig, wenn
 `supports_websockets = true` gilt, und **lehnt Anbieterpräfix-IDs** wie
 `codex/gpt-5.5` ab (`The 'codex/gpt-5.5' model is not supported when using Codex with
 a ChatGPT account`). Senden Sie die **reine** ID (z. B. `gpt-5.5`). Die Bridge von
-OmniRoute unterstützt ausschließlich codex und löst daher eine reine ID vor dem
+Pusula unterstützt ausschließlich codex und löst daher eine reine ID vor dem
 Tunneln zum Upstream erneut als codex-Modell auf (`resolveCodexWsModelInfo`) —
 obwohl ein reines `gpt-5.5` über HTTP andernfalls an einen anderen Anbieter
 weitergeleitet würde.
 
 #### Konfigurieren der OpenAI Codex CLI
 
-Richten Sie die Codex CLI auf OmniRoute aus, indem Sie unter
+Richten Sie die Codex CLI auf Pusula aus, indem Sie unter
 `~/.codex/config.toml` einen benutzerdefinierten Anbieter mit WebSocket-
 Unterstützung hinzufügen (verwenden Sie ein separates `CODEX_HOME`, um eine
 bestehende Konfiguration nicht zu verändern):
 
 ```toml
 model = "gpt-5.5"                 # reine ID — NICHT "codex/gpt-5.5"
-model_provider = "omniroute"
+model_provider = "pusula"
 
-[model_providers.omniroute]
-name = "OmniRoute (WS)"
+[model_providers.pusula]
+name = "Pusula (WS)"
 base_url = "http://localhost:20128/v1"   # kein abschließender Schrägstrich; die WS-URL wird daraus abgeleitet (in der Produktion https/wss verwenden)
 wire_api = "responses"                    # seit Feb. 2026 der einzige unterstützte Wert
 supports_websockets = true                # aktiviert den Responses-over-WS-Transport
-env_key = "OMNIROUTE_API_KEY"             # enthält den OmniRoute-API-Schlüssel (Bearer)
+env_key = "PUSULA_API_KEY"             # enthält den Pusula-API-Schlüssel (Bearer)
 ```
 
 ```bash
-export OMNIROUTE_API_KEY=sk-...           # ein OmniRoute-API-Schlüssel (beliebiger Schlüssel, wenn REQUIRE_API_KEY=false)
+export PUSULA_API_KEY=sk-...           # ein Pusula-API-Schlüssel (beliebiger Schlüssel, wenn REQUIRE_API_KEY=false)
 codex exec "Responda apenas: PONG"
 ```
 
-Die CLI aktualisiert `base_url + /responses` zu einem WebSocket, und OmniRoute
+Die CLI aktualisiert `base_url + /responses` zu einem WebSocket, und Pusula
 tunnelt ihn zur ausgewählten codex-OAuth-Verbindung. Ende-zu-Ende gegen den
 lokalen Server validiert: ChatGPT gibt `codex.rate_limits` +
 `response.created` zurück und streamt die Vervollständigung.
@@ -784,7 +784,7 @@ Beispielantwort:
 
 ### Auswirkungen auf die Latenz
 
-Bei einem Treffer im semantischen Cache wird die Antwort **ohne Upstream-Aufruf** aus dem Cache bereitgestellt, sodass die gemeldete `X-OmniRoute-Response-Latency` nahezu null beträgt (unabhängig von der ursprünglichen Upstream-Latenz). Latenzempfindliche Clients (Benchmarking, p50-/p99-Monitoring) sollten den Antwort-Header `X-OmniRoute-Cache-Latency` prüfen:
+Bei einem Treffer im semantischen Cache wird die Antwort **ohne Upstream-Aufruf** aus dem Cache bereitgestellt, sodass die gemeldete `X-Pusula-Response-Latency` nahezu null beträgt (unabhängig von der ursprünglichen Upstream-Latenz). Latenzempfindliche Clients (Benchmarking, p50-/p99-Monitoring) sollten den Antwort-Header `X-Pusula-Cache-Latency` prüfen:
 
 | Wert        | Bedeutung                                                                      |
 | ----------- | ------------------------------------------------------------------------------ |
@@ -811,7 +811,7 @@ Bei der Schlüsselerstellung (`POST /api/keys`) festlegen oder per Aktualisierun
 Jede Anfrage kann den Cache unabhängig von den Schlüsseleinstellungen umgehen:
 
 ```
-X-OmniRoute-No-Cache: true
+X-Pusula-No-Cache: true
 ```
 
 ---
@@ -1033,7 +1033,7 @@ Repariert fehlende oder beschädigte OAuth-Umgebungsvariablen für einen bestimm
 {
   "success": true,
   "repaired": ["CLAUDE_CODE_OAUTH_CLIENT_ID", "CLAUDE_CODE_OAUTH_CLIENT_SECRET"],
-  "backupPath": "/home/user/.omniroute/backups/env-repair-2026-04-11.bak"
+  "backupPath": "/home/user/.pusula/backups/env-repair-2026-04-11.bak"
 }
 ```
 
@@ -1120,7 +1120,7 @@ Hinweise:
 
 - Die tokenisierten Aliasse verwenden dieselben Handler wie `/v1/*` und `/api/tags`; die Antwortstrukturen bleiben identisch.
 - Bevorzugen Sie `Authorization: Bearer ...`, wenn der Client benutzerdefinierte Header unterstützt.
-- URL-basierte Token können in Reverse-Proxy-Protokollen, im Browserverlauf und in Telemetriedaten außerhalb von OmniRoute erscheinen. Behandeln Sie sie als Kompatibilitätsoption und nicht als standardmäßigen Authentifizierungsmodus.
+- URL-basierte Token können in Reverse-Proxy-Protokollen, im Browserverlauf und in Telemetriedaten außerhalb von Pusula erscheinen. Behandeln Sie sie als Kompatibilitätsoption und nicht als standardmäßigen Authentifizierungsmodus.
 
 ---
 
@@ -1228,7 +1228,7 @@ Vollständige Architekturreferenz: [`ARCHITECTURE.md`](../architecture/ARCHITECT
 
 ## Webhooks
 
-Ausgehende Webhook-Abonnements für OmniRoute-Ereignisse (Abschluss von Anfragen, Ausschöpfung von Kontingenten, Schlüsselrotation usw.).
+Ausgehende Webhook-Abonnements für Pusula-Ereignisse (Abschluss von Anfragen, Ausschöpfung von Kontingenten, Schlüsselrotation usw.).
 
 | Methode | Pfad                      | Beschreibung                                                                   |
 | ------- | ------------------------- | ------------------------------------------------------------------------------ |
@@ -1261,7 +1261,7 @@ Wird vom Subsystem zur automatischen Schlüsselverwaltung verwendet, um API-Schl
 
 ## Agents-Protokoll
 
-Cloud-Agent-Aufgaben (Claude Code, Codex Cloud, OpenHands usw.), die im Auftrag von OmniRoute-Benutzern remote ausgeführt werden.
+Cloud-Agent-Aufgaben (Claude Code, Codex Cloud, OpenHands usw.), die im Auftrag von Pusula-Benutzern remote ausgeführt werden.
 
 | Methode | Pfad                          | Beschreibung                                                                                                                                                       |
 | ------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -1307,7 +1307,7 @@ Ausgehende HTTP(S)-/SOCKS-Proxys, die Anbietern, Konten oder global zugewiesen w
 
 ## Resilienz (erweitert)
 
-OmniRoute stellt drei unabhängige Mechanismen für temporäre Fehler bereit; über die folgenden Verwaltungsendpunkte können Betreiber deren Status auslesen und sie überschreiben:
+Pusula stellt drei unabhängige Mechanismen für temporäre Fehler bereit; über die folgenden Verwaltungsendpunkte können Betreiber deren Status auslesen und sie überschreiben:
 
 | Geltungsbereich         | Zustandsspeicher                                | Auslesen                                  | Zurücksetzen / Löschen                                       |
 | ----------------------- | ----------------------------------------------- | ----------------------------------------- | ------------------------------------------------------------ |
@@ -1336,7 +1336,7 @@ Die vollständige konzeptionelle Referenz und die Standardwerte für Schutzschal
 
 ## Skills
 
-Skill-Framework zur Erweiterung von OmniRoute um benutzerdefinierte ausführbare Handler sowie Marketplace-Integrationen.
+Skill-Framework zur Erweiterung von Pusula um benutzerdefinierte ausführbare Handler sowie Marketplace-Integrationen.
 
 | Methode | Pfad                              | Beschreibung                                                                                                                          |
 | ------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1373,7 +1373,7 @@ Persistenter Speicher für Konversationen und Fakten, dessen Gültigkeitsbereich
 
 ## MCP-Server
 
-OmniRoute enthält einen eingebetteten Model-Context-Protocol-Server mit 3 Transportarten (stdio, SSE, streamable-http) und Tools mit festgelegten Gültigkeitsbereichen. Die folgenden Dashboard-Endpunkte lesen Status-/Audit-Daten und leiten die HTTP-Transportarten weiter.
+Pusula enthält einen eingebetteten Model-Context-Protocol-Server mit 3 Transportarten (stdio, SSE, streamable-http) und Tools mit festgelegten Gültigkeitsbereichen. Die folgenden Dashboard-Endpunkte lesen Status-/Audit-Daten und leiten die HTTP-Transportarten weiter.
 
 | Methode | Pfad | Beschreibung |
 | ------ | ---------------------- | ------------------------------------------------------------------------------------------------ | -------------------- |
@@ -1395,13 +1395,13 @@ OmniRoute enthält einen eingebetteten Model-Context-Protocol-Server mit 3 Trans
 
 ## A2A-Server
 
-OmniRoute stellt einen A2A-Endpunkt (Agent-to-Agent) für JSON-RPC 2.0 sowie einen REST-Wrapper für Inspektions- und Dashboard-Zwecke bereit.
+Pusula stellt einen A2A-Endpunkt (Agent-to-Agent) für JSON-RPC 2.0 sowie einen REST-Wrapper für Inspektions- und Dashboard-Zwecke bereit.
 
 ### JSON-RPC
 
 ```bash
 POST /a2a
-Authorization: Bearer your-api-key   # optional, sofern OMNIROUTE_API_KEY nicht festgelegt ist
+Authorization: Bearer your-api-key   # optional, sofern PUSULA_API_KEY nicht festgelegt ist
 Content-Type: application/json
 
 {
@@ -1444,7 +1444,7 @@ Gibt die öffentliche A2A-Agent-Card zurück (Name, Beschreibung, Funktionen, Sk
 | GET     | `/api/a2a/tasks/[id]`        | Ruft eine einzelne Aufgabe ab                                                                                            |
 | POST    | `/api/a2a/tasks/[id]/cancel` | Bricht eine Aufgabe ab                                                                                                   |
 
-**Authentifizierung:** Die REST-Hilfsendpunkte werden ohne Verwaltungs-Authentifizierung ausgeführt (vom Dashboard lesbar); die JSON-RPC-Route `/a2a` verwendet Bearer `OMNIROUTE_API_KEY`, sofern konfiguriert.
+**Authentifizierung:** Die REST-Hilfsendpunkte werden ohne Verwaltungs-Authentifizierung ausgeführt (vom Dashboard lesbar); die JSON-RPC-Route `/a2a` verwendet Bearer `PUSULA_API_KEY`, sofern konfiguriert.
 
 ---
 
@@ -1621,7 +1621,7 @@ Nur Administratoren vorbehaltene Endpunkte für die betriebliche Verwaltung.
 
 ## Verwaltung von CLI-Tools
 
-Verwalten Sie CLI-Tools, die in OmniRoute integriert sind (antigravity, commandCode,
+Verwalten Sie CLI-Tools, die in Pusula integriert sind (antigravity, commandCode,
 devin-cli usw.). Die vollständige Liste finden Sie in der [Provider-Referenz](./PROVIDER_REFERENCE.md).
 
 | Methode | Pfad                                    | Beschreibung                                                                                                                                                                                    |
@@ -1732,7 +1732,7 @@ Vollständige Details finden Sie unter [Skills-Framework](../frameworks/SKILLS.m
 
 ## Plugins
 
-OmniRoute-Plugins (Erweiterungen von Drittanbietern) verwalten.
+Pusula-Plugins (Erweiterungen von Drittanbietern) verwalten.
 
 | Methode | Pfad                               | Beschreibung                                |
 | ------- | ---------------------------------- | ------------------------------------------- |
@@ -1758,7 +1758,7 @@ Der Shadow-/A-B-Vergleich von Anbietern ist **keine eigenständige REST-Schnitts
 
 ## Guardrails
 
-Laufzeit-Guardrails überprüfen (PII-Erkennung, Erkennung von Prompt-Injection, Vision-Bridging). Guardrails werden bei jeder Anfrage ausgeführt; die Deaktivierung pro Aufruf erfolgt über den Anfrage-Header `x-omniroute-disabled-guardrails` — es gibt keine persistente Schnittstelle zum Aktivieren oder Deaktivieren.
+Laufzeit-Guardrails überprüfen (PII-Erkennung, Erkennung von Prompt-Injection, Vision-Bridging). Guardrails werden bei jeder Anfrage ausgeführt; die Deaktivierung pro Aufruf erfolgt über den Anfrage-Header `x-pusula-disabled-guardrails` — es gibt keine persistente Schnittstelle zum Aktivieren oder Deaktivieren.
 
 | Methode | Pfad                   | Beschreibung                                                                                                     |
 | ------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------- |

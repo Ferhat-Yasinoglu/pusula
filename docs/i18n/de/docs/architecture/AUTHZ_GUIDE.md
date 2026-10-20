@@ -7,7 +7,7 @@
 > **Maßgebliche Quelle:** `src/server/authz/`, `src/shared/constants/publicApiRoutes.ts`, `src/lib/api/requireManagementAuth.ts`, `src/shared/utils/apiAuth.ts`
 > **Zuletzt aktualisiert:** 2026-09-22 — Scope-Namespaces verweisen auf MCP-SERVER.md
 
-OmniRoute verfügt über eine routenabhängige Autorisierungspipeline, die jede API-Anfrage absichert. Die Klassifizierung ist **deterministisch** und erfolgt nach dem **Fail-Closed-Prinzip** — alles, was nicht klassifiziert werden kann, wird als `MANAGEMENT` eingestuft und erfordert eine Sitzung oder ein Token mit Berechtigungen auf Management-Ebene. Diese Seite erläutert das Modell für Entwickler, die Routen verwalten oder neue Endpunkte entwerfen.
+Pusula verfügt über eine routenabhängige Autorisierungspipeline, die jede API-Anfrage absichert. Die Klassifizierung ist **deterministisch** und erfolgt nach dem **Fail-Closed-Prinzip** — alles, was nicht klassifiziert werden kann, wird als `MANAGEMENT` eingestuft und erfordert eine Sitzung oder ein Token mit Berechtigungen auf Management-Ebene. Diese Seite erläutert das Modell für Entwickler, die Routen verwalten oder neue Endpunkte entwerfen.
 
 ![Autorisierungspipeline (3 Routenklassen + Richtlinienauswertung)](../diagrams/exported/authz-pipeline.svg)
 
@@ -23,7 +23,7 @@ Wird für die OpenAI-/Anthropic-/Gemini-kompatiblen Client-APIs und einige Verwa
 Authorization: Bearer <api-key>
 ```
 
-Die Validierung erfolgt durch `isValidApiKey()` / `extractApiKey()` in `src/sse/services/auth.ts`; beide werden über `src/shared/utils/apiAuth.ts` erneut exportiert. Der Validator akzeptiert außerdem die Umgebungsvariablen `OMNIROUTE_API_KEY` / `ROUTER_API_KEY` als persistente Passthrough-Schlüssel (Issue #1350).
+Die Validierung erfolgt durch `isValidApiKey()` / `extractApiKey()` in `src/sse/services/auth.ts`; beide werden über `src/shared/utils/apiAuth.ts` erneut exportiert. Der Validator akzeptiert außerdem die Umgebungsvariablen `PUSULA_API_KEY` / `ROUTER_API_KEY` als persistente Passthrough-Schlüssel (Issue #1350).
 
 ### 2. Dashboard-Sitzung (auth_token-Cookie)
 
@@ -33,7 +33,7 @@ Für Dashboard-Seiten und administrative Vorgänge.
 Cookie: auth_token=<JWT signed with JWT_SECRET>
 ```
 
-Ein Cookie gilt nur dann als Sitzung, wenn das JWT erfolgreich verifiziert wurde **und** `authenticated: true` enthält (`src/shared/utils/dashboardSessionToken.ts` → `verifyDashboardSessionToken`). Jeder Nutzer des Cookies (Routen-Guard, Aktualisierung der AuthZ-Pipeline, WebSocket-Handshake, Live-Server, `/api/settings/require-login`, `/api/auth/status`) verwendet diesen Helper. Es existieren weitere mit `JWT_SECRET` signierte JWTs — der Cursor-CLI-Passthrough stellt für Schlüsselinhaber Token mit `iss "omniroute" / aud "cursor-cli"` aus — diese gelten jedoch niemals als Sitzungen (#13298).
+Ein Cookie gilt nur dann als Sitzung, wenn das JWT erfolgreich verifiziert wurde **und** `authenticated: true` enthält (`src/shared/utils/dashboardSessionToken.ts` → `verifyDashboardSessionToken`). Jeder Nutzer des Cookies (Routen-Guard, Aktualisierung der AuthZ-Pipeline, WebSocket-Handshake, Live-Server, `/api/settings/require-login`, `/api/auth/status`) verwendet diesen Helper. Es existieren weitere mit `JWT_SECRET` signierte JWTs — der Cursor-CLI-Passthrough stellt für Schlüsselinhaber Token mit `iss "pusula" / aud "cursor-cli"` aus — diese gelten jedoch niemals als Sitzungen (#13298).
 
 Die Verifizierung erfolgt durch `isDashboardSessionAuthenticated()` in `src/shared/utils/apiAuth.ts`. Die Pipeline aktualisiert das JWT automatisch, wenn von seiner 30-tägigen Gültigkeitsdauer weniger als 7 Tage verbleiben.
 
@@ -63,7 +63,7 @@ Die Dashboard-Admin-Anmeldung unterstützt neben der standardmäßigen Passworta
 ```
 Eingehende Anfrage → src/proxy.ts
   → runAuthzPipeline() in src/server/authz/pipeline.ts
-    1. Vertrauenswürdige interne Header entfernen (x-omniroute-auth-*, x-omniroute-route-class)
+    1. Vertrauenswürdige interne Header entfernen (x-pusula-auth-*, x-pusula-route-class)
     2. Anfrage-ID generieren, Route über classifyRoute() klassifizieren
     3. Wenn pathname == "/" → Weiterleitung zu /dashboard
     4. Wenn im Entleerungsmodus (kontrolliertes Herunterfahren) und /api/* → 503
@@ -71,11 +71,11 @@ Eingehende Anfrage → src/proxy.ts
     6. Wenn OPTIONS → CORS-Preflight 204
     7. Wenn options.enforce == false → unverändert mit Routenklassen-Headern weiterleiten
     8. Andernfalls: POLICIES[routeClass].evaluate(ctx)
-       - zulassen   → x-omniroute-auth-{kind,id,label,scopes} setzen → NextResponse.next()
+       - zulassen   → x-pusula-auth-{kind,id,label,scopes} setzen → NextResponse.next()
        - ablehnen   → JSON-Fehler mit correlation_id (Dashboard-Seiten → 302 /login)
 ```
 
-Vertrauenswürdige interne Header (definiert in `src/server/authz/headers.ts`) werden **vor der Klassifizierung aus eingehenden Anfragen entfernt** — Clients können `x-omniroute-auth-*` nicht vorab setzen, um sich als ein Subjekt auszugeben.
+Vertrauenswürdige interne Header (definiert in `src/server/authz/headers.ts`) werden **vor der Klassifizierung aus eingehenden Anfragen entfernt** — Clients können `x-pusula-auth-*` nicht vorab setzen, um sich als ein Subjekt auszugeben.
 
 ### Policy-Verträge
 
@@ -199,8 +199,8 @@ Katalog und Abgleichregeln (identische Zeichenfolge oder ein gewährter Scope, d
 `MCP_SCOPE_LIST` in `src/shared/constants/mcpScopes.ts` ist die ursprüngliche typisierte
 Teilmenge, nicht der vollständige Katalog. Die Durchsetzung erfolgt in
 `open-sse/mcp-server/scopeEnforcement.ts`, nachdem `resolveCallerScopeContext()`
-die Scopes aus MCP-Authentifizierungsinformationen, Anfragemetadaten oder `OMNIROUTE_MCP_SCOPES`
-ermittelt hat. Sie bleibt deaktiviert, sofern nicht `OMNIROUTE_MCP_ENFORCE_SCOPES=true` gesetzt ist.
+die Scopes aus MCP-Authentifizierungsinformationen, Anfragemetadaten oder `PUSULA_MCP_SCOPES`
+ermittelt hat. Sie bleibt deaktiviert, sofern nicht `PUSULA_MCP_ENFORCE_SCOPES=true` gesetzt ist.
 
 ### Zugriffstoken-Scopes
 
@@ -238,16 +238,16 @@ Die Pipeline versieht Antworten immer mit:
 
 ```
 x-request-id:               <Korrelations-ID, wird in Fehlerantworten wiedergegeben>
-x-omniroute-route-class:    PUBLIC | CLIENT_API | MANAGEMENT
+x-pusula-route-class:    PUBLIC | CLIENT_API | MANAGEMENT
 ```
 
 Bei authentifizierten Anfragen enthalten die Upstream-Anfrage-Header (auf Handler-Seite) außerdem:
 
 ```
-x-omniroute-auth-kind:      client_api_key | dashboard_session | management_key | anonymous
-x-omniroute-auth-id:        key_<letzte 4> | "dashboard" | "anonymous"
-x-omniroute-auth-label:     (optional)
-x-omniroute-auth-scopes:    kommagetrennte Liste
+x-pusula-auth-kind:      client_api_key | dashboard_session | management_key | anonymous
+x-pusula-auth-id:        key_<letzte 4> | "dashboard" | "anonymous"
+x-pusula-auth-label:     (optional)
+x-pusula-auth-scopes:    kommagetrennte Liste
 ```
 
 Verwenden Sie `assertAuth(req, expectedClass)` innerhalb von Handlern — die Funktion löst einen `AuthzAssertionError` mit dem Code `AUTHZ_NOT_INITIALIZED` aus, wenn die Middleware umgangen wurde (hilfreich, um Konfigurationsregressionen in Tests zu erkennen).

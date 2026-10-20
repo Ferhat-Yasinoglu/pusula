@@ -10,7 +10,7 @@ import path from "node:path";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-13131-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-13131-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const { hasSpecializedExecutor } = await import("../../open-sse/executors/index.ts");

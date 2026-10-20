@@ -4,13 +4,13 @@
 
 ---
 
-> **TL;DR**: Mit ACP kann OmniRoute CLI-Agenten (wie Claude Code oder Codex) als untergeordnete Prozesse starten, anstatt HTTP-APIs zu verwenden. Dadurch erhalten Sie einen „CLI-as-Backend“-Transport.
+> **TL;DR**: Mit ACP kann Pusula CLI-Agenten (wie Claude Code oder Codex) als untergeordnete Prozesse starten, anstatt HTTP-APIs zu verwenden. Dadurch erhalten Sie einen „CLI-as-Backend“-Transport.
 
 ---
 
 ## Was ist ACP?
 
-ACP (Agent Client Protocol) ist ein **„CLI-as-Backend“-Transport** für OmniRoute. Anstatt HTTP-API-Aufrufe an KI-Anbieter abzufangen, **startet ACP CLI-Agenten als untergeordnete Prozesse** und übermittelt Prompts über deren native Schnittstelle.
+ACP (Agent Client Protocol) ist ein **„CLI-as-Backend“-Transport** für Pusula. Anstatt HTTP-API-Aufrufe an KI-Anbieter abzufangen, **startet ACP CLI-Agenten als untergeordnete Prozesse** und übermittelt Prompts über deren native Schnittstelle.
 
 ### Warum ACP verwenden?
 
@@ -71,7 +71,7 @@ ACP erkennt auf Ihrem System installierte CLI-Agenten automatisch. Es ist keine 
 
 ### Schritt 3: ACP-Transport verwenden
 
-Nach der Erkennung kann ACP als Transport für jeden unterstützten Anbieter verwendet werden. OmniRoute verwendet ACP automatisch, wenn die CLI verfügbar ist.
+Nach der Erkennung kann ACP als Transport für jeden unterstützten Anbieter verwendet werden. Pusula verwendet ACP automatisch, wenn die CLI verfügbar ist.
 
 ---
 
@@ -81,7 +81,7 @@ Nach der Erkennung kann ACP als Transport für jeden unterstützten Anbieter ver
 
 ```
 ┌─────────────────┐
-│  OmniRoute      │
+│  Pusula      │
 │  (HTTP-Proxy)   │
 └────────┬────────┘
          │
@@ -137,7 +137,7 @@ interface CliAgentInfo {
   versionCommand: string; // Befehl zur Versionserkennung
   version: string | null; // Erkannte Version (null, falls nicht installiert)
   installed: boolean; // Gibt an, ob der Agent installiert ist
-  providerAlias: string; // Anbieter-ID in OmniRoute
+  providerAlias: string; // Anbieter-ID in Pusula
   spawnArgs: string[]; // Beim Start zu übergebende Argumente
   protocol: "stdio" | "http"; // Kommunikationsprotokoll
   isCustom?: boolean; // Gibt an, ob dies ein benutzerdefinierter Agent ist
@@ -461,7 +461,7 @@ await acpManager.sendPrompt(sessionId, prompt, 300000); // 5 Minuten
 **Lösungen**:
 
 1. **Dateiberechtigungen überprüfen**: `chmod +x /usr/local/bin/claude`
-2. **Eigentümer überprüfen**: Stellen Sie sicher, dass OmniRoute über Lese- und Ausführungsberechtigungen verfügt
+2. **Eigentümer überprüfen**: Stellen Sie sicher, dass Pusula über Lese- und Ausführungsberechtigungen verfügt
 3. **SELinux/AppArmor überprüfen**: Kann das Starten von Prozessen blockieren
 
 ---

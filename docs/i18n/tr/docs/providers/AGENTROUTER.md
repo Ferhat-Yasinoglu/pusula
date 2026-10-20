@@ -8,7 +8,7 @@
 
 ## Hızlı başlangıç — yerel `agentrouter` sağlayıcısını kullanın (önerilen)
 
-Çoğu kullanıcı için **özel bir kurulum gerekmez**. OmniRoute, Claude Code bağlantı biçiminin tamamı önceden yerleşik olarak sunulan bir `agentrouter` sağlayıcısıyla birlikte gelir (bkz. `open-sse/config/providerRegistry.ts` → `agentrouter`). Kullanmak için:
+Çoğu kullanıcı için **özel bir kurulum gerekmez**. Pusula, Claude Code bağlantı biçiminin tamamı önceden yerleşik olarak sunulan bir `agentrouter` sağlayıcısıyla birlikte gelir (bkz. `open-sse/config/providerRegistry.ts` → `agentrouter`). Kullanmak için:
 
 1. **Kontrol Paneli → Sağlayıcılar → Sağlayıcı Ekle** bölümünü açın.
 2. Listeden **AgentRouter** seçeneğini belirleyin.
@@ -22,18 +22,18 @@ Bu kılavuzun geri kalanında **gelişmiş yöntem**, yani `anthropic-compatible
 
 ## Gelişmiş: Claude Code uyumlu sağlayıcı türü üzerinden bağlanma
 
-OmniRoute, AgentRouter'ı (ve benzer aktarma hizmetlerini) doğru bağlantı biçimiyle Anthropic Messages API'sini kullanan **Claude Code uyumlu** sağlayıcı türü (`anthropic-compatible-cc-*`) aracılığıyla da destekler. `https://agentrouter.org` adresine yönlendirilen genel bir `openai-compatible-chat` sağlayıcısı **çalışmaz** — üst sistemdeki WAF, Claude Code'dan geliyor gibi görünmeyen istekleri reddeder.
+Pusula, AgentRouter'ı (ve benzer aktarma hizmetlerini) doğru bağlantı biçimiyle Anthropic Messages API'sini kullanan **Claude Code uyumlu** sağlayıcı türü (`anthropic-compatible-cc-*`) aracılığıyla da destekler. `https://agentrouter.org` adresine yönlendirilen genel bir `openai-compatible-chat` sağlayıcısı **çalışmaz** — üst sistemdeki WAF, Claude Code'dan geliyor gibi görünmeyen istekleri reddeder.
 
 ---
 
 ## Ön koşullar
 
 - Bir AgentRouter hesabı ve API anahtarı. Yeni kayıtlar, projenin [README](../README.md) dosyasındaki satış ortaklığı bağlantısı üzerinden ücretsiz kredi alır.
-- `ENABLE_CC_COMPATIBLE_PROVIDER` özellik bayrağı etkinleştirilmiş olarak çalışan OmniRoute (aşağıya bakın).
+- `ENABLE_CC_COMPATIBLE_PROVIDER` özellik bayrağı etkinleştirilmiş olarak çalışan Pusula (aşağıya bakın).
 
 ## 1. CC uyumlu sağlayıcı türünü etkinleştirin
 
-Claude Code uyumlu sağlayıcı türü, resmî Claude Code istemcisini yakından taklit eden trafik gönderdiği için bir özellik bayrağının arkasında tutulur. OmniRoute'u başlatmadan önce bir ortam değişkeni ayarlayarak etkinleştirin:
+Claude Code uyumlu sağlayıcı türü, resmî Claude Code istemcisini yakından taklit eden trafik gönderdiği için bir özellik bayrağının arkasında tutulur. Pusula'u başlatmadan önce bir ortam değişkeni ayarlayarak etkinleştirin:
 
 ```bash
 ENABLE_CC_COMPATIBLE_PROVIDER=true
@@ -42,12 +42,12 @@ ENABLE_CC_COMPATIBLE_PROVIDER=true
 Docker örneği:
 
 ```bash
-docker run -d --name omniroute \
+docker run -d --name pusula \
   --restart unless-stopped \
   -p 20128:20128 \
-  -v omniroute-data:/app/data \
+  -v pusula-data:/app/data \
   -e ENABLE_CC_COMPATIBLE_PROVIDER=true \
-  diegosouzapw/omniroute:latest
+  ferhat-yasinoglu/pusula:latest
 ```
 
 Yeniden başlatmanın ardından kontrol paneli, mevcut OpenAI uyumlu ve Anthropic uyumlu akışlara ek olarak **Claude Code Uyumlu Ekle** seçeneğini gösterir.
@@ -140,7 +140,7 @@ yalnızca belirli bir model alt kümesine (ör. `claude-opus-4-6`) izin verir. A
 geçerli olsa bile diğer model kimlikleri `unauthorized_client_error` döndürür.
 Planınızın hangi modelleri kapsadığını AgentRouter kontrol panelinden denetleyin.
 
-**omniroute günlüklerinde `Invalid JSON response from provider (reset after Ns)`** —
+**pusula günlüklerinde `Invalid JSON response from provider (reset after Ns)`** —
 Yukarı akış JSON olmayan bir gövde döndürdü (genellikle WAF'tan gelen bir HTML hata
 sayfası). Bu genellikle isteğin AgentRouter arka ucuna hiç ulaşmadığı anlamına gelir
 — sağlayıcı kimliğinin `anthropic-compatible-cc-` ile başladığını yeniden kontrol
@@ -156,7 +156,7 @@ elle yapılmış eski bir `anthropic-compatible-*` (`cc` olmayan) veya
 kimliklerinin sahibi olabilir (ve combo'lar buna düğüm kimliğiyle başvurabilir);
 dolayısıyla trafik, doğru wire image ile birlikte gelen yerleşik `agentrouter`
 sağlayıcısı yerine bu sağlayıcıya yönlendirilir — bu sağlayıcı genel bir User-Agent
-gönderir ve reddedilir. Modelin gerçekte nereye çözümlendiğini omniroute günlüklerinde
+gönderir ve reddedilir. Modelin gerçekte nereye çözümlendiğini pusula günlüklerinde
 kontrol edin (`ROUTING` etiketi `agentrouter/<model> → <providerId>/<model>`
 ifadesini gösterir); `<providerId>`, `agentrouter` değilse yerel sağlayıcıda
 birleştirin: combo'ları `agentrouter/<model>` (providerId `agentrouter`) hedefine

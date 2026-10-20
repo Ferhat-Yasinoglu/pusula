@@ -36,7 +36,7 @@
 از `buildErrorBody()` استفاده کنید — پاکسازی درون آن تعبیه شده است:
 
 ```ts
-import { buildErrorBody } from "@omniroute/open-sse/utils/error.ts";
+import { buildErrorBody } from "@pusula/open-sse/utils/error.ts";
 
 export async function POST(req: Request) {
   try {
@@ -60,7 +60,7 @@ import {
   unavailableResponse, // Retry-After را اضافه میکند
   providerCircuitOpenResponse,
   modelCooldownResponse,
-} from "@omniroute/open-sse/utils/error.ts";
+} from "@pusula/open-sse/utils/error.ts";
 ```
 
 همهٔ این موارد، مرز استاندارد خطای عمومی را اعمال میکنند. `errorResponse`، `writeStreamError` و
@@ -71,7 +71,7 @@ import {
 هنگامی که نمیتوانید از توابع کمکی بالا استفاده کنید (برای مثال، وقتی ساختار پاسخ توسط یک پروتکل بالادستی مانند Connect-RPC تعیین شده است)، `sanitizeErrorMessage` را مستقیماً وارد کنید:
 
 ```ts
-import { sanitizeErrorMessage } from "@omniroute/open-sse/utils/error.ts";
+import { sanitizeErrorMessage } from "@pusula/open-sse/utils/error.ts";
 
 const body = JSON.stringify({
   error: {
@@ -171,7 +171,7 @@ const safe = String(err).split("\n")[0];
 3. محدودیت عمق: تودرتویی فراتر از 4 سطح با رشتهٔ `"[truncated]"` جایگزین میشود.
 4. آرایهها به 32 عنصر محدود میشوند.
 
-فقط محلهای فراخوانی دارای بدنهٔ خطای تجزیهشده از ارائهدهنده باید `upstreamDetails` را ارسال کنند. خطاهای داخلی OmniRoute
+فقط محلهای فراخوانی دارای بدنهٔ خطای تجزیهشده از ارائهدهنده باید `upstreamDetails` را ارسال کنند. خطاهای داخلی Pusula
 (شکست تجزیهٔ SSE، محتوای خالی، مسدودسازیهای guardrail) نباید آن را دربر بگیرند.
 
 هرگز `err.stack` یا `err.message` خام، یا هیچ رشتهای از یک استثنای زمان اجرا را به
@@ -182,7 +182,7 @@ const safe = String(err).split("\n")[0];
 بازیابی خودکار کلاینت لازم است حفظ میکند، اما این عبور بایتبهبایت نیست: پاکساز بازگشتی همیشه
 پیش از سریالسازی اجرا میشود. بدنههای چرخهای، دارای BigInt یا دارای `toJSON()` مخرب، بهصورت امن رد میشوند و
 واجد شرایط عبور نیستند. OCR و moderation نیز همین قاعده را اعمال میکنند؛ بدنههای upstream غیر JSON، خالی یا
-دارای برچسب نادرست به پوشش خطای استاندارد JSON در OmniRoute تبدیل میشوند.
+دارای برچسب نادرست به پوشش خطای استاندارد JSON در Pusula تبدیل میشوند.
 
 ## محدودیت شناختهشدهٔ CodeQL: پاکسازهای سفارشی شناسایی نمیشوند
 

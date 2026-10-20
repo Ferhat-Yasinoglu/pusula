@@ -12,7 +12,7 @@ konzipiert und akzeptiert daher nur Datenverkehr, der dem Übertragungsformat vo
 
 ## Schnellstart — den nativen `agentrouter`-Provider verwenden (empfohlen)
 
-Für die meisten Benutzer ist **keine besondere Einrichtung erforderlich**. OmniRoute enthält einen integrierten
+Für die meisten Benutzer ist **keine besondere Einrichtung erforderlich**. Pusula enthält einen integrierten
 `agentrouter`-Provider, in dem das vollständige Übertragungsformat von Claude Code bereits hinterlegt ist (siehe
 `open-sse/config/providerRegistry.ts` → `agentrouter`). So verwenden Sie ihn:
 
@@ -34,7 +34,7 @@ die Basis-URL, den Chat-Pfad oder den Header-Satz überschreiben möchten.
 
 ## Fortgeschritten: Verbindung über den Claude-Code-kompatiblen Provider-Typ
 
-OmniRoute unterstützt AgentRouter (und ähnliche Relay-Dienste) auch über den
+Pusula unterstützt AgentRouter (und ähnliche Relay-Dienste) auch über den
 **Claude-Code-kompatiblen** Provider-Typ (`anthropic-compatible-cc-*`), der die
 Anthropic Messages API mit dem korrekten Übertragungsformat verwendet. Ein generischer
 `openai-compatible-chat`-Provider, der auf `https://agentrouter.org` verweist, funktioniert
@@ -47,14 +47,14 @@ Code aussehen.
 
 - Ein AgentRouter-Konto und ein API-Schlüssel. Neuanmeldungen erhalten über den Affiliate-Link
   in der Projekt-[README](../README.md) kostenloses Guthaben.
-- Eine laufende OmniRoute-Instanz, bei der das Feature-Flag `ENABLE_CC_COMPATIBLE_PROVIDER` aktiviert ist
+- Eine laufende Pusula-Instanz, bei der das Feature-Flag `ENABLE_CC_COMPATIBLE_PROVIDER` aktiviert ist
   (siehe unten).
 
 ## 1. Den CC-kompatiblen Provider-Typ aktivieren
 
 Der Claude-Code-kompatible Provider-Typ ist durch ein Feature-Flag geschützt, da er
 Datenverkehr sendet, der dem offiziellen Claude-Code-Client sehr ähnlich ist. Aktivieren Sie ihn,
-indem Sie vor dem Start von OmniRoute eine Umgebungsvariable setzen:
+indem Sie vor dem Start von Pusula eine Umgebungsvariable setzen:
 
 ```bash
 ENABLE_CC_COMPATIBLE_PROVIDER=true
@@ -63,12 +63,12 @@ ENABLE_CC_COMPATIBLE_PROVIDER=true
 Docker-Beispiel:
 
 ```bash
-docker run -d --name omniroute \
+docker run -d --name pusula \
   --restart unless-stopped \
   -p 20128:20128 \
-  -v omniroute-data:/app/data \
+  -v pusula-data:/app/data \
   -e ENABLE_CC_COMPATIBLE_PROVIDER=true \
-  diegosouzapw/omniroute:latest
+  ferhat-yasinoglu/pusula:latest
 ```
 
 Nach dem Neustart zeigt das Dashboard zusätzlich zu den vorhandenen OpenAI-kompatiblen und
@@ -165,7 +165,7 @@ AgentRouter-Tarife erlauben nur eine Teilmenge der Modelle (z. B.
 obwohl der Schlüssel gültig ist. Prüfen Sie im AgentRouter-Dashboard, welche
 Modelle Ihr Tarif abdeckt.
 
-**`Invalid JSON response from provider (reset after Ns)` in den omniroute-Logs** —
+**`Invalid JSON response from provider (reset after Ns)` in den pusula-Logs** —
 Der Upstream hat einen Nicht-JSON-Body zurückgegeben (üblicherweise eine
 HTML-Fehlerseite der WAF). Dies bedeutet in der Regel, dass die Anfrage das
 AgentRouter-Backend nie erreicht hat — prüfen Sie erneut, ob die Provider-ID mit
@@ -182,7 +182,7 @@ kann er die Modell-IDs `agentrouter/<model>` beanspruchen (und Combos können ü
 die Knoten-ID auf ihn verweisen), sodass der Datenverkehr an diesen Provider
 geleitet wird — der einen generischen User-Agent sendet und abgelehnt wird — statt
 an den integrierten `agentrouter`-Provider, der bereits das korrekte Wire Image
-bereitstellt. Prüfen Sie in den omniroute-Logs, wohin das Modell tatsächlich
+bereitstellt. Prüfen Sie in den pusula-Logs, wohin das Modell tatsächlich
 aufgelöst wird (das Tag `ROUTING` zeigt
 `agentrouter/<model> → <providerId>/<model>`); wenn `<providerId>` nicht
 `agentrouter` ist, konsolidieren Sie die Konfiguration auf den nativen Provider:

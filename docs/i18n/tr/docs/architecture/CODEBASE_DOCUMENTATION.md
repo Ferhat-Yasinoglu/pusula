@@ -1,4 +1,4 @@
-# OmniRoute Codebase Documentation (Türkçe)
+# Pusula Codebase Documentation (Türkçe)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../architecture/CODEBASE_DOCUMENTATION.md) · 🇪🇹 [am](../../../am/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇸🇦 [ar](../../../ar/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇦🇿 [az](../../../az/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇧🇬 [bg](../../../bg/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇧🇩 [bn](../../../bn/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇧🇦 [bs](../../../bs/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇨🇿 [cs](../../../cs/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇩🇰 [da](../../../da/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇩🇪 [de](../../../de/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇬🇷 [el](../../../el/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇪🇸 [es](../../../es/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇪🇪 [et](../../../et/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇷 [fa](../../../fa/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇫🇮 [fi](../../../fi/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇫🇷 [fr](../../../fr/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇪 [ga](../../../ga/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [gu](../../../gu/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇳🇬 [ha](../../../ha/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇱 [he](../../../he/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [hi](../../../hi/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇭🇷 [hr](../../../hr/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇭🇺 [hu](../../../hu/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇦🇲 [hy](../../../hy/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇩 [id](../../../id/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇳🇬 [ig](../../../ig/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇹 [it](../../../it/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇯🇵 [ja](../../../ja/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇬🇪 [ka](../../../ka/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇰🇭 [km](../../../km/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [kn](../../../kn/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇰🇷 [ko](../../../ko/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇱🇹 [lt](../../../lt/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇱🇻 [lv](../../../lv/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [ml](../../../ml/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [mr](../../../mr/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇲🇾 [ms](../../../ms/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇲🇹 [mt](../../../mt/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇲🇲 [my](../../../my/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇳🇵 [ne](../../../ne/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇳🇱 [nl](../../../nl/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇳🇴 [no](../../../no/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [or](../../../or/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [pa](../../../pa/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇵🇭 [phi](../../../phi/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇵🇱 [pl](../../../pl/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇵🇹 [pt](../../../pt/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇷🇴 [ro](../../../ro/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇷🇺 [ru](../../../ru/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇱🇰 [si](../../../si/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇸🇰 [sk](../../../sk/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇸🇮 [sl](../../../sl/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇷🇸 [sr](../../../sr/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇸🇪 [sv](../../../sv/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇰🇪 [sw](../../../sw/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [ta](../../../ta/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇮🇳 [te](../../../te/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇹🇭 [th](../../../th/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇵🇰 [ur](../../../ur/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇺🇿 [uz](../../../uz/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇻🇳 [vi](../../../vi/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇳🇬 [yo](../../../yo/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/architecture/CODEBASE_DOCUMENTATION.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/architecture/CODEBASE_DOCUMENTATION.md)
 
@@ -6,7 +6,7 @@
 
 > **Sürüm:** v3.8.51
 > **Son güncelleme:** 2026-06-28
-> **Hedef kitle:** OmniRoute'a katkıda bulunan veya onun üzerinde entegrasyonlar geliştiren mühendisler.
+> **Hedef kitle:** Pusula'a katkıda bulunan veya onun üzerinde entegrasyonlar geliştiren mühendisler.
 >
 > Üst düzey mimari diyagramlar ve her alt sistemin arkasındaki gerekçeler için
 > [ARCHITECTURE.md](./ARCHITECTURE.md) dosyasını okuyun. Belirli alt sistemler
@@ -37,22 +37,22 @@ anlayabilmesi ve yeni modüller oluşturmadan kodu nereye ekleyeceğini bilmesi 
 Yol takma adları (`tsconfig.json`):
 
 - `@/*` → `src/*`
-- `@omniroute/open-sse` → `open-sse/index.ts`
-- `@omniroute/open-sse/*` → `open-sse/*`
+- `@pusula/open-sse` → `open-sse/index.ts`
+- `@pusula/open-sse/*` → `open-sse/*`
 
 Varsayılan HTTP portu: **`20128`** (API ve pano aynı süreci paylaşır). Veri
-dizini, varsayılan değeri `~/.omniroute/` olan `DATA_DIR` ortam değişkenidir.
+dizini, varsayılan değeri `~/.pusula/` olan `DATA_DIR` ortam değişkenidir.
 
 ---
 
 ## 2. Depo Düzeni
 
 ```
-OmniRoute/
+Pusula/
 ├── src/                  Next.js uygulaması (App Router, kütüphaneler, alan, sunucu, paylaşılanlar)
-├── open-sse/             Akış motoru çalışma alanı (@omniroute/open-sse)
+├── open-sse/             Akış motoru çalışma alanı (@pusula/open-sse)
 ├── electron/             Masaüstü sarmalayıcısı (Electron 41 ana süreç + preload)
-├── bin/                  CLI giriş noktaları (omniroute, reset-password)
+├── bin/                  CLI giriş noktaları (pusula, reset-password)
 ├── tests/                Birim, entegrasyon, e2e, protocols-e2e, çevirici, güvenlik, fikstürler
 ├── scripts/              Derleme, eşitleme, denetim, geçiş ve çalışma zamanı yardımcı betikleri
 ├── docs/                 Herkese açık belgeler (bu dizin)
@@ -298,7 +298,7 @@ Tablo, gerçek dizinleri ve dikkat çeken üst düzey dosyaları gruplandırır.
 | `runtime/`        | Çalışma zamanı özellik algılama                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | `search/`         | `executeWebSearch.ts`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `services/`       | Gömülü hizmetler çerçevesi: `ServiceSupervisor.ts` (işlem kilidi, halka arabellek ve sistem durumu denetleyicisi içeren genel alt süreç denetleyicisi), `bootstrap.ts` (süreç düzeyinde kayıt ve otomatik başlatma), `registry.ts` (araç → denetleyici eşlemesi), `apiKey.ts` (AES-256-GCM anahtar deposu), `modelSync.ts` (düzenli model senkronizasyonu), `ringBuffer.ts` (5 MB dairesel günlük arabelleği), `healthCheck.ts` (HTTP sistem durumu yoklaması), `types.ts`, `embedWsProxy.ts` (WebSocket proxy'si), `installers/{ninerouter,cliproxy}.ts`. Bkz. `docs/frameworks/EMBEDDED-SERVICES.md`                                                                                                                    |
-| `agentSkills/`    | Ajan Becerileri kataloğu + oluşturucu: `catalog.ts` (getCatalog/getSkillById/filterCatalog/computeCoverage), `generator.ts` (generateAgentSkills → `skills/{id}/SKILL.md` dosyasına yazar), `openapiParser.ts` (OpenAPI belirtiminden REST uç noktalarını çıkarır), `cliRegistryParser.ts` (bin/cli-registry'den CLI alt komutlarını çıkarır), `schemas.ts` (Zod: AgentSkillSchema, SkillCoverageSchema, ListQuerySchema, GenerateBodySchema), `types.ts` (AgentSkill, SkillCoverage, SkillMarkdown, GeneratorReport). REST rotaları (`/api/agent-skills/*`), MCP araçları (`omniroute_agent_skills_*`) ve A2A becerisi `list-capabilities` tarafından kullanılır. Bkz. [AGENT-SKILLS.md](../frameworks/AGENT-SKILLS.md). |
+| `agentSkills/`    | Ajan Becerileri kataloğu + oluşturucu: `catalog.ts` (getCatalog/getSkillById/filterCatalog/computeCoverage), `generator.ts` (generateAgentSkills → `skills/{id}/SKILL.md` dosyasına yazar), `openapiParser.ts` (OpenAPI belirtiminden REST uç noktalarını çıkarır), `cliRegistryParser.ts` (bin/cli-registry'den CLI alt komutlarını çıkarır), `schemas.ts` (Zod: AgentSkillSchema, SkillCoverageSchema, ListQuerySchema, GenerateBodySchema), `types.ts` (AgentSkill, SkillCoverage, SkillMarkdown, GeneratorReport). REST rotaları (`/api/agent-skills/*`), MCP araçları (`pusula_agent_skills_*`) ve A2A becerisi `list-capabilities` tarafından kullanılır. Bkz. [AGENT-SKILLS.md](../frameworks/AGENT-SKILLS.md). |
 | `skills/`         | Beceri çerçevesi: `registry.ts`, `executor.ts`, `interception.ts`, `injection.ts`, `sandbox.ts`, `custom.ts`, `hybrid.ts`, `builtins.ts`, `a2a.ts`, `providerSettings.ts`, `schemas.ts`, `skillssh.ts`, `types.ts`; ayrıca `builtin/browser.ts`                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | `spend/`          | `batchWriter.ts` (arkadan yazma arabelleği)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | `sync/`           | `bundle.ts`, `tokens.ts` (Bulut Senkronizasyonu)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
@@ -384,7 +384,7 @@ Saf iş mantığı; G/Ç içermez. Rotalar ve işleyiciler tarafından içe akta
 | `degradation.ts`                           | Düşürülmüş mod geçişleri                              |
 | `providerExpiration.ts`                    | Süresi dolmuş hesap/anahtar algılama                  |
 | `quotaCache.ts`                            | Önbelleğe alınmış kota kararları                      |
-| `responses.ts`, `omnirouteResponseMeta.ts` | Yanıt biçimi yardımcıları                             |
+| `responses.ts`, `pusulaResponseMeta.ts` | Yanıt biçimi yardımcıları                             |
 | `configAudit.ts`                           | Yapılandırma değişikliği denetimi                     |
 | `assessment/`                              | Model değerlendirmesi (RFC'ye göre, kısmen uygulandı) |
 | `types.ts`                                 | Paylaşılan etki alanı türleri                         |
@@ -436,7 +436,7 @@ Odaklanmış alt dizinlere ayrılmıştır:
 
 ## 4. `open-sse/` — Akış motoru çalışma alanı
 
-`@omniroute/open-sse` olarak yayımlanan ayrı bir npm çalışma alanıdır. İstek
+`@pusula/open-sse` olarak yayımlanan ayrı bir npm çalışma alanıdır. İstek
 işleme, yürütücüler, çeviriciler, servisler, dönüştürücü ve MCP sunucusunu yönetir.
 
 ```
@@ -599,7 +599,7 @@ GitHub sürüm akışına yönlendirilen `electron-updater` aracılığıyla ger
 
 ```
 bin/
-├── omniroute.mjs           Ana CLI giriş noktası (Node ESM)
+├── pusula.mjs           Ana CLI giriş noktası (Node ESM)
 ├── reset-password.mjs      Yönetim parolasını CLI üzerinden sıfırlar
 ├── mcp-server.mjs          MCP sunucusu başlatıcısı (stdio)
 ├── nodeRuntimeSupport.mjs  Node sürümü koruması
@@ -622,8 +622,8 @@ bin/
 
 `package.json` → `bin` içinde iki çalıştırılabilir dosya sunulur:
 
-- `omniroute` → `bin/omniroute.mjs`
-- `omniroute-reset-password` → `bin/reset-password.mjs`
+- `pusula` → `bin/pusula.mjs`
+- `pusula-reset-password` → `bin/reset-password.mjs`
 
 ---
 
@@ -779,7 +779,7 @@ Bkz. [A2A-SERVER.md § Yeni Bir Beceri Ekleme](../frameworks/A2A-SERVER.md). Bec
 
 - **Kod stili**: 2 boşluklu girinti, çift tırnak, 100 karakter genişliği, noktalı virgüller,
   `es5` son virgülleri — Prettier tarafından `lint-staged` aracılığıyla uygulanır.
-- **İçe aktarmalar**: harici → dahili (`@/`, `@omniroute/open-sse`) → göreli.
+- **İçe aktarmalar**: harici → dahili (`@/`, `@pusula/open-sse`) → göreli.
 - **Adlandırma**: dosyalar `camelCase` veya `kebab-case`, bileşenler `PascalCase`,
   sabitler `UPPER_SNAKE`.
 - **ESLint**: `no-eval`, `no-implied-eval`, `no-new-func` = her yerde `error`;

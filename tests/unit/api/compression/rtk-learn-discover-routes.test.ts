@@ -19,7 +19,7 @@ import os from "node:os";
 import path from "node:path";
 import { cleanupTempDataDir } from "../../../_setup/tempDataDir.ts";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-rtk-ld-routes-"));
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-rtk-ld-routes-"));
 const ORIGINAL_DATA_DIR = process.env.DATA_DIR;
 const ORIGINAL_INITIAL_PASSWORD = process.env.INITIAL_PASSWORD;
 process.env.DATA_DIR = TEST_DATA_DIR;

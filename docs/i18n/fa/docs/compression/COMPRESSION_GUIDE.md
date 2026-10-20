@@ -1,4 +1,4 @@
-# 🗜️ Prompt Compression Guide — OmniRoute (فارسی)
+# 🗜️ Prompt Compression Guide — Pusula (فارسی)
 
 🌐 **Languages:** 🇺🇸 [English](../../../../compression/COMPRESSION_GUIDE.md) · 🇪🇹 [am](../../../am/docs/compression/COMPRESSION_GUIDE.md) · 🇸🇦 [ar](../../../ar/docs/compression/COMPRESSION_GUIDE.md) · 🇦🇿 [az](../../../az/docs/compression/COMPRESSION_GUIDE.md) · 🇧🇬 [bg](../../../bg/docs/compression/COMPRESSION_GUIDE.md) · 🇧🇩 [bn](../../../bn/docs/compression/COMPRESSION_GUIDE.md) · 🇧🇦 [bs](../../../bs/docs/compression/COMPRESSION_GUIDE.md) · 🇨🇿 [cs](../../../cs/docs/compression/COMPRESSION_GUIDE.md) · 🇩🇰 [da](../../../da/docs/compression/COMPRESSION_GUIDE.md) · 🇩🇪 [de](../../../de/docs/compression/COMPRESSION_GUIDE.md) · 🇬🇷 [el](../../../el/docs/compression/COMPRESSION_GUIDE.md) · 🇪🇸 [es](../../../es/docs/compression/COMPRESSION_GUIDE.md) · 🇪🇪 [et](../../../et/docs/compression/COMPRESSION_GUIDE.md) · 🇫🇮 [fi](../../../fi/docs/compression/COMPRESSION_GUIDE.md) · 🇫🇷 [fr](../../../fr/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇪 [ga](../../../ga/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [gu](../../../gu/docs/compression/COMPRESSION_GUIDE.md) · 🇳🇬 [ha](../../../ha/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇱 [he](../../../he/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [hi](../../../hi/docs/compression/COMPRESSION_GUIDE.md) · 🇭🇷 [hr](../../../hr/docs/compression/COMPRESSION_GUIDE.md) · 🇭🇺 [hu](../../../hu/docs/compression/COMPRESSION_GUIDE.md) · 🇦🇲 [hy](../../../hy/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇩 [id](../../../id/docs/compression/COMPRESSION_GUIDE.md) · 🇳🇬 [ig](../../../ig/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇹 [it](../../../it/docs/compression/COMPRESSION_GUIDE.md) · 🇯🇵 [ja](../../../ja/docs/compression/COMPRESSION_GUIDE.md) · 🇬🇪 [ka](../../../ka/docs/compression/COMPRESSION_GUIDE.md) · 🇰🇭 [km](../../../km/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [kn](../../../kn/docs/compression/COMPRESSION_GUIDE.md) · 🇰🇷 [ko](../../../ko/docs/compression/COMPRESSION_GUIDE.md) · 🇱🇹 [lt](../../../lt/docs/compression/COMPRESSION_GUIDE.md) · 🇱🇻 [lv](../../../lv/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [ml](../../../ml/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [mr](../../../mr/docs/compression/COMPRESSION_GUIDE.md) · 🇲🇾 [ms](../../../ms/docs/compression/COMPRESSION_GUIDE.md) · 🇲🇹 [mt](../../../mt/docs/compression/COMPRESSION_GUIDE.md) · 🇲🇲 [my](../../../my/docs/compression/COMPRESSION_GUIDE.md) · 🇳🇵 [ne](../../../ne/docs/compression/COMPRESSION_GUIDE.md) · 🇳🇱 [nl](../../../nl/docs/compression/COMPRESSION_GUIDE.md) · 🇳🇴 [no](../../../no/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [or](../../../or/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [pa](../../../pa/docs/compression/COMPRESSION_GUIDE.md) · 🇵🇭 [phi](../../../phi/docs/compression/COMPRESSION_GUIDE.md) · 🇵🇱 [pl](../../../pl/docs/compression/COMPRESSION_GUIDE.md) · 🇵🇹 [pt](../../../pt/docs/compression/COMPRESSION_GUIDE.md) · 🇧🇷 [pt-BR](../../../pt-BR/docs/compression/COMPRESSION_GUIDE.md) · 🇷🇴 [ro](../../../ro/docs/compression/COMPRESSION_GUIDE.md) · 🇷🇺 [ru](../../../ru/docs/compression/COMPRESSION_GUIDE.md) · 🇱🇰 [si](../../../si/docs/compression/COMPRESSION_GUIDE.md) · 🇸🇰 [sk](../../../sk/docs/compression/COMPRESSION_GUIDE.md) · 🇸🇮 [sl](../../../sl/docs/compression/COMPRESSION_GUIDE.md) · 🇷🇸 [sr](../../../sr/docs/compression/COMPRESSION_GUIDE.md) · 🇸🇪 [sv](../../../sv/docs/compression/COMPRESSION_GUIDE.md) · 🇰🇪 [sw](../../../sw/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [ta](../../../ta/docs/compression/COMPRESSION_GUIDE.md) · 🇮🇳 [te](../../../te/docs/compression/COMPRESSION_GUIDE.md) · 🇹🇭 [th](../../../th/docs/compression/COMPRESSION_GUIDE.md) · 🇹🇷 [tr](../../../tr/docs/compression/COMPRESSION_GUIDE.md) · 🇺🇦 [uk-UA](../../../uk-UA/docs/compression/COMPRESSION_GUIDE.md) · 🇵🇰 [ur](../../../ur/docs/compression/COMPRESSION_GUIDE.md) · 🇺🇿 [uz](../../../uz/docs/compression/COMPRESSION_GUIDE.md) · 🇻🇳 [vi](../../../vi/docs/compression/COMPRESSION_GUIDE.md) · 🇳🇬 [yo](../../../yo/docs/compression/COMPRESSION_GUIDE.md) · 🇨🇳 [zh-CN](../../../zh-CN/docs/compression/COMPRESSION_GUIDE.md) · 🇹🇼 [zh-TW](../../../zh-TW/docs/compression/COMPRESSION_GUIDE.md)
 
@@ -8,7 +8,7 @@
 
 ## نمای کلی
 
-OmniRoute یک خط لولهٔ ماژولار برای فشردهسازی پرامپت پیادهسازی میکند که **بهصورت پیشدستانه**، پیش از رسیدن درخواستها به ارائهدهندگان بالادستی اجرا میشود. این یعنی صرفهجویی در توکنها بهشکلی شفاف انجام میشود — نیازی به تغییر گردش کار شما نیست.
+Pusula یک خط لولهٔ ماژولار برای فشردهسازی پرامپت پیادهسازی میکند که **بهصورت پیشدستانه**، پیش از رسیدن درخواستها به ارائهدهندگان بالادستی اجرا میشود. این یعنی صرفهجویی در توکنها بهشکلی شفاف انجام میشود — نیازی به تغییر گردش کار شما نیست.
 
 ```
 درخواست کلاینت
@@ -118,15 +118,15 @@ RTK -> Caveman
 
 ## محاسبات صرفهجویی بالادستی
 
-OmniRoute صرفهجویی ناشی از فشردهسازی را بر اساس دو منبع مستند میکند: بنچمارکهای پروژههای بالادستی و
-ترکیب موتورهای خود OmniRoute.
+Pusula صرفهجویی ناشی از فشردهسازی را بر اساس دو منبع مستند میکند: بنچمارکهای پروژههای بالادستی و
+ترکیب موتورهای خود Pusula.
 
 | منبع    | عدد README بالادستی استفادهشده در اینجا                                                                       |
 | ------- | ------------------------------------------------------------------------------------------------------------- |
 | Caveman | `~75%` توکن خروجی کمتر، `65%` میانگین صرفهجویی خروجی در بنچمارک، بازه `22-87%` و ابزار فشردهسازی ورودی `~46%` |
 | RTK     | صرفهجویی `60-90%` در خروجی فرمان؛ نشست نمونه با `~118,000 -> ~23,900` توکن، یا `79.7%` صرفهجویی (`~80%`)      |
 
-برای بارهای همپوشان ابزار/زمینه، ترکیب پیشفرض OmniRoute موتورها را بهصورت پشتهای اجرا میکند:
+برای بارهای همپوشان ابزار/زمینه، ترکیب پیشفرض Pusula موتورها را بهصورت پشتهای اجرا میکند:
 
 ```txt
 RTK -> Caveman
@@ -210,7 +210,7 @@ Combo: "free-tier-fallback"
 
 ### بازنویسی به ازای هر درخواست
 
-هدر درخواست `x-omniroute-compression` را برای بازنویسی طرح فشردهسازی برای یک درخواست واحد ارسال کنید. این بالاترین اولویت را دارد — بازنویسی ترکیب مسیریابی، پروفایل فعال، فعالسازی خودکار و پیشفرض پنل را نادیده میگیرد. مقادیر ناشناخته نادیده گرفته میشوند (درخواست هرگز رد نمیشود) و سوئیچ اصلی سراسری هنوز همه چیز را کنترل میکند: وقتی فشردهسازی به صورت سراسری خاموش است، هدر نمیتواند آن را روشن کند. مقادیر:
+هدر درخواست `x-pusula-compression` را برای بازنویسی طرح فشردهسازی برای یک درخواست واحد ارسال کنید. این بالاترین اولویت را دارد — بازنویسی ترکیب مسیریابی، پروفایل فعال، فعالسازی خودکار و پیشفرض پنل را نادیده میگیرد. مقادیر ناشناخته نادیده گرفته میشوند (درخواست هرگز رد نمیشود) و سوئیچ اصلی سراسری هنوز همه چیز را کنترل میکند: وقتی فشردهسازی به صورت سراسری خاموش است، هدر نمیتواند آن را روشن کند. مقادیر:
 
 | مقدار         | اثر                                                                                                               |
 | ------------- | ----------------------------------------------------------------------------------------------------------------- |
@@ -223,7 +223,7 @@ Combo: "free-tier-fallback"
 
 بدون `allow-lossy`، `engine:<id>` یا یک ترکیب نامگذاری شده، موتورهای از دست دهنده اعمال نمیشوند. درخواست همچنان حذف تکرار جلسه و تاشو فضای خالی را دریافت میکند زمانی که فشردهسازی روشن است.
 
-طرح اعمال شده در هدر پاسخ `X-OmniRoute-Compression: <mode>; source=<source>` بازتاب داده میشود، که در آن `<source>` یکی از `request-header`، `routing-override`، `active-profile`، `auto-trigger`، `default` یا `off` است.
+طرح اعمال شده در هدر پاسخ `X-Pusula-Compression: <mode>; source=<source>` بازتاب داده میشود، که در آن `<source>` یکی از `request-header`، `routing-override`، `active-profile`، `auto-trigger`، `default` یا `off` است.
 
 ### API
 
@@ -311,7 +311,7 @@ curl -X POST http://localhost:20128/api/context/rtk/test \
 
 ## سیستمهای فشردهسازی پیشرفته
 
-فراتر از ۷ حالت استاندارد، OmniRoute شامل چندین سیستم فشردهسازی پیشرفته است که به طور خودکار بر اساس زمینه عمل میکنند.
+فراتر از ۷ حالت استاندارد، Pusula شامل چندین سیستم فشردهسازی پیشرفته است که به طور خودکار بر اساس زمینه عمل میکنند.
 
 ### فشردهسازی آگاه به کش (Cache-Aware)
 
@@ -333,7 +333,7 @@ curl -X POST http://localhost:20128/api/context/rtk/test \
 import {
   detectCachingContext,
   getCacheAwareStrategy,
-} from "@omniroute/open-sse/services/compression/cachingAware";
+} from "@pusula/open-sse/services/compression/cachingAware";
 
 const body = {
   model: "anthropic/claude-sonnet-4.5",
@@ -367,7 +367,7 @@ const strategy = getCacheAwareStrategy("aggressive", ctx);
 #### مثال کد
 
 ```ts
-import { applyAging } from "@omniroute/open-sse/services/compression/progressiveAging";
+import { applyAging } from "@pusula/open-sse/services/compression/progressiveAging";
 
 const messages = [
   { role: "system", content: "You are a helpful assistant" },
@@ -445,7 +445,7 @@ Terse prose | `terse-prose` | Drop filler/articles/hedging; keep technical subst
 `applyOutputStyles()` (`open-sse/services/compression/outputStyles/apply.ts`) انتخاب را در برابر کاتالوگ حل میکند (شناسههای ناشناخته و سبکهای نامتناسب با زبان محلی
 نادیده گرفته میشوند، هرگز خطا نیستند)، دستورالعملهای انتخاب شده را به ترتیب کاتالوگ به هم متصل میکند،
 بند مرزها را **یک بار** اضافه میکند، و نتیجه را در ابتدای اعلان سیستم
-پشت یک نشانگر یکسانسازی (`[OmniRoute Output Styles]`) قرار میدهد — اعمال مجدد
+پشت یک نشانگر یکسانسازی (`[Pusula Output Styles]`) قرار میدهد — اعمال مجدد
 عملیاتی بیاثر است. هنگامی که زبان درخواست شناسایی شده دارای ترجمه باشد،
 دستورالعمل محلی به جای انگلیسی تزریق میشود.
 
