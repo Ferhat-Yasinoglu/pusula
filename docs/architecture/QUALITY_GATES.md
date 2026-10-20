@@ -585,7 +585,7 @@ as an absent translation. Fix a red with
 all locales in parallel with `npm run i18n:translate-new-keys` (`scripts/i18n/translate-new-keys.sh`,
 detached-safe, refuses to start without the `PUSULA_TRANSLATION_*` env). A key that must stay
 English (a pinned product/engine/flag name) belongs in `scripts/i18n/untranslatable-keys.json`,
-never behind a marker. `vi` bans markers outright (`tests/unit/i18n-vi-completeness.test.ts`).
+never behind a marker. `vi` bans markers outright (`tests/unit/i18n-locale-completeness.test.ts`).
 
 #### `check-vitest-exclusions` — parked-test gate
 

@@ -590,7 +590,7 @@ daha sonra sürüm ucunda herkes için başarısız oldu (pt-BR %3,2 > %2,5 + %0
 `PUSULA_TRANSLATION_*` ortam değişkenleri olmadan başlamayı reddeder) kullanarak tüm yerel ayarlarda
 paralel biçimde düzeltin. İngilizce kalması gereken bir anahtar (sabitlenmiş ürün/motor/bayrak adı),
 hiçbir zaman bir işaretçinin arkasında değil, `scripts/i18n/untranslatable-keys.json` içinde yer almalıdır.
-`vi`, işaretçileri tamamen yasaklar (`tests/unit/i18n-vi-completeness.test.ts`).
+`vi`, işaretçileri tamamen yasaklar (`tests/unit/i18n-locale-completeness.test.ts`).
 
 #### `check-vitest-exclusions` — bekletilen test geçidi
 

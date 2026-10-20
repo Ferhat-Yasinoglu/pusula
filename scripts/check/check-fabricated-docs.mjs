@@ -760,7 +760,7 @@ export function scanDocFile(absPath, index, root = ROOT) {
     const lineText = text.split("\n")[ln - 1] || "";
     // Only flag when on a line that looks like a shell command (starts with $, or
     // inside a shell block, or wrapped in `code`)
-    const isShellLike = /^[ \t]*\$\s|^```sh|^```bash|^```shell|`pusula/.test(lineText);
+    const isShellLike = /^[ \t]*\$\s|^```sh|^```bash|^```shell|`pusula\s/.test(lineText);
     if (!isShellLike) continue;
     if (/example|placeholder|tbd/i.test(lineText)) continue;
     findings.push({

@@ -585,7 +585,7 @@ SLOهای هدف پس از راهاندازی تلهمتری آزمونهای ن
 ایمن برای حالت detached و بدون متغیرهای محیطی `PUSULA_TRANSLATION_*` از شروع خودداری میکند).
 کلیدی که باید انگلیسی بماند (نام ثابتشدهٔ محصول/موتور/پرچم) باید در `scripts/i18n/untranslatable-keys.json`
 قرار گیرد، نه پشت یک نشانگر. `vi` نشانگرها را بهطور کامل ممنوع میکند
-(`tests/unit/i18n-vi-completeness.test.ts`).
+(`tests/unit/i18n-locale-completeness.test.ts`).
 
 #### `check-vitest-exclusions` — گیت تستهای کنارگذاشتهشده
 

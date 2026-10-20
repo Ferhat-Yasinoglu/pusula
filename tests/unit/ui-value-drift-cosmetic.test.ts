@@ -4,8 +4,8 @@
  * `"Reset Defaults"` → `"Reset defaults"` marked the key stale in 41 locales during the
  * v3.8.49 cycle. Every one of those translations was still a correct translation of the same
  * sentence, and in locales with no letter case the "fix" is not even expressible. The
- * documented escape hatch — a `__MISSING__:` placeholder — is BANNED in `vi` by
- * tests/unit/i18n-vi-completeness.test.ts, so `vi` had no legitimate way out of a purely
+ * documented escape hatch — a `__MISSING__:` placeholder — is BANNED in the maintained locales by
+ * tests/unit/i18n-locale-completeness.test.ts, so `vi` had no legitimate way out of a purely
  * cosmetic English edit.
  *
  * The exemption has to stay narrow, and that is the real risk here: too generous and a genuine

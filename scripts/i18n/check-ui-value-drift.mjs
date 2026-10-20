@@ -86,7 +86,7 @@ export function flattenLeaves(node, prefix = "", out = {}) {
  * Why this exists: `"Reset Defaults"` → `"Reset defaults"` marked the key stale in 41 locales
  * during the v3.8.49 cycle. Every one of those translations was still correct, and in locales
  * with no letter case the "fix" is not even expressible. Worse, the documented escape hatch
- * (a `__MISSING__:` placeholder) is BANNED in `vi` by tests/unit/i18n-vi-completeness.test.ts,
+ * (a `__MISSING__:` placeholder) is BANNED in the maintained locales by tests/unit/i18n-locale-completeness.test.ts,
  * so `vi` had no legitimate way out of a purely cosmetic English edit.
  *
  * Deliberately narrow: ONLY letter case and trailing terminal punctuation.

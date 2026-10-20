@@ -599,7 +599,7 @@ sicher bei getrenntem Terminal, verweigert den Start ohne die Umgebungsvariablen
 `PUSULA_TRANSLATION_*`). Ein Schlüssel, der Englisch bleiben muss (der fest vorgegebene Name
 eines Produkts, einer Engine oder eines Flags), gehört in
 `scripts/i18n/untranslatable-keys.json`, niemals hinter einen Marker. `vi` verbietet Marker
-vollständig (`tests/unit/i18n-vi-completeness.test.ts`).
+vollständig (`tests/unit/i18n-locale-completeness.test.ts`).
 
 #### `check-vitest-exclusions` — Prüfschranke für zurückgestellte Tests
 
