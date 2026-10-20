@@ -76,8 +76,13 @@ export function FlowCanvas({
   // timer outlives the component and calls fitView on a torn-down instance
   // (React Flow then dispatches state on an unmounted store).
   const initFitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // React Flow hands out onInit on its own 1ms timer (useOnInitHandler), so the callback
+  // can arrive AFTER this component unmounted — a fast remount, or a test tearing down right
+  // after render. A late init must not re-arm the fitView timer the unmount just cleared.
+  const mountedRef = useRef(true);
 
   const onInit = useCallback((instance: ReactFlowInstance) => {
+    if (!mountedRef.current) return;
     const generation = ++generationRef.current;
     rfInstance.current = instance;
     // Defer fitView until ReactFlow has measured its viewport, but guard
@@ -94,10 +99,14 @@ export function FlowCanvas({
 
   useEffect(() => {
     // Capture the ref objects (not their values) so the cleanup reads them at unmount time.
+    const mounted = mountedRef;
     const generation = generationRef;
     const initFitTimer = initFitTimerRef;
+    mounted.current = true;
     return () => {
-      // Invalidate every queued fitView and drop the deferred onInit fit on unmount.
+      // Invalidate every queued fitView, drop the deferred onInit fit, and ignore any onInit
+      // React Flow still delivers after this point.
+      mounted.current = false;
       generation.current++;
       if (initFitTimer.current) {
         clearTimeout(initFitTimer.current);
