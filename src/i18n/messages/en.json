@@ -1321,7 +1321,9 @@
       "close": "close"
     },
     "noResults": "No results",
-    "themeTeal": "Teal"
+    "themeTeal": "Teal",
+    "modelCatalog": "Model Catalog",
+    "modelCatalogSubtitle": "Browse every routable model"
   },
   "webhooks": {
     "title": "Webhooks",

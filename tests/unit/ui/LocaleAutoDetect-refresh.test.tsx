@@ -16,6 +16,15 @@ vi.mock("next/navigation", () => ({
   useRouter: () => ({ refresh }),
 }));
 
+// config/i18n.json declares no `aliases` today, so the real LOCALE_ALIASES is empty and
+// could not tell a wired alias map from a forgotten one. Inject one synthetic alias on a
+// real locale (Dari `prs` → Persian `fa`): no configured locale code starts with `prs`,
+// so it resolves ONLY through the alias map the component must hand to detectBrowserLocale.
+vi.mock("@/i18n/config", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@/i18n/config")>();
+  return { ...actual, LOCALE_ALIASES: Object.freeze({ fa: Object.freeze(["prs"]) }) };
+});
+
 describe("LocaleAutoDetect refresh gating", () => {
   const cleanups: Array<() => void> = [];
 
@@ -54,31 +63,30 @@ describe("LocaleAutoDetect refresh gating", () => {
   });
 
   it("refreshes when the detected locale differs from the server-rendered <html lang>", async () => {
-    document.documentElement.lang = "fr";
+    document.documentElement.lang = "de";
     await mount();
     expect(refresh).toHaveBeenCalledTimes(1);
   });
 
   // Alias wiring guard: the component must hand `LOCALE_ALIASES` to
-  // `detectBrowserLocale`. `fil` (Filipino) is the discriminating input — no
-  // locale code starts with `fil`, so with the real config it resolves to `phi`
-  // ONLY through the declared alias; a forgotten third argument yields null and
-  // no cookie is written.
-  it("persists the aliased locale for a Filipino browser (fil → phi)", async () => {
+  // `detectBrowserLocale`. `prs` (Dari) is the discriminating input — no locale code
+  // starts with `prs`, so it resolves to `fa` ONLY through the (injected) alias; a
+  // forgotten third argument yields null and no cookie is written.
+  it("persists the aliased locale for a Dari browser (prs → fa)", async () => {
     document.documentElement.lang = "en";
-    Object.defineProperty(navigator, "languages", { value: ["fil"], configurable: true });
+    Object.defineProperty(navigator, "languages", { value: ["prs"], configurable: true });
     await mount();
-    expect(document.cookie).toContain("NEXT_LOCALE=phi");
+    expect(document.cookie).toContain("NEXT_LOCALE=fa");
     expect(refresh).toHaveBeenCalledTimes(1);
   });
 
-  // Script-tagged Traditional Chinese must not fall through to zh-CN (Simplified,
-  // the first zh-* locale in config order): `zh-hant` is a declared alias of zh-TW.
-  it("persists zh-TW for a zh-Hant-TW browser, not zh-CN", async () => {
+  // A region-tagged browser language must reach its base-language catalog through RFC 4647
+  // truncation (`tr-TR` → `tr`), not fall through to null.
+  it("persists tr for a tr-TR browser through base-language truncation", async () => {
     document.documentElement.lang = "en";
-    Object.defineProperty(navigator, "languages", { value: ["zh-Hant-TW"], configurable: true });
+    Object.defineProperty(navigator, "languages", { value: ["tr-TR"], configurable: true });
     await mount();
-    expect(document.cookie).toContain("NEXT_LOCALE=zh-TW");
+    expect(document.cookie).toContain("NEXT_LOCALE=tr");
     expect(refresh).toHaveBeenCalledTimes(1);
   });
 });

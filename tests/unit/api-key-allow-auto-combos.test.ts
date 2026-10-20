@@ -146,10 +146,10 @@ test("R7: the API Manager wires the toggle and defaults it ON", () => {
   );
 });
 
-test("R8: the toggle's UI strings exist in English and Vietnamese", () => {
-  // en.json is the source of truth; vi is the one locale whose completeness is
-  // asserted by tests/unit/i18n-vi-completeness.test.ts (it bans placeholders).
-  for (const locale of ["en", "vi"]) {
+test("R8: the toggle's UI strings exist in English and every translated locale", () => {
+  // en.json is the source of truth; tr/de/fa are the locales whose completeness is
+  // asserted by tests/unit/i18n-locale-completeness.test.ts (it bans placeholders).
+  for (const locale of ["en", "tr", "de", "fa"]) {
     const messages = JSON.parse(read(`src/i18n/messages/${locale}.json`));
     for (const key of ["autoCombosTitle", "autoCombosDesc"]) {
       const value = messages?.settings?.[key];

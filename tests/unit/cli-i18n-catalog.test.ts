@@ -9,9 +9,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..", "..");
 const require = createRequire(import.meta.url);
 const en = require("../../bin/cli/locales/en.json");
-const ptBR = require("../../bin/cli/locales/pt-BR.json");
-const zhCN = require("../../bin/cli/locales/zh-CN.json");
-const zhTW = require("../../bin/cli/locales/zh-TW.json");
+const tr = require("../../bin/cli/locales/tr.json");
+const de = require("../../bin/cli/locales/de.json");
+const fa = require("../../bin/cli/locales/fa.json");
 
 function flattenKeys(obj: Record<string, unknown>, prefix = ""): Set<string> {
   const keys = new Set<string>();
@@ -67,16 +67,17 @@ test("en.json contém todas as chaves usadas via t() nos comandos", () => {
   assert.deepEqual(missing, [], `Chaves faltando em en.json: ${missing.join(", ")}`);
 });
 
-test("pt-BR.json tem todas as seções top-level de en.json", () => {
+test("tr.json tem todas as seções top-level de en.json", () => {
   const enTop = Object.keys(en as object);
-  const ptTop = new Set(Object.keys(ptBR as object));
-  const missing = enTop.filter((k) => !ptTop.has(k));
-  assert.deepEqual(missing, [], `Seções top-level faltando em pt-BR.json: ${missing.join(", ")}`);
+  const trTop = new Set(Object.keys(tr as object));
+  const missing = enTop.filter((k) => !trTop.has(k));
+  assert.deepEqual(missing, [], `Seções top-level faltando em tr.json: ${missing.join(", ")}`);
 });
 
 for (const [name, cat] of [
-  ["zh-CN", zhCN],
-  ["zh-TW", zhTW],
+  ["tr", tr],
+  ["de", de],
+  ["fa", fa],
 ] as const) {
   test(name + ".json tem paridade total de chaves com en.json", () => {
     const catKeys = flattenKeys(cat as Record<string, unknown>);
@@ -88,10 +89,10 @@ for (const [name, cat] of [
 test("i18n.mjs detecta locale por PUSULA_LANG", async () => {
   const { resetForTests, detectLocale } = await import("../../bin/cli/i18n.mjs");
   const orig = process.env.PUSULA_LANG;
-  process.env.PUSULA_LANG = "pt-BR";
+  process.env.PUSULA_LANG = "tr";
   resetForTests();
   const locale = detectLocale();
-  assert.equal(locale, "pt-BR");
+  assert.equal(locale, "tr");
   if (orig === undefined) delete process.env.PUSULA_LANG;
   else process.env.PUSULA_LANG = orig;
   resetForTests();
@@ -109,36 +110,15 @@ test("i18n.mjs usa fallback en quando locale não existe", async () => {
   resetForTests();
 });
 
-test("i18n.mjs resolve alias do config: PUSULA_LANG=uk → uk-UA, fil_PH.UTF-8 → phi, in → id", async () => {
-  const { resetForTests, detectLocale } = await import("../../bin/cli/i18n.mjs");
-  const orig = process.env.PUSULA_LANG;
-  process.env.PUSULA_LANG = "uk";
-  resetForTests();
-  assert.equal(detectLocale(), "uk-UA");
-  process.env.PUSULA_LANG = "fil_PH.UTF-8";
-  resetForTests();
-  assert.equal(detectLocale(), "phi");
-  process.env.PUSULA_LANG = "uk_UA.UTF-8";
-  resetForTests();
-  assert.equal(detectLocale(), "uk-UA");
-  // `in` (retired duplicate Indonesian locale) must keep resolving to `id`, otherwise a
-  // saved PUSULA_LANG=in silently falls back to English.
-  process.env.PUSULA_LANG = "in";
-  resetForTests();
-  assert.equal(detectLocale(), "id");
-  if (orig === undefined) delete process.env.PUSULA_LANG;
-  else process.env.PUSULA_LANG = orig;
-  resetForTests();
-});
-
-test("i18n.mjs resolve base→regional e aliases: zh → zh-CN, zh-hant/zh_HK → zh-TW, UK → uk-UA", async () => {
+test("i18n.mjs canonicaliza tags POSIX/regionais e maiúsculas para o catálogo base: tr_TR.UTF-8 → tr, de-AT → de, fa_IR → fa, TR → tr", async () => {
   const { resetForTests, detectLocale } = await import("../../bin/cli/i18n.mjs");
   const orig = process.env.PUSULA_LANG;
   const cases: Array<[string, string]> = [
-    ["zh", "zh-CN"], // bare base language → first regional catalog declared in config/i18n.json
-    ["zh-hant", "zh-TW"], // alias family declared on zh-TW
-    ["zh_HK.UTF-8", "zh-TW"], // POSIX form of the zh-hk alias (charset stripped, _ → -)
-    ["UK", "uk-UA"], // upper-case input canonicalized through the alias map
+    ["tr_TR.UTF-8", "tr"], // POSIX form: charset stripped, _ → -, then base language catalog
+    ["de-AT", "de"], // regional tag with no dedicated catalog → base language catalog
+    ["fa_IR", "fa"], // underscore form of a regional tag
+    ["TR", "tr"], // upper-case input canonicalized through the config code map
+    ["De", "de"], // mixed-case input canonicalized through the config code map
   ];
   for (const [input, expected] of cases) {
     process.env.PUSULA_LANG = input;
@@ -168,11 +148,12 @@ test("t() retorna a chave quando não existe no catálogo", async () => {
   resetForTests();
 });
 
-test("t() usa pt-BR quando disponível", async () => {
+test("t() usa tr quando disponível", async () => {
   const { resetForTests, t, setLocale } = await import("../../bin/cli/i18n.mjs");
   resetForTests();
-  setLocale("pt-BR");
+  setLocale("tr");
   const result = t("health.noServer");
-  assert.ok(result.includes("pusula serve"), `Esperava mensagem pt-BR, obteve: ${result}`);
+  assert.ok(result.includes("pusula serve"), `Esperava mensagem tr, obteve: ${result}`);
+  assert.notEqual(result, en.health.noServer, "a mensagem tr deve diferir da inglesa");
   resetForTests();
 });

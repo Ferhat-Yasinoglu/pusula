@@ -29,7 +29,7 @@ const endpointsSrc = readFileSync(join(ROOT, QS, "components/QuotaEndpointsCard.
 const en = JSON.parse(readFileSync(join(ROOT, "src/i18n/messages/en.json"), "utf8")) as {
   quotaShare: Record<string, string>;
 };
-const pt = JSON.parse(readFileSync(join(ROOT, "src/i18n/messages/pt-BR.json"), "utf8")) as {
+const tr = JSON.parse(readFileSync(join(ROOT, "src/i18n/messages/tr.json"), "utf8")) as {
   quotaShare: Record<string, string>;
 };
 
@@ -198,7 +198,7 @@ test("planRegistry seeds xiaomi-mimo (4.1B lite cap) and kimi-coding for manual 
 
 // ── i18n parity for every new key ────────────────────────────────────────────
 
-test("i18n: new quotaShare keys exist in both en and pt-BR", () => {
+test("i18n: new quotaShare keys exist in both en and tr", () => {
   const keys = [
     "deleteGroup",
     "deleteGroupConfirm",
@@ -212,6 +212,6 @@ test("i18n: new quotaShare keys exist in both en and pt-BR", () => {
   ];
   for (const k of keys) {
     assert.ok(en.quotaShare[k], `en.json quotaShare.${k} must exist`);
-    assert.ok(pt.quotaShare[k], `pt-BR.json quotaShare.${k} must exist`);
+    assert.ok(tr.quotaShare[k], `tr.json quotaShare.${k} must exist`);
   }
 });

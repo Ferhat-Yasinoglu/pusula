@@ -3,7 +3,9 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import en from "../../src/i18n/messages/en.json" with { type: "json" };
-import vi from "../../src/i18n/messages/vi.json" with { type: "json" };
+import tr from "../../src/i18n/messages/tr.json" with { type: "json" };
+import de from "../../src/i18n/messages/de.json" with { type: "json" };
+import fa from "../../src/i18n/messages/fa.json" with { type: "json" };
 import { BUILTIN_BADGES } from "../../src/lib/gamification/badges";
 
 const profileSource = readFileSync("src/app/(dashboard)/dashboard/profile/page.tsx", "utf8");
@@ -13,15 +15,24 @@ const topListSource = readFileSync(
   "utf8"
 );
 const englishBadges = en.gamification.badges as Record<string, Record<string, string>>;
-const vietnameseBadges = vi.gamification.badges as Record<string, Record<string, string>>;
+const translatedBadges: Array<[string, Record<string, Record<string, string>>]> = [
+  ["tr", tr.gamification.badges as Record<string, Record<string, string>>],
+  ["de", de.gamification.badges as Record<string, Record<string, string>>],
+  ["fa", fa.gamification.badges as Record<string, Record<string, string>>],
+];
 
-test("every built-in badge has complete English and Vietnamese display copy", () => {
+test("every built-in badge has complete English and translated display copy", () => {
   for (const badge of BUILTIN_BADGES) {
     for (const field of ["name", "description", "criteria"] as const) {
       const englishValue = englishBadges[badge.id]?.[field];
-      const vietnameseValue = vietnameseBadges[badge.id]?.[field];
       assert.ok(englishValue?.trim(), `en missing gamification.badges.${badge.id}.${field}`);
-      assert.ok(vietnameseValue?.trim(), `vi missing gamification.badges.${badge.id}.${field}`);
+      for (const [locale, badges] of translatedBadges) {
+        const translatedValue = badges[badge.id]?.[field];
+        assert.ok(
+          translatedValue?.trim(),
+          `${locale} missing gamification.badges.${badge.id}.${field}`
+        );
+      }
     }
   }
 });

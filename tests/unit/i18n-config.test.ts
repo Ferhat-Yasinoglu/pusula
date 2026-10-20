@@ -50,13 +50,16 @@ test("locale aliases are lower-case, unique and never collide with a locale code
   }
 });
 
-test("Ukrainian, Filipino, legacy Indonesian, Hong-Kong/Macau and zh-Hant browsers resolve through declared aliases", () => {
-  assert.deepEqual(LOCALE_ALIASES["uk-UA"], ["uk"]);
-  assert.deepEqual(LOCALE_ALIASES["phi"], ["fil", "tl"]);
-  // `in` was a duplicate Indonesian locale, retired in favour of `id`. The alias is the
-  // only thing keeping a saved NEXT_LOCALE=in / PUSULA_LANG=in working — do not drop it.
-  assert.deepEqual(LOCALE_ALIASES["id"], ["in"]);
-  // `zh-hant` lets script-tagged Traditional Chinese (`zh-Hant-TW`, `zh-Hant-HK`)
-  // reach zh-TW instead of the first zh-* locale in config order (zh-CN).
-  assert.deepEqual(LOCALE_ALIASES["zh-TW"], ["zh-hk", "zh-mo", "zh-hant"]);
+test("LOCALE_ALIASES mirrors exactly the aliases declared in config/i18n.json", () => {
+  // Only locales that declare `aliases` appear; with none declared the map is empty, and any
+  // alias added to the config (e.g. a legacy or script-tagged browser tag) must surface here.
+  const expected = Object.fromEntries(
+    (i18nConfig.locales as Array<{ code: string; aliases?: string[] }>)
+      .filter((locale) => Array.isArray(locale.aliases) && locale.aliases.length > 0)
+      .map((locale) => [locale.code, locale.aliases])
+  );
+  assert.deepEqual(LOCALE_ALIASES, expected);
+  for (const code of Object.keys(LOCALE_ALIASES)) {
+    assert.ok(LOCALES.includes(code), `${code} must be a configured locale`);
+  }
 });

@@ -1321,7 +1321,9 @@
       "close": "schließen"
     },
     "noResults": "Keine Ergebnisse",
-    "themeTeal": "Türkis"
+    "themeTeal": "Türkis",
+    "modelCatalog": "Modellkatalog",
+    "modelCatalogSubtitle": "Alle routbaren Modelle durchsuchen"
   },
   "webhooks": {
     "title": "Webhooks",

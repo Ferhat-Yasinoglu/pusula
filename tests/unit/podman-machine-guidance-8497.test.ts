@@ -38,7 +38,7 @@ test("#8497 Podman guide separates local engines from Podman Machine", () => {
   assert.match(localGuidance, /podman unshare chown 1000:1000 \.\/data/);
   assert.doesNotMatch(machineGuidance, /podman unshare chown/);
   assert.match(machineGuidance, /remote client/);
-  assert.match(machineGuidance, /docker\.io\/ferhat-yasinoglu\/pusula:latest/);
+  assert.match(machineGuidance, /(?:docker|ghcr)\.io\/ferhat-yasinoglu\/pusula:latest/);
 });
 
 test("#8497 Quadlet is Linux/systemd-only and generated units are not enabled", () => {
@@ -94,7 +94,7 @@ test("#8497 pull example and environment hints stay topology-safe", () => {
   const envExample = read(".env.example");
   const envReference = read("docs/reference/ENVIRONMENT.md");
 
-  assert.match(quadlet, /Image=docker\.io\/ferhat-yasinoglu\/pusula:latest/);
+  assert.match(quadlet, /Image=(?:docker|ghcr)\.io\/ferhat-yasinoglu\/pusula:latest/);
   assert.doesNotMatch(quadlet, /ferhat-yasinoglu\/pusula:base/);
 
   for (const source of [envExample, envReference]) {
@@ -107,16 +107,16 @@ test("#8497 pull example and environment hints stay topology-safe", () => {
 test("#8497 localized quick starts do not retain the remote-unsafe recipe", () => {
   const localizedReadmes = [
     {
-      path: "docs/i18n/zh-CN/README.md",
-      localOnly: /仅限 Linux \+ 本地无根 Podman/,
+      path: "docs/i18n/tr/README.md",
+      localOnly: /Yalnızca Linux \+ yerel rootless Podman/,
     },
     {
-      path: "docs/i18n/zh-TW/README.md",
-      localOnly: /僅限 Linux \+ 本機 rootless Podman/,
+      path: "docs/i18n/de/README.md",
+      localOnly: /Nur unter Linux \+ lokalem Rootless-Podman/,
     },
     {
-      path: "docs/i18n/pl/README.md",
-      localOnly: /Tylko Linux \+ lokalny Podman bez roota/,
+      path: "docs/i18n/fa/README.md",
+      localOnly: /فقط Linux \+ Podman محلی و rootless/,
     },
   ];
 
@@ -128,8 +128,8 @@ test("#8497 localized quick starts do not retain the remote-unsafe recipe", () =
     assert.match(content, /contrib\/podman\/README\.md#data-directory-permissions-by-topology/);
   }
 
-  const zhEnvironment = read("docs/i18n/zh-CN/docs/reference/ENVIRONMENT.md");
-  assert.doesNotMatch(zhEnvironment, /修复指令使用 `podman unshare chown`/);
-  assert.match(zhEnvironment, /任何 Podman 拓扑/);
-  assert.match(zhEnvironment, /Podman Machine/);
+  const trEnvironment = read("docs/i18n/tr/docs/reference/ENVIRONMENT.md");
+  assert.doesNotMatch(trEnvironment, /podman unshare chown/);
+  assert.match(trEnvironment, /Herhangi bir Podman topolojisi/);
+  assert.match(trEnvironment, /Podman Machine/);
 });

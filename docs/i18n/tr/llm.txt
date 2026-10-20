@@ -1,6 +1,6 @@
 # Pusula (Türkçe)
 
-🌐 **Languages:** 🇺🇸 [English](../../../llm.txt) · 🇩🇪 [de](../de/llm.txt) · 🇮🇷 [fa](../fa/llm.txt)
+🌐 **Languages:** 🇺🇸 [English](../../../llm.txt) · 🇩🇪 [de](../de/llm.txt) · 🇮🇷 [fa](../fa/llm.txt) · 🇹🇷 [tr](../tr/llm.txt)
 
 ---
 
@@ -98,7 +98,7 @@ Pusula solves the problem of managing multiple AI provider subscriptions, quotas
 │   │   ├── configAudit.ts        # Configuration auditing
 │   │   └── responses.ts          # Domain response types
 │   ├── i18n/                     # Internationalization
-│   │   └── messages/             # 67 language JSON files
+│   │   └── messages/             # 4 language JSON files
 │   ├── lib/                      # Core libraries
 │   │   ├── a2a/                  # Agent-to-Agent v0.3 protocol server
 │   │   │   ├── skills/           # A2A skills (quotaManagement, smartRouting)
@@ -263,7 +263,7 @@ Pusula solves the problem of managing multiple AI provider subscriptions, quotas
 │   ├── translator/               # Translator-specific tests
 │   └── load/                     # Load tests
 ├── docs/                         # Documentation
-│   ├── i18n/                     # 66-language translated docs
+│   ├── i18n/                     # 3-language translated docs
 │   ├── architecture/             # ARCHITECTURE.md, CODEBASE_DOCUMENTATION.md, REPOSITORY_MAP.md, AUTHZ_GUIDE.md, RESILIENCE_GUIDE.md, QUALITY_GATES.md
 │   ├── reference/                # API_REFERENCE.md, PROVIDER_REFERENCE.md, CLI-TOOLS.md
 │   ├── frameworks/               # MCP-SERVER.md (110 tools), A2A-SERVER.md, SKILLS.md, MEMORY.md, CLOUD_AGENT.md, EVALS.md, WEBHOOKS.md

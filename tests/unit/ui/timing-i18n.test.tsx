@@ -22,12 +22,12 @@ const TIMING_WATERFALL = path.resolve(
   "../../../src/app/(dashboard)/dashboard/tools/traffic-inspector/components/shared/TimingWaterfall.tsx",
 );
 const EN = path.resolve(__dirname, "../../../src/i18n/messages/en.json");
-const PT = path.resolve(__dirname, "../../../src/i18n/messages/pt-BR.json");
+const TR = path.resolve(__dirname, "../../../src/i18n/messages/tr.json");
 
 const tabSrc = readFileSync(TIMING_TAB, "utf-8");
 const waterfallSrc = readFileSync(TIMING_WATERFALL, "utf-8");
 const en = JSON.parse(readFileSync(EN, "utf-8"));
-const pt = JSON.parse(readFileSync(PT, "utf-8"));
+const tr = JSON.parse(readFileSync(TR, "utf-8"));
 
 describe("Timing i18n (R4 fix #3)", () => {
   it("TimingTab uses useTranslations and has no hardcoded English labels", () => {
@@ -50,7 +50,7 @@ describe("Timing i18n (R4 fix #3)", () => {
     assert.ok(waterfallSrc.includes('t("timingTotalLatency")'));
   });
 
-  it("All 7 new timing keys exist in both en.json and pt-BR.json", () => {
+  it("All 7 new timing keys exist in both en.json and tr.json", () => {
     const keys = [
       "timingNoData",
       "timingTotalLatency",
@@ -62,12 +62,12 @@ describe("Timing i18n (R4 fix #3)", () => {
     ];
     for (const k of keys) {
       assert.ok(en.trafficInspector?.[k], `en.json must have trafficInspector.${k}`);
-      assert.ok(pt.trafficInspector?.[k], `pt-BR.json must have trafficInspector.${k}`);
+      assert.ok(tr.trafficInspector?.[k], `tr.json must have trafficInspector.${k}`);
     }
   });
 
   it("common.understand is present in both locales (RiskNoticeModal namespace)", () => {
     assert.equal(en.common?.understand, "I understand");
-    assert.equal(pt.common?.understand, "Eu entendo");
+    assert.equal(tr.common?.understand, "Anladım");
   });
 });

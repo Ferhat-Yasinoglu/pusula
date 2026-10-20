@@ -84,8 +84,8 @@ test("anomalies page loading and empty states are polite status regions", () => 
 
 test("new anomalies and sidebar keys are propagated to every configured locale", () => {
   const config = readJson("config/i18n.json") as { locales: Array<{ code: string }> };
-  const codes = ["en", ...config.locales.map((locale) => locale.code)];
-  assert.ok(codes.length > 40, "expected the full locale roster");
+  const codes = [...new Set(["en", ...config.locales.map((locale) => locale.code)])];
+  assert.ok(codes.length >= 4, "expected the full locale roster (en + tr/de/fa)");
 
   for (const code of codes) {
     const messages = readJson(`src/i18n/messages/${code}.json`);
@@ -96,13 +96,15 @@ test("new anomalies and sidebar keys are propagated to every configured locale",
     }
   }
 
-  // Vietnamese is kept fully translated (see i18n-vi-completeness.test.ts).
-  const vi = readJson("src/i18n/messages/vi.json");
-  for (const key of NEW_KEYS) {
-    assert.doesNotMatch(
-      getMessage(vi, key) as string,
-      /^__MISSING__:/,
-      `vi.${key} must be translated`
-    );
+  // Every translated locale is kept fully translated (see i18n-locale-completeness.test.ts).
+  for (const code of ["tr", "de", "fa"]) {
+    const messages = readJson(`src/i18n/messages/${code}.json`);
+    for (const key of NEW_KEYS) {
+      assert.doesNotMatch(
+        getMessage(messages, key) as string,
+        /^__MISSING__:/,
+        `${code}.${key} must be translated`
+      );
+    }
   }
 });

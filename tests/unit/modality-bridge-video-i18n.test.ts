@@ -48,16 +48,16 @@ test(`all ${i18nConfig.locales.length} UI locale catalogs contain non-placeholde
 });
 
 test("localized Modality Bridge copy describes the shipped Video Bridge without stale backlog text", () => {
-  const ptBr = JSON.parse(readFileSync(path.join(messagesDirectory, "pt-BR.json"), "utf8")) as {
+  const tr = JSON.parse(readFileSync(path.join(messagesDirectory, "tr.json"), "utf8")) as {
     settings: Record<string, string>;
   };
   assert.equal(
-    ptBr.settings.modalityBridgeIntro,
-    "Converta conteúdo multimodal em texto antes que ele chegue a modelos apenas de texto. As pontes de visão, áudio e vídeo estão disponíveis e podem ser configuradas."
+    tr.settings.modalityBridgeIntro,
+    "Çok modlu içeriği yalnızca metin işleyen modellere ulaşmadan önce metne dönüştürün. Görüntü, ses ve video köprüleri kullanılabilir ve yapılandırılabilir."
   );
   assert.equal(
-    ptBr.settings.modalityBridgeVideoDesc,
-    "Faça uma amostragem dos quadros do vídeo, descreva-os com um modelo de visão e continue com o modelo de texto escolhido."
+    tr.settings.modalityBridgeVideoDesc,
+    "Video karelerinden örnekler alın, bunları bir görüntü modeliyle açıklayın ve seçilen metin modeliyle devam edin."
   );
 
   for (const file of readdirSync(messagesDirectory).filter((entry) => entry.endsWith(".json"))) {

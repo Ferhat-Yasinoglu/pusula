@@ -1321,7 +1321,9 @@
       "close": "kapat"
     },
     "noResults": "Sonuç yok",
-    "themeTeal": "Turkuaz"
+    "themeTeal": "Turkuaz",
+    "modelCatalog": "Model Kataloğu",
+    "modelCatalogSubtitle": "Yönlendirilebilir tüm modellere göz atın"
   },
   "webhooks": {
     "title": "Web kancaları",

@@ -22,7 +22,7 @@ const PAGE_CLIENT_PATH = join(
 );
 
 const EN_PATH = join(ROOT, "src/i18n/messages/en.json");
-const PT_PATH = join(ROOT, "src/i18n/messages/pt-BR.json");
+const TR_PATH = join(ROOT, "src/i18n/messages/tr.json");
 
 const pageSrc = readFileSync(PAGE_CLIENT_PATH, "utf8");
 
@@ -121,32 +121,32 @@ test('i18n en.json: quotaShare.allGroups exists and equals "All groups"', () => 
   );
 });
 
-test('i18n pt-BR.json: quotaShare.allGroups exists and equals "Todos os grupos"', () => {
-  const pt = JSON.parse(readFileSync(PT_PATH, "utf8")) as Record<
+test('i18n tr.json: quotaShare.allGroups exists and equals "Tüm gruplar"', () => {
+  const tr = JSON.parse(readFileSync(TR_PATH, "utf8")) as Record<
     string,
     Record<string, string>
   >;
   assert.equal(
-    typeof pt["quotaShare"]?.["allGroups"],
+    typeof tr["quotaShare"]?.["allGroups"],
     "string",
-    "pt-BR.json must have quotaShare.allGroups"
+    "tr.json must have quotaShare.allGroups"
   );
   assert.equal(
-    pt["quotaShare"]["allGroups"],
-    "Todos os grupos",
-    'pt-BR.json quotaShare.allGroups must equal "Todos os grupos"'
+    tr["quotaShare"]["allGroups"],
+    "Tüm gruplar",
+    'tr.json quotaShare.allGroups must equal "Tüm gruplar"'
   );
 });
 
-test("i18n parity: allGroups present in both en and pt-BR", () => {
+test("i18n parity: allGroups present in both en and tr", () => {
   const en = JSON.parse(readFileSync(EN_PATH, "utf8")) as Record<
     string,
     Record<string, string>
   >;
-  const pt = JSON.parse(readFileSync(PT_PATH, "utf8")) as Record<
+  const tr = JSON.parse(readFileSync(TR_PATH, "utf8")) as Record<
     string,
     Record<string, string>
   >;
   assert.ok("allGroups" in (en["quotaShare"] ?? {}), "en.json missing quotaShare.allGroups");
-  assert.ok("allGroups" in (pt["quotaShare"] ?? {}), "pt-BR.json missing quotaShare.allGroups");
+  assert.ok("allGroups" in (tr["quotaShare"] ?? {}), "tr.json missing quotaShare.allGroups");
 });

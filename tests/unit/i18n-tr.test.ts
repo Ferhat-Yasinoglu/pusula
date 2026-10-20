@@ -17,10 +17,10 @@ function flatten(obj: Record<string, unknown>, prefix = ""): Record<string, unkn
   return out;
 }
 
-describe("i18n pt-BR integrity", () => {
+describe("i18n tr integrity", () => {
   it("should be a valid JSON file", () => {
-    const ptPath = path.resolve("src/i18n/messages/pt-BR.json");
-    const content = fs.readFileSync(ptPath, "utf8");
+    const trPath = path.resolve("src/i18n/messages/tr.json");
+    const content = fs.readFileSync(trPath, "utf8");
     const json = JSON.parse(content);
     assert.strictEqual(typeof json, "object");
     assert.ok(json.common);
@@ -28,8 +28,8 @@ describe("i18n pt-BR integrity", () => {
   });
 
   it("should contain critical keys for the dashboard", () => {
-    const ptPath = path.resolve("src/i18n/messages/pt-BR.json");
-    const json = JSON.parse(fs.readFileSync(ptPath, "utf8"));
+    const trPath = path.resolve("src/i18n/messages/tr.json");
+    const json = JSON.parse(fs.readFileSync(trPath, "utf8"));
 
     // Critical keys we refactored
     assert.ok(json.settings.routingAntigravitySignatureDesc);
@@ -39,25 +39,25 @@ describe("i18n pt-BR integrity", () => {
   });
 
   // Regression guard for #6695: en.json gained 194 keys that were never
-  // mirrored into pt-BR.json (i18n:sync-ui was not re-run), and the
-  // i18n-ui-coverage CI gate is a percentage threshold (80%) so it stayed
-  // green at 93.8% coverage despite the gap. This asserts full key parity
+  // mirrored into the primary translated catalog (i18n:sync-ui was not re-run),
+  // and the i18n-ui-coverage CI gate is a percentage threshold (80%) so it
+  // stayed green at 93.8% coverage despite the gap. This asserts full key parity
   // so a future drift fails loudly instead of silently degrading coverage.
   it("should contain every key present in en.json (no drift, #6695)", () => {
     const enPath = path.resolve("src/i18n/messages/en.json");
-    const ptPath = path.resolve("src/i18n/messages/pt-BR.json");
+    const trPath = path.resolve("src/i18n/messages/tr.json");
     const en = JSON.parse(fs.readFileSync(enPath, "utf8"));
-    const pt = JSON.parse(fs.readFileSync(ptPath, "utf8"));
+    const tr = JSON.parse(fs.readFileSync(trPath, "utf8"));
 
     const enFlat = flatten(en);
-    const ptFlat = flatten(pt);
+    const trFlat = flatten(tr);
 
-    const missing = Object.keys(enFlat).filter((k) => !(k in ptFlat));
+    const missing = Object.keys(enFlat).filter((k) => !(k in trFlat));
 
     assert.strictEqual(
       missing.length,
       0,
-      `pt-BR.json is missing ${missing.length} keys present in en.json. Sample: ${missing
+      `tr.json is missing ${missing.length} keys present in en.json. Sample: ${missing
         .slice(0, 10)
         .join(", ")}`
     );

@@ -3,70 +3,70 @@ import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
-const pt = require("../../src/i18n/messages/pt-BR.json");
+const tr = require("../../src/i18n/messages/tr.json");
 const en = require("../../src/i18n/messages/en.json");
 
-// ─── PT-BR namespace presence ─────────────────────────────────────────────────
+// ─── TR namespace presence ────────────────────────────────────────────────────
 
-test("pt-BR has cliCommon namespace", () => {
-  assert.ok(pt.cliCommon, "expected pt-BR.json to have 'cliCommon' namespace");
+test("tr has cliCommon namespace", () => {
+  assert.ok(tr.cliCommon, "expected tr.json to have 'cliCommon' namespace");
 });
 
-test("pt-BR has cliCode namespace", () => {
-  assert.ok(pt.cliCode, "expected pt-BR.json to have 'cliCode' namespace");
+test("tr has cliCode namespace", () => {
+  assert.ok(tr.cliCode, "expected tr.json to have 'cliCode' namespace");
 });
 
-test("pt-BR has cliAgents namespace", () => {
-  assert.ok(pt.cliAgents, "expected pt-BR.json to have 'cliAgents' namespace");
+test("tr has cliAgents namespace", () => {
+  assert.ok(tr.cliAgents, "expected tr.json to have 'cliAgents' namespace");
 });
 
-test("pt-BR has acpAgents namespace", () => {
-  assert.ok(pt.acpAgents, "expected pt-BR.json to have 'acpAgents' namespace");
+test("tr has acpAgents namespace", () => {
+  assert.ok(tr.acpAgents, "expected tr.json to have 'acpAgents' namespace");
 });
 
-// ─── PT-BR page titles ────────────────────────────────────────────────────────
-// PR-4 retranslated the verbatim-English page titles; pt-BR now carries real Portuguese.
+// ─── TR page titles ───────────────────────────────────────────────────────────
+// PR-4 retranslated the verbatim-English page titles; tr now carries real Turkish.
 
-test("pt-BR cliCode.pageTitle is 'Códigos da CLI'", () => {
-  assert.equal(pt.cliCode.pageTitle, "Códigos da CLI");
+test("tr cliCode.pageTitle is 'CLI Kodları'", () => {
+  assert.equal(tr.cliCode.pageTitle, "CLI Kodları");
 });
 
-test("pt-BR cliAgents.pageTitle is 'Agentes de CLI'", () => {
-  assert.equal(pt.cliAgents.pageTitle, "Agentes de CLI");
+test("tr cliAgents.pageTitle is 'CLI Ajanları'", () => {
+  assert.equal(tr.cliAgents.pageTitle, "CLI Ajanları");
 });
 
-test("pt-BR acpAgents.pageTitle is 'Agentes ACP'", () => {
-  assert.equal(pt.acpAgents.pageTitle, "Agentes ACP");
+test("tr acpAgents.pageTitle is 'ACP Ajanları'", () => {
+  assert.equal(tr.acpAgents.pageTitle, "ACP Ajanları");
 });
 
-// ─── PT-BR cliCommon content ──────────────────────────────────────────────────
+// ─── TR cliCommon content ─────────────────────────────────────────────────────
 
-test("pt-BR cliCommon.concept.code.phrase contains 'código'", () => {
+test("tr cliCommon.concept.code.phrase contains 'kod'", () => {
   assert.ok(
-    typeof pt.cliCommon.concept?.code?.phrase === "string" &&
-      pt.cliCommon.concept.code.phrase.includes("código"),
-    `expected cliCommon.concept.code.phrase to contain 'código', got: ${pt.cliCommon.concept?.code?.phrase}`
+    typeof tr.cliCommon.concept?.code?.phrase === "string" &&
+      tr.cliCommon.concept.code.phrase.includes("kod"),
+    `expected cliCommon.concept.code.phrase to contain 'kod', got: ${tr.cliCommon.concept?.code?.phrase}`
   );
 });
 
-test("pt-BR cliCommon.comparison.title is non-empty string", () => {
+test("tr cliCommon.comparison.title is non-empty string", () => {
   assert.ok(
-    typeof pt.cliCommon.comparison?.title === "string" && pt.cliCommon.comparison.title.length > 0
+    typeof tr.cliCommon.comparison?.title === "string" && tr.cliCommon.comparison.title.length > 0
   );
 });
 
-// ─── PT-BR sidebar keys ───────────────────────────────────────────────────────
+// ─── TR sidebar keys ──────────────────────────────────────────────────────────
 
-test("pt-BR sidebar has cliCode key", () => {
-  assert.ok(pt.sidebar?.cliCode, "expected pt-BR sidebar to have 'cliCode' key");
+test("tr sidebar has cliCode key", () => {
+  assert.ok(tr.sidebar?.cliCode, "expected tr sidebar to have 'cliCode' key");
 });
 
-test("pt-BR sidebar has cliAgents key", () => {
-  assert.ok(pt.sidebar?.cliAgents, "expected pt-BR sidebar to have 'cliAgents' key");
+test("tr sidebar has cliAgents key", () => {
+  assert.ok(tr.sidebar?.cliAgents, "expected tr sidebar to have 'cliAgents' key");
 });
 
-test("pt-BR sidebar has acpAgents key", () => {
-  assert.ok(pt.sidebar?.acpAgents, "expected pt-BR sidebar to have 'acpAgents' key");
+test("tr sidebar has acpAgents key", () => {
+  assert.ok(tr.sidebar?.acpAgents, "expected tr sidebar to have 'acpAgents' key");
 });
 
 // ─── EN namespace presence ────────────────────────────────────────────────────

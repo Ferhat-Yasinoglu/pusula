@@ -77,7 +77,7 @@ describe("feature-flags-settings count update", () => {
 
 describe("i18n key parity for SERVER_OWNED_TOOL_LOOP_ENABLED", () => {
   let enMessages: Record<string, unknown>;
-  let ptBrMessages: Record<string, unknown>;
+  let trMessages: Record<string, unknown>;
 
   before(async () => {
     const enRaw = fs.readFileSync(
@@ -85,11 +85,11 @@ describe("i18n key parity for SERVER_OWNED_TOOL_LOOP_ENABLED", () => {
       "utf8"
     );
     enMessages = JSON.parse(enRaw);
-    const ptBrRaw = fs.readFileSync(
-      path.resolve(__dirname, "../../src/i18n/messages/pt-BR.json"),
+    const trRaw = fs.readFileSync(
+      path.resolve(__dirname, "../../src/i18n/messages/tr.json"),
       "utf8"
     );
-    ptBrMessages = JSON.parse(ptBrRaw);
+    trMessages = JSON.parse(trRaw);
   });
 
   it("en.json has nested featureFlags.definitions.SERVER_OWNED_TOOL_LOOP_ENABLED.label", () => {
@@ -108,16 +108,17 @@ describe("i18n key parity for SERVER_OWNED_TOOL_LOOP_ENABLED", () => {
     );
   });
 
-  it("pt-BR.json has nested featureFlags.definitions.SERVER_OWNED_TOOL_LOOP_ENABLED.label", () => {
-    const defs = ptBrMessages.featureFlags as Record<string, unknown> | undefined;
-    assert.ok(defs, "pt-BR.json should have featureFlags section");
+  it("tr.json has nested featureFlags.definitions.SERVER_OWNED_TOOL_LOOP_ENABLED.label", () => {
+    const defs = trMessages.featureFlags as Record<string, unknown> | undefined;
+    assert.ok(defs, "tr.json should have featureFlags section");
     const definitions = (defs as Record<string, unknown>).definitions as
       Record<string, unknown> | undefined;
-    assert.ok(definitions, "pt-BR.json featureFlags should have definitions");
+    assert.ok(definitions, "tr.json featureFlags should have definitions");
     const flagDef = definitions.SERVER_OWNED_TOOL_LOOP_ENABLED as
       Record<string, unknown> | undefined;
     assert.ok(flagDef, "definitions should contain SERVER_OWNED_TOOL_LOOP_ENABLED");
-    assert.equal(flagDef.label, "Server-Owned Tool Loop");
+    assert.equal(typeof flagDef.label, "string");
+    assert.ok(((flagDef.label as string) || "").length > 0, "label should be non-empty");
     assert.equal(typeof flagDef.description, "string");
     assert.ok(
       ((flagDef.description as string) || "").length > 0,

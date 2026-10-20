@@ -356,7 +356,7 @@ test("insertDocsIndexRow on the real docs/i18n/README.md adds one row at the der
   assert.equal(after.length, before.length + 1);
 
   const sentence = before.findIndex((line) =>
-    line.startsWith("Translations of documentation into")
+    /^Translations of (?:the )?documentation into /.test(line)
   );
   const at = expectedRowIndex(indexRows(before), entry.code);
   assert.ok(sentence >= 0 && at > sentence);
@@ -560,7 +560,7 @@ const LLM_COUNT_PHRASE =
 const LLM_COUNT_LINE = new RegExp(`\\d+[ -]${LLM_COUNT_PHRASE.source}`);
 const LLM_COUNT_NUMBER = new RegExp(`\\d+(?=[ -]${LLM_COUNT_PHRASE.source})`);
 
-test("bumpCounts on the real llm.txt rewrites exactly the five count lines, each by one", () => {
+test("bumpCounts on the real llm.txt rewrites every count line, each by one, and nothing else", () => {
   const total = realConfig().locales.length;
   const before = readRepo("llm.txt").split("\n");
   const after = bumpCounts(before.join("\n"), total + 1).split("\n");
@@ -568,7 +568,9 @@ test("bumpCounts on the real llm.txt rewrites exactly the five count lines, each
   const changed = before
     .map((line, index) => [line, after[index]])
     .filter(([from, to]) => from !== to);
-  assert.equal(changed.length, 5);
+  const countLines = before.filter((line) => LLM_COUNT_LINE.test(line));
+  assert.ok(countLines.length >= 3, `expected the llm.txt count lines, found ${countLines.length}`);
+  assert.equal(changed.length, countLines.length);
   for (const [from, to] of changed) {
     assert.match(from, LLM_COUNT_LINE);
     assert.equal(
@@ -624,13 +626,13 @@ test("buildMirrorStub is accepted by check-docs-sync's separator logic and is a 
 });
 
 test("buildMirrorStub reproduces a real mirror byte for byte", () => {
-  const mirror = readRepo("docs/i18n/pt-BR/llm.txt");
+  const mirror = readRepo("docs/i18n/tr/llm.txt");
   const parts = mirror.match(
     /^# (\S+) \((.+)\)\n\n(🌐 \*\*Languages:\*\* [^\n]+)\n\n---\n\n([\s\S]*)$/
   );
-  assert.ok(parts, "docs/i18n/pt-BR/llm.txt does not have the five-part mirror layout");
+  assert.ok(parts, "docs/i18n/tr/llm.txt does not have the five-part mirror layout");
   const [, heading, native, bar, body] = parts;
   assert.equal(heading, "Pusula");
-  assert.equal(native, realConfig().locales.find((l) => l.code === "pt-BR")?.native);
+  assert.equal(native, realConfig().locales.find((l) => l.code === "tr")?.native);
   assert.equal(buildMirrorStub({ heading, native, bar, body }), mirror);
 });

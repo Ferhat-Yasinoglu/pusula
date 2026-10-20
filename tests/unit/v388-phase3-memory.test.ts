@@ -7,7 +7,7 @@ import { join } from "node:path";
 const root = join(import.meta.dirname, "../..");
 const read = (p: string) => readFileSync(join(root, p), "utf8");
 const en = JSON.parse(read("src/i18n/messages/en.json"));
-const pt = JSON.parse(read("src/i18n/messages/pt-BR.json"));
+const tr = JSON.parse(read("src/i18n/messages/tr.json"));
 
 test("memory: health auto-checks on mount + 30s polling", () => {
   const src = read("src/app/(dashboard)/dashboard/memory/components/tabs/MemoriesTab.tsx");
@@ -28,10 +28,10 @@ test("memory: vector store shows install hint when backend is none", () => {
   assert.ok(src.includes("engine.vectorStoreInstallHint"), "renders the install-hint key");
 });
 
-test("memory i18n: memoryEnabled + engine.vectorStoreInstallHint present in en + pt-BR", () => {
-  assert.ok(en.memory?.memoryEnabled && pt.memory?.memoryEnabled, "memoryEnabled in both locales");
+test("memory i18n: memoryEnabled + engine.vectorStoreInstallHint present in en + tr", () => {
+  assert.ok(en.memory?.memoryEnabled && tr.memory?.memoryEnabled, "memoryEnabled in both locales");
   assert.ok(
-    en.memory?.engine?.vectorStoreInstallHint && pt.memory?.engine?.vectorStoreInstallHint,
+    en.memory?.engine?.vectorStoreInstallHint && tr.memory?.engine?.vectorStoreInstallHint,
     "vectorStoreInstallHint in both locales"
   );
 });

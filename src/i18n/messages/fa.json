@@ -1321,7 +1321,9 @@
       "close": "بستن"
     },
     "noResults": "هیچ نتیجه‌ای یافت نشد",
-    "themeTeal": "فیروزه‌ای"
+    "themeTeal": "فیروزه‌ای",
+    "modelCatalog": "کاتالوگ مدل‌ها",
+    "modelCatalogSubtitle": "مرور همهٔ مدل‌های قابل مسیریابی"
   },
   "webhooks": {
     "title": "وب هوک ها",

@@ -8,8 +8,9 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 import en from "../../src/i18n/messages/en.json" with { type: "json" };
-import vi from "../../src/i18n/messages/vi.json" with { type: "json" };
-import ptBR from "../../src/i18n/messages/pt-BR.json" with { type: "json" };
+import tr from "../../src/i18n/messages/tr.json" with { type: "json" };
+import de from "../../src/i18n/messages/de.json" with { type: "json" };
+import fa from "../../src/i18n/messages/fa.json" with { type: "json" };
 
 const { applyThinkingBudget, setThinkingBudgetConfig, ThinkingMode, DEFAULT_THINKING_CONFIG } =
   await import("../../open-sse/services/thinkingBudget.ts");
@@ -54,11 +55,12 @@ test("ThinkingBudgetTab uses dedicated thinkingMode* keys (not Auto Combo auto/a
   assert.ok(source.includes("thinkingBudgetIndependenceHint"));
 });
 
-test("en/vi/pt-BR catalogs define Thinking Budget mode keys with real copy", () => {
+test("en/tr/de/fa catalogs define Thinking Budget mode keys with real copy", () => {
   for (const [locale, catalog] of [
     ["en", en],
-    ["vi", vi],
-    ["pt-BR", ptBR],
+    ["tr", tr],
+    ["de", de],
+    ["fa", fa],
   ] as const) {
     const settings = (catalog as { settings: Record<string, string> }).settings;
     for (const key of THINKING_MODE_KEYS) {

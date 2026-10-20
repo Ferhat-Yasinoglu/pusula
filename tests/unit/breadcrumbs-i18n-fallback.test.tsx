@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import Breadcrumbs from "../../src/shared/components/Breadcrumbs";
-import ptBrMessages from "../../src/i18n/messages/pt-BR.json";
+import trMessages from "../../src/i18n/messages/tr.json";
 
 let labels: Record<string, string> = {};
 const translate = Object.assign(
@@ -61,16 +61,16 @@ describe("Breadcrumbs missing translation fallback", () => {
   });
 
   it("uses localized breadcrumb labels when Radar and setup translations exist", async () => {
-    labels = ptBrMessages.breadcrumbs;
+    labels = trMessages.breadcrumbs;
     const container = document.createElement("div");
     document.body.appendChild(container);
     const root = createRoot(container);
 
     await act(async () => root.render(<Breadcrumbs />));
 
-    expect(container.textContent).toContain("Painel");
+    expect(container.textContent).toContain("Pano");
     expect(container.textContent).toContain("Radar");
-    expect(container.textContent).toContain("Configuração");
+    expect(container.textContent).toContain("Kurulum");
     expect(translate).toHaveBeenCalledWith("radar");
     expect(translate).toHaveBeenCalledWith("setup");
     act(() => root.unmount());
