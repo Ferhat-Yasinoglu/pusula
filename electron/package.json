@@ -1,11 +1,11 @@
 {
   "name": "pusula-desktop",
-  "version": "3.8.51",
+  "version": "1.0.0",
   "description": "Pusula Desktop Application",
   "main": "main.js",
   "author": {
-    "name": "Pusula Team",
-    "email": "support@pusula.online"
+    "name": "Ferhat Yasinoglu",
+    "email": "farhadyaqoobi.kunduz@gmail.com"
   },
   "license": "MIT",
   "homepage": "https://github.com/Ferhat-Yasinoglu/pusula",
@@ -40,7 +40,7 @@
     "undici": "^7.29.0"
   },
   "build": {
-    "appId": "online.pusula.desktop",
+    "appId": "io.github.ferhatyasinoglu.pusula",
     "productName": "Pusula",
     "copyright": "Copyright © 2025 Pusula",
     "buildDependenciesFromSource": false,
@@ -52,8 +52,8 @@
     },
     "publish": {
       "provider": "github",
-      "owner": "diegosouzapw",
-      "repo": "Pusula"
+      "owner": "Ferhat-Yasinoglu",
+      "repo": "pusula"
     },
     "files": [
       "main.js",

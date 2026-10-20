@@ -16,8 +16,8 @@ fs.mkdirSync(pluginsDir, { recursive: true });
 fs.mkdirSync(testDataDir, { recursive: true });
 process.env.PUSULA_PLUGINS_DIR = pluginsDir;
 process.env.DATA_DIR = testDataDir;
-assert.notEqual(fs.realpathSync(testDataDir), "/home/diegosouzapw/.pusula");
-assert.notEqual(fs.realpathSync(pluginsDir), "/home/diegosouzapw/.pusula/plugins");
+assert.notEqual(fs.realpathSync(testDataDir), "/home/ferhat/.pusula");
+assert.notEqual(fs.realpathSync(pluginsDir), "/home/ferhat/.pusula/plugins");
 
 process.env.API_KEY_SECRET = "provider-error-boundary-test-secret";
 process.env.DISABLE_SQLITE_AUTO_BACKUP = "true";

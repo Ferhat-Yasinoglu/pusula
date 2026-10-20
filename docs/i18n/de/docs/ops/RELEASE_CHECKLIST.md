@@ -45,7 +45,7 @@ dadurch wird der vollständig automatische Ablauf wiederhergestellt, den das Pro
 WS1.3-Garantie erhalten bleibt (ein geleaktes Token kann nicht allein veröffentlichen — es gibt kein Token).
 
 **Einmalige Einrichtung (Eigentümer):** npmjs.com → Paket `pusula` → Settings → _Trusted
-Publisher_ → GitHub: Eigentümer `diegosouzapw`, Repository `Pusula`, Workflow `npm-publish.yml`
+Publisher_ → GitHub: Eigentümer `Ferhat-Yasinoglu`, Repository `pusula`, Workflow `npm-publish.yml`
 (Umgebung: keine). Solange dies nicht eingerichtet ist, schlägt der automatische Schritt mit `ENEEDAUTH` fehl:
 erneut mit `publish_mode=staged` (siehe unten) oder `direct` auslösen.
 
@@ -78,10 +78,10 @@ als Standardreaktion verwenden (innerhalb von Minuten möglich, reversibel); `np
 Fensters und niemals als erste Maßnahme. Docker: Ein Versions-Tag niemals überschreiben — ein Rollback bedeutet,
 `latest` wieder auf den letzten funktionierenden Digest zu verweisen.
 
-**Docker Hub `latest` (bei jeder stabilen SemVer-Veröffentlichung erforderlich):** Der
+**GHCR `latest` (bei jeder stabilen SemVer-Veröffentlichung erforderlich):** Der
 `docker-publish`-Workflow muss **sowohl** `X.Y.Z` als auch, wenn
 `should-promote-latest.sh` bestätigt, dass dies die höchste stabile SemVer-Version ist, `:latest`
-mit **demselben Digest** taggen. Nach Abschluss des Jobs gilt: Der Digest von `latest` auf Docker Hub entspricht dem neuen
+mit **demselben Digest** taggen. Nach Abschluss des Jobs gilt: Der Digest von `latest` auf GHCR entspricht dem neuen
 SemVer-Digest und `last_updated` wurde aktualisiert. `:latest` darf nicht auf einem älteren
 Build verbleiben, während die Release Notes Fehlerbehebungen beschreiben, die nur in Git vorhanden sind. Compose-
 Schnellstarts verwenden `:latest`; GitOps sollte weiterhin `X.Y.Z` anheften. Siehe
@@ -147,8 +147,8 @@ Matrix automatisch und ohne Label.
 - [ ] `npm run test:coverage` — Gate 60/60/60/60 erfüllt (Anweisungen/Zeilen/Funktionen/Verzweigungen)
 - [ ] `npm run test:integration` — erfolgreich (wenn Änderungen DB / Handler betreffen)
 - [ ] `npm run test:combo:matrix` — erfolgreich (Matrix der Combo-Strategien: weist die Auswahlentscheidungen aller 19 öffentlichen Routing-Strategien deterministisch nach; ausführen, wenn Combo-Routing, Strategieauflösung oder Fallback-Logik geändert werden)
-- [ ] `RUN_COMBO_LIVE=1 npm run test:combo:live` — **optional/manuell** (durch ein Gate geschützter Smoke-Test gegen echte Upstreams; bezieht einen schreibgeschützten DB-Snapshot vom VPS `root@192.168.0.15`; greift auf echte Provider zu und verbraucht Guthaben; wird nie in CI ausgeführt; wird ohne das Gate ordnungsgemäß übersprungen)
-- [ ] `npm run test:combo:live:vps` — **optional/manuell** (Phase-3-VPS-Live-Smoke-Test: 7 HTTP-Szenarien gegen den laufenden `.15`-Server über reines Node ESM; erfordert `ssh root@192.168.0.15`; erstellt/löscht ausschließlich `__live_test__*`-Combos; greift auf echte Provider zu; wird nie in CI ausgeführt)
+- [ ] `RUN_COMBO_LIVE=1 npm run test:combo:live` — **optional/manuell** (durch ein Gate geschützter Smoke-Test gegen echte Upstreams; bezieht einen schreibgeschützten DB-Snapshot vom VPS `root@<your-server>`; greift auf echte Provider zu und verbraucht Guthaben; wird nie in CI ausgeführt; wird ohne das Gate ordnungsgemäß übersprungen)
+- [ ] `npm run test:combo:live:vps` — **optional/manuell** (Phase-3-VPS-Live-Smoke-Test: 7 HTTP-Szenarien gegen den laufenden `.15`-Server über reines Node ESM; erfordert `ssh root@<your-server>`; erstellt/löscht ausschließlich `__live_test__*`-Combos; greift auf echte Provider zu; wird nie in CI ausgeführt)
 - [ ] `npm run test:e2e` — erfolgreich (UI-Änderungen)
 - [ ] `npm run test:protocols:e2e` — erfolgreich (MCP-/A2A-Änderungen)
 - [ ] `npm run test:ecosystem` — erfolgreich
@@ -294,7 +294,7 @@ Deployment-Skills verwenden den schlanken rsync-Ablauf — kein `npm pack`, kein
 - [ ] `/capture-release-evidences-cc` ausführen (Claude Code Skill)
   - Erfasst WebP-Screenshots/-Aufzeichnungen neuer Funktionen
   - Hängt sie an die Versionshinweise / den Blogbeitrag an
-- [ ] GitHub Discussions / Discord mit der Release-Ankündigung aktualisieren
+- [ ] GitHub Discussions mit der Release-Ankündigung aktualisieren
 - [ ] Meilenstein für die nächste Version öffnen
 - [ ] Falls kritisch: Diskussion anheften oder für ein In-App-Banner in `news.json` veröffentlichen
 
@@ -305,13 +305,8 @@ Die Radar-Ankündigung wird absichtlich mit `active: false` eingecheckt. Die Akt
 
 - [ ] Alle gestapelten Radar-PRs sind zusammengeführt und die CI des Release-Stands ist grün
 - [ ] Die OSS-Radar-Routen bereitstellen und Smoke-Tests durchführen, wobei `RADAR_ENABLED` standardmäßig weiterhin deaktiviert bleibt
-- [ ] Smoke-Tests für `GET /planos`, `/termos`, `/privacidade` und `/reembolso` auf dem angegebenen Radar-Host durchführen
-- [ ] Identität/Kontaktdaten/Adresse des Betreibers sowie die vom Eigentümer genehmigte rechtliche Prüfung im privaten Dienst erfassen
-- [ ] Stripe Checkout und den signierten Webhook ausschließlich im Testmodus testen
-- [ ] Eine verschlüsselte transaktionale E-Mail-Zustellung mit dem genehmigten Absender/der genehmigten Domain testen
 - [ ] Die Wiederherstellung aus einem Backup und einen beaufsichtigten Forschungslauf mit gedeckeltem Budget nachweisen
-- [ ] Die BRL/PIX-Prüfrichtlinie genehmigen, bevor Spendennachweise akzeptiert werden
-- [ ] Den öffentlichen Checkout erst nach Erfüllung der vorherigen Kriterien aktivieren und anschließend die neue `news.json`-ID aktivieren
+- [ ] Die neue `news.json`-ID erst nach Erfüllung der vorherigen Kriterien aktivieren
 - [ ] Überprüfen, dass das Home-Banner lokalisierten Text verwendet und eine neue ID wieder erscheint, nachdem eine ältere ID geschlossen wurde
 
 ## Smoke-Test für eingebettete Dienste (v3.8.4+)
@@ -390,7 +385,7 @@ Wenn das Release ein kritisches Problem aufweist:
 1. `gh release edit vX.Y.Z --prerelease` (markiert es als nicht aktuellstes Release)
 2. `git tag -d vX.Y.Z && git push --delete origin vX.Y.Z` (nur wenn es noch nicht von Benutzern übernommen wurde)
 3. Oder: Hotfix auf `release/vX.Y.0` → Patch-Release `vX.Y.(Z+1)`
-4. Sofort in GitHub Discussions und Discord kommunizieren
+4. Sofort in GitHub Discussions kommunizieren
 
 ## Verbindliche Regeln
 

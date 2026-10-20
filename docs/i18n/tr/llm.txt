@@ -28,7 +28,7 @@ Pusula solves the problem of managing multiple AI provider subscriptions, quotas
 - **Proxy engine:** Custom pipeline with format translation, circuit breaker, rate limiting, auto-combo engine
 - **i18n:** next-intl with 67 languages
 - **Desktop:** Electron (cross-platform: Windows, macOS, Linux)
-- **Package:** Published on npm (`pusula`) and Docker Hub (`ferhat-yasinoglu/pusula`)
+- **Package:** Published on npm (`pusula`) and GitHub Container Registry (`ghcr.io/ferhat-yasinoglu/pusula`)
 
 ## Project Structure
 
@@ -490,9 +490,8 @@ diagnostics) plus **memory**, **skill**, **agentSkill**, **githubSkill**, **pool
 ## Links
 
 - Repository: https://github.com/Ferhat-Yasinoglu/pusula
-- Website: https://github.com/Ferhat-Yasinoglu/pusula
 - npm: https://www.npmjs.com/package/pusula
-- Docker Hub: https://hub.docker.com/r/ferhat-yasinoglu/pusula
+- Container image: https://github.com/Ferhat-Yasinoglu/pusula/pkgs/container/pusula
 - Documentation: See `/docs/` directory
 
 ### Documentation Index

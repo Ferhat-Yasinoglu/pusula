@@ -1062,7 +1062,6 @@
     "presetColors": "Popüler renkler",
     "createTheme": "Tema oluştur",
     "chooseColor": "Bir renk seç",
-    "themeCoral": "Mercan",
     "themeBlue": "Mavi",
     "themeRed": "Kırmızı",
     "themeGreen": "Yeşil",
@@ -1321,7 +1320,8 @@
       "open": "açık",
       "close": "kapat"
     },
-    "noResults": "Sonuç yok"
+    "noResults": "Sonuç yok",
+    "themeTeal": "Turkuaz"
   },
   "webhooks": {
     "title": "Web kancaları",
@@ -7428,7 +7428,6 @@
     "customPricingNote": "Belirli modeller için varsayılan fiyatlandırmayı geçersiz kılabilirsiniz. Özel geçersiz kılmalar, otomatik algılanan fiyatlandırmaya göre öncelik kazanır.",
     "editPricing": "Fiyatlandırmayı Düzenle",
     "viewFullDetails": "Tüm Ayrıntıları Görüntüle",
-    "themeCoral": "Mercan",
     "adaptiveVolumeRouting": "Uyarlanabilir Hacim Yönlendirmesi",
     "adaptiveVolumeRoutingDesc": "Bağlantıları yük hacmine ve işleme kapasitesi baskısına göre dinamik olarak ölçeklendirin.",
     "lkgpToggleTitle": "Son Bilinen İyi Sağlayıcı (LKGP)",
@@ -8435,7 +8434,8 @@
     "catalogScopeDesc": "GET /v1/models uç noktasının bu anahtar için gösterdiği modeller. Listeyi daraltmak, anahtarın çağırabileceği modelleri değiştirmez.",
     "catalogScopeAll": "Her ikisi",
     "catalogScopeCombos": "Yalnızca kombinasyonlar",
-    "catalogScopeModels": "Yalnızca modeller"
+    "catalogScopeModels": "Yalnızca modeller",
+    "themeTeal": "Turkuaz"
   },
   "contextRtk": {
     "title": "RTK Motoru",
@@ -13584,20 +13584,6 @@
     "running": "Çalıştırılıyor...",
     "testFailed": "Test başarısız oldu"
   },
-  "kimiSponsorBanner": {
-    "foundingFriendTitle": "Kimi (Moonshot AI), Pusula'un kurucu Açık Kaynak Dostudur",
-    "description": "Yeni kullanıcılar ilk bakiye yüklemesinde %15 ekstra API kredisi kazanır. Resmî Kimi API üzerinden Pusula'ta Kimi K3 kullanın.",
-    "cta": "Kimi API Anahtarı Alın",
-    "partnerLinkNote": "Ortaklık bağlantısı",
-    "dismissAriaLabel": "Kapat"
-  },
-  "vscodeCopilotBanner": {
-    "title": "Pusula artık VS Code Copilot Chat içinde çalışıyor",
-    "description": "Ücretsiz OmniCopilot uzantısını yükleyin ve zaten kullandığınız Copilot Chat model seçicisinde her Pusula modeli görünsün.",
-    "cta": "Uzantıyı Al",
-    "secondaryNote": "Open VSX'te de mevcut (Cursor, Windsurf, VSCodium…)",
-    "dismissAriaLabel": "Kapat"
-  },
   "featureFlagExposeFunctionalGatewayMirrorsDescription": "<gateway-alias>/<model> ayna kimliklerini /v1/models üzerinde, kanonik sahibi aktif bir kimliğe sahip olmayan ancak aktif bir kimliğe sahip bir geçiş geçidi tarafından yönlendirilen modeller için tanıtın. Uyarı: Küresel olarak etkinleştirildiğinde tüm istemciler için katalog girişleri ekler.",
   "radarPage": {
     "title": "Radar Kataloğu",
@@ -14344,13 +14330,6 @@
     "toolsMismatch": "Sağlayıcı araç çağrısını desteklemiyor",
     "structuredOutputMismatch": "Sağlayıcı yapılandırılmış çıktıyı desteklemiyor",
     "contextWindowMismatch": "Talep sağlayıcı bağlam penceresini aşıyor"
-  },
-  "cheaperInferenceSponsorBanner": {
-    "title": "Cheaper Inference, bir Pusula Açık Kaynak Dostudur",
-    "description": "Düzinelerce öncü modeli OpenAI uyumlu tek bir uç nokta üzerinden yeniden sunan, maliyete göre sıralanmış bir ağ geçidi — her isteği liste fiyatını asla aşmadan uygun olan en ucuz sağlayıcıya yönlendirir.",
-    "cta": "API Anahtarı Al",
-    "partnerLinkNote": "İş ortağı bağlantısı",
-    "dismissAriaLabel": "Kapat"
   },
   "featureFlagPusulaDisableThinkingLevelVariantsDescription": "/v1/models kataloğunda düşünme düzeyi varyantlarının (ör. -low, -medium, -high) oluşturulmasını devre dışı bırakın."
 }

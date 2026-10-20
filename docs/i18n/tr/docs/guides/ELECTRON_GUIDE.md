@@ -178,7 +178,7 @@ spawn(process.execPath, [serverScript], {
 `session.defaultSession.webRequest.onHeadersReceived` aracılığıyla ayarlanır. Dikkate değer yönergeler:
 
 - `frame-ancestors 'none'`, `object-src 'none'`, `child-src 'none'`
-- `connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:* https://*.pusula.online https://*.pusula.dev`
+- `connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:*`
 - Geliştirme modu yalnızca `script-src` yönergesine `'unsafe-eval'` ekler
 
 ## Otomatik Güncelleme

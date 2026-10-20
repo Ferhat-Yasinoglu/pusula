@@ -1,4 +1,4 @@
-// #12547 (diegosouzapw endorsed): /v1/images/edits must iterate a combo's targets
+// #12547 (maintainer endorsed): /v1/images/edits must iterate a combo's targets
 // the same way /v1/images/generations does (#9239), so a combo whose FIRST target
 // isn't edit-capable (or lacks credentials) falls through to a later edit-capable
 // target instead of flattening to the first target and hard-erroring.

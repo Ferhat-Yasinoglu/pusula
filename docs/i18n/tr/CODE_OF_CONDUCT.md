@@ -42,7 +42,7 @@ Bu Davranış Kuralları tüm topluluk alanlarında geçerlidir ve ayrıca bir b
 
 İstismar edici, taciz edici veya başka bir şekilde kabul edilemez davranış durumları, yaptırımdan sorumlu topluluk liderlerine şu adresten özel bir güvenlik bildirimi (security advisory) açılarak bildirilebilir:
 <https://github.com/Ferhat-Yasinoglu/pusula/security/advisories/new>
-veya proje yöneticisine diegosouza.pw@outlook.com adresinden e-posta gönderilebilir.
+veya proje yöneticisi [@Ferhat-Yasinoglu](https://github.com/Ferhat-Yasinoglu) ile GitHub üzerinden iletişime geçilebilir.
 Güvenlikle ilgili hassas olaylar için bkz. [`SECURITY.md`](SECURITY.md).
 Tüm şikayetler derhal ve adil bir şekilde incelenecek ve araştırılacaktır.
 

@@ -5,7 +5,7 @@
 ---
 
 Homologasyon VPS'sinde çalışan Pusula dağıtımının gerçek ortam E2E doğrulaması
-(`HOMOLOG_BASE_URL`, ör. `http://192.168.0.15:20128`). Tek bir komut, manuel
+(`HOMOLOG_BASE_URL`, ör. `http://127.0.0.1:20128`). Tek bir komut, manuel
 sürüm STOP #2 kontrol listesinin yerini otomatik ve kanıt üreten bir çalıştırmayla alır.
 
 ## Kapsamı
@@ -29,7 +29,7 @@ deterministik bir regresyon test paketidir. Yapay zekâ yalnızca gelecekteki ba
 ## Ön koşullar
 
 1. `.env.homolog.example` dosyasını `.env.homolog` olarak kopyalayın (git tarafından yok sayılır — asla commit etmeyin) ve şunları doldurun:
-   - `HOMOLOG_BASE_URL` — hedef dağıtım, ör. `http://192.168.0.15:20128`.
+   - `HOMOLOG_BASE_URL` — hedef dağıtım, ör. `http://127.0.0.1:20128`.
    - `HOMOLOG_ADMIN_PASSWORD` — söz konusu dağıtımın pano yönetim parolası.
    - `HOMOLOG_CRITICAL_PROVIDERS` — gerçek bir duman testi sohbet isteği alacak, virgülle ayrılmış sağlayıcı ön ekleri (ör. `openai,anthropic,gemini,codex,grok,glm,deepseek,openrouter`).
    - `HOMOLOG_API_KEY` — normal çalıştırmalarda boş bırakın; test paketi kendi geçici anahtarını oluşturur ve iptal eder. Bunu yalnızca tek bir katmanda yalıtılmış olarak hata ayıklamak için ayarlayın.

@@ -102,7 +102,7 @@ RUN test -f package-lock.json \
 # regardless of npm version or ignore-scripts allowlist behavior.
 # node-gyp comes from npm's own bundled copy (deterministic, already in the image)
 # instead of `npx --yes`, which would install an arbitrary registry version
-# on-demand and run its lifecycle scripts (Sonar docker:S6505).
+# on-demand and run its lifecycle scripts (an avoidable supply-chain exposure).
 RUN --mount=type=cache,id=s/92ca8a61-c1ba-421f-a389-d48ac7258c2d-npm-cache,target=/root/.npm \
   npm ci --include=optional --no-audit --no-fund --legacy-peer-deps --ignore-scripts \
   && (cd node_modules/better-sqlite3 \
@@ -147,7 +147,7 @@ ENV PUSULA_BASE_PATH=$PUSULA_BASE_PATH
 # fixed when the image is built and cannot be flipped with `-e` on a running
 # container. Build with `--build-arg DASHBOARD_ALLOW_EMBED=vscode` to produce an
 # image whose HTML pages may be framed by the VS Code Simple Browser
-# (OmniCopilot's `dashboardOpen: "editor"`). Unset — the default — keeps every
+# (a Copilot-style extension's `dashboardOpen: "editor"`). Unset — the default — keeps every
 # route on `frame-ancestors 'none'` + X-Frame-Options: DENY. Builder-stage only:
 # the runner stage deliberately does not carry it, because a runtime value would
 # suggest an effect it cannot have.
@@ -237,7 +237,7 @@ ENV DATA_DIR=/app/data
 RUN mkdir -p /app/data && chown node:node /app /app/data
 
 # #13679: default the PUBLISHED image to requiring an API key. A bare
-# `docker run -p 20128:20128 … ferhat-yasinoglu/pusula` (README/QUICK-START
+# `docker run -p 20128:20128 … ghcr.io/ferhat-yasinoglu/pusula` (README/QUICK-START
 # one-liners) does not pass `--env-file .env`, so without this default the
 # anonymous /v1 LLM proxy would be both keyless AND world-reachable on the
 # published container. This does NOT change the npm/CLI local-dev default
@@ -353,7 +353,7 @@ RUN --mount=type=cache,id=s/92ca8a61-c1ba-421f-a389-d48ac7258c2d-apt-cache,targe
   && git config --system url."https://github.com/".insteadOf "ssh://git@github.com/"
 
 # Install CLI tools globally. Separate layer from apt for better cache reuse.
-# Pinned to exact versions per Diego's diagnosis in #12576 — floating
+# Pinned to exact versions per the diagnosis in #12576 — floating
 # `@latest` causes two CI failures:
 #   1. `openclaw` ships a breaking major ~weekly; overnight builds silently
 #      advance to a version that no longer matches the tested combo stack.

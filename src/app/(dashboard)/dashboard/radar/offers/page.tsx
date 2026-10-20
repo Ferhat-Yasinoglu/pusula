@@ -21,8 +21,10 @@ interface OffersMeta {
 
 interface SettingsPayload {
   hasSupporterKey?: boolean;
-  contributorClaimUrl?: string;
-  supporterPlansUrl?: string;
+  /** `null` when the operator configured no claim flow on their feed server (button hidden). */
+  contributorClaimUrl?: string | null;
+  /** `null` when the operator configured no plans page on their feed server (button hidden). */
+  supporterPlansUrl?: string | null;
 }
 
 export default function RadarOffersPage() {
@@ -67,6 +69,7 @@ export default function RadarOffersPage() {
       }
       if (
         status.status === "error" ||
+        status.status === "not_configured" ||
         status.status === "invalid_signature" ||
         status.status === "invalid_schema" ||
         status.status === "wrong_tier" ||

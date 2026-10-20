@@ -133,7 +133,7 @@ export async function createLiveHarness(prefix: string): Promise<LiveHarness> {
     const output = execFileSync(
       "ssh",
       [
-        "root@192.168.0.15",
+        "root@<your-server>",
         'grep -E "^(STORAGE_ENCRYPTION_KEY|API_KEY_SECRET)=" ~/.pusula/.env',
       ],
       { encoding: "utf8", timeout: 15_000 }
@@ -178,7 +178,7 @@ export async function createLiveHarness(prefix: string): Promise<LiveHarness> {
   const snapshotDbPath = path.join(snapshotDir, "storage.sqlite");
 
   try {
-    execFileSync("scp", ["root@192.168.0.15:/root/.pusula/storage.sqlite", snapshotDbPath], {
+    execFileSync("scp", ["root@<your-server>:/root/.pusula/storage.sqlite", snapshotDbPath], {
       timeout: 60_000,
     });
   } catch (err: any) {

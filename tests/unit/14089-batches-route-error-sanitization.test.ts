@@ -1,5 +1,5 @@
 /**
- * #14089 (diegosouzapw, good first issue): `POST /api/v1/batches` returned the
+ * #14089 (maintainer-tagged good first issue): `POST /api/v1/batches` returned the
  * raw `error.message` from its catch block verbatim, contrary to Hard Rule #12
  * (AGENTS.md) — every HTTP / SSE / executor error response must go through
  * `buildErrorBody()` or `sanitizeErrorMessage()` from `open-sse/utils/error.ts`.

@@ -4718,53 +4718,6 @@
         }
       }
     },
-    "docs/guides/VSCODE-COPILOT.md": {
-      "source_hash": "bcf155d5508003d6e7495bf3370c5b844b6d1ed5a4efb547fbf5835de63d5816",
-      "locales": {
-        "de": {
-          "source_hash": "bcf155d5508003d6e7495bf3370c5b844b6d1ed5a4efb547fbf5835de63d5816",
-          "target_hash": "f73c87ea53d45c31c6195fd9886115e2edbc24aa7e5c2de531af49b76ae43320",
-          "section_hashes": [
-            "e9b82d0dd188",
-            "069d38237347",
-            "d29bae4fdbf5",
-            "3d9560c2571a",
-            "bca12ef8f4d1",
-            "e6b8adddb94e",
-            "76c9ca7dbe9d"
-          ],
-          "updated_at": "2026-09-24T05:21:22.131Z"
-        },
-        "fa": {
-          "source_hash": "bcf155d5508003d6e7495bf3370c5b844b6d1ed5a4efb547fbf5835de63d5816",
-          "target_hash": "092095a9b87edfca948aaf363812f023f720b00c8a447c8f3d72931e4fe35021",
-          "section_hashes": [
-            "e9b82d0dd188",
-            "069d38237347",
-            "d29bae4fdbf5",
-            "3d9560c2571a",
-            "bca12ef8f4d1",
-            "e6b8adddb94e",
-            "76c9ca7dbe9d"
-          ],
-          "updated_at": "2026-09-24T05:21:22.131Z"
-        },
-        "tr": {
-          "source_hash": "bcf155d5508003d6e7495bf3370c5b844b6d1ed5a4efb547fbf5835de63d5816",
-          "target_hash": "64a012cc29f3adebed2b254770c7c837b1ab855fddef8e08edcdc1eff85e1df1",
-          "section_hashes": [
-            "e9b82d0dd188",
-            "069d38237347",
-            "d29bae4fdbf5",
-            "3d9560c2571a",
-            "bca12ef8f4d1",
-            "e6b8adddb94e",
-            "76c9ca7dbe9d"
-          ],
-          "updated_at": "2026-09-24T05:21:22.131Z"
-        }
-      }
-    },
     "docs/ops/BRANCHING_MODEL.md": {
       "source_hash": "aeb3c53a79cb1c6ca5b95cf409936b69d407dfef3d5d8d17e91194fb732fbb78",
       "locales": {

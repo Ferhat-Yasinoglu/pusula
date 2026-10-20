@@ -18,11 +18,10 @@ If you discover a security vulnerability in Pusula, please report it responsibly
 
 ## Supported Versions
 
-| Version | Support Status |
-| ------- | -------------- |
-| 3.8.x   | ✅ Active      |
-| 3.7.x   | ✅ Security    |
-| < 3.7.0 | ❌ Unsupported |
+| Version        | Support Status |
+| -------------- | -------------- |
+| 1.x (latest)   | ✅ Active      |
+| older releases | ❌ Unsupported |
 
 ---
 
@@ -238,7 +237,7 @@ For each finding category we maintain a per-finding maintainer attestation:
 
 - **[`docs/security/SOCKET_DEV_FINDINGS.md`](docs/security/SOCKET_DEV_FINDINGS.md)** —
   per-finding map: source file ↔ flagged chunk ↔ behaviour ↔ mitigation
-  applied in v3.8.6.
+  applied.
 - In-source `SECURITY-AUDITOR-NOTE:` blocks at each flagged function point
   back to the same document.
 

@@ -188,5 +188,4 @@ Pusula automatically skips failed providers and tries the next one. You don't ne
 ## Need Help?
 
 - **[Troubleshooting](../guides/TROUBLESHOOTING.md)** — Common issues and fixes
-- **[Discord](https://discord.gg/U47eFqAXCn)** — Community support
 - **[GitHub Issues](https://github.com/Ferhat-Yasinoglu/pusula/issues)** — Report bugs

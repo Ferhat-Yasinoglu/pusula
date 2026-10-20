@@ -35,7 +35,7 @@ test("findAiAttribution: rejects AI-generation footers and session trailers", ()
 
 test("findAiAttribution: keeps human co-authors, product names in prose, and ordinary text", () => {
   const clean = [
-    "Co-authored-by: diegosouzapw <8016841+diegosouzapw@users.noreply.github.com>",
+    "Co-authored-by: Ferhat-Yasinoglu <Ferhat-Yasinoglu@users.noreply.github.com>",
     "Co-authored-by: Devin Smith <devin@example.com>",
     "Co-authored-by: Cursor Lee <cursor.lee@example.com>",
     "Co-authored-by: Amirreza Kimiyaei <amirreza@example.com>",

@@ -6,7 +6,7 @@ name: Build App
 # swapfile below. Triggered on `push: branches: ["**"]` it painted every branch and every
 # PR red while producing an artefact nothing downloads. The bundle is validated where a
 # build actually fits:
-#   - main:       ci.yml `Build` (self-hosted omni-build pool) on every merge
+#   - main:       ci.yml `Build` (self-hosted pusula-build pool) on every merge
 #   - release/**: nightly-release-green.yml (same pool, continuous)
 # Dispatch this workflow by hand when a hosted build artefact is genuinely needed.
 on:

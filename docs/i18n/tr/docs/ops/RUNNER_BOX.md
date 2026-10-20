@@ -46,7 +46,7 @@ Runner'ın varsayılan `KillMode=process` ayarı, bir birim durdurulduğunda vey
 başlatıldığında `Runner.Worker → npm → next-build` sürecini çalışır durumda bırakır —
 yetim kalan bir derleme, bağlı bir iş olmadan RAM ve CPU tüketmeye devam eder. Her
 Pusula birimi, `KillMode=mixed` ayarına sahip bir drop-in
-(`/etc/systemd/system/actions.runner.diegosouzapw-Pusula.<name>.service.d/10-killmode.conf`)
+(`/etc/systemd/system/actions.runner.Ferhat-Yasinoglu-pusula.<name>.service.d/10-killmode.conf`)
 taşır: önce dinleyiciye SIGTERM, `TimeoutStop` anında ise tüm cgroup'a SIGKILL gönderilir.
 Bu ayar, birimin bir sonraki yeniden başlatılmasında etkili olur — boşta olma kontrolü
 ve yeniden başlatma aynı komutta olacak şekilde, **yalnızca boşta olduğunda ve her

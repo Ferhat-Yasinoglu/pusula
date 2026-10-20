@@ -8,7 +8,7 @@
  * Combo create/delete mechanism: SSH-sqlite fallback.
  * /api/combos requires management auth (returns 401 unauthenticated).
  * We insert/delete rows directly via:
- *   execFileSync("ssh", ["root@192.168.0.15", "sqlite3", "/root/.pusula/storage.sqlite", SQL])
+ *   execFileSync("ssh", ["root@<your-server>", "sqlite3", "/root/.pusula/storage.sqlite", SQL])
  * Values are static test-scoped data — no untrusted interpolation.
  *
  * combos table schema (PRAGMA table_info):
@@ -29,7 +29,7 @@ import { randomUUID } from "node:crypto";
 // ---------------------------------------------------------------------------
 const BASE_URL = process.env.COMBO_LIVE_BASE_URL ?? "http://192.168.0.15:20128";
 const API_KEY = process.env.COMBO_LIVE_API_KEY ?? null;
-const VPS_SSH_HOST = "root@192.168.0.15";
+const VPS_SSH_HOST = "root@<your-server>";
 const VPS_DB_PATH = "/root/.pusula/storage.sqlite";
 
 // ---------------------------------------------------------------------------

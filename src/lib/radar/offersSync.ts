@@ -5,11 +5,16 @@
 
 import { sanitizeErrorMessage } from "@pusula/open-sse/utils/error";
 import { isFeatureFlagEnabled } from "@/shared/utils/featureFlags";
+import {
+  getRadarFeedBaseUrl,
+  radarFeedNotConfigured,
+  type RadarFeedNotConfiguredStatus,
+} from "./feedUrl";
 import { RadarOffersFeedSchema, type RadarOffersFeed } from "./offersFeedSchema";
 import { compareVersions, type RadarSettingsSnapshot } from "./sync";
 import { verifyFeedBytes } from "./verify";
 
-const DEFAULT_FEED_BASE_URL = "https://radar.pusula.online";
+// No default feed host: the operator's `RADAR_FEED_URL` is the only source (see ./feedUrl.ts).
 const SYNC_TIMEOUT_MS = 30_000;
 const MAX_FEED_BYTES = 10 * 1024 * 1024;
 
@@ -17,6 +22,7 @@ export type OffersSyncStatus =
   | { status: "disabled" }
   | { status: "opt_out" }
   | { status: "no_key" }
+  | RadarFeedNotConfiguredStatus
   | { status: "invalid_signature" }
   | { status: "invalid_schema" }
   | { status: "wrong_tier" }
@@ -91,7 +97,10 @@ export async function syncRadarOffers(deps: OffersSyncDeps = {}): Promise<Offers
     if (!settings.optIn) return { status: "opt_out" };
     if (!settings.supporterKey) return { status: "no_key" };
 
-    const baseUrl = (process.env.RADAR_FEED_URL || DEFAULT_FEED_BASE_URL).replace(/\/+$/, "");
+    // Self-hosted only: no RADAR_FEED_URL => skip with one log line, no network.
+    const baseUrl = getRadarFeedBaseUrl();
+    if (!baseUrl) return radarFeedNotConfigured("offers");
+
     const response = await fetchFn(`${baseUrl}/v1/offers/latest`, {
       method: "GET",
       headers: { Authorization: `Bearer ${settings.supporterKey}` },

@@ -29,7 +29,7 @@ Häufige Probleme und Lösungen für Pusula.
 | "pusula is not recognized" | Im Windows-PATH fehlen globale node-Module            | Fügen Sie Ihr globales npm-Präfix zum Windows-PATH hinzu. Ermitteln Sie es mit `npm config get prefix`.           |
 | "429 Too Many Requests"       | Die Anfragerate wurde begrenzt                        | Warten Sie 1 Minute oder verbinden Sie weitere Anbieter                                                           |
 
-**Problem weiterhin ungelöst?** Lesen Sie unten die [ausführliche Fehlerbehebung](#detailed-troubleshooting) oder fragen Sie auf [Discord](https://discord.gg/U47eFqAXCn).
+**Problem weiterhin ungelöst?** Lesen Sie unten die [ausführliche Fehlerbehebung](#detailed-troubleshooting) oder öffnen Sie ein [GitHub-Issue](https://github.com/Ferhat-Yasinoglu/pusula/issues).
 
 ---
 
@@ -390,7 +390,7 @@ finden Sie unter [`docs/guides/KIRO_SETUP.md`](./KIRO_SETUP.md).
 ### Cloud-Synchronisierungsfehler
 
 1. Stellen Sie sicher, dass `BASE_URL` auf Ihre laufende Instanz verweist (z. B. `http://localhost:20128`)
-2. Stellen Sie sicher, dass `CLOUD_URL` auf Ihren Cloud-Endpunkt verweist (z. B. `https://pusula.dev`)
+2. Stellen Sie sicher, dass `CLOUD_URL` auf Ihren Cloud-Endpunkt verweist (z. B. `https://pusula.example.com`)
 3. Halten Sie die `NEXT_PUBLIC_*`-Werte mit den serverseitigen Werten synchron
 
 ### Cloud gibt bei `stream=false` den Statuscode 500 zurück

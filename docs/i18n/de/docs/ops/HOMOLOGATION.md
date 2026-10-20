@@ -5,7 +5,7 @@
 ---
 
 E2E-Validierung der auf dem Homologations-VPS laufenden Pusula-Bereitstellung in einer realen Umgebung
-(`HOMOLOG_BASE_URL`, z. B. `http://192.168.0.15:20128`). Ein einziger Befehl ersetzt die manuelle
+(`HOMOLOG_BASE_URL`, z. B. `http://127.0.0.1:20128`). Ein einziger Befehl ersetzt die manuelle
 Release-STOP-#2-Checkliste durch einen automatisierten Lauf, der Nachweise erzeugt.
 
 ## Abgedeckte Bereiche
@@ -28,7 +28,7 @@ keine Evaluierung. KI kommt nur bei zukünftigen Wartungsarbeiten zum Einsatz (s
 ## Voraussetzungen
 
 1. Kopiere `.env.homolog.example` nach `.env.homolog` (wird von Git ignoriert — niemals committen) und trage Folgendes ein:
-   - `HOMOLOG_BASE_URL` — das Ziel-Deployment, z. B. `http://192.168.0.15:20128`.
+   - `HOMOLOG_BASE_URL` — das Ziel-Deployment, z. B. `http://127.0.0.1:20128`.
    - `HOMOLOG_ADMIN_PASSWORD` — das Dashboard-Verwaltungspasswort für dieses Deployment.
    - `HOMOLOG_CRITICAL_PROVIDERS` — kommagetrennte Provider-Präfixe, für die eine echte
      Smoke-Chat-Anfrage ausgeführt wird (z. B. `openai,anthropic,gemini,codex,grok,glm,deepseek,openrouter`).

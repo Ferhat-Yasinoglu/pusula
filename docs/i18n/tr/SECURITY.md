@@ -22,11 +22,7 @@ Pusula'ta bir güvenlik açığı keşfederseniz, lütfen sorumlu bir şekilde b
 
 ## Desteklenen Sürümler
 
-| Sürüm   | Destek Durumu     |
-| ------- | ----------------- |
-| 3.8.x   | ✅ Aktif          |
-| 3.7.x   | ✅ Güvenlik       |
-| < 3.7.0 | ❌ Desteklenmiyor |
+Güvenlik düzeltmeleri yalnızca en son yayımlanan sürüme uygulanır. Bir bildirimde bulunmadan önce lütfen güncel sürümü kullandığınızdan emin olun; daha eski sürümler için yama yayımlanmaz.
 
 ---
 

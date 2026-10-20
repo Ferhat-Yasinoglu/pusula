@@ -15,7 +15,7 @@ body:
     attributes:
       label: Pusula Version
       description: "Run `pusula --version` or check the left sidebar in the dashboard."
-      placeholder: "e.g. 3.7.9"
+      placeholder: "e.g. 1.0.0"
     validations:
       required: true
 

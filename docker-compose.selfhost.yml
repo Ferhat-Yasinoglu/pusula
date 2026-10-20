@@ -8,7 +8,7 @@
 #    open http://127.0.0.1:20128
 #
 #  No profiles, no build step, no multi-tenant anything.
-#  Pulls the published image `ferhat-yasinoglu/pusula:latest`.
+#  Pulls the published image `ghcr.io/ferhat-yasinoglu/pusula:latest`.
 #
 #  All app ports bind to 127.0.0.1 ONLY by default (REQUIRE_API_KEY ships
 #  as false). Set APP_BIND_HOST=0.0.0.0 in .env ONLY after you have set
@@ -35,7 +35,7 @@ services:
       retries: 3
 
   pusula:
-    image: ferhat-yasinoglu/pusula:latest
+    image: ghcr.io/ferhat-yasinoglu/pusula:latest
     container_name: pusula
     restart: unless-stopped
     stop_grace_period: 40s

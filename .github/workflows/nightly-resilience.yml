@@ -79,9 +79,9 @@ jobs:
   a11y:
     name: A11y axe (nightly, freeze-and-alert)
     # #11965: this job runs a backend-only `next build`; the hosted 7 GB runner cannot build
-    # release/v3.8.51 (VM shutdown ~7 min in), so it targets the box's light pool (`omni-light`:
-    # two listeners, jobs ≤ ~6 GB). Falls back to hosted when USE_VPS_RUNNER is off.
-    runs-on: ${{ (vars.USE_VPS_RUNNER == 'true' && fromJSON('["self-hosted","omni-light"]')) || 'ubuntu-latest' }}
+    # release/v3.8.51 (VM shutdown ~7 min in), so it targets the opt-in self-hosted light pool
+    # (`pusula-light`: jobs ≤ ~6 GB). Falls back to hosted when USE_VPS_RUNNER is off.
+    runs-on: ${{ (vars.USE_VPS_RUNNER == 'true' && fromJSON('["self-hosted","pusula-light"]')) || 'ubuntu-latest' }}
     # The Playwright webServer (`start` mode) builds Next via build-next-isolated.mjs and
     # boots the standalone server itself (waits on /api/monitoring/health, 15min webServer
     # timeout). Unlike the per-PR test-e2e job, this nightly job has no pre-built artifact,
@@ -89,7 +89,7 @@ jobs:
     # the real axe analysis (the 4 page tests are gated to nightly so per-PR e2e stays fast)
     # and makes the meta-test fail loudly if @axe-core/playwright ever goes missing.
     # webServer timeout raised to 30 min (env below) to survive contention on the
-    # shared omni-light listeners; job budget must cover build + 30 min boot + suite.
+    # shared pusula-light listeners; job budget must cover build + 30 min boot + suite.
     timeout-minutes: 50
     env:
       JWT_SECRET: ci-test-secret-with-sufficient-length-for-validation
@@ -105,7 +105,7 @@ jobs:
       # PORT drives the server the webServer script boots — both set, same value.
       DASHBOARD_PORT: "21777"
       PORT: "21777"
-      # Boot window: 15 min is not enough when both omni-light listeners are
+      # Boot window: 15 min is not enough when the pusula-light listeners are
       # already building concurrent jobs; 30 min covers the observed worst case.
       PUSULA_PLAYWRIGHT_WEB_SERVER_TIMEOUT: "1800000"
     steps:

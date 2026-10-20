@@ -1,6 +1,6 @@
 # Contributor Covenant Code of Conduct (فارسی)
 
-🌐 **Languages:** 🇺🇸 [English](../../../CODE_OF_CONDUCT.md) · 🇪🇹 [am](../am/CODE_OF_CONDUCT.md) · 🇸🇦 [ar](../ar/CODE_OF_CONDUCT.md) · 🇦🇿 [az](../az/CODE_OF_CONDUCT.md) · 🇧🇬 [bg](../bg/CODE_OF_CONDUCT.md) · 🇧🇩 [bn](../bn/CODE_OF_CONDUCT.md) · 🇧🇦 [bs](../bs/CODE_OF_CONDUCT.md) · 🇨🇿 [cs](../cs/CODE_OF_CONDUCT.md) · 🇩🇰 [da](../da/CODE_OF_CONDUCT.md) · 🇩🇪 [de](../de/CODE_OF_CONDUCT.md) · 🇬🇷 [el](../el/CODE_OF_CONDUCT.md) · 🇪🇸 [es](../es/CODE_OF_CONDUCT.md) · 🇪🇪 [et](../et/CODE_OF_CONDUCT.md) · 🇫🇮 [fi](../fi/CODE_OF_CONDUCT.md) · 🇫🇷 [fr](../fr/CODE_OF_CONDUCT.md) · 🇮🇪 [ga](../ga/CODE_OF_CONDUCT.md) · 🇮🇳 [gu](../gu/CODE_OF_CONDUCT.md) · 🇳🇬 [ha](../ha/CODE_OF_CONDUCT.md) · 🇮🇱 [he](../he/CODE_OF_CONDUCT.md) · 🇮🇳 [hi](../hi/CODE_OF_CONDUCT.md) · 🇭🇷 [hr](../hr/CODE_OF_CONDUCT.md) · 🇭🇺 [hu](../hu/CODE_OF_CONDUCT.md) · 🇦🇲 [hy](../hy/CODE_OF_CONDUCT.md) · 🇮🇩 [id](../id/CODE_OF_CONDUCT.md) · 🇳🇬 [ig](../ig/CODE_OF_CONDUCT.md) · 🇮🇹 [it](../it/CODE_OF_CONDUCT.md) · 🇯🇵 [ja](../ja/CODE_OF_CONDUCT.md) · 🇬🇪 [ka](../ka/CODE_OF_CONDUCT.md) · 🇰🇭 [km](../km/CODE_OF_CONDUCT.md) · 🇮🇳 [kn](../kn/CODE_OF_CONDUCT.md) · 🇰🇷 [ko](../ko/CODE_OF_CONDUCT.md) · 🇱🇹 [lt](../lt/CODE_OF_CONDUCT.md) · 🇱🇻 [lv](../lv/CODE_OF_CONDUCT.md) · 🇮🇳 [ml](../ml/CODE_OF_CONDUCT.md) · 🇮🇳 [mr](../mr/CODE_OF_CONDUCT.md) · 🇲🇾 [ms](../ms/CODE_OF_CONDUCT.md) · 🇲🇹 [mt](../mt/CODE_OF_CONDUCT.md) · 🇲🇲 [my](../my/CODE_OF_CONDUCT.md) · 🇳🇵 [ne](../ne/CODE_OF_CONDUCT.md) · 🇳🇱 [nl](../nl/CODE_OF_CONDUCT.md) · 🇳🇴 [no](../no/CODE_OF_CONDUCT.md) · 🇮🇳 [or](../or/CODE_OF_CONDUCT.md) · 🇮🇳 [pa](../pa/CODE_OF_CONDUCT.md) · 🇵🇭 [phi](../phi/CODE_OF_CONDUCT.md) · 🇵🇱 [pl](../pl/CODE_OF_CONDUCT.md) · 🇵🇹 [pt](../pt/CODE_OF_CONDUCT.md) · 🇧🇷 [pt-BR](../pt-BR/CODE_OF_CONDUCT.md) · 🇷🇴 [ro](../ro/CODE_OF_CONDUCT.md) · 🇷🇺 [ru](../ru/CODE_OF_CONDUCT.md) · 🇱🇰 [si](../si/CODE_OF_CONDUCT.md) · 🇸🇰 [sk](../sk/CODE_OF_CONDUCT.md) · 🇸🇮 [sl](../sl/CODE_OF_CONDUCT.md) · 🇷🇸 [sr](../sr/CODE_OF_CONDUCT.md) · 🇸🇪 [sv](../sv/CODE_OF_CONDUCT.md) · 🇰🇪 [sw](../sw/CODE_OF_CONDUCT.md) · 🇮🇳 [ta](../ta/CODE_OF_CONDUCT.md) · 🇮🇳 [te](../te/CODE_OF_CONDUCT.md) · 🇹🇭 [th](../th/CODE_OF_CONDUCT.md) · 🇹🇷 [tr](../tr/CODE_OF_CONDUCT.md) · 🇺🇦 [uk-UA](../uk-UA/CODE_OF_CONDUCT.md) · 🇵🇰 [ur](../ur/CODE_OF_CONDUCT.md) · 🇺🇿 [uz](../uz/CODE_OF_CONDUCT.md) · 🇻🇳 [vi](../vi/CODE_OF_CONDUCT.md) · 🇳🇬 [yo](../yo/CODE_OF_CONDUCT.md) · 🇨🇳 [zh-CN](../zh-CN/CODE_OF_CONDUCT.md) · 🇹🇼 [zh-TW](../zh-TW/CODE_OF_CONDUCT.md)
+🌐 **Languages:** 🇺🇸 [English](../../../CODE_OF_CONDUCT.md) · 🇩🇪 [de](../de/CODE_OF_CONDUCT.md) · 🇹🇷 [tr](../tr/CODE_OF_CONDUCT.md)
 
 ---
 
@@ -47,15 +47,12 @@
 انتشار مطلب از طریق حساب رسمی رسانههای اجتماعی یا ایفای نقش بهعنوان نماینده
 منصوبشده در یک رویداد آنلاین یا حضوری است.
 
-## Enforcement
+## اجرا
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the community leaders responsible for enforcement at
-.
-All complaints will be reviewed and investigated promptly and fairly.
+موارد رفتار آزاردهنده، توهین‌آمیز یا به هر شکل غیرقابل‌پذیرش را می‌توانید به رهبران جامعهٔ مسئول اجرا گزارش دهید: از طریق یک [گزارش امنیتی محرمانه در GitHub](https://github.com/Ferhat-Yasinoglu/pusula/security/advisories/new) یا با تماس با نگهدارندهٔ پروژه، [@Ferhat-Yasinoglu](https://github.com/Ferhat-Yasinoglu).
+همهٔ شکایت‌ها به‌سرعت و منصفانه بررسی و رسیدگی خواهند شد.
 
-All community leaders are obligated to respect the privacy and security of the
-reporter of any incident.
+همهٔ رهبران جامعه موظف‌اند حریم خصوصی و امنیت گزارش‌دهندهٔ هر رخداد را محترم بشمارند.
 
 ## دستورالعملهای اجرایی
 

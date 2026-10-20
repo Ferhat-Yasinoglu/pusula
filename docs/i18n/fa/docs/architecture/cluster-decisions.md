@@ -4,7 +4,7 @@
 
 ---
 
-**وضعیت:** پیشنهاد (در انتظار بررسی @diegosouzapw)
+**وضعیت:** پیشنهاد (در انتظار بررسی @Ferhat-Yasinoglu)
 **تاریخ:** 2026-06-20
 **ارجاعات:** [#3932](https://github.com/Ferhat-Yasinoglu/pusula/issues/3932)، PR #4381
 

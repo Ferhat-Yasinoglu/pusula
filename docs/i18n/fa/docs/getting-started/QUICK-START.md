@@ -186,5 +186,4 @@ Pusula بهطور خودکار ارائهدهندگان ناموفق را ناد
 ## به کمک نیاز دارید؟
 
 - **[عیبیابی](../guides/TROUBLESHOOTING.md)** — مشکلات رایج و راهحلها
-- **[Discord](https://discord.gg/U47eFqAXCn)** — پشتیبانی انجمن
 - **[مشکلات GitHub](https://github.com/Ferhat-Yasinoglu/pusula/issues)** — گزارش اشکالها

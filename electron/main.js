@@ -359,7 +359,7 @@ function setupContentSecurityPolicy() {
       "form-action 'self'",
       // Single connect-src: a duplicate directive is ignored by the browser (first wins),
       // which previously dropped the 127.0.0.1 origins. Keep both loopback forms here.
-      `connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:* wss://localhost:* wss://127.0.0.1:* https://*.pusula.online https://*.pusula.dev`,
+      `connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:* wss://localhost:* wss://127.0.0.1:*`,
       scriptSrc,
       "script-src-attr 'none'",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",

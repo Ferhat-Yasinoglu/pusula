@@ -27,7 +27,6 @@ Für die einmalige, manuell erstellte Basiskonfiguration der beiden umfangreichs
 - [Claude Code Konfiguration](./CLAUDE-CODE-CONFIGURATION.md)
 - [Codex CLI Konfiguration](./CODEX-CLI-CONFIGURATION.md)
 - [Remote-Modus](./REMOTE-MODE.md) — steuern Sie ein Remote-Pusula (VPS / Tailnet) von Ihrem Laptop aus
-- [VS Code Copilot Chat](./VSCODE-COPILOT.md) — die OmniCopilot-Erweiterung; sie kann diese `setup-*`-Befehle auch für Sie direkt im Editor ausführen
 
 ---
 

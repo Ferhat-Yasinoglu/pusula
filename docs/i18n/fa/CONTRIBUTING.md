@@ -1,6 +1,6 @@
 # Contributing to Pusula (فارسی)
 
-🌐 **Languages:** 🇺🇸 [English](../../../CONTRIBUTING.md) · 🇪🇹 [am](../am/CONTRIBUTING.md) · 🇸🇦 [ar](../ar/CONTRIBUTING.md) · 🇦🇿 [az](../az/CONTRIBUTING.md) · 🇧🇬 [bg](../bg/CONTRIBUTING.md) · 🇧🇩 [bn](../bn/CONTRIBUTING.md) · 🇧🇦 [bs](../bs/CONTRIBUTING.md) · 🇨🇿 [cs](../cs/CONTRIBUTING.md) · 🇩🇰 [da](../da/CONTRIBUTING.md) · 🇩🇪 [de](../de/CONTRIBUTING.md) · 🇬🇷 [el](../el/CONTRIBUTING.md) · 🇪🇸 [es](../es/CONTRIBUTING.md) · 🇪🇪 [et](../et/CONTRIBUTING.md) · 🇫🇮 [fi](../fi/CONTRIBUTING.md) · 🇫🇷 [fr](../fr/CONTRIBUTING.md) · 🇮🇪 [ga](../ga/CONTRIBUTING.md) · 🇮🇳 [gu](../gu/CONTRIBUTING.md) · 🇳🇬 [ha](../ha/CONTRIBUTING.md) · 🇮🇱 [he](../he/CONTRIBUTING.md) · 🇮🇳 [hi](../hi/CONTRIBUTING.md) · 🇭🇷 [hr](../hr/CONTRIBUTING.md) · 🇭🇺 [hu](../hu/CONTRIBUTING.md) · 🇦🇲 [hy](../hy/CONTRIBUTING.md) · 🇮🇩 [id](../id/CONTRIBUTING.md) · 🇳🇬 [ig](../ig/CONTRIBUTING.md) · 🇮🇹 [it](../it/CONTRIBUTING.md) · 🇯🇵 [ja](../ja/CONTRIBUTING.md) · 🇬🇪 [ka](../ka/CONTRIBUTING.md) · 🇰🇭 [km](../km/CONTRIBUTING.md) · 🇮🇳 [kn](../kn/CONTRIBUTING.md) · 🇰🇷 [ko](../ko/CONTRIBUTING.md) · 🇱🇹 [lt](../lt/CONTRIBUTING.md) · 🇱🇻 [lv](../lv/CONTRIBUTING.md) · 🇮🇳 [ml](../ml/CONTRIBUTING.md) · 🇮🇳 [mr](../mr/CONTRIBUTING.md) · 🇲🇾 [ms](../ms/CONTRIBUTING.md) · 🇲🇹 [mt](../mt/CONTRIBUTING.md) · 🇲🇲 [my](../my/CONTRIBUTING.md) · 🇳🇵 [ne](../ne/CONTRIBUTING.md) · 🇳🇱 [nl](../nl/CONTRIBUTING.md) · 🇳🇴 [no](../no/CONTRIBUTING.md) · 🇮🇳 [or](../or/CONTRIBUTING.md) · 🇮🇳 [pa](../pa/CONTRIBUTING.md) · 🇵🇭 [phi](../phi/CONTRIBUTING.md) · 🇵🇱 [pl](../pl/CONTRIBUTING.md) · 🇵🇹 [pt](../pt/CONTRIBUTING.md) · 🇧🇷 [pt-BR](../pt-BR/CONTRIBUTING.md) · 🇷🇴 [ro](../ro/CONTRIBUTING.md) · 🇷🇺 [ru](../ru/CONTRIBUTING.md) · 🇱🇰 [si](../si/CONTRIBUTING.md) · 🇸🇰 [sk](../sk/CONTRIBUTING.md) · 🇸🇮 [sl](../sl/CONTRIBUTING.md) · 🇷🇸 [sr](../sr/CONTRIBUTING.md) · 🇸🇪 [sv](../sv/CONTRIBUTING.md) · 🇰🇪 [sw](../sw/CONTRIBUTING.md) · 🇮🇳 [ta](../ta/CONTRIBUTING.md) · 🇮🇳 [te](../te/CONTRIBUTING.md) · 🇹🇭 [th](../th/CONTRIBUTING.md) · 🇹🇷 [tr](../tr/CONTRIBUTING.md) · 🇺🇦 [uk-UA](../uk-UA/CONTRIBUTING.md) · 🇵🇰 [ur](../ur/CONTRIBUTING.md) · 🇺🇿 [uz](../uz/CONTRIBUTING.md) · 🇻🇳 [vi](../vi/CONTRIBUTING.md) · 🇳🇬 [yo](../yo/CONTRIBUTING.md) · 🇨🇳 [zh-CN](../zh-CN/CONTRIBUTING.md) · 🇹🇼 [zh-TW](../zh-TW/CONTRIBUTING.md)
+🌐 **Languages:** 🇺🇸 [English](../../../CONTRIBUTING.md) · 🇩🇪 [de](../de/CONTRIBUTING.md) · 🇹🇷 [tr](../tr/CONTRIBUTING.md)
 
 ---
 
@@ -205,11 +205,11 @@ npm run check
 
 # آزمون سریع و کنترلشدهٔ ترکیب واقعی upstream (به دسترسی VPS و اعتبار واقعی ارائهدهنده نیاز دارد)
 # با ارائهدهندگان واقعی ارتباط برقرار میکند — کمی هزینه دارد. هرگز در CI اجرا نمیشود. بدون دروازه بهدرستی رد میشود.
-# نیازمند: دسترسی ssh root@192.168.0.15 (یک snapshot فقطخواندنی از DB را از VPS بارگذاری میکند).
+# نیازمند: دسترسی ssh root@<your-server> (یک snapshot فقطخواندنی از DB را از VPS بارگذاری میکند).
 RUN_COMBO_LIVE=1 npm run test:combo:live
 
 # آزمون سریع زندهٔ VPS در فاز 3 — اسکریپتهای سادهٔ Node ESM که مستقیماً به سرور زندهٔ .15 متصل میشوند.
-# نیازمند: دسترسی ssh root@192.168.0.15 (ترکیبها از طریق SSH sqlite ایجاد/حذف میشوند).
+# نیازمند: دسترسی ssh root@<your-server> (ترکیبها از طریق SSH sqlite ایجاد/حذف میشوند).
 # با ارائهدهندگان واقعی ارتباط برقرار میکند (هزینهٔ اندک). فقط ترکیبهای __live_test__* را ایجاد/حذف میکند. هرگز در CI اجرا نمیشود.
 # مقدار REQUIRE_API_KEY=false روی .15 است، بنابراین کلید API لازم نیست؛ اما در صورت تنظیم، COMBO_LIVE_BASE_URL / COMBO_LIVE_API_KEY را رعایت میکند.
 npm run test:combo:live:vps              # 7 سناریوی HTTP (اولویت/نوبتگردشی/وزندار/هزینه/ادغام/خودکار + سلامت)
@@ -414,4 +414,5 @@ Releases are managed via the `/generate-release` workflow. When a new GitHub Rel
 - **مستندات امنیتی**: [`docs/security/CLI_TOKEN.md`](docs/security/CLI_TOKEN.md)، [`docs/security/ROUTE_GUARD_TIERS.md`](docs/security/ROUTE_GUARD_TIERS.md)، [`docs/security/ERROR_SANITIZATION.md`](docs/security/ERROR_SANITIZATION.md)، [`docs/security/PUBLIC_CREDS.md`](docs/security/PUBLIC_CREDS.md)
 - **مستندات عملیات**: [`docs/ops/SQLITE_RUNTIME.md`](docs/ops/SQLITE_RUNTIME.md)
 - **مشکلات**: [github.com/Ferhat-Yasinoglu/pusula/issues](https://github.com/Ferhat-Yasinoglu/pusula/issues)
+- **پرسش و گفت‌وگو**: [github.com/Ferhat-Yasinoglu/pusula/discussions](https://github.com/Ferhat-Yasinoglu/pusula/discussions)
 - **رکوردهای تصمیمگیری معماری (ADR)**: برای مشاهدهٔ رکوردهای تصمیمگیری معماری، به `docs/adr/` مراجعه کنید

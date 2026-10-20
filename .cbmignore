@@ -11,7 +11,7 @@
 # `auto_index_limit=50000`, total indexável medido ≈11.546 arquivos (folga 4,3×).
 #
 # Fontes cruzadas:
-#   - `codebase-memory-mcp cli index_status --project home-diegosouzapw-dev-proxys-Pusula`
+#   - `codebase-memory-mcp cli index_status --project home-ferhat-dev-pusula`
 #     → `not_indexed.dirs` (27) + `not_indexed.files` (336), todos `BY DESIGN`.
 #   - `.gitignore` deste repo (5.691 B) — fonte canônica secundária.
 #
@@ -128,7 +128,6 @@ tests/golden-set/data/
 # Logs e saida de teste
 logs/*
 test_output.log
-home-diegosouzapw-dev-automacoes-*.txt
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 5. Diretorios do monorepo por subprojeto (nao fazem parte do app principal)

@@ -389,7 +389,7 @@ GET /v1/models?prefix=canonical    # yalnızca tam sağlayıcı kimliği ön eki
 
 `dual` modundaki bir yansı, sorgu parametresi olmadan da tanınabilir: birincil kimliğe işaret eden bir `parent` alanı taşır.
 
-Bir model seçici oluşturan istemciler `?prefix=alias` istemelidir — [OmniCopilot VS Code uzantısı](../guides/VSCODE-COPILOT.md) da bunu yapar.
+Bir model seçici oluşturan istemciler `?prefix=alias` istemelidir.
 
 ### Düşünmesiz model varyantları
 
@@ -660,7 +660,7 @@ tamamlamayı akış halinde iletir.
 
 ## Self servis kullanım (`/api/usage/om-usage`)
 
-Herhangi bir API anahtarı, yönetim kimlik doğrulaması olmadan **kendi** kullanımını ve kotalarını okuyabilir. Bu, bir istemcinin (CLI, OmniCopilot paneli) anahtar sahibine harcamalarını göstermek için kullandığı uç noktadır.
+Herhangi bir API anahtarı, yönetim kimlik doğrulaması olmadan **kendi** kullanımını ve kotalarını okuyabilir. Bu, bir istemcinin (örneğin CLI) anahtar sahibine harcamalarını göstermek için kullandığı uç noktadır.
 
 ```bash
 # Metin biçimi (tarihsel sözleşme — terminal için düz metin)

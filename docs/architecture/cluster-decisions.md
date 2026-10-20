@@ -6,7 +6,7 @@ lastUpdated: 2026-06-28
 
 # Cluster Decisions — Optional Sidecar Profiles
 
-**Status:** proposal (awaiting @diegosouzapw review)
+**Status:** proposal (awaiting @Ferhat-Yasinoglu review)
 **Date:** 2026-06-20
 **Refs:** [#3932](https://github.com/Ferhat-Yasinoglu/pusula/issues/3932), PR #4381
 

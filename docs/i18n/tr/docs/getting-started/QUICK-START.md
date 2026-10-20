@@ -186,5 +186,4 @@ Pusula, başarısız olan sağlayıcıları otomatik olarak atlar ve sıradakini
 ## Yardıma mı İhtiyacınız Var?
 
 - **[Sorun Giderme](../guides/TROUBLESHOOTING.md)** — Yaygın sorunlar ve çözümler
-- **[Discord](https://discord.gg/U47eFqAXCn)** — Topluluk desteği
 - **[GitHub Issues](https://github.com/Ferhat-Yasinoglu/pusula/issues)** — Hataları bildirin

@@ -1,6 +1,6 @@
 # Contributing to Pusula (Deutsch)
 
-🌐 **Languages:** 🇺🇸 [English](../../../CONTRIBUTING.md) · 🇪🇹 [am](../am/CONTRIBUTING.md) · 🇸🇦 [ar](../ar/CONTRIBUTING.md) · 🇦🇿 [az](../az/CONTRIBUTING.md) · 🇧🇬 [bg](../bg/CONTRIBUTING.md) · 🇧🇩 [bn](../bn/CONTRIBUTING.md) · 🇧🇦 [bs](../bs/CONTRIBUTING.md) · 🇨🇿 [cs](../cs/CONTRIBUTING.md) · 🇩🇰 [da](../da/CONTRIBUTING.md) · 🇬🇷 [el](../el/CONTRIBUTING.md) · 🇪🇸 [es](../es/CONTRIBUTING.md) · 🇪🇪 [et](../et/CONTRIBUTING.md) · 🇮🇷 [fa](../fa/CONTRIBUTING.md) · 🇫🇮 [fi](../fi/CONTRIBUTING.md) · 🇫🇷 [fr](../fr/CONTRIBUTING.md) · 🇮🇪 [ga](../ga/CONTRIBUTING.md) · 🇮🇳 [gu](../gu/CONTRIBUTING.md) · 🇳🇬 [ha](../ha/CONTRIBUTING.md) · 🇮🇱 [he](../he/CONTRIBUTING.md) · 🇮🇳 [hi](../hi/CONTRIBUTING.md) · 🇭🇷 [hr](../hr/CONTRIBUTING.md) · 🇭🇺 [hu](../hu/CONTRIBUTING.md) · 🇦🇲 [hy](../hy/CONTRIBUTING.md) · 🇮🇩 [id](../id/CONTRIBUTING.md) · 🇳🇬 [ig](../ig/CONTRIBUTING.md) · 🇮🇹 [it](../it/CONTRIBUTING.md) · 🇯🇵 [ja](../ja/CONTRIBUTING.md) · 🇬🇪 [ka](../ka/CONTRIBUTING.md) · 🇰🇭 [km](../km/CONTRIBUTING.md) · 🇮🇳 [kn](../kn/CONTRIBUTING.md) · 🇰🇷 [ko](../ko/CONTRIBUTING.md) · 🇱🇹 [lt](../lt/CONTRIBUTING.md) · 🇱🇻 [lv](../lv/CONTRIBUTING.md) · 🇮🇳 [ml](../ml/CONTRIBUTING.md) · 🇮🇳 [mr](../mr/CONTRIBUTING.md) · 🇲🇾 [ms](../ms/CONTRIBUTING.md) · 🇲🇹 [mt](../mt/CONTRIBUTING.md) · 🇲🇲 [my](../my/CONTRIBUTING.md) · 🇳🇵 [ne](../ne/CONTRIBUTING.md) · 🇳🇱 [nl](../nl/CONTRIBUTING.md) · 🇳🇴 [no](../no/CONTRIBUTING.md) · 🇮🇳 [or](../or/CONTRIBUTING.md) · 🇮🇳 [pa](../pa/CONTRIBUTING.md) · 🇵🇭 [phi](../phi/CONTRIBUTING.md) · 🇵🇱 [pl](../pl/CONTRIBUTING.md) · 🇵🇹 [pt](../pt/CONTRIBUTING.md) · 🇧🇷 [pt-BR](../pt-BR/CONTRIBUTING.md) · 🇷🇴 [ro](../ro/CONTRIBUTING.md) · 🇷🇺 [ru](../ru/CONTRIBUTING.md) · 🇱🇰 [si](../si/CONTRIBUTING.md) · 🇸🇰 [sk](../sk/CONTRIBUTING.md) · 🇸🇮 [sl](../sl/CONTRIBUTING.md) · 🇷🇸 [sr](../sr/CONTRIBUTING.md) · 🇸🇪 [sv](../sv/CONTRIBUTING.md) · 🇰🇪 [sw](../sw/CONTRIBUTING.md) · 🇮🇳 [ta](../ta/CONTRIBUTING.md) · 🇮🇳 [te](../te/CONTRIBUTING.md) · 🇹🇭 [th](../th/CONTRIBUTING.md) · 🇹🇷 [tr](../tr/CONTRIBUTING.md) · 🇺🇦 [uk-UA](../uk-UA/CONTRIBUTING.md) · 🇵🇰 [ur](../ur/CONTRIBUTING.md) · 🇺🇿 [uz](../uz/CONTRIBUTING.md) · 🇻🇳 [vi](../vi/CONTRIBUTING.md) · 🇳🇬 [yo](../yo/CONTRIBUTING.md) · 🇨🇳 [zh-CN](../zh-CN/CONTRIBUTING.md) · 🇹🇼 [zh-TW](../zh-TW/CONTRIBUTING.md)
+🌐 **Languages:** 🇺🇸 [English](../../../CONTRIBUTING.md) · 🇹🇷 [Türkçe](../tr/CONTRIBUTING.md) · 🇩🇪 [Deutsch](CONTRIBUTING.md) · 🇮🇷 [فارسی](../fa/CONTRIBUTING.md)
 
 ---
 
@@ -131,13 +131,13 @@ Standard-URLs:
 > „ein Branch pro Release“ mit Tagging bei der Veröffentlichung.
 
 ```bash
-# Vom aktuellen Stand des aktiven Release-Branches abzweigen (Beispiel: release/v3.8.49)
+# Vom aktuellen Stand des aktiven Release-Branches abzweigen (release/vX.Y.Z)
 git fetch origin
-git checkout -b feat/your-feature-name origin/release/v3.8.49
+git checkout -b feat/your-feature-name origin/release/vX.Y.Z
 # ... Änderungen vornehmen ...
 git commit -m "feat: describe your change"
 git push -u origin feat/your-feature-name
-# Einen Pull Request mit base = release/v3.8.49 öffnen
+# Einen Pull Request mit base = release/vX.Y.Z öffnen
 ```
 
 ### Branch-Benennung
@@ -163,7 +163,7 @@ test: add observability unit tests
 refactor(db): consolidate rate limit tables
 ```
 
-Scopes (v3.8): `db`, `sse`, `oauth`, `dashboard`, `api`, `cli`, `docker`, `ci`, `mcp`, `a2a`, `memory`, `skills`, `cloud-agent`, `guardrails`, `compression`, `auto-combo`, `resilience`, `providers`, `executors`, `translator`, `domain`, `authz`.
+Scopes: `db`, `sse`, `oauth`, `dashboard`, `api`, `cli`, `docker`, `ci`, `mcp`, `a2a`, `memory`, `skills`, `cloud-agent`, `guardrails`, `compression`, `auto-combo`, `resilience`, `providers`, `executors`, `translator`, `domain`, `authz`.
 
 ---
 
@@ -205,11 +205,11 @@ npm run check
 
 # Durch Gate geschützter Combo-Smoke-Test mit echten Upstream-Diensten (erfordert VPS-Zugriff + Guthaben bei echten Anbietern)
 # Greift auf ECHTE Anbieter zu — verursacht geringe Kosten. Wird NIEMALS in CI ausgeführt. Wird ohne Gate ordnungsgemäß übersprungen.
-# Erforderlich: Zugriff per ssh root@192.168.0.15 (bezieht einen schreibgeschützten DB-Snapshot vom VPS).
+# Erforderlich: Zugriff per ssh root@<your-server> (bezieht einen schreibgeschützten DB-Snapshot vom VPS).
 RUN_COMBO_LIVE=1 npm run test:combo:live
 
 # Live-Smoke-Test für den Phase-3-VPS — reine Node-ESM-Skripte, die direkt auf den Live-Server .15 zugreifen.
-# Erfordert: Zugriff per ssh root@192.168.0.15 (Combos werden per SSH sqlite erstellt/entfernt).
+# Erfordert: Zugriff per ssh root@<your-server> (Combos werden per SSH sqlite erstellt/entfernt).
 # Greift auf ECHTE Anbieter zu (geringe Kosten). Erstellt/löscht ausschließlich __live_test__*-Combos. Wird NIEMALS in CI ausgeführt.
 # REQUIRE_API_KEY=false auf .15, daher ist kein API-Schlüssel erforderlich; COMBO_LIVE_BASE_URL / COMBO_LIVE_API_KEY werden jedoch berücksichtigt, falls gesetzt.
 npm run test:combo:live:vps              # 7 HTTP-Szenarien (Priorität/Round-Robin/gewichtet/Kosten/Fusion/automatisch + Zustand)

@@ -312,7 +312,6 @@ jobs:
   # never block. The blocking gates themselves SKIP (exit 0) when their binary/plugin
   # is absent — only a measured regression on the SAME metric the baseline froze
   # blocks. The CodeQL ratchet was PROMOTED to the quality-gate job (v3.8.26).
-  # SonarQube needs SONAR_TOKEN/SONAR_HOST_URL secrets.
   quality-extended:
     name: Quality Gates (Extended)
     runs-on: ubuntu-latest
@@ -666,12 +665,12 @@ jobs:
     # Dynamic runner: when the release captain flips the USE_VPS_RUNNER repo var to
     # 'true' (scripts/vps/release-runner-up.sh does it after the self-hosted VM is
     # online), the heavy jobs run on the dedicated 32-core VPS runners (label
-    # omni-build) instead of queueing on the 20-concurrent-job hosted pool.
+    # pusula-build) instead of queueing on the 20-concurrent-job hosted pool.
     # Safety: fork PRs NEVER reach the self-hosted runner — the expression falls
     # back to ubuntu-latest unless the PR head repo is this repository (push /
     # dispatch events are own-origin by definition). Any failure path (VM down,
     # var unset/false) also falls back to ubuntu-latest.
-    runs-on: ${{ (vars.USE_VPS_RUNNER == 'true' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)) && fromJSON('["self-hosted","omni-build"]') || 'ubuntu-latest' }}
+    runs-on: ${{ (vars.USE_VPS_RUNNER == 'true' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)) && fromJSON('["self-hosted","pusula-build"]') || 'ubuntu-latest' }}
     needs: changes
     # The .113 pool runs ONE next-build with room to spare and two at the edge: the
     # box has 31 GB and a single next-build peaks at 14–16 GB RSS. On 2026-08-28
@@ -997,6 +996,9 @@ jobs:
       JWT_SECRET: ci-test-secret-with-sufficient-length-for-validation
       API_KEY_SECRET: ci-test-api-key-secret-long
       DISABLE_SQLITE_AUTO_BACKUP: "true"
+      # Mapped into env so the Trunk upload can be gated on it (the `secrets`
+      # context is not available in a step-level `if:`).
+      TRUNK_TOKEN: ${{ secrets.TRUNK_TOKEN }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -1016,15 +1018,16 @@ jobs:
       # CompareTab D22 cap). Promoted to BLOCKING per the plan's post-merge step.
       - run: npm run test:vitest:ui -- --reporter=default --reporter=junit --outputFile.junit=trunk-junit/vitest-ui.xml
       # Trunk Flaky Tests upload — advisory (never blocks), own-origin only (fork PRs
-      # have no TRUNK_TOKEN). Pinned by SHA (tag v2.1.2).
+      # have no TRUNK_TOKEN) and skipped entirely when no TRUNK_TOKEN is configured.
+      # Pinned by SHA (tag v2.1.2).
       - name: Upload test results to Trunk (advisory)
-        if: ${{ always() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+        if: ${{ always() && env.TRUNK_TOKEN != '' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
         continue-on-error: true
         uses: trunk-io/analytics-uploader@385f1ccdf345b4532dc4b6c665dd432b702b8e28 # v2.1.2
         with:
           junit-paths: trunk-junit/**/*.xml
           org-slug: pusula
-          token: ${{ secrets.TRUNK_TOKEN }}
+          token: ${{ env.TRUNK_TOKEN }}
 
   # Node 24/26 compatibility matrices moved to .github/workflows/nightly-compat.yml
   # (plano mestre testes+CI, Eixo D2 — they cost ~28% of every heavy run to catch a
@@ -1033,7 +1036,7 @@ jobs:
   test-coverage:
     name: Coverage
     runs-on: ubuntu-latest
-    # 10min was sized before #7114 added the lcov reporter (Codecov/Sonar need it);
+    # 10min was sized before #7114 added the lcov reporter (Codecov needs it);
     # merging 8 shard JSONs + text+json+lcov now takes ~10-12min — three consecutive
     # release-tip runs died at exactly 10m as job-timeout "cancelled" (2026-07-15/16).
     # 30, not 20 (2026-08-29): the informational Codecov upload below hung for the rest of
@@ -1046,6 +1049,9 @@ jobs:
     env:
       JWT_SECRET: ci-test-secret-with-sufficient-length-for-validation
       API_KEY_SECRET: ci-test-api-key-secret-long
+      # Mapped into env so the Codecov step can be gated on it (the `secrets`
+      # context is not available in a step-level `if:`).
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -1116,9 +1122,9 @@ jobs:
       # informational during calibration (codecov.yml sets informational: true);
       # promote to blocking only after ~2 weeks without false blocks. The lcov
       # reporter above also fixes coverage/lcov.info being silently absent
-      # (if-no-files-found: warn) — Sonar consumes the same file.
+      # (if-no-files-found: warn). Skipped entirely when CODECOV_TOKEN is not configured.
       - name: Upload coverage to Codecov (informational)
-        if: always()
+        if: ${{ always() && env.CODECOV_TOKEN != '' }}
         # Informational means informational: its own ceiling and continue-on-error, so a
         # stalled upload can neither eat the job's budget nor turn a green job cancelled.
         timeout-minutes: 5
@@ -1126,7 +1132,7 @@ jobs:
         uses: codecov/codecov-action@0b35c9ecc4f0529d0eb674914510c22f85b196b4 # v7.1.0
         with:
           files: coverage/lcov.info
-          token: ${{ secrets.CODECOV_TOKEN }}
+          token: ${{ env.CODECOV_TOKEN }}
           fail_ci_if_error: false
       - name: Upload coverage artifacts
         if: always()
@@ -1138,61 +1144,6 @@ jobs:
             coverage/coverage-report.md
             coverage/lcov.info
           if-no-files-found: warn
-
-  sonarqube:
-    name: SonarQube
-    runs-on: ubuntu-latest
-    needs: test-coverage
-    # Temporarily opt-in: the private project currently has no Sonar quota.
-    # Re-enable without another code change by setting the repository Actions
-    # variable SONARQUBE_ENABLED=true after quota/project access is restored.
-    if: ${{ vars.SONARQUBE_ENABLED == 'true' && !cancelled() && needs.test-coverage.result == 'success' }}
-    env:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          persist-credentials: false
-          fetch-depth: 0
-      # The upload strips the common `coverage/` prefix, so the artifact root holds
-      # lcov.info directly — download into coverage/ so it lands at coverage/lcov.info,
-      # where sonar.javascript.lcov.reportPaths expects it (path: . left the Sonar
-      # new-code coverage at 0% every scan).
-      - uses: actions/download-artifact@v8
-        with:
-          name: coverage-report
-          path: coverage/
-      - name: Explain SonarQube skip
-        if: ${{ github.event_name != 'pull_request' || env.SONAR_TOKEN == '' || env.SONAR_HOST_URL == '' }}
-        run: |
-          if [ "${{ github.event_name }}" != "pull_request" ]; then
-            echo "SonarQube scan skipped on non-PR events to keep main pushes governed by repository CI gates." >> "$GITHUB_STEP_SUMMARY"
-          else
-            echo "SonarQube scan skipped because SONAR_TOKEN or SONAR_HOST_URL is not configured." >> "$GITHUB_STEP_SUMMARY"
-          fi
-      - name: Read project version
-        if: ${{ github.event_name == 'pull_request' && env.SONAR_TOKEN != '' && env.SONAR_HOST_URL != '' }}
-        id: pkg
-        run: |
-          VERSION="$(node -p "require('./package.json').version")"
-          # Harden against output injection: only accept a plain semver-ish string.
-          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$ ]]; then
-            echo "Invalid package.json version: $VERSION" >&2; exit 1
-          fi
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-      - name: SonarQube Scan
-        if: ${{ github.event_name == 'pull_request' && env.SONAR_TOKEN != '' && env.SONAR_HOST_URL != '' }}
-        uses: SonarSource/sonarqube-scan-action@v8
-        env:
-          SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
-        with:
-          # sonar.projectVersion advances the "previous_version" new-code baseline at
-          # each release; without it the baseline never moves (it stays pinned to the
-          # analysis where the version last changed) and legacy issues pile up as
-          # "new code" in the quality gate.
-          args: -Dsonar.projectVersion=${{ steps.pkg.outputs.version }}
 
   coverage-pr-comment:
     name: PR Coverage Comment
@@ -1296,6 +1247,9 @@ jobs:
       API_KEY_SECRET: ci-test-api-key-secret-long
       DISABLE_SQLITE_AUTO_BACKUP: "true"
       PUSULA_PLAYWRIGHT_SKIP_BUILD: "1"
+      # Mapped into env so the Trunk upload can be gated on it (the `secrets`
+      # context is not available in a step-level `if:`).
+      TRUNK_TOKEN: ${{ secrets.TRUNK_TOKEN }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -1344,15 +1298,16 @@ jobs:
             echo "[e2e-balance] balancer unavailable — plain --shard fallback"
             npx playwright test tests/e2e/*.spec.ts --shard="$SHARD"/9 --reporter=line,junit
           fi
-      # WS5.2/5.3: Trunk Flaky Tests upload — advisory, own-origin only, SHA-pinned.
+      # WS5.2/5.3: Trunk Flaky Tests upload — advisory, own-origin only, SHA-pinned,
+      # skipped entirely when no TRUNK_TOKEN is configured.
       - name: Upload test results to Trunk (advisory)
-        if: ${{ always() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+        if: ${{ always() && env.TRUNK_TOKEN != '' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
         continue-on-error: true
         uses: trunk-io/analytics-uploader@385f1ccdf345b4532dc4b6c665dd432b702b8e28 # v2.1.2
         with:
           junit-paths: junit-e2e-results.xml
           org-slug: pusula
-          token: ${{ secrets.TRUNK_TOKEN }}
+          token: ${{ env.TRUNK_TOKEN }}
 
   test-integration:
     name: Integration Tests (${{ matrix.shard }}/2)
@@ -1482,7 +1437,6 @@ jobs:
       - electron-package-smoke
       - test-unit
       - test-coverage
-      - sonarqube
       - coverage-pr-comment
       - test-e2e
       - test-integration
@@ -1549,7 +1503,6 @@ jobs:
           echo "| i18n UI Coverage | $(status '${{ needs.i18n-ui-coverage.result }}') |" >> "$GITHUB_STEP_SUMMARY"
           echo "| i18n Glossary (zh-CN, ko) | $(status '${{ needs.i18n-glossary-zhcn.result }}') |" >> "$GITHUB_STEP_SUMMARY"
           echo "| PR Test Policy | $(status '${{ needs.pr-test-policy.result }}') |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| SonarQube (opt-in; disabled without SONARQUBE_ENABLED=true) | $(status '${{ needs.sonarqube.result }}') |" >> "$GITHUB_STEP_SUMMARY"
 
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "## 🏗️ Build" >> "$GITHUB_STEP_SUMMARY"

@@ -1062,7 +1062,6 @@
     "presetColors": "رنگهای محبوب",
     "createTheme": "ایجاد پوسته",
     "chooseColor": "یک رنگ انتخاب کنید",
-    "themeCoral": "مرجانی",
     "themeBlue": "آبی",
     "themeRed": "قرمز",
     "themeGreen": "سبز",
@@ -1321,7 +1320,8 @@
       "open": "باز کردن",
       "close": "بستن"
     },
-    "noResults": "هیچ نتیجه‌ای یافت نشد"
+    "noResults": "هیچ نتیجه‌ای یافت نشد",
+    "themeTeal": "فیروزه‌ای"
   },
   "webhooks": {
     "title": "وب هوک ها",
@@ -7428,7 +7428,6 @@
     "customPricingNote": "میتوانید قیمتگذاری پیشفرض را برای مدلهای خاص تغییر دهید. تنظیمات سفارشی بر قیمتگذاری شناساییشده بهصورت خودکار اولویت دارند.",
     "editPricing": "ویرایش قیمتگذاری",
     "viewFullDetails": "مشاهدهٔ جزئیات کامل",
-    "themeCoral": "مرجانی",
     "adaptiveVolumeRouting": "مسیریابی تطبیقی بر اساس حجم",
     "adaptiveVolumeRoutingDesc": "اتصالها را بر اساس حجم بار و فشار توان عملیاتی، بهصورت پویا مقیاسبندی میکند.",
     "lkgpToggleTitle": "آخرین ارائهدهندهٔ سالم شناختهشده (LKGP)",
@@ -8435,7 +8434,8 @@
     "catalogScopeDesc": "مواردی که GET /v1/models برای این کلید اعلام میکند. محدود کردن فهرست هرگز مدلهایی را که کلید میتواند فراخوانی کند تغییر نمیدهد.",
     "catalogScopeAll": "هر دو",
     "catalogScopeCombos": "فقط ترکیبها",
-    "catalogScopeModels": "فقط مدلها"
+    "catalogScopeModels": "فقط مدلها",
+    "themeTeal": "فیروزه‌ای"
   },
   "contextRtk": {
     "title": "موتور RTK",
@@ -13584,20 +13584,6 @@
     "running": "در حال اجرا...",
     "testFailed": "آزمون ناموفق بود"
   },
-  "kimiSponsorBanner": {
-    "foundingFriendTitle": "Kimi (Moonshot AI) دوست متن‌باز بنیان‌گذار Pusula است",
-    "description": "کاربران جدید در اولین شارژ حساب 15% اعتبار API اضافی دریافت می‌کنند. از Kimi K3 در Pusula از طریق API رسمی Kimi استفاده کنید.",
-    "cta": "دریافت کلید Kimi API",
-    "partnerLinkNote": "لینک همکاری",
-    "dismissAriaLabel": "بستن"
-  },
-  "vscodeCopilotBanner": {
-    "title": "Pusula اکنون درون VS Code Copilot Chat اجرا می‌شود",
-    "description": "افزونه رایگان OmniCopilot را نصب کنید تا همه مدل‌های Pusula مستقیماً در انتخابگر مدل Copilot Chat که از قبل استفاده می‌کنید نمایش داده شوند.",
-    "cta": "دریافت افزونه",
-    "secondaryNote": "همچنین در Open VSX (Cursor، Windsurf، VSCodium…)",
-    "dismissAriaLabel": "بستن"
-  },
   "featureFlagExposeFunctionalGatewayMirrorsDescription": "آگهی <gateway-alias>/<model> شناسه‌های آینه‌ای در /v1/models برای مدل‌هایی که مالک قانونی آن‌ها هیچ اعتبار فعالی ندارد اما یک دروازه عبوری با اعتبار فعال آن‌ها را مسیریابی می‌کند. هشدار: در صورت فعال‌سازی جهانی، ورودی‌های کاتالوگ را برای تمام مشتریان اضافه می‌کند.",
   "radarPage": {
     "title": "کاتالوگ رادار",
@@ -14344,13 +14330,6 @@
     "toolsMismatch": "ارائه‌دهنده از فراخوانی ابزار پشتیبانی نمی‌کند",
     "structuredOutputMismatch": "ارائه‌دهنده خروجی ساختاریافته را پشتیبانی نمی‌کند",
     "contextWindowMismatch": "درخواست از حد مجاز پنجره زمینه ارائه‌دهنده فراتر می‌رود"
-  },
-  "cheaperInferenceSponsorBanner": {
-    "title": "Cheaper Inference یکی از دوستان متنباز Pusula است",
-    "description": "دروازهای با رتبهبندی هزینه که دهها مدل پیشرفته را پشت یک نقطهٔ پایانی سازگار با OpenAI بازفروشی میکند—هر درخواست را به ارزانترین ارائهدهندهٔ واجد شرایط هدایت میکند، بدون آنکه هرگز از قیمت فهرستشده فراتر رود.",
-    "cta": "دریافت کلید API",
-    "partnerLinkNote": "پیوند شریک",
-    "dismissAriaLabel": "بستن"
   },
   "featureFlagPusulaDisableThinkingLevelVariantsDescription": "تولید گونههای سطح تفکر (برای مثال -low، -medium و -high) را در کاتالوگ /v1/models غیرفعال کنید."
 }

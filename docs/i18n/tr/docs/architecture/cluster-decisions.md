@@ -4,7 +4,7 @@
 
 ---
 
-**Durum:** öneri (@diegosouzapw incelemesi bekleniyor)
+**Durum:** öneri (@Ferhat-Yasinoglu incelemesi bekleniyor)
 **Tarih:** 2026-06-20
 **Referanslar:** [#3932](https://github.com/Ferhat-Yasinoglu/pusula/issues/3932), PR #4381
 

@@ -1,6 +1,6 @@
 # Pusula (Deutsch)
 
-🌐 **Languages:** 🇺🇸 [English](../../../llm.txt) · 🇪🇹 [am](../am/llm.txt) · 🇸🇦 [ar](../ar/llm.txt) · 🇦🇿 [az](../az/llm.txt) · 🇧🇬 [bg](../bg/llm.txt) · 🇧🇩 [bn](../bn/llm.txt) · 🇧🇦 [bs](../bs/llm.txt) · 🇨🇿 [cs](../cs/llm.txt) · 🇩🇰 [da](../da/llm.txt) · 🇬🇷 [el](../el/llm.txt) · 🇪🇸 [es](../es/llm.txt) · 🇪🇪 [et](../et/llm.txt) · 🇮🇷 [fa](../fa/llm.txt) · 🇫🇮 [fi](../fi/llm.txt) · 🇫🇷 [fr](../fr/llm.txt) · 🇮🇪 [ga](../ga/llm.txt) · 🇮🇳 [gu](../gu/llm.txt) · 🇳🇬 [ha](../ha/llm.txt) · 🇮🇱 [he](../he/llm.txt) · 🇮🇳 [hi](../hi/llm.txt) · 🇭🇷 [hr](../hr/llm.txt) · 🇭🇺 [hu](../hu/llm.txt) · 🇦🇲 [hy](../hy/llm.txt) · 🇮🇩 [id](../id/llm.txt) · 🇳🇬 [ig](../ig/llm.txt) · 🇮🇹 [it](../it/llm.txt) · 🇯🇵 [ja](../ja/llm.txt) · 🇬🇪 [ka](../ka/llm.txt) · 🇰🇭 [km](../km/llm.txt) · 🇮🇳 [kn](../kn/llm.txt) · 🇰🇷 [ko](../ko/llm.txt) · 🇱🇹 [lt](../lt/llm.txt) · 🇱🇻 [lv](../lv/llm.txt) · 🇮🇳 [ml](../ml/llm.txt) · 🇮🇳 [mr](../mr/llm.txt) · 🇲🇾 [ms](../ms/llm.txt) · 🇲🇹 [mt](../mt/llm.txt) · 🇲🇲 [my](../my/llm.txt) · 🇳🇵 [ne](../ne/llm.txt) · 🇳🇱 [nl](../nl/llm.txt) · 🇳🇴 [no](../no/llm.txt) · 🇮🇳 [or](../or/llm.txt) · 🇮🇳 [pa](../pa/llm.txt) · 🇵🇭 [phi](../phi/llm.txt) · 🇵🇱 [pl](../pl/llm.txt) · 🇵🇹 [pt](../pt/llm.txt) · 🇧🇷 [pt-BR](../pt-BR/llm.txt) · 🇷🇴 [ro](../ro/llm.txt) · 🇷🇺 [ru](../ru/llm.txt) · 🇱🇰 [si](../si/llm.txt) · 🇸🇰 [sk](../sk/llm.txt) · 🇸🇮 [sl](../sl/llm.txt) · 🇷🇸 [sr](../sr/llm.txt) · 🇸🇪 [sv](../sv/llm.txt) · 🇰🇪 [sw](../sw/llm.txt) · 🇮🇳 [ta](../ta/llm.txt) · 🇮🇳 [te](../te/llm.txt) · 🇹🇭 [th](../th/llm.txt) · 🇹🇷 [tr](../tr/llm.txt) · 🇺🇦 [uk-UA](../uk-UA/llm.txt) · 🇵🇰 [ur](../ur/llm.txt) · 🇺🇿 [uz](../uz/llm.txt) · 🇻🇳 [vi](../vi/llm.txt) · 🇳🇬 [yo](../yo/llm.txt) · 🇨🇳 [zh-CN](../zh-CN/llm.txt) · 🇹🇼 [zh-TW](../zh-TW/llm.txt)
+🌐 **Languages:** 🇺🇸 [English](../../../llm.txt) · 🇹🇷 [Türkçe](../tr/llm.txt) · 🇩🇪 [Deutsch](llm.txt) · 🇮🇷 [فارسی](../fa/llm.txt)
 
 ---
 
@@ -11,8 +11,6 @@
 Pusula solves the problem of managing multiple AI provider subscriptions, quotas, and rate limits. It sits between your AI-powered tools (IDE agents, CLI tools) and AI providers, routing requests intelligently through a 4-tier fallback system: Subscription → API Key → Cheap → Free.
 
 **Key value:** One endpoint (`http://localhost:20128/v1`), unlimited models, zero downtime, minimal cost.
-
-**Current version:** 3.8.51
 
 ## Tech Stack
 
@@ -28,7 +26,7 @@ Pusula solves the problem of managing multiple AI provider subscriptions, quotas
 - **Proxy engine:** Custom pipeline with format translation, circuit breaker, rate limiting, auto-combo engine
 - **i18n:** next-intl with 67 languages
 - **Desktop:** Electron (cross-platform: Windows, macOS, Linux)
-- **Package:** Published on npm (`pusula`) and Docker Hub (`ferhat-yasinoglu/pusula`)
+- **Package:** Published on npm (`pusula`) and GitHub Container Registry (`ghcr.io/ferhat-yasinoglu/pusula`)
 
 ## Project Structure
 
@@ -278,7 +276,7 @@ Pusula solves the problem of managing multiple AI provider subscriptions, quotas
 └── .env.example                  # Environment variable template
 ```
 
-## Key Features (v3.8.50)
+## Key Features
 
 ### Core Proxy
 - **358 AI providers** with automatic format translation
@@ -476,7 +474,7 @@ diagnostics) plus **memory**, **skill**, **agentSkill**, **githubSkill**, **pool
     - **Connection Cooldown** (`src/sse/services/auth.ts::markAccountUnavailable`) — one key/account scope.
     - **Model Lockout** (`open-sse/services/accountFallback.ts`) — provider + connection + model scope.
 
-## v3.8.x Highlights
+## Highlights
 
 - **352-provider catalog** with 150+ free tiers, one-click account imports, and bulk key add
 - **19 routing strategies** — including `fusion` (parallel panel + judge synthesis), `pipeline`, `reset-aware`, `reset-window`, `headroom`, and `context-relay`
@@ -490,9 +488,8 @@ diagnostics) plus **memory**, **skill**, **agentSkill**, **githubSkill**, **pool
 ## Links
 
 - Repository: https://github.com/Ferhat-Yasinoglu/pusula
-- Website: https://github.com/Ferhat-Yasinoglu/pusula
 - npm: https://www.npmjs.com/package/pusula
-- Docker Hub: https://hub.docker.com/r/ferhat-yasinoglu/pusula
+- Container image: https://github.com/Ferhat-Yasinoglu/pusula/pkgs/container/pusula
 - Documentation: See `/docs/` directory
 
 ### Documentation Index

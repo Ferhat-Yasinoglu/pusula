@@ -20,6 +20,11 @@
 
 import { RadarReferralsFeedSchema, type RadarReferralsFeed } from "./referralsFeedSchema";
 import { RadarTierSchema, type RadarTier } from "./feedSchema";
+import {
+  getRadarFeedBaseUrl,
+  radarFeedNotConfigured,
+  type RadarFeedNotConfiguredStatus,
+} from "./feedUrl";
 import { verifyFeedBytes } from "./verify";
 import { sanitizeErrorMessage } from "@pusula/open-sse/utils/error";
 import { isFeatureFlagEnabled } from "@/shared/utils/featureFlags";
@@ -29,11 +34,11 @@ import type { RadarSettingsSnapshot } from "./sync";
 // Constants
 // ---------------------------------------------------------------------------
 
-/**
- * Default feed base URL — same default/override convention as `sync.ts`
- * (`RADAR_FEED_URL` env var points forks/self-hosters at their own server).
+/*
+ * No default feed base URL — same self-hosted-only convention as `sync.ts`:
+ * the operator's `RADAR_FEED_URL` (resolved by `./feedUrl.ts`) is the only
+ * source, and an unset value skips the sync without touching the network.
  */
-const DEFAULT_FEED_BASE_URL = "https://radar.pusula.online";
 
 const SYNC_TIMEOUT_MS = 30_000;
 
@@ -63,6 +68,7 @@ export const REFERRALS_STALE_MS = 60 * 60 * 1000; // 1h
 export type ReferralsSyncStatus =
   | { status: "disabled" }
   | { status: "opt_out" }
+  | RadarFeedNotConfiguredStatus
   | { status: "invalid_signature" }
   | { status: "invalid_schema" }
   | { status: "stale" }
@@ -135,8 +141,9 @@ export function shouldSyncReferralsOnRead(
  * Download, verify, validate, and cache the Radar referrals feed.
  *
  * Steps:
- *  1. Feature flag off => `{status:"disabled"}`, no network.
- *  2. Opt-in false     => `{status:"opt_out"}`, no network.
+ *  1. Feature flag off     => `{status:"disabled"}`, no network.
+ *  2. Opt-in false         => `{status:"opt_out"}`, no network.
+ *  2b. RADAR_FEED_URL unset => `{status:"not_configured"}`, one log line, no network.
  *  3. GET `${base}/v1/referrals/latest` with timeout.
  *  4. Verify Ed25519 signature over exact bytes (same pinned key as the
  *     catalog feed — one key pins both artifacts).
@@ -180,8 +187,14 @@ export async function syncRadarReferrals(
       return { status: "opt_out" };
     }
 
+    // Step 2b: Feed URL gate — self-hosted only; no operator-configured
+    // RADAR_FEED_URL means there is nothing to download.
+    const baseUrl = getRadarFeedBaseUrl();
+    if (!baseUrl) {
+      return radarFeedNotConfigured("referrals");
+    }
+
     // Step 3: Download feed
-    const baseUrl = (process.env.RADAR_FEED_URL || DEFAULT_FEED_BASE_URL).replace(/\/+$/, "");
     const url = `${baseUrl}/v1/referrals/latest`;
 
     const headers: Record<string, string> = {};

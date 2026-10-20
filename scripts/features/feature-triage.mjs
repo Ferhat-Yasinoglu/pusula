@@ -10,7 +10,7 @@
  *
  * Usage:
  *   node scripts/features/feature-triage.mjs \
- *     --owner diegosouzapw --repo Pusula \
+ *     --owner Ferhat-Yasinoglu --repo Pusula \
  *     --output _ideia/_triage.json
  *
  * Exit codes:

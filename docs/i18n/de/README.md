@@ -1,6 +1,6 @@
 # README (Deutsch)
 
-🌐 **Languages:** 🇺🇸 [English](../../../README.md) · 🇪🇹 [am](../am/README.md) · 🇸🇦 [ar](../ar/README.md) · 🇦🇿 [az](../az/README.md) · 🇧🇬 [bg](../bg/README.md) · 🇧🇩 [bn](../bn/README.md) · 🇧🇦 [bs](../bs/README.md) · 🇨🇿 [cs](../cs/README.md) · 🇩🇰 [da](../da/README.md) · 🇬🇷 [el](../el/README.md) · 🇪🇸 [es](../es/README.md) · 🇪🇪 [et](../et/README.md) · 🇮🇷 [fa](../fa/README.md) · 🇫🇮 [fi](../fi/README.md) · 🇫🇷 [fr](../fr/README.md) · 🇮🇪 [ga](../ga/README.md) · 🇮🇳 [gu](../gu/README.md) · 🇳🇬 [ha](../ha/README.md) · 🇮🇱 [he](../he/README.md) · 🇮🇳 [hi](../hi/README.md) · 🇭🇷 [hr](../hr/README.md) · 🇭🇺 [hu](../hu/README.md) · 🇦🇲 [hy](../hy/README.md) · 🇮🇩 [id](../id/README.md) · 🇳🇬 [ig](../ig/README.md) · 🇮🇹 [it](../it/README.md) · 🇯🇵 [ja](../ja/README.md) · 🇬🇪 [ka](../ka/README.md) · 🇰🇭 [km](../km/README.md) · 🇮🇳 [kn](../kn/README.md) · 🇰🇷 [ko](../ko/README.md) · 🇱🇹 [lt](../lt/README.md) · 🇱🇻 [lv](../lv/README.md) · 🇮🇳 [ml](../ml/README.md) · 🇮🇳 [mr](../mr/README.md) · 🇲🇾 [ms](../ms/README.md) · 🇲🇹 [mt](../mt/README.md) · 🇲🇲 [my](../my/README.md) · 🇳🇵 [ne](../ne/README.md) · 🇳🇱 [nl](../nl/README.md) · 🇳🇴 [no](../no/README.md) · 🇮🇳 [or](../or/README.md) · 🇮🇳 [pa](../pa/README.md) · 🇵🇭 [phi](../phi/README.md) · 🇵🇱 [pl](../pl/README.md) · 🇵🇹 [pt](../pt/README.md) · 🇧🇷 [pt-BR](../pt-BR/README.md) · 🇷🇴 [ro](../ro/README.md) · 🇷🇺 [ru](../ru/README.md) · 🇱🇰 [si](../si/README.md) · 🇸🇰 [sk](../sk/README.md) · 🇸🇮 [sl](../sl/README.md) · 🇷🇸 [sr](../sr/README.md) · 🇸🇪 [sv](../sv/README.md) · 🇰🇪 [sw](../sw/README.md) · 🇮🇳 [ta](../ta/README.md) · 🇮🇳 [te](../te/README.md) · 🇹🇭 [th](../th/README.md) · 🇹🇷 [tr](../tr/README.md) · 🇺🇦 [uk-UA](../uk-UA/README.md) · 🇵🇰 [ur](../ur/README.md) · 🇺🇿 [uz](../uz/README.md) · 🇻🇳 [vi](../vi/README.md) · 🇳🇬 [yo](../yo/README.md) · 🇨🇳 [zh-CN](../zh-CN/README.md) · 🇹🇼 [zh-TW](../zh-TW/README.md)
+🌐 **Languages:** 🇺🇸 [English](../../../README.md) · 🇹🇷 [Türkçe](../tr/README.md) · 🇩🇪 [Deutsch](README.md) · 🇮🇷 [فارسی](../fa/README.md)
 
 ---
 
@@ -11,7 +11,7 @@
 <br/>
 <br/>
 
-# 🚀 Pusula — Das kostenlose KI-Gateway
+# 🧭 Pusula — Das kostenlose KI-Gateway
 
 <img src="./docs/diagrams/readme-hero.svg" width="100%" alt="Pusula — Hören Sie nie auf zu programmieren. Jedes KI-Tool → 358 Anbieter — 150+ kostenlos — über einen Endpunkt. Claude Code, Codex, Cursor, Cline, Copilot & Antigravity in KOSTENLOSES Claude / GPT / Gemini mit automatischem Fallback. RTK + Caveman gestapelte Komprimierung spart 15–95% Tokens (~89% im Durchschnitt) — nie wieder Limits erreichen. 358 KI-Anbieter · 150+ kostenlose Stufen · ~1,62 Mrd. kostenlose Tokens/Monat · 19 Routing-Strategien · $0 zum Start."/>
 
@@ -42,43 +42,13 @@
 </h3>
 
 [![Sterne](https://img.shields.io/github/stars/Ferhat-Yasinoglu/pusula?style=social)](https://github.com/Ferhat-Yasinoglu/pusula)
-<a href="https://trendshift.io/repositories/23589" target="_blank"><img src="https://trendshift.io/api/badge/repositories/23589" alt="diegosouzapw%2FPusula | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-[![Rang im Sterneverlauf](https://api.star-history.com/badge?repo=Ferhat-Yasinoglu/pusula&theme=dark)](https://www.star-history.com/ferhat-yasinoglu/pusula)
-[![olud.ai](https://olud.ai/badge.php?tool=diegosouzapw-pusula)](https://olud.ai/project/diegosouzapw-pusula.html)
 
-### 💬 Tritt der Community bei
+### 💬 Fragen & Support
 
-**👋 Folge dem Maintainer — erfahre als Erstes von neuen Anbietern, Releases und Tipps:**
+[![GitHub Issues](https://img.shields.io/badge/GitHub-Issues-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Ferhat-Yasinoglu/pusula/issues)
+[![GitHub Discussions](https://img.shields.io/badge/GitHub-Discussions-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Ferhat-Yasinoglu/pusula/discussions)
 
-[![Diego auf LinkedIn folgen](https://img.shields.io/badge/Follow_Diego_on-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/diegosouzapw/)
-[![@diegosouzapw auf GitHub folgen](https://img.shields.io/github/followers/diegosouzapw?style=for-the-badge&logo=github&logoColor=white&label=Follow%20on%20GitHub&color=181717)](https://github.com/diegosouzapw)
-
-[![Discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/U47eFqAXCn)
-[![Telegram](https://img.shields.io/badge/Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/pusulaOficial)
-[![WhatsApp Global](https://img.shields.io/badge/WhatsApp_Global-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://chat.whatsapp.com/FvuCbrpZmQ6I85n2vW5QIC?s=cl&p=a&mlu=4)
-[![WhatsApp Brasil](https://img.shields.io/badge/WhatsApp_Brasil-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://chat.whatsapp.com/KWgatljAjmbELQory59Oti?s=cl&p=a&mlu=4)
-[![Website](https://img.shields.io/badge/Website-pusula.online-blue?logo=google-chrome&logoColor=white)](https://github.com/Ferhat-Yasinoglu/pusula)
-
-**Fragen, Anbietertipps, Roadmap und Support → [Discord](https://discord.gg/U47eFqAXCn) · [Telegram](https://t.me/pusulaOficial) · WhatsApp [🌍 Global](https://chat.whatsapp.com/FvuCbrpZmQ6I85n2vW5QIC?s=cl&p=a&mlu=4) / [🇧🇷 Brasilien](https://chat.whatsapp.com/KWgatljAjmbELQory59Oti?s=cl&p=a&mlu=4) / [Portal](https://portal.sthub.com.br/communities/groups/st-hub/channels/Pusula-World-8kRjmK)**
-
-<br/>
-
-## 📈 Das Gateway wächst weiter
-
-<div align="center">
-
-|                               | v3.8.49 |       **v3.8.50**       |          `v3.8.51+`          |
-| ----------------------------- | :-----: | :---------------------: | :--------------------------: |
-| 🌐 Anbieter                   |   290   |         **357**         | weitere in der Warteschlange |
-| 🧠 Eindeutige Chatmodell-IDs  |  1185   |        **1312**         |              —               |
-| 🖼️ Modalitäts-Bridge          |    —    | 🆕 Bild + Audio + Video |              —               |
-| 📡 Kostenloser Radar-Katalog  |    —    |       🆕 optional       |              —               |
-| ⚖️ Kontingentbasierte Planung |    —    |     🆕 Quota-Share      |              —               |
-| 📊 Kontingenttelemetrie       |    —    |         🆕 live         |              —               |
-
-**→ [Roadmap](ROADMAP.md) — auf direktem Weg zu `v3.9.0 LTS`**
-
-</div>
+**Fehler melden und Fragen stellen → [GitHub Issues](https://github.com/Ferhat-Yasinoglu/pusula/issues) · Ideen, Anbietertipps und Austausch → [GitHub Discussions](https://github.com/Ferhat-Yasinoglu/pusula/discussions)**
 
 <br/>
 
@@ -86,7 +56,7 @@
 
 [![npm-Version](https://img.shields.io/npm/v/pusula?color=cb3837&logo=npm)](https://www.npmjs.com/package/pusula)
 ![NPM monatlich](https://img.shields.io/npm/dm/pusula?label=npm/month&color=cb3837&logo=npm)
-[![Docker Hub](https://img.shields.io/docker/v/ferhat-yasinoglu/pusula?label=Docker%20Hub&logo=docker&color=2496ED)](https://hub.docker.com/r/ferhat-yasinoglu/pusula)
+[![GHCR](https://img.shields.io/badge/GHCR-ghcr.io%2Fferhat--yasinoglu%2Fpusula-2496ED?logo=docker&logoColor=white)](https://github.com/Ferhat-Yasinoglu/pusula/pkgs/container/pusula)
 [![Lizenz: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 ![Docker-Downloads](https://img.shields.io/docker/pulls/ferhat-yasinoglu/pusula?label=docker%20pulls&logo=docker&color=2496ED)
 ![Electron-Downloads](https://img.shields.io/github/downloads/ferhat-yasinoglu/pusula/total?style=flat&label=electron%20downloads&logo=electron&color=47848F)
@@ -117,96 +87,28 @@
     <td align="center"><a href="#-private--local-first">🔒 Privat</a></td>
   </tr>
   <tr>
-    <td align="right"><b>👀 Ansehen</b></td>
-    <td align="center"><a href="#-pusula-in-action">🎬 In Aktion</a></td>
-    <td align="center"><a href="#-whats-new">✨ Neuigkeiten</a></td>
-    <td align="center"><a href="#-compatible-clis--coding-agents">🤖 Kompatible CLIs</a></td>
-  </tr>
-  <tr>
-    <td align="right"><b>💚 Unterstützung</b></td>
-    <td align="center"><a href="#-support-pusula">💚 Unterstützen / Spenden</a></td>
-    <td align="center"><a href="#-community--help">💬 Community</a></td>
-    <td align="center"><a href="#-sponsors">💖 Sponsoren</a></td>
+    <td align="right"><b>🧰 Ökosystem</b></td>
+    <td align="center"><a href="#-kompatible-clis--coding-agenten">🤖 Kompatible CLIs</a></td>
+    <td align="center"><a href="#-community--hilfe">💬 Community &amp; Hilfe</a></td>
+    <td align="center"><a href="#-mitwirken">👥 Mitwirken</a></td>
   </tr>
   <tr>
     <td align="right"><b>📦 Projekt</b></td>
     <td align="center"><a href="#%EF%B8%8F-tech-stack">🛠️ Technologie-Stack</a></td>
     <td align="center"><a href="#-documentation">📖 Dokumentation</a></td>
-    <td align="center"><a href="#-600-contributors">👥 Mitwirkende</a></td>
+    <td align="center"><a href="#-lizenz">📄 Lizenz</a></td>
   </tr>
 </table>
 
 </div>
 
 <div align="center">
-  <b>🌐 In 66 Sprachen</b>
+  <b>🌐 In 4 Sprachen</b>
   <br/><br/>
-  <a href="README.md"><img src="docs/assets/flags/us.svg" width="30" alt="Englisch (en)" title="Englisch (en)"></a>
-  <a href="docs/i18n/pt-BR/README.md"><img src="docs/assets/flags/br.svg" width="30" alt="Portugiesisch — Brasilien (pt-BR)" title="Portugiesisch — Brasilien (pt-BR)"></a>
-  <a href="docs/i18n/pt/README.md"><img src="docs/assets/flags/pt.svg" width="30" alt="Portugiesisch (pt)" title="Portugiesisch (pt)"></a>
-  <a href="docs/i18n/es/README.md"><img src="docs/assets/flags/es.svg" width="30" alt="Spanisch (es)" title="Spanisch (es)"></a>
-  <a href="docs/i18n/fr/README.md"><img src="docs/assets/flags/fr.svg" width="30" alt="Französisch (fr)" title="Französisch (fr)"></a>
-  <a href="docs/i18n/it/README.md"><img src="docs/assets/flags/it.svg" width="30" alt="Italienisch (it)" title="Italienisch (it)"></a>
-  <a href="docs/i18n/de/README.md"><img src="docs/assets/flags/de.svg" width="30" alt="Deutsch (de)" title="Deutsch (de)"></a>
-  <a href="docs/i18n/nl/README.md"><img src="docs/assets/flags/nl.svg" width="30" alt="Niederländisch (nl)" title="Niederländisch (nl)"></a>
-  <a href="docs/i18n/ru/README.md"><img src="docs/assets/flags/ru.svg" width="30" alt="Russisch (ru)" title="Russisch (ru)"></a>
-  <a href="docs/i18n/uk-UA/README.md"><img src="docs/assets/flags/ua.svg" width="30" alt="Ukrainisch (uk-UA)" title="Ukrainisch (uk-UA)"></a>
-  <a href="docs/i18n/pl/README.md"><img src="docs/assets/flags/pl.svg" width="30" alt="Polnisch (pl)" title="Polnisch (pl)"></a>
-  <a href="docs/i18n/cs/README.md"><img src="docs/assets/flags/cz.svg" width="30" alt="Tschechisch (cs)" title="Tschechisch (cs)"></a>
-  <a href="docs/i18n/sk/README.md"><img src="docs/assets/flags/sk.svg" width="30" alt="Slowakisch (sk)" title="Slowakisch (sk)"></a>
-  <a href="docs/i18n/ro/README.md"><img src="docs/assets/flags/ro.svg" width="30" alt="Rumänisch (ro)" title="Rumänisch (ro)"></a>
-  <a href="docs/i18n/hu/README.md"><img src="docs/assets/flags/hu.svg" width="30" alt="Ungarisch (hu)" title="Ungarisch (hu)"></a>
-  <a href="docs/i18n/bg/README.md"><img src="docs/assets/flags/bg.svg" width="30" alt="Bulgarisch (bg)" title="Bulgarisch (bg)"></a>
-  <a href="docs/i18n/da/README.md"><img src="docs/assets/flags/dk.svg" width="30" alt="Dänisch (da)" title="Dänisch (da)"></a>
-  <a href="docs/i18n/fi/README.md"><img src="docs/assets/flags/fi.svg" width="30" alt="Finnisch (fi)" title="Finnisch (fi)"></a>
-  <a href="docs/i18n/no/README.md"><img src="docs/assets/flags/no.svg" width="30" alt="Norwegisch (no)" title="Norwegisch (no)"></a>
-  <a href="docs/i18n/sv/README.md"><img src="docs/assets/flags/se.svg" width="30" alt="Schwedisch (sv)" title="Schwedisch (sv)"></a>
-  <a href="docs/i18n/zh-CN/README.md"><img src="docs/assets/flags/cn.svg" width="30" alt="Chinesisch — vereinfacht (zh-CN)" title="Chinesisch — vereinfacht (zh-CN)"></a>
-  <a href="docs/i18n/zh-TW/README.md"><img src="docs/assets/flags/tw.svg" width="30" alt="Chinesisch — traditionell (zh-TW)" title="Chinesisch — traditionell (zh-TW)"></a>
-  <a href="docs/i18n/ja/README.md"><img src="docs/assets/flags/jp.svg" width="30" alt="Japanisch (ja)" title="Japanisch (ja)"></a>
-  <a href="docs/i18n/ko/README.md"><img src="docs/assets/flags/kr.svg" width="30" alt="Koreanisch (ko)" title="Koreanisch (ko)"></a>
-  <a href="docs/i18n/th/README.md"><img src="docs/assets/flags/th.svg" width="30" alt="Thailändisch (th)" title="Thailändisch (th)"></a>
-  <a href="docs/i18n/vi/README.md"><img src="docs/assets/flags/vn.svg" width="30" alt="Vietnamesisch (vi)" title="Vietnamesisch (vi)"></a>
-  <a href="docs/i18n/id/README.md"><img src="docs/assets/flags/id.svg" width="30" alt="Indonesisch (id)" title="Indonesisch (id)"></a>
-  <a href="docs/i18n/ms/README.md"><img src="docs/assets/flags/my.svg" width="30" alt="Malaiisch (ms)" title="Malaiisch (ms)"></a>
-  <a href="docs/i18n/phi/README.md"><img src="docs/assets/flags/ph.svg" width="30" alt="Filipino (phi)" title="Filipino (phi)"></a>
-  <a href="docs/i18n/hi/README.md"><img src="docs/assets/flags/in.svg" width="30" alt="Hindi (hi)" title="Hindi (hi)"></a>
-  <a href="docs/i18n/gu/README.md"><img src="docs/assets/flags/in.svg" width="30" alt="Gujarati (gu)" title="Gujarati (gu)"></a>
-  <a href="docs/i18n/mr/README.md"><img src="docs/assets/flags/in.svg" width="30" alt="Marathi (mr)" title="Marathi (mr)"></a>
-  <a href="docs/i18n/ta/README.md"><img src="docs/assets/flags/in.svg" width="30" alt="Tamilisch (ta)" title="Tamilisch (ta)"></a>
-  <a href="docs/i18n/te/README.md"><img src="docs/assets/flags/in.svg" width="30" alt="Telugu (te)" title="Telugu (te)"></a>
-  <a href="docs/i18n/bn/README.md"><img src="docs/assets/flags/bd.svg" width="30" alt="Bengalisch (bn)" title="Bengalisch (bn)"></a>
-  <a href="docs/i18n/ur/README.md"><img src="docs/assets/flags/pk.svg" width="30" alt="Urdu (ur)" title="Urdu (ur)"></a>
-  <a href="docs/i18n/fa/README.md"><img src="docs/assets/flags/ir.svg" width="30" alt="Persisch (fa)" title="Persisch (fa)"></a>
-  <a href="docs/i18n/ar/README.md"><img src="docs/assets/flags/sa.svg" width="30" alt="Arabisch (ar)" title="Arabisch (ar)"></a>
-  <a href="docs/i18n/he/README.md"><img src="docs/assets/flags/il.svg" width="30" alt="Hebräisch (he)" title="Hebräisch (he)"></a>
-  <a href="docs/i18n/tr/README.md"><img src="docs/assets/flags/tr.svg" width="30" alt="Türkisch (tr)" title="Türkisch (tr)"></a>
-  <a href="docs/i18n/az/README.md"><img src="docs/assets/flags/az.svg" width="30" alt="Aserbaidschanisch (az)" title="Aserbaidschanisch (az)"></a>
-  <a href="docs/i18n/sw/README.md"><img src="docs/assets/flags/tz.svg" width="30" alt="Suaheli (sw)" title="Suaheli (sw)"></a>
-  <a href="docs/i18n/el/README.md"><img src="docs/assets/flags/gr.svg" width="30" alt="Griechisch (el)" title="Griechisch (el)"></a>
-  <a href="docs/i18n/hr/README.md"><img src="docs/assets/flags/hr.svg" width="30" alt="Kroatisch (hr)" title="Kroatisch (hr)"></a>
-  <a href="docs/i18n/sr/README.md"><img src="docs/assets/flags/rs.svg" width="30" alt="Serbisch (sr)" title="Serbisch (sr)"></a>
-  <a href="docs/i18n/lt/README.md"><img src="docs/assets/flags/lt.svg" width="30" alt="Litauisch (lt)" title="Litauisch (lt)"></a>
-  <a href="docs/i18n/et/README.md"><img src="docs/assets/flags/ee.svg" width="30" alt="Estnisch (et)" title="Estnisch (et)"></a>
-  <a href="docs/i18n/lv/README.md"><img src="docs/assets/flags/lv.svg" width="30" alt="Lettisch (lv)" title="Lettisch (lv)"></a>
-  <a href="docs/i18n/sl/README.md"><img src="docs/assets/flags/si.svg" width="30" alt="Slowenisch (sl)" title="Slowenisch (sl)"></a>
-  <a href="docs/i18n/mt/README.md"><img src="docs/assets/flags/mt.svg" width="30" alt="Maltesisch (mt)" title="Maltesisch (mt)"></a>
-  <a href="docs/i18n/ga/README.md"><img src="docs/assets/flags/ie.svg" width="30" alt="Irisch (ga)" title="Irisch (ga)"></a>
-  <a href="docs/i18n/kn/README.md"><img src="docs/assets/flags/in.svg" width="30" alt="Kannada (kn)" title="Kannada (kn)"></a>
-  <a href="docs/i18n/ml/README.md"><img src="docs/assets/flags/in.svg" width="30" alt="Malayalam (ml)" title="Malayalam (ml)"></a>
-  <a href="docs/i18n/or/README.md"><img src="docs/assets/flags/in.svg" width="30" alt="Odia (or)" title="Odia (or)"></a>
-  <a href="docs/i18n/pa/README.md"><img src="docs/assets/flags/in.svg" width="30" alt="Panjabi (pa)" title="Panjabi (pa)"></a>
-  <a href="docs/i18n/ne/README.md"><img src="docs/assets/flags/np.svg" width="30" alt="Nepalesisch (ne)" title="Nepalesisch (ne)"></a>
-  <a href="docs/i18n/si/README.md"><img src="docs/assets/flags/lk.svg" width="30" alt="Singhalesisch (si)" title="Singhalesisch (si)"></a>
-  <a href="docs/i18n/my/README.md"><img src="docs/assets/flags/mm.svg" width="30" alt="Birmanisch (my)" title="Birmanisch (my)"></a>
-  <a href="docs/i18n/km/README.md"><img src="docs/assets/flags/kh.svg" width="30" alt="Khmer (km)" title="Khmer (km)"></a>
-  <a href="docs/i18n/ha/README.md"><img src="docs/assets/flags/ng.svg" width="30" alt="Hausa (ha)" title="Hausa (ha)"></a>
-  <a href="docs/i18n/yo/README.md"><img src="docs/assets/flags/ng.svg" width="30" alt="Yoruba (yo)" title="Yoruba (yo)"></a>
-  <a href="docs/i18n/ig/README.md"><img src="docs/assets/flags/ng.svg" width="30" alt="Igbo (ig)" title="Igbo (ig)"></a>
-  <a href="docs/i18n/am/README.md"><img src="docs/assets/flags/et.svg" width="30" alt="Amharisch (am)" title="Amharisch (am)"></a>
-  <a href="docs/i18n/uz/README.md"><img src="docs/assets/flags/uz.svg" width="30" alt="Usbekisch (uz)" title="Usbekisch (uz)"></a>
-  <a href="docs/i18n/ka/README.md"><img src="docs/assets/flags/ge.svg" width="30" alt="Georgisch (ka)" title="Georgisch (ka)"></a>
-  <a href="docs/i18n/hy/README.md"><img src="docs/assets/flags/am.svg" width="30" alt="Armenisch (hy)" title="Armenisch (hy)"></a>
+  <a href="../../../README.md"><img src="../../assets/flags/us.svg" width="30" alt="English (en)" title="English (en)"></a>
+  <a href="../tr/README.md"><img src="../../assets/flags/tr.svg" width="30" alt="Türkçe (tr)" title="Türkçe (tr)"></a>
+  <a href="README.md"><img src="../../assets/flags/de.svg" width="30" alt="Deutsch (de)" title="Deutsch (de)"></a>
+  <a href="../fa/README.md"><img src="../../assets/flags/ir.svg" width="30" alt="فارسی (fa)" title="فارسی (fa)"></a>
 </div>
 
 <br/>
@@ -257,85 +159,6 @@ curl http://localhost:20128/v1/chat/completions \
 <img src="./docs/diagrams/tier-cascade.svg" width="100%" alt="Pusula-Anfragefluss: Ihre IDE oder CLI (Claude Code, Cursor, Cline…) ruft einen lokalen Endpunkt auf (http://localhost:20128/v1); der Pusula Smart Router (RTK + Caveman-Kompression, 19 Routing-Strategien, Circuit Breaker, TLS-Stealth, MCP, A2A, Guardrails) kann über 4 Anbieterstufen hinweg zurückgreifen, solange ein geeignetes, funktionierendes Ziel verfügbar ist – Stufe 1 Abonnement, Stufe 2 API-Schlüssel, Stufe 3 Günstig und Stufe 4 Kostenlos."/>
 
 </div>
-
-<br/>
-
-<div align="center">
-
-## 🤝 Unterstützt von unseren Open-Source-Freunden
-
-</div>
-
-<p align="center">
-  <a href="https://platform.kimi.ai?track_id=track-8197581fdd7d4139a0f562e4a03c3798&aff=pusula">
-    <img src="public/sponsors/kimi-k3-banner.png" width="100%" alt="Kimi K3 — Offene Spitzenintelligenz · 2,8 Billionen Parameter · Kontext mit 1 Mio. Token"/>
-  </a>
-</p>
-
-> **Möchten Sie sich als Open-Source-Freund anschließen?** Dies sind die Unternehmen, die Open Source unterstützen und dabei helfen, Pusula voranzubringen — und wir legen öffentlich offen, wofür jedes Token eingesetzt wird, das sie uns zur Verfügung stellen. Kontaktieren Sie uns: [diegosouza.pw@outlook.com](mailto:diegosouza.pw@outlook.com)
-
-<table>
-  <tr>
-    <td align="center" width="150">
-      <a href="https://platform.kimi.ai?track_id=track-8197581fdd7d4139a0f562e4a03c3798&aff=pusula">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="public/providers/kimi-logomark-dark.svg">
-          <img src="public/providers/kimi-logomark-light.svg" width="64" alt="Kimi (Moonshot AI)"/>
-        </picture>
-      </a>
-      <br/><b>Kimi</b><br/><sub>Moonshot AI</sub><br/><br/>
-      <img src="https://img.shields.io/badge/Founding_Friend-1783FF?style=flat-square" alt="Gründender Open-Source-Freund"/>
-    </td>
-    <td>
-      Vielen Dank an <b>Kimi (Moonshot AI)</b>, unseren ersten Open-Source-Freund, für die Unterstützung dieses Projekts! Kimi ist das KI-Labor hinter den Open-Weight-Modellfamilien K2 und K3 — <b>Kimi K3</b> bietet ein Kontextfenster mit 1 Mio. Token, native Bildverarbeitung und Programmierfähigkeiten auf Spitzenniveau zu einem Bruchteil der Preise geschlossener Modelle und funktioniert sofort mit Claude Code, Codex und jedem von Pusula unterstützten Programmierwerkzeug.
-      <br/><br/>
-      <b>Was durch Kimis Unterstützung ermöglicht wird:</b> Kimis API-Guthaben finanzieren die KI-validierte Release-Pipeline von Pusula — die Phase <i>Merge-Validierung, unterstützt von Kimi K3</i>, die jeden Pull Request vor der Veröffentlichung prüft — sowie die tägliche Funktionsentwicklung. Erstklassige Kimi-Unterstützung ist auf beiden Wegen verfügbar: über die direkte <a href="https://platform.kimi.ai?track_id=track-8197581fdd7d4139a0f562e4a03c3798&aff=pusula">Kimi API</a> (<code>kimi-k3</code>) und den <a href="https://www.kimi.ai/code?aff=pusula">Kimi Code-Programmiertarif</a> (OAuth und API-Schlüssel). Pusula ist außerdem das erste brasilianische Open-Source-Projekt im Unterstützungsprogramm von Kimi. <a href="https://platform.kimi.ai?track_id=track-8197581fdd7d4139a0f562e4a03c3798&aff=pusula"><b>Erhalten Sie einen Kimi-API-Schlüssel mit 15 % zusätzlichem Guthaben →</b></a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" width="150">
-      <a href="https://cheaperinference.com/?utm_source=pusula">
-        <img src="./public/providers/cli-generic.svg" width="64" alt="Cheaper Inference"/>
-      </a>
-      <br/><b>Cheaper Inference</b><br/><sub>cheaperinference.com</sub><br/><br/>
-      <img src="https://img.shields.io/badge/Open_Source_Friend-31f889?style=flat-square&labelColor=04170d" alt="Open-Source-Freund"/>
-    </td>
-    <td>
-      Vielen Dank an <b>Cheaper Inference</b>, einen Open-Source-Freund von Pusula, für die Unterstützung dieses Projekts! Cheaper Inference ist ein nach Kosten sortiertes Gateway, das 42 Spitzenmodelle — Claude, GPT-5.x, Gemini, Kimi K3, GLM, DeepSeek, Grok und MiniMax — über einen einzigen OpenAI-kompatiblen Endpunkt weiterverkauft und jede Anfrage an den günstigsten geeigneten Anbieter weiterleitet, ohne jemals mehr als den Listenpreis des Modellherstellers zu berechnen.
-      <br/><br/>
-      <b>Erstklassige Unterstützung in Pusula:</b> Chat Completions, der native Endpunkt <code>/v1/responses</code>, Bildverarbeitung, Tool-Aufrufe und 3 Bildmodelle (<code>grok-imagine</code>, <code>nano-banana-pro</code>, <code>nano-banana-2</code>, erreichbar als <code>cheaperinference/&lt;model&gt;</code>). <a href="https://cheaperinference.com/?utm_source=pusula"><b>API-Schlüssel erhalten →</b></a>
-    </td>
-  </tr>
-</table>
-
-<sub>Mit <code>aff=pusula</code> gekennzeichnete Links sind Partnerlinks. Sie finanzieren das Projekt, ohne dass Ihnen zusätzliche Kosten entstehen.</sub>
-
-<br/>
-
-<details open>
-<summary><sub><b>🎟️ Affiliate-Aktion</b> — kostenlose Registrierungsgutscheine von Anbietern, die uns nicht sponsern (zum Aufklappen anklicken)</sub></summary>
-
-<sub><i>Dieser Abschnitt ist ausschließlich für Empfehlungs-/Gutscheincodes vorgesehen. Gesponserte Partnerschaften finden Sie oben unter <b>🤝 Unterstützt von unseren Open-Source-Freunden</b>. Pusula unterhält keine Sponsoringbeziehung oder Partnerschaft mit den hier aufgeführten Anbietern — dies sind öffentliche Gutscheine, die jeder nutzen kann.</i></sub>
-
-<table>
-  <tr>
-    <td align="center" width="120">
-      <a href="https://agentrouter.org/register?aff=70LM">
-        <img src="./public/providers/cli-generic.svg" width="32" alt="AgentRouter"/>
-      </a>
-      <br/><sub><b>AgentRouter</b></sub><br/><sub>agentrouter.org</sub>
-    </td>
-    <td>
-      <sub><b><a href="https://agentrouter.org/register?aff=70LM">AgentRouter</a></b> — Affiliate-Registrierung · <b>$100 kostenloses Guthaben</b> bei der Registrierung (kostenloser Server, rechnen Sie mit höherer Latenz — am besten für Tests, nicht für die Produktion). Erstklassige Unterstützung in Pusula seit <b>v3.8.50</b>: Chat Completions, das Anthropic-kompatible Übertragungsformat und der OpenAI-kompatible Pfad. Zu den verfügbaren Modellen gehören <code>claude-opus-4-8</code>, <code>claude-opus-5</code>, <code>gpt-5.6-sol</code> und weitere. <b><a href="https://agentrouter.org/register?aff=70LM">$100 sichern →</a></b></sub>
-      <br/><br/>
-      <sub>⚠️ <i>Affiliate-Link — Pusula unterhält keine Sponsoringbeziehung oder Partnerschaft mit diesem Anbieter.</i></sub>
-    </td>
-  </tr>
-</table>
-
-<sub>Kennen Sie einen weiteren Anbieter mit einem großzügigen kostenlosen Registrierungsgutschein, von dem Pusula-Nutzer profitieren? Eröffnen Sie ein Issue, und wir fügen ihn hier hinzu.</sub>
-
-</details>
 
 <br/>
 
@@ -498,105 +321,6 @@ Alle **19** Strategien — pro Combo-Schritt frei kombinierbar:
 
 <br/>
 
-## 💚 Pusula unterstützen
-
-Pusula ist MIT-lizenziert und wird offen weiterentwickelt. Wenn es Ihnen Zeit oder Geld spart, können Sie so dazu beitragen, dass es unabhängig bleibt — wählen Sie einfach, was zu Ihnen passt. Sponsoring beeinflusst niemals die Routing-Priorität; es verschafft Sichtbarkeit, keine bessere Platzierung.
-
-<table>
-  <tr><td nowrap>⭐ <b>Repository mit einem Stern markieren</b></td><td>Kostenlos — hilft wirklich bei der Sichtbarkeit</td><td><a href="https://github.com/Ferhat-Yasinoglu/pusula">Pusula mit einem Stern markieren</a></td></tr>
-  <tr><td nowrap>🐙 <b>GitHub Sponsors</b></td><td>Einmalig oder monatlich · keine Plattformgebühr</td><td><a href="https://github.com/sponsors/diegosouzapw">github.com/sponsors/diegosouzapw</a></td></tr>
-  <tr><td nowrap>☕ <b>Ko-fi</b></td><td>Schnelle einmalige Spende, keine Registrierung für Spendende erforderlich</td><td><a href="https://ko-fi.com/diegosouzapw">ko-fi.com/diegosouzapw</a></td></tr>
-  <tr><td nowrap>🧋 <b>Buy Me a Coffee</b></td><td>Kleine, informelle Geste</td><td><a href="https://www.buymeacoffee.com/diegosouzapw">buymeacoffee.com/diegosouzapw</a></td></tr>
-  <tr><td nowrap>🖐 <b>Liberapay</b></td><td>Wiederkehrend · gemeinnützig · Open Source</td><td><a href="https://liberapay.com/diegosouzapw">liberapay.com/diegosouzapw</a></td></tr>
-  <tr><td nowrap>🇧🇷 <b>PIX</b> (Brasilien)</td><td>Sofort, gebührenfrei</td><td>Schlüssel &amp; QR-Code unten</td></tr>
-  <tr><td nowrap>₿ <b>Kryptowährungen</b></td><td>BTC · ETH · USDT-TRC20 · USDC-Solana</td><td>Adressen unten</td></tr>
-</table>
-
-**🇧🇷 PIX** — sofort, gebührenfrei (Brasilien)
-
-<img src="docs/assets/pix-qr.png" width="140" align="right" alt="PIX-QR-Code von Pusula"/>
-
-Schlüssel (zufällig): `5d865059-bc44-483a-962d-43ceb80126eb`
-
-Pix copia-e-cola:
-
-```
-00020101021126580014br.gov.bcb.pix01365d865059-bc44-483a-962d-43ceb80126eb5204000053039865802BR5922PUSULA CONTRIBUICAO6006BRASIL62070503***630475DD
-```
-
-<br clear="right"/>
-
-<details>
-<summary><b>₿ Kryptowährungen</b> — BTC · ETH · USDT-TRC20 · USDC-Solana (zum Aufklappen anklicken)</summary>
-
-<table>
-  <tr><td nowrap><b>₿ BTC</b></td><td nowrap>Bitcoin (SegWit)</td><td><code>bc1qh00smz004sy85wyl28v77tenkt3ckl6eaep7fd</code></td></tr>
-  <tr><td nowrap><b>Ξ ETH</b></td><td nowrap>Ethereum (ERC20)</td><td><code>0x64Cf6B68A6Ff34288e89172950a2d00102337a84</code></td></tr>
-  <tr><td nowrap><b>₮ USDT</b></td><td nowrap>Tron (TRC20)</td><td><code>TKAF41JpuQrHbKTnsQa9svJE2T192Hvsc2</code></td></tr>
-  <tr><td nowrap><b>$ USDC</b></td><td nowrap>Solana</td><td><code>2emNNZzVVWQc3FQ2wk9M6qXUQmW8AKdjjL174fXR28Tu</code></td></tr>
-</table>
-
-<sub>⚠️ Senden Sie jede Kryptowährung ausschließlich über das angegebene Netzwerk — beim Senden über das falsche Netzwerk können die Mittel verloren gehen.</sub>
-
-</details>
-
-🐛 Einen Fehler gefunden oder Feedback? Eröffnen Sie eine [Diskussion](https://github.com/Ferhat-Yasinoglu/pusula/discussions).
-
-<br/>
-
-<p><strong>Hinweise für Entwickler:</strong> Das Projekt kann während npm install/postinstall der Einfachheit halber eine lokale <code>.env</code>-Datei für Entwickler erstellen. Diese Datei wird absichtlich über <code>.gitignore</code> ignoriert (siehe <code>.gitignore</code>) und darf niemals committet werden — falls sie versehentlich committet wurde, ändern Sie alle offengelegten Geheimnisse und entfernen Sie die Datei aus dem Verlauf. Hinweise zur Verwaltung lokaler Umgebungsdateien und Geheimnisse finden Sie unter <a href="docs/DEVELOPER-ENVIRONMENT.md">docs/DEVELOPER-ENVIRONMENT.md</a>.</p>
-
-## 📡 Pusula Radar
-
-Die wichtigste Kennzahl für das kostenlose Kontingent bleibt bei **~1,62 Mrd. Tokens/Monat** aus dem oben dokumentierten,
-poolbereinigten Katalog. Vorübergehende Startguthaben von Anbietern können den Umfang im ersten
-Monat separat auf **~2,22 Mrd.** erhöhen. Radar ist eine optionale, signierte Katalog-Überlagerung für alle, die zwischen Pusula-Releases aktuellere
-Informationen zur Verfügbarkeit kostenloser Modelle wünschen; der Community-Katalog und alle bestehenden kostenlosen
-Funktionen bleiben kostenlos.
-
-Unterstützer können Zugriff auf den Live-Katalog und zusätzliche Anbieterangebote erhalten. Dessen separate,
-veränderliche Obergrenze liegt – abhängig von der Verfügbarkeit der Anbieter – bei **höchstens etwa 3 Mrd. Tokens/Monat**.
-Diese Obergrenze ist nicht garantiert: Anbieter können Kontingente, Teilnahmevoraussetzungen, Modelle oder Regionen
-jederzeit ändern.
-
-Radar ist optional und ausschließlich für GET-Anfragen vorgesehen. Der Pusula-Client lädt weder Prompts noch Datenverkehr, Anbieter-
-konfigurationen, Nutzungstelemetrie oder den lokalen Status verworfener Mitteilungen hoch. Informationen zu den Teilnahmevoraussetzungen und
-zum aktuellen Katalog finden Sie unter **[radar.pusula.online/planos](https://radar.pusula.online/planos)**.
-
-<br/>
-
-<div align="center">
-
-## ✨ Was ist neu?
-
-</div>
-
-> Aktuelle Highlights von **v3.8.20 → v3.8.50**. Den vollständigen Verlauf finden Sie in [`CHANGELOG.md`](CHANGELOG.md).
-
-- **🎛️ OmniConductor** — eingehende A2A-Delegierung an Ihre Agentenflotte, Conductor-Skills auf der Agent Card und ein Dashboard-Panel mit Faro-Push-to-Talk-Sprachchat. → [A2A-Server](docs/frameworks/A2A-SERVER.md)
-- **🛂 Adaptive Zulassung & Überlastungsschutz** — ressourcenintensive Chatanfragen werden in eine Warteschlange gestellt, statt einen 503-Fehler auszulösen, mit atomaren gleitenden RPM-Leases pro Verbindung. → [Resilienzleitfaden](docs/architecture/RESILIENCE_GUIDE.md)
-- **🗂️ Kanonische `/v1/models`-Reihenfolge** — ein zusammenhängender, nach Provider gruppierter Block pro Provider (Combos zuerst fixiert), stabil über alle Katalogquellen hinweg. → [API-Referenz](docs/reference/API_REFERENCE.md)
-- **🗜️ Gehärtete Komprimierung** — standardmäßig aktivierter Inflationsschutz, Caveman-Pakete für DE / FR / JA + Chinesisch (wényán), RTK-Filter für Gradle & .NET. → [Komprimierung](docs/compression/COMPRESSION_ENGINES.md)
-- **💸 Ehrliche Pauschalkosten** — Abonnement-/Coding-Plan-Provider werden in der Kostenanalyse mit **$0** ausgewiesen; Budget, Kontingent & Routing nehmen weiterhin Schätzungen vor. → [API-Referenz](docs/reference/API_REFERENCE.md)
-- **⚖️ Quota-Share-Routing** — teilt das Kontingent eines gemeinsamen Kontos fair auf gebündelte Schlüssel auf und bleibt dabei auslastungserhaltend, sodass ungenutzte Anteile verliehen werden. → [Resilienzleitfaden](docs/architecture/RESILIENCE_GUIDE.md)
-- **🤖 CLI-/Agenten-Einrichtung mit einem Befehl** — 13 registrierte `setup-*`-Befehle; `pusula run` startet 7 CLIs (Claude Code, Codex, Aider, Goose, OpenCode, Qwen Code, Gemini CLI); `pusula configure` unterstützt 10 Ziele mit einer interaktiven Provider- und Modellauswahl sowie kontextspezifischen Favoriten. → [CLI-Integrationen](docs/guides/CLI-INTEGRATIONS.md)
-- **🛰️ Remote-Modus** — steuern Sie eine entfernte Pusula-Instanz mit bereichsgebundenen Tokens (`connect` / `contexts` / `tokens`) sowie einem `antigravity`-OAuth-Helfer für VPS-Installationen. → [Remote-Modus](docs/guides/REMOTE-MODE.md)
-- **🧭 Intelligenteres automatisches Routing** — `auto/<category>:<tier>`-Combos, **Fusion** (Modellpanel + Bewerter), aufgabenbezogenes Routing sowie anfragespezifische Überschreibungen für Modell / Modus / USD-Budget. → [Auto-Combo](docs/routing/AUTO-COMBO.md)
-- **🗜️ Erweiterbare Komprimierung** — 12 kombinierbare Engines + Compression Studios: LLMLingua-2, zweistufiges Ultra, omniglyph, Fidelity-Gate pro Schritt, GCF v3.2, Editor mit Drag-and-drop-Neuanordnung. → [Komprimierung](docs/compression/COMPRESSION_ENGINES.md)
-- **🕵️ Transparente MITM-Entschlüsselung (TPROXY)** — erfasst CLIs, die Proxy-Umgebungsvariablen ignorieren, mit einer CA pro SNI und einem Trust-Store-Installationsprogramm. → [MITM/TPROXY](docs/security/MITM-TPROXY-DECRYPT.md)
-- **💸 Kosten-Telemetrie überall** — `X-Pusula-*`-Header für Kosten/Nutzung an jedem Endpunkt, Header für Cache-HIT-Einsparungen, USD-Ausgabenkontingente pro Schlüssel. → [API-Referenz](docs/reference/API_REFERENCE.md)
-- **🧠 Speicher unter Ihrer Kontrolle** — standardmäßig deaktiviert, optionale int8-Vektorquantisierung + typisierter Verfall, anfragespezifisches `x-pusula-no-memory`. → [Speicher](docs/frameworks/MEMORY.md)
-- **🛡️ Sicherheit** — Schutz vor Prompt-Injection auf jeder LLM-Route (Red-Team-Suite), optionale Schutzvorkehrung zur Maskierung von Zugangsdaten (schwärzt offengelegte API-Schlüssel/Geheimnisse in beide Richtungen), kostenlose DuckDuckGo-Websuche als letzte Rückfallebene und eine optionale OIDC-Anmeldeschranke für das Dashboard (die Passwortanmeldung bleibt stets verfügbar). → [Schutzvorkehrungen](docs/security/GUARDRAILS.md)
-- **🖼️ Neue Endpunkte** — `/v1/ocr` (Mistral OCR) und `/v1/audio/translations` (im Whisper-Stil) vervollständigen die Medienfunktionen. → [API-Referenz](docs/reference/API_REFERENCE.md)
-- **🎨 Bild-/Video-/Audiogenerierung** — eine API für Medien: xAI Grok Imagine & Novita AI Video, ComfyUI, Magnific, Adobe Firefly, Segmind sowie Sprachanbieter wie ElevenLabs. → [API-Referenz](docs/reference/API_REFERENCE.md)
-- **🌍 Bereitstellung & Betrieb** — Reverse-Proxy-`basePath`, automatische Erkennung der Browsersprache, Geräteverfolgung pro Schlüssel, MITM-Vertrauen ohne Root-Rechte, zh-TW-Lokalisierung. → [Umgebung](docs/reference/ENVIRONMENT.md)
-- **🤝 Mehr Provider & Agenten** — Cloud-Agenten (Codex Cloud, Cursor, Devin, Jules), Grok Build (xAI) mit Browser- + OAuth-Anmeldung, vollwertige Ollama-Karte, Claude Opus 5 & Sonnet 5, offizielle Kimi-Partnerschaft (Code/Web/Moonshot), Zed, Requesty, SenseNova, Yuanbao, Agnes AI … und ein aktualisierter **Katalog mit 352 Providern**. → [Provider](docs/reference/PROVIDER_REFERENCE.md)
-- **📡 Routing-Transparenz** — jede Antwort enthält einen `X-Pusula-Decision`-Header, der die verwendete Strategie, den Provider und die Latenz angibt; eine neue `cache-optimized`-Combo-Strategie + der Auto-Combo-Faktor `cacheAffinity` leiten wiederholte Anfragen zurück an die Verbindung, die das zwischengespeicherte Präfix hält; und ein schreibgeschützter Endpunkt `/v1/auto-combo/{channel}/candidates` stellt den aktuellen Kandidatenpool eines `auto/*`-Kanals bereit. → [Auto-Combo](docs/routing/AUTO-COMBO.md)
-- **⚡ Lokale Leistung & Infrastruktur** — lokales Redis mit einem Klick, Relay-Deployments für Cloudflare Workers / Deno Deploy, Bifrost & Mux als überwachte eingebettete Dienste. → [Eingebettete Dienste](docs/frameworks/EMBEDDED-SERVICES.md)
-- **🧩 Ebenfalls enthalten** — Plugin-Framework + Marktplatz, Omni-/Agent-/GitHub-Skills-Frameworks, Obsidian-Vault-Integration (22 MCP-Tools), OpenAI-kompatible Batch- & Files-APIs, semantischer Antwort-Cache, Gamification mit Bestenlisten, ACP-Agentenerkennung (15 integrierte Agenten), planmäßiger Log-Export nach BigQuery, `auto/chaos`-Fehlerinjektion, eine Telegram-Bot-Bridge, ein integrierter Versionsmanager und LMArena-ELO-Ranglisten kostenloser Provider. → [Dokumentation](docs/README.md)
-
-<br/>
-
 <div align="center">
 
 ## 🤖 Kompatible CLIs & Coding-Agenten
@@ -635,7 +359,6 @@ zum aktuellen Katalog finden Sie unter **[radar.pusula.online/planos](https://ra
     <td align="center" width="76"><picture><source media="(prefers-color-scheme:dark)" srcset="https://cdn.jsdelivr.net/npm/@lobehub/icons-static-png@1.91.0/dark/goose.png"/><img src="https://cdn.jsdelivr.net/npm/@lobehub/icons-static-svg@1.91.0/icons/goose.svg" width="40" alt="Goose"/></picture><br/><sub><b>Goose</b></sub><br/><sub>                           </sub></td>
     <td align="center" width="76"><img src="./public/providers/cli-generic.svg" width="40" alt="Open Interpreter"/><br/><sub><b>Open Interpreter</b></sub><br/><sub>                           </sub></td>
     <td align="center" width="76"><img src="./public/providers/cli-generic.svg" width="40" alt="Warp AI"/><br/><sub><b>Warp AI</b></sub><br/><sub>                           </sub></td>
-    <td align="center" width="76"><a href="https://deyin.ai"><img src="./public/deyin.svg" width="40" alt="deyin.ai"/><br/><sub><b>deyin.ai</b></sub><br/><sub>                           </sub></a></td>
   </tr>
 </table>
 </div>
@@ -754,81 +477,14 @@ aus Ihrem Shell-Verlauf heraus. → [CLI-Integrationen](docs/guides/CLI-INTEGRAT
   <tr><td align="left" nowrap>📦 <b>npm (global)</b></td><td align="left" nowrap><code>npm install -g pusula</code></td><td align="left">Ein Befehl, jedes Betriebssystem</td></tr>
   <tr><td align="left" nowrap>🐳 <b>Docker</b></td><td align="left" nowrap><code>docker run … ferhat-yasinoglu/pusula</code></td><td align="left">Multi-Architektur: <b>AMD64 + ARM64</b></td></tr>
   <tr><td align="left" nowrap>🖥️ <b>Desktop (Electron)</b></td><td align="left" nowrap><code>npm run electron:build</code></td><td align="left">Natives Fenster + Taskleiste — <b>Windows / macOS / Linux</b></td></tr>
-  <tr><td align="left" nowrap>🎩 <b>Menüleiste (PusulaTray)</b></td><td align="left" nowrap><code>brew install --cask zoispag/tap/pusula-tray</code></td><td align="left">Überwacht und aktualisiert den Server automatisch — <b>macOS</b></td></tr>
   <tr><td align="left" nowrap>💪 <b>ARM</b></td><td align="left" nowrap>nativ für <code>arm64</code></td><td align="left">Raspberry Pi, ARM-Server, Apple Silicon</td></tr>
   <tr><td align="left" nowrap>📱 <b>Android (Termux)</b></td><td align="left" nowrap><code>pkg install nodejs && npx -y pusula</code></td><td align="left">Läuft <b>auf deinem Smartphone</b>, rund um die Uhr, ohne Root-Zugriff</td></tr>
   <tr><td align="left" nowrap>📲 <b>PWA</b></td><td align="left" nowrap>„Zum Startbildschirm hinzufügen“</td><td align="left">Vollbildmodus, offline, über den Browser installierbar</td></tr>
   <tr><td align="left" nowrap>🧩 <b>OpenCode-Plugin</b></td><td align="left" nowrap><code>@pusula/opencode-provider</code></td><td align="left">Native OpenCode-Integration</td></tr>
-  <tr><td align="left" nowrap>🤖 <b>VS Code Copilot Chat</b></td><td align="left" nowrap><b>OmniCopilot</b>-Erweiterung installieren</td><td align="left">Jedes Pusula-Modell in der nativen Copilot-Chat-Auswahl — Stable &amp; Insiders</td></tr>
   <tr><td align="left" nowrap>🛠️ <b>Aus dem Quellcode</b></td><td align="left" nowrap><code>npm install && npm run dev</code></td><td align="left">Anpassen und mitwirken</td></tr>
 </table>
 
-<sub>📖 [Docker-Anleitung](docs/guides/DOCKER_GUIDE.md) · [Desktop](electron/README.md) · [Menüleisten-App](https://github.com/zoispag/pusula-tray) · [Termux](docs/guides/TERMUX_GUIDE.md) · [PWA](docs/guides/PWA_GUIDE.md) · [OpenCode](docs/frameworks/OPENCODE.md)</sub>
-
-<br/>
-
-<div align="center">
-
-### 🧩 Neu: Pusula im nativen Copilot Chat von VS Code
-
-</div>
-
-> Keine neue Seitenleiste, keine neue Chat-Oberfläche — jedes von Pusula bereitgestellte Modell erscheint direkt in der
-> **bereits verwendeten Modellauswahl von Copilot Chat**. Seit VS Code 1.122 funktionieren Anbietermodelle
-> ohne GitHub-Anmeldung oder Copilot-Abonnement — Agentenmodus, Tool-Aufrufe und Bildverarbeitung,
-> kostenlos.
-
-Installiere die Erweiterung **[OmniCopilot](https://github.com/diegosouzapw/OmniCopilot)**, verbinde sie
-mit deinem Pusula-Server (standardmäßig `localhost:20128`) und öffne dann Copilot Chat → Modellauswahl
-→ **Modelle verwalten…** → **Pusula**.
-
-<table>
-  <tr><th align="left">Store</th><th align="left">Link</th><th align="left">Kompatibel mit</th></tr>
-  <tr><td align="left" nowrap>🧩 <b>VS Code Marketplace</b></td><td align="left"><a href="https://marketplace.visualstudio.com/items?itemName=diegosouzapw.omnicopilot">Installieren →</a></td><td align="left">VS Code — Stable &amp; Insiders</td></tr>
-  <tr><td align="left" nowrap>🔓 <b>Open VSX Registry</b></td><td align="left"><a href="https://open-vsx.org/extension/diegosouzapw/omnicopilot">Installieren →</a></td><td align="left">Cursor, Windsurf, VSCodium, Theia, code-server, Gitpod, Antigravity, Kiro…</td></tr>
-</table>
-
-Im Editor: Öffne die Ansicht **Erweiterungen**, suche nach **„Pusula“** und klicke auf **Installieren**
-— funktioniert in beiden Stores auf dieselbe Weise. Quellcode, Issues und das Runbook für die Veröffentlichung findest du unter
-[diegosouzapw/OmniCopilot](https://github.com/diegosouzapw/OmniCopilot).
-
-<sub>📖 [Anleitung für VS Code Copilot Chat](docs/guides/VSCODE-COPILOT.md) — Einrichtung, Anzeige in der Modellauswahl, Dashboard in einem Tab, Fehlerbehebung</sub>
-
-<br/>
-
-<div align="center">
-
-### 🎩 Neu: PusulaTray — dein Gateway in der Menüleiste
-
-</div>
-
-> `pusula serve` funktioniert am besten, wenn es immer läuft. **[PusulaTray](https://github.com/zoispag/pusula-tray)**
-> macht daraus eine einmalig einzurichtende Menüleisten-App für macOS: Sie startet den Server, hält ihn
-> auch nach Neustarts am Laufen, aktualisiert ihn direkt und macht dein aktuelles Token-Budget mit einem Klick verfügbar — **kein
-> offenes Terminalfenster und keine globale Installation mit `npm install -g pusula`, um die du dich kümmern musst.**
-
-Die App basiert auf [Tauri v2](https://v2.tauri.app/) (mit einem winzigen Rust-Kern) und bringt
-eine eigene signierte Node-24-Laufzeitumgebung mit. Sie verwaltet eine app-eigene Pusula-Installation und gerät daher nie mit deinem
-globalen `node`/`bun` in Konflikt. Sie **verwendet deine vorhandene Konfiguration und Datenbank unter `~/.pusula/`** — es ist also
-dasselbe Pusula, das du bereits ausführst, nur mit Hut. 🎩
-
-<table>
-  <tr><th align="left">Funktion</th><th align="left">Funktionsweise</th></tr>
-  <tr><td align="left" nowrap>🟢 <b>Überwacht den Server</b></td><td align="left">Startet <code>pusula serve</code> und übernimmt eine bereits laufende Instanz, statt sie zu duplizieren</td></tr>
-  <tr><td align="left" nowrap>📊 <b>Live-Nutzung auf einen Blick</b></td><td align="left">Kontingentanzeigen der Anbieter, Sitzungs- und Wochenlimits von Claude mit Countdown bis zur Zurücksetzung sowie Kostenaufschlüsselung für 30 Tage</td></tr>
-  <tr><td align="left" nowrap>🔄 <b>Automatische direkte Updates</b></td><td align="left">Mehrstufige Installation, atomarer Austausch und Rollback bei Fehlern — immer auf dem neuesten Release</td></tr>
-  <tr><td align="left" nowrap>🚀 <b>Beim Anmelden starten</b></td><td align="left">Optionaler Start bei der Anmeldung; nur in der Menüleiste, ohne Dock-Symbol</td></tr>
-  <tr><td align="left" nowrap>🩺 <b>Diagnose &amp; Protokolle</b></td><td align="left">Diagnose mit einem Klick und Zugriff auf die Serverprotokolle</td></tr>
-</table>
-
-```sh
-brew install --cask zoispag/tap/pusula-tray
-```
-
-<sub>Bevorzugen Sie einen Download? Laden Sie die neueste <code>.dmg</code>-Datei unter
-<a href="https://github.com/zoispag/pusula-tray/releases">Releases</a> herunter. Quellcode, Issues und Build-Dokumentation
-finden Sie unter <a href="https://github.com/zoispag/pusula-tray">zoispag/pusula-tray</a>.
-<br/>💛 Ein Community-Projekt von <a href="https://github.com/zoispag">@zoispag</a> — keine offizielle Pusula-Veröffentlichung.</sub>
+<sub>📖 [Docker-Anleitung](docs/guides/DOCKER_GUIDE.md) · [Desktop](electron/README.md) · [Termux](docs/guides/TERMUX_GUIDE.md) · [PWA](docs/guides/PWA_GUIDE.md) · [OpenCode](docs/frameworks/OPENCODE.md)</sub>
 
 <br/>
 
@@ -894,7 +550,7 @@ Stellen Sie Pusula über **MCP**, **A2A**, eine **REST API**, **Webhooks** oder 
   <tr><td align="left" nowrap>📡 <b>MCP (SSE)</b></td><td align="left" nowrap><code>/api/mcp/sse</code></td><td align="left">Streaming-Transport für MCP</td></tr>
   <tr><td align="left" nowrap>🤝 <b>A2A</b></td><td align="left" nowrap><code>/.well-known/agent.json</code></td><td align="left">Agent-zu-Agent-Kommunikation, <b>JSON-RPC 2.0</b> + SSE, 6 Fähigkeiten</td></tr>
   <tr><td align="left" nowrap>🌐 <b>REST API</b></td><td align="left" nowrap><code>/v1/*</code></td><td align="left">OpenAI-kompatibel — Chat, Einbettungen, Bilder, Audio, OCR</td></tr>
-  <tr><td align="left" nowrap>🔔 <b>Webhooks</b></td><td align="left" nowrap><code>/api/webhooks</code></td><td align="left">Anfrage- und Kontingentereignisse an Slack, Discord, Telegram oder eine beliebige URL senden</td></tr>
+  <tr><td align="left" nowrap>🔔 <b>Webhooks</b></td><td align="left" nowrap><code>/api/webhooks</code></td><td align="left">Anfrage- und Kontingentereignisse an Slack, andere Chat-Dienste oder eine beliebige URL senden</td></tr>
   <tr><td align="left" nowrap>🛰️ <b>Remote-CLI</b></td><td align="left" nowrap><code>pusula connect <host></code></td><td align="left">Eine Remote-Instanz mit eingeschränkten Zugriffstoken steuern</td></tr>
 </table>
 
@@ -1169,94 +825,17 @@ gleichen Prozess über einen einzigen Port bereitgestellt, daher gibt es derzeit
 
 <div align="center">
 
-# 🎬 Pusula in Aktion
-
-</div>
-
-## 📹 Videoanleitungen
-
-<div align="center">
-
-<sub>Momentaufnahme des Dashboards vom 2026-08-24 · Rohkatalog: YT 809 | TT 137 | IG 124 · Aktualität (Tage): YT 1 | TT 21 | IG 22</sub>
-
-<table>
-  <tr>
-    <td align="center" width="320">
-      <a href="https://www.instagram.com/reel/Da8ZthUPK98/">
-        <img src="https://placehold.co/320x180/111827/FFFFFF?text=Instagram+Reel+%7C+nick_saraev&font=montserrat&bold=true" alt="Instagram-Reel" width="300"/>
-      </a><br/>
-      <b>🎬 #1 — Instagram</b><br/>
-      <sub>nick_saraev — 3,042,474 Aufrufe</sub>
-    </td>
-    <td align="center" width="320">
-      <a href="https://www.instagram.com/reel/DaSs65mMrHk/">
-        <img src="https://placehold.co/320x180/111827/FFFFFF?text=Instagram+Reel+%7C+theopenstack&font=montserrat&bold=true" alt="Instagram-Reel — theopenstack" width="300"/>
-      </a><br/>
-      <b>🎬 #2 — Instagram</b><br/>
-      <sub>theopenstack — 692,419 Aufrufe</sub>
-    </td>
-    <td align="center" width="320">
-      <a href="https://www.tiktok.com/@milesreevesai/video/7667980059189366019">
-        <img src="https://placehold.co/320x180/111827/FFFFFF?text=TikTok+%7C+milesreevesai&font=montserrat&bold=true" alt="TikTok — milesreevesai" width="300"/>
-      </a><br/>
-      <b>🎬 #3 — TikTok</b><br/>
-      <sub>milesreevesai — 620,400 Aufrufe</sub>
-    </td>
-    <td align="center" width="320">
-      <a href="https://www.youtube.com/watch?v=QucgvbO5gsM">
-        <img src="https://img.youtube.com/vi/QucgvbO5gsM/maxresdefault.jpg" alt="YouTube — Vaibhav Sisinty" width="300"/>
-      </a><br/>
-      <b>🎬 #4 — YouTube</b><br/>
-      <sub>Vaibhav Sisinty — 391,109 Aufrufe</sub>
-    </td>
-    <td align="center" width="320">
-      <a href="https://www.instagram.com/reel/DbIt9AjK7-U/">
-        <img src="https://placehold.co/320x180/111827/FFFFFF?text=Instagram+Reel+%7C+buildwithai.club&font=montserrat&bold=true" alt="Instagram-Reel — buildwithai.club" width="300"/>
-      </a><br/>
-      <b>🎬 #5 — Instagram</b><br/>
-      <sub>buildwithai.club — 347,652 Aufrufe</sub>
-    </td>
-  </tr>
-</table>
-
-</div>
-
-**Vollständige Rangliste (deduplizierte kanonische URLs, `v > 0`, größte Reichweite):**
-
-| #1                                                                                     | #2                                                                                    | #3                                                                                                      | #4                                                                                     | #5                                                                                        |
-| -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| [nick_saraev — Instagram](https://www.instagram.com/reel/Da8ZthUPK98/) — **3,042,474** | [theopenstack — Instagram](https://www.instagram.com/reel/DaSs65mMrHk/) — **692,419** | [milesreevesai — TikTok](https://www.tiktok.com/@milesreevesai/video/7667980059189366019) — **620,400** | [Vaibhav Sisinty — YouTube](https://www.youtube.com/watch?v=QucgvbO5gsM) — **391,109** | [buildwithai.club — Instagram](https://www.instagram.com/reel/DbIt9AjK7-U/) — **347,652** |
-
-| #6                                                                                  | #7                                                                                      | #8                                                                                          | #9                                                                                        | #10                                                                                         |
-| ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| [nivedan.ai — Instagram](https://www.instagram.com/reel/DbIrCksJiqq/) — **331,973** | [vaibhavsisinty — Instagram](https://www.instagram.com/reel/Dae05TSAK1l/) — **263,744** | [Nick Automates — YouTube Shorts](https://www.youtube.com/shorts/fZIBK_4fKq8) — **218,174** | [theroshankrishna — Instagram](https://www.instagram.com/reel/Dapjs58z0P0/) — **186,786** | [midudev — TikTok](https://www.tiktok.com/@midudev/video/7664636453544152342) — **177,800** |
-
-Kanonische Kennzahlen vom 2026-08-24: **1.029 einzigartige Videos** · **11.132.922 bekannte Aufrufe** (`v > 0`) · **639 Kanäle/Profile nach Netzwerk**. Das Roh-Dashboard enthält 1.070 Zeilen; 41 Instagram-Duplikate wurden anhand der kanonischen URL normalisiert, wobei die höchste Aufrufzahl pro Video beibehalten wurde.
-
-> 🎬 **Du hast ein Video über Pusula erstellt?** Eröffne ein [Issue](https://github.com/Ferhat-Yasinoglu/pusula/issues/new) oder eine [Diskussion](https://github.com/Ferhat-Yasinoglu/pusula/discussions) mit dem Link — wir stellen es hier vor.
-
-<br/>
-
-<div align="center">
-
 # 📧 Community & Hilfe
 
-> Alles an einem Ort — folge dem Maintainer, chatte mit der Community oder eröffne ein Issue.
+> Fragen, Fehlerberichte und Ideen laufen direkt über GitHub — ein Issue oder eine Diskussion genügt.
 
-| Kanal                                          | Wo / wie                                                                                                                           |
-| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| 💼 **LinkedIn** — dem Maintainer folgen        | [linkedin.com/in/diegosouzapw](https://www.linkedin.com/in/diegosouzapw/)                                                          |
-| 🐙 **GitHub** — für Releases & Tipps folgen    | [@diegosouzapw](https://github.com/diegosouzapw)                                                                                   |
-| 💬 **Discord**                                 | [discord.gg/U47eFqAXCn](https://discord.gg/U47eFqAXCn)                                                                             |
-| ✈️ **Telegram**                                | [t.me/pusulaOficial](https://t.me/pusulaOficial)                                                                             |
-| 🟢 **WhatsApp — 🌍 Global**                    | [der Gruppe beitreten](https://chat.whatsapp.com/FvuCbrpZmQ6I85n2vW5QIC?s=cl&p=a&mlu=4)                                            |
-| 🟢 **WhatsApp — 🇧🇷 Brasilien**                 | [der Gruppe beitreten](https://chat.whatsapp.com/KWgatljAjmbELQory59Oti?s=cl&p=a&mlu=4)                                            |
-| 🌍 **Website**                                 | [pusula.online](https://github.com/Ferhat-Yasinoglu/pusula)                                                                                       |
-| 🌍 **🌍StHub Pusula-Community (kostenlos)** | [StHub-Portal](https://portal.sthub.com.br/communities/groups/st-hub/channels/Pusula-World-8kRjmK)                              |
-| 📦 **Quellcode**                               | [github.com/Ferhat-Yasinoglu/pusula](https://github.com/Ferhat-Yasinoglu/pusula)                                                     |
-| 🐛 **Fehler melden**                           | [Issue erstellen](https://github.com/Ferhat-Yasinoglu/pusula/issues) — Ausgabe von `npm run system-info` anhängen                   |
-| 🤝 **Mitwirken**                               | [CONTRIBUTING.md](CONTRIBUTING.md) · [Branching- & Release-Modell](docs/ops/BRANCHING_MODEL.md) · ein `good first issue` auswählen |
-| 💚 **Das Projekt unterstützen**                | [Möglichkeiten zur Unterstützung ↑](#-support-pusula) · [GitHub Sponsors](https://github.com/sponsors/diegosouzapw)             |
+| Kanal                    | Wo / wie                                                                                                                             |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| 🐛 **Fehler melden**     | [GitHub Issues](https://github.com/Ferhat-Yasinoglu/pusula/issues) — Ausgabe von `npm run system-info` anhängen                       |
+| 💬 **Fragen & Ideen**    | [GitHub Discussions](https://github.com/Ferhat-Yasinoglu/pusula/discussions)                                                          |
+| 🔒 **Sicherheitslücken** | [Security Advisory erstellen](https://github.com/Ferhat-Yasinoglu/pusula/security/advisories/new) — siehe [SECURITY.md](SECURITY.md) |
+| 📦 **Quellcode**         | [github.com/Ferhat-Yasinoglu/pusula](https://github.com/Ferhat-Yasinoglu/pusula)                                                      |
+| 🤝 **Mitwirken**         | [CONTRIBUTING.md](CONTRIBUTING.md) · [Branching- & Release-Modell](docs/ops/BRANCHING_MODEL.md) · ein `good first issue` auswählen   |
 
 </div>
 
@@ -1286,8 +865,8 @@ Kanonische Kennzahlen vom 2026-08-24: **1.029 einzigartige Videos** · **11.132.
   <tr><td nowrap><b>Protokollierung</b></td><td>pino — strukturierte JSON-Logs mit Anfragekontext</td></tr>
   <tr><td nowrap><b>Testen</b></td><td>Node.js Test-Runner + Vitest — <b>über 39.000 statische Testdeklarationen</b> in über 5.100 verfolgten Testdateien (Unit, Integration, E2E, Sicherheit, Ökosystem)</td></tr>
   <tr><td nowrap><b>Plattformen</b></td><td>Desktop (Electron) · Android (Termux) · PWA (jeder Browser)</td></tr>
-  <tr><td nowrap><b>CI/CD</b></td><td>GitHub Actions — automatische npm-Veröffentlichung + Docker Hub bei Release</td></tr>
-  <tr><td nowrap><b>Links</b></td><td><a href="https://github.com/Ferhat-Yasinoglu/pusula">Webseite</a> · <a href="https://www.npmjs.com/package/pusula">npm</a> · <a href="https://hub.docker.com/r/ferhat-yasinoglu/pusula">Docker Hub</a></td></tr>
+  <tr><td nowrap><b>CI/CD</b></td><td>GitHub Actions — automatische npm-Veröffentlichung + GHCR bei Release</td></tr>
+  <tr><td nowrap><b>Links</b></td><td><a href="https://github.com/Ferhat-Yasinoglu/pusula">GitHub</a> · <a href="https://www.npmjs.com/package/pusula">npm</a> · <a href="https://github.com/Ferhat-Yasinoglu/pusula/pkgs/container/pusula">GHCR</a></td></tr>
 </table>
 
 <div align="center">
@@ -1371,200 +950,9 @@ Kanonische Kennzahlen vom 2026-08-24: **1.029 einzigartige Videos** · **11.132.
 
 <div align="center">
 
-# ⭐ Wichtigste Mitwirkende
-
-> Pusula wird von einer engagierten Open-Source-Community geprägt. Diese Personen haben außergewöhnliche Beiträge geleistet, die sich direkt auf die Qualität, Stabilität und Reichweite des Projekts auswirken. **Vielen Dank.**
-
-### Externe Mitwirkende nach zusammengeführten Pull Requests
-
-<table>
-  <tr><th align="center">Rang</th><th align="left">Mitwirkende</th><th align="center">Zusammengeführte PRs</th><th align="right">~Geänderte Zeilen</th></tr>
-  <tr><td align="center">1</td><td align="left"><a href="https://github.com/backryun"><b>backryun</b></a></td><td align="center">190</td><td align="right">227,977</td></tr>
-  <tr><td align="center">2</td><td align="left"><a href="https://github.com/oyi77"><b>oyi77</b></a></td><td align="center">180</td><td align="right">407,678</td></tr>
-  <tr><td align="center">3</td><td align="left"><a href="https://github.com/rdself"><b>rdself</b></a></td><td align="center">145</td><td align="right">80,663</td></tr>
-  <tr><td align="center">4</td><td align="left"><a href="https://github.com/JxnLexn"><b>JxnLexn</b></a></td><td align="center">128</td><td align="right">387,049</td></tr>
-  <tr><td align="center">5</td><td align="left"><a href="https://github.com/KooshaPari"><b>KooshaPari</b></a></td><td align="center">101</td><td align="right">125,747</td></tr>
-  <tr><td align="center">6</td><td align="left"><a href="https://github.com/herjarsa"><b>herjarsa</b></a></td><td align="center">88</td><td align="right">230,872</td></tr>
-  <tr><td align="center">7</td><td align="left"><a href="https://github.com/RaviTharuma"><b>RaviTharuma</b></a></td><td align="center">79</td><td align="right">55,106</td></tr>
-  <tr><td align="center">8</td><td align="left"><a href="https://github.com/maxmad64bis"><b>maxmad64bis</b></a></td><td align="center">69</td><td align="right">394,715</td></tr>
-  <tr><td align="center">9</td><td align="left"><a href="https://github.com/artickc"><b>artickc</b></a></td><td align="center">59</td><td align="right">33,260</td></tr>
-  <tr><td align="center">10</td><td align="left"><a href="https://github.com/HouMinXi"><b>HouMinXi</b></a></td><td align="center">51</td><td align="right">47,334</td></tr>
-  <tr><td align="center">10</td><td align="left"><a href="https://github.com/chirag127"><b>chirag127</b></a></td><td align="center">51</td><td align="right">5,153</td></tr>
-  <tr><td align="center">12</td><td align="left"><a href="https://github.com/xz-dev"><b>xz-dev</b></a></td><td align="center">50</td><td align="right">245,976</td></tr>
-  <tr><td align="center">13</td><td align="left"><a href="https://github.com/hartmark"><b>hartmark</b></a></td><td align="center">47</td><td align="right">52,185</td></tr>
-  <tr><td align="center">14</td><td align="left"><a href="https://github.com/rqzbeh"><b>rqzbeh</b></a></td><td align="center">39</td><td align="right">143,181</td></tr>
-  <tr><td align="center">15</td><td align="left"><a href="https://github.com/dhaern"><b>dhaern</b></a></td><td align="center">34</td><td align="right">19,559</td></tr>
-  <tr><td align="center">16</td><td align="left"><a href="https://github.com/Dingding-leo"><b>Dingding-leo</b></a></td><td align="center">33</td><td align="right">1,986</td></tr>
-  <tr><td align="center">17</td><td align="left"><a href="https://github.com/NomenAK"><b>NomenAK</b></a></td><td align="center">32</td><td align="right">13,854</td></tr>
-  <tr><td align="center">18</td><td align="left"><a href="https://github.com/MumuTW"><b>MumuTW</b></a></td><td align="center">30</td><td align="right">16,953</td></tr>
-  <tr><td align="center">19</td><td align="left"><a href="https://github.com/benzntech"><b>benzntech</b></a></td><td align="center">29</td><td align="right">11,641</td></tr>
-  <tr><td align="center">20</td><td align="left"><a href="https://github.com/pacocartones"><b>pacocartones</b></a></td><td align="center">24</td><td align="right">9,331</td></tr>
-  <tr><td align="center">20</td><td align="left"><a href="https://github.com/Prudhvivuda"><b>Prudhvivuda</b></a></td><td align="center">24</td><td align="right">6,312</td></tr>
-</table>
-
-<sub>Eingefroren beim aktuellen Stand von <code>release/v3.8.50</code> mit <code>dafb4ae808</code>, einschließlich Zusammenführungen bis 2026-08-24 05:26:03 UTC. Die paginierte GitHub-GraphQL-Erhebung enthält 5.911 zusammengeführte PRs: 2.707 vom Repository-Eigentümer, 179 von Dependabot und <b>3.025 externe PRs von 535 verschiedenen Mitwirkenden</b>. „Geänderte Zeilen“ entspricht den GitHub-Hinzufügungen und -Löschungen und umfasst generierte Dateien, Lockfiles, Kataloge, Übersetzungen und Dokumentation; es handelt sich um Änderungsvolumen, nicht um selbst verfasste LOC. Gleichstände an der Auswahlgrenze werden beibehalten.</sub>
-
-### GitHub-zugeordnete Commits
-
-<table>
-  <tr>
-    <td align="center" width="160">
-      <a href="https://github.com/backryun">
-        <img src="https://github.com/backryun.png" width="40" style="border-radius:50%" alt="backryun"/><br/>
-        <b>backryun</b>
-      </a><br/>
-      <sub>🥇 220 GitHub-zugeordnete Commits</sub>
-    </td>
-    <td align="center" width="160">
-      <a href="https://github.com/oyi77">
-        <img src="https://github.com/oyi77.png" width="40" style="border-radius:50%" alt="Paijo"/><br/>
-        <b>Paijo</b>
-      </a><br/>
-      <sub>🥈 219 GitHub-zugeordnete Commits</sub>
-    </td>
-    <td align="center" width="160">
-      <a href="https://github.com/rdself">
-        <img src="https://github.com/rdself.png" width="40" style="border-radius:50%" alt="Randi"/><br/>
-        <b>Randi</b>
-      </a><br/>
-      <sub>🥉 108 GitHub-zugeordnete Commits</sub>
-    </td>
-    <td align="center" width="160">
-      <a href="https://github.com/RaviTharuma">
-        <img src="https://github.com/RaviTharuma.png" width="40" style="border-radius:50%" alt="Ravi Tharuma"/><br/>
-        <b>Ravi Tharuma</b>
-      </a><br/>
-      <sub>🏅 81 GitHub-zugeordnete Commits</sub>
-    </td>
-    <td align="center" width="160">
-      <a href="https://github.com/christopher-s">
-        <img src="https://github.com/christopher-s.png" width="40" style="border-radius:50%" alt="Chris"/><br/>
-        <b>Chris</b>
-      </a><br/>
-      <sub>🏅 70 GitHub-zugeordnete Commits</sub>
-    </td>
-    <td align="center" width="160">
-      <a href="https://github.com/hartmark">
-        <img src="https://github.com/hartmark.png" width="40" style="border-radius:50%" alt="Markus Hartung"/><br/>
-        <b>Markus Hartung</b>
-      </a><br/>
-      <sub>🏅 69 GitHub-zugeordnete Commits · geteilter 6. Platz</sub>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" width="160">
-      <a href="https://github.com/maxmad64bis">
-        <img src="https://github.com/maxmad64bis.png" width="40" style="border-radius:50%" alt="Dizzle"/><br/>
-        <b>Dizzle</b>
-      </a><br/>
-      <sub>🏅 69 GitHub-zugeordnete Commits · geteilter 6. Platz</sub>
-    </td>
-    <td align="center" width="160">
-      <a href="https://github.com/JxnLexn">
-        <img src="https://github.com/JxnLexn.png" width="40" style="border-radius:50%" alt="Jan Leon"/><br/>
-        <b>Jan Leon</b>
-      </a><br/>
-      <sub>🏅 64 GitHub-zugeordnete Commits</sub>
-    </td>
-    <td align="center" width="160">
-      <a href="https://github.com/zen0bit">
-        <img src="https://github.com/zen0bit.png" width="40" style="border-radius:50%" alt="zenobit"/><br/>
-        <b>zenobit</b>
-      </a><br/>
-      <sub>🏅 62 GitHub-zugeordnete Commits</sub>
-    </td>
-    <td align="center" width="160">
-      <a href="https://github.com/HouMinXi">
-        <img src="https://github.com/HouMinXi.png" width="40" style="border-radius:50%" alt="Bob.Hou"/><br/>
-        <b>Bob.Hou</b>
-      </a><br/>
-      <sub>🏅 51 GitHub-zugeordnete Commits · geteilter 10. Platz</sub>
-    </td>
-    <td align="center" width="160">
-      <a href="https://github.com/xz-dev">
-        <img src="https://github.com/xz-dev.png" width="40" style="border-radius:50%" alt="Xiangzhe"/><br/>
-        <b>Xiangzhe</b>
-      </a><br/>
-      <sub>🏅 51 GitHub-zugeordnete Commits · geteilter 10. Platz</sub>
-    </td>
-  </tr>
-</table>
-
-<sub>Erneut überprüft am 2026-08-24 um 06:14:31 UTC: GitHub-zugeordnete Commits, die von der Contributors API des Repositorys für den Standard-Branch <code>release/v3.8.50</code> gemeldet wurden. Die API gab 525 Identitäten zurück (415 Benutzer, 2 Bots, 108 anonyme Identitäten); diese Tabelle schließt den Maintainer, Bots und anonyme Identitäten aus und berücksichtigt Gleichstände. Sie unterscheidet sich sowohl von der obigen Rangliste zusammengeführter PRs als auch von der unten stehenden, 639 Personen umfassenden Zählung auf Basis von Git-Metadaten.</sub>
-
-> 🙏 Die Funktionen, Fehlerbehebungen und Infrastrukturverbesserungen dieser Mitwirkenden sind ein **zentraler Bestandteil** dessen, was Pusula zuverlässig und funktionsreich macht. Jeder Pull Request, jeder Testfall und jede i18n-Übersetzungsdatei zählt. Open Source wird von Menschen wie ihnen geschaffen.
+## 👥 Mitwirken
 
 </div>
-
----
-
-<br/>
-
-## 💖 Sponsoren
-
-<div align="center">
-
-Ein herzliches Dankeschön an die Menschen, die Pusula aus eigener Tasche finanzieren — jeder Beitrag sorgt dafür, dass das Projekt kostenlos, unabhängig und in Bewegung bleibt.
-
-<table>
-  <tr>
-    <td align="center" width="180">
-      <a href="https://github.com/drewbitt">
-        <img src="https://github.com/drewbitt.png?size=140" width="72" style="border-radius:50%" alt="Andrew"/><br/>
-        <b>Andrew</b>
-      </a><br/>
-      <sub>💛 Aktiver monatlicher Sponsor</sub>
-    </td>
-    <td align="center" width="180">
-      <a href="https://github.com/psylligent">
-        <img src="https://github.com/psylligent.png?size=140" width="72" style="border-radius:50%" alt="Vlad I"/><br/>
-        <b>Vlad I</b>
-      </a><br/>
-      <sub>💛 Aktiver monatlicher Sponsor</sub>
-    </td>
-    <td align="center" width="180">
-      <a href="https://github.com/pacocartones">
-        <img src="https://github.com/pacocartones.png?size=140" width="72" style="border-radius:50%" alt="Paco Cartones"/><br/>
-        <b>Paco Cartones</b>
-      </a><br/>
-      <sub>💛 Aktiver einmaliger Sponsor</sub>
-    </td>
-    <td align="center" width="180">
-      <a href="https://github.com/igormorais123">
-        <img src="https://github.com/igormorais123.png?size=140" width="72" style="border-radius:50%" alt="Professor Igor Morais Vasconcelos"/><br/>
-        <b>Prof. Igor Morais</b>
-      </a><br/>
-      <sub>💛 Ehemaliger einmaliger Unterstützer</sub>
-    </td>
-    <td align="center" width="180">
-      <a href="https://github.com/longtao77">
-        <img src="https://github.com/longtao77.png?size=140" width="72" style="border-radius:50%" alt="longtao"/><br/>
-        <b>longtao</b>
-      </a><br/>
-      <sub>💛 Ehemaliger einmaliger Unterstützer</sub>
-    </td>
-  </tr>
-</table>
-
-<sub>… und weitere Personen, die lieber anonym bleiben 💛</sub>
-
-<sub>Öffentliche GitHub-Sponsoren wurden am 2026-08-24 erneut validiert. Der <code>activeOnly</code>-Status von GitHub bestimmt die oben aufgeführten Aktiv-Kennzeichnungen; zuvor offengelegte öffentliche einmalige Unterstützer werden weiterhin gewürdigt, und private Sponsoren bleiben anonym.</sub>
-
-<b><a href="https://github.com/sponsors/diegosouzapw">💖 Sponsor werden →</a></b> — jeder Dollar trägt dazu bei, dass Pusula kostenlos und unabhängig bleibt.
-
-</div>
-
-<br/>
-
-<div align="center">
-
-## 👥 Über 600 Mitwirkende
-
-</div>
-
-[![Mitwirkende](https://contrib.rocks/image?repo=Ferhat-Yasinoglu/pusula&max=639&columns=20&anon=1)](https://github.com/Ferhat-Yasinoglu/pusula/graphs/contributors)
-
-<sub>Geprüft am 2026-08-24 auf der eingefrorenen Basis <code>ac02c5b42f</code> und erneut an der aktuellen Spitze von <code>release/v3.8.50</code> mit <code>dafb4ae808</code> überprüft: <b>639 normalisierte menschliche Git-Identitäten</b> — 407 erscheinen als Commit-Autoren (einschließlich des Maintainers) und 232 ausschließlich in expliziten <code>Co-authored-by</code>-Trailern. Die Erhebung normalisiert GitHub-Noreply-Handles, schließt 26 Bot-, Agenten-, Dienst- oder Platzhalteridentitäten aus und führt gewöhnliche E-Mail-Adressen nicht allein deshalb zusammen, weil ihre Anzeigenamen übereinstimmen.</sub>
 
 ### So können Sie beitragen
 
@@ -1584,35 +972,6 @@ Ausführliche Richtlinien finden Sie in [CONTRIBUTING.md](CONTRIBUTING.md).
 VERSION=x.y.z
 gh release create "v${VERSION}" --title "v${VERSION}" --generate-notes
 ```
-
-<br/>
-
-<div align="center">
-
-## 📊 Sterne
-
-<a href="https://www.star-history.com/?repos=diegosouzapw%2FPusula&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=Ferhat-Yasinoglu/pusula&type=date&theme=dark&legend=top-left&sealed_token=XP_ycEjv7s31p1edvhsMOXry51OWYsUjDRWjflSG7jQKRpO9hPGg7i_EHvwhI6QtrARTMH-YGjJhi8sumRYflEJD0DPlH_MMHjizhBYCX8fbHFrHEiNvVA" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=Ferhat-Yasinoglu/pusula&type=date&legend=top-left&sealed_token=XP_ycEjv7s31p1edvhsMOXry51OWYsUjDRWjflSG7jQKRpO9hPGg7i_EHvwhI6QtrARTMH-YGjJhi8sumRYflEJD0DPlH_MMHjizhBYCX8fbHFrHEiNvVA" />
-   <img alt="Diagramm des Sterneverlaufs" src="https://api.star-history.com/chart?repos=Ferhat-Yasinoglu/pusula&type=date&legend=top-left&sealed_token=XP_ycEjv7s31p1edvhsMOXry51OWYsUjDRWjflSG7jQKRpO9hPGg7i_EHvwhI6QtrARTMH-YGjJhi8sumRYflEJD0DPlH_MMHjizhBYCX8fbHFrHEiNvVA" />
- </picture>
-</a>
-
-<br/>
-
-<div align="center">
-
-## 🌍 StarMapper
-
-<a href="https://starmapper.bruniaux.com/ferhat-yasinoglu/pusula">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://starmapper.bruniaux.com/api/map-image/ferhat-yasinoglu/pusula?theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://starmapper.bruniaux.com/api/map-image/ferhat-yasinoglu/pusula?theme=light" />
-    <img alt="StarMapper" src="https://starmapper.bruniaux.com/api/map-image/ferhat-yasinoglu/pusula" />
-  </picture>
-</a>
-</div>
 
 <br/>
 
@@ -1738,7 +1097,7 @@ MIT-Lizenz – Details finden Sie unter [LICENSE](LICENSE).
 
 **[⬆ Zurück nach oben](#-pusula)** · Mit ❤️ für die Open-Source-KI-Community entwickelt.
 
-<sub>Pusula v3.8.51 · Node ≥22.22.2 · MIT-Lizenz · <a href="https://github.com/Ferhat-Yasinoglu/pusula">pusula.online</a></sub>
+<sub>Pusula · Node ≥22.22.2 · MIT-Lizenz · <a href="https://github.com/Ferhat-Yasinoglu/pusula">github.com/Ferhat-Yasinoglu/pusula</a></sub>
 
 </div>
 <!-- GitHub Discussions für Fragen und Antworten der Community aktiviert -->

@@ -12,6 +12,11 @@
  */
 
 import { RadarFeedSchema, RadarTierSchema, type RadarFeed, type RadarTier } from "./feedSchema";
+import {
+  getRadarFeedBaseUrl,
+  radarFeedNotConfigured,
+  type RadarFeedNotConfiguredStatus,
+} from "./feedUrl";
 import { verifyFeedBytes } from "./verify";
 import { sanitizeErrorMessage } from "@pusula/open-sse/utils/error";
 import { isFeatureFlagEnabled } from "@/shared/utils/featureFlags";
@@ -20,11 +25,11 @@ import { isFeatureFlagEnabled } from "@/shared/utils/featureFlags";
 // Constants
 // ---------------------------------------------------------------------------
 
-/**
- * Default feed base URL.  Forks and self-hosters point this at their own
- * signed feed with the `RADAR_FEED_URL` env var (see docs/frameworks/RADAR.md).
+/*
+ * There is deliberately NO default feed base URL: Radar is self-hosted only
+ * and the operator must point `RADAR_FEED_URL` at their own signed feed
+ * server (see `./feedUrl.ts` and docs/frameworks/RADAR.md).
  */
-const DEFAULT_FEED_BASE_URL = "https://radar.pusula.online";
 
 const SYNC_TIMEOUT_MS = 30_000;
 
@@ -46,6 +51,7 @@ const MAX_FEED_BYTES = 10 * 1024 * 1024; // 10 MB
 export type SyncStatus =
   | { status: "disabled" }
   | { status: "opt_out" }
+  | RadarFeedNotConfiguredStatus
   | { status: "invalid_signature" }
   | { status: "invalid_schema" }
   | { status: "stale" }
@@ -155,13 +161,14 @@ export function nextSyncTime(lastSyncAt: string | null): Date {
  * Download, verify, validate, and cache the Radar feed.
  *
  * Steps:
- *  1. Feature flag off => `{status:"disabled"}`, no network.
- *  2. Opt-in false     => `{status:"opt_out"}`, no network.
- *  3. GET feed with timeout.
- *  4. Verify Ed25519 signature over exact bytes.
- *  5. Parse+validate with RadarFeedSchema.
- *  6. Version floor: incoming must be strictly newer than cache.
- *  7. Cache the result.
+ *  1. Feature flag off     => `{status:"disabled"}`, no network.
+ *  2. Opt-in false         => `{status:"opt_out"}`, no network.
+ *  3. RADAR_FEED_URL unset => `{status:"not_configured"}`, one log line, no network.
+ *  4. GET feed with timeout.
+ *  5. Verify Ed25519 signature over exact bytes.
+ *  6. Parse+validate with RadarFeedSchema.
+ *  7. Version floor: incoming must be strictly newer than cache.
+ *  8. Cache the result.
  *
  * @param deps - Injectable dependencies for testing.
  */
@@ -194,8 +201,15 @@ export async function syncRadar(deps: SyncDeps = {}): Promise<SyncStatus> {
       return { status: "opt_out" };
     }
 
-    // Step 3: Download feed
-    const baseUrl = (process.env.RADAR_FEED_URL || DEFAULT_FEED_BASE_URL).replace(/\/+$/, "");
+    // Step 3: Feed URL gate — Radar is self-hosted only; with no operator-
+    // configured RADAR_FEED_URL there is nothing to download, so skip without
+    // ever touching the network.
+    const baseUrl = getRadarFeedBaseUrl();
+    if (!baseUrl) {
+      return radarFeedNotConfigured("catalog");
+    }
+
+    // Step 4: Download feed
     const url = `${baseUrl}/v1/catalog/latest`;
 
     const headers: Record<string, string> = { "x-pusula-radar-schema": "2" };

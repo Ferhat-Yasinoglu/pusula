@@ -1,4 +1,4 @@
-name: Publish to Docker Hub
+name: Publish Docker Image
 
 on:
   push:
@@ -48,7 +48,7 @@ jobs:
       promote_latest: ${{ steps.version.outputs.promote_latest }}
       skip: ${{ steps.version.outputs.skip }}
     env:
-      IMAGE_NAME: ferhat-yasinoglu/pusula
+      GHCR_IMAGE_NAME: ghcr.io/ferhat-yasinoglu/pusula
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -112,31 +112,33 @@ jobs:
           # 3) Skip immutable version tags that already exist. Floating `main`
           # and `next` channels are intentionally rebuilt on every matching push.
           SKIP="false"
+          # Anonymous manifest lookup works for a public GHCR package; if the
+          # package is private the lookup fails and the tag is simply rebuilt.
           if [ "$VERSION" != "main" ] && [ "$VERSION" != "next" ]; then
-            if docker manifest inspect "ferhat-yasinoglu/pusula:${VERSION}" >/dev/null 2>&1; then
-              echo "Image ferhat-yasinoglu/pusula:${VERSION} already exists on Docker Hub — skipping rebuild."
+            if docker manifest inspect "${GHCR_IMAGE_NAME}:${VERSION}" >/dev/null 2>&1; then
+              echo "Image ${GHCR_IMAGE_NAME}:${VERSION} already exists on GHCR — skipping rebuild."
               SKIP="true"
             fi
           fi
           echo "skip=$SKIP" >> "$GITHUB_OUTPUT"
 
-          echo "Publishing ferhat-yasinoglu/pusula:$VERSION (promote_latest=$PROMOTE, skip=$SKIP)"
+          echo "Publishing ${GHCR_IMAGE_NAME}:$VERSION (promote_latest=$PROMOTE, skip=$SKIP)"
 
   build:
     name: Build Docker (${{ matrix.platform }})
     needs: prepare
     if: needs.prepare.outputs.skip != 'true'
-    # amd64: the .113 omni-build pool (31 GB / 32 cores, ONE listener since
-    # #12048). Hosted ubuntu-24.04 is ~7 GB and dies ResourceExhausted (#11976).
+    # amd64: the opt-in self-hosted `pusula-build` pool (large-RAM box, ONE
+    # listener). Hosted ubuntu-24.04 is ~7 GB and dies ResourceExhausted (#11976).
     # Falls back to hosted when USE_VPS_RUNNER is off. arm64: no ARM box — stay
     # on GitHub's ubuntu-24.04-arm.
-    # Webpack on BOTH arches: Turbopack on pusula-113-6 hit
+    # Webpack on BOTH arches: Turbopack on the self-hosted build box hit
     # TurbopackInternalError "there must be a path to a root" after 26 min
     # (run 33253576569). The same tree's arm64 webpack build on hosted ARM
     # succeeded (run 33264823398). Dockerfile already documents webpack as the
     # Docker escape hatch (PUSULA_USE_TURBOPACK=0).
-    runs-on: ${{ matrix.arch == 'amd64' && (vars.USE_VPS_RUNNER == 'true' && fromJSON('["self-hosted","omni-build"]') || 'ubuntu-24.04') || 'ubuntu-24.04-arm' }}
-    # Share the 1-slot omni-build ceiling (#12048) with ci.yml `Build` /
+    runs-on: ${{ matrix.arch == 'amd64' && (vars.USE_VPS_RUNNER == 'true' && fromJSON('["self-hosted","pusula-build"]') || 'ubuntu-24.04') || 'ubuntu-24.04-arm' }}
+    # Share the 1-slot pusula-build ceiling (#12048) with ci.yml `Build` /
     # npm-publish. Same group as main's Build so a :next publish waits beside
     # the artefact instead of sitting next to it. arm64 is hosted — its own
     # group, cancelled by the workflow-level concurrency.
@@ -155,7 +157,6 @@ jobs:
           - platform: linux/arm64
             arch: arm64
     env:
-      IMAGE_NAME: ferhat-yasinoglu/pusula
       GHCR_IMAGE_NAME: ghcr.io/ferhat-yasinoglu/pusula
     steps:
       - name: Checkout
@@ -170,12 +171,6 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v4.6.0
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v4.6.0
@@ -196,7 +191,6 @@ jobs:
             PUSULA_BUILD_MEMORY_MB=12288
           outputs: type=image,push-by-digest=true,name-canonical=true,push=true
           tags: |
-            ${{ env.IMAGE_NAME }}
             ${{ env.GHCR_IMAGE_NAME }}
           cache-from: type=gha,scope=docker-${{ matrix.arch }}
           cache-to: type=gha,scope=docker-${{ matrix.arch }},mode=max,ignore-error=true
@@ -216,7 +210,6 @@ jobs:
             PUSULA_BUILD_MEMORY_MB=12288
           outputs: type=image,push-by-digest=true,name-canonical=true,push=true
           tags: |
-            ${{ env.IMAGE_NAME }}
             ${{ env.GHCR_IMAGE_NAME }}
           cache-from: type=gha,scope=docker-web-${{ matrix.arch }}
           cache-to: type=gha,scope=docker-web-${{ matrix.arch }},mode=max,ignore-error=true
@@ -244,7 +237,6 @@ jobs:
             PUSULA_BUILD_MEMORY_MB=12288
           outputs: type=image,push-by-digest=true,name-canonical=true,push=true
           tags: |
-            ${{ env.IMAGE_NAME }}
             ${{ env.GHCR_IMAGE_NAME }}
           cache-from: type=gha,scope=docker-bun-base-${{ matrix.arch }}
           cache-to: type=gha,scope=docker-bun-base-${{ matrix.arch }},mode=max,ignore-error=true
@@ -272,7 +264,6 @@ jobs:
             PUSULA_BUILD_MEMORY_MB=12288
           outputs: type=image,push-by-digest=true,name-canonical=true,push=true
           tags: |
-            ${{ env.IMAGE_NAME }}
             ${{ env.GHCR_IMAGE_NAME }}
           cache-from: type=gha,scope=docker-bun-web-${{ matrix.arch }}
           cache-to: type=gha,scope=docker-bun-web-${{ matrix.arch }},mode=max,ignore-error=true
@@ -353,7 +344,6 @@ jobs:
       packages: write
       security-events: write
     env:
-      IMAGE_NAME: ferhat-yasinoglu/pusula
       GHCR_IMAGE_NAME: ghcr.io/ferhat-yasinoglu/pusula
       VERSION: ${{ needs.prepare.outputs.version }}
       PROMOTE_LATEST: ${{ needs.prepare.outputs.promote_latest }}
@@ -367,12 +357,6 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v4.6.0
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v4.6.0
@@ -415,32 +399,6 @@ jobs:
           path: /tmp/digests/bun-web
           merge-multiple: true
 
-      - name: Create Docker Hub version manifests
-        run: |
-          set -euo pipefail
-
-          create_manifest() {
-            local image="$1" suffix="$2" dir="$3" optional="${4:-}"
-            local refs=()
-            while IFS= read -r digest_file; do
-              refs+=("${image}@sha256:$(basename "$digest_file")")
-            done < <(find "$dir" -type f | sort)
-            if [ "${#refs[@]}" -eq 0 ]; then
-              if [ -n "$optional" ]; then
-                echo "::warning::No image digests in $dir — skipping optional tag ${image}:${VERSION}${suffix}" >&2
-                return 0
-              fi
-              echo "No image digests in $dir" >&2
-              exit 1
-            fi
-            docker buildx imagetools create -t "${image}:${VERSION}${suffix}" "${refs[@]}"
-          }
-
-          create_manifest "${IMAGE_NAME}" "" /tmp/digests/base
-          create_manifest "${IMAGE_NAME}" "-web" /tmp/digests/web
-          create_manifest "${IMAGE_NAME}" "-bun" /tmp/digests/bun-base optional
-          create_manifest "${IMAGE_NAME}" "-web-bun" /tmp/digests/bun-web optional
-
       - name: Create GHCR version manifests
         run: |
           set -euo pipefail
@@ -473,7 +431,7 @@ jobs:
           set -euo pipefail
           container="pusula-smoke-${VERSION//[^a-zA-Z0-9_.-]/-}"
           trap 'docker rm -f "$container" >/dev/null 2>&1 || true' EXIT
-          docker run --detach --name "$container" "${IMAGE_NAME}:${VERSION}"
+          docker run --detach --name "$container" "${GHCR_IMAGE_NAME}:${VERSION}"
           for attempt in $(seq 1 30); do
             status="$(docker inspect --format '{{.State.Health.Status}}' "$container")"
             if [ "$status" = "healthy" ]; then
@@ -487,22 +445,6 @@ jobs:
           done
           docker logs "$container"
           exit 1
-
-      - name: Promote Docker Hub latest tags
-        if: needs.prepare.outputs.promote_latest == 'true'
-        run: |
-          set -euo pipefail
-          promote_tag() {
-            local suffix="$1"
-            docker buildx imagetools create -t "${IMAGE_NAME}:latest${suffix}" "${IMAGE_NAME}:${VERSION}${suffix}"
-          }
-          promote_tag ""
-          promote_tag "-web"
-          for suffix in -bun -web-bun; do
-            if docker buildx imagetools inspect "${IMAGE_NAME}:${VERSION}${suffix}" >/dev/null 2>&1; then
-              promote_tag "$suffix"
-            fi
-          done
 
       - name: Promote GHCR latest tags
         if: needs.prepare.outputs.promote_latest == 'true'
@@ -523,7 +465,7 @@ jobs:
       - name: Inspect image
         if: needs.prepare.outputs.version != 'main'
         run: |
-          docker buildx imagetools inspect "${IMAGE_NAME}:${VERSION}"
+          docker buildx imagetools inspect "${GHCR_IMAGE_NAME}:${VERSION}"
 
       - name: Generate CycloneDX SBOM (image, advisory)
         if: needs.prepare.outputs.version != 'main'
@@ -588,15 +530,3 @@ jobs:
         with:
           sarif_file: trivy-results.sarif
           category: trivy-image
-
-      - name: Update Docker Hub description
-        # Only refresh README/description when we actually promote :latest
-        # (avoids overwriting from main, next, or back-fill builds).
-        if: needs.prepare.outputs.promote_latest == 'true'
-        uses: peter-evans/dockerhub-description@v5
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: ferhat-yasinoglu/pusula
-          short-description: "Pusula — Unified AI proxy. Route any LLM through one endpoint."
-          readme-filepath: ./README.md

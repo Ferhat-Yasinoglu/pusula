@@ -1,5 +1,5 @@
 // tests/unit/build/should-promote-latest-5301.test.ts
-// Regression guard for #5301 — Docker Hub `:latest` tag not re-pointed on release.
+// Regression guard for #5301 — GHCR `:latest` tag not re-pointed on release.
 //
 // The docker-publish workflow decides whether the just-built VERSION should also
 // move `:latest` by extracting the highest STABLE semver from the candidate set.

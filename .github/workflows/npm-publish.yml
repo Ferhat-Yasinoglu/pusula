@@ -63,7 +63,7 @@ jobs:
     # mid-"Creating an optimized production build" while v3.8.48 had still fit in 16min.
     # This job never runs on `pull_request`, so the fork-safety clause is always true here;
     # it is kept verbatim so the expression stays greppable against ci.yml.
-    runs-on: ${{ (vars.USE_VPS_RUNNER == 'true' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)) && fromJSON('["self-hosted","omni-build"]') || 'ubuntu-latest' }}
+    runs-on: ${{ (vars.USE_VPS_RUNNER == 'true' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)) && fromJSON('["self-hosted","pusula-build"]') || 'ubuntu-latest' }}
     outputs:
       version: ${{ steps.resolve.outputs.version }}
       tag: ${{ steps.resolve.outputs.tag }}
@@ -205,8 +205,8 @@ jobs:
             exit 0
           fi
           RUN=""
-          # $RUNNER_TEMP, never /tmp: on the .113 pool /tmp is a 12 GB tmpfs (RAM). Parking
-          # this 1.3 GB artefact there took 27–32 min of the 76-min publish job — the
+          # $RUNNER_TEMP, never /tmp: on a self-hosted runner /tmp may be a RAM-backed tmpfs.
+          # Parking this 1.3 GB artefact there took 27–32 min of the 76-min publish job — the
           # same bytes upload from disk in 2 min. RUNNER_TEMP is per-runner and on disk.
           for candidate in $CANDIDATES; do
             if gh run download "$candidate" --repo "$REPO" --name next-build --dir "$RUNNER_TEMP/next-build" 2>/dev/null; then
@@ -299,7 +299,7 @@ jobs:
       # actually broke us: installing over an existing version, where ~110 SQLite migrations
       # run against a populated database. v3.8.48 shipped as a hotfix because the published
       # 3.8.47 crashed on boot, and the v3.8.49 upgrade path was first exercised end-to-end
-      # by hand on a real 3.8.48 box (VPS .16) — after publishing, which is exactly backwards.
+      # by hand on a real 3.8.48 box — after publishing, which is exactly backwards.
       # Runs BEFORE `npm stage publish` so a broken upgrade never reaches the registry at all;
       # a staged package that is never approved simply expires, with no `npm deprecate` needed.
       - name: Prove clean-install AND upgrade-over-previous both boot

@@ -14,9 +14,9 @@ const SCRIPT_PATH = fileURLToPath(
   new URL("../../scripts/check/check-git-identity.sh", import.meta.url)
 );
 
-const OWNER_NAME = "diegosouzapw";
-const OWNER_EMAIL = "8016841+diegosouzapw@users.noreply.github.com";
-const LEGACY_EMAIL = "diegosouzapw@users.noreply.github.com";
+const OWNER_NAME = "Ferhat-Yasinoglu";
+const OWNER_EMAIL = "Ferhat-Yasinoglu@users.noreply.github.com";
+const LEGACY_EMAIL = "ferhatyasinoglu@gmail.com";
 
 /** Runs the gate with a synthetic git identity. `configured` toggles the opt-in. */
 function runGate(

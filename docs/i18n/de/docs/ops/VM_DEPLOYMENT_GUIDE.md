@@ -123,8 +123,8 @@ NEXT_PUBLIC_BASE_URL=https://llms.seudominio.com
 # PUSULA_PUBLIC_BASE_URL=https://llms.seudominio.com
 
 # === Cloud-Synchronisierung (optional) ===
-# CLOUD_URL=https://cloud.pusula.online
-# NEXT_PUBLIC_CLOUD_URL=https://cloud.pusula.online
+# CLOUD_URL=https://cloud.pusula.example.com
+# NEXT_PUBLIC_CLOUD_URL=https://cloud.pusula.example.com
 EOF
 ```
 

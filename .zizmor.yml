@@ -58,7 +58,7 @@
 # per-rule entry with a justification comment.
 rules:
   dangerous-triggers:
-    # deploy-vps.yml uses `on: workflow_run` (after "Publish to Docker Hub").
+    # deploy-vps.yml uses `on: workflow_run` (after "Publish Docker Image").
     # zizmor flags workflow_run as "almost always used insecurely", but this one
     # is guarded and not exploitable:
     #   • The deploy job is gated on `github.event.workflow_run.conclusion ==

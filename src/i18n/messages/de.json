@@ -1062,7 +1062,6 @@
     "presetColors": "Beliebte Farben",
     "createTheme": "Thema erstellen",
     "chooseColor": "Wählen Sie eine Farbe",
-    "themeCoral": "Koralle",
     "themeBlue": "Blau",
     "themeRed": "Rot",
     "themeGreen": "Grün",
@@ -1321,7 +1320,8 @@
       "open": "öffnen",
       "close": "schließen"
     },
-    "noResults": "Keine Ergebnisse"
+    "noResults": "Keine Ergebnisse",
+    "themeTeal": "Türkis"
   },
   "webhooks": {
     "title": "Webhooks",
@@ -7428,7 +7428,6 @@
     "customPricingNote": "Sie können die Standardpreise für bestimmte Modelle überschreiben. Benutzerdefinierte Überschreibungen haben Vorrang vor automatisch erkannten Preisen.",
     "editPricing": "Preise bearbeiten",
     "viewFullDetails": "Vollständige Details anzeigen",
-    "themeCoral": "Koralle",
     "adaptiveVolumeRouting": "Adaptive volumenbasierte Weiterleitung",
     "adaptiveVolumeRoutingDesc": "Verbindungen basierend auf Nutzlastvolumen und Durchsatzbelastung dynamisch skalieren.",
     "lkgpToggleTitle": "Zuletzt funktionierender Anbieter (LKGP)",
@@ -8435,7 +8434,8 @@
     "catalogScopeDesc": "Was GET /v1/models für diesen Schlüssel ausgibt. Eine Einschränkung der Liste ändert niemals, welche Modelle der Schlüssel aufrufen kann.",
     "catalogScopeAll": "Beides",
     "catalogScopeCombos": "Nur Kombos",
-    "catalogScopeModels": "Nur Modelle"
+    "catalogScopeModels": "Nur Modelle",
+    "themeTeal": "Türkis"
   },
   "contextRtk": {
     "title": "RTK-Engine",
@@ -13584,20 +13584,6 @@
     "running": "Läuft...",
     "testFailed": "Test fehlgeschlagen"
   },
-  "kimiSponsorBanner": {
-    "foundingFriendTitle": "Kimi (Moonshot AI) ist Pusulas Open-Source-Gründungsfreund",
-    "description": "Neue Nutzer erhalten 15% extra API-Guthaben bei der ersten Aufladung. Nutze Kimi K3 in Pusula über die offizielle Kimi API.",
-    "cta": "Kimi API-Schlüssel holen",
-    "partnerLinkNote": "Partnerlink",
-    "dismissAriaLabel": "Schließen"
-  },
-  "vscodeCopilotBanner": {
-    "title": "Pusula läuft jetzt direkt in VS Code Copilot Chat",
-    "description": "Installiere die kostenlose OmniCopilot-Erweiterung, und jedes Pusula-Modell erscheint direkt in der Copilot-Chat-Modellauswahl, die du bereits nutzt.",
-    "cta": "Erweiterung holen",
-    "secondaryNote": "Auch auf Open VSX (Cursor, Windsurf, VSCodium…)",
-    "dismissAriaLabel": "Schließen"
-  },
   "featureFlagExposeFunctionalGatewayMirrorsDescription": "Bewerben Sie <gateway-alias>/<model> Spiegel-IDs auf /v1/models für Modelle, deren kanonischer Eigentümer keine aktiven Anmeldeinformationen hat, aber ein Durchgangsgateway mit aktiven Anmeldeinformationen sie weiterleitet. Warnung: Fügt Katalogeinträge für alle Clients hinzu, wenn global aktiviert.",
   "radarPage": {
     "title": "Radar-Katalog",
@@ -14344,13 +14330,6 @@
     "toolsMismatch": "Der Anbieter unterstützt keinen Toolaufruf",
     "structuredOutputMismatch": "Der Anbieter unterstützt keine strukturierten Ausgaben",
     "contextWindowMismatch": "Anfrage überschreitet das Kontextfenster des Anbieters"
-  },
-  "cheaperInferenceSponsorBanner": {
-    "title": "Cheaper Inference ist ein Open-Source-Partner von Pusula",
-    "description": "Ein nach Kosten geordnetes Gateway, das Dutzende hochmoderner Modelle über einen einzigen OpenAI-kompatiblen Endpunkt weiterverkauft und jede Anfrage an den günstigsten geeigneten Anbieter weiterleitet, wobei der Preis nie über dem Listenpreis liegt.",
-    "cta": "API-Schlüssel anfordern",
-    "partnerLinkNote": "Partnerlink",
-    "dismissAriaLabel": "Schließen"
   },
   "featureFlagPusulaDisableThinkingLevelVariantsDescription": "Deaktiviert die Generierung von Denkstufenvarianten (z. B. -low, -medium, -high) im /v1/models-Katalog."
 }

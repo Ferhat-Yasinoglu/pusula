@@ -63,7 +63,7 @@ test("addCredit: appends, extends a trailing thanks group, skips maintainer and 
   assert.equal(addCredit("- x (#1) — thanks @alice", ["bob"]), "- x (#1) — thanks @alice / @bob");
   assert.equal(addCredit("- x (#1 — thanks @alice)", ["bob"]), "- x (#1 — thanks @alice / @bob)");
   assert.equal(
-    addCredit("- x (#1) — thanks @alice", ["alice", "diegosouzapw"]),
+    addCredit("- x (#1) — thanks @alice", ["alice", "Ferhat-Yasinoglu"]),
     "- x (#1) — thanks @alice"
   );
   assert.equal(
@@ -247,7 +247,7 @@ test("reconcile: folds fragments under the version section, credits by fragment 
     {
       hash: "c2c2c2c2c2cccc",
       date: "2026-08-26",
-      authorName: "diegosouzapw",
+      authorName: "Ferhat-Yasinoglu",
       authorEmail: "d@x",
       subject: "feat(models): recreated (#11887)",
       refs: [11887],
@@ -277,7 +277,7 @@ test("reconcile: folds fragments under the version section, credits by fragment 
     {
       hash: "f5f5f5f5f5ffff",
       date: "2026-08-28",
-      authorName: "diegosouzapw",
+      authorName: "Ferhat-Yasinoglu",
       authorEmail: "d@x",
       subject: "chore(release): open v3.8.51 development cycle",
       refs: [],
@@ -287,7 +287,7 @@ test("reconcile: folds fragments under the version section, credits by fragment 
     {
       hash: "0606060606aaaa",
       date: "2026-08-29",
-      authorName: "diegosouzapw",
+      authorName: "Ferhat-Yasinoglu",
       authorEmail: "d@x",
       subject: "fix(streaming): sanitize (#12457)",
       refs: [12457],
@@ -306,7 +306,7 @@ test("reconcile: folds fragments under the version section, credits by fragment 
     {
       number: 11887,
       title: "recreated",
-      author: { login: "diegosouzapw" },
+      author: { login: "Ferhat-Yasinoglu" },
       body: "",
       closingIssuesReferences: [],
     },
@@ -327,7 +327,7 @@ test("reconcile: folds fragments under the version section, credits by fragment 
     {
       number: 12457,
       title: "sanitize",
-      author: { login: "diegosouzapw" },
+      author: { login: "Ferhat-Yasinoglu" },
       body: "",
       closingIssuesReferences: [],
     },

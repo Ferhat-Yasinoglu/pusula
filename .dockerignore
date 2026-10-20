@@ -128,7 +128,6 @@ _*
 playwright.config.ts
 vitest*.ts
 audit-report.json
-sonar-project.properties
 
 # Deployment Configs
 docker-compose*.yml

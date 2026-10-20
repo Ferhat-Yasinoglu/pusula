@@ -27,7 +27,7 @@ coverage, and reconciliation steps.
 
 ```bash
 git clone https://github.com/Ferhat-Yasinoglu/pusula.git
-cd Pusula
+cd pusula
 npm install
 ```
 
@@ -112,8 +112,8 @@ dashboard UI files while building, keeps API route handlers, and restores the or
 after the build. Use `npm run build` for changes that affect the dashboard UI or for full
 release validation; the contributor profile is not a replacement for the release build.
 
-> **VPS deploy note:** the remote image directory `/usr/lib/node_modules/pusula/app/`
-> is unchanged. The deploy skills rsync the contents of `dist/` into it.
+> **Deploy note:** when deploying to your own server, rsync the contents of `dist/` into the
+> installed package's `app/` directory (for example `/usr/lib/node_modules/pusula/app/`).
 > Only the in-repo build output path moved (`app/` → `dist/`).
 
 Default URLs:
@@ -132,13 +132,13 @@ Default URLs:
 > release-per-branch + tag-at-ship model.
 
 ```bash
-# Branch from the active release tip (example: release/v3.8.49)
+# Branch from the active release tip (replace release/vX.Y.Z with the current one)
 git fetch origin
-git checkout -b feat/your-feature-name origin/release/v3.8.49
+git checkout -b feat/your-feature-name origin/release/vX.Y.Z
 # ... make changes ...
 git commit -m "feat: describe your change"
 git push -u origin feat/your-feature-name
-# Open a Pull Request with base = release/v3.8.49
+# Open a Pull Request with base = release/vX.Y.Z
 ```
 
 ### Branch Naming
@@ -164,7 +164,7 @@ test: add observability unit tests
 refactor(db): consolidate rate limit tables
 ```
 
-Scopes (v3.8): `db`, `sse`, `oauth`, `dashboard`, `api`, `cli`, `docker`, `ci`, `mcp`, `a2a`, `memory`, `skills`, `cloud-agent`, `guardrails`, `compression`, `auto-combo`, `resilience`, `providers`, `executors`, `translator`, `domain`, `authz`.
+Scopes: `db`, `sse`, `oauth`, `dashboard`, `api`, `cli`, `docker`, `ci`, `mcp`, `a2a`, `memory`, `skills`, `cloud-agent`, `guardrails`, `compression`, `auto-combo`, `resilience`, `providers`, `executors`, `translator`, `domain`, `authz`.
 
 ---
 
@@ -177,7 +177,7 @@ npm run test:all
 # Single test file (Node.js native test runner — most tests use this)
 node --import tsx/esm --test tests/unit/your-file.test.ts
 
-# Only the unit tests impacted by your change (same TIA selector as the CI gate, #8084)
+# Only the unit tests impacted by your change (same TIA selector as the CI gate)
 npm run test:scoped            # changes in the last commit (or the working tree)
 npm run test:scoped:staged     # staged changes only — pairs well with a pre-commit run
 npm run test:scoped:full       # rebuild the import-graph map first (after adding/moving files)
@@ -204,15 +204,15 @@ npm run coverage:report
 npm run lint
 npm run check
 
-# Gated real-upstream combo smoke (requires VPS access + real provider credits)
+# Gated real-upstream combo smoke (requires access to your own Pusula server + real provider credits)
 # Hits REAL providers — costs a little. NEVER runs in CI. Skips cleanly without the gate.
-# Needs: ssh root@192.168.0.15 access (sources a read-only DB snapshot from the VPS).
+# Needs: SSH access to your Pusula server (sources a read-only DB snapshot from it).
 RUN_COMBO_LIVE=1 npm run test:combo:live
 
-# Phase-3 VPS live smoke — plain Node ESM scripts, hit the live .15 server directly.
-# Requires: ssh root@192.168.0.15 access (combos created/torn down via SSH sqlite).
+# Phase-3 live smoke — plain Node ESM scripts, hit your live server directly.
+# Requires: SSH access to your Pusula server (combos created/torn down via SSH sqlite).
 # Hits REAL providers (small cost). Creates/deletes only __live_test__* combos. NEVER runs in CI.
-# REQUIRE_API_KEY=false on .15 so no API key needed, but honors COMBO_LIVE_BASE_URL / COMBO_LIVE_API_KEY if set.
+# With REQUIRE_API_KEY=false on that server no API key is needed; honors COMBO_LIVE_BASE_URL / COMBO_LIVE_API_KEY if set.
 npm run test:combo:live:vps              # 7 HTTP scenarios (priority/round-robin/weighted/cost/fusion/auto + health)
 npm run test:combo:live:vps:failover     # adds a real cross-provider failover scenario (8 total)
 ```
@@ -232,7 +232,7 @@ Before opening a PR, use the
 [Contribution Golden Path](docs/ops/CONTRIBUTION_GOLDEN_PATH.md) to run the focused loop for
 what you changed. The full unit suite (4 CI shards), Vitest, the **60%+** coverage gate, and
 the production build are CI's responsibility — running them locally adds no signal the PR
-checks will not already give you, and on smaller machines it can saturate the host (#8084):
+checks will not already give you, and on smaller machines it can saturate the host:
 
 - Run the test files that cover your change: `node --import tsx/esm --test tests/unit/<file>.test.ts`
 - Run `npm run lint`
@@ -418,9 +418,9 @@ Write unit tests in `tests/unit/` covering at minimum:
 
 Releases are managed via the `/generate-release` workflow. When a new GitHub Release is created, the package is **automatically published to npm** via GitHub Actions.
 
-For VPS deploys, use `npm run build:release` (not `npm run build`) — it performs a clean
+For server deploys, use `npm run build:release` (not `npm run build`) — it performs a clean
 rebuild, assembles the bundle into `dist/`, and writes the `dist/BUILD_SHA` sentinel.
-Then use the `/deploy-vps-*-cc` skills which rsync `dist/` to the remote `app/` directory.
+Then rsync `dist/` to the remote `app/` directory of your installation.
 
 ---
 
@@ -431,4 +431,5 @@ Then use the `/deploy-vps-*-cc` skills which rsync `dist/` to the remote `app/` 
 - **Security docs**: [`docs/security/CLI_TOKEN.md`](docs/security/CLI_TOKEN.md), [`docs/security/ROUTE_GUARD_TIERS.md`](docs/security/ROUTE_GUARD_TIERS.md), [`docs/security/ERROR_SANITIZATION.md`](docs/security/ERROR_SANITIZATION.md), [`docs/security/PUBLIC_CREDS.md`](docs/security/PUBLIC_CREDS.md)
 - **Ops docs**: [`docs/ops/SQLITE_RUNTIME.md`](docs/ops/SQLITE_RUNTIME.md)
 - **Issues**: [github.com/Ferhat-Yasinoglu/pusula/issues](https://github.com/Ferhat-Yasinoglu/pusula/issues)
+- **Questions**: [GitHub Discussions](https://github.com/Ferhat-Yasinoglu/pusula/discussions)
 - **ADRs**: See `docs/adr/` for architectural decision records

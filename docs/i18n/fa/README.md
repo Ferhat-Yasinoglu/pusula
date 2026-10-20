@@ -1,6 +1,6 @@
 # README (فارسی)
 
-🌐 **Languages:** 🇺🇸 [English](../../../README.md) · 🇪🇹 [am](../am/README.md) · 🇸🇦 [ar](../ar/README.md) · 🇦🇿 [az](../az/README.md) · 🇧🇬 [bg](../bg/README.md) · 🇧🇩 [bn](../bn/README.md) · 🇧🇦 [bs](../bs/README.md) · 🇨🇿 [cs](../cs/README.md) · 🇩🇰 [da](../da/README.md) · 🇩🇪 [de](../de/README.md) · 🇬🇷 [el](../el/README.md) · 🇪🇸 [es](../es/README.md) · 🇪🇪 [et](../et/README.md) · 🇫🇮 [fi](../fi/README.md) · 🇫🇷 [fr](../fr/README.md) · 🇮🇪 [ga](../ga/README.md) · 🇮🇳 [gu](../gu/README.md) · 🇳🇬 [ha](../ha/README.md) · 🇮🇱 [he](../he/README.md) · 🇮🇳 [hi](../hi/README.md) · 🇭🇷 [hr](../hr/README.md) · 🇭🇺 [hu](../hu/README.md) · 🇦🇲 [hy](../hy/README.md) · 🇮🇩 [id](../id/README.md) · 🇳🇬 [ig](../ig/README.md) · 🇮🇹 [it](../it/README.md) · 🇯🇵 [ja](../ja/README.md) · 🇬🇪 [ka](../ka/README.md) · 🇰🇭 [km](../km/README.md) · 🇮🇳 [kn](../kn/README.md) · 🇰🇷 [ko](../ko/README.md) · 🇱🇹 [lt](../lt/README.md) · 🇱🇻 [lv](../lv/README.md) · 🇮🇳 [ml](../ml/README.md) · 🇮🇳 [mr](../mr/README.md) · 🇲🇾 [ms](../ms/README.md) · 🇲🇹 [mt](../mt/README.md) · 🇲🇲 [my](../my/README.md) · 🇳🇵 [ne](../ne/README.md) · 🇳🇱 [nl](../nl/README.md) · 🇳🇴 [no](../no/README.md) · 🇮🇳 [or](../or/README.md) · 🇮🇳 [pa](../pa/README.md) · 🇵🇭 [phi](../phi/README.md) · 🇵🇱 [pl](../pl/README.md) · 🇵🇹 [pt](../pt/README.md) · 🇧🇷 [pt-BR](../pt-BR/README.md) · 🇷🇴 [ro](../ro/README.md) · 🇷🇺 [ru](../ru/README.md) · 🇱🇰 [si](../si/README.md) · 🇸🇰 [sk](../sk/README.md) · 🇸🇮 [sl](../sl/README.md) · 🇷🇸 [sr](../sr/README.md) · 🇸🇪 [sv](../sv/README.md) · 🇰🇪 [sw](../sw/README.md) · 🇮🇳 [ta](../ta/README.md) · 🇮🇳 [te](../te/README.md) · 🇹🇭 [th](../th/README.md) · 🇹🇷 [tr](../tr/README.md) · 🇺🇦 [uk-UA](../uk-UA/README.md) · 🇵🇰 [ur](../ur/README.md) · 🇺🇿 [uz](../uz/README.md) · 🇻🇳 [vi](../vi/README.md) · 🇳🇬 [yo](../yo/README.md) · 🇨🇳 [zh-CN](../zh-CN/README.md) · 🇹🇼 [zh-TW](../zh-TW/README.md)
+🌐 **Languages:** 🇺🇸 [English](../../../README.md) · 🇩🇪 [de](../de/README.md) · 🇹🇷 [tr](../tr/README.md)
 
 ---
 
@@ -11,7 +11,7 @@
 <br/>
 <br/>
 
-# 🚀 Pusula — دروازه هوش مصنوعی رایگان
+# 🧭 Pusula — دروازه هوش مصنوعی رایگان
 
 <img src="./docs/diagrams/readme-hero.svg" width="100%" alt="Pusula — هرگز کدنویسی را متوقف نکنید. هر ابزار هوش مصنوعی ← ۳۵۸ ارائهدهنده — ۱۵۰+ رایگان — از طریق یک نقطه پایانی. Claude Code, Codex, Cursor, Cline, Copilot و Antigravity به Claude / GPT / Gemini رایگان با بازگشت خودکار. فشردهسازی پشتهای RTK + Caveman ۱۵ تا ۹۵ درصد توکنها را ذخیره میکند (میانگین ~۸۹%) — هرگز به محدودیتها نمیرسید. ۳۵۸ ارائهدهنده هوش مصنوعی · ۱۵۰+ سطح رایگان · ~۱.۶۲ میلیارد توکن رایگان در ماه · ۱۹ استراتژی مسیریابی · $۰ برای شروع."/>
 
@@ -42,43 +42,10 @@
 </h3>
 
 [![ستارهها](https://img.shields.io/github/stars/Ferhat-Yasinoglu/pusula?style=social)](https://github.com/Ferhat-Yasinoglu/pusula)
-<a href="https://trendshift.io/repositories/23589" target="_blank"><img src="https://trendshift.io/api/badge/repositories/23589" alt="diegosouzapw%2FPusula | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-[![رتبه تاریخچه ستارهها](https://api.star-history.com/badge?repo=Ferhat-Yasinoglu/pusula&theme=dark)](https://www.star-history.com/ferhat-yasinoglu/pusula)
-[![olud.ai](https://olud.ai/badge.php?tool=diegosouzapw-pusula)](https://olud.ai/project/diegosouzapw-pusula.html)
 
-### 💬 به جامعه بپیوندید
+### 💬 پرسش و پشتیبانی
 
-**👋 نگهدارنده پروژه را دنبال کنید — زودتر از همه از ارائهدهندگان جدید، نسخهها و نکتهها باخبر شوید:**
-
-[![Diego را در LinkedIn دنبال کنید](https://img.shields.io/badge/Follow_Diego_on-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/diegosouzapw/)
-[![@diegosouzapw را در GitHub دنبال کنید](https://img.shields.io/github/followers/diegosouzapw?style=for-the-badge&logo=github&logoColor=white&label=Follow%20on%20GitHub&color=181717)](https://github.com/diegosouzapw)
-
-[![Discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/U47eFqAXCn)
-[![Telegram](https://img.shields.io/badge/Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/pusulaOficial)
-[![WhatsApp جهانی](https://img.shields.io/badge/WhatsApp_Global-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://chat.whatsapp.com/FvuCbrpZmQ6I85n2vW5QIC?s=cl&p=a&mlu=4)
-[![WhatsApp برزیل](https://img.shields.io/badge/WhatsApp_Brasil-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://chat.whatsapp.com/KWgatljAjmbELQory59Oti?s=cl&p=a&mlu=4)
-[![وبسایت](https://img.shields.io/badge/Website-pusula.online-blue?logo=google-chrome&logoColor=white)](https://github.com/Ferhat-Yasinoglu/pusula)
-
-**پرسشها، نکتههای مربوط به ارائهدهندگان، نقشه راه و پشتیبانی ← [Discord](https://discord.gg/U47eFqAXCn) · [Telegram](https://t.me/pusulaOficial) · WhatsApp [🌍 جهانی](https://chat.whatsapp.com/FvuCbrpZmQ6I85n2vW5QIC?s=cl&p=a&mlu=4) / [🇧🇷 برزیل](https://chat.whatsapp.com/KWgatljAjmbELQory59Oti?s=cl&p=a&mlu=4) / [پورتال](https://portal.sthub.com.br/communities/groups/st-hub/channels/Pusula-World-8kRjmK)**
-
-<br/>
-
-## 📈 دروازه همچنان در حال رشد است
-
-<div align="center">
-
-|                               | v3.8.49 |      **v3.8.50**       |        `v3.8.51+`        |
-| ----------------------------- | :-----: | :--------------------: | :----------------------: |
-| 🌐 ارائهدهندگان               |   290   |        **357**         | موارد بیشتری در صف هستند |
-| 🧠 شناسههای منحصربهفرد مدل چت |  1185   |        **1312**        |            —             |
-| 🖼️ پل چندرسانهای              |    —    | 🆕 تصویر + صدا + ویدئو |            —             |
-| 📡 کاتالوگ رایگان Radar       |    —    |   🆕 با انتخاب کاربر   |            —             |
-| ⚖️ زمانبندی آگاه از سهمیه     |    —    |     🆕 Quota-Share     |            —             |
-| 📊 پایش سهمیه                 |    —    |        🆕 زنده         |            —             |
-
-**→ [نقشه راه](ROADMAP.md) — در مسیر رسیدن به `v3.9.0 LTS`**
-
-</div>
+**پرسش، پیشنهاد یا مشکلی دارید؟** باگ‌ها و درخواست‌های قابلیت را در [GitHub Issues](https://github.com/Ferhat-Yasinoglu/pusula/issues) ثبت کنید و برای پرسش و پاسخ و گفت‌وگو با دیگر کاربران به [GitHub Discussions](https://github.com/Ferhat-Yasinoglu/pusula/discussions) سر بزنید.
 
 <br/>
 
@@ -86,7 +53,7 @@
 
 [![نسخه npm](https://img.shields.io/npm/v/pusula?color=cb3837&logo=npm)](https://www.npmjs.com/package/pusula)
 ![دانلود ماهانه NPM](https://img.shields.io/npm/dm/pusula?label=npm/month&color=cb3837&logo=npm)
-[![Docker Hub](https://img.shields.io/docker/v/ferhat-yasinoglu/pusula?label=Docker%20Hub&logo=docker&color=2496ED)](https://hub.docker.com/r/ferhat-yasinoglu/pusula)
+[![GHCR](https://img.shields.io/badge/GHCR-ghcr.io%2Fferhat--yasinoglu%2Fpusula-2496ED?logo=docker&logoColor=white)](https://github.com/Ferhat-Yasinoglu/pusula/pkgs/container/pusula)
 [![مجوز: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 ![دریافتهای Docker](https://img.shields.io/docker/pulls/ferhat-yasinoglu/pusula?label=docker%20pulls&logo=docker&color=2496ED)
 ![دانلودهای Electron](https://img.shields.io/github/downloads/ferhat-yasinoglu/pusula/total?style=flat&label=electron%20downloads&logo=electron&color=47848F)
@@ -118,95 +85,27 @@
   </tr>
   <tr>
     <td align="right"><b>👀 مشاهده</b></td>
-    <td align="center"><a href="#-pusula-in-action">🎬 در عمل</a></td>
-    <td align="center"><a href="#-whats-new">✨ تازهها</a></td>
     <td align="center"><a href="#-compatible-clis--coding-agents">🤖 CLIهای سازگار</a></td>
-  </tr>
-  <tr>
-    <td align="right"><b>💚 حمایت</b></td>
-    <td align="center"><a href="#-support-pusula">💚 حمایت / کمک مالی</a></td>
-    <td align="center"><a href="#-community--help">💬 انجمن</a></td>
-    <td align="center"><a href="#-sponsors">💖 حامیان مالی</a></td>
+    <td align="center"><a href="#-community--help">💬 انجمن و راهنما</a></td>
+    <td align="center"><a href="#-contributing">👥 مشارکت</a></td>
   </tr>
   <tr>
     <td align="right"><b>📦 پروژه</b></td>
     <td align="center"><a href="#%EF%B8%8F-tech-stack">🛠️ پشته فناوری</a></td>
     <td align="center"><a href="#-documentation">📖 مستندات</a></td>
-    <td align="center"><a href="#-600-contributors">👥 مشارکتکنندگان</a></td>
+    <td align="center"><a href="#-license">📄 مجوز</a></td>
   </tr>
 </table>
 
 </div>
 
 <div align="center">
-  <b>🌐 به ۶۶ زبان</b>
+  <b>🌐 به ۴ زبان</b>
   <br/><br/>
-  <a href="README.md"><img src="docs/assets/flags/us.svg" width="30" alt="انگلیسی (en)" title="انگلیسی (en)"></a>
-  <a href="docs/i18n/pt-BR/README.md"><img src="docs/assets/flags/br.svg" width="30" alt="پرتغالی — برزیل (pt-BR)" title="پرتغالی — برزیل (pt-BR)"></a>
-  <a href="docs/i18n/pt/README.md"><img src="docs/assets/flags/pt.svg" width="30" alt="پرتغالی (pt)" title="پرتغالی (pt)"></a>
-  <a href="docs/i18n/es/README.md"><img src="docs/assets/flags/es.svg" width="30" alt="اسپانیایی (es)" title="اسپانیایی (es)"></a>
-  <a href="docs/i18n/fr/README.md"><img src="docs/assets/flags/fr.svg" width="30" alt="فرانسوی (fr)" title="فرانسوی (fr)"></a>
-  <a href="docs/i18n/it/README.md"><img src="docs/assets/flags/it.svg" width="30" alt="ایتالیایی (it)" title="ایتالیایی (it)"></a>
-  <a href="docs/i18n/de/README.md"><img src="docs/assets/flags/de.svg" width="30" alt="آلمانی (de)" title="آلمانی (de)"></a>
-  <a href="docs/i18n/nl/README.md"><img src="docs/assets/flags/nl.svg" width="30" alt="هلندی (nl)" title="هلندی (nl)"></a>
-  <a href="docs/i18n/ru/README.md"><img src="docs/assets/flags/ru.svg" width="30" alt="روسی (ru)" title="روسی (ru)"></a>
-  <a href="docs/i18n/uk-UA/README.md"><img src="docs/assets/flags/ua.svg" width="30" alt="اوکراینی (uk-UA)" title="اوکراینی (uk-UA)"></a>
-  <a href="docs/i18n/pl/README.md"><img src="docs/assets/flags/pl.svg" width="30" alt="لهستانی (pl)" title="لهستانی (pl)"></a>
-  <a href="docs/i18n/cs/README.md"><img src="docs/assets/flags/cz.svg" width="30" alt="چکی (cs)" title="چکی (cs)"></a>
-  <a href="docs/i18n/sk/README.md"><img src="docs/assets/flags/sk.svg" width="30" alt="اسلواکی (sk)" title="اسلواکی (sk)"></a>
-  <a href="docs/i18n/ro/README.md"><img src="docs/assets/flags/ro.svg" width="30" alt="رومانیایی (ro)" title="رومانیایی (ro)"></a>
-  <a href="docs/i18n/hu/README.md"><img src="docs/assets/flags/hu.svg" width="30" alt="مجاری (hu)" title="مجاری (hu)"></a>
-  <a href="docs/i18n/bg/README.md"><img src="docs/assets/flags/bg.svg" width="30" alt="بلغاری (bg)" title="بلغاری (bg)"></a>
-  <a href="docs/i18n/da/README.md"><img src="docs/assets/flags/dk.svg" width="30" alt="دانمارکی (da)" title="دانمارکی (da)"></a>
-  <a href="docs/i18n/fi/README.md"><img src="docs/assets/flags/fi.svg" width="30" alt="فنلاندی (fi)" title="فنلاندی (fi)"></a>
-  <a href="docs/i18n/no/README.md"><img src="docs/assets/flags/no.svg" width="30" alt="نروژی (no)" title="نروژی (no)"></a>
-  <a href="docs/i18n/sv/README.md"><img src="docs/assets/flags/se.svg" width="30" alt="سوئدی (sv)" title="سوئدی (sv)"></a>
-  <a href="docs/i18n/zh-CN/README.md"><img src="docs/assets/flags/cn.svg" width="30" alt="چینی — سادهشده (zh-CN)" title="چینی — سادهشده (zh-CN)"></a>
-  <a href="docs/i18n/zh-TW/README.md"><img src="docs/assets/flags/tw.svg" width="30" alt="چینی — سنتی (zh-TW)" title="چینی — سنتی (zh-TW)"></a>
-  <a href="docs/i18n/ja/README.md"><img src="docs/assets/flags/jp.svg" width="30" alt="ژاپنی (ja)" title="ژاپنی (ja)"></a>
-  <a href="docs/i18n/ko/README.md"><img src="docs/assets/flags/kr.svg" width="30" alt="کرهای (ko)" title="کرهای (ko)"></a>
-  <a href="docs/i18n/th/README.md"><img src="docs/assets/flags/th.svg" width="30" alt="تایلندی (th)" title="تایلندی (th)"></a>
-  <a href="docs/i18n/vi/README.md"><img src="docs/assets/flags/vn.svg" width="30" alt="ویتنامی (vi)" title="ویتنامی (vi)"></a>
-  <a href="docs/i18n/id/README.md"><img src="docs/assets/flags/id.svg" width="30" alt="اندونزیایی (id)" title="اندونزیایی (id)"></a>
-  <a href="docs/i18n/ms/README.md"><img src="docs/assets/flags/my.svg" width="30" alt="مالایی (ms)" title="مالایی (ms)"></a>
-  <a href="docs/i18n/phi/README.md"><img src="docs/assets/flags/ph.svg" width="30" alt="فیلیپینی (phi)" title="فیلیپینی (phi)"></a>
-  <a href="docs/i18n/hi/README.md"><img src="docs/assets/flags/in.svg" width="30" alt="هندی (hi)" title="هندی (hi)"></a>
-  <a href="docs/i18n/gu/README.md"><img src="docs/assets/flags/in.svg" width="30" alt="گجراتی (gu)" title="گجراتی (gu)"></a>
-  <a href="docs/i18n/mr/README.md"><img src="docs/assets/flags/in.svg" width="30" alt="مراتی (mr)" title="مراتی (mr)"></a>
-  <a href="docs/i18n/ta/README.md"><img src="docs/assets/flags/in.svg" width="30" alt="تامیلی (ta)" title="تامیلی (ta)"></a>
-  <a href="docs/i18n/te/README.md"><img src="docs/assets/flags/in.svg" width="30" alt="تلوگویی (te)" title="تلوگویی (te)"></a>
-  <a href="docs/i18n/bn/README.md"><img src="docs/assets/flags/bd.svg" width="30" alt="بنگالی (bn)" title="بنگالی (bn)"></a>
-  <a href="docs/i18n/ur/README.md"><img src="docs/assets/flags/pk.svg" width="30" alt="اردو (ur)" title="اردو (ur)"></a>
-  <a href="docs/i18n/fa/README.md"><img src="docs/assets/flags/ir.svg" width="30" alt="فارسی (fa)" title="فارسی (fa)"></a>
-  <a href="docs/i18n/ar/README.md"><img src="docs/assets/flags/sa.svg" width="30" alt="عربی (ar)" title="عربی (ar)"></a>
-  <a href="docs/i18n/he/README.md"><img src="docs/assets/flags/il.svg" width="30" alt="عبری (he)" title="عبری (he)"></a>
-  <a href="docs/i18n/tr/README.md"><img src="docs/assets/flags/tr.svg" width="30" alt="ترکی (tr)" title="ترکی (tr)"></a>
-  <a href="docs/i18n/az/README.md"><img src="docs/assets/flags/az.svg" width="30" alt="آذربایجانی (az)" title="آذربایجانی (az)"></a>
-  <a href="docs/i18n/sw/README.md"><img src="docs/assets/flags/tz.svg" width="30" alt="سواحیلی (sw)" title="سواحیلی (sw)"></a>
-  <a href="docs/i18n/el/README.md"><img src="docs/assets/flags/gr.svg" width="30" alt="یونانی (el)" title="یونانی (el)"></a>
-  <a href="docs/i18n/hr/README.md"><img src="docs/assets/flags/hr.svg" width="30" alt="کرواتی (hr)" title="کرواتی (hr)"></a>
-  <a href="docs/i18n/sr/README.md"><img src="docs/assets/flags/rs.svg" width="30" alt="صربی (sr)" title="صربی (sr)"></a>
-  <a href="docs/i18n/lt/README.md"><img src="docs/assets/flags/lt.svg" width="30" alt="لیتوانیایی (lt)" title="لیتوانیایی (lt)"></a>
-  <a href="docs/i18n/et/README.md"><img src="docs/assets/flags/ee.svg" width="30" alt="استونیایی (et)" title="استونیایی (et)"></a>
-  <a href="docs/i18n/lv/README.md"><img src="docs/assets/flags/lv.svg" width="30" alt="لتونیایی (lv)" title="لتونیایی (lv)"></a>
-  <a href="docs/i18n/sl/README.md"><img src="docs/assets/flags/si.svg" width="30" alt="اسلوونیایی (sl)" title="اسلوونیایی (sl)"></a>
-  <a href="docs/i18n/mt/README.md"><img src="docs/assets/flags/mt.svg" width="30" alt="مالتی (mt)" title="مالتی (mt)"></a>
-  <a href="docs/i18n/ga/README.md"><img src="docs/assets/flags/ie.svg" width="30" alt="ایرلندی (ga)" title="ایرلندی (ga)"></a>
-  <a href="docs/i18n/kn/README.md"><img src="docs/assets/flags/in.svg" width="30" alt="کانادایی (kn)" title="کانادایی (kn)"></a>
-  <a href="docs/i18n/ml/README.md"><img src="docs/assets/flags/in.svg" width="30" alt="مالایالم (ml)" title="مالایالم (ml)"></a>
-  <a href="docs/i18n/or/README.md"><img src="docs/assets/flags/in.svg" width="30" alt="اودیایی (or)" title="اودیایی (or)"></a>
-  <a href="docs/i18n/pa/README.md"><img src="docs/assets/flags/in.svg" width="30" alt="پنجابی (pa)" title="پنجابی (pa)"></a>
-  <a href="docs/i18n/ne/README.md"><img src="docs/assets/flags/np.svg" width="30" alt="نپالی (ne)" title="نپالی (ne)"></a>
-  <a href="docs/i18n/si/README.md"><img src="docs/assets/flags/lk.svg" width="30" alt="سینهالی (si)" title="سینهالی (si)"></a>
-  <a href="docs/i18n/my/README.md"><img src="docs/assets/flags/mm.svg" width="30" alt="برمهای (my)" title="برمهای (my)"></a>
-  <a href="docs/i18n/km/README.md"><img src="docs/assets/flags/kh.svg" width="30" alt="خمری (km)" title="خمری (km)"></a>
-  <a href="docs/i18n/ha/README.md"><img src="docs/assets/flags/ng.svg" width="30" alt="هوسایی (ha)" title="هوسایی (ha)"></a>
-  <a href="docs/i18n/yo/README.md"><img src="docs/assets/flags/ng.svg" width="30" alt="یوروبایی (yo)" title="یوروبایی (yo)"></a>
-  <a href="docs/i18n/ig/README.md"><img src="docs/assets/flags/ng.svg" width="30" alt="ایگبویی (ig)" title="ایگبویی (ig)"></a>
-  <a href="docs/i18n/am/README.md"><img src="docs/assets/flags/et.svg" width="30" alt="امهری (am)" title="امهری (am)"></a>
-  <a href="docs/i18n/uz/README.md"><img src="docs/assets/flags/uz.svg" width="30" alt="ازبکی (uz)" title="ازبکی (uz)"></a>
-  <a href="docs/i18n/ka/README.md"><img src="docs/assets/flags/ge.svg" width="30" alt="گرجی (ka)" title="گرجی (ka)"></a>
-  <a href="docs/i18n/hy/README.md"><img src="docs/assets/flags/am.svg" width="30" alt="ارمنی (hy)" title="ارمنی (hy)"></a>
+  <a href="../../../README.md"><img src="../../assets/flags/us.svg" width="30" alt="English (en)" title="English (en)"></a>
+  <a href="../tr/README.md"><img src="../../assets/flags/tr.svg" width="30" alt="Türkçe (tr)" title="Türkçe (tr)"></a>
+  <a href="../de/README.md"><img src="../../assets/flags/de.svg" width="30" alt="Deutsch (de)" title="Deutsch (de)"></a>
+  <a href="README.md"><img src="../../assets/flags/ir.svg" width="30" alt="فارسی (fa)" title="فارسی (fa)"></a>
 </div>
 
 <br/>
@@ -257,85 +156,6 @@ curl http://localhost:20128/v1/chat/completions \
 <img src="./docs/diagrams/tier-cascade.svg" width="100%" alt="جریان درخواست Pusula: IDE یا CLI شما (Claude Code, Cursor, Cline…) یک نقطه پایانی محلی (http://localhost:20128/v1) را فراخوانی میکند؛ روتر هوشمند Pusula (فشردهسازی RTK + Caveman، ۱۹ استراتژی مسیریابی، قطعکنندههای مدار، پنهانسازی TLS، MCP، A2A، گاردریلها) میتواند در میان ۴ سطح ارائهدهنده بازگشت کند تا زمانی که یک هدف سالم واجد شرایط باقی بماند — سطح ۱ اشتراک، سطح ۲ کلید API، سطح ۳ ارزان و سطح ۴ رایگان."/>
 
 </div>
-
-<br/>
-
-<div align="center">
-
-## 🤝 مورد حمایت دوستان متنباز ما
-
-</div>
-
-<p align="center">
-  <a href="https://platform.kimi.ai?track_id=track-8197581fdd7d4139a0f562e4a03c3798&aff=pusula">
-    <img src="public/sponsors/kimi-k3-banner.png" width="100%" alt="Kimi K3 — هوش مرزی باز · 2.8T پارامتر · 1M-توکن زمینه"/>
-  </a>
-</p>
-
-> **آیا میخواهید به عنوان یک دوست متنباز به ما بپیوندید؟** اینها شرکتهایی هستند که از متنباز حمایت میکنند و به حرکت Pusula کمک میکنند — و ما به صورت عمومی اعلام میکنیم که هر توکنی که به ما میدهند به کجا میرود. با ما تماس بگیرید: [diegosouza.pw@outlook.com](mailto:diegosouza.pw@outlook.com)
-
-<table>
-  <tr>
-    <td align="center" width="150">
-      <a href="https://platform.kimi.ai?track_id=track-8197581fdd7d4139a0f562e4a03c3798&aff=pusula">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="public/providers/kimi-logomark-dark.svg">
-          <img src="public/providers/kimi-logomark-light.svg" width="64" alt="Kimi (Moonshot AI)"/>
-        </picture>
-      </a>
-      <br/><b>Kimi</b><br/><sub>Moonshot AI</sub><br/><br/>
-      <img src="https://img.shields.io/badge/Founding_Friend-1783FF?style=flat-square" alt="دوست متنباز بنیانگذار"/>
-    </td>
-    <td>
-      با تشکر از <b>Kimi (Moonshot AI)</b>، دوست متنباز بنیانگذار ما، برای حمایت از این پروژه! Kimi آزمایشگاه هوش مصنوعی پشت خانواده مدلهای K2 و K3 با وزن باز است — <b>Kimi K3</b> یک پنجره زمینه 1M-توکن، دید بومی و کدنویسی در سطح مرزی را با کسری از قیمت مدلهای بسته ارائه میدهد و با Claude Code، Codex و هر ابزار کدنویسی که Pusula ارائه میدهد، خارج از جعبه کار میکند.
-      <br/><br/>
-      <b>حمایت Kimi چه چیزی را تامین میکند:</b> اعتبارات API Kimi خط لوله انتشار تایید شده توسط هوش مصنوعی Pusula را تامین میکند — مرحله <i>تایید ادغام توسط Kimi K3</i> که هر درخواست کشش را قبل از ارسال بررسی میکند — به علاوه توسعه ویژگیهای روزمره. پشتیبانی درجه یک Kimi در هر دو مسیر ارائه میشود: <a href="https://platform.kimi.ai?track_id=track-8197581fdd7d4139a0f562e4a03c3798&aff=pusula">API مستقیم Kimi</a> (<code>kimi-k3</code>) و <a href="https://www.kimi.ai/code?aff=pusula">برنامه کدنویسی Kimi Code</a> (OAuth و کلید API). Pusula همچنین اولین پروژه متنباز برزیلی در برنامه پشتیبانی Kimi است. <a href="https://platform.kimi.ai?track_id=track-8197581fdd7d4139a0f562e4a03c3798&aff=pusula"><b>یک کلید API Kimi با 15% اعتبار اضافی دریافت کنید ←</b></a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" width="150">
-      <a href="https://cheaperinference.com/?utm_source=pusula">
-        <img src="./public/providers/cli-generic.svg" width="64" alt="استنتاج ارزانتر"/>
-      </a>
-      <br/><b>استنتاج ارزانتر</b><br/><sub>cheaperinference.com</sub><br/><br/>
-      <img src="https://img.shields.io/badge/Open_Source_Friend-31f889?style=flat-square&labelColor=04170d" alt="دوست متنباز"/>
-    </td>
-    <td>
-      با تشکر از <b>استنتاج ارزانتر</b>، یک دوست متنباز Pusula، برای حمایت از این پروژه! استنتاج ارزانتر یک دروازه با رتبهبندی هزینه است که 42 مدل مرزی — Claude، GPT-5.x، Gemini، Kimi K3، GLM، DeepSeek، Grok و MiniMax — را پشت یک نقطه پایانی سازگار با OpenAI به فروش میرساند و هر درخواست را به ارزانترین ارائهدهنده واجد شرایط هدایت میکند بدون اینکه هرگز بالاتر از قیمت لیست سازنده مدل شارژ کند.
-      <br/><br/>
-      <b>پشتیبانی درجه یک در Pusula:</b> تکمیل چت، نقطه پایانی بومی <code>/v1/responses</code>، دید، فراخوانی ابزار و 3 مدل تصویر (<code>grok-imagine</code>، <code>nano-banana-pro</code>، <code>nano-banana-2</code>، قابل دسترسی به عنوان <code>cheaperinference/&lt;model&gt;</code>). <a href="https://cheaperinference.com/?utm_source=pusula"><b>یک کلید API دریافت کنید ←</b></a>
-    </td>
-  </tr>
-</table>
-
-<sub>لینکهای دارای برچسب <code>aff=pusula</code> لینکهای شریک هستند. آنها پروژه را بدون هیچ هزینه اضافی برای شما تامین مالی میکنند.</sub>
-
-<br/>
-
-<details open>
-<summary><sub><b>🎟️ تبلیغات وابسته</b> — کوپنهای ثبتنام رایگان از ارائهدهندگانی که ما حمایت نمیکنیم (برای گسترش کلیک کنید)</sub></summary>
-
-<sub><i>این بخش فقط برای کدهای ارجاع/کوپن است. مشارکتهای حمایتشده در بخش <b>🤝 مورد حمایت دوستان متنباز ما</b> در بالا قرار دارند. Pusula هیچ حمایت یا مشارکتی با ارائهدهندگان ذکر شده در اینجا ندارد — اینها کوپنهای عمومی هستند که هر کسی میتواند از آنها استفاده کند.</i></sub>
-
-<table>
-  <tr>
-    <td align="center" width="120">
-      <a href="https://agentrouter.org/register?aff=70LM">
-        <img src="./public/providers/cli-generic.svg" width="32" alt="AgentRouter"/>
-      </a>
-      <br/><sub><b>AgentRouter</b></sub><br/><sub>agentrouter.org</sub>
-    </td>
-    <td>
-      <sub><b><a href="https://agentrouter.org/register?aff=70LM">AgentRouter</a></b> — ثبتنام وابسته · <b>100 دلار اعتبار رایگان</b> هنگام ثبتنام (سرور رایگان، انتظار تاخیر بالاتر — بهترین برای آزمایش، نه تولید). پشتیبانی درجه یک در Pusula از <b>v3.8.50</b>: تکمیل چت، فرمت سیمی سازگار با Anthropic و مسیر سازگار با OpenAI. مدلهای موجود شامل <code>claude-opus-4-8</code>، <code>claude-opus-5</code>، <code>gpt-5.6-sol</code> و موارد دیگر. <b><a href="https://agentrouter.org/register?aff=70LM">100 دلار خود را بگیرید ←</a></b></sub>
-      <br/><br/>
-      <sub>⚠️ <i>لینک وابسته — Pusula هیچ حمایت یا مشارکتی با این ارائهدهنده ندارد.</i></sub>
-    </td>
-  </tr>
-</table>
-
-<sub>آیا ارائهدهنده دیگری با کوپن ثبتنام رایگان سخاوتمندانه میشناسید که به کاربران Pusula سود برساند؟ یک مشکل باز کنید و ما آن را اینجا اضافه خواهیم کرد.</sub>
-
-</details>
 
 <br/>
 
@@ -498,96 +318,6 @@ curl http://localhost:20128/v1/chat/completions \
 
 <br/>
 
-## 💚 از Pusula حمایت کنید
-
-Pusula دارای مجوز MIT است و بهصورت عمومی نگهداری میشود. اگر باعث صرفهجویی در زمان یا هزینه شما شده است، از هر روشی که برایتان مناسب است برای مستقل ماندن آن حمایت کنید. حمایت مالی هرگز بر اولویت مسیریابی تأثیر نمیگذارد؛ این حمایت دیدهشدن را به همراه دارد، نه رتبهبندی را.
-
-<table>
-  <tr><td nowrap>⭐ <b>به مخزن ستاره بدهید</b></td><td>رایگان — واقعاً به دیدهشدن کمک میکند</td><td><a href="https://github.com/Ferhat-Yasinoglu/pusula">به Pusula ستاره بدهید</a></td></tr>
-  <tr><td nowrap>🐙 <b>GitHub Sponsors</b></td><td>یکباره یا ماهانه · بدون کارمزد پلتفرم</td><td><a href="https://github.com/sponsors/diegosouzapw">github.com/sponsors/diegosouzapw</a></td></tr>
-  <tr><td nowrap>☕ <b>Ko-fi</b></td><td>کمک مالی سریع و یکباره، بدون نیاز به ثبتنام اهداکننده</td><td><a href="https://ko-fi.com/diegosouzapw">ko-fi.com/diegosouzapw</a></td></tr>
-  <tr><td nowrap>🧋 <b>Buy Me a Coffee</b></td><td>حمایتی کوچک و دوستانه</td><td><a href="https://www.buymeacoffee.com/diegosouzapw">buymeacoffee.com/diegosouzapw</a></td></tr>
-  <tr><td nowrap>🖐 <b>Liberapay</b></td><td>دورهای · غیرانتفاعی · متنباز</td><td><a href="https://liberapay.com/diegosouzapw">liberapay.com/diegosouzapw</a></td></tr>
-  <tr><td nowrap>🇧🇷 <b>PIX</b> (برزیل)</td><td>فوری، بدون کارمزد</td><td>کلید و کد QR در پایین</td></tr>
-  <tr><td nowrap>₿ <b>رمزارز</b></td><td>BTC · ETH · USDT-TRC20 · USDC-Solana</td><td>نشانیها در پایین</td></tr>
-</table>
-
-**🇧🇷 PIX** — فوری، بدون کارمزد (برزیل)
-
-<img src="docs/assets/pix-qr.png" width="140" align="right" alt="کد QR مربوط به PIX برای Pusula"/>
-
-کلید (تصادفی): `5d865059-bc44-483a-962d-43ceb80126eb`
-
-کد قابل کپی و جایگذاری Pix:
-
-```
-00020101021126580014br.gov.bcb.pix01365d865059-bc44-483a-962d-43ceb80126eb5204000053039865802BR5922PUSULA CONTRIBUICAO6006BRASIL62070503***630475DD
-```
-
-<br clear="right"/>
-
-<details>
-<summary><b>₿ رمزارز</b> — BTC · ETH · USDT-TRC20 · USDC-Solana (برای باز کردن کلیک کنید)</summary>
-
-<table>
-  <tr><td nowrap><b>₿ BTC</b></td><td nowrap>Bitcoin (SegWit)</td><td><code>bc1qh00smz004sy85wyl28v77tenkt3ckl6eaep7fd</code></td></tr>
-  <tr><td nowrap><b>Ξ ETH</b></td><td nowrap>Ethereum (ERC20)</td><td><code>0x64Cf6B68A6Ff34288e89172950a2d00102337a84</code></td></tr>
-  <tr><td nowrap><b>₮ USDT</b></td><td nowrap>Tron (TRC20)</td><td><code>TKAF41JpuQrHbKTnsQa9svJE2T192Hvsc2</code></td></tr>
-  <tr><td nowrap><b>$ USDC</b></td><td nowrap>Solana</td><td><code>2emNNZzVVWQc3FQ2wk9M6qXUQmW8AKdjjL174fXR28Tu</code></td></tr>
-</table>
-
-<sub>⚠️ هر ارز را فقط از طریق شبکه مشخصشده ارسال کنید — ارسال از طریق شبکه اشتباه ممکن است باعث از دست رفتن دارایی شود.</sub>
-
-</details>
-
-🐛 باگ پیدا کردهاید یا بازخوردی دارید؟ یک [گفتوگو](https://github.com/Ferhat-Yasinoglu/pusula/discussions) باز کنید.
-
-<br/>
-
-<p><strong>یادداشتهای توسعهدهنده:</strong> این پروژه ممکن است برای راحتی توسعهدهندگان هنگام نصب یا پسنصب با npm، یک فایل محلی <code>.env</code> ایجاد کند. این فایل عمداً از طریق <code>.gitignore</code> نادیده گرفته میشود (<code>.gitignore</code> را ببینید) و هرگز نباید commit شود — اگر بهاشتباه commit شد، تمام اطلاعات محرمانه افشاشده را تغییر دهید و فایل را از تاریخچه حذف کنید. برای راهنمایی درباره مدیریت فایلهای محیطی محلی و اطلاعات محرمانه، به <a href="docs/DEVELOPER-ENVIRONMENT.md">docs/DEVELOPER-ENVIRONMENT.md</a> مراجعه کنید.</p>
-
-## 📡 رادار Pusula
-
-عنوان اصلی سطح رایگان همچنان **~1.62B توکن در ماه** از کاتالوگ مستندشده و حذفتکرارشده بر اساس مخزن مشترک در بالا است. اعتبارهای موقت ثبتنام ارائهدهندگان میتوانند بهطور جداگانه میزان ماه اول را به **~2.22B** افزایش دهند. رادار یک لایهٔ اختیاری و امضاشده برای کاتالوگ است که برای افرادی طراحی شده که میخواهند در فاصلهٔ میان انتشار نسخههای Pusula، اطلاعات بهروزتری دربارهٔ دسترسپذیری مدلهای رایگان داشته باشند؛ کاتالوگ جامعه و تمام قابلیتهای رایگان موجود همچنان رایگان باقی میمانند.
-
-حامیان میتوانند کاتالوگ زنده و فرصتهای بیشتری از ارائهدهندگان دریافت کنند. سقف جداگانه و متغیر آن، بسته به دسترسپذیری ارائهدهندگان، **حداکثر تقریباً 3B توکن در ماه** است. این سقف تضمینشده نیست: ارائهدهندگان ممکن است سهمیهها، شرایط احراز صلاحیت، مدلها یا مناطق را در هر زمان تغییر دهند.
-
-رادار نیازمند فعالسازی اختیاری است و فقط از GET استفاده میکند. کلاینت Pusula هیچیک از اعلانها، ترافیک، پیکربندی ارائهدهنده، تلهمتری استفاده یا وضعیت محلی رد کردن اعلانها را آپلود نمیکند. برای آگاهی از شرایط احراز صلاحیت و کاتالوگ فعلی، به **[radar.pusula.online/planos](https://radar.pusula.online/planos)** مراجعه کنید.
-
-<br/>
-
-<div align="center">
-
-## ✨ تازهها
-
-</div>
-
-> نکات برجستهٔ اخیر از **v3.8.20 → v3.8.50**. تاریخچهٔ کامل در [`CHANGELOG.md`](CHANGELOG.md).
-
-- **🎛️ OmniConductor** — واگذاری ورودی A2A به ناوگان عاملهای شما، مهارتهای Conductor در Agent Card و یک پنل داشبورد با گفتوگوی صوتی فشردن-برای-صحبت Faro. → [سرور A2A](docs/frameworks/A2A-SERVER.md)
-- **🛂 پذیرش تطبیقی و محافظت در برابر اضافهبار** — درخواستهای سنگین گفتوگو بهجای دریافت خطای 503 در صف قرار میگیرند، همراه با اجارههای چرخشی اتمی RPM برای هر اتصال. → [راهنمای تابآوری](docs/architecture/RESILIENCE_GUIDE.md)
-- **🗂️ ترتیب استاندارد `/v1/models`** — یک بلوک پیوسته و گروهبندیشده بر اساس ارائهدهنده برای هر ارائهدهنده (ابتدا ترکیبهای سنجاقشده)، پایدار در تمام منابع کاتالوگ. → [مرجع API](docs/reference/API_REFERENCE.md)
-- **🗜️ مقاومسازی فشردهسازی** — محافظ پیشفرض و فعال در برابر تورم، بستههای Caveman برای DE / FR / JA + چینی (wényán)، و فیلترهای RTK برای Gradle و .NET. → [فشردهسازی](docs/compression/COMPRESSION_ENGINES.md)
-- **💸 هزینه ثابت و صادقانه** — ارائهدهندگان اشتراکی / طرحهای کدنویسی در تحلیل هزینه مقدار **$0** را نشان میدهند؛ بودجه، سهمیه و مسیریابی همچنان برآورد میشوند. → [مرجع API](docs/reference/API_REFERENCE.md)
-- **⚖️ مسیریابی Quota-Share** — سهمیه یک حساب مشترک را بهطور منصفانه میان کلیدهای تجمیعشده تقسیم میکند و با حفظ کارایی، سهمهای بلااستفاده را به دیگران قرض میدهد. → [راهنمای تابآوری](docs/architecture/RESILIENCE_GUIDE.md)
-- **🤖 راهاندازی CLI/عامل با یک فرمان** — 13 فرمان ثبتشده `setup-*`؛ فرمان `pusula run` تعداد 7 ابزار CLI را اجرا میکند (Claude Code، Codex، Aider، Goose، OpenCode، Qwen Code، Gemini CLI)؛ فرمان `pusula configure` با انتخابگر تعاملی ارائهدهنده+مدل و موارد دلخواه مختص هر زمینه، از 10 مقصد پشتیبانی میکند. → [یکپارچهسازیهای CLI](docs/guides/CLI-INTEGRATIONS.md)
-- **🛰️ حالت راهدور** — یک Pusula راهدور را با توکنهای دارای دامنه (`connect` / `contexts` / `tokens`) و یک ابزار کمکی OAuth به نام `antigravity` برای نصبهای VPS کنترل کنید. → [حالت راهدور](docs/guides/REMOTE-MODE.md)
-- **🧭 مسیریابی خودکار هوشمندتر** — ترکیبهای `auto/<category>:<tier>`، **Fusion** (پنل مدل + داور)، مسیریابی آگاه از وظیفه، و بازنویسی مدل / حالت / بودجه USD برای هر درخواست. → [Auto-Combo](docs/routing/AUTO-COMBO.md)
-- **🗜️ فشردهسازی قابلافزونه** — 12 موتور قابلترکیب + Compression Studios: ‏LLMLingua-2، ‏Ultra دومرحلهای، omniglyph، دروازه وفاداری برای هر گام، GCF v3.2 و ویرایشگر مرتبسازی با کشیدن. → [فشردهسازی](docs/compression/COMPRESSION_ENGINES.md)
-- **🕵️ رمزگشایی شفاف MITM ‏(TPROXY)** — ابزارهای CLI را که متغیرهای محیطی پراکسی را نادیده میگیرند، با یک CA مختص هر SNI و نصبکننده مخزن اعتماد رهگیری کنید. → [MITM/TPROXY](docs/security/MITM-TPROXY-DECRYPT.md)
-- **💸 تلهمتری هزینه در همهجا** — سرآیندهای هزینه/مصرف `X-Pusula-*` در هر نقطه پایانی، سرآیند صرفهجویی cache-HIT و سهمیههای هزینهکرد USD برای هر کلید. → [مرجع API](docs/reference/API_REFERENCE.md)
-- **🧠 حافظهای تحت کنترل شما** — بهطور پیشفرض غیرفعال، کوانتیزهسازی برداری int8 و زوال نوعدار بهصورت انتخابی، و `x-pusula-no-memory` برای هر درخواست. → [حافظه](docs/frameworks/MEMORY.md)
-- **🛡️ امنیت** — محافظ تزریق پرامپت در هر مسیر LLM (مجموعه آزمون تیم قرمز)، حفاظ اختیاری پوشاندن اطلاعات اعتباری (کلیدهای API/اسرار افشاشده را در هر دو جهت حذف میکند)، جستوجوی وب رایگان DuckDuckGo بهعنوان آخرین راهحل، و یک دروازه ورود اختیاری OIDC برای داشبورد (ورود با گذرواژه همیشه در دسترس میماند). → [حفاظها](docs/security/GUARDRAILS.md)
-- **🖼️ نقاط پایانی جدید** — `/v1/ocr` ‏(Mistral OCR) و `/v1/audio/translations` (به سبک Whisper) مجموعه قابلیتهای رسانهای را تکمیل میکنند. → [مرجع API](docs/reference/API_REFERENCE.md)
-- **🎨 تولید تصویر / ویدئو / صدا** — یک API برای رسانه: ویدئوی xAI Grok Imagine و Novita AI، ‏ComfyUI، ‏Magnific، ‏Adobe Firefly، ‏Segmind و ارائهدهندگان گفتار مانند ElevenLabs. → [مرجع API](docs/reference/API_REFERENCE.md)
-- **🌍 استقرار و عملیات** — ‏`basePath` برای پراکسی معکوس، تشخیص خودکار زبان مرورگر، ردیابی دستگاه برای هر کلید، اعتماد MITM بدون دسترسی root و بومیسازی zh-TW. → [محیط](docs/reference/ENVIRONMENT.md)
-- **🤝 ارائهدهندگان و عاملهای بیشتر** — عاملهای ابری (Codex Cloud، Cursor، Devin، Jules)، ‏Grok Build ‏(xAI) با مرورگر + ورود OAuth، کارت سطحاول Ollama، ‏Claude Opus 5 و Sonnet 5، همکاری رسمی با Kimi ‏(Code/Web/Moonshot)، ‏Zed، ‏Requesty، ‏SenseNova، ‏Yuanbao، ‏Agnes AI… و یک **کاتالوگ بهروزشده شامل 352 ارائهدهنده**. → [ارائهدهندگان](docs/reference/PROVIDER_REFERENCE.md)
-- **📡 شفافیت مسیریابی** — هر پاسخ دارای سرآیند `X-Pusula-Decision` است که راهبرد/ارائهدهنده/تأخیر ارائهکننده پاسخ را مشخص میکند؛ یک راهبرد ترکیبی جدید `cache-optimized` بههمراه عامل Auto-Combo با نام `cacheAffinity`، درخواستهای تکراری را به اتصالی بازمیگرداند که پیشوند ذخیرهشده در حافظه نهان را در اختیار دارد؛ و نقطه پایانی فقطخواندنی `/v1/auto-combo/{channel}/candidates` مجموعه زنده نامزدهای یک کانال `auto/*` را نمایش میدهد. → [Auto-Combo](docs/routing/AUTO-COMBO.md)
-- **⚡ عملکرد و زیرساخت محلی** — ‏Redis محلی با یک کلیک، ابزارهای استقرار رله Cloudflare Workers / Deno Deploy، و Bifrost و Mux بهعنوان سرویسهای تعبیهشده تحت نظارت. → [سرویسهای تعبیهشده](docs/frameworks/EMBEDDED-SERVICES.md)
-- **🧩 امکانات دیگر موجود در بسته** — چارچوب افزونه + بازارچه، چارچوبهای مهارت Omni/Agent/GitHub، یکپارچهسازی مخزن Obsidian ‏(22 ابزار MCP)، ‏APIهای سازگار با OpenAI برای Batch و Files، حافظه نهان معنایی پاسخ، بازیوارسازی همراه با جدولهای رتبهبندی، کشف عامل ACP ‏(15 عامل داخلی)، صدور زمانبندیشده گزارشها به BigQuery، تزریق خطای `auto/chaos`، یک پل ربات Telegram، مدیر نسخه درونبرنامهای و رتبهبندی ارائهدهندگان رایگان LMArena-ELO. → [مستندات](docs/README.md)
-
-<br/>
-
 <div align="center">
 
 ## 🤖 رابطهای خط فرمان و عاملهای کدنویسی سازگار
@@ -626,7 +356,6 @@ Pusula دارای مجوز MIT است و بهصورت عمومی نگهداری 
     <td align="center" width="76"><picture><source media="(prefers-color-scheme:dark)" srcset="https://cdn.jsdelivr.net/npm/@lobehub/icons-static-png@1.91.0/dark/goose.png"/><img src="https://cdn.jsdelivr.net/npm/@lobehub/icons-static-svg@1.91.0/icons/goose.svg" width="40" alt="Goose"/></picture><br/><sub><b>Goose</b></sub><br/><sub>                           </sub></td>
     <td align="center" width="76"><img src="./public/providers/cli-generic.svg" width="40" alt="Open Interpreter"/><br/><sub><b>Open Interpreter</b></sub><br/><sub>                           </sub></td>
     <td align="center" width="76"><img src="./public/providers/cli-generic.svg" width="40" alt="Warp AI"/><br/><sub><b>Warp AI</b></sub><br/><sub>                           </sub></td>
-    <td align="center" width="76"><a href="https://deyin.ai"><img src="./public/deyin.svg" width="40" alt="deyin.ai"/><br/><sub><b>deyin.ai</b></sub><br/><sub>                           </sub></a></td>
   </tr>
 </table>
 </div>
@@ -745,81 +474,14 @@ pusula configure codex          # همچنین: claude opencode qwen aider goose
   <tr><td align="left" nowrap>📦 <b>npm (سراسری)</b></td><td align="left" nowrap><code>npm install -g pusula</code></td><td align="left">یک فرمان، روی هر سیستمعامل</td></tr>
   <tr><td align="left" nowrap>🐳 <b>Docker</b></td><td align="left" nowrap><code>docker run … ferhat-yasinoglu/pusula</code></td><td align="left">چندمعماری <b>AMD64 + ARM64</b></td></tr>
   <tr><td align="left" nowrap>🖥️ <b>دسکتاپ (Electron)</b></td><td align="left" nowrap><code>npm run electron:build</code></td><td align="left">پنجره بومی + سینی سیستم — <b>Windows / macOS / Linux</b></td></tr>
-  <tr><td align="left" nowrap>🎩 <b>نوار منو (PusulaTray)</b></td><td align="left" nowrap><code>brew install --cask zoispag/tap/pusula-tray</code></td><td align="left">نظارت بر سرور و بهروزرسانی خودکار آن — <b>macOS</b></td></tr>
   <tr><td align="left" nowrap>💪 <b>ARM</b></td><td align="left" nowrap><code>arm64</code> بومی</td><td align="left">Raspberry Pi، سرورهای ARM، Apple Silicon</td></tr>
   <tr><td align="left" nowrap>📱 <b>Android (Termux)</b></td><td align="left" nowrap><code>pkg install nodejs && npx -y pusula</code></td><td align="left">بدون نیاز به روت، بهصورت ۲۴/۷ <b>روی گوشی شما</b> اجرا میشود</td></tr>
   <tr><td align="left" nowrap>📲 <b>PWA</b></td><td align="left" nowrap>«افزودن به صفحه اصلی»</td><td align="left">تمامصفحه، آفلاین، قابل نصب از مرورگر</td></tr>
   <tr><td align="left" nowrap>🧩 <b>افزونه OpenCode</b></td><td align="left" nowrap><code>@pusula/opencode-provider</code></td><td align="left">یکپارچهسازی بومی با OpenCode</td></tr>
-  <tr><td align="left" nowrap>🤖 <b>VS Code Copilot Chat</b></td><td align="left" nowrap>افزونه <b>OmniCopilot</b> را نصب کنید</td><td align="left">همه مدلهای Pusula در انتخابگر بومی Copilot Chat — نسخههای پایدار و Insiders</td></tr>
   <tr><td align="left" nowrap>🛠️ <b>از کد منبع</b></td><td align="left" nowrap><code>npm install && npm run dev</code></td><td align="left">تغییرش دهید و مشارکت کنید</td></tr>
 </table>
 
-<sub>📖 [راهنمای Docker](docs/guides/DOCKER_GUIDE.md) · [دسکتاپ](electron/README.md) · [سینی نوار منو](https://github.com/zoispag/pusula-tray) · [Termux](docs/guides/TERMUX_GUIDE.md) · [PWA](docs/guides/PWA_GUIDE.md) · [OpenCode](docs/frameworks/OPENCODE.md)</sub>
-
-<br/>
-
-<div align="center">
-
-### 🧩 جدید: Pusula درون Copilot Chat بومی VS Code
-
-</div>
-
-> نه نوار کناری جدیدی در کار است و نه رابط گفتوگوی تازهای — هر مدلی که Pusula ارائه میکند، مستقیماً در
-> **انتخابگر مدل Copilot Chat که از قبل استفاده میکنید** نمایش داده میشود. از VS Code 1.122 به بعد، مدلهای ارائهدهندگان
-> بدون ورود به GitHub یا اشتراک Copilot کار میکنند — حالت عامل، فراخوانی ابزار و بینایی،
-> رایگان.
-
-افزونه **[OmniCopilot](https://github.com/diegosouzapw/OmniCopilot)** را نصب کنید و آن را
-به سرور Pusula خود متصل کنید (پیشفرض `localhost:20128` است)، سپس Copilot Chat ← انتخابگر مدل
-← **مدیریت مدلها…** ← **Pusula** را باز کنید.
-
-<table>
-  <tr><th align="left">فروشگاه</th><th align="left">پیوند</th><th align="left">سازگار با</th></tr>
-  <tr><td align="left" nowrap>🧩 <b>VS Code Marketplace</b></td><td align="left"><a href="https://marketplace.visualstudio.com/items?itemName=diegosouzapw.omnicopilot">نصب ←</a></td><td align="left">VS Code — نسخههای پایدار و Insiders</td></tr>
-  <tr><td align="left" nowrap>🔓 <b>Open VSX Registry</b></td><td align="left"><a href="https://open-vsx.org/extension/diegosouzapw/omnicopilot">نصب ←</a></td><td align="left">Cursor، Windsurf، VSCodium، Theia، code-server، Gitpod، Antigravity، Kiro…</td></tr>
-</table>
-
-از داخل ویرایشگر: نمای **افزونهها** را باز کنید، **«Pusula»** را جستوجو کنید و روی **نصب**
-کلیک کنید — در هر دو فروشگاه به یک شکل کار میکند. کد منبع، مشکلات و راهنمای انتشار در
-[diegosouzapw/OmniCopilot](https://github.com/diegosouzapw/OmniCopilot) قرار دارند.
-
-<sub>📖 [راهنمای VS Code Copilot Chat](docs/guides/VSCODE-COPILOT.md) — راهاندازی، آنچه انتخابگر نمایش میدهد، داشبورد در یک زبانه، عیبیابی</sub>
-
-<br/>
-
-<div align="center">
-
-### 🎩 جدید: PusulaTray — دروازه شما، ساکن در نوار منو
-
-</div>
-
-> `pusula serve` وقتی همیشه روشن باشد، بهترین عملکرد را دارد. **[PusulaTray](https://github.com/zoispag/pusula-tray)**
-> آن را به یک برنامه نوار منوی «تنظیم کن و فراموش کن» برای macOS تبدیل میکند: سرور را راهاندازی میکند، پس از
-> راهاندازی مجدد سیستم فعال نگهش میدارد، آن را درجا بهروزرسانی میکند و بودجه زنده توکن شما را با یک کلیک در دسترس قرار میدهد — **بدون
-> باز ماندن پنجره ترمینال و بدون نیاز به مراقبت از `npm install -g pusula`.**
-
-این برنامه با [Tauri v2](https://v2.tauri.app/) ساخته شده است (هستهای مبتنی بر Rust که اندازهاش تقریباً قابل چشمپوشی است)،
-محیط اجرای امضاشده Node 24 خودش را ارائه میکند و نصب Pusula متعلق به برنامه را مدیریت میکند؛ بنابراین هرگز با
-`node`/`bun` سراسری شما تداخل ندارد. این برنامه **از پیکربندی و پایگاه داده موجود شما در `~/.pusula/` استفاده میکند** — پس همان
-Pusulaای است که از قبل اجرا میکنید، فقط این بار کلاه به سر دارد. 🎩
-
-<table>
-  <tr><th align="left">چه کاری انجام میدهد</th><th align="left">چگونه</th></tr>
-  <tr><td align="left" nowrap>🟢 <b>بر سرور نظارت میکند</b></td><td align="left"><code>pusula serve</code> را اجرا میکند و بهجای ایجاد نمونهای تکراری، نمونه از قبل در حال اجرا را بهکار میگیرد</td></tr>
-  <tr><td align="left" nowrap>📊 <b>نمای کلی از مصرف زنده</b></td><td align="left">نوارهای سهمیه ارائهدهندگان، محدودیتهای جلسهای/هفتگی Claude همراه با شمارش معکوس بازنشانی، تفکیک هزینه ۳۰روزه</td></tr>
-  <tr><td align="left" nowrap>🔄 <b>بهروزرسانی خودکار درجا</b></td><td align="left">نصب مرحلهای، جابهجایی اتمی، بازگشت در صورت شکست — همیشه روی جدیدترین نسخه</td></tr>
-  <tr><td align="left" nowrap>🚀 <b>اجرا هنگام ورود</b></td><td align="left">اجرای اختیاری هنگام ورود؛ فقط در سینی، بدون نماد در Dock</td></tr>
-  <tr><td align="left" nowrap>🩺 <b>بررسی سلامت و گزارشها</b></td><td align="left">عیبیابی با یک کلیک و دسترسی به گزارشهای سرور</td></tr>
-</table>
-
-```sh
-brew install --cask zoispag/tap/pusula-tray
-```
-
-<sub>دانلود را ترجیح میدهید؟ جدیدترین فایل <code>.dmg</code> را از
-<a href="https://github.com/zoispag/pusula-tray">Releases</a> دریافت کنید. کد منبع، مشکلات و مستندات
-ساخت در <a href="https://github.com/zoispag/pusula-tray">zoispag/pusula-tray</a> قرار دارند.
-<br/>💛 پروژهای اجتماعی توسط <a href="https://github.com/zoispag">@zoispag</a> — و نه یک نسخهٔ رسمی Pusula.</sub>
+<sub>📖 [راهنمای Docker](docs/guides/DOCKER_GUIDE.md) · [دسکتاپ](electron/README.md) · [Termux](docs/guides/TERMUX_GUIDE.md) · [PWA](docs/guides/PWA_GUIDE.md) · [OpenCode](docs/frameworks/OPENCODE.md)</sub>
 
 <br/>
 
@@ -885,7 +547,7 @@ Pusula را از طریق **MCP**،‏ **A2A**، یک **REST API**،‏ **وبه
   <tr><td align="left" nowrap>📡 <b>MCP (SSE)</b></td><td align="left" nowrap><code>/api/mcp/sse</code></td><td align="left">انتقال جریانی MCP</td></tr>
   <tr><td align="left" nowrap>🤝 <b>A2A</b></td><td align="left" nowrap><code>/.well-known/agent.json</code></td><td align="left">ارتباط عاملبهعامل،‏ <b>JSON-RPC 2.0</b> + SSE،‏ 6 مهارت</td></tr>
   <tr><td align="left" nowrap>🌐 <b>REST API</b></td><td align="left" nowrap><code>/v1/*</code></td><td align="left">سازگار با OpenAI — گفتوگو، تعبیهسازیها، تصاویر، صدا و OCR</td></tr>
-  <tr><td align="left" nowrap>🔔 <b>وبهوکها</b></td><td align="left" nowrap><code>/api/webhooks</code></td><td align="left">ارسال رویدادهای درخواست / سهمیه به Slack،‏ Discord،‏ Telegram یا هر URL</td></tr>
+  <tr><td align="left" nowrap>🔔 <b>وبهوکها</b></td><td align="left" nowrap><code>/api/webhooks</code></td><td align="left">ارسال رویدادهای درخواست / سهمیه به Slack یا هر URL دلخواه</td></tr>
   <tr><td align="left" nowrap>🛰️ <b>CLI راه دور</b></td><td align="left" nowrap><code>pusula connect <host></code></td><td align="left">کنترل یک نمونهٔ راه دور با توکنهای دسترسی دارای دامنهٔ محدود</td></tr>
 </table>
 
@@ -1160,94 +822,17 @@ PUSULA_SKIP_POSTINSTALL=1 npm install -g pusula   # CI=1 نیز از آن صرف
 
 <div align="center">
 
-# 🎬 Pusula در عمل
-
-</div>
-
-## 📹 راهنماهای ویدیویی
-
-<div align="center">
-
-<sub>نمای لحظهای پنل در 2026-08-24 · فهرست خام: YT 809 | TT 137 | IG 124 · تازگی (روز): YT 1 | TT 21 | IG 22</sub>
-
-<table>
-  <tr>
-    <td align="center" width="320">
-      <a href="https://www.instagram.com/reel/Da8ZthUPK98/">
-        <img src="https://placehold.co/320x180/111827/FFFFFF?text=Instagram+Reel+%7C+nick_saraev&font=montserrat&bold=true" alt="ریلز Instagram" width="300"/>
-      </a><br/>
-      <b>🎬 #1 — Instagram</b><br/>
-      <sub>nick_saraev — 3,042,474 بازدید</sub>
-    </td>
-    <td align="center" width="320">
-      <a href="https://www.instagram.com/reel/DaSs65mMrHk/">
-        <img src="https://placehold.co/320x180/111827/FFFFFF?text=Instagram+Reel+%7C+theopenstack&font=montserrat&bold=true" alt="ریلز Instagram — theopenstack" width="300"/>
-      </a><br/>
-      <b>🎬 #2 — Instagram</b><br/>
-      <sub>theopenstack — 692,419 بازدید</sub>
-    </td>
-    <td align="center" width="320">
-      <a href="https://www.tiktok.com/@milesreevesai/video/7667980059189366019">
-        <img src="https://placehold.co/320x180/111827/FFFFFF?text=TikTok+%7C+milesreevesai&font=montserrat&bold=true" alt="TikTok — milesreevesai" width="300"/>
-      </a><br/>
-      <b>🎬 #3 — TikTok</b><br/>
-      <sub>milesreevesai — 620,400 بازدید</sub>
-    </td>
-    <td align="center" width="320">
-      <a href="https://www.youtube.com/watch?v=QucgvbO5gsM">
-        <img src="https://img.youtube.com/vi/QucgvbO5gsM/maxresdefault.jpg" alt="YouTube — Vaibhav Sisinty" width="300"/>
-      </a><br/>
-      <b>🎬 #4 — YouTube</b><br/>
-      <sub>Vaibhav Sisinty — 391,109 بازدید</sub>
-    </td>
-    <td align="center" width="320">
-      <a href="https://www.instagram.com/reel/DbIt9AjK7-U/">
-        <img src="https://placehold.co/320x180/111827/FFFFFF?text=Instagram+Reel+%7C+buildwithai.club&font=montserrat&bold=true" alt="ریلز Instagram — buildwithai.club" width="300"/>
-      </a><br/>
-      <b>🎬 #5 — Instagram</b><br/>
-      <sub>buildwithai.club — 347,652 بازدید</sub>
-    </td>
-  </tr>
-</table>
-
-</div>
-
-**رتبهبندی کامل (URLهای متعارف و بدون موارد تکراری، `v > 0`، بیشترین دسترسی):**
-
-| #1                                                                                     | #2                                                                                    | #3                                                                                                      | #4                                                                                     | #5                                                                                        |
-| -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| [nick_saraev — Instagram](https://www.instagram.com/reel/Da8ZthUPK98/) — **3,042,474** | [theopenstack — Instagram](https://www.instagram.com/reel/DaSs65mMrHk/) — **692,419** | [milesreevesai — TikTok](https://www.tiktok.com/@milesreevesai/video/7667980059189366019) — **620,400** | [Vaibhav Sisinty — YouTube](https://www.youtube.com/watch?v=QucgvbO5gsM) — **391,109** | [buildwithai.club — Instagram](https://www.instagram.com/reel/DbIt9AjK7-U/) — **347,652** |
-
-| #6                                                                                  | #7                                                                                      | #8                                                                                                  | #9                                                                                        | #10                                                                                         |
-| ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| [nivedan.ai — Instagram](https://www.instagram.com/reel/DbIrCksJiqq/) — **331,973** | [vaibhavsisinty — Instagram](https://www.instagram.com/reel/Dae05TSAK1l/) — **263,744** | [Nick Automates — ویدیوهای کوتاه YouTube](https://www.youtube.com/shorts/fZIBK_4fKq8) — **218,174** | [theroshankrishna — Instagram](https://www.instagram.com/reel/Dapjs58z0P0/) — **186,786** | [midudev — TikTok](https://www.tiktok.com/@midudev/video/7664636453544152342) — **177,800** |
-
-معیارهای متعارف در 2026-08-24: **1.029 ویدیوی منحصربهفرد** · **11.132.922 بازدید شناختهشده** (`v > 0`) · **639 کانال/پروفایل در شبکههای مختلف**. پنل خام شامل 1.070 ردیف است؛ 41 مورد تکراری Instagram بر اساس URL متعارف یکسانسازی شدند و بالاترین تعداد بازدید برای هر ویدیو حفظ شد.
-
-> 🎬 **درباره Pusula ویدیو ساختهاید؟** یک [گزارش](https://github.com/Ferhat-Yasinoglu/pusula/issues/new) یا [گفتوگو](https://github.com/Ferhat-Yasinoglu/pusula/discussions) با پیوند ویدیو باز کنید — آن را اینجا معرفی خواهیم کرد.
-
-<br/>
-
-<div align="center">
-
 # 📧 انجمن و راهنما
 
-> همهچیز در یک مکان — نگهدارنده را دنبال کنید، با انجمن گفتوگو کنید یا یک گزارش باز کنید.
+> پرسش دارید، باگی پیدا کرده‌اید یا ایده‌ای در سر دارید؟ همه‌چیز در GitHub است.
 
-| کانال                                          | کجا / چگونه                                                                                                                   |
-| ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| 💼 **LinkedIn** — دنبالکردن نگهدارنده          | [linkedin.com/in/diegosouzapw](https://www.linkedin.com/in/diegosouzapw/)                                                     |
-| 🐙 **GitHub** — دنبالکردن برای انتشارها و نکات | [@diegosouzapw](https://github.com/diegosouzapw)                                                                              |
-| 💬 **Discord**                                 | [discord.gg/U47eFqAXCn](https://discord.gg/U47eFqAXCn)                                                                        |
-| ✈️ **Telegram**                                | [t.me/pusulaOficial](https://t.me/pusulaOficial)                                                                        |
-| 🟢 **WhatsApp — 🌍 جهانی**                     | [پیوستن به گروه](https://chat.whatsapp.com/FvuCbrpZmQ6I85n2vW5QIC?s=cl&p=a&mlu=4)                                             |
-| 🟢 **WhatsApp — 🇧🇷 برزیل**                     | [پیوستن به گروه](https://chat.whatsapp.com/KWgatljAjmbELQory59Oti?s=cl&p=a&mlu=4)                                             |
-| 🌍 **وبسایت**                                  | [pusula.online](https://github.com/Ferhat-Yasinoglu/pusula)                                                                                  |
-| 🌍 **🌍انجمن Pusula در StHub (رایگان)**     | [پورتال StHub](https://portal.sthub.com.br/communities/groups/st-hub/channels/Pusula-World-8kRjmK)                         |
-| 📦 **کد منبع**                                 | [github.com/Ferhat-Yasinoglu/pusula](https://github.com/Ferhat-Yasinoglu/pusula)                                                |
-| 🐛 **گزارش یک باگ**                            | [ایجاد یک مسئله](https://github.com/Ferhat-Yasinoglu/pusula/issues) — خروجی `npm run system-info` را پیوست کنید                |
-| 🤝 **مشارکت**                                  | [CONTRIBUTING.md](CONTRIBUTING.md) · [مدل شاخهبندی و انتشار](docs/ops/BRANCHING_MODEL.md) · یک `good first issue` انتخاب کنید |
-| 💚 **حمایت از پروژه**                          | [راههای حمایت ↑](#-support-pusula) · [حامیان GitHub](https://github.com/sponsors/diegosouzapw)                             |
+| کانال | کجا / چگونه |
+| --- | --- |
+| 🐛 **گزارش باگ یا درخواست قابلیت** | [GitHub Issues](https://github.com/Ferhat-Yasinoglu/pusula/issues) — خروجی `npm run system-info` را پیوست کنید |
+| 💬 **پرسش و پاسخ، ایده‌ها و گفت‌وگو** | [GitHub Discussions](https://github.com/Ferhat-Yasinoglu/pusula/discussions) |
+| 📦 **کد منبع** | [github.com/Ferhat-Yasinoglu/pusula](https://github.com/Ferhat-Yasinoglu/pusula) |
+| 🤝 **مشارکت** | [CONTRIBUTING.md](CONTRIBUTING.md) · [مدل شاخه‌بندی و انتشار](docs/ops/BRANCHING_MODEL.md) · یک `good first issue` انتخاب کنید |
+| 🔒 **گزارش آسیب‌پذیری امنیتی** | [SECURITY.md](SECURITY.md) · [گزارش محرمانه](https://github.com/Ferhat-Yasinoglu/pusula/security/advisories/new) |
 
 </div>
 
@@ -1277,8 +862,8 @@ PUSULA_SKIP_POSTINSTALL=1 npm install -g pusula   # CI=1 نیز از آن صرف
   <tr><td nowrap><b>ثبت وقایع</b></td><td>pino — لاگهای JSON ساختاریافته با زمینه درخواست</td></tr>
   <tr><td nowrap><b>آزمایش</b></td><td>Node.js test runner + Vitest — <b>بیش از ۳۹,۰۰۰ اعلان تست استاتیک</b> در بیش از ۵,۱۰۰ فایل تست ردیابی شده (واحد، یکپارچهسازی، E2E، امنیت، اکوسیستم)</td></tr>
   <tr><td nowrap><b>پلتفرمها</b></td><td>دسکتاپ (Electron) · اندروید (Termux) · PWA (هر مرورگری)</td></tr>
-  <tr><td nowrap><b>CI/CD</b></td><td>GitHub Actions — انتشار خودکار npm + Docker Hub در زمان انتشار</td></tr>
-  <tr><td nowrap><b>پیوندها</b></td><td><a href="https://github.com/Ferhat-Yasinoglu/pusula">وبسایت</a> · <a href="https://www.npmjs.com/package/pusula">npm</a> · <a href="https://hub.docker.com/r/ferhat-yasinoglu/pusula">Docker Hub</a></td></tr>
+  <tr><td nowrap><b>CI/CD</b></td><td>GitHub Actions — انتشار خودکار npm + GHCR در زمان انتشار</td></tr>
+  <tr><td nowrap><b>پیوندها</b></td><td><a href="https://github.com/Ferhat-Yasinoglu/pusula">GitHub</a> · <a href="https://www.npmjs.com/package/pusula">npm</a> · <a href="https://github.com/Ferhat-Yasinoglu/pusula/pkgs/container/pusula">GHCR</a></td></tr>
 </table>
 
 <div align="center">
@@ -1362,200 +947,9 @@ PUSULA_SKIP_POSTINSTALL=1 npm install -g pusula   # CI=1 نیز از آن صرف
 
 <div align="center">
 
-# ⭐ برترین مشارکتکنندگان
-
-> Pusula بهدست جامعهای پرشور از متنباز شکل گرفته است. این افراد مشارکتهای برجستهای داشتهاند که مستقیماً بر کیفیت، پایداری و گستره پروژه تأثیر میگذارد. **سپاسگزاریم.**
-
-### مشارکتکنندگان خارجی بر اساس درخواستهای کشش ادغامشده
-
-<table>
-  <tr><th align="center">رتبه</th><th align="left">مشارکتکننده</th><th align="center">PRهای ادغامشده</th><th align="right">~خطوط تغییریافته</th></tr>
-  <tr><td align="center">1</td><td align="left"><a href="https://github.com/backryun"><b>backryun</b></a></td><td align="center">190</td><td align="right">227,977</td></tr>
-  <tr><td align="center">2</td><td align="left"><a href="https://github.com/oyi77"><b>oyi77</b></a></td><td align="center">180</td><td align="right">407,678</td></tr>
-  <tr><td align="center">3</td><td align="left"><a href="https://github.com/rdself"><b>rdself</b></a></td><td align="center">145</td><td align="right">80,663</td></tr>
-  <tr><td align="center">4</td><td align="left"><a href="https://github.com/JxnLexn"><b>JxnLexn</b></a></td><td align="center">128</td><td align="right">387,049</td></tr>
-  <tr><td align="center">5</td><td align="left"><a href="https://github.com/KooshaPari"><b>KooshaPari</b></a></td><td align="center">101</td><td align="right">125,747</td></tr>
-  <tr><td align="center">6</td><td align="left"><a href="https://github.com/herjarsa"><b>herjarsa</b></a></td><td align="center">88</td><td align="right">230,872</td></tr>
-  <tr><td align="center">7</td><td align="left"><a href="https://github.com/RaviTharuma"><b>RaviTharuma</b></a></td><td align="center">79</td><td align="right">55,106</td></tr>
-  <tr><td align="center">8</td><td align="left"><a href="https://github.com/maxmad64bis"><b>maxmad64bis</b></a></td><td align="center">69</td><td align="right">394,715</td></tr>
-  <tr><td align="center">9</td><td align="left"><a href="https://github.com/artickc"><b>artickc</b></a></td><td align="center">59</td><td align="right">33,260</td></tr>
-  <tr><td align="center">10</td><td align="left"><a href="https://github.com/HouMinXi"><b>HouMinXi</b></a></td><td align="center">51</td><td align="right">47,334</td></tr>
-  <tr><td align="center">10</td><td align="left"><a href="https://github.com/chirag127"><b>chirag127</b></a></td><td align="center">51</td><td align="right">5,153</td></tr>
-  <tr><td align="center">12</td><td align="left"><a href="https://github.com/xz-dev"><b>xz-dev</b></a></td><td align="center">50</td><td align="right">245,976</td></tr>
-  <tr><td align="center">13</td><td align="left"><a href="https://github.com/hartmark"><b>hartmark</b></a></td><td align="center">47</td><td align="right">52,185</td></tr>
-  <tr><td align="center">14</td><td align="left"><a href="https://github.com/rqzbeh"><b>rqzbeh</b></a></td><td align="center">39</td><td align="right">143,181</td></tr>
-  <tr><td align="center">15</td><td align="left"><a href="https://github.com/dhaern"><b>dhaern</b></a></td><td align="center">34</td><td align="right">19,559</td></tr>
-  <tr><td align="center">16</td><td align="left"><a href="https://github.com/Dingding-leo"><b>Dingding-leo</b></a></td><td align="center">33</td><td align="right">1,986</td></tr>
-  <tr><td align="center">17</td><td align="left"><a href="https://github.com/NomenAK"><b>NomenAK</b></a></td><td align="center">32</td><td align="right">13,854</td></tr>
-  <tr><td align="center">18</td><td align="left"><a href="https://github.com/MumuTW"><b>MumuTW</b></a></td><td align="center">30</td><td align="right">16,953</td></tr>
-  <tr><td align="center">19</td><td align="left"><a href="https://github.com/benzntech"><b>benzntech</b></a></td><td align="center">29</td><td align="right">11,641</td></tr>
-  <tr><td align="center">20</td><td align="left"><a href="https://github.com/pacocartones"><b>pacocartones</b></a></td><td align="center">24</td><td align="right">9,331</td></tr>
-  <tr><td align="center">20</td><td align="left"><a href="https://github.com/Prudhvivuda"><b>Prudhvivuda</b></a></td><td align="center">24</td><td align="right">6,312</td></tr>
-</table>
-
-<sub>این آمار بر اساس آخرین وضعیت زنده <code>release/v3.8.50</code> در <code>dafb4ae808</code>، با ادغامها تا 2026-08-24 05:26:03 UTC ثابت شده است. سرشماری صفحهبندیشده GitHub GraphQL شامل 5,911 درخواست کشش ادغامشده است: 2,707 مورد توسط مالک مخزن، 179 مورد توسط Dependabot و <b>3,025 درخواست کشش خارجی از 535 مشارکتکننده متمایز</b>. «خطوط تغییریافته» برابر با مجموع افزودهها و حذفهای GitHub است و فایلهای تولیدشده، lockfileها، کاتالوگها، ترجمهها و مستندات را شامل میشود؛ این مقدار نشاندهنده حجم تغییرات است، نه LOC تألیفشده. رتبههای مساوی در مرز نهایی حفظ شدهاند.</sub>
-
-### کامیتهای منتسب به GitHub
-
-<table>
-  <tr>
-    <td align="center" width="160">
-      <a href="https://github.com/backryun">
-        <img src="https://github.com/backryun.png" width="40" style="border-radius:50%" alt="backryun"/><br/>
-        <b>backryun</b>
-      </a><br/>
-      <sub>🥇 ۲۲۰ کامیت منتسب به GitHub</sub>
-    </td>
-    <td align="center" width="160">
-      <a href="https://github.com/oyi77">
-        <img src="https://github.com/oyi77.png" width="40" style="border-radius:50%" alt="Paijo"/><br/>
-        <b>Paijo</b>
-      </a><br/>
-      <sub>🥈 ۲۱۹ کامیت منتسب به GitHub</sub>
-    </td>
-    <td align="center" width="160">
-      <a href="https://github.com/rdself">
-        <img src="https://github.com/rdself.png" width="40" style="border-radius:50%" alt="Randi"/><br/>
-        <b>Randi</b>
-      </a><br/>
-      <sub>🥉 ۱۰۸ کامیت منتسب به GitHub</sub>
-    </td>
-    <td align="center" width="160">
-      <a href="https://github.com/RaviTharuma">
-        <img src="https://github.com/RaviTharuma.png" width="40" style="border-radius:50%" alt="Ravi Tharuma"/><br/>
-        <b>Ravi Tharuma</b>
-      </a><br/>
-      <sub>🏅 ۸۱ کامیت منتسب به GitHub</sub>
-    </td>
-    <td align="center" width="160">
-      <a href="https://github.com/christopher-s">
-        <img src="https://github.com/christopher-s.png" width="40" style="border-radius:50%" alt="Chris"/><br/>
-        <b>Chris</b>
-      </a><br/>
-      <sub>🏅 ۷۰ کامیت منتسب به GitHub</sub>
-    </td>
-    <td align="center" width="160">
-      <a href="https://github.com/hartmark">
-        <img src="https://github.com/hartmark.png" width="40" style="border-radius:50%" alt="Markus Hartung"/><br/>
-        <b>Markus Hartung</b>
-      </a><br/>
-      <sub>🏅 ۶۹ کامیت منتسب به GitHub · رتبه مشترک ۶</sub>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" width="160">
-      <a href="https://github.com/maxmad64bis">
-        <img src="https://github.com/maxmad64bis.png" width="40" style="border-radius:50%" alt="Dizzle"/><br/>
-        <b>Dizzle</b>
-      </a><br/>
-      <sub>🏅 ۶۹ کامیت منتسب به GitHub · رتبه مشترک ۶</sub>
-    </td>
-    <td align="center" width="160">
-      <a href="https://github.com/JxnLexn">
-        <img src="https://github.com/JxnLexn.png" width="40" style="border-radius:50%" alt="Jan Leon"/><br/>
-        <b>Jan Leon</b>
-      </a><br/>
-      <sub>🏅 ۶۴ کامیت منتسب به GitHub</sub>
-    </td>
-    <td align="center" width="160">
-      <a href="https://github.com/zen0bit">
-        <img src="https://github.com/zen0bit.png" width="40" style="border-radius:50%" alt="zenobit"/><br/>
-        <b>zenobit</b>
-      </a><br/>
-      <sub>🏅 ۶۲ کامیت منتسب به GitHub</sub>
-    </td>
-    <td align="center" width="160">
-      <a href="https://github.com/HouMinXi">
-        <img src="https://github.com/HouMinXi.png" width="40" style="border-radius:50%" alt="Bob.Hou"/><br/>
-        <b>Bob.Hou</b>
-      </a><br/>
-      <sub>🏅 ۵۱ کامیت منتسب به GitHub · رتبه مشترک ۱۰</sub>
-    </td>
-    <td align="center" width="160">
-      <a href="https://github.com/xz-dev">
-        <img src="https://github.com/xz-dev.png" width="40" style="border-radius:50%" alt="Xiangzhe"/><br/>
-        <b>Xiangzhe</b>
-      </a><br/>
-      <sub>🏅 ۵۱ کامیت منتسب به GitHub · رتبه مشترک ۱۰</sub>
-    </td>
-  </tr>
-</table>
-
-<sub>بازبینی مجدد در 2026-08-24 06:14:31 UTC: کامیتهای منتسب به GitHub که توسط API مشارکتکنندگان مخزن برای شاخه پیشفرض <code>release/v3.8.50</code> گزارش شدهاند. API تعداد ۵۲۵ هویت (۴۱۵ کاربر، ۲ ربات و ۱۰۸ ناشناس) را برگرداند؛ این جدول نگهدارنده، رباتها و هویتهای ناشناس را مستثنا میکند و رتبههای مشترک را حفظ میکند. این جدول هم با رتبهبندی درخواستهای کشش ادغامشده در بالا و هم با سرشماری ۶۳۹نفره فرادادههای Git در پایین متفاوت است.</sub>
-
-> 🙏 قابلیتها، رفع اشکالها و بهبودهای زیرساختی این مشارکتکنندگان، **بخشی اساسی** از عواملی هستند که Pusula را قابلاعتماد و سرشار از قابلیت میکنند. هر درخواست کشش، هر مورد آزمایشی و هر فایل ترجمه i18n اهمیت دارد. متنباز به دست افرادی مانند آنها ساخته میشود.
+## 👥 مشارکت
 
 </div>
-
----
-
-<br/>
-
-## 💖 حامیان مالی
-
-<div align="center">
-
-سپاسی صمیمانه از افرادی که هزینههای Pusula را از جیب خود تأمین میکنند — هر کمک مالی باعث میشود این پروژه رایگان، مستقل و در حال پیشرفت باقی بماند.
-
-<table>
-  <tr>
-    <td align="center" width="180">
-      <a href="https://github.com/drewbitt">
-        <img src="https://github.com/drewbitt.png?size=140" width="72" style="border-radius:50%" alt="Andrew"/><br/>
-        <b>Andrew</b>
-      </a><br/>
-      <sub>💛 حامی مالی ماهانه فعال</sub>
-    </td>
-    <td align="center" width="180">
-      <a href="https://github.com/psylligent">
-        <img src="https://github.com/psylligent.png?size=140" width="72" style="border-radius:50%" alt="Vlad I"/><br/>
-        <b>Vlad I</b>
-      </a><br/>
-      <sub>💛 حامی مالی ماهانه فعال</sub>
-    </td>
-    <td align="center" width="180">
-      <a href="https://github.com/pacocartones">
-        <img src="https://github.com/pacocartones.png?size=140" width="72" style="border-radius:50%" alt="Paco Cartones"/><br/>
-        <b>Paco Cartones</b>
-      </a><br/>
-      <sub>💛 حامی مالی فعال با پرداخت یکباره</sub>
-    </td>
-    <td align="center" width="180">
-      <a href="https://github.com/igormorais123">
-        <img src="https://github.com/igormorais123.png?size=140" width="72" style="border-radius:50%" alt="Professor Igor Morais Vasconcelos"/><br/>
-        <b>Prof. Igor Morais</b>
-      </a><br/>
-      <sub>💛 حامی پیشین با پرداخت یکباره</sub>
-    </td>
-    <td align="center" width="180">
-      <a href="https://github.com/longtao77">
-        <img src="https://github.com/longtao77.png?size=140" width="72" style="border-radius:50%" alt="longtao"/><br/>
-        <b>longtao</b>
-      </a><br/>
-      <sub>💛 حامی پیشین با پرداخت یکباره</sub>
-    </td>
-  </tr>
-</table>
-
-<sub>… و دیگرانی که ترجیح میدهند ناشناس بمانند 💛</sub>
-
-<sub>حامیان عمومی GitHub در تاریخ 2026-08-24 دوباره اعتبارسنجی شدند. وضعیت <code>activeOnly</code> در GitHub برچسبهای فعال بالا را تعیین میکند؛ همچنان از حامیان عمومی با پرداخت یکباره که پیشتر اعلام شدهاند قدردانی میشود و حامیان خصوصی ناشناس باقی میمانند.</sub>
-
-<b><a href="https://github.com/sponsors/diegosouzapw">💖 حامی مالی شوید ←</a></b> — هر دلار کمک میکند Pusula رایگان و مستقل باقی بماند.
-
-</div>
-
-<br/>
-
-<div align="center">
-
-## 👥 بیش از 600 مشارکتکننده
-
-</div>
-
-[![مشارکتکنندگان](https://contrib.rocks/image?repo=Ferhat-Yasinoglu/pusula&max=639&columns=20&anon=1)](https://github.com/Ferhat-Yasinoglu/pusula/graphs/contributors)
-
-<sub>در تاریخ 2026-08-24 بر روی مبنای ثابت <code>ac02c5b42f</code> ممیزی شد و مجدداً در نوک زنده شاخه <code>release/v3.8.50</code> با شناسه <code>dafb4ae808</code> بررسی شد: <b>639 هویت انسانی نرمالسازیشده Git</b> — 407 مورد بهعنوان نویسنده commit ظاهر میشوند (از جمله نگهدارنده پروژه) و 232 مورد فقط در تریلرهای صریح <code>Co-authored-by</code> حضور دارند. این سرشماری شناسههای noreply در GitHub را نرمالسازی میکند، 26 هویت متعلق به رباتها، عاملها، سرویسها یا جاینگهدارها را کنار میگذارد و آدرسهای ایمیل معمولی را صرفاً بهدلیل یکسان بودن نام نمایشی آنها ادغام نمیکند.</sub>
 
 ### نحوه مشارکت
 
@@ -1575,35 +969,6 @@ PUSULA_SKIP_POSTINSTALL=1 npm install -g pusula   # CI=1 نیز از آن صرف
 VERSION=x.y.z
 gh release create "v${VERSION}" --title "v${VERSION}" --generate-notes
 ```
-
-<br/>
-
-<div align="center">
-
-## 📊 ستارهها
-
-<a href="https://www.star-history.com/?repos=diegosouzapw%2FPusula&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=Ferhat-Yasinoglu/pusula&type=date&theme=dark&legend=top-left&sealed_token=XP_ycEjv7s31p1edvhsMOXry51OWYsUjDRWjflSG7jQKRpO9hPGg7i_EHvwhI6QtrARTMH-YGjJhi8sumRYflEJD0DPlH_MMHjizhBYCX8fbHFrHEiNvVA" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=Ferhat-Yasinoglu/pusula&type=date&legend=top-left&sealed_token=XP_ycEjv7s31p1edvhsMOXry51OWYsUjDRWjflSG7jQKRpO9hPGg7i_EHvwhI6QtrARTMH-YGjJhi8sumRYflEJD0DPlH_MMHjizhBYCX8fbHFrHEiNvVA" />
-   <img alt="نمودار تاریخچهٔ ستارهها" src="https://api.star-history.com/chart?repos=Ferhat-Yasinoglu/pusula&type=date&legend=top-left&sealed_token=XP_ycEjv7s31p1edvhsMOXry51OWYsUjDRWjflSG7jQKRpO9hPGg7i_EHvwhI6QtrARTMH-YGjJhi8sumRYflEJD0DPlH_MMHjizhBYCX8fbHFrHEiNvVA" />
- </picture>
-</a>
-
-<br/>
-
-<div align="center">
-
-## 🌍 StarMapper
-
-<a href="https://starmapper.bruniaux.com/ferhat-yasinoglu/pusula">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://starmapper.bruniaux.com/api/map-image/ferhat-yasinoglu/pusula?theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://starmapper.bruniaux.com/api/map-image/ferhat-yasinoglu/pusula?theme=light" />
-    <img alt="StarMapper" src="https://starmapper.bruniaux.com/api/map-image/ferhat-yasinoglu/pusula" />
-  </picture>
-</a>
-</div>
 
 <br/>
 
@@ -1729,7 +1094,7 @@ Pusula بر شانههای غولها ایستاده است. این پروژه �
 
 **[⬆ بازگشت به بالا](#-pusula)** · ساختهشده با ❤️ برای جامعه متنباز هوش مصنوعی.
 
-<sub>Pusula v3.8.51 · Node ≥22.22.2 · مجوز MIT · <a href="https://github.com/Ferhat-Yasinoglu/pusula">pusula.online</a></sub>
+<sub>Pusula v3.8.51 · Node ≥22.22.2 · مجوز MIT · <a href="https://github.com/Ferhat-Yasinoglu/pusula">github.com/Ferhat-Yasinoglu/pusula</a></sub>
 
 </div>
 <!-- GitHub Discussions برای پرسش و پاسخ جامعه فعال شده است -->

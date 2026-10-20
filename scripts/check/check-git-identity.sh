@@ -15,9 +15,9 @@
 #   (c) um e-mail explicitamente aposentado (`pusula.legacyEmail`).
 #
 # Ativação — opcional e por máquina; sem ela o gate é inerte:
-#   git config --global pusula.expectedName  "diegosouzapw"
-#   git config --global pusula.expectedEmail "8016841+diegosouzapw@users.noreply.github.com"
-#   git config --global --add pusula.legacyEmail "diegosouzapw@users.noreply.github.com"
+#   git config --global pusula.expectedName  "Ferhat-Yasinoglu"
+#   git config --global pusula.expectedEmail "Ferhat-Yasinoglu@users.noreply.github.com"
+#   git config --global --add pusula.legacyEmail "ferhatyasinoglu@gmail.com"
 
 expected_name=$(git config --get pusula.expectedName 2>/dev/null)
 expected_email=$(git config --get pusula.expectedEmail 2>/dev/null)

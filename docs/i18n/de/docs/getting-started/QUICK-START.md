@@ -186,5 +186,4 @@ Pusula überspringt fehlgeschlagene Anbieter automatisch und versucht es mit dem
 ## Benötigen Sie Hilfe?
 
 - **[Fehlerbehebung](../guides/TROUBLESHOOTING.md)** — Häufige Probleme und Lösungen
-- **[Discord](https://discord.gg/U47eFqAXCn)** — Unterstützung durch die Community
 - **[GitHub Issues](https://github.com/Ferhat-Yasinoglu/pusula/issues)** — Fehler melden

@@ -27,7 +27,6 @@ pusula providers remove <connection-id> --yes
 - [پیکربندی Claude Code](./CLAUDE-CODE-CONFIGURATION.md)
 - [پیکربندی Codex CLI](./CODEX-CLI-CONFIGURATION.md)
 - [حالت از راه دور](./REMOTE-MODE.md) — یک Pusula از راه دور (VPS / Tailnet) را از لپتاپ خود کنترل کنید
-- [چت Copilot در VS Code](./VSCODE-COPILOT.md) — افزونه OmniCopilot؛ این افزونه همچنین میتواند این دستورات `setup-*` را برای شما از داخل ویرایشگر اجرا کند
 
 ---
 

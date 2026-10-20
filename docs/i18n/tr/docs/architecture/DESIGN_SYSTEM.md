@@ -17,7 +17,7 @@
 
 ## 1. Amaç
 
-Pazarlama sitesi (`viral.pusula.online`, `why.pusula.online`, `pusula.online`) ile ürün kontrol paneli **tek bir ürün** gibi görünmelidir. Site, paletini zaten kontrol panelinden almıştır — `css/tokens.css` dosyasında bile _"Palet, Pusula kontrol panelini yansıtır (src/app/globals.css)"_ ifadesi yer alır. Dolayısıyla ikisi renk düzeyinde zaten yaklaşık %80 oranında uyumludur. Kontrol panelinde eksik olanlar şunlardır:
+Pazarlama sitesi (`_mono_repo/pusulaSite/`) ile ürün kontrol paneli **tek bir ürün** gibi görünmelidir. Site, paletini zaten kontrol panelinden almıştır — `css/tokens.css` dosyasında bile _"Palet, Pusula kontrol panelini yansıtır (src/app/globals.css)"_ ifadesi yer alır. Dolayısıyla ikisi renk düzeyinde zaten yaklaşık %80 oranında uyumludur. Kontrol panelinde eksik olanlar şunlardır:
 
 1. Sitenin her sayfada kullandığı **milimetrik kâğıt ızgara duvar kâğıdı**.
 2. Sitede bulunan ancak kontrol panelinde eksik olan birkaç **paylaşılan tasarım belirteci** (yarıçap ölçeği, marka gradyanı, `surface-2`, mono yazı tipi).
@@ -45,8 +45,8 @@ Her marka rengi ve yüzey, siteyle **değer bakımından** zaten eşleşir (yaln
 
 | Kavram                            | Site belirteci (`tokens.css`)               | Kontrol paneli belirteci (`globals.css`) | Eşleşme                   |
 | --------------------------------- | ------------------------------------------- | ---------------------------------------- | ------------------------- |
-| birincil                          | `--primary #e54d5e`                         | `--color-primary #e54d5e`                | ✅                        |
-| birincil-vurgu                    | `--primary-hover #c93d4e`                   | `--color-primary-hover #c93d4e`          | ✅                        |
+| birincil                          | `--primary #0f8f83`                         | `--color-primary #0f8f83`                | ✅                        |
+| birincil-vurgu                    | `--primary-hover #0b6f66`                   | `--color-primary-hover #0b6f66`          | ✅                        |
 | vurgu                             | `--accent #6366f1`                          | `--color-accent #6366f1`                 | ✅                        |
 | vurgu-2                           | `--accent-2 #8b5cf6`                        | `--color-accent-hover #8b5cf6`           | ✅ (yeniden adlandırıldı) |
 | vurgu-3                           | `--accent-3 #a855f7`                        | `--color-accent-light #a855f7`           | ✅ (yeniden adlandırıldı) |
@@ -101,7 +101,7 @@ body::before {
 
 ### 4.2 Kod tabanında zaten bulunan örnek
 
-`src/app/landing/page.tsx:16-26`, aynı ızgarayı **zaten sayfa bazında uyguluyor**; ancak **kırmızı** çizgilerle (`#E54D5E`, opaklık `0.06`), **50px** aralıkla ve animasyonlu kürelerle. Dolayısıyla bu desen üründe kendini kanıtlamış durumda; bu çalışma onu **global ve temaya duyarlı** bir duvar kâğıdına dönüştürüyor.
+`src/app/landing/page.tsx:16-26`, aynı ızgarayı **zaten sayfa bazında uyguluyor**; ancak **kırmızı** çizgilerle (`#0F8F83`, opaklık `0.06`), **50px** aralıkla ve animasyonlu kürelerle. Dolayısıyla bu desen üründe kendini kanıtlamış durumda; bu çalışma onu **global ve temaya duyarlı** bir duvar kâğıdına dönüştürüyor.
 
 ### 4.3 Eklenen token'lar (`globals.css` içinde)
 

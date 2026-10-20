@@ -45,7 +45,7 @@ atlatma yöntemidir; WS1.3 garantisini korurken projenin v3.8.48'e kadar sahip o
 otomatik akışı geri getirir (sızdırılmış bir token tek başına yayım yapamaz — çünkü token yoktur).
 
 **Tek seferlik kurulum (sahip):** npmjs.com → `pusula` paketi → Settings → _Trusted
-Publisher_ → GitHub: owner `diegosouzapw`, repo `Pusula`, workflow `npm-publish.yml`
+Publisher_ → GitHub: owner `Ferhat-Yasinoglu`, repo `pusula`, workflow `npm-publish.yml`
 (environment: none). Bu yapılandırma mevcut olana kadar otomatik adım `ENEEDAUTH` ile başarısız
 olur: `publish_mode=staged` (aşağıda) veya `direct` ile yeniden tetikleyin.
 
@@ -81,7 +81,7 @@ geri alınabilir); `npm unpublish` komutunu yalnızca 72 saat/bağımlısı olma
 asla ilk hamle olarak kullanmayın. Docker: bir sürüm etiketini asla yeniden yazmayın — geri alma,
 `latest` etiketini son iyi digest'e yeniden yönlendirmektir.
 
-**Docker Hub `latest` (her kararlı SemVer yayımında zorunludur):**
+**GHCR `latest` (her kararlı SemVer yayımında zorunludur):**
 `docker-publish` iş akışı **hem** `X.Y.Z` etiketini **hem de**
 `should-promote-latest.sh` bunun en yüksek kararlı SemVer olduğunu doğruladığında `:latest`
 etiketini **aynı digest** ile etiketlemelidir. İşten sonra: Hub `latest` digest'i yeni
@@ -150,8 +150,8 @@ herhangi bir etiket olmadan E2E matrisini otomatik olarak atlar.
 - [ ] `npm run test:coverage` — 60/60/60/60 eşiği karşılanıyor (ifadeler/satırlar/fonksiyonlar/dallar)
 - [ ] `npm run test:integration` — başarılı (değişiklikler DB / işleyicileri etkiliyorsa)
 - [ ] `npm run test:combo:matrix` — başarılı (combo stratejisi matrisi: 19 genel yönlendirme stratejisinin tamamının seçim kararlarını deterministik olarak kanıtlar; combo yönlendirmesi, strateji çözümlemesi veya geri dönüş mantığı değiştirildiğinde çalıştırın)
-- [ ] `RUN_COMBO_LIVE=1 npm run test:combo:live` — **isteğe bağlı/manuel** (kapılı gerçek üst akış duman testi; VPS `root@192.168.0.15` üzerinden salt okunur bir DB anlık görüntüsü alır; gerçek sağlayıcılara istek gönderir, kredi tüketir; CI'da asla çalışmaz; kapı olmadan sorunsuz biçimde atlanır)
-- [ ] `npm run test:combo:live:vps` — **isteğe bağlı/manuel** (3. Aşama VPS canlı duman testi: canlı `.15` sunucusuna düz Node ESM aracılığıyla gönderilen 7 HTTP senaryosu; `ssh root@192.168.0.15` gerektirir; yalnızca `__live_test__*` combo'larını oluşturur/siler; gerçek sağlayıcılara istek gönderir; CI'da asla çalışmaz)
+- [ ] `RUN_COMBO_LIVE=1 npm run test:combo:live` — **isteğe bağlı/manuel** (kapılı gerçek üst akış duman testi; VPS `root@<your-server>` üzerinden salt okunur bir DB anlık görüntüsü alır; gerçek sağlayıcılara istek gönderir, kredi tüketir; CI'da asla çalışmaz; kapı olmadan sorunsuz biçimde atlanır)
+- [ ] `npm run test:combo:live:vps` — **isteğe bağlı/manuel** (3. Aşama VPS canlı duman testi: canlı `.15` sunucusuna düz Node ESM aracılığıyla gönderilen 7 HTTP senaryosu; `ssh root@<your-server>` gerektirir; yalnızca `__live_test__*` combo'larını oluşturur/siler; gerçek sağlayıcılara istek gönderir; CI'da asla çalışmaz)
 - [ ] `npm run test:e2e` — başarılı (UI değişiklikleri)
 - [ ] `npm run test:protocols:e2e` — başarılı (MCP/A2A değişiklikleri)
 - [ ] `npm run test:ecosystem` — başarılı
@@ -297,7 +297,7 @@ Dağıtım becerileri hafif rsync akışını kullanır — `npm pack` veya `npm
 - [ ] `/capture-release-evidences-cc` komutunu çalıştırın (Claude Code becerisi)
   - Yeni özelliklerin WebP ekran görüntülerini/kayıtlarını alır
   - Sürüm notlarına / blog gönderisine ekler
-- [ ] GitHub Discussions / Discord'u sürüm duyurusuyla güncelleyin
+- [ ] GitHub Discussions'ı sürüm duyurusuyla güncelleyin
 - [ ] Sonraki sürüm için kilometre taşı açın
 - [ ] Kritikse: uygulama içi banner için tartışmayı sabitleyin veya `news.json` içinde yayımlayın
 
@@ -307,13 +307,8 @@ Radar duyurusu kasıtlı olarak `active: false` ile commit edilmiştir. Etkinle�
 
 - [ ] Yığınlanmış tüm Radar PR'ları birleştirildi ve sürüm ucu CI durumu yeşil
 - [ ] `RADAR_ENABLED` varsayılan olarak hâlâ kapalıyken açık kaynaklı Radar rotalarını dağıtın ve temel işlev testinden geçirin
-- [ ] Belirtilen Radar ana makinesinde `GET /planos`, `/termos`, `/privacidade` ve `/reembolso` uç noktalarını temel işlev testinden geçirin
-- [ ] Operatörün kimliğini/iletişim bilgilerini/adresini ve sahibi tarafından onaylanmış hukuki incelemeyi özel hizmete kaydedin
-- [ ] Stripe Checkout'u ve imzalı webhook'u yalnızca test modunda sınayın
-- [ ] Onaylı gönderen/alan adıyla şifrelenmiş bir işlemsel e-posta teslimatını sınayın
 - [ ] Yedekten geri yüklemenin çalıştığını ve gözetimli, bütçesi sınırlandırılmış bir araştırma çalıştırmasını kanıtlayın
-- [ ] Bağış kanıtını kabul etmeden önce BRL/PIX inceleme politikasını onaylayın
-- [ ] Herkese açık Checkout'u yalnızca önceki geçitler tamamlandıktan sonra etkinleştirin, ardından yeni `news.json` kimliğini etkinleştirin
+- [ ] Yeni `news.json` kimliğini yalnızca önceki geçitler tamamlandıktan sonra etkinleştirin
 - [ ] Ana Sayfa banner'ının yerelleştirilmiş metin kullandığını ve eski bir kimlik kapatıldıktan sonra yeni bir kimliğin yeniden göründüğünü doğrulayın
 
 ## Gömülü Hizmetler duman testi (v3.8.4+)
@@ -392,7 +387,7 @@ Sürümde kritik bir sorun varsa:
 1. `gh release edit vX.Y.Z --prerelease` (en son sürüm olarak işaretlenmesini kaldırır)
 2. `git tag -d vX.Y.Z && git push --delete origin vX.Y.Z` (yalnızca kullanıcılar tarafından henüz benimsenmediyse)
 3. Veya: `release/vX.Y.0` üzerinde düzeltme → yama sürümü `vX.Y.(Z+1)`
-4. GitHub Discussions ve Discord üzerinden derhal iletişim kurun
+4. GitHub Discussions üzerinden derhal iletişim kurun
 
 ## Kesin Kurallar
 

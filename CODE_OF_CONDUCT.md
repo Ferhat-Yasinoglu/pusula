@@ -62,7 +62,7 @@ Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement by opening a
 private security advisory at
 <https://github.com/Ferhat-Yasinoglu/pusula/security/advisories/new>
-or by emailing the maintainer at diegosouza.pw@outlook.com.
+or by contacting the maintainer, [@Ferhat-Yasinoglu](https://github.com/Ferhat-Yasinoglu), on GitHub.
 For security-sensitive incidents, see [`SECURITY.md`](SECURITY.md).
 All complaints will be reviewed and investigated promptly and fairly.
 

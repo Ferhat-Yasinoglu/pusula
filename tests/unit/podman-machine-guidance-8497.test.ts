@@ -38,7 +38,7 @@ test("#8497 Podman guide separates local engines from Podman Machine", () => {
   assert.match(localGuidance, /podman unshare chown 1000:1000 \.\/data/);
   assert.doesNotMatch(machineGuidance, /podman unshare chown/);
   assert.match(machineGuidance, /remote client/);
-  assert.match(machineGuidance, /docker\.io\/diegosouzapw\/pusula:latest/);
+  assert.match(machineGuidance, /docker\.io\/ferhat-yasinoglu\/pusula:latest/);
 });
 
 test("#8497 Quadlet is Linux/systemd-only and generated units are not enabled", () => {
@@ -94,8 +94,8 @@ test("#8497 pull example and environment hints stay topology-safe", () => {
   const envExample = read(".env.example");
   const envReference = read("docs/reference/ENVIRONMENT.md");
 
-  assert.match(quadlet, /Image=docker\.io\/diegosouzapw\/pusula:latest/);
-  assert.doesNotMatch(quadlet, /diegosouzapw\/pusula:base/);
+  assert.match(quadlet, /Image=docker\.io\/ferhat-yasinoglu\/pusula:latest/);
+  assert.doesNotMatch(quadlet, /ferhat-yasinoglu\/pusula:base/);
 
   for (const source of [envExample, envReference]) {
     assert.match(source, /any Podman topology/);

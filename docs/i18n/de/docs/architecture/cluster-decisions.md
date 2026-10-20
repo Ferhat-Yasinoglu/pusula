@@ -4,7 +4,7 @@
 
 ---
 
-**Status:** Vorschlag (wartet auf Prüfung durch @diegosouzapw)
+**Status:** Vorschlag (wartet auf Prüfung durch @Ferhat-Yasinoglu)
 **Datum:** 2026-06-20
 **Referenzen:** [#3932](https://github.com/Ferhat-Yasinoglu/pusula/issues/3932), PR #4381
 

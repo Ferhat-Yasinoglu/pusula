@@ -29,7 +29,7 @@ Pusula için yaygın sorunlar ve çözümleri.
 | "pusula tanınmıyor"        | Windows PATH içinde global node modülleri eksik | npm global ön ekinizi Windows PATH'e ekleyin. `npm config get prefix` ile bulun.                     |
 | "429 Çok Fazla İstek"         | Hız sınırına takıldınız                         | 1 dakika bekleyin veya daha fazla sağlayıcı bağlayın                                                 |
 
-**Hâlâ çözemediniz mi?** Aşağıdaki [ayrıntılı sorun giderme](#detailed-troubleshooting) bölümüne bakın veya [Discord](https://discord.gg/U47eFqAXCn) üzerinden sorun.
+**Hâlâ çözemediniz mi?** Aşağıdaki [ayrıntılı sorun giderme](#detailed-troubleshooting) bölümüne bakın veya bir [GitHub issue](https://github.com/Ferhat-Yasinoglu/pusula/issues) açın.
 
 ---
 
@@ -362,7 +362,7 @@ Tüm ayrıntılar ve iki Kiro hesabını yan yana eklemeye yönelik adım adım 
 ### Bulut Senkronizasyonu Hataları
 
 1. `BASE_URL` değerinin çalışan örneğinizi gösterdiğini doğrulayın (ör. `http://localhost:20128`)
-2. `CLOUD_URL` değerinin bulut uç noktanızı gösterdiğini doğrulayın (ör. `https://pusula.dev`)
+2. `CLOUD_URL` değerinin bulut uç noktanızı gösterdiğini doğrulayın (ör. `https://pusula.example.com`)
 3. `NEXT_PUBLIC_*` değerlerini sunucu tarafındaki değerlerle uyumlu tutun
 
 ### Bulutta `stream=false` 500 Hatası Döndürüyor

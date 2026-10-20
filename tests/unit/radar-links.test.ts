@@ -1,56 +1,91 @@
 /**
  * tests/unit/radar-links.test.ts
  *
- * TDD guard for src/lib/radar/links.ts — the two outbound "get a supporter
- * key" links (F4/T7): contributor-claim (GitHub OAuth) and supporter-plans
- * (payment page). Pure, DB-free module: defaults + env override only.
+ * TDD guard for src/lib/radar/links.ts — the two OPTIONAL outbound "get a
+ * supporter key" links (F4/T7): contributor-claim and supporter-plans, both
+ * living on the operator's own self-hosted Radar feed server.
+ *
+ * Radar is self-hosted only, so the module is env-only with NO default:
+ * unset => null (the dashboard hides the button), set => the operator's URL.
+ * Pure, DB-free module.
  *
  * No price/monetary value assertion lives here on purpose — this module
- * never resolves one (D14: pricing only lives on the private plans page the
- * URL points at, never in the OSS repo).
+ * never resolves one (D14: pricing never lives in this repo).
  */
 
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 
-test.beforeEach(() => {
+const links = await import("../../src/lib/radar/links.ts");
+
+function clearEnv(): void {
   delete process.env.RADAR_CONTRIBUTOR_CLAIM_URL;
   delete process.env.RADAR_SUPPORTER_PLANS_URL;
+}
+
+test.beforeEach(clearEnv);
+test.after(clearEnv);
+
+test("getContributorClaimUrl / getSupporterPlansUrl: no default — unset env => null (buttons hidden)", () => {
+  assert.equal(links.getContributorClaimUrl(), null);
+  assert.equal(links.getSupporterPlansUrl(), null);
 });
 
-test.after(() => {
-  delete process.env.RADAR_CONTRIBUTOR_CLAIM_URL;
-  delete process.env.RADAR_SUPPORTER_PLANS_URL;
+test("getContributorClaimUrl: honors RADAR_CONTRIBUTOR_CLAIM_URL (operator's self-hosted server)", () => {
+  process.env.RADAR_CONTRIBUTOR_CLAIM_URL = "https://radar.example.com/auth/github";
+  assert.equal(links.getContributorClaimUrl(), "https://radar.example.com/auth/github");
+  assert.equal(links.getSupporterPlansUrl(), null, "the other link stays hidden independently");
 });
 
-test("getContributorClaimUrl: defaults to the radar.pusula.online GitHub OAuth entry point", async () => {
-  const { getContributorClaimUrl } = await import("../../src/lib/radar/links.ts");
-  assert.equal(getContributorClaimUrl(), "https://radar.pusula.online/auth/github");
+test("getSupporterPlansUrl: honors RADAR_SUPPORTER_PLANS_URL (operator's self-hosted server)", () => {
+  process.env.RADAR_SUPPORTER_PLANS_URL = "https://radar.example.com/plans";
+  assert.equal(links.getSupporterPlansUrl(), "https://radar.example.com/plans");
+  assert.equal(links.getContributorClaimUrl(), null, "the other link stays hidden independently");
 });
 
-test("getContributorClaimUrl: honors RADAR_CONTRIBUTOR_CLAIM_URL override", async () => {
-  process.env.RADAR_CONTRIBUTOR_CLAIM_URL = "https://fork.example.com/auth/github";
-  const { getContributorClaimUrl } = await import("../../src/lib/radar/links.ts");
-  assert.equal(getContributorClaimUrl(), "https://fork.example.com/auth/github");
-});
-
-test("getSupporterPlansUrl: defaults to the radar.pusula.online plans page", async () => {
-  const { getSupporterPlansUrl } = await import("../../src/lib/radar/links.ts");
-  assert.equal(getSupporterPlansUrl(), "https://radar.pusula.online/planos");
-});
-
-test("getSupporterPlansUrl: honors RADAR_SUPPORTER_PLANS_URL override", async () => {
-  process.env.RADAR_SUPPORTER_PLANS_URL = "https://fork.example.com/plans";
-  const { getSupporterPlansUrl } = await import("../../src/lib/radar/links.ts");
-  assert.equal(getSupporterPlansUrl(), "https://fork.example.com/plans");
-});
-
-test("getContributorClaimUrl / getSupporterPlansUrl: empty-string env falls back to default (not a blank link)", async () => {
+test("getContributorClaimUrl / getSupporterPlansUrl: empty or whitespace-only env => null, never a blank link", () => {
   process.env.RADAR_CONTRIBUTOR_CLAIM_URL = "";
-  process.env.RADAR_SUPPORTER_PLANS_URL = "";
-  const { getContributorClaimUrl, getSupporterPlansUrl } = await import(
-    "../../src/lib/radar/links.ts"
-  );
-  assert.equal(getContributorClaimUrl(), "https://radar.pusula.online/auth/github");
-  assert.equal(getSupporterPlansUrl(), "https://radar.pusula.online/planos");
+  process.env.RADAR_SUPPORTER_PLANS_URL = "   ";
+  assert.equal(links.getContributorClaimUrl(), null);
+  assert.equal(links.getSupporterPlansUrl(), null);
+});
+
+test("getContributorClaimUrl / getSupporterPlansUrl: surrounding whitespace is trimmed", () => {
+  process.env.RADAR_CONTRIBUTOR_CLAIM_URL = "  https://radar.example.com/auth/github  ";
+  process.env.RADAR_SUPPORTER_PLANS_URL = " http://radar.internal.example.com:8080/plans ";
+  assert.equal(links.getContributorClaimUrl(), "https://radar.example.com/auth/github");
+  assert.equal(links.getSupporterPlansUrl(), "http://radar.internal.example.com:8080/plans");
+});
+
+test("getContributorClaimUrl / getSupporterPlansUrl: relative or non-http(s) values => null (never rendered as an href)", () => {
+  for (const value of [
+    "/auth/github",
+    "radar.example.com/plans",
+    "javascript:alert(1)",
+    "ftp://radar.example.com",
+  ]) {
+    process.env.RADAR_CONTRIBUTOR_CLAIM_URL = value;
+    process.env.RADAR_SUPPORTER_PLANS_URL = value;
+    assert.equal(links.getContributorClaimUrl(), null, `claim: ${value}`);
+    assert.equal(links.getSupporterPlansUrl(), null, `plans: ${value}`);
+  }
+});
+
+test("getRadarAdminUrl: still default-free and independent of the two supporter links", () => {
+  process.env.RADAR_CONTRIBUTOR_CLAIM_URL = "https://radar.example.com/auth/github";
+  process.env.RADAR_SUPPORTER_PLANS_URL = "https://radar.example.com/plans";
+  const saved = process.env.RADAR_ADMIN_URL;
+  delete process.env.RADAR_ADMIN_URL;
+  try {
+    assert.equal(links.getRadarAdminUrl(), null);
+  } finally {
+    if (saved !== undefined) process.env.RADAR_ADMIN_URL = saved;
+  }
+});
+
+test("links.ts embeds no URL literal — there is no upstream host to fall back to", async () => {
+  const source = await readFile(new URL("../../src/lib/radar/links.ts", import.meta.url), "utf8");
+  assert.doesNotMatch(source, /https?:\/\/[a-z0-9.-]+\.[a-z]{2,}/i);
+  assert.doesNotMatch(source, /DEFAULT_(CONTRIBUTOR_CLAIM|SUPPORTER_PLANS)_URL/);
 });

@@ -7,9 +7,8 @@ type AdaptaTutorialModalProps = {
   onClose: () => void;
 };
 
-// The Adapta CTA href used to go through our own link.pusula.online shortener
-// for click metrics, but that domain no longer resolves after the move to
-// omniskill.online, so href and visible text are the real destination again.
+// Walks the user through copying the Clerk `__client` cookie from
+// agent.adapta.one, which the adapta-web provider uses as its credential.
 export function AdaptaTutorialModal({ isOpen, onClose }: AdaptaTutorialModalProps) {
   const t = useTranslations("providers.adaptaTutorial");
 

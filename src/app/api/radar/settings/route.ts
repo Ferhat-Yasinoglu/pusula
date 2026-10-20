@@ -3,12 +3,15 @@
  * snapshot. Powers the dashboard page's "am I already opted in?" check so
  * a reload doesn't re-show the activation screen (see FIX 3).
  *
- * Also relays the two F4/T7 "get a supporter key" outbound links
+ * Also relays the two OPTIONAL F4/T7 "get a supporter key" outbound links
  * (`contributorClaimUrl`, `supporterPlansUrl` — see `@/lib/radar/links`) so
  * the client component never reads `process.env` itself. Smallest surface
- * per spec: no dedicated route, reuses this one. Both are plain public
- * URLs (no secret, no pricing) — safe to expose alongside the settings
- * snapshot, gated by the same flag/auth checks below.
+ * per spec: no dedicated route, reuses this one. Radar is self-hosted only,
+ * so each link is `null` unless the operator configured
+ * `RADAR_CONTRIBUTOR_CLAIM_URL` / `RADAR_SUPPORTER_PLANS_URL` for their own
+ * feed server — the dashboard hides a button whose link is `null`. When set
+ * they are plain public URLs (no secret, no pricing) — safe to expose
+ * alongside the settings snapshot, gated by the same flag/auth checks below.
  *
  * POST /api/radar/settings — set Radar opt-in and/or supporter key.
  *

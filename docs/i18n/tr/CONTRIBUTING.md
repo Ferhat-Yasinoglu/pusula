@@ -396,4 +396,5 @@ VPS dağıtımları için `npm run build:release` kullanın — temiz bir yenide
 - **Güvenlik belgeleri**: [`docs/security/CLI_TOKEN.md`](docs/security/CLI_TOKEN.md), [`docs/security/ROUTE_GUARD_TIERS.md`](docs/security/ROUTE_GUARD_TIERS.md), [`docs/security/ERROR_SANITIZATION.md`](docs/security/ERROR_SANITIZATION.md), [`docs/security/PUBLIC_CREDS.md`](docs/security/PUBLIC_CREDS.md)
 - **Operasyon belgeleri**: [`docs/ops/SQLITE_RUNTIME.md`](docs/ops/SQLITE_RUNTIME.md)
 - **Sorun Bildirimi (Issues)**: [github.com/Ferhat-Yasinoglu/pusula/issues](https://github.com/Ferhat-Yasinoglu/pusula/issues)
+- **Sorular ve Tartışmalar (Discussions)**: [github.com/Ferhat-Yasinoglu/pusula/discussions](https://github.com/Ferhat-Yasinoglu/pusula/discussions)
 - **Mimari Karar Kayıtları (ADR)**: Mimari karar kayıtları için `docs/adr/` dizinine bakın

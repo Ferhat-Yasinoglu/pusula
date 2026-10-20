@@ -128,7 +128,7 @@ mkdir -p data
 ### 3. Build and start
 
 The application profiles use local image names such as `pusula:base`; those
-are build outputs, not published Docker Hub tags. On the first run, have Compose
+are build outputs, not published GHCR tags. On the first run, have Compose
 build the selected profile:
 
 ```bash
@@ -191,7 +191,7 @@ podman run -d --name pusula \
   -e DATA_DIR=/app/data \
   -p 20128:20128 \
   -v pusula-data:/app/data \
-  docker.io/ferhat-yasinoglu/pusula:latest
+  ghcr.io/ferhat-yasinoglu/pusula:latest
 ```
 
 For a bind mount that still fails, inspect or repair the shared path from the

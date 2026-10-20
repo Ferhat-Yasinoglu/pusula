@@ -7,7 +7,7 @@ lastUpdated: 2026-07-14
 # Homologation Suite (`npm run homolog`)
 
 Real-environment E2E validation of the Pusula deploy running on the homologation VPS
-(`HOMOLOG_BASE_URL`, e.g. `http://192.168.0.15:20128`). One command replaces the manual
+(`HOMOLOG_BASE_URL`, e.g. `http://127.0.0.1:20128`). One command replaces the manual
 release STOP #2 checklist with an automated, evidence-producing run.
 
 ## What it covers
@@ -30,7 +30,7 @@ not an eval. AI only enters in future maintenance work (see Roadmap below).
 ## Prerequisites
 
 1. Copy `.env.homolog.example` to `.env.homolog` (gitignored — never commit it) and fill in:
-   - `HOMOLOG_BASE_URL` — the target deploy, e.g. `http://192.168.0.15:20128`.
+   - `HOMOLOG_BASE_URL` — the target deploy, e.g. `http://127.0.0.1:20128`.
    - `HOMOLOG_ADMIN_PASSWORD` — the dashboard management password for that deploy.
    - `HOMOLOG_CRITICAL_PROVIDERS` — comma-separated provider prefixes that get a real
      smoke chat request (e.g. `openai,anthropic,gemini,codex,grok,glm,deepseek,openrouter`).

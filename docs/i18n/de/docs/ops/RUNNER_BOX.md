@@ -47,7 +47,7 @@ prüfen.
 Das standardmäßige `KillMode=process` des Runners lässt `Runner.Worker → npm → next-build`
 weiterlaufen, wenn eine Unit gestoppt oder neu gestartet wird — ein verwaister Build verbraucht
 weiterhin RAM und CPU, ohne dass ihm ein Job zugeordnet ist. Jede Pusula-Unit verfügt über ein Drop-in
-(`/etc/systemd/system/actions.runner.diegosouzapw-Pusula.<name>.service.d/10-killmode.conf`)
+(`/etc/systemd/system/actions.runner.Ferhat-Yasinoglu-pusula.<name>.service.d/10-killmode.conf`)
 mit `KillMode=mixed`: zuerst SIGTERM an den Listener, dann bei
 `TimeoutStop` SIGKILL an die gesamte cgroup. Es wird beim nächsten Neustart der Unit wirksam — starten Sie
 **jeweils nur einen Runner und nur im Leerlauf** neu, wobei sich die Leerlaufprüfung und der Neustart

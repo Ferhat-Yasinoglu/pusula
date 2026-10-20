@@ -31,7 +31,7 @@ Common problems and solutions for Pusula.
 | "pusula is not recognized" | Windows PATH is missing global node modules | Add your npm global prefix to Windows PATH. Find it with `npm config get prefix`.                 |
 | "429 Too Many Requests"       | Rate limited                                | Wait 1 minute, or connect more providers                                                          |
 
-**Still stuck?** See the [detailed troubleshooting](#detailed-troubleshooting) below, or ask on [Discord](https://discord.gg/U47eFqAXCn).
+**Still stuck?** See the [detailed troubleshooting](#detailed-troubleshooting) below, or open a [GitHub issue](https://github.com/Ferhat-Yasinoglu/pusula/issues).
 
 ---
 
@@ -382,7 +382,7 @@ see [`docs/guides/KIRO_SETUP.md`](./KIRO_SETUP.md).
 ### Cloud Sync Errors
 
 1. Verify `BASE_URL` points to your running instance (e.g., `http://localhost:20128`)
-2. Verify `CLOUD_URL` points to your cloud endpoint (e.g., `https://pusula.dev`)
+2. Verify `CLOUD_URL` points to your cloud endpoint (e.g., `https://pusula.example.com`)
 3. Keep `NEXT_PUBLIC_*` values aligned with server-side values
 
 ### Cloud `stream=false` Returns 500

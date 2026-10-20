@@ -181,7 +181,7 @@ Gespeichert in `<DATA_DIR>/server.env`. `DATA_DIR` wird wie folgt aufgelöst:
 Wird über `session.defaultSession.webRequest.onHeadersReceived` festgelegt. Wichtige Direktiven:
 
 - `frame-ancestors 'none'`, `object-src 'none'`, `child-src 'none'`
-- `connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:* https://*.pusula.online https://*.pusula.dev`
+- `connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:*`
 - Im Entwicklungsmodus wird ausschließlich `script-src` um `'unsafe-eval'` ergänzt
 
 ## Automatische Updates

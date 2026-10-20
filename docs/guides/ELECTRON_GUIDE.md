@@ -175,7 +175,7 @@ Persisted to `<DATA_DIR>/server.env`. `DATA_DIR` resolves to:
 Set via `session.defaultSession.webRequest.onHeadersReceived`. Notable directives:
 
 - `frame-ancestors 'none'`, `object-src 'none'`, `child-src 'none'`
-- `connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:* https://*.pusula.online https://*.pusula.dev`
+- `connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:*`
 - Dev mode adds `'unsafe-eval'` to `script-src` only
 
 ## Auto-update

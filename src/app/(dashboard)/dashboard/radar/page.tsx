@@ -91,10 +91,12 @@ export default function RadarPage() {
     campaigns: [],
     tier: null,
   });
-  // F4/T7 — "get a supporter key" outbound links, relayed by
+  // F4/T7 — optional "get a supporter key" outbound links, relayed by
   // GET /api/radar/settings (server-resolved, see src/lib/radar/links.ts).
-  // Never hardcoded here: this component must never embed an external URL
-  // literal (see tests/unit/radar-referrals-page-tab.test.ts).
+  // Radar is self-hosted only: each is `null` unless the operator configured
+  // the matching env var for their own feed server, and a null link hides its
+  // button. Never hardcoded here: this component must never embed an external
+  // URL literal (see tests/unit/radar-referrals-page-tab.test.ts).
   const [contributorClaimUrl, setContributorClaimUrl] = useState<string | null>(null);
   const [supporterPlansUrl, setSupporterPlansUrl] = useState<string | null>(null);
 
@@ -177,13 +179,20 @@ export default function RadarPage() {
       setSupporterKeyMasked(
         typeof settingsData.supporterKeyMasked === "string" ? settingsData.supporterKeyMasked : null
       );
-      // F4/T7 — best-effort: keep whatever we already had if the field is
-      // absent (older cached response shape), never fall back to a literal.
-      if (typeof settingsData.contributorClaimUrl === "string") {
-        setContributorClaimUrl(settingsData.contributorClaimUrl);
+      // F4/T7 — best-effort: an explicit `null` (operator configured no link)
+      // hides the button; keep whatever we already had if the field is absent
+      // (older cached response shape); never fall back to a literal.
+      if (
+        typeof settingsData.contributorClaimUrl === "string" ||
+        settingsData.contributorClaimUrl === null
+      ) {
+        setContributorClaimUrl(settingsData.contributorClaimUrl || null);
       }
-      if (typeof settingsData.supporterPlansUrl === "string") {
-        setSupporterPlansUrl(settingsData.supporterPlansUrl);
+      if (
+        typeof settingsData.supporterPlansUrl === "string" ||
+        settingsData.supporterPlansUrl === null
+      ) {
+        setSupporterPlansUrl(settingsData.supporterPlansUrl || null);
       }
 
       if (settingsData.optIn === true) {
@@ -218,10 +227,16 @@ export default function RadarPage() {
       if (data.status === "updated" || data.status === "stale") {
         await fetchCatalog();
         void fetchReferrals();
-      } else if (data.status === "error" || data.status === "too_large") {
+      } else if (
+        data.status === "error" ||
+        data.status === "too_large" ||
+        data.status === "not_configured"
+      ) {
         // "too_large" reuses the generic sync-failed copy — the feed exceeded the
         // client-side size cap (10MB), which is operationally the same as any
         // other sync failure from the operator's point of view.
+        // "not_configured" carries the server's reason (RADAR_FEED_URL is unset:
+        // Radar is self-hosted only) so the operator learns what to configure.
         setError(data.reason || t("syncFailed"));
       } else if (data.status === "disabled") {
         setError(t("flagDisabled"));
@@ -403,31 +418,43 @@ export default function RadarPage() {
 
                 <RadarAccessExplainer />
 
-                {/* F4/T7 — ways to obtain a supporter key. These conditions
-                    intentionally precede both activation actions (D32). */}
-                {contributorClaimUrl && supporterPlansUrl && (
+                {/* F4/T7 — ways to obtain a supporter key from the operator's own
+                    Radar feed server. Each link renders only when the operator
+                    configured its URL (RADAR_CONTRIBUTOR_CLAIM_URL /
+                    RADAR_SUPPORTER_PLANS_URL); the whole section disappears when
+                    neither is set. These conditions intentionally precede both
+                    activation actions (D32). */}
+                {(contributorClaimUrl || supporterPlansUrl) && (
                   <div className="flex w-full flex-col gap-3 rounded-xl border border-border p-4">
                     <p className="text-sm font-medium">{t("claimSectionTitle")}</p>
                     <div className="flex w-full flex-col gap-3 sm:flex-row">
-                      <a
-                        href={contributorClaimUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 rounded-lg border border-violet-500 px-4 py-2 text-center text-sm font-medium text-violet-400 transition-colors hover:bg-violet-500/10"
-                      >
-                        {t("contributorButton")}
-                      </a>
-                      <a
-                        href={supporterPlansUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 rounded-lg border border-violet-500 px-4 py-2 text-center text-sm font-medium text-violet-400 transition-colors hover:bg-violet-500/10"
-                      >
-                        {t("supporterButton")}
-                      </a>
+                      {contributorClaimUrl && (
+                        <a
+                          href={contributorClaimUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 rounded-lg border border-violet-500 px-4 py-2 text-center text-sm font-medium text-violet-400 transition-colors hover:bg-violet-500/10"
+                        >
+                          {t("contributorButton")}
+                        </a>
+                      )}
+                      {supporterPlansUrl && (
+                        <a
+                          href={supporterPlansUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 rounded-lg border border-violet-500 px-4 py-2 text-center text-sm font-medium text-violet-400 transition-colors hover:bg-violet-500/10"
+                        >
+                          {t("supporterButton")}
+                        </a>
+                      )}
                     </div>
-                    <p className="text-left text-xs text-text-muted">{t("contributorHint")}</p>
-                    <p className="text-left text-xs text-text-muted">{t("supporterHint")}</p>
+                    {contributorClaimUrl && (
+                      <p className="text-left text-xs text-text-muted">{t("contributorHint")}</p>
+                    )}
+                    {supporterPlansUrl && (
+                      <p className="text-left text-xs text-text-muted">{t("supporterHint")}</p>
+                    )}
                   </div>
                 )}
 

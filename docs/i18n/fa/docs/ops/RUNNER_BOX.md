@@ -45,7 +45,7 @@ exit 1 = نیازمند رسیدگی؛ گزارش را بخوانید.
 مقدار پیشفرض `KillMode=process` در runner باعث میشود زنجیرهٔ `Runner.Worker → npm → next-build`
 هنگام توقف یا راهاندازی مجدد یک واحد زنده بماند — در نتیجه، یک build یتیم بدون اینکه jobای به آن
 متصل باشد، همچنان RAM و CPU مصرف میکند. هر واحد Pusula یک drop-in
-(`/etc/systemd/system/actions.runner.diegosouzapw-Pusula.<name>.service.d/10-killmode.conf`)
+(`/etc/systemd/system/actions.runner.Ferhat-Yasinoglu-pusula.<name>.service.d/10-killmode.conf`)
 با `KillMode=mixed` دارد: ابتدا SIGTERM برای listener و در زمان
 `TimeoutStop`،‏ SIGKILL برای کل cgroup ارسال میشود. این تنظیم در راهاندازی مجدد بعدی واحد اعمال
 میشود — هر بار **فقط یک runner را و تنها در زمان idle بودن** راهاندازی مجدد کنید؛ بررسی idle بودن

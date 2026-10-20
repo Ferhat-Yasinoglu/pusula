@@ -38,9 +38,9 @@ Bu yapıtları `_tasks/` deposu içinde commit edin (`git -C _tasks …`), asla 
 
 ## Geçici Dosyalar — `/tmp` Değil `_artifacts/` Kullanın
 
-Bu proje, çalışma ortamının varsayılan oturum karalama alanını (`/tmp/claude-*/…`) geçersiz kılar. Geçici/çalışma dosyalarını — dışa aktarmaları, oluşturulan zip'leri, tek seferlik ara çıktıları, aksi halde `/tmp` içine koyacağınız her şeyi — bunun yerine `/home/diegosouzapw/dev/proxys/Pusula/_artifacts/` dizinine yazın.
+Bu proje, çalışma ortamının varsayılan oturum karalama alanını (`/tmp/claude-*/…`) geçersiz kılar. Geçici/çalışma dosyalarını — dışa aktarmaları, oluşturulan zip'leri, tek seferlik ara çıktıları, aksi halde `/tmp` içine koyacağınız her şeyi — bunun yerine depo kökündeki `_artifacts/` dizinine yazın.
 
-- `_artifacts/` bir kök `_*` yoludur: zaten gitignore edilmiştir (`AGENTS.md` → "Root `_*` paths"), yalnızca diskte yaşar, asla takip edilmez.
+- `_artifacts/` kök düzeyinde bir `_*` dizinidir: zaten gitignore edilmiştir (`AGENTS.md` → "Root `_*` paths"), yalnızca diskte yaşar, asla takip edilmez.
 - Gerekçe: karalama çıktılarını proje içinde tutmak (vs `/tmp`), operatörün geçici her şeyi tek bir yerde bulup silmesini kolaylaştırır.
 - Bunu `_tasks/` (Katı Kural #23, kalıcı planlar/şartnameler/araştırmalar için kendi özel git deposu) ile **karıştırmayın** — `_artifacts/` yalnızca tek kullanımlık çalışma dosyaları içindir.
 

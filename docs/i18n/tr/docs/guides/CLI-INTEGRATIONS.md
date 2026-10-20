@@ -27,7 +27,6 @@ En zengin iki entegrasyonun tek seferlik, elle yazılmış temel kurulumu için,
 - [Claude Code yapılandırması](./CLAUDE-CODE-CONFIGURATION.md)
 - [Codex CLI yapılandırması](./CODEX-CLI-CONFIGURATION.md)
 - [Uzak Mod](./REMOTE-MODE.md) — dizüstü bilgisayarınızdan uzak bir Pusula'u (VPS / Tailnet) yönetin
-- [VS Code Copilot Sohbeti](./VSCODE-COPILOT.md) — OmniCopilot uzantısı; bu `setup-*` komutlarını sizin için düzenleyicinin içinden de çalıştırabilir
 
 ---
 

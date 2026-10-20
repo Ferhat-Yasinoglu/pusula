@@ -413,7 +413,7 @@ GET /v1/models?prefix=canonical    # nur das vollständige Anbieter-ID-Präfix
 
 Eine Spiegel-ID im `dual`-Modus kann auch ohne den Abfrageparameter erkannt werden: Sie enthält ein `parent`-Feld, das auf die primäre ID verweist.
 
-Clients, die eine Modellauswahl darstellen, sollten `?prefix=alias` anfordern — so verfährt auch die [OmniCopilot-VS-Code-Erweiterung](../guides/VSCODE-COPILOT.md).
+Clients, die eine Modellauswahl darstellen, sollten `?prefix=alias` anfordern.
 
 ### Modellvarianten ohne Denkmodus
 
@@ -706,7 +706,7 @@ lokalen Server validiert: ChatGPT gibt `codex.rate_limits` +
 
 ## Self-Service-Nutzung (`/api/usage/om-usage`)
 
-Jeder API-Schlüssel kann seine **eigene** Nutzung und seine Kontingente abrufen — ohne Verwaltungsauthentifizierung. Dies ist der Endpunkt, über den ein Client (CLI, das OmniCopilot-Panel) einem Schlüsselinhaber seine Ausgaben anzeigt.
+Jeder API-Schlüssel kann seine **eigene** Nutzung und seine Kontingente abrufen — ohne Verwaltungsauthentifizierung. Dies ist der Endpunkt, über den ein Client (zum Beispiel die CLI) einem Schlüsselinhaber seine Ausgaben anzeigt.
 
 ```bash
 # Textformat (der bisherige Vertrag — Klartext für ein Terminal)

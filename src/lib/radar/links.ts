@@ -1,51 +1,62 @@
 /**
- * links.ts — pure config for the two Radar "get a supporter key" outbound
- * links (F4/T7): the contributor-claim (GitHub OAuth) flow and the
- * supporter-plans (payment) page on the private radar.pusula.online
- * server.
+ * links.ts — pure config for the two OPTIONAL Radar "get a supporter key"
+ * outbound links (F4/T7): the contributor-claim flow and the supporter-plans
+ * page. Both live on the operator's own self-hosted Radar feed server.
  *
- * DELIBERATELY DB-FREE and side-effect-free — same shape as the
- * `RADAR_FEED_URL` override already used by `./sync.ts`, so forks/self-hosters
- * point both links at their own deployment via env vars (see
- * docs/frameworks/RADAR.md).
+ * Radar is self-hosted only, so NEITHER link has a default: when the operator
+ * leaves `RADAR_CONTRIBUTOR_CLAIM_URL` / `RADAR_SUPPORTER_PLANS_URL` unset the
+ * accessors return `null`, `GET /api/radar/settings` relays `null`, and the
+ * dashboard hides the corresponding button. Same env-only shape as the
+ * `RADAR_FEED_URL` setting used by `./sync.ts` (see docs/frameworks/RADAR.md).
  *
- * These functions are read server-side only (inside a route handler) and the
- * resolved URLs are relayed to the client via GET /api/radar/settings — the
- * dashboard page never reads `process.env` itself, matching the pattern the
- * D28 referral links already established for the private feed.
+ * DELIBERATELY DB-FREE and side-effect-free. These functions are read
+ * server-side only (inside a route handler) and the resolved URLs are relayed
+ * to the client via GET /api/radar/settings — the dashboard page never reads
+ * `process.env` itself, matching the pattern the D28 referral links use.
  *
  * No price or monetary value is ever resolved, stored, or exposed here — the
- * URLs point at pages that are themselves the ONLY place pricing lives
- * (spec D14: no pricing in the OSS repo).
+ * URLs point at pages the operator controls; this repo never states pricing
+ * (spec D14).
  */
 
 import { parseRadarAdminUrl } from "@/shared/validation/radarAdminUrl";
 
-/** Default contributor-claim entry point — starts the GitHub OAuth flow. */
-const DEFAULT_CONTRIBUTOR_CLAIM_URL = "https://radar.pusula.online/auth/github";
-
-/** Default supporter plans/payment page. */
-const DEFAULT_SUPPORTER_PLANS_URL = "https://radar.pusula.online/planos";
-
 /**
- * URL that starts the "I'm a contributor" GitHub OAuth claim flow.
- * Override with `RADAR_CONTRIBUTOR_CLAIM_URL` for forks/self-hosters.
+ * Accept only an absolute `http(s)` URL; anything else (unset, blank,
+ * relative, `javascript:` …) resolves to `null` so it is never rendered as an
+ * `href`.
  */
-export function getContributorClaimUrl(): string {
-  return process.env.RADAR_CONTRIBUTOR_CLAIM_URL || DEFAULT_CONTRIBUTOR_CLAIM_URL;
+function optionalHttpUrl(value: string | undefined): string | null {
+  const trimmed = value?.trim();
+  if (!trimmed) return null;
+  try {
+    const parsed = new URL(trimmed);
+    if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return null;
+  } catch {
+    return null;
+  }
+  return trimmed;
 }
 
 /**
- * URL for the "Support the project" plans/payment page.
- * Override with `RADAR_SUPPORTER_PLANS_URL` for forks/self-hosters.
+ * URL of the "I'm a contributor" claim flow on the operator's feed server,
+ * from `RADAR_CONTRIBUTOR_CLAIM_URL`. `null` (button hidden) when unset.
  */
-export function getSupporterPlansUrl(): string {
-  return process.env.RADAR_SUPPORTER_PLANS_URL || DEFAULT_SUPPORTER_PLANS_URL;
+export function getContributorClaimUrl(): string | null {
+  return optionalHttpUrl(process.env.RADAR_CONTRIBUTOR_CLAIM_URL);
+}
+
+/**
+ * URL of the "Support the project" plans page on the operator's feed server,
+ * from `RADAR_SUPPORTER_PLANS_URL`. `null` (button hidden) when unset.
+ */
+export function getSupporterPlansUrl(): string | null {
+  return optionalHttpUrl(process.env.RADAR_SUPPORTER_PLANS_URL);
 }
 
 /**
  * Private operations-panel URL configured by the instance owner.
- * Unlike the public supporter flows, this deliberately has no default.
+ * Like the two links above, this deliberately has no default.
  */
 export function getRadarAdminUrl(): string | null {
   return parseRadarAdminUrl(process.env.RADAR_ADMIN_URL);

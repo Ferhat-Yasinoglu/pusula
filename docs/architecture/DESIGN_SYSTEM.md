@@ -18,7 +18,7 @@ lastUpdated: 2026-07-11
 
 ## 1. Purpose
 
-The marketing site (`viral.pusula.online`, `why.pusula.online`, `pusula.online`) and the product dashboard should look like **one product**. The site already borrowed its palette from the dashboard — its `css/tokens.css` even says _"Palette mirrors the Pusula dashboard (src/app/globals.css)"_. So the two are already ~80% aligned at the color level. What's missing on the dashboard:
+The marketing site (`_mono_repo/pusulaSite/`) and the product dashboard should look like **one product**. The site already borrowed its palette from the dashboard — its `css/tokens.css` even says _"Palette mirrors the Pusula dashboard (src/app/globals.css)"_. So the two are already ~80% aligned at the color level. What's missing on the dashboard:
 
 1. The **graph-paper grid wallpaper** the site uses on every page.
 2. A handful of **shared design tokens** the site has but the dashboard lacks (radius scale, brand gradient, `surface-2`, mono font).
@@ -46,8 +46,8 @@ Every brand color and surface already matches the site **by value** (only the na
 
 | Concept                    | Site token (`tokens.css`)                   | Dashboard token (`globals.css`) | Match        |
 | -------------------------- | ------------------------------------------- | ------------------------------- | ------------ |
-| primary                    | `--primary #e54d5e`                         | `--color-primary #e54d5e`       | ✅           |
-| primary-hover              | `--primary-hover #c93d4e`                   | `--color-primary-hover #c93d4e` | ✅           |
+| primary                    | `--primary #0f8f83`                         | `--color-primary #0f8f83`       | ✅           |
+| primary-hover              | `--primary-hover #0b6f66`                   | `--color-primary-hover #0b6f66` | ✅           |
 | accent                     | `--accent #6366f1`                          | `--color-accent #6366f1`        | ✅           |
 | accent-2                   | `--accent-2 #8b5cf6`                        | `--color-accent-hover #8b5cf6`  | ✅ (renamed) |
 | accent-3                   | `--accent-3 #a855f7`                        | `--color-accent-light #a855f7`  | ✅ (renamed) |
@@ -102,7 +102,7 @@ body::before {
 
 ### 4.2 Precedent already in the codebase
 
-`src/app/landing/page.tsx:16-26` **already implements this same grid per-page** — but with **red** lines (`#E54D5E`, opacity `0.06`) at **50px**, plus animated orbs. So the pattern is proven in the product; this work promotes it to a **global, theme-aware** wallpaper.
+`src/app/landing/page.tsx:16-26` **already implements this same grid per-page** — but with **red** lines (`#0F8F83`, opacity `0.06`) at **50px**, plus animated orbs. So the pattern is proven in the product; this work promotes it to a **global, theme-aware** wallpaper.
 
 ### 4.3 Tokens added (in `globals.css`)
 

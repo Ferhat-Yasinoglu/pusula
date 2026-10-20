@@ -51,9 +51,14 @@ export default function RadarIntelPage() {
       if (!response.ok) throw new Error("intel_sync_failed");
       const status = (await response.json()) as { status?: string };
       if (
-        ["error", "invalid_signature", "invalid_schema", "wrong_tier", "too_large"].includes(
-          status.status ?? ""
-        )
+        [
+          "error",
+          "not_configured",
+          "invalid_signature",
+          "invalid_schema",
+          "wrong_tier",
+          "too_large",
+        ].includes(status.status ?? "")
       ) {
         setError(t("loadFailed"));
       }

@@ -44,7 +44,7 @@ import { fileURLToPath } from "node:url";
 import { resolveCycleBase } from "./list-uncovered-commits.mjs";
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
-export const MAINTAINER = "diegosouzapw";
+export const MAINTAINER = "Ferhat-Yasinoglu";
 export const SECTION_HEADINGS = Object.freeze({
   features: "### ✨ New Features",
   fixes: "### 🐛 Bug Fixes",

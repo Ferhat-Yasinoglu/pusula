@@ -17,7 +17,7 @@
 
 ## 1. Zweck
 
-Die Marketing-Website (`viral.pusula.online`, `why.pusula.online`, `pusula.online`) und das Produkt-Dashboard sollen wie **ein Produkt** aussehen. Die Website hat ihre Farbpalette bereits vom Dashboard übernommen — in ihrer Datei `css/tokens.css` steht sogar _„Die Palette entspricht dem Pusula-Dashboard (src/app/globals.css)“_. Daher stimmen beide auf Farbebene bereits zu etwa 80 % überein. Was dem Dashboard noch fehlt:
+Die Marketing-Website (`_mono_repo/pusulaSite/`) und das Produkt-Dashboard sollen wie **ein Produkt** aussehen. Die Website hat ihre Farbpalette bereits vom Dashboard übernommen — in ihrer Datei `css/tokens.css` steht sogar _„Die Palette entspricht dem Pusula-Dashboard (src/app/globals.css)“_. Daher stimmen beide auf Farbebene bereits zu etwa 80 % überein. Was dem Dashboard noch fehlt:
 
 1. Der **Millimeterpapier-Rasterhintergrund**, den die Website auf jeder Seite verwendet.
 2. Einige **gemeinsame Design-Tokens**, die auf der Website vorhanden sind, dem Dashboard jedoch fehlen (Radius-Skala, Markenverlauf, `surface-2`, Monospace-Schriftart).
@@ -45,8 +45,8 @@ Jede Marken- und Oberflächenfarbe stimmt bereits **wertmäßig** mit der Websit
 
 | Konzept                                   | Website-Token (`tokens.css`)                | Dashboard-Token (`globals.css`) | Übereinstimmung |
 | ----------------------------------------- | ------------------------------------------- | ------------------------------- | --------------- |
-| Primärfarbe                               | `--primary #e54d5e`                         | `--color-primary #e54d5e`       | ✅              |
-| Primärfarbe bei Hover                     | `--primary-hover #c93d4e`                   | `--color-primary-hover #c93d4e` | ✅              |
+| Primärfarbe                               | `--primary #0f8f83`                         | `--color-primary #0f8f83`       | ✅              |
+| Primärfarbe bei Hover                     | `--primary-hover #0b6f66`                   | `--color-primary-hover #0b6f66` | ✅              |
 | Akzent                                    | `--accent #6366f1`                          | `--color-accent #6366f1`        | ✅              |
 | Akzent 2                                  | `--accent-2 #8b5cf6`                        | `--color-accent-hover #8b5cf6`  | ✅ (umbenannt)  |
 | Akzent 3                                  | `--accent-3 #a855f7`                        | `--color-accent-light #a855f7`  | ✅ (umbenannt)  |
@@ -101,7 +101,7 @@ body::before {
 
 ### 4.2 Bereits vorhandenes Beispiel in der Codebasis
 
-`src/app/landing/page.tsx:16-26` **implementiert dieses Raster bereits seitenbezogen** — allerdings mit **roten** Linien (`#E54D5E`, Deckkraft `0.06`) im Abstand von **50px** sowie animierten Lichtkugeln. Das Muster hat sich im Produkt somit bewährt; durch diese Arbeit wird es zu einem **globalen, Theme-fähigen** Hintergrundbild.
+`src/app/landing/page.tsx:16-26` **implementiert dieses Raster bereits seitenbezogen** — allerdings mit **roten** Linien (`#0F8F83`, Deckkraft `0.06`) im Abstand von **50px** sowie animierten Lichtkugeln. Das Muster hat sich im Produkt somit bewährt; durch diese Arbeit wird es zu einem **globalen, Theme-fähigen** Hintergrundbild.
 
 ### 4.3 Hinzugefügte Tokens (in `globals.css`)
 
