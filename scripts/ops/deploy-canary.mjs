@@ -11,7 +11,7 @@
  * that performs the side effects and rolls back when the smoke fails.
  *
  * Usage:
- *   node scripts/ops/deploy-canary.mjs --host root@192.168.0.17 --tarball ./pusula-3.8.50.tgz \
+ *   node scripts/ops/deploy-canary.mjs --host root@canary.example.com --tarball ./pusula-1.0.0.tgz \
  *        --base-url http://192.168.0.17:20128 --model cx/gpt-5.6-terra --model qct/deepseek-v4-flash-0731
  *
  * Flags:

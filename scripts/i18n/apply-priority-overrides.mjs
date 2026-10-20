@@ -161,9 +161,9 @@ const README_PREFIX_OVERRIDES = {
 
 const README_NAV_OVERRIDES = {
   "README.ja.md":
-    "[🌐 ウェブサイト](https://github.com/Ferhat-Yasinoglu/pusula) • [🚀 クイックスタート](#-クイックスタート) • [💡 主な機能](#-主な機能) • [📖 ドキュメント](#-ドキュメント) • [💰 料金](#-価格の概要) • [💬 WhatsApp](https://chat.whatsapp.com/JI7cDQ1GyaiDHhVBpLxf8b?mode=gi_t)",
+    "[🌐 ウェブサイト](https://github.com/Ferhat-Yasinoglu/pusula) • [🚀 クイックスタート](#-クイックスタート) • [💡 主な機能](#-主な機能) • [📖 ドキュメント](#-ドキュメント) • [💰 料金](#-価格の概要)",
   "README.ar.md":
-    "[🌐 الموقع](https://github.com/Ferhat-Yasinoglu/pusula) • [🚀 البداية السريعة](#-بداية-سريعة) • [💡 الميزات](#-الميزات-الرئيسية) • [📖 التوثيق](#-التوثيق) • [💰 الأسعار](#-لمحة-سريعة-عن-الأسعار) • [💬 WhatsApp](https://chat.whatsapp.com/JI7cDQ1GyaiDHhVBpLxf8b?mode=gi_t)",
+    "[🌐 الموقع](https://github.com/Ferhat-Yasinoglu/pusula) • [🚀 البداية السريعة](#-بداية-سريعة) • [💡 الميزات](#-الميزات-الرئيسية) • [📖 التوثيق](#-التوثيق) • [💰 الأسعار](#-لمحة-سريعة-عن-الأسعار)",
 };
 
 function setByPath(target, pathStr, value) {

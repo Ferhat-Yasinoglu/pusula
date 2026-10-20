@@ -91,7 +91,7 @@ test("D7: zero completion probes is a failure, not a vacuous pass", () => {
 
 test("D8: remote steps are argv arrays — never shell strings (Hard Rule #13)", () => {
   const steps = buildRemoteSteps({
-    host: "root@192.168.0.17",
+    host: "root@canary.example.com",
     tarballPath: "/root/pusula-e05ac345da.tgz",
     pm2App: "pusula",
   });
@@ -109,7 +109,7 @@ test("D8: remote steps are argv arrays — never shell strings (Hard Rule #13)",
 
 test("D9: the install step records the previous version so rollback is possible", () => {
   const steps = buildRemoteSteps({
-    host: "root@192.168.0.17",
+    host: "root@canary.example.com",
     tarballPath: "/root/pusula-e05ac345da.tgz",
     pm2App: "pusula",
   });
@@ -123,7 +123,7 @@ test("D9: the install step records the previous version so rollback is possible"
 
 test("D10: restart comes after install, and the smoke after the restart", () => {
   const steps = buildRemoteSteps({
-    host: "root@192.168.0.17",
+    host: "root@canary.example.com",
     tarballPath: "/root/pusula-e05ac345da.tgz",
     pm2App: "pusula",
   });
