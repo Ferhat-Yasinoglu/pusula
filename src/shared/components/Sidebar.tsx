@@ -699,7 +699,7 @@ export default function Sidebar({
             prefetch={false}
             className={cn("flex items-center", collapsed ? "justify-center" : "gap-2.5")}
           >
-            <div className="flex items-center justify-center size-8 rounded bg-linear-to-br from-[#E54D5E] to-[#C93D4E] shrink-0">
+            <div className="flex items-center justify-center size-8 rounded bg-linear-to-br from-[#0F8F83] to-[#0B6F66] shrink-0">
               {customLogo ? (
                 <img
                   src={customLogo}

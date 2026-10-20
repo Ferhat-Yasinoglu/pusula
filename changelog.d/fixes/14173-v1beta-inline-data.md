@@ -1,1 +1,0 @@
-- **fix(v1beta):** Images, PDFs and audio sent as `inlineData` to `/v1beta/models/{model}:generateContent`, and parts sent next to a `functionResponse` (such as a file gemini-cli read), now reach the provider instead of being dropped ([#14173](https://github.com/Ferhat-Yasinoglu/pusula/pull/14173))

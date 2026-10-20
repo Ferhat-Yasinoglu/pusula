@@ -1,7 +1,7 @@
 {
   "name": "pusula",
-  "version": "3.8.51",
-  "description": "Unified AI router with 358 providers, RTK+Caveman compression, auto fallback, MCP/A2A, desktop, PWA, and OpenAI-compatible APIs.",
+  "version": "1.0.0",
+  "description": "Pusula: unified AI gateway with hundreds of providers, RTK+Caveman compression, auto fallback, MCP/A2A, desktop, PWA, and OpenAI-compatible APIs.",
   "type": "module",
   "bin": {
     "pusula": "bin/pusula.mjs",
@@ -80,10 +80,13 @@
     "cline",
     "codex",
     "llm",
-    "auto-fallback"
+    "auto-fallback",
+    "pusula",
+    "gateway",
+    "ai-gateway"
   ],
   "license": "MIT",
-  "author": "diegosouzapw",
+  "author": "Ferhat Yasinoglu (https://github.com/Ferhat-Yasinoglu)",
   "repository": {
     "type": "git",
     "url": "https://github.com/Ferhat-Yasinoglu/pusula"
@@ -549,5 +552,8 @@
       "dompurify": "^3.4.14"
     },
     "csv-parse": "^7.0.2"
+  },
+  "bugs": {
+    "url": "https://github.com/Ferhat-Yasinoglu/pusula/issues"
   }
 }

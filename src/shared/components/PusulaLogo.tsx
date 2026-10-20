@@ -1,6 +1,7 @@
 /**
- * Pusula logo SVG — network hub icon with connected nodes.
- * Matches the favicon and app icon design.
+ * Pusula logo SVG — a compass: ring, four cardinal ticks and a needle whose
+ * amber half points north-east (the chosen route). Matches the favicon and
+ * the app icon; everything but the amber needle half follows `currentColor`.
  */
 type PusulaLogoProps = {
   size?: number;
@@ -18,70 +19,50 @@ export default function PusulaLogo({ size = 20, className = "" }: PusulaLogoProp
       className={className}
       suppressHydrationWarning
     >
-      {/* Central node */}
-      <circle cx="16" cy="16" r="3" fill="currentColor" />
-      {/* Outer nodes */}
-      <circle cx="8" cy="8" r="2" fill="currentColor" />
-      <circle cx="24" cy="8" r="2" fill="currentColor" />
-      <circle cx="8" cy="24" r="2" fill="currentColor" />
-      <circle cx="24" cy="24" r="2" fill="currentColor" />
-      <circle cx="16" cy="5" r="1.5" fill="currentColor" />
-      <circle cx="16" cy="27" r="1.5" fill="currentColor" />
-      {/* Connection lines */}
+      {/* Compass ring */}
+      <circle cx="16" cy="16" r="9.5" stroke="currentColor" strokeWidth="1.4" />
+      {/* Cardinal ticks */}
       <line
         x1="16"
-        y1="13"
-        x2="8"
-        y2="8"
-        stroke="currentColor"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-      />
-      <line
-        x1="16"
-        y1="13"
-        x2="24"
-        y2="8"
-        stroke="currentColor"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-      />
-      <line
-        x1="16"
-        y1="19"
-        x2="8"
-        y2="24"
-        stroke="currentColor"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-      />
-      <line
-        x1="16"
-        y1="19"
-        x2="24"
-        y2="24"
-        stroke="currentColor"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-      />
-      <line
-        x1="16"
-        y1="13"
+        y1="8.1"
         x2="16"
-        y2="5"
+        y2="6.5"
         stroke="currentColor"
-        strokeWidth="1.2"
+        strokeWidth="1"
         strokeLinecap="round"
       />
       <line
         x1="16"
-        y1="19"
+        y1="23.9"
         x2="16"
-        y2="27"
+        y2="25.5"
         stroke="currentColor"
-        strokeWidth="1.2"
+        strokeWidth="1"
         strokeLinecap="round"
       />
+      <line
+        x1="8.1"
+        y1="16"
+        x2="6.5"
+        y2="16"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeLinecap="round"
+      />
+      <line
+        x1="23.9"
+        y1="16"
+        x2="25.5"
+        y2="16"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeLinecap="round"
+      />
+      {/* Needle: amber half points north-east, the trailing half follows currentColor */}
+      <path d="M21.4 10.6 L17.4 17.4 L14.6 14.6 Z" fill="#F59E0B" />
+      <path d="M10.6 21.4 L14.6 14.6 L17.4 17.4 Z" fill="currentColor" fillOpacity="0.9" />
+      {/* Pivot */}
+      <circle cx="16" cy="16" r="0.9" fill="currentColor" />
     </svg>
   );
 }

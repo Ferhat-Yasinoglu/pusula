@@ -1,5 +1,13 @@
 # Third-Party Notices
 
+## Origin of this codebase
+
+Pusula is a derivative work of OmniRoute (<https://github.com/diegosouzapw/OmniRoute>),
+copyright (c) 2026 diegosouzapw, released under the MIT License. The original copyright
+notice and the MIT permission notice are preserved in [`LICENSE`](LICENSE), as that license
+requires. The Pusula name, logo, branding and all modifications and additions are
+copyright (c) 2026 Ferhat Yasinoğlu and are released under the same MIT License.
+
 ## wreq-js 3.2.0 native transport
 
 Pusula ships `wreq-js@3.2.0` and its platform-specific native bindings for browser-

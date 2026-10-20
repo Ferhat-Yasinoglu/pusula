@@ -1,1 +1,0 @@
-- **fix(providers):** Perplexity Web no longer strips array subscripts from code — citation cleanup now skips fenced code blocks, inline code spans and `<tool>` payloads, so `print(arr[0], arr[12])` survives in both rendered answers and tool-call arguments ([#14121](https://github.com/Ferhat-Yasinoglu/pusula/issues/14121))

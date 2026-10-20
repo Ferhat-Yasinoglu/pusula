@@ -1,1 +1,0 @@
-- **docs(authz):** document that API-key management scopes, MCP tool scopes, and `read`/`write`/`admin` access tokens are three independent namespaces ([#14526](https://github.com/Ferhat-Yasinoglu/pusula/pull/14526)) — thanks @RaviTharuma

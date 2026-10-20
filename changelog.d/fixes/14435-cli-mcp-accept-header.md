@@ -1,1 +1,0 @@
-- **fix(cli):** MCP-backed CLI commands now send the required Streamable HTTP headers and parse SSE responses, fixing HTTP 406 failures with `streamable-http` ([#14435](https://github.com/Ferhat-Yasinoglu/pusula/issues/14435)) — thanks @Joaquinbrialva

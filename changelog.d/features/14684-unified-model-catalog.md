@@ -1,1 +1,0 @@
-- **feat(dashboard):** Add a unified, searchable model catalog across all providers ([#14684](https://github.com/Ferhat-Yasinoglu/pusula/pull/14684)) — thanks @Dattuog
