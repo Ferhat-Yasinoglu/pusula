@@ -51,7 +51,10 @@ describe("RTK raw-output bounded retention (#10659)", () => {
     const pointer = maybePersistRtkRawOutput(text, { retention: "always" });
     assert.ok(pointer, "pointer should be produced with retention=always");
     // Bucketed layout: pointer.path sits one level below the store root.
-    assert.equal(path.dirname(pointer!.path), path.join(storeRoot(dataDir), pointer!.id.slice(0, 2)));
+    assert.equal(
+      path.dirname(pointer!.path),
+      path.join(storeRoot(dataDir), pointer!.id.slice(0, 2))
+    );
     assert.ok(fs.existsSync(pointer!.path), "bucket file exists on disk");
     assert.equal(readRtkRawOutput(pointer!.id), text, "read resolves via bucket lookup");
   });
@@ -73,7 +76,13 @@ describe("RTK raw-output bounded retention (#10659)", () => {
   it("purge deletes files older than maxAgeDays and keeps recent ones", async () => {
     const dataDir = freshDataDir();
     const now = Date.now();
-    const oldId = writeBucketFile(dataDir, now - 40 * 86_400_000, "old", "aa".padEnd(24, "0"), "old");
+    const oldId = writeBucketFile(
+      dataDir,
+      now - 40 * 86_400_000,
+      "old",
+      "aa".padEnd(24, "0"),
+      "old"
+    );
     writeBucketFile(dataDir, now - 40 * 86_400_000, "old2", "ab".padEnd(24, "0"), "old2");
     const recentId = writeBucketFile(dataDir, now - 1000, "recent", "ac".padEnd(24, "0"), "recent");
 

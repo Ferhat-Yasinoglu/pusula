@@ -14,9 +14,8 @@ import path from "node:path";
 const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-test-radar-default-"));
 process.env.DATA_DIR = tmpDir;
 
-const { FEATURE_FLAG_DEFINITIONS } = await import(
-  "../../src/shared/constants/featureFlagDefinitions.ts"
-);
+const { FEATURE_FLAG_DEFINITIONS } =
+  await import("../../src/shared/constants/featureFlagDefinitions.ts");
 
 test("RADAR_ENABLED feature flag defaults to OFF", async (t) => {
   const def = (key: string) => FEATURE_FLAG_DEFINITIONS.find((d) => d.key === key);
@@ -37,11 +36,7 @@ test("RADAR_ENABLED feature flag defaults to OFF", async (t) => {
 
   await t.test("RADAR_ENABLED category is 'policies'", () => {
     const d = def("RADAR_ENABLED");
-    assert.strictEqual(
-      d!.category,
-      "policies",
-      "RADAR_ENABLED must be in the 'policies' category"
-    );
+    assert.strictEqual(d!.category, "policies", "RADAR_ENABLED must be in the 'policies' category");
   });
 
   await t.test("RADAR_ENABLED type is 'boolean'", () => {

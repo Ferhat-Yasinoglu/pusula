@@ -41,7 +41,13 @@ async function resetStorage() {
         availableBytes: null,
         constrainedBytes: null,
       },
-      cgroup: { currentBytes: null, maxBytes: null, highBytes: null, fileBytes: null, events: null },
+      cgroup: {
+        currentBytes: null,
+        maxBytes: null,
+        highBytes: null,
+        fileBytes: null,
+        events: null,
+      },
       psi: null,
     }),
   });
@@ -157,7 +163,13 @@ test("direct handleChatCore default still applies resource pressure guard", asyn
         availableBytes: null,
         constrainedBytes: null,
       },
-      cgroup: { currentBytes: null, maxBytes: null, highBytes: null, fileBytes: null, events: null },
+      cgroup: {
+        currentBytes: null,
+        maxBytes: null,
+        highBytes: null,
+        fileBytes: null,
+        events: null,
+      },
       psi: null,
     }),
   });
@@ -198,7 +210,13 @@ test("handleChatCore skipResourcePressureGuard bypasses the inside-core fuse", a
         availableBytes: null,
         constrainedBytes: null,
       },
-      cgroup: { currentBytes: null, maxBytes: null, highBytes: null, fileBytes: null, events: null },
+      cgroup: {
+        currentBytes: null,
+        maxBytes: null,
+        highBytes: null,
+        fileBytes: null,
+        events: null,
+      },
       psi: null,
     }),
   });

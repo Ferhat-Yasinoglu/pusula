@@ -81,7 +81,10 @@ function isTypeOnlyClause(clause: string): boolean {
   if (!named) return false;
   const outsideBraces = clause.replace(/\{[^}]*\}/, "").trim();
   if (/[A-Za-z_$*]/.test(outsideBraces)) return false;
-  const bindings = named[1].split(",").map((b) => b.trim()).filter(Boolean);
+  const bindings = named[1]
+    .split(",")
+    .map((b) => b.trim())
+    .filter(Boolean);
   return bindings.length > 0 && bindings.every((b) => /^type\s/.test(b));
 }
 

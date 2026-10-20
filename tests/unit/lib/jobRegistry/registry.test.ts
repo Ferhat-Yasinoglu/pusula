@@ -191,9 +191,7 @@ test("runNow: queue depth=1, coalesces concurrent triggers then re-runs", async 
 test("runNow: env gate blocks when env explicitly disabled", async () => {
   const reg = getJobRegistry();
   let calls = 0;
-  reg.register(
-    def("j", async () => ({ success: true }), { envFlag: "PUSULA_TEST_JOB_ENABLED" })
-  );
+  reg.register(def("j", async () => ({ success: true }), { envFlag: "PUSULA_TEST_JOB_ENABLED" }));
   process.env.PUSULA_TEST_JOB_ENABLED = "0";
   const res = await reg.runNow("j");
   delete process.env.PUSULA_TEST_JOB_ENABLED;

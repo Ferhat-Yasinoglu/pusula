@@ -774,10 +774,9 @@ if (!isIsolatedChild) {
           snapshotBytes.readUInt32BE(24),
           "the normalized SQLite change counter and version-valid-for fields must agree"
         );
-        assert.deepEqual(
-          snapshot.prepare("SELECT version, name FROM _pusula_migrations").all(),
-          [{ version: "074", name: "discovery_results" }]
-        );
+        assert.deepEqual(snapshot.prepare("SELECT version, name FROM _pusula_migrations").all(), [
+          { version: "074", name: "discovery_results" },
+        ]);
         assert.equal(
           snapshot
             .prepare(
@@ -803,9 +802,7 @@ if (!isIsolatedChild) {
       const reopened = await createSqlJsAdapter(sqlitePath);
       try {
         assert.deepEqual(
-          reopened
-            .prepare("SELECT version, name FROM _pusula_migrations ORDER BY version")
-            .all(),
+          reopened.prepare("SELECT version, name FROM _pusula_migrations ORDER BY version").all(),
           [
             { version: "074", name: "discovery_results" },
             { version: "081", name: "inspector_custom_hosts" },

@@ -92,8 +92,9 @@ describe("comboAgentMiddleware — ReDoS safety + newline-wrapped tags (#3870)",
 
   test("stripModelTags removes the newline run wrapping a tag (no blank line left)", () => {
     const out = String(
-      stripModelTags([{ role: "user", content: "before\n\n<pusulaModel>a/b</pusulaModel>\n\nafter" }])[0]
-        .content
+      stripModelTags([
+        { role: "user", content: "before\n\n<pusulaModel>a/b</pusulaModel>\n\nafter" },
+      ])[0].content
     );
     assert.ok(!out.includes("<pusulaModel>"), "tag removed");
     assert.ok(!out.includes("\n\n\n"), "no triple newline left from stripping");

@@ -98,16 +98,36 @@ test("appendA2ATaskEvent + listA2ATaskEvents returns events in insertion order",
 
 test("listA2ATaskHistory filters by from/to/skill/state and paginates with correct total", () => {
   a2aTasks.upsertA2ATask(
-    baseRow({ id: "t1", skillId: "smart-routing", state: "completed", createdAt: "2026-01-01T00:00:00.000Z" })
+    baseRow({
+      id: "t1",
+      skillId: "smart-routing",
+      state: "completed",
+      createdAt: "2026-01-01T00:00:00.000Z",
+    })
   );
   a2aTasks.upsertA2ATask(
-    baseRow({ id: "t2", skillId: "smart-routing", state: "failed", createdAt: "2026-01-02T00:00:00.000Z" })
+    baseRow({
+      id: "t2",
+      skillId: "smart-routing",
+      state: "failed",
+      createdAt: "2026-01-02T00:00:00.000Z",
+    })
   );
   a2aTasks.upsertA2ATask(
-    baseRow({ id: "t3", skillId: "cost-analysis", state: "completed", createdAt: "2026-01-03T00:00:00.000Z" })
+    baseRow({
+      id: "t3",
+      skillId: "cost-analysis",
+      state: "completed",
+      createdAt: "2026-01-03T00:00:00.000Z",
+    })
   );
   a2aTasks.upsertA2ATask(
-    baseRow({ id: "t4", skillId: "smart-routing", state: "completed", createdAt: "2026-01-10T00:00:00.000Z" })
+    baseRow({
+      id: "t4",
+      skillId: "smart-routing",
+      state: "completed",
+      createdAt: "2026-01-10T00:00:00.000Z",
+    })
   );
 
   // from/to window
@@ -153,26 +173,26 @@ test("listA2ATaskHistory filters by from/to/skill/state and paginates with corre
 });
 
 test("listA2ATaskHistory owner semantics: private rows hidden from other owners, visible to their own owner, NULL rows visible to all", () => {
-  a2aTasks.upsertA2ATask(baseRow({ id: "pub", apiKeyId: null, createdAt: "2026-01-01T00:00:00.000Z" }));
-  a2aTasks.upsertA2ATask(baseRow({ id: "priv-a", apiKeyId: "A", createdAt: "2026-01-02T00:00:00.000Z" }));
-  a2aTasks.upsertA2ATask(baseRow({ id: "priv-b", apiKeyId: "B", createdAt: "2026-01-03T00:00:00.000Z" }));
+  a2aTasks.upsertA2ATask(
+    baseRow({ id: "pub", apiKeyId: null, createdAt: "2026-01-01T00:00:00.000Z" })
+  );
+  a2aTasks.upsertA2ATask(
+    baseRow({ id: "priv-a", apiKeyId: "A", createdAt: "2026-01-02T00:00:00.000Z" })
+  );
+  a2aTasks.upsertA2ATask(
+    baseRow({ id: "priv-b", apiKeyId: "B", createdAt: "2026-01-03T00:00:00.000Z" })
+  );
 
   const noOwner = a2aTasks.listA2ATaskHistory({ limit: 10, offset: 0 });
   assert.equal(noOwner.total, 3);
 
   const asA = a2aTasks.listA2ATaskHistory({ owner: "A", limit: 10, offset: 0 });
   assert.equal(asA.total, 2);
-  assert.deepEqual(
-    asA.rows.map((r) => r.id).sort(),
-    ["priv-a", "pub"]
-  );
+  assert.deepEqual(asA.rows.map((r) => r.id).sort(), ["priv-a", "pub"]);
 
   const asB = a2aTasks.listA2ATaskHistory({ owner: "B", limit: 10, offset: 0 });
   assert.equal(asB.total, 2);
-  assert.deepEqual(
-    asB.rows.map((r) => r.id).sort(),
-    ["priv-b", "pub"]
-  );
+  assert.deepEqual(asB.rows.map((r) => r.id).sort(), ["priv-b", "pub"]);
 });
 
 test("getA2ATaskHistoryById: found, hidden from other owner, missing", () => {
@@ -198,7 +218,11 @@ test("purgeA2AHistory removes rows older than retentionDays, returns deleted cou
   a2aTasks.upsertA2ATask(baseRow({ id: "old-1" }));
   a2aTasks.upsertA2ATask(baseRow({ id: "old-2" }));
   a2aTasks.upsertA2ATask(
-    baseRow({ id: "recent", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() })
+    baseRow({
+      id: "recent",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    })
   );
   a2aTasks.appendA2ATaskEvent("old-1", "state_changed");
   a2aTasks.appendA2ATaskEvent("old-2", "state_changed");

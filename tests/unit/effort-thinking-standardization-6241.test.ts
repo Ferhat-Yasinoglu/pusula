@@ -71,14 +71,7 @@ test("normalizeEffort maps canonical + aliases, ignores unknown", () => {
   assert.equal(normalizeEffort("none"), "none");
   assert.equal(normalizeEffort("turbo"), undefined);
   assert.equal(normalizeEffort(3), undefined);
-  assert.deepEqual([...CANONICAL_EFFORT_VALUES], [
-    "none",
-    "low",
-    "medium",
-    "high",
-    "xhigh",
-    "max",
-  ]);
+  assert.deepEqual([...CANONICAL_EFFORT_VALUES], ["none", "low", "medium", "high", "xhigh", "max"]);
 });
 
 // ── normalizeReasoningRequest ──────────────────────────────────────────

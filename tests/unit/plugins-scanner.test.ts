@@ -54,9 +54,7 @@ describe("plugin scanner", () => {
     });
 
     it("honors PUSULA_PLUGINS_DIR when the process has no HOME at all", () => {
-      const dir = withEnv({ PUSULA_PLUGINS_DIR: "/mnt/plugins" }, () =>
-        mod.getDefaultPluginDir()
-      );
+      const dir = withEnv({ PUSULA_PLUGINS_DIR: "/mnt/plugins" }, () => mod.getDefaultPluginDir());
       assert.equal(dir, "/mnt/plugins");
     });
 

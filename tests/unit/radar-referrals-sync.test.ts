@@ -249,9 +249,7 @@ test("syncRadarReferrals: requests ${RADAR_FEED_URL}/v1/referrals/latest", async
     setCache: () => {},
     fetch: ((url: string) => {
       requestedUrl = String(url);
-      return Promise.resolve(
-        mockResponse(bytes, { "x-pusula-feed-signature": signBytes(bytes) })
-      );
+      return Promise.resolve(mockResponse(bytes, { "x-pusula-feed-signature": signBytes(bytes) }));
     }) as unknown as typeof globalThis.fetch,
   });
   assert.equal(result.status, "updated");

@@ -2,10 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
-const pageUrl = new URL(
-  "../../../src/app/(dashboard)/dashboard/combos/page.tsx",
-  import.meta.url
-);
+const pageUrl = new URL("../../../src/app/(dashboard)/dashboard/combos/page.tsx", import.meta.url);
 
 const source = await readFile(pageUrl, "utf8");
 
@@ -15,18 +12,9 @@ test("combos dashboard keeps provider alias resolution on the client-safe module
     /import\s+\{\s*resolveProviderAlias\s*\}\s+from\s+["']@pusula\/open-sse\/services\/providerAlias\.ts["'];?/
   );
 
-  assert.doesNotMatch(
-    source,
-    /@pusula\/open-sse\/services\/model\.ts/
-  );
+  assert.doesNotMatch(source, /@pusula\/open-sse\/services\/model\.ts/);
 
-  assert.doesNotMatch(
-    source,
-    /\bresolveCanonicalProviderModel\b/
-  );
+  assert.doesNotMatch(source, /\bresolveCanonicalProviderModel\b/);
 
-  assert.match(
-    source,
-    /return resolveProviderAlias\(aliasOrProvider\) \|\| "";/
-  );
+  assert.match(source, /return resolveProviderAlias\(aliasOrProvider\) \|\| "";/);
 });

@@ -172,9 +172,7 @@ test("crush-settings DELETE: removes only the pusula provider entry", async () =
             type: "openai-compat",
             base_url: "http://localhost:20128/v1",
             api_key: "sk-test",
-            models: [
-              { id: "openai/gpt-5", name: "Pusula: openai/gpt-5", context_window: 128000 },
-            ],
+            models: [{ id: "openai/gpt-5", name: "Pusula: openai/gpt-5", context_window: 128000 }],
           },
           other: { type: "openai-compat", base_url: "http://example.com/v1" },
         },

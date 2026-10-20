@@ -114,10 +114,7 @@ test("combo diagnostics: JSON body keeps the original non-Latin1 text even thoug
     }
   );
   // Header value must be a valid Latin1 ByteString — em dash (U+2014) replaced.
-  assert.equal(
-    res.headers.get("x-pusula-combo-terminal-reason"),
-    terminalReason.replace("—", "?")
-  );
+  assert.equal(res.headers.get("x-pusula-combo-terminal-reason"), terminalReason.replace("—", "?"));
   const body = await res.json();
   // JSON body keeps the original, readable (unsanitized) em dash.
   assert.equal(body.diagnostics.terminalReason, terminalReason);

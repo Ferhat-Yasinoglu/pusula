@@ -55,10 +55,7 @@ test("resolvePackageJsonWorkspaceProtocols replaces workspace:*, workspace:^, wo
   assert.equal((resolved.dependencies as Record<string, string>)["@pusula/open-sse"], "^3.8.51");
   assert.equal((resolved.dependencies as Record<string, string>)["@pusula/shared"], "1.2.3");
   assert.equal((resolved.dependencies as Record<string, string>).lodash, "^4.17.0");
-  assert.equal(
-    (resolved.devDependencies as Record<string, string>)["@pusula/open-sse"],
-    "~3.8.51"
-  );
+  assert.equal((resolved.devDependencies as Record<string, string>)["@pusula/open-sse"], "~3.8.51");
   assert.equal((resolved.peerDependencies as Record<string, string>)["@pusula/shared"], "1.2.3");
   assert.equal(
     (resolved.optionalDependencies as Record<string, string>)["@pusula/open-sse"],

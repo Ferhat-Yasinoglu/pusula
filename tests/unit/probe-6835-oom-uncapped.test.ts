@@ -33,9 +33,8 @@ test("getDbInstance() eventually caps a persistently-OOMing sql.js probe (#6835)
     close() {},
     raw: null,
   };
-  (
-    globalThis as unknown as { __pusulaSqlJsAdapters: Map<string, unknown> }
-  ).__pusulaSqlJsAdapters = new Map([[sqliteFile, fakeAdapter]]);
+  (globalThis as unknown as { __pusulaSqlJsAdapters: Map<string, unknown> }).__pusulaSqlJsAdapters =
+    new Map([[sqliteFile, fakeAdapter]]);
   const errors: string[] = [];
   for (let i = 0; i < 8; i++) {
     try {

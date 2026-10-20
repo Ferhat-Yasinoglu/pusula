@@ -76,8 +76,7 @@ test.after(() => {
   else process.env.AUTH_COOKIE_SECURE = ORIGINAL_AUTH_COOKIE_SECURE;
   if (ORIGINAL_REQUIRE_API_KEY === undefined) delete process.env.REQUIRE_API_KEY;
   else process.env.REQUIRE_API_KEY = ORIGINAL_REQUIRE_API_KEY;
-  if (ORIGINAL_PUSULA_PUBLIC_BASE_URL === undefined)
-    delete process.env.PUSULA_PUBLIC_BASE_URL;
+  if (ORIGINAL_PUSULA_PUBLIC_BASE_URL === undefined) delete process.env.PUSULA_PUBLIC_BASE_URL;
   else process.env.PUSULA_PUBLIC_BASE_URL = ORIGINAL_PUSULA_PUBLIC_BASE_URL;
   if (ORIGINAL_NEXT_PUBLIC_BASE_URL === undefined) delete process.env.NEXT_PUBLIC_BASE_URL;
   else process.env.NEXT_PUBLIC_BASE_URL = ORIGINAL_NEXT_PUBLIC_BASE_URL;

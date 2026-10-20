@@ -24,9 +24,7 @@ process.env.API_KEY_SECRET = process.env.API_KEY_SECRET || "nvidia-stale-12849-t
 const core = await import("../../src/lib/db/core.ts");
 const { replaceSyncedAvailableModelsForConnection } = await import("../../src/lib/db/models.ts");
 const { getModelInfo } = await import("../../src/sse/services/model.ts");
-const { nvidiaProvider } = await import(
-  "../../open-sse/config/providers/registry/nvidia/index.ts"
-);
+const { nvidiaProvider } = await import("../../open-sse/config/providers/registry/nvidia/index.ts");
 
 const PROVIDER = "nvidia";
 const CONNECTION_ID = "nvidia-stale-catalog-12849";
@@ -87,7 +85,10 @@ test.after(() => {
 test("#12849: a fresh synced catalog still gates — a model missing from it is rejected", async () => {
   // Sanity: touchConnectionSyncedModelsAt stamped this sync as fresh already.
   const { syncedModelsAt } = connectionRow();
-  assert.ok(syncedModelsAt, "replaceSyncedAvailableModelsForConnection must stamp synced_models_at");
+  assert.ok(
+    syncedModelsAt,
+    "replaceSyncedAvailableModelsForConnection must stamp synced_models_at"
+  );
 
   const resolved = await getModelInfo(`${PROVIDER}/${LIVE_MODEL}`);
 

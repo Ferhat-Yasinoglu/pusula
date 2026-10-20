@@ -75,13 +75,7 @@ test("a model-locked account row stays in the listing with reachable:false + mod
 
   // Lock a single model on a single account — the bare model id, matching
   // every real lock writer (accountFallback.ts, resilienceCandidateFilter.ts).
-  accountFallback.lockModel(
-    "antigravity",
-    first.id,
-    "claude-sonnet-4-6",
-    "rate_limit",
-    60_000
-  );
+  accountFallback.lockModel("antigravity", first.id, "claude-sonnet-4-6", "rate_limit", 60_000);
 
   const result = await candidateHandler.getAutoComboCandidates("auto", null);
   const sonnetRows = result.candidates.filter(

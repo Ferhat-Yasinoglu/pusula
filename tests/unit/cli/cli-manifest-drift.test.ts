@@ -115,10 +115,7 @@ test("completion scripts embed the manifest-derived target lists", async () => {
 
 test("model-flag wiring stays declared in the manifest", () => {
   assert.deepEqual(manifestModelArgs("aider", "glm/glm-5.2"), ["--model", "openai/glm/glm-5.2"]);
-  assert.deepEqual(manifestModelArgs("opencode", "glm/glm-5.2"), [
-    "--model",
-    "pusula/glm/glm-5.2",
-  ]);
+  assert.deepEqual(manifestModelArgs("opencode", "glm/glm-5.2"), ["--model", "pusula/glm/glm-5.2"]);
   assert.deepEqual(manifestModelArgs("qwen", "glm/glm-5.2"), ["--model", "glm/glm-5.2"]);
   assert.deepEqual(manifestModelArgs("claude", "glm/glm-5.2"), []);
   assert.deepEqual(manifestModelArgs("codex", "glm/glm-5.2"), []);

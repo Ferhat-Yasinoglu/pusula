@@ -37,15 +37,20 @@ async function jpegDataUri(width: number, height: number, fill = 1): Promise<str
   return `data:image/jpeg;base64,${buffer.toString("base64")}`;
 }
 
-function framesInput(
-  entries: ReadonlyArray<{ dataUri: string; timestampSeconds: number }>
-): { derivation: typeof derivation; durationSeconds: number; frames: typeof entries } {
+function framesInput(entries: ReadonlyArray<{ dataUri: string; timestampSeconds: number }>): {
+  derivation: typeof derivation;
+  durationSeconds: number;
+  frames: typeof entries;
+} {
   return { derivation, durationSeconds: 20, frames: entries };
 }
 
 test("video bridge drill-down feature flags default to opt-in / disabled", () => {
   assert.equal(isVideoBridgeDrilldownProductionEnabled({}), false);
-  assert.equal(isVideoBridgeDrilldownProductionEnabled({ PUSULA_VIDEO_BRIDGE_DRILLDOWN_ENABLED: "true" }), true);
+  assert.equal(
+    isVideoBridgeDrilldownProductionEnabled({ PUSULA_VIDEO_BRIDGE_DRILLDOWN_ENABLED: "true" }),
+    true
+  );
   assert.equal(isVideoBridgeDrilldownRemoteAccessEnabled({}), false);
   assert.equal(
     isVideoBridgeDrilldownRemoteAccessEnabled({
@@ -56,7 +61,9 @@ test("video bridge drill-down feature flags default to opt-in / disabled", () =>
 });
 
 test("produce mints an opaque hashed handle that reveals no session/video identity", async () => {
-  const lifecycle = new VideoDrilldownLifecycle({ cache: new VideoDrilldownCache({ maxEntries: 8, ttlMs: 60_000 }) });
+  const lifecycle = new VideoDrilldownLifecycle({
+    cache: new VideoDrilldownCache({ maxEntries: 8, ttlMs: 60_000 }),
+  });
   const { handle, expiresAt } = await lifecycle.produce(
     "principal-a",
     framesInput([{ dataUri: await jpegDataUri(640, 360), timestampSeconds: 1 }])
@@ -66,7 +73,9 @@ test("produce mints an opaque hashed handle that reveals no session/video identi
 });
 
 test("resolve returns stored frames to the owning principal by handle only", async () => {
-  const lifecycle = new VideoDrilldownLifecycle({ cache: new VideoDrilldownCache({ maxEntries: 8, ttlMs: 60_000 }) });
+  const lifecycle = new VideoDrilldownLifecycle({
+    cache: new VideoDrilldownCache({ maxEntries: 8, ttlMs: 60_000 }),
+  });
   const { handle } = await lifecycle.produce(
     "principal-a",
     framesInput([{ dataUri: await jpegDataUri(640, 360), timestampSeconds: 3 }])
@@ -79,7 +88,9 @@ test("resolve returns stored frames to the owning principal by handle only", asy
 });
 
 test("resolve denies a wrong principal and a nonexistent handle identically (no oracle)", async () => {
-  const lifecycle = new VideoDrilldownLifecycle({ cache: new VideoDrilldownCache({ maxEntries: 8, ttlMs: 60_000 }) });
+  const lifecycle = new VideoDrilldownLifecycle({
+    cache: new VideoDrilldownCache({ maxEntries: 8, ttlMs: 60_000 }),
+  });
   const { handle } = await lifecycle.produce(
     "principal-a",
     framesInput([{ dataUri: await jpegDataUri(640, 360), timestampSeconds: 3 }])
@@ -99,7 +110,9 @@ test("resolve denies a wrong principal and a nonexistent handle identically (no 
 });
 
 test("delete removes the artifact for its own principal and is idempotent", async () => {
-  const lifecycle = new VideoDrilldownLifecycle({ cache: new VideoDrilldownCache({ maxEntries: 8, ttlMs: 60_000 }) });
+  const lifecycle = new VideoDrilldownLifecycle({
+    cache: new VideoDrilldownCache({ maxEntries: 8, ttlMs: 60_000 }),
+  });
   const { handle } = await lifecycle.produce(
     "principal-a",
     framesInput([{ dataUri: await jpegDataUri(640, 360), timestampSeconds: 3 }])
@@ -110,7 +123,9 @@ test("delete removes the artifact for its own principal and is idempotent", asyn
 });
 
 test("preview and standard variants shrink frames without ever upscaling", async () => {
-  const lifecycle = new VideoDrilldownLifecycle({ cache: new VideoDrilldownCache({ maxEntries: 8, ttlMs: 60_000 }) });
+  const lifecycle = new VideoDrilldownLifecycle({
+    cache: new VideoDrilldownCache({ maxEntries: 8, ttlMs: 60_000 }),
+  });
   const big = await lifecycle.produce(
     "principal-a",
     framesInput([{ dataUri: await jpegDataUri(1280, 720), timestampSeconds: 1 }])
@@ -130,10 +145,10 @@ test("preview and standard variants shrink frames without ever upscaling", async
   // The already-small 200x100 frame must not be upscaled toward the preview ceiling.
   const smallPreview = await lifecycle.resolve("principal-a", small.handle, { variant: "preview" });
   const smallFrame = smallPreview?.frames[0];
-  assert.deepEqual(
-    smallFrame && { height: smallFrame.height, width: smallFrame.width },
-    { height: 100, width: 200 }
-  );
+  assert.deepEqual(smallFrame && { height: smallFrame.height, width: smallFrame.width }, {
+    height: 100,
+    width: 200,
+  });
 
   const standard = await lifecycle.resolve("principal-a", big.handle, { variant: "standard" });
   for (const frame of standard?.frames ?? []) {
@@ -143,17 +158,22 @@ test("preview and standard variants shrink frames without ever upscaling", async
 
   const detail = await lifecycle.resolve("principal-a", big.handle, { variant: "detail" });
   const detailBig = detail?.frames[0];
-  assert.deepEqual(
-    detailBig && { height: detailBig.height, width: detailBig.width },
-    { height: 720, width: 1280 }
-  );
+  assert.deepEqual(detailBig && { height: detailBig.height, width: detailBig.width }, {
+    height: 720,
+    width: 1280,
+  });
 });
 
 test("pagination never exceeds the 8-frame page cap and reports hasMore across pages", async () => {
-  const lifecycle = new VideoDrilldownLifecycle({ cache: new VideoDrilldownCache({ maxEntries: 8, ttlMs: 60_000 }) });
+  const lifecycle = new VideoDrilldownLifecycle({
+    cache: new VideoDrilldownCache({ maxEntries: 8, ttlMs: 60_000 }),
+  });
   const entries = [] as Array<{ dataUri: string; timestampSeconds: number }>;
   for (let index = 0; index < 12; index += 1) {
-    entries.push({ dataUri: await jpegDataUri(64, 64, (index % 250) + 1), timestampSeconds: index });
+    entries.push({
+      dataUri: await jpegDataUri(64, 64, (index % 250) + 1),
+      timestampSeconds: index,
+    });
   }
   const { handle } = await lifecycle.produce("principal-a", framesInput(entries.slice(0, 16)));
 

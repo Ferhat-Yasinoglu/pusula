@@ -100,10 +100,7 @@ test("compose isolates guard audit mounts and waits for healthy guards", () => {
   for (const guard of ["network-guard", "claude-egress-guard"]) {
     assert.ok(services[guard].healthcheck?.test, `${guard} healthcheck`);
   }
-  assert.equal(
-    services["pusula-live"].depends_on?.["network-guard"].condition,
-    "service_healthy"
-  );
+  assert.equal(services["pusula-live"].depends_on?.["network-guard"].condition, "service_healthy");
   assert.equal(services.claude.depends_on?.["claude-egress-guard"].condition, "service_healthy");
   assert.equal(
     services["claude-live"].depends_on?.["claude-egress-guard"].condition,

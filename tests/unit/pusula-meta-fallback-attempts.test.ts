@@ -4,14 +4,15 @@ import { PUSULA_RESPONSE_HEADERS } from "../../src/shared/constants/headers.ts";
 import { buildPusulaResponseMetaHeaders } from "../../src/domain/pusulaResponseMeta.ts";
 
 test("headers constant exposes the fallback-attempts key", () => {
-  assert.equal(
-    PUSULA_RESPONSE_HEADERS.fallbackAttempts,
-    "X-Pusula-Fallback-Attempts"
-  );
+  assert.equal(PUSULA_RESPONSE_HEADERS.fallbackAttempts, "X-Pusula-Fallback-Attempts");
 });
 
 test("buildPusulaResponseMetaHeaders emits the fallback-attempts count when > 0", () => {
-  const h = buildPusulaResponseMetaHeaders({ model: "gpt", provider: "openai", fallbackAttempts: 2 });
+  const h = buildPusulaResponseMetaHeaders({
+    model: "gpt",
+    provider: "openai",
+    fallbackAttempts: 2,
+  });
   assert.equal(h["X-Pusula-Fallback-Attempts"], "2");
 });
 

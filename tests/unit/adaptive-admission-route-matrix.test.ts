@@ -161,7 +161,13 @@ function reloadNormalResourcePressure() {
         availableBytes: null,
         constrainedBytes: null,
       },
-      cgroup: { currentBytes: null, maxBytes: null, highBytes: null, fileBytes: null, events: null },
+      cgroup: {
+        currentBytes: null,
+        maxBytes: null,
+        highBytes: null,
+        fileBytes: null,
+        events: null,
+      },
       psi: null,
     }),
   });

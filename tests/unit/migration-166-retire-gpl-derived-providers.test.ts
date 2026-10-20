@@ -20,9 +20,8 @@ test.after(() => {
 test("migration 166 disables GPL-derived connections fail-closed and preserves audit history", async () => {
   const db = core.getDbInstance();
 
-  const applied = db
-    .prepare("SELECT version FROM _pusula_migrations WHERE version = 166")
-    .get() as { version: number } | undefined;
+  const applied = db.prepare("SELECT version FROM _pusula_migrations WHERE version = 166").get() as
+    { version: number } | undefined;
   assert.ok(applied, "migration 166 must be recorded as applied");
 
   // api_keys policy columns are reconciled lazily by the domain module on fresh

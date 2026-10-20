@@ -236,8 +236,7 @@ test("Responses response.failed is projected before forwarding, logging, and onF
           type: "function_call",
           call_id: "call_private",
           name: "read_private_file",
-          arguments:
-            '{"path":"/srv/pusula/private-runtime.ts","api_key":"sk-stream-secret-tool"}',
+          arguments: '{"path":"/srv/pusula/private-runtime.ts","api_key":"sk-stream-secret-tool"}',
         },
         {
           id: "provider_private",
@@ -256,8 +255,7 @@ test("Responses response.failed is projected before forwarding, logging, and onF
       },
       last_error: {
         code: "server_error",
-        message:
-          "last failure at /srv/pusula/private-runtime.ts:45:2 token=sk-stream-secret-last",
+        message: "last failure at /srv/pusula/private-runtime.ts:45:2 token=sk-stream-secret-last",
       },
       message:
         "sibling failure at /srv/pusula/private-runtime.ts:46:2 token=sk-stream-secret-sibling",
@@ -396,8 +394,7 @@ test("Claude type:error is projected before forwarding and terminates the stream
     error: {
       type: "server_error",
       code: "server_error",
-      message:
-        "claude failed at /srv/pusula/private-runtime.ts:51:3 token=sk-stream-secret-123456",
+      message: "claude failed at /srv/pusula/private-runtime.ts:51:3 token=sk-stream-secret-123456",
       api_key: "sk-stream-secret-abcdef",
     },
   };
@@ -424,8 +421,7 @@ test("a final response.failed frame without a trailing newline is projected befo
       status: "failed",
       error: {
         code: "server_error",
-        message:
-          "tail failed at /srv/pusula/private-runtime.ts:61:8 token=sk-stream-secret-123456",
+        message: "tail failed at /srv/pusula/private-runtime.ts:61:8 token=sk-stream-secret-123456",
         api_key: "sk-stream-secret-abcdef",
       },
     },

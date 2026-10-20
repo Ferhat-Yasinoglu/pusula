@@ -18,7 +18,10 @@ test("buildOpenCodeConfigDocument includes both V1 (provider) and V2 (providers)
   assert.equal(doc.providers.pusula.package, "@opencode-ai/ai/providers/openai-compatible");
   assert.equal(doc.providers.pusula.settings.baseURL, "http://localhost:20128/v1");
   assert.equal(doc.providers.pusula.settings.apiKey, "{env:PUSULA_API_KEY}");
-  assert.ok(doc.providers.pusula.models["auto/best-coding"].limit, "V2 model limit must be present");
+  assert.ok(
+    doc.providers.pusula.models["auto/best-coding"].limit,
+    "V2 model limit must be present"
+  );
 });
 
 test("mergeOpenCodeConfig preserves existing properties and updates both provider and providers", () => {

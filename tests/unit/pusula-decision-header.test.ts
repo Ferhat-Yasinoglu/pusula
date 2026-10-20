@@ -19,10 +19,7 @@ test("buildPusulaResponseMetaHeaders emits X-Pusula-Decision for a combo strateg
     model: "gpt-4o",
     latencyMs: 42,
   });
-  assert.equal(
-    headers["X-Pusula-Decision"],
-    "strategy=priority; provider=openai; latency_ms=42"
-  );
+  assert.equal(headers["X-Pusula-Decision"], "strategy=priority; provider=openai; latency_ms=42");
 });
 
 test("strategy: single (non-combo request) still emits the header", () => {
@@ -31,10 +28,7 @@ test("strategy: single (non-combo request) still emits the header", () => {
     provider: "anthropic",
     latencyMs: 10,
   });
-  assert.equal(
-    headers["X-Pusula-Decision"],
-    "strategy=single; provider=anthropic; latency_ms=10"
-  );
+  assert.equal(headers["X-Pusula-Decision"], "strategy=single; provider=anthropic; latency_ms=10");
 });
 
 test("omitted strategy AND provider -> header absent entirely", () => {
@@ -76,10 +70,7 @@ test("buildNonStreamingResponseHeaders falls back to strategy=single when comboS
     requestId: "req-2",
     comboStrategy: null,
   });
-  assert.match(
-    headers["X-Pusula-Decision"],
-    /^strategy=single; provider=openai; latency_ms=\d+$/
-  );
+  assert.match(headers["X-Pusula-Decision"], /^strategy=single; provider=openai; latency_ms=\d+$/);
 });
 
 test("assembleStreamingResponseHeaders emits X-Pusula-Fallback-Attempts when count > 0", () => {

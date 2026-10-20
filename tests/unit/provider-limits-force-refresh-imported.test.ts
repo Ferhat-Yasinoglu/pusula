@@ -18,8 +18,7 @@ import path from "node:path";
 
 process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-force-refresh-imported-"));
 
-const { getCredentialRefreshExecutor } =
-  await import("../../open-sse/executors/credential.ts");
+const { getCredentialRefreshExecutor } = await import("../../open-sse/executors/credential.ts");
 const { refreshAndUpdateCredentials } = await import("../../src/lib/usage/providerLimits.ts");
 
 function importedCodexConnection() {

@@ -125,8 +125,14 @@ test("by-provider delete drops this provider's synced models and leaves others",
   const deleted = await providersDb.deleteProviderConnectionsByProvider(TEST_PROVIDER);
   assert.equal(deleted, 2);
 
-  assert.deepEqual(await models.getSyncedAvailableModelsForConnection(TEST_PROVIDER, target.id), []);
-  assert.deepEqual(await models.getSyncedAvailableModelsForConnection(TEST_PROVIDER, sibling.id), []);
+  assert.deepEqual(
+    await models.getSyncedAvailableModelsForConnection(TEST_PROVIDER, target.id),
+    []
+  );
+  assert.deepEqual(
+    await models.getSyncedAvailableModelsForConnection(TEST_PROVIDER, sibling.id),
+    []
+  );
   const kept = await models.getSyncedAvailableModelsForConnection(OTHER_PROVIDER, other.id);
   assert.equal(kept.length, 1);
   assert.equal(kept[0]?.id, "keep-model");

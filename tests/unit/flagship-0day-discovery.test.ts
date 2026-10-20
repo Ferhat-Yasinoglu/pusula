@@ -53,10 +53,7 @@ test.after(() => {
 });
 
 test("test 1: Claude models URL is exactly /v1/models?limit=1000", () => {
-  assert.equal(
-    PROVIDER_MODELS_CONFIG.claude.url,
-    "https://api.anthropic.com/v1/models?limit=1000"
-  );
+  assert.equal(PROVIDER_MODELS_CONFIG.claude.url, "https://api.anthropic.com/v1/models?limit=1000");
 });
 
 test("test 2: Claude parseResponse keeps ids from data and defaults empty objects to []", () => {
@@ -97,9 +94,7 @@ test("test 6: CATALOG_SIBLING_IDS stays agy/antigravity and never keys the xai f
   const src = readRepo("src/lib/db/models/activeSyncedCatalog.ts");
   const literal = extractNamedConstLiteral(src, "CATALOG_SIBLING_IDS");
   const uncommented = literal.replace(/\/\/.*$/gm, "");
-  const keys = [
-    ...uncommented.matchAll(/^\s*(?:"([^"]+)"|([A-Za-z_][\w-]*))\s*:/gm),
-  ]
+  const keys = [...uncommented.matchAll(/^\s*(?:"([^"]+)"|([A-Za-z_][\w-]*))\s*:/gm)]
     .map((match) => match[1] ?? match[2])
     .sort();
   assert.deepEqual(keys, ["agy", "antigravity"]);

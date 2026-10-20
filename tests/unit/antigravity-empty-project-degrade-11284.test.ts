@@ -31,9 +31,8 @@ process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../src/lib/db/core.ts");
 const providersDb = await import("../../src/lib/db/providers.ts");
-const { persistOAuthConnection, buildOAuthConnectionCreatePayload } = await import(
-  "../../src/lib/oauth/connectionPersistence.ts"
-);
+const { persistOAuthConnection, buildOAuthConnectionCreatePayload } =
+  await import("../../src/lib/oauth/connectionPersistence.ts");
 const { createConnectionFromAgyToken } = await import("../../src/lib/oauth/utils/agyAuthImport.ts");
 
 test.after(() => {
@@ -115,7 +114,11 @@ test("persistOAuthConnection does not save agy with empty projectId as active", 
   assert.equal(stored?.testStatus, "degraded");
   assert.equal(stored?.errorCode, "missing_project_id");
   assert.equal(stored?.lastErrorType, "oauth_missing_project_id");
-  assert.equal(stored?.isActive, true, "refresh token stays stored; request-time bootstrap can heal");
+  assert.equal(
+    stored?.isActive,
+    true,
+    "refresh token stays stored; request-time bootstrap can heal"
+  );
 });
 
 test("persistOAuthConnection clears stale degrade fields once projectId appears", async () => {

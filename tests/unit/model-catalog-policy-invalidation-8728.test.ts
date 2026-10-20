@@ -4,9 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-const TEST_DATA_DIR = fs.mkdtempSync(
-  path.join(os.tmpdir(), "pusula-model-catalog-policy-8728-")
-);
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-model-catalog-policy-8728-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.DISABLE_SQLITE_AUTO_BACKUP = "true";
 process.env.API_KEY_SECRET = process.env.API_KEY_SECRET || "model-catalog-policy-invalidation-8728";

@@ -16,9 +16,8 @@ process.env.DISABLE_SQLITE_AUTO_BACKUP = "true";
 const core = await import("../../src/lib/db/core.ts");
 const apiKeysDb = await import("../../src/lib/db/apiKeys.ts");
 const route = await import("../../src/app/api/v1/video-bridge/drilldown/route.ts");
-const { VideoDrilldownLifecycle } = await import(
-  "../../src/lib/guardrails/videoBridgeDrilldownLifecycle.ts"
-);
+const { VideoDrilldownLifecycle } =
+  await import("../../src/lib/guardrails/videoBridgeDrilldownLifecycle.ts");
 const { VideoDrilldownCache } = await import("../../src/lib/guardrails/videoBridgeDrilldown.ts");
 const { isLocalOnlyPath } = await import("../../src/server/authz/routeGuard.ts");
 

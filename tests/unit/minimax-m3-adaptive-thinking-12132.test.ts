@@ -37,7 +37,7 @@ test("normalizeClaudeAdaptiveThinking collapses enabled->adaptive for MiniMax M3
   assert.equal(
     (result.thinking as Record<string, unknown>).type,
     "adaptive",
-    "thinking.type:\"enabled\" must be collapsed to \"adaptive\" for MiniMax M3, " +
+    'thinking.type:"enabled" must be collapsed to "adaptive" for MiniMax M3, ' +
       "otherwise upstream rejects it with 400 (2013)"
   );
   assert.equal(

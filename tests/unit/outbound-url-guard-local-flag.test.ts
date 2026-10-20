@@ -23,9 +23,8 @@ function withEnv(overrides: Record<string, string | undefined>, fn: () => void) 
 }
 
 test("#9123: setting ONLY PUSULA_ALLOW_LOCAL_PROVIDER_URLS=true should relax the guard used for search-provider outbound calls (currently does not)", async () => {
-  const { areLocalProviderUrlsAllowed, getProviderOutboundGuard } = await import(
-    "../../src/shared/network/outboundUrlGuardPolicy.ts"
-  );
+  const { areLocalProviderUrlsAllowed, getProviderOutboundGuard } =
+    await import("../../src/shared/network/outboundUrlGuardPolicy.ts");
 
   withEnv({ PUSULA_ALLOW_LOCAL_PROVIDER_URLS: "true" }, () => {
     assert.equal(areLocalProviderUrlsAllowed(), true);
@@ -40,9 +39,8 @@ test("#9123: setting ONLY PUSULA_ALLOW_LOCAL_PROVIDER_URLS=true should relax the
 });
 
 test("#9123 control: PUSULA_ALLOW_PRIVATE_PROVIDER_URLS=true DOES relax the same guard", async () => {
-  const { getProviderOutboundGuard } = await import(
-    "../../src/shared/network/outboundUrlGuardPolicy.ts"
-  );
+  const { getProviderOutboundGuard } =
+    await import("../../src/shared/network/outboundUrlGuardPolicy.ts");
   withEnv({ PUSULA_ALLOW_PRIVATE_PROVIDER_URLS: "true" }, () => {
     assert.equal(getProviderOutboundGuard(), "none");
   });

@@ -39,16 +39,21 @@ test.after(async () => {
 
 test("Tavily 432 plan limit body is detected as transient plan usage limit", () => {
   const tavily432Body = JSON.stringify({
-    error: "This request exceeds your plan's set usage limit. Please upgrade your plan or contact support@tavily.com",
+    error:
+      "This request exceeds your plan's set usage limit. Please upgrade your plan or contact support@tavily.com",
   });
 
-  const isMatched = quotaTextCooldowns.isSubscriptionQuotaText(tavily432Body.toLowerCase(), "tavily-search");
+  const isMatched = quotaTextCooldowns.isSubscriptionQuotaText(
+    tavily432Body.toLowerCase(),
+    "tavily-search"
+  );
   assert.equal(isMatched, true, "Should recognize Tavily plan limit error message");
 });
 
 test("checkFallbackError classifies status 432 and plan limit text as non-permanent quota_exhausted", () => {
   const tavily432Body = JSON.stringify({
-    error: "This request exceeds your plan's set usage limit. Please upgrade your plan or contact support@tavily.com",
+    error:
+      "This request exceeds your plan's set usage limit. Please upgrade your plan or contact support@tavily.com",
   });
 
   const result = accountFallback.checkFallbackError(
@@ -94,7 +99,11 @@ test("markAccountUnavailable sets transient unavailable status without deactivat
 
   assert.ok(updated, "Connection should exist in DB");
   assert.equal(updated.isActive, true, "Connection must remain isActive=1");
-  assert.equal(updated.testStatus, "unavailable", "Connection should be marked transient unavailable");
+  assert.equal(
+    updated.testStatus,
+    "unavailable",
+    "Connection should be marked transient unavailable"
+  );
   assert.ok(updated.rateLimitedUntil, "rateLimitedUntil must be populated");
 
   const untilMs = new Date(updated.rateLimitedUntil).getTime();
@@ -105,9 +114,12 @@ test("executeProviderFetch calls markAccountUnavailable on 432 error response wh
   let serverPort = 0;
   const server = http.createServer((_req, res) => {
     res.writeHead(432, { "Content-Type": "application/json", Connection: "close" });
-    res.end(JSON.stringify({
-      error: "This request exceeds your plan's set usage limit. Please upgrade your plan or contact support@tavily.com",
-    }));
+    res.end(
+      JSON.stringify({
+        error:
+          "This request exceeds your plan's set usage limit. Please upgrade your plan or contact support@tavily.com",
+      })
+    );
   });
 
   await new Promise<void>((resolve) => {
@@ -233,7 +245,11 @@ test("executeProviderFetch does NOT mark account unavailable on non-quota client
 
       assert.ok(updated);
       assert.equal(updated.isActive, true, `isActive must remain true on ${statusCode}`);
-      assert.equal(updated.testStatus, "active", `testStatus must remain 'active' on ${statusCode}`);
+      assert.equal(
+        updated.testStatus,
+        "active",
+        `testStatus must remain 'active' on ${statusCode}`
+      );
       assert.ok(!updated.rateLimitedUntil, `rateLimitedUntil must be null/empty on ${statusCode}`);
     } finally {
       clearTimeout(timer);
@@ -266,7 +282,13 @@ test("cooldown on key1 allows getProviderCredentials to auto-rotate to healthy k
   });
 
   // Mark key1 as unavailable due to 432
-  await auth.markAccountUnavailable(String(conn1.id), 432, "plan limit reached", "tavily-search", null);
+  await auth.markAccountUnavailable(
+    String(conn1.id),
+    432,
+    "plan limit reached",
+    "tavily-search",
+    null
+  );
 
   // Next credential resolution should skip key1 and return key2
   const selected = await auth.getProviderCredentials("tavily-search");

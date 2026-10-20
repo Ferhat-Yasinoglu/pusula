@@ -99,9 +99,7 @@ test("CLI startup loads later non-conflicting .env files without overriding earl
   const dataDir = path.join(tmp, "data");
   const cwd = path.join(tmp, "cwd");
   const appDataDir =
-    process.platform === "win32"
-      ? path.join(tmp, "appdata", "pusula")
-      : path.join(home, ".pusula");
+    process.platform === "win32" ? path.join(tmp, "appdata", "pusula") : path.join(home, ".pusula");
 
   try {
     fs.mkdirSync(dataDir, { recursive: true });
@@ -115,9 +113,7 @@ test("CLI startup loads later non-conflicting .env files without overriding earl
     );
     fs.writeFileSync(
       path.join(appDataDir, ".env"),
-      ["PUSULA_BASE_URL=https://appdata.example/v1", "PUSULA_HTTP_TIMEOUT_MS=1234", ""].join(
-        "\n"
-      ),
+      ["PUSULA_BASE_URL=https://appdata.example/v1", "PUSULA_HTTP_TIMEOUT_MS=1234", ""].join("\n"),
       "utf-8"
     );
     fs.writeFileSync(

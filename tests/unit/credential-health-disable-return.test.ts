@@ -7,8 +7,6 @@ import assert from "node:assert/strict";
 process.env.PUSULA_DISABLE_CREDENTIAL_HEALTH_CHECK = "true";
 
 test("initCredentialHealthCheck returns false when the disable env is set", async () => {
-  const { initCredentialHealthCheck } = await import(
-    "../../src/lib/credentialHealth/scheduler.ts"
-  );
+  const { initCredentialHealthCheck } = await import("../../src/lib/credentialHealth/scheduler.ts");
   assert.equal(initCredentialHealthCheck(), false);
 });

@@ -8,9 +8,8 @@ const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-combo-id-tes
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../src/lib/db/core.ts");
-const { getCombos, getComboById, getComboByName, deleteCombo } = await import(
-  "../../src/lib/db/repositories/sqliteComboRepository.ts"
-);
+const { getCombos, getComboById, getComboByName, deleteCombo } =
+  await import("../../src/lib/db/repositories/sqliteComboRepository.ts");
 
 test.after(() => {
   core.resetDbInstance();

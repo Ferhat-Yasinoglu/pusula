@@ -12,7 +12,10 @@ import {
   isGeminiCredentialProvider,
   readGeminiEnvApiKey,
 } from "../../src/lib/providers/gemini.ts";
-import { parseEmbeddingModel, getEmbeddingDimension } from "../../open-sse/config/embeddingRegistry.ts";
+import {
+  parseEmbeddingModel,
+  getEmbeddingDimension,
+} from "../../open-sse/config/embeddingRegistry.ts";
 import { v1EmbeddingsSchema } from "../../src/shared/validation/schemas/apiV1.ts";
 import { handleEmbedding } from "../../open-sse/handlers/embeddings.ts";
 
@@ -103,10 +106,7 @@ test("schema accepts Gemini native text + inline_data mixed batches", () => {
   const parsed = v1EmbeddingsSchema.safeParse({
     model: "gemini/gemini-embedding-2",
     task: "retrieval.query",
-    input: [
-      { text: "a red bicycle" },
-      { inline_data: { mime_type: "image/png", data: PNG_B64 } },
-    ],
+    input: [{ text: "a red bicycle" }, { inline_data: { mime_type: "image/png", data: PNG_B64 } }],
   });
   assert.equal(parsed.success, true);
   if (parsed.success) {
@@ -143,8 +143,11 @@ test("schema accepts fused Gemini Content and rejects unsafe file URIs", () => {
 
 test("handleEmbedding sends N Gemini Embedding 2 inputs as N batch requests", async () => {
   const originalFetch = globalThis.fetch;
-  const seen: Array<{ url: string; headers: Record<string, string>; body: Record<string, unknown> }> =
-    [];
+  const seen: Array<{
+    url: string;
+    headers: Record<string, string>;
+    body: Record<string, unknown>;
+  }> = [];
   globalThis.fetch = async (url, init = {}) => {
     const headers = (init.headers || {}) as Record<string, string>;
     seen.push({

@@ -875,8 +875,7 @@ test("handleImageGeneration sanitizes Antigravity upstream error payloads", asyn
       JSON.stringify({
         error: {
           code: 500,
-          message:
-            "failed at /Users/backryun/Pusula/open-sse/handlers/imageGeneration.ts:1\nstack",
+          message: "failed at /Users/backryun/Pusula/open-sse/handlers/imageGeneration.ts:1\nstack",
           status: "INTERNAL",
         },
       }),

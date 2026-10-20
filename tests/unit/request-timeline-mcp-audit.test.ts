@@ -77,10 +77,7 @@ test("mergeTimelineLogs keeps LLM rows when the MCP list is empty", () => {
 test("mergeTimelineLogs concatenates MCP rows without colliding ids", () => {
   const merged = mergeTimelineLogs([llmLog("42")], [mapMcpAuditEntry(SAMPLE_ENTRY)]);
   assert.equal(merged.length, 2);
-  assert.deepEqual(
-    merged.map((row) => row.id).sort(),
-    ["42", "mcp:42"]
-  );
+  assert.deepEqual(merged.map((row) => row.id).sort(), ["42", "mcp:42"]);
 });
 
 test("timelineFetchUrls omits key params when the dropdown is All", () => {

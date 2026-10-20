@@ -62,7 +62,10 @@ describe("qdrant quick-select: merge with existing options", () => {
   it("appends unseen registry options", () => {
     const merged = mergeEmbeddingOptions(
       [{ value: "a/x", label: "A" }],
-      [{ value: "b/y", label: "B" }, { value: "b/z", label: "C" }]
+      [
+        { value: "b/y", label: "B" },
+        { value: "b/z", label: "C" },
+      ]
     );
     assert.deepEqual(
       merged.map((o) => o.value),
@@ -73,7 +76,10 @@ describe("qdrant quick-select: merge with existing options", () => {
   it("output is sorted by value for stable UI ordering", () => {
     const merged = mergeEmbeddingOptions(
       [{ value: "z/1", label: "Z" }],
-      [{ value: "a/1", label: "A" }, { value: "m/1", label: "M" }]
+      [
+        { value: "a/1", label: "A" },
+        { value: "m/1", label: "M" },
+      ]
     );
     assert.deepEqual(
       merged.map((o) => o.value),

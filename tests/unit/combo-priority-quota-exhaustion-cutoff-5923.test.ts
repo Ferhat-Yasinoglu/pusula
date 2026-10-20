@@ -21,9 +21,7 @@ import path from "node:path";
  * touch the provider circuit breaker (both connections belong to the same
  * provider, and the healthy one must remain fully eligible).
  */
-const TEST_DATA_DIR = fs.mkdtempSync(
-  path.join(os.tmpdir(), "pusula-quota-cutoff-priority-5923-")
-);
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-quota-cutoff-priority-5923-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const dbCore = await import("../../src/lib/db/core.ts");

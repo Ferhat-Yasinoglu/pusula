@@ -22,9 +22,8 @@ import { dirname, resolve } from "node:path";
 const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-test-auth-log-account-id-"));
 process.env.DATA_DIR = tmpDir;
 
-const { FEATURE_FLAG_DEFINITIONS } = await import(
-  "../../src/shared/constants/featureFlagDefinitions.ts"
-);
+const { FEATURE_FLAG_DEFINITIONS } =
+  await import("../../src/shared/constants/featureFlagDefinitions.ts");
 
 test("AUTH_LOG_INCLUDE_ACCOUNT_ID feature flag defaults to OFF, independent of debugMode", async (t) => {
   const def = (key: string) => FEATURE_FLAG_DEFINITIONS.find((d) => d.key === key);

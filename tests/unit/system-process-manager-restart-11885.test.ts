@@ -27,7 +27,11 @@ test("restartRunningServer: uses Pusula's own supervisor when both the superviso
   // the supervisor sets its isShuttingDown flag and intentionally skips the respawn
   // (see bin/cli/commands/stop.mjs), which would NOT produce a restart.
   assert.deepEqual(killed, [222]);
-  assert.equal(pm2Calls.length, 0, "must not fall back to pm2 when the own supervisor path succeeds");
+  assert.equal(
+    pm2Calls.length,
+    0,
+    "must not fall back to pm2 when the own supervisor path succeeds"
+  );
 });
 
 test("restartRunningServer: falls back to pm2 when no Pusula supervisor is detected", async () => {

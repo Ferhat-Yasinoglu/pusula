@@ -20,8 +20,7 @@ const { evaluateContextLimit } =
   await import("../../open-sse/services/combo/contextOverrideGate.ts");
 const { saveModelsDevCapabilities, clearModelsDevCapabilities } =
   await import("../../src/lib/modelsDevSync.ts");
-const { filterTargetsByRequestCompatibility } =
-  await import("../../open-sse/services/combo.ts");
+const { filterTargetsByRequestCompatibility } = await import("../../open-sse/services/combo.ts");
 
 test.after(() => {
   core.resetDbInstance();

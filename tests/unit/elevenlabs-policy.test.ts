@@ -94,9 +94,7 @@ test("an over-budget key is rejected with 429 on all three ElevenLabs routes wit
   costRules.recordCost(key.id, 2);
 
   const upstreamWasCalled = stubUpstream();
-  const [voicesResponse, speechResponse, transcriptionResponse] = await callAllThreeRoutes(
-    key.key
-  );
+  const [voicesResponse, speechResponse, transcriptionResponse] = await callAllThreeRoutes(key.key);
 
   for (const response of [voicesResponse, speechResponse, transcriptionResponse]) {
     assert.equal(response.status, 429);
@@ -111,9 +109,7 @@ test("a key scoped away from the elevenlabs category is rejected with 403 on all
   await apiKeysDb.updateApiKeyPermissions(key.id, { allowedEndpoints: ["chat"] });
 
   const upstreamWasCalled = stubUpstream();
-  const [voicesResponse, speechResponse, transcriptionResponse] = await callAllThreeRoutes(
-    key.key
-  );
+  const [voicesResponse, speechResponse, transcriptionResponse] = await callAllThreeRoutes(key.key);
 
   for (const response of [voicesResponse, speechResponse, transcriptionResponse]) {
     assert.equal(response.status, 403);

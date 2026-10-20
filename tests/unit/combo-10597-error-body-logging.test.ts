@@ -48,14 +48,24 @@ function healthy200(model: string) {
       id: "ok",
       object: "chat.completion",
       model,
-      choices: [{ index: 0, message: { role: "assistant", content: "hello from " + model }, finish_reason: "stop" }],
+      choices: [
+        {
+          index: 0,
+          message: { role: "assistant", content: "hello from " + model },
+          finish_reason: "stop",
+        },
+      ],
     }),
     { status: 200, headers: { "Content-Type": "application/json" } }
   );
 }
 
 function makeCombo(models: string[]) {
-  return { name: "test-combo-10597", strategy: "priority", models: models.map((m) => ({ model: m })) };
+  return {
+    name: "test-combo-10597",
+    strategy: "priority",
+    models: models.map((m) => ({ model: m })),
+  };
 }
 
 test("#10597 COMBO failure log must surface the upstream error body, not just the status code", async () => {
@@ -79,7 +89,10 @@ test("#10597 COMBO failure log must surface the upstream error body, not just th
   assert.equal(modelsCalled.length, 2);
 
   const failureLog = warnCalls.find(
-    (c) => typeof c.msg === "string" && c.msg.includes("claude/claude-opus-4-8") && c.msg.includes("failed")
+    (c) =>
+      typeof c.msg === "string" &&
+      c.msg.includes("claude/claude-opus-4-8") &&
+      c.msg.includes("failed")
   );
   assert.ok(failureLog, "expected a COMBO warn log for the failing leg");
 

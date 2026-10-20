@@ -174,5 +174,8 @@ test("resolveDirectHeadersTimeoutMs defaults to 30000 and respects PUSULA_DIRECT
   assert.equal(resolveDirectHeadersTimeoutMs({}), 30_000);
   assert.equal(resolveDirectHeadersTimeoutMs({ PUSULA_DIRECT_HEADERS_TIMEOUT_MS: "5000" }), 5_000);
   assert.equal(resolveDirectHeadersTimeoutMs({ PUSULA_DIRECT_HEADERS_TIMEOUT_MS: "" }), 30_000);
-  assert.equal(resolveDirectHeadersTimeoutMs({ PUSULA_DIRECT_HEADERS_TIMEOUT_MS: "not-a-number" }), 0);
+  assert.equal(
+    resolveDirectHeadersTimeoutMs({ PUSULA_DIRECT_HEADERS_TIMEOUT_MS: "not-a-number" }),
+    0
+  );
 });

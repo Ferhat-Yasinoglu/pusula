@@ -32,9 +32,8 @@ const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-ag-orphan-to
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = "test-ag-orphan-tooluse-secret";
 
-const { openaiToAntigravityRequest } = await import(
-  "../../open-sse/translator/request/openai-to-gemini.ts"
-);
+const { openaiToAntigravityRequest } =
+  await import("../../open-sse/translator/request/openai-to-gemini.ts");
 const { fixToolPairs } = await import("../../open-sse/services/contextManager.ts");
 
 type GeminiEnvelope = {
@@ -144,8 +143,7 @@ test("control: the mainline Claude executor's fixToolPairs DOES strip the same o
     Record<string, unknown>
   >;
   const assistantMsg = fixed.find((m) => m.role === "assistant") as
-    | { tool_calls?: Array<{ id: string }> }
-    | undefined;
+    { tool_calls?: Array<{ id: string }> } | undefined;
   const survivingIds = (assistantMsg?.tool_calls ?? []).map((tc) => tc.id);
   assert.deepEqual(survivingIds, ["toolu_vrtx_019zAAAA"]);
 });

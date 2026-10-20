@@ -274,11 +274,7 @@ test("isLoopback rejeita IP público", async () => {
 test("token derivado de machine-id diferente produz hash diferente", () => {
   const SALT = "pusula-cli-auth-v1";
   // Mirror the production derivation (#10148): HMAC-SHA256(machineId, SALT) hex.
-  const hash = (mid: string) =>
-    crypto
-      .createHmac("sha256", mid)
-      .update(SALT)
-      .digest("hex");
+  const hash = (mid: string) => crypto.createHmac("sha256", mid).update(SALT).digest("hex");
   const t1 = hash("machine-id-host-A");
   const t2 = hash("machine-id-host-B");
   assert.notEqual(t1, t2);

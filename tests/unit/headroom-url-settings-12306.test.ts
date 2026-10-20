@@ -100,7 +100,10 @@ test("updateSettings round-trips an empty headroomUrl without dropping the key",
 
 test("advanced settings page mounts the Headroom proxy card", async () => {
   const src = fs.readFileSync(
-    path.join(import.meta.dirname, "../../src/app/(dashboard)/dashboard/settings/advanced/page.tsx"),
+    path.join(
+      import.meta.dirname,
+      "../../src/app/(dashboard)/dashboard/settings/advanced/page.tsx"
+    ),
     "utf8"
   );
   assert.match(src, /HeadroomProxyCard/);
@@ -122,7 +125,8 @@ test("save reads PATCH validation details instead of a generic HTTP status", () 
   );
   assert.match(src, /throw new Error\(settingsErrorText\(body, `HTTP \$\{res\.status\}`\)\)/);
   assert.equal(
-    (src.match(/throw new Error\(settingsErrorText\(body, `HTTP \$\{res\.status\}`\)\)/g) || []).length,
+    (src.match(/throw new Error\(settingsErrorText\(body, `HTTP \$\{res\.status\}`\)\)/g) || [])
+      .length,
     2
   );
   assert.match(src, /body\.error\?\.details/);

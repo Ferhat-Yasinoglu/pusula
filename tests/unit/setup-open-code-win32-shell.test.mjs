@@ -52,12 +52,6 @@ test("resolveOpenCodeAuthProviderId: adds opencode- prefix when absent (#8830)",
 
 test("resolveOpenCodeAuthProviderId: idempotent — passes through already-prefixed ids (#8830)", () => {
   assert.equal(resolveOpenCodeAuthProviderId("opencode-pusula"), "opencode-pusula");
-  assert.equal(
-    resolveOpenCodeAuthProviderId("opencode-pusula-preprod"),
-    "opencode-pusula-preprod"
-  );
-  assert.equal(
-    resolveOpenCodeAuthProviderId("opencode-anthropic"),
-    "opencode-anthropic"
-  );
+  assert.equal(resolveOpenCodeAuthProviderId("opencode-pusula-preprod"), "opencode-pusula-preprod");
+  assert.equal(resolveOpenCodeAuthProviderId("opencode-anthropic"), "opencode-anthropic");
 });

@@ -299,9 +299,7 @@ test("sanitizeOpenAIResponse promotes reasoning_details text to reasoning_conten
           role: "assistant",
           content: "Visible answer",
           reasoning: "Hmm, let me think this through",
-          reasoning_details: [
-            { type: "reasoning.text", text: "Hmm, let me think this through" },
-          ],
+          reasoning_details: [{ type: "reasoning.text", text: "Hmm, let me think this through" }],
         },
       },
     ],
@@ -634,9 +632,7 @@ test("sanitizeStreamingChunk promotes reasoning_details text when reasoning is a
   ).choices[0].delta;
   assert.equal(delta.reasoning, "thinking chunk");
   assert.equal(delta.reasoning_content, "thinking chunk");
-  assert.deepEqual(delta.reasoning_details, [
-    { type: "reasoning.text", text: "thinking chunk" },
-  ]);
+  assert.deepEqual(delta.reasoning_details, [{ type: "reasoning.text", text: "thinking chunk" }]);
 });
 
 test("sanitizeStreamingChunk preserves and mirrors Copilot reasoning_text deltas", () => {

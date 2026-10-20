@@ -16,9 +16,8 @@ import assert from "node:assert/strict";
  * testable without touching a host.
  */
 
-const { planCanaryDeploy, evaluateSmoke, buildRemoteSteps } = await import(
-  "../../scripts/ops/deployCanary.ts"
-);
+const { planCanaryDeploy, evaluateSmoke, buildRemoteSteps } =
+  await import("../../scripts/ops/deployCanary.ts");
 
 test("D1: an artifact off the release line is refused before anything is shipped", () => {
   const plan = planCanaryDeploy({

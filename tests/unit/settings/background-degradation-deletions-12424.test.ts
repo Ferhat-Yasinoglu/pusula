@@ -6,9 +6,8 @@ import path from "node:path";
 
 process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-bgdeg-12424-"));
 
-const { applyRuntimeSettings, resetRuntimeSettingsStateForTests } = await import(
-  "../../../src/lib/config/runtimeSettings.ts"
-);
+const { applyRuntimeSettings, resetRuntimeSettingsStateForTests } =
+  await import("../../../src/lib/config/runtimeSettings.ts");
 const {
   getBackgroundDegradationConfig,
   getDefaultDegradationMap,

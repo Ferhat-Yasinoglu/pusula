@@ -11,8 +11,7 @@ const core = await import("../../src/lib/db/core.ts");
 const settings = await import("../../src/lib/db/settings.ts");
 
 async function resetStorage() {
-  const globalDb = (globalThis as { __pusulaDb?: { open: boolean; close(): void } })
-    .__pusulaDb;
+  const globalDb = (globalThis as { __pusulaDb?: { open: boolean; close(): void } }).__pusulaDb;
   try {
     if (globalDb?.open) {
       globalDb.close();

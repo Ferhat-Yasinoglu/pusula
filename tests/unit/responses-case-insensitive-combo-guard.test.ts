@@ -57,9 +57,7 @@ test("Responses route uses the downstream combo resolver for the Codex rewrite g
   assert.doesNotMatch(source, /getComboByName\(name\)/);
 });
 
-const TEST_DATA_DIR = fs.mkdtempSync(
-  path.join(os.tmpdir(), "pusula-responses-ci-" + Date.now())
-);
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-responses-ci-" + Date.now()));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../src/lib/db/core.ts");

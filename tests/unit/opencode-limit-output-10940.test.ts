@@ -37,9 +37,8 @@ describe("opencode config generator — limit.output always emitted (#10940)", (
       makeCatalogResponse([{ id: "metadataless-model", owned_by: "someProvider" }])
     );
     try {
-      const { generateOpencodeConfig } = await import(
-        "../../src/lib/cli-helper/config-generator/opencode.ts"
-      );
+      const { generateOpencodeConfig } =
+        await import("../../src/lib/cli-helper/config-generator/opencode.ts");
       const out = await generateOpencodeConfig({
         baseUrl: "http://localhost:20128",
         apiKey: "sk-test",
@@ -68,9 +67,8 @@ describe("opencode config generator — limit.output always emitted (#10940)", (
       ])
     );
     try {
-      const { generateOpencodeConfig } = await import(
-        "../../src/lib/cli-helper/config-generator/opencode.ts"
-      );
+      const { generateOpencodeConfig } =
+        await import("../../src/lib/cli-helper/config-generator/opencode.ts");
       const out = await generateOpencodeConfig({
         baseUrl: "http://localhost:20128",
         apiKey: "sk-test",

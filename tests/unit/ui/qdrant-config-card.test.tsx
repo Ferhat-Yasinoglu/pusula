@@ -167,14 +167,15 @@ describe("QdrantConfigCard", () => {
     expect(putCalls.length).toBeGreaterThan(0);
 
     const tutorial = container.querySelector(
-      "[data-testid='qdrant-setup-tutorial']",
+      "[data-testid='qdrant-setup-tutorial']"
     ) as HTMLButtonElement | null;
     expect(tutorial).toBeTruthy();
     await act(async () => {
       tutorial?.click();
     });
     expect(container.querySelector("[role='dialog']")).toBeTruthy();
-    expect(container.textContent).toContain("Rafa Martins");  });
+    expect(container.textContent).toContain("Rafa Martins");
+  });
 
   it("test connection button calls /api/settings/qdrant/health", async () => {
     const fetchMock = vi.fn().mockImplementation((url: string) => {
@@ -259,9 +260,9 @@ describe("QdrantConfigCard", () => {
           });
         }
         if (url === "/api/settings/qdrant/search") {
-        return Promise.resolve({ ok: true, json: async () => ({ ok: true, results: [] }) });
-      }
-      return Promise.resolve({ ok: true, json: async () => ({}) });
+          return Promise.resolve({ ok: true, json: async () => ({ ok: true, results: [] }) });
+        }
+        return Promise.resolve({ ok: true, json: async () => ({}) });
       });
     globalThis.fetch = fetchMock;
 

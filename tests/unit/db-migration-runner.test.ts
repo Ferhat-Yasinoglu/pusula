@@ -202,10 +202,11 @@ test("runMigrations applies pending files sequentially in version order", serial
     );
 
     assert.equal(appliedCount, 3);
-    assert.deepEqual(
-      db.prepare("SELECT version FROM _pusula_migrations ORDER BY version").all(),
-      [{ version: "001" }, { version: "002" }, { version: "010" }]
-    );
+    assert.deepEqual(db.prepare("SELECT version FROM _pusula_migrations ORDER BY version").all(), [
+      { version: "001" },
+      { version: "002" },
+      { version: "010" },
+    ]);
     assert.ok(
       db
         .prepare("SELECT name FROM sqlite_master WHERE type = 'table' AND name = ?")
@@ -360,10 +361,7 @@ test("getMigrationStatus reports applied and pending migrations", serial, async 
         applied_at TEXT NOT NULL DEFAULT (datetime('now'))
       );
     `);
-    db.prepare("INSERT INTO _pusula_migrations (version, name) VALUES (?, ?)").run(
-      "001",
-      "first"
-    );
+    db.prepare("INSERT INTO _pusula_migrations (version, name) VALUES (?, ?)").run("001", "first");
 
     const status = withMockedMigrationFs(
       {

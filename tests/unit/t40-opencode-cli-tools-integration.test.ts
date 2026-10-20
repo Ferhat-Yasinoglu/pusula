@@ -106,10 +106,7 @@ test("T40: OpenCode config document uses current provider schema", () => {
     configDocument.provider.pusula.models["cc/claude-sonnet-4-20250514"].name,
     "Claude Sonnet 4.5"
   );
-  assert.equal(
-    configDocument.provider.pusula.models["gg/gemini-2.5-pro"].name,
-    "Gemini 2.5 Pro"
-  );
+  assert.equal(configDocument.provider.pusula.models["gg/gemini-2.5-pro"].name, "Gemini 2.5 Pro");
   // v2 provider schema is dual-written alongside the v1 block.
   assert.equal(
     configDocument.providers.pusula.package,

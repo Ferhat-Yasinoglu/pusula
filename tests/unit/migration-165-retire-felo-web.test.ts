@@ -41,9 +41,8 @@ test.after(() => {
 test("migration 165 retires every Felo id fail-closed and preserves audit history", async () => {
   const db = core.getDbInstance();
 
-  const applied = db
-    .prepare("SELECT version FROM _pusula_migrations WHERE version = 165")
-    .get() as { version: number } | undefined;
+  const applied = db.prepare("SELECT version FROM _pusula_migrations WHERE version = 165").get() as
+    { version: number } | undefined;
   assert.ok(applied, "migration 165 must be recorded as applied");
 
   // Recreate a pre-migration fixture even though a fresh test database already

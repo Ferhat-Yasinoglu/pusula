@@ -7,13 +7,12 @@ import path from "node:path";
 const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-db-ratelimit-guard-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
-const core = await import("../../src/lib/db/core.ts") as typeof import("../../src/lib/db/core.ts");
-const providersDb = await import("../../src/lib/db/providers.ts") as typeof import("../../src/lib/db/providers.ts");
-const {
-  setConnectionRateLimitUntil,
-  clearConnectionRateLimit,
-  isConnectionRateLimited,
-} = providersDb;
+const core =
+  (await import("../../src/lib/db/core.ts")) as typeof import("../../src/lib/db/core.ts");
+const providersDb =
+  (await import("../../src/lib/db/providers.ts")) as typeof import("../../src/lib/db/providers.ts");
+const { setConnectionRateLimitUntil, clearConnectionRateLimit, isConnectionRateLimited } =
+  providersDb;
 
 function readRateLimitedUntil(connectionId: string): unknown {
   const db = (
@@ -25,9 +24,10 @@ function readRateLimitedUntil(connectionId: string): unknown {
       };
     }
   ).getDbInstance();
-  return db
-    .prepare("SELECT rate_limited_until FROM provider_connections WHERE id = ?")
-    .get(connectionId)?.rate_limited_until ?? null;
+  return (
+    db.prepare("SELECT rate_limited_until FROM provider_connections WHERE id = ?").get(connectionId)
+      ?.rate_limited_until ?? null
+  );
 }
 
 async function resetStorage() {

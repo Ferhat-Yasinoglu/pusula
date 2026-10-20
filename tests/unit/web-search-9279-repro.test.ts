@@ -26,10 +26,7 @@ test("#9279 versioned web_search_20250305 IS intercepted with interceptSearchOve
   );
 
   assert.equal(fallback.enabled, true);
-  assert.equal(
-    fallback.toolName,
-    PUSULA_WEB_SEARCH_FALLBACK_TOOL_NAME
-  );
+  assert.equal(fallback.toolName, PUSULA_WEB_SEARCH_FALLBACK_TOOL_NAME);
   assert.equal(fallback.convertedToolCount, 1);
 });
 
@@ -51,10 +48,7 @@ test("#9279 versioned web_search_20250305 intercepted even without per-model ove
   );
 
   assert.equal(fallback.enabled, true);
-  assert.equal(
-    fallback.toolName,
-    PUSULA_WEB_SEARCH_FALLBACK_TOOL_NAME
-  );
+  assert.equal(fallback.toolName, PUSULA_WEB_SEARCH_FALLBACK_TOOL_NAME);
   assert.equal(fallback.convertedToolCount, 1);
 });
 

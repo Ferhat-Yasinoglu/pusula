@@ -112,7 +112,10 @@ test("mixed-version inputs are refused, not merged", () => {
   // Artifacts from two different builds in one release-assets dir means something is wrong
   // upstream; a manifest stitched from both would point at files that were never published
   // together.
-  const merged = mergeManifests([parseManifest(INTEL), parseManifest(ARM.replace("3.8.49", "3.8.48"))]);
+  const merged = mergeManifests([
+    parseManifest(INTEL),
+    parseManifest(ARM.replace("3.8.49", "3.8.48")),
+  ]);
   assert.ok(merged.versionConflict, "the caller must be able to refuse");
   assert.deepEqual(merged.versionConflict.sort(), ["3.8.48", "3.8.49"]);
 });

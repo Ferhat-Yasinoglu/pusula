@@ -39,10 +39,7 @@ test("VPS compose requires an explicitly pinned image and production secrets", (
   const { raw, parsed } = readCompose();
   const pusula = parsed.services?.pusula;
 
-  assert.equal(
-    pusula?.image,
-    "${PUSULA_IMAGE:?Set PUSULA_IMAGE to a versioned tag or digest}"
-  );
+  assert.equal(pusula?.image, "${PUSULA_IMAGE:?Set PUSULA_IMAGE to a versioned tag or digest}");
   assert.equal(pusula?.environment?.REQUIRE_API_KEY, "${REQUIRE_API_KEY:-true}");
   assert.match(raw, /JWT_SECRET: \$\{JWT_SECRET:\?Set JWT_SECRET in \.env\}/);
   assert.match(raw, /API_KEY_SECRET: \$\{API_KEY_SECRET:\?Set API_KEY_SECRET in \.env\}/);

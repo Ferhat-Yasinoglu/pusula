@@ -59,7 +59,8 @@ function makeSkill(overrides: Partial<AgentSkill> = {}): AgentSkill {
     endpoints: ["POST /api/providers", "GET /api/providers"],
     rawUrl:
       "https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/refs/heads/main/skills/pusula-providers/SKILL.md",
-    githubUrl: "https://github.com/Ferhat-Yasinoglu/pusula/blob/main/skills/pusula-providers/SKILL.md",
+    githubUrl:
+      "https://github.com/Ferhat-Yasinoglu/pusula/blob/main/skills/pusula-providers/SKILL.md",
     ...overrides,
   };
 }

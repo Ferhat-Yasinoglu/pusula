@@ -74,7 +74,9 @@ describe("#12709 - SystemStorageTab guest-session 401 on /api/settings/database"
     await flush();
     await flush();
 
-    const dbCall = fetchMock.mock.calls.find((c) => String(c[0]).includes("/api/settings/database"));
+    const dbCall = fetchMock.mock.calls.find((c) =>
+      String(c[0]).includes("/api/settings/database")
+    );
     expect(dbCall).toBeTruthy();
 
     const text = container.textContent || "";

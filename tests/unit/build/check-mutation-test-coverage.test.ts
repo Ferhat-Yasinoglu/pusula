@@ -40,10 +40,7 @@ test("testImportsModule matches static, dynamic and require imports of the modul
   );
   // unrelated module is not matched
   assert.equal(
-    testImportsModule(
-      `import { a } from "@pusula/open-sse/handlers/chatCore/idempotency";`,
-      frag
-    ),
+    testImportsModule(`import { a } from "@pusula/open-sse/handlers/chatCore/idempotency";`, frag),
     false
   );
   // the fragment appearing only in a comment (not an import string) is NOT a match

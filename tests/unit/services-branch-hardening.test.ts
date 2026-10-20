@@ -129,7 +129,10 @@ test("combo agent middleware covers system override, tool filtering, tag strippi
     messages: [
       { role: "system", content: "old system" },
       { role: "user", content: "hello" },
-      { role: "assistant", content: "cached\n<pusulaModel>anthropic/claude-sonnet-4-6</pusulaModel>" },
+      {
+        role: "assistant",
+        content: "cached\n<pusulaModel>anthropic/claude-sonnet-4-6</pusulaModel>",
+      },
     ],
     tools: originalTools,
   };

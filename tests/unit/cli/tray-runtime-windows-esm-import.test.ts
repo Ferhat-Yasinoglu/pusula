@@ -3,10 +3,7 @@ import assert from "node:assert/strict";
 import path from "node:path";
 import os from "node:os";
 import { pathToFileURL } from "node:url";
-import {
-  systrayModuleSpecifier,
-  SYSTRAY_PACKAGE,
-} from "../../../bin/cli/runtime/trayRuntime.ts";
+import { systrayModuleSpecifier, SYSTRAY_PACKAGE } from "../../../bin/cli/runtime/trayRuntime.ts";
 
 // Regression guard for the Windows-only ESM loader failure at the lazy tray
 // import in bin/cli/runtime/trayRuntime.ts (loadSystray):
@@ -32,7 +29,7 @@ test("systrayModuleSpecifier returns a file:// URL, not a raw absolute path", ()
     spec,
     /^file:\/\//,
     "dynamic import() of a raw absolute path fails on Windows (drive letter " +
-      "parsed as a URL scheme); wrap the path in pathToFileURL(...).href",
+      "parsed as a URL scheme); wrap the path in pathToFileURL(...).href"
   );
   assert.ok(spec.includes(SYSTRAY_PACKAGE), "specifier must target the systray2 package");
   // A file:// URL is a loader-acceptable specifier on every platform.
@@ -41,8 +38,6 @@ test("systrayModuleSpecifier returns a file:// URL, not a raw absolute path", ()
 
 test("systrayModuleSpecifier matches pathToFileURL of the module directory", () => {
   const runtimeDir = path.join(os.tmpdir(), "pusula-tray-spec-test");
-  const expected = pathToFileURL(
-    path.join(runtimeDir, "node_modules", SYSTRAY_PACKAGE),
-  ).href;
+  const expected = pathToFileURL(path.join(runtimeDir, "node_modules", SYSTRAY_PACKAGE)).href;
   assert.equal(systrayModuleSpecifier(runtimeDir), expected);
 });

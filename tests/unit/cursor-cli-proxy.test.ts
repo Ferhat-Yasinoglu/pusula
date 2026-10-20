@@ -49,7 +49,8 @@ function makeDeps(overrides: Partial<CursorCliProxyDeps> = {}): {
     now: () => NOW,
     getSecret: () => SECRET,
     validateApiKey: async (key) => key === PUSULA_KEY,
-    getApiKeyMetadata: async (key) => (key === PUSULA_KEY ? { id: "key-1", name: "unit key" } : null),
+    getApiKeyMetadata: async (key) =>
+      key === PUSULA_KEY ? { id: "key-1", name: "unit key" } : null,
     getApiKeyById: async (id) => (id === "key-1" ? { isActive: true, revokedAt: null } : null),
     requireApiKey: () => true,
     listCursorConnections: async () => [{ id: "conn-1", apiKey: CURSOR_KEY, priority: 1 }],

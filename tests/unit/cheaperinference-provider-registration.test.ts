@@ -54,8 +54,7 @@ test("cheaperinference registry entry points at the measured API surface", async
 
 test("cheaperinference catalog matches the measured GET /v1/models text set", async () => {
   const { REGISTRY } = await import("@pusula/open-sse/config/providers/index.ts");
-  const models = (REGISTRY.cheaperinference as unknown as { models: Array<{ id: string }> })
-    .models;
+  const models = (REGISTRY.cheaperinference as unknown as { models: Array<{ id: string }> }).models;
   // 39 text models measured on 2026-07-31; the 3 image models live in
   // imageRegistry.ts, never here (chat requests for them 400 upstream).
   assert.equal(models.length, 39);
@@ -87,8 +86,7 @@ test("cheaperinference resale pricing covers every catalog model", async () => {
   const { REGISTRY } = await import("@pusula/open-sse/config/providers/index.ts");
   const pricing = (DEFAULT_PRICING as Record<string, Record<string, unknown>>).cheaperinference;
   assert.ok(pricing, "no pricing block for cheaperinference");
-  const models = (REGISTRY.cheaperinference as unknown as { models: Array<{ id: string }> })
-    .models;
+  const models = (REGISTRY.cheaperinference as unknown as { models: Array<{ id: string }> }).models;
   for (const model of models) {
     assert.ok(pricing[model.id], `missing pricing for ${model.id}`);
   }

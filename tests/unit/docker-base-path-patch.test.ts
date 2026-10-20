@@ -64,15 +64,9 @@ test("patchStandaloneBasePath rejects mismatched non-root builds", () => {
 
 test("patchBasePathLiterals rewrites assetPrefix literals (Next 16 SSR asset URLs)", () => {
   // Next 16 app-router renders SSR asset URLs from assetPrefix ALONE.
-  assert.equal(
-    patchBasePathLiterals('{"assetPrefix":""}', "/pusula"),
-    '{"assetPrefix":"/pusula"}'
-  );
+  assert.equal(patchBasePathLiterals('{"assetPrefix":""}', "/pusula"), '{"assetPrefix":"/pusula"}');
   assert.equal(patchBasePathLiterals('assetPrefix:""', "/pusula"), 'assetPrefix:"/pusula"');
-  assert.equal(
-    patchBasePathLiterals("assetPrefix:void 0", "/pusula"),
-    'assetPrefix:"/pusula"'
-  );
+  assert.equal(patchBasePathLiterals("assetPrefix:void 0", "/pusula"), 'assetPrefix:"/pusula"');
   // Asset prefix must mirror the basePath so both routing and assets align.
   const mixed = patchBasePathLiterals('{"basePath":"","assetPrefix":""}', "/pusula");
   assert.match(mixed, /"basePath":"\/pusula"/);

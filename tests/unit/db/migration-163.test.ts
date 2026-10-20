@@ -58,13 +58,7 @@ test("migration 163 — a row from the previous schema keeps its data and reads 
   db.prepare(
     `INSERT INTO radar_feed_cache (id, version, tier, payload, signature, fetched_at)
      VALUES (1, ?, ?, ?, ?, ?)`
-  ).run(
-    "2026.08.02.1",
-    "community",
-    '{"feed":"pusula-radar"}',
-    "sig",
-    "2026-08-24T07:00:00.000Z"
-  );
+  ).run("2026.08.02.1", "community", '{"feed":"pusula-radar"}', "sig", "2026-08-24T07:00:00.000Z");
 
   const cache = radarDb.getRadarCache();
 

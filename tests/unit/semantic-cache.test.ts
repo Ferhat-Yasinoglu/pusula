@@ -144,7 +144,9 @@ describe("Semantic Cache", () => {
 
       it("generates different signatures for different tools arrays", () => {
         const tools1 = [{ type: "function", function: { name: "get_weather", parameters: {} } }];
-        const tools2 = [{ type: "function", function: { name: "get_stock_price", parameters: {} } }];
+        const tools2 = [
+          { type: "function", function: { name: "get_stock_price", parameters: {} } },
+        ];
         const sig1 = generateSignature("gpt-4o", messages, 0, 1, undefined, { tools: tools1 });
         const sig2 = generateSignature("gpt-4o", messages, 0, 1, undefined, { tools: tools2 });
         assert.notEqual(sig1, sig2);

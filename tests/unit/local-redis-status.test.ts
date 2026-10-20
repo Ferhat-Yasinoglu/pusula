@@ -23,10 +23,7 @@ const src = fs.readFileSync(STATUS_SRC, "utf8");
 
 test("redis status: reports running via REDIS_URL reachability, not only Docker", () => {
   assert.ok(src.includes("parseRedisUrl"), "status route must parse REDIS_URL");
-  assert.ok(
-    src.includes("redisUrlReachable"),
-    "status route must probe REDIS_URL reachability"
-  );
+  assert.ok(src.includes("redisUrlReachable"), "status route must probe REDIS_URL reachability");
   assert.ok(
     src.includes("redisUrlConfigured"),
     "status route must report whether REDIS_URL is configured"

@@ -28,10 +28,7 @@ const SCRIPT_PATH = path.join(
 );
 
 test("pickTarball extracts the filename from npm pack --json output", () => {
-  assert.equal(
-    pickTarball('[{"filename":"pusula-3.8.49.tgz","size":1}]'),
-    "pusula-3.8.49.tgz"
-  );
+  assert.equal(pickTarball('[{"filename":"pusula-3.8.49.tgz","size":1}]'), "pusula-3.8.49.tgz");
 });
 
 test("pickTarball normalizes scoped slashes to the on-disk dash form", () => {

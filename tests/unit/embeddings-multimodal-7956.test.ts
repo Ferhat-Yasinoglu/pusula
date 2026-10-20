@@ -255,10 +255,7 @@ test("translates one fused Gemini Content to embedContent (one vector)", async (
     "gemini-embedding-2",
     {
       input: {
-        parts: [
-          { text: "caption" },
-          { inline_data: { mime_type: "image/png", data: "aQ==" } },
-        ],
+        parts: [{ text: "caption" }, { inline_data: { mime_type: "image/png", data: "aQ==" } }],
       },
       dimensions: 1536,
       task: "retrieval.query",
@@ -276,10 +273,7 @@ test("translates one fused Gemini Content to embedContent (one vector)", async (
   );
   assert.deepEqual(prepared.body, {
     content: {
-      parts: [
-        { text: "caption" },
-        { inline_data: { mime_type: "image/png", data: "aQ==" } },
-      ],
+      parts: [{ text: "caption" }, { inline_data: { mime_type: "image/png", data: "aQ==" } }],
     },
     output_dimensionality: 1536,
     task_type: "RETRIEVAL_QUERY",

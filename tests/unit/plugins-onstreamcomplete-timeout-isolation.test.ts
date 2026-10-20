@@ -93,9 +93,13 @@ export async function onStreamComplete(payload) {
       "utf-8"
     );
 
-    loaded = await loadPlugin(entryPoint, makeManifest("sc-timeout-isolation", {
-      onStreamComplete: true,
-    }), { hookTimeoutMs: HOOK_TIMEOUT_MS });
+    loaded = await loadPlugin(
+      entryPoint,
+      makeManifest("sc-timeout-isolation", {
+        onStreamComplete: true,
+      }),
+      { hookTimeoutMs: HOOK_TIMEOUT_MS }
+    );
 
     // Capture the loader's warning (logger("PLUGIN_LOADER").warn → console.warn).
     const originalWarn = console.warn;
@@ -184,9 +188,13 @@ export async function onRequest(ctx) {
       "utf-8"
     );
 
-    loaded = await loadPlugin(entryPoint, makeManifest("req-timeout-kill", {
-      onRequest: true,
-    }), { hookTimeoutMs: HOOK_TIMEOUT_MS });
+    loaded = await loadPlugin(
+      entryPoint,
+      makeManifest("req-timeout-kill", {
+        onRequest: true,
+      }),
+      { hookTimeoutMs: HOOK_TIMEOUT_MS }
+    );
 
     // A blocking hook exceeding the timeout: the pre-existing isolation semantics apply —
     // the misbehaving plugin process is killed.

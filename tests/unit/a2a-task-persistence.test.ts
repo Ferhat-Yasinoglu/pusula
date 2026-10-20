@@ -222,7 +222,10 @@ test("a throwing persistence.appendEvent does not break updateTask", () => {
     }) as A2APersistence["appendEvent"],
   });
   const tm = createManager(5, persistence);
-  const task = tm.createTask({ skill: "smart-routing", messages: [{ role: "user", content: "hi" }] });
+  const task = tm.createTask({
+    skill: "smart-routing",
+    messages: [{ role: "user", content: "hi" }],
+  });
 
   let updated: ReturnType<A2ATaskManager["updateTask"]> | undefined;
   assert.doesNotThrow(() => {

@@ -17,9 +17,8 @@ test.after(() => {
 test("migration 159 removes stale MiMoCode provider state and is idempotent", () => {
   const db = core.getDbInstance();
 
-  const applied = db
-    .prepare("SELECT version FROM _pusula_migrations WHERE version = 159")
-    .get() as { version: number } | undefined;
+  const applied = db.prepare("SELECT version FROM _pusula_migrations WHERE version = 159").get() as
+    { version: number } | undefined;
 
   assert.ok(applied, "migration 159 must be recorded as applied");
 

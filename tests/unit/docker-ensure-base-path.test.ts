@@ -9,10 +9,7 @@ function makeStandaloneRoot(basePath = "") {
   const appRoot = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-docker-base-"));
   const distRoot = path.join(appRoot, ".build", "next");
   fs.mkdirSync(path.join(distRoot, "server"), { recursive: true });
-  fs.writeFileSync(
-    path.join(distRoot, "routes-manifest.json"),
-    JSON.stringify({ basePath })
-  );
+  fs.writeFileSync(path.join(distRoot, "routes-manifest.json"), JSON.stringify({ basePath }));
   fs.writeFileSync(
     path.join(distRoot, "server", "chunk.js"),
     `export const config={basePath:"${basePath}"};`
@@ -40,8 +37,5 @@ test("ensureDockerBasePath patches a root image when a subpath is configured", (
 
 test("ensureDockerBasePath rejects unset runtime on subpath images", () => {
   const appRoot = makeStandaloneRoot("/pusula");
-  assert.throws(
-    () => ensureDockerBasePath({ appRoot, env: {} }),
-    /built for subpath/
-  );
+  assert.throws(() => ensureDockerBasePath({ appRoot, env: {} }), /built for subpath/);
 });

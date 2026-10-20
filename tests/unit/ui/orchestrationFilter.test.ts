@@ -187,9 +187,7 @@ test("q matching a work keeps its activity node and the edges between them", () 
   const ids = out.nodes.map((n) => n.id);
   assert.ok(ids.includes("cloud-agent:1"));
   assert.ok(ids.includes("cloud-agent:1:activity"));
-  assert.ok(
-    out.edges.some((e) => e.from === "cloud-agent:1" && e.to === "cloud-agent:1:activity")
-  );
+  assert.ok(out.edges.some((e) => e.from === "cloud-agent:1" && e.to === "cloud-agent:1:activity"));
 });
 
 test("state chip keeps only matching works", () => {

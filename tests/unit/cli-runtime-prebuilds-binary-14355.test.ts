@@ -28,9 +28,8 @@ async function withFakeDataDir(fn: (dataDir: string) => Promise<void> | void) {
 
 test("isBetterSqliteBinaryValid recognizes a real, loadable binary under prebuilds/<platform>-<arch>.node", async () => {
   await withFakeDataDir(async () => {
-    const { getRuntimeNodeModules, isBetterSqliteBinaryValid, prebuiltBinaryName } = await import(
-      "../../bin/cli/runtime/nativeDeps.mjs"
-    );
+    const { getRuntimeNodeModules, isBetterSqliteBinaryValid, prebuiltBinaryName } =
+      await import("../../bin/cli/runtime/nativeDeps.mjs");
 
     const realBinary = join(
       process.cwd(),
@@ -63,9 +62,8 @@ test("isBetterSqliteBinaryValid recognizes a real, loadable binary under prebuil
 
 test("isBetterSqliteBinaryValid rejects a prebuilds/ file that only has correct magic bytes but wrong ABI", async () => {
   await withFakeDataDir(async () => {
-    const { getRuntimeNodeModules, isBetterSqliteBinaryValid, prebuiltBinaryName } = await import(
-      "../../bin/cli/runtime/nativeDeps.mjs"
-    );
+    const { getRuntimeNodeModules, isBetterSqliteBinaryValid, prebuiltBinaryName } =
+      await import("../../bin/cli/runtime/nativeDeps.mjs");
     const { platform } = await import("node:os");
 
     const nm = getRuntimeNodeModules();
@@ -95,9 +93,8 @@ test("isBetterSqliteBinaryValid rejects a prebuilds/ file that only has correct 
 
 test("isBetterSqliteBinaryValid prefers build/Release when both layouts happen to exist", async () => {
   await withFakeDataDir(async () => {
-    const { getRuntimeNodeModules, isBetterSqliteBinaryValid, prebuiltBinaryName } = await import(
-      "../../bin/cli/runtime/nativeDeps.mjs"
-    );
+    const { getRuntimeNodeModules, isBetterSqliteBinaryValid, prebuiltBinaryName } =
+      await import("../../bin/cli/runtime/nativeDeps.mjs");
 
     const realBinary = join(
       process.cwd(),

@@ -4,9 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(
-  path.join(os.tmpdir(), "pusula-usage-analytics-model-dedup-")
-);
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-usage-analytics-model-dedup-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 const ORIGINAL_API_KEY_SECRET = process.env.API_KEY_SECRET;
 process.env.API_KEY_SECRET = "test-usage-analytics-model-dedup-secret";

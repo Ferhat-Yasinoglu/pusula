@@ -59,8 +59,7 @@ test.after(() => {
 const LEAKS = [
   {
     label: "config/state path (.json)",
-    message:
-      "ENOENT: no such file or directory, open '/home/operator/.pusula/data/tunnels.json'",
+    message: "ENOENT: no such file or directory, open '/home/operator/.pusula/data/tunnels.json'",
     secrets: ["/home/operator", "tunnels.json"],
     sharedSanitizerCovers: true,
   },

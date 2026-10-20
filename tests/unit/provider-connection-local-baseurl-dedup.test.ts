@@ -59,8 +59,16 @@ test("two LM Studio connections with different baseUrl but same optional API key
   });
 
   const conns = await apiKeyConnections("lm-studio");
-  assert.equal(conns.length, 2, "distinct-baseUrl local connections must not be deduped onto one row");
-  assert.notEqual(connectionId(second), connectionId(first), "the second add must create a new connection, not overwrite the first");
+  assert.equal(
+    conns.length,
+    2,
+    "distinct-baseUrl local connections must not be deduped onto one row"
+  );
+  assert.notEqual(
+    connectionId(second),
+    connectionId(first),
+    "the second add must create a new connection, not overwrite the first"
+  );
 });
 
 // Same baseUrl + same apiKey for a local provider must still dedup to 1 row
@@ -82,7 +90,11 @@ test("two LM Studio connections with the same baseUrl and same API key still ded
   });
 
   const conns = await apiKeyConnections("lm-studio");
-  assert.equal(conns.length, 1, "re-adding the same local server (same baseUrl, trailing slash aside) must dedup to one row");
+  assert.equal(
+    conns.length,
+    1,
+    "re-adding the same local server (same baseUrl, trailing slash aside) must dedup to one row"
+  );
 });
 
 // Hosted providers (#3023) must keep matching purely on apiKey value —
@@ -102,6 +114,14 @@ test("hosted provider (openai) apiKey-value dedup is unaffected by baseUrl (#121
   });
 
   const conns = await apiKeyConnections("openai");
-  assert.equal(conns.length, 1, "hosted-provider apiKey dedup (#3023) must still collapse to one row");
-  assert.equal(connectionId(second), connectionId(first), "the second add must update the same hosted connection");
+  assert.equal(
+    conns.length,
+    1,
+    "hosted-provider apiKey dedup (#3023) must still collapse to one row"
+  );
+  assert.equal(
+    connectionId(second),
+    connectionId(first),
+    "the second add must update the same hosted connection"
+  );
 });

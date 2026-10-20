@@ -12,10 +12,7 @@ const { buildNonStreamingResponseHeaders } =
 function makeDeps(now = 1000) {
   const metaCalls: Array<{ headers: Record<string, string>; meta: Record<string, unknown> }> = [];
   const deps = {
-    attachPusulaMetaHeaders: (
-      headers: Record<string, string>,
-      meta: Record<string, unknown>
-    ) => {
+    attachPusulaMetaHeaders: (headers: Record<string, string>, meta: Record<string, unknown>) => {
       metaCalls.push({ headers, meta });
       headers["x-pusula-meta"] = "attached";
     },

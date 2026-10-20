@@ -15,8 +15,14 @@ const { messagesToPrompt } = await import("../../open-sse/executors/deepseek-web
 
 test("#10527: default (no tools[], no historyWindow) keeps the original task after a few Cline-style turns", () => {
   const clineStyleConversation = [
-    { role: "system", content: "You are Cline, an autonomous coding agent. Use the available tools." },
-    { role: "user", content: "Add input validation to the /api/v1/signup route and write a test for it." },
+    {
+      role: "system",
+      content: "You are Cline, an autonomous coding agent. Use the available tools.",
+    },
+    {
+      role: "user",
+      content: "Add input validation to the /api/v1/signup route and write a test for it.",
+    },
     {
       role: "assistant",
       content:

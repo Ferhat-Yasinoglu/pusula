@@ -12,9 +12,8 @@ process.env.API_KEY_SECRET = process.env.API_KEY_SECRET || "explicit-inactive-w2
 const core = await import("../../src/lib/db/core.ts");
 const providersDb = await import("../../src/lib/db/providers.ts");
 const auth = await import("../../src/sse/services/auth.ts");
-const { maybeReactivateAfterExplicitProbe, resetExplicitProbeMapForTests } = await import(
-  "../../src/sse/services/explicitInactiveProbe.ts"
-);
+const { maybeReactivateAfterExplicitProbe, resetExplicitProbeMapForTests } =
+  await import("../../src/sse/services/explicitInactiveProbe.ts");
 
 async function resetStorage() {
   core.resetDbInstance();

@@ -102,10 +102,7 @@ test("PUSULA_CONTAINER=0 forces detection off even inside a container", () => {
     env: { PUSULA_CONTAINER: "0" } as NodeJS.ProcessEnv,
   };
   assert.equal(isRunningInContainer(inContainer), false);
-  assert.equal(
-    isRunningInContainer({ ...inContainer, env: { PUSULA_CONTAINER: "false" } }),
-    false
-  );
+  assert.equal(isRunningInContainer({ ...inContainer, env: { PUSULA_CONTAINER: "false" } }), false);
 });
 
 // ── hasBindMountAt ───────────────────────────────────────────────────────────

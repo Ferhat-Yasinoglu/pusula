@@ -359,11 +359,7 @@ test("getWalGuardMaxBytes parses env: garbage falls back to the 256MB default", 
     DEF,
     "non-numeric -> default"
   );
-  assert.equal(
-    getWalGuardMaxBytes({ PUSULA_WAL_GUARD_MAX_MB: "0" }),
-    DEF,
-    "below 1MB -> default"
-  );
+  assert.equal(getWalGuardMaxBytes({ PUSULA_WAL_GUARD_MAX_MB: "0" }), DEF, "below 1MB -> default");
   assert.equal(
     getWalGuardMaxBytes({ PUSULA_WAL_GUARD_MAX_MB: "0.5" }),
     DEF,

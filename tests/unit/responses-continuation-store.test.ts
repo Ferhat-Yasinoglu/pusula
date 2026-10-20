@@ -535,7 +535,10 @@ test("resolvePreviousResponseState never lets the pending bridge cross tenants",
     responseId: "resp_gen-tenant-bridge",
     pipeline: {
       clientRawRequest: { body: { input: [{ role: "user", content: "secret" }] } },
-      clientResponse: { id: "resp_gen-tenant-bridge", output: [{ role: "assistant", content: "reply" }] },
+      clientResponse: {
+        id: "resp_gen-tenant-bridge",
+        output: [{ role: "assistant", content: "reply" }],
+      },
     },
   });
 
@@ -589,8 +592,13 @@ test("the pending bridge shares the durable path's fail-closed rules (video-reda
     responseId: "resp_gen-video-bridge",
     videoContentRemoved: true,
     pipeline: {
-      clientRawRequest: { body: { input: [{ role: "user", content: "[redacted-video-transcript]" }] } },
-      clientResponse: { id: "resp_gen-video-bridge", output: [{ role: "assistant", content: "ok" }] },
+      clientRawRequest: {
+        body: { input: [{ role: "user", content: "[redacted-video-transcript]" }] },
+      },
+      clientResponse: {
+        id: "resp_gen-video-bridge",
+        output: [{ role: "assistant", content: "ok" }],
+      },
     },
   });
 
@@ -602,7 +610,6 @@ test("the pending bridge shares the durable path's fail-closed rules (video-reda
 
   assert.equal(store.resolvePreviousResponseState("resp_gen-video-bridge", "key-1"), null);
 });
-
 
 // resolveTurnCompletionState / resolveConversationStalledState -- backs the
 // /dashboard/conversations "stalled" badge (live incident 2026-09-04: a
@@ -636,7 +643,10 @@ test("resolveTurnCompletionState returns 'tool_call_pending' for a completed str
     },
   });
 
-  assert.equal(store.resolveTurnCompletionState("2026-01-01/turn-tool-call.json"), "tool_call_pending");
+  assert.equal(
+    store.resolveTurnCompletionState("2026-01-01/turn-tool-call.json"),
+    "tool_call_pending"
+  );
 });
 
 test("resolveTurnCompletionState returns 'incomplete' for a collector-truncated stream (_truncated: true)", () => {
@@ -662,7 +672,10 @@ test("resolveTurnCompletionState returns 'incomplete' for a non-'completed' stat
     clientResponse: { summary: { status: "failed", output: [] } },
   });
 
-  assert.equal(store.resolveTurnCompletionState("2026-01-01/turn-failed-status.json"), "incomplete");
+  assert.equal(
+    store.resolveTurnCompletionState("2026-01-01/turn-failed-status.json"),
+    "incomplete"
+  );
 });
 
 test("resolveTurnCompletionState returns 'unknown' for a missing artifact", () => {

@@ -71,14 +71,8 @@ test("resolveDocHref: leaves external URLs and pure anchor links untouched", () 
     resolveDocHref("mailto:support@example.com", "architecture/ARCHITECTURE.md"),
     "mailto:support@example.com"
   );
-  assert.equal(
-    resolveDocHref("#pipeline", "architecture/ARCHITECTURE.md"),
-    "#pipeline"
-  );
-  assert.equal(
-    resolveDocHref("", "architecture/ARCHITECTURE.md"),
-    ""
-  );
+  assert.equal(resolveDocHref("#pipeline", "architecture/ARCHITECTURE.md"), "#pipeline");
+  assert.equal(resolveDocHref("", "architecture/ARCHITECTURE.md"), "");
 });
 
 test("normalizeDocsMarkdownLinks: rewrites inline, reference, and HTML links in markdown", () => {

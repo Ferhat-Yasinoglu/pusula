@@ -64,15 +64,10 @@ test("resolveProviderHeaderLink: empty-string referral is treated as absent (fal
 
 test("providerPageUtils.ts does not import @/lib/radar or @/lib/db/* (loose coupling — D28)", () => {
   const src = fs.readFileSync(
-    path.resolve(
-      process.cwd(),
-      "src/app/(dashboard)/dashboard/providers/providerPageUtils.ts"
-    ),
+    path.resolve(process.cwd(), "src/app/(dashboard)/dashboard/providers/providerPageUtils.ts"),
     "utf-8"
   );
-  const importLines = src
-    .split("\n")
-    .filter((line) => /^\s*import\b/.test(line));
+  const importLines = src.split("\n").filter((line) => /^\s*import\b/.test(line));
   assert.ok(
     !importLines.some((line) => line.includes("@/lib/radar")),
     "providerPageUtils.ts must not import @/lib/radar"

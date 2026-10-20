@@ -138,9 +138,7 @@ test("extractApiKey extracts a path-scoped token from /api/v1/vscode/<token>/...
 });
 
 test("extractApiKey extracts a path-scoped token from /api/v1/vscode/raw/<token>/...", () => {
-  const req = new Request(
-    "https://pusula.test/api/v1/vscode/raw/sk-test-path-token/api/version"
-  );
+  const req = new Request("https://pusula.test/api/v1/vscode/raw/sk-test-path-token/api/version");
   assert.equal(extractApiKey(req), "sk-test-path-token");
 });
 

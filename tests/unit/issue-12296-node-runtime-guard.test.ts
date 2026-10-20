@@ -55,7 +55,7 @@ test("bin/pusula.mjs invokes the Node runtime compatibility guard before the hea
 
   assert.ok(
     firstCallIdx < heavyImportIdx,
-    "the Node runtime compatibility guard must run BEFORE `await import(\"tsx/esm\")` and the rest of the heavy " +
+    'the Node runtime compatibility guard must run BEFORE `await import("tsx/esm")` and the rest of the heavy ' +
       "import chain (Commander command registry, ora/boxen/update-notifier, etc.) so an unsupported Node.js " +
       "version is reported with a clear message and a clean exit instead of crashing on a native parse error " +
       "raised while loading a transitive dependency."

@@ -123,8 +123,7 @@ test("isCodexAppServerRequired: true only when codexTransport==='app-server' + c
   } finally {
     if (prevUrl !== undefined) process.env.PUSULA_CODEX_APPSERVER_WS = prevUrl;
     if (prevTok !== undefined) process.env.PUSULA_CODEX_APPSERVER_WS_TOKEN = prevTok;
-    if (prevTokFile !== undefined)
-      process.env.PUSULA_CODEX_APPSERVER_WS_TOKEN_FILE = prevTokFile;
+    if (prevTokFile !== undefined) process.env.PUSULA_CODEX_APPSERVER_WS_TOKEN_FILE = prevTokFile;
   }
 });
 
@@ -382,8 +381,7 @@ test("CodexAppServerExecutor: unconfigured connection returns an in-band error R
   } finally {
     if (prevUrl !== undefined) process.env.PUSULA_CODEX_APPSERVER_WS = prevUrl;
     if (prevTok !== undefined) process.env.PUSULA_CODEX_APPSERVER_WS_TOKEN = prevTok;
-    if (prevTokFile !== undefined)
-      process.env.PUSULA_CODEX_APPSERVER_WS_TOKEN_FILE = prevTokFile;
+    if (prevTokFile !== undefined) process.env.PUSULA_CODEX_APPSERVER_WS_TOKEN_FILE = prevTokFile;
   }
 });
 

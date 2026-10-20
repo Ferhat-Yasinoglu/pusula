@@ -1,6 +1,10 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { resolveRooTarget, buildRooImport, buildRooVscodeAutoImport } from "../../../bin/cli/commands/setup-roo.mjs";
+import {
+  resolveRooTarget,
+  buildRooImport,
+  buildRooVscodeAutoImport,
+} from "../../../bin/cli/commands/setup-roo.mjs";
 
 test("resolveRooTarget ensures /v1 on the base URL", () => {
   assert.equal(resolveRooTarget({ remote: "http://vps:20128" }).baseUrl, "http://vps:20128/v1");
@@ -17,7 +21,11 @@ test("buildRooImport produces an openai-compatible provider profile (baseUrl /v1
   assert.equal(d.providerProfiles.currentApiConfigName, "Pusula");
 });
 test("buildRooImport falls back to a placeholder key", () => {
-  assert.equal(buildRooImport({ baseUrl: "http://x/v1", apiKey: "", model: "m" }).providerProfiles.apiConfigs.Pusula.openAiApiKey, "sk_pusula");
+  assert.equal(
+    buildRooImport({ baseUrl: "http://x/v1", apiKey: "", model: "m" }).providerProfiles.apiConfigs
+      .Pusula.openAiApiKey,
+    "sk_pusula"
+  );
 });
 test("buildRooVscodeAutoImport sets the pointer, preserving other settings", () => {
   const s = buildRooVscodeAutoImport({ "editor.tabSize": 2 }, "/home/u/.pusula/roo-settings.json");

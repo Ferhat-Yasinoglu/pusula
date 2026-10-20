@@ -13,10 +13,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { REGISTRY } from "@pusula/open-sse/config/providerRegistry.ts";
-import {
-  getRerankProvider,
-  parseRerankModel,
-} from "../../open-sse/config/rerankRegistry.ts";
+import { getRerankProvider, parseRerankModel } from "../../open-sse/config/rerankRegistry.ts";
 import { deriveRerankProviderForChatProvider } from "../../open-sse/config/rerankRegistry.ts";
 
 describe("rerank registry: unknown providers stay rejected at parse level", () => {

@@ -73,10 +73,7 @@ test("x-pusula-recovery-action header emitted when recovery present", async () =
   });
   const res = errorResponseWithComboDiagnostics(503, "exhausted", diag);
   assert.equal(res.headers.get("x-pusula-recovery-action"), "try-auto");
-  assert.equal(
-    res.headers.get("x-pusula-recovery-next-step"),
-    "Auto-select available providers."
-  );
+  assert.equal(res.headers.get("x-pusula-recovery-next-step"), "Auto-select available providers.");
 });
 
 test("x-pusula-retry-after-seconds header emitted when retry_after_seconds set", async () => {

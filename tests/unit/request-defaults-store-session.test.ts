@@ -35,10 +35,7 @@ test("buildOpenAIStoreSessionId normalizes external and generated session ids", 
     buildOpenAIStoreSessionId("ext:client session/abc"),
     "pusula-session-client-session-abc"
   );
-  assert.equal(
-    buildOpenAIStoreSessionId(" internal:session "),
-    "pusula-session-internal:session"
-  );
+  assert.equal(buildOpenAIStoreSessionId(" internal:session "), "pusula-session-internal:session");
   assert.equal(buildOpenAIStoreSessionId(""), undefined);
 });
 

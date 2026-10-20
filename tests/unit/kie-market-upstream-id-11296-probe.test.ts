@@ -6,9 +6,7 @@ import { join } from "node:path";
 
 process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "pusula-kie-11296-probe-"));
 
-const { handleImageGeneration } = await import(
-  "../../open-sse/handlers/imageGeneration.ts"
-);
+const { handleImageGeneration } = await import("../../open-sse/handlers/imageGeneration.ts");
 
 interface CapturedCreate {
   url: string;

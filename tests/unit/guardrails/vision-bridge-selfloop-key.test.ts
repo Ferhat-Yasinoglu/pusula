@@ -11,9 +11,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-const { resolveSelfLoopApiKey } = await import(
-  "../../../src/lib/guardrails/visionBridgeHelpers.ts"
-);
+const { resolveSelfLoopApiKey } =
+  await import("../../../src/lib/guardrails/visionBridgeHelpers.ts");
 
 test("uses VISION_BRIDGE_API_KEY when set", async () => {
   const previous = process.env.VISION_BRIDGE_API_KEY;

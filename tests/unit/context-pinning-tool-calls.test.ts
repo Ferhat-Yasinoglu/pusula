@@ -50,7 +50,9 @@ describe("Context pinning — tool call responses (#721)", () => {
     // Array content → should append synthetic message
     assert.equal(result.length, 3);
     assert.equal(result[2].role, "assistant");
-    assert.ok((result[2] as any).content.includes("<pusulaModel>nvidia/llama-3.4-70b</pusulaModel>"));
+    assert.ok(
+      (result[2] as any).content.includes("<pusulaModel>nvidia/llama-3.4-70b</pusulaModel>")
+    );
   });
 
   test("extractPinnedModel finds tag in synthetic message after tool_calls", () => {

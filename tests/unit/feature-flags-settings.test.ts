@@ -336,10 +336,7 @@ describe("featureFlagDefinitions", () => {
   });
 
   it("defines CLI profile auto-sync flags as CLI booleans disabled by default", () => {
-    for (const key of [
-      "PUSULA_AUTO_SYNC_CODEX_PROFILES",
-      "PUSULA_AUTO_SYNC_CLAUDE_PROFILES",
-    ]) {
+    for (const key of ["PUSULA_AUTO_SYNC_CODEX_PROFILES", "PUSULA_AUTO_SYNC_CLAUDE_PROFILES"]) {
       const def = FEATURE_FLAG_DEFINITIONS.find((d) => d.key === key);
       assert.ok(def, `${key} should exist`);
       assert.strictEqual(def.category, "cli");

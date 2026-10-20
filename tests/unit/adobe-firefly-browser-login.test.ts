@@ -261,7 +261,11 @@ test("killProcessTree on Linux targets process group (-pid) with SIGTERM and sch
   assert.equal(killedSignals.length, 1, "expected immediate SIGTERM call to process group");
   assert.equal(killedSignals[0].pid, -54321, "Linux must target process group with negative PID");
   assert.equal(killedSignals[0].signal, "SIGTERM");
-  assert.equal(procKillCalled, false, "should not call direct child.kill when process group kill succeeds");
+  assert.equal(
+    procKillCalled,
+    false,
+    "should not call direct child.kill when process group kill succeeds"
+  );
 });
 
 test("killProcessTree falls back to child.kill on Linux when process group kill fails", () => {
@@ -347,5 +351,3 @@ test("killProcessTree handles null / undefined / pid-less gracefully without thr
   assert.doesNotThrow(() => killProcessTree({}));
   assert.doesNotThrow(() => killProcessTree({ pid: undefined }));
 });
-
-

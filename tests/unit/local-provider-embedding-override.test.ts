@@ -28,16 +28,13 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(
-  path.join(os.tmpdir(), "pusula-local-embedding-override-")
-);
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-local-embedding-override-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../src/lib/db/core.ts");
 const modelsDb = await import("../../src/lib/db/models.ts");
-const { resolveLocalSyncedEndpointRoute } = await import(
-  "../../src/lib/providerModels/syncedEndpointRouting.ts"
-);
+const { resolveLocalSyncedEndpointRoute } =
+  await import("../../src/lib/providerModels/syncedEndpointRouting.ts");
 
 const PROVIDER = "llama-cpp";
 const ALIAS = "llamacpp";
@@ -46,13 +43,15 @@ const ALIAS_MODEL_ID = `${ALIAS}/${RAW_MODEL_ID}`;
 const CONNECTION_ID = "c7e7371e-709d-4f3d-a704-b0767bf7f1bc";
 
 beforeEach(() => {
-  core.getDbInstance()
+  core
+    .getDbInstance()
     .prepare("DELETE FROM key_value WHERE namespace IN ('customModels', 'syncedAvailableModels')")
     .run();
 });
 
 function seedSyncedModelWithNoCapabilityData() {
-  core.getDbInstance()
+  core
+    .getDbInstance()
     .prepare(
       "INSERT OR REPLACE INTO key_value (namespace, key, value) VALUES ('syncedAvailableModels', ?, ?)"
     )
@@ -87,7 +86,11 @@ test("updateCustomModel: without createIfMissing, still returns null for a never
   const result = await modelsDb.updateCustomModel("some-other-provider", "never/imported", {
     supportedEndpoints: ["embeddings"],
   });
-  assert.equal(result, null, "the PATCH isHidden caller relies on this null to trigger its own compat-override fallback");
+  assert.equal(
+    result,
+    null,
+    "the PATCH isHidden caller relies on this null to trigger its own compat-override fallback"
+  );
 });
 
 test("resolveLocalSyncedEndpointRoute: an operator override rescues a model with no supportedEndpoints of its own", async () => {
@@ -146,12 +149,17 @@ test("resolveLocalSyncedEndpointRoute: a caller who collapses the double slash t
   const route = await resolveLocalSyncedEndpointRoute(singleSlashId, "embeddings");
   assert.ok(route, "the single-slash form must still resolve to the same model/connection");
   assert.equal(route!.provider, PROVIDER);
-  assert.equal(route!.model, RAW_MODEL_ID, "the resolved model id must be the real leading-slash form");
+  assert.equal(
+    route!.model,
+    RAW_MODEL_ID,
+    "the resolved model id must be the real leading-slash form"
+  );
   assert.deepEqual(route!.connectionIds, [CONNECTION_ID]);
 });
 
 test("resolveLocalSyncedEndpointRoute: a model's own genuine supportedEndpoints still work with no override needed", async () => {
-  core.getDbInstance()
+  core
+    .getDbInstance()
     .prepare(
       "INSERT OR REPLACE INTO key_value (namespace, key, value) VALUES ('syncedAvailableModels', ?, ?)"
     )

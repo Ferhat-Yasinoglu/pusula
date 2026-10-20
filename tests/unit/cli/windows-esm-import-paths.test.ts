@@ -52,7 +52,7 @@ test("bin/cli never passes an interpolated absolute path to dynamic import()", (
     offenders,
     [],
     "dynamic import() of an interpolated absolute path fails on Windows; " +
-      `wrap the path in pathToFileURL(...).href instead:\n${offenders.join("\n")}`,
+      `wrap the path in pathToFileURL(...).href instead:\n${offenders.join("\n")}`
   );
 });
 

@@ -445,7 +445,13 @@ test("syncRadar: requests ${RADAR_FEED_URL}/v1/catalog/latest with trailing slas
 });
 
 test("sync modules embed no URL literal — there is no upstream host to fall back to", () => {
-  for (const file of ["sync.ts", "referralsSync.ts", "offersSync.ts", "intelSync.ts", "feedUrl.ts"]) {
+  for (const file of [
+    "sync.ts",
+    "referralsSync.ts",
+    "offersSync.ts",
+    "intelSync.ts",
+    "feedUrl.ts",
+  ]) {
     const source = fs.readFileSync(
       path.resolve(import.meta.dirname!, "../../src/lib/radar", file),
       "utf-8"

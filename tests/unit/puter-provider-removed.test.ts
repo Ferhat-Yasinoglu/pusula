@@ -46,9 +46,8 @@ test("puter executor is removed from the executor map (id and alias)", () => {
 test("migration 152 deletes stored puter configuration and is idempotent", () => {
   const db = core.getDbInstance();
 
-  const applied = db
-    .prepare("SELECT version FROM _pusula_migrations WHERE version = 152")
-    .get() as { version: number } | undefined;
+  const applied = db.prepare("SELECT version FROM _pusula_migrations WHERE version = 152").get() as
+    { version: number } | undefined;
   assert.ok(applied, "migration 152 must be recorded as applied");
 
   // Simulate a pre-removal install that still has Puter configuration, then

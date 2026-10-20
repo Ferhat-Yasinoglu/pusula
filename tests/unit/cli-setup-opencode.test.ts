@@ -108,8 +108,7 @@ describe("pusula setup opencode", () => {
 
     const cfg = readConfig();
     const pusulaEntries = cfg.plugin.filter(
-      (p: unknown) =>
-        Array.isArray(p) && (p[1] as { providerId?: string })?.providerId === "pusula"
+      (p: unknown) => Array.isArray(p) && (p[1] as { providerId?: string })?.providerId === "pusula"
     );
     assert.equal(pusulaEntries.length, 1, "re-run must not duplicate the entry");
     assert.equal(

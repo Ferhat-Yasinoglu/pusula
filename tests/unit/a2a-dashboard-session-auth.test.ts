@@ -4,7 +4,8 @@ import assert from "node:assert/strict";
 process.env.PUSULA_API_KEY = "test-configured-key-12888";
 process.env.JWT_SECRET = "test-jwt-secret-for-probe-12888";
 
-const { authenticateA2ARequest, resolveA2AOwner } = await import("../../src/lib/a2a/authenticate.ts");
+const { authenticateA2ARequest, resolveA2AOwner } =
+  await import("../../src/lib/a2a/authenticate.ts");
 const { isDashboardSessionAuthenticated } = await import("../../src/shared/utils/apiAuth.ts");
 const { SignJWT } = await import("jose");
 
@@ -27,7 +28,11 @@ test("A2A route accepts a dashboard-session-authenticated request with no Author
   const fakeRequest = await buildSessionRequest();
 
   const dashboardSessionOk = await isDashboardSessionAuthenticated(fakeRequest as never);
-  assert.equal(dashboardSessionOk, true, "expected the dashboard session cookie itself to be valid");
+  assert.equal(
+    dashboardSessionOk,
+    true,
+    "expected the dashboard session cookie itself to be valid"
+  );
 
   const a2aAuthOk = await authenticateA2ARequest(fakeRequest as never);
   assert.equal(

@@ -6,9 +6,7 @@ import path from "node:path";
 
 import { getCodexClientVersion } from "../../open-sse/config/codexClient.ts";
 
-const TEST_DATA_DIR = fs.mkdtempSync(
-  path.join(os.tmpdir(), "pusula-provider-model-routes-codex-")
-);
+const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-provider-model-routes-codex-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
 const core = await import("../../src/lib/db/core.ts");

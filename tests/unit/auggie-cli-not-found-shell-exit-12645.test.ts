@@ -6,9 +6,7 @@ import path from "node:path";
 
 import type { ExecuteInput } from "@pusula/open-sse/executors/base";
 
-const { AuggieExecutor, __resetAuggieModels } = await import(
-  "@pusula/open-sse/executors/auggie"
-);
+const { AuggieExecutor, __resetAuggieModels } = await import("@pusula/open-sse/executors/auggie");
 
 function makeFakeAuggieBin(dir: string, stderrLine: string): string {
   const fakeBin = path.join(dir, "fake-auggie.sh");

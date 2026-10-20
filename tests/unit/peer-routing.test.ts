@@ -24,19 +24,13 @@ test("peer routing stays disabled without an instance id", () => {
     false
   );
   assert.deepEqual(headers, {});
-  assert.equal(
-    inspectPeerRequest(new Headers({ "X-Pusula-Peer-Trace": "gateway-a" }), {}),
-    null
-  );
+  assert.equal(inspectPeerRequest(new Headers({ "X-Pusula-Peer-Trace": "gateway-a" }), {}), null);
 });
 
 test("peer URL matching requires the configured origin and path boundary", () => {
   assert.equal(isConfiguredPusulaPeer("http://gateway-b:20128/v1/chat/completions", env), true);
   assert.equal(isConfiguredPusulaPeer("https://peer.example/api/v1/responses", env), true);
-  assert.equal(
-    isConfiguredPusulaPeer("http://gateway-b:20128/v10/chat/completions", env),
-    false
-  );
+  assert.equal(isConfiguredPusulaPeer("http://gateway-b:20128/v10/chat/completions", env), false);
   assert.equal(
     isConfiguredPusulaPeer("http://gateway-b.evil:20128/v1/chat/completions", env),
     false
@@ -74,10 +68,7 @@ test("ingress rejects a repeated instance and an exhausted hop budget", () => {
     }
   );
   assert.deepEqual(
-    inspectPeerRequest(
-      { "X-Pusula-Peer-Trace": "gateway-w,gateway-x,gateway-y,gateway-z" },
-      env
-    ),
+    inspectPeerRequest({ "X-Pusula-Peer-Trace": "gateway-w,gateway-x,gateway-y,gateway-z" }, env),
     {
       code: "peer_hop_limit_exceeded",
       message: "Pusula peer routing hop limit exceeded",

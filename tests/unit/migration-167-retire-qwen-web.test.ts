@@ -73,9 +73,8 @@ test.after(() => {
 test("migration 167 retires every Qwen Web id fail-closed and preserves audit history", async () => {
   const db = core.getDbInstance();
 
-  const applied = db
-    .prepare("SELECT version FROM _pusula_migrations WHERE version = 167")
-    .get() as { version: number } | undefined;
+  const applied = db.prepare("SELECT version FROM _pusula_migrations WHERE version = 167").get() as
+    { version: number } | undefined;
   assert.ok(applied, "migration 167 must be recorded as applied");
 
   // Recreate a pre-migration fixture even though a fresh test database already

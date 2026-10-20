@@ -38,9 +38,7 @@ async function seedSharedWallet(provider: string, name: string) {
     authType: oauth ? "oauth" : "apikey",
     name,
     email: name,
-    ...(oauth
-      ? { accessToken: `${provider}-${name}` }
-      : { apiKey: `${provider}-${name}` }),
+    ...(oauth ? { accessToken: `${provider}-${name}` } : { apiKey: `${provider}-${name}` }),
     isActive: true,
     testStatus: "active",
   });
@@ -150,10 +148,7 @@ test("a grok-cli 402 with an unrelated body does not park the connection", async
   );
   const after = await providersDb.getProviderConnectionById(id);
   assert.equal(after.testStatus, "active");
-  assert.equal(
-    accountFallback.getModelLockoutInfo("grok-cli", id, "grok-4.6")?.reason,
-    "credits"
-  );
+  assert.equal(accountFallback.getModelLockoutInfo("grok-cli", id, "grok-4.6")?.reason, "credits");
 });
 
 for (const provider of ["grok-web", "xai-oauth"] as const) {

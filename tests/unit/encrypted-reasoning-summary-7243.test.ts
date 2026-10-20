@@ -1,9 +1,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-const { getVisibleResponsesReasoningSummaryText } = await import(
-  "../../open-sse/translator/response/openai-responses/pureHelpers.ts"
-);
+const { getVisibleResponsesReasoningSummaryText } =
+  await import("../../open-sse/translator/response/openai-responses/pureHelpers.ts");
 
 test("#7243 getVisibleResponsesReasoningSummaryText returns upstream plaintext summary", () => {
   const item = {

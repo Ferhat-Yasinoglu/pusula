@@ -177,7 +177,6 @@ test("Imports: base.ts imports runWithOnPersist from open-sse tokenRefresh", asy
   assert.match(src, /from\s+"\.\.\/services\/tokenRefresh\.ts"/);
 });
 
-
 test("serialized refresh re-checks rotation inside the lane, not before waiting", async () => {
   const src = await read("open-sse/services/tokenRefresh.ts");
   const start = src.indexOf("async function _getAccessTokenWithStalenessCheck");

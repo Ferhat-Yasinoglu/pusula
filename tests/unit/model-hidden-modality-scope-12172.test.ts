@@ -15,13 +15,10 @@ const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-12172-modali
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = process.env.API_KEY_SECRET || "modality-collision-test-secret";
 
-const { setModelIsHidden, getModelIsHidden, getHiddenModelsByProvider } = await import(
-  "../../src/lib/db/models.ts"
-);
+const { setModelIsHidden, getModelIsHidden, getHiddenModelsByProvider } =
+  await import("../../src/lib/db/models.ts");
 const { resetDbInstance } = await import("../../src/lib/db/core.ts");
-const { codexProvider } = await import(
-  "../../open-sse/config/providers/registry/codex/index.ts"
-);
+const { codexProvider } = await import("../../open-sse/config/providers/registry/codex/index.ts");
 const { IMAGE_PROVIDERS } = await import("../../open-sse/config/imageRegistry.ts");
 
 test.after(() => {

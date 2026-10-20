@@ -15,9 +15,7 @@ function layout() {
   const dataDir = path.join(tmp, "data");
   const cwd = path.join(tmp, "cwd");
   const appDataDir =
-    process.platform === "win32"
-      ? path.join(tmp, "appdata", "pusula")
-      : path.join(home, ".pusula");
+    process.platform === "win32" ? path.join(tmp, "appdata", "pusula") : path.join(home, ".pusula");
   fs.mkdirSync(dataDir, { recursive: true });
   fs.mkdirSync(appDataDir, { recursive: true });
   fs.mkdirSync(cwd, { recursive: true });
@@ -53,10 +51,7 @@ function runCli(
 test("a key masked by an earlier .env is named, with both files and without its value", () => {
   const dirs = layout();
   try {
-    fs.writeFileSync(
-      path.join(dirs.dataDir, ".env"),
-      "PUSULA_BASE_URL=https://data.example/v1\n"
-    );
+    fs.writeFileSync(path.join(dirs.dataDir, ".env"), "PUSULA_BASE_URL=https://data.example/v1\n");
     fs.writeFileSync(path.join(dirs.cwd, ".env"), "PUSULA_BASE_URL=https://cwd.example/v1\n");
 
     const stderr = runCli(dirs).stderr ?? "";
@@ -74,10 +69,7 @@ test("a key masked by an earlier .env is named, with both files and without its 
 test("a key each file declares once says nothing", () => {
   const dirs = layout();
   try {
-    fs.writeFileSync(
-      path.join(dirs.dataDir, ".env"),
-      "PUSULA_BASE_URL=https://data.example/v1\n"
-    );
+    fs.writeFileSync(path.join(dirs.dataDir, ".env"), "PUSULA_BASE_URL=https://data.example/v1\n");
     fs.writeFileSync(path.join(dirs.cwd, ".env"), "PORT=34567\n");
 
     const stderr = runCli(dirs).stderr ?? "";
@@ -90,10 +82,7 @@ test("a key each file declares once says nothing", () => {
 test("a key the environment already set is reported too — that is #6194", () => {
   const dirs = layout();
   try {
-    fs.writeFileSync(
-      path.join(dirs.dataDir, ".env"),
-      "PUSULA_BASE_URL=https://data.example/v1\n"
-    );
+    fs.writeFileSync(path.join(dirs.dataDir, ".env"), "PUSULA_BASE_URL=https://data.example/v1\n");
 
     const stderr = runCli(dirs, { PUSULA_BASE_URL: "https://shell.example/v1" }).stderr ?? "";
 
@@ -113,10 +102,7 @@ test("an unreadable .env is reported instead of being swallowed", () => {
     // A directory named `.env` passes existsSync and makes readFileSync throw
     // EISDIR for any user, root included — unlike chmod 000.
     fs.mkdirSync(path.join(dirs.cwd, ".env"), { recursive: true });
-    fs.writeFileSync(
-      path.join(dirs.dataDir, ".env"),
-      "PUSULA_BASE_URL=https://data.example/v1\n"
-    );
+    fs.writeFileSync(path.join(dirs.dataDir, ".env"), "PUSULA_BASE_URL=https://data.example/v1\n");
 
     const result = runCli(dirs);
     assert.equal(result.status, 0, "an unreadable .env must stay non-fatal");

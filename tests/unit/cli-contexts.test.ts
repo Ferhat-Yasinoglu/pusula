@@ -279,13 +279,7 @@ test("context export --include-secrets resolves keychain-backed credentials", as
   }) as typeof process.stdout.write;
 
   try {
-    await createProgram().parseAsync([
-      "node",
-      "pusula",
-      "context",
-      "export",
-      "--include-secrets",
-    ]);
+    await createProgram().parseAsync(["node", "pusula", "context", "export", "--include-secrets"]);
   } finally {
     process.stdout.write = originalWrite;
     await setContextKeychainBackendForTests(null);

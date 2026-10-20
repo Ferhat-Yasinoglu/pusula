@@ -72,15 +72,7 @@ test("auth export action receives (options, command): flags reach the handler en
     // --format bogus makes runAuthExportCommand return 1 BEFORE any DB access;
     // the action must then call process.exit(1). With the opts/cmd swap this
     // parse rejects with "cmd.optsWithGlobals is not a function" instead.
-    await program.parseAsync([
-      "node",
-      "pusula",
-      "auth",
-      "export",
-      "--force",
-      "--format",
-      "bogus",
-    ]);
+    await program.parseAsync(["node", "pusula", "auth", "export", "--force", "--format", "bogus"]);
   } finally {
     restore();
     exitStub.restore();

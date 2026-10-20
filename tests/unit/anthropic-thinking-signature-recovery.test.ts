@@ -6,9 +6,8 @@ const {
   isAnthropicThinkingSignatureError,
   stripHistoricalThinkingForSignatureRecovery,
 } = await import("@pusula/open-sse/handlers/chatCore/passthroughHelpers.ts");
-const { recoverAnthropicThinkingSignature } = await import(
-  "@pusula/open-sse/handlers/chatCore/thinkingSignatureRecovery.ts"
-);
+const { recoverAnthropicThinkingSignature } =
+  await import("@pusula/open-sse/handlers/chatCore/thinkingSignatureRecovery.ts");
 
 function makeHistory() {
   return {

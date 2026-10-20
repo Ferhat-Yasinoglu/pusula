@@ -1,12 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-const { validateDeepSeekWebProvider } = await import(
-  "../../src/lib/providers/validation/webProvidersA.ts"
-);
-const { classifyFailure } = await import(
-  "../../src/app/api/providers/[id]/test/route.ts"
-);
+const { validateDeepSeekWebProvider } =
+  await import("../../src/lib/providers/validation/webProvidersA.ts");
+const { classifyFailure } = await import("../../src/app/api/providers/[id]/test/route.ts");
 
 const SYNTHETIC_INVALID_TOKEN = "pusula-auth-keeper-invalid-session-deepseek";
 

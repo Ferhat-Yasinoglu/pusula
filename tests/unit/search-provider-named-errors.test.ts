@@ -7,9 +7,8 @@ import { join } from "node:path";
 process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "pusula-search-named-errors-"));
 
 const { handleSearch } = await import("../../open-sse/handlers/search.ts");
-const { formatSearchProviderFailure } = await import(
-  "../../open-sse/handlers/search/providerFailure.ts"
-);
+const { formatSearchProviderFailure } =
+  await import("../../open-sse/handlers/search/providerFailure.ts");
 
 test("formatSearchProviderFailure names the provider and sanitized Node cause", () => {
   const err = new TypeError("fetch failed");

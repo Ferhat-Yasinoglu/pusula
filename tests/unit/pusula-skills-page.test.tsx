@@ -118,9 +118,10 @@ describe("PusulaSkillsPageClient.tsx", () => {
   });
 
   it("wires PusulaSkillsList with inspector props", () => {
-    expect(src.includes("PusulaSkillsList"), "PusulaSkillsPageClient must render PusulaSkillsList").toBe(
-      true
-    );
+    expect(
+      src.includes("PusulaSkillsList"),
+      "PusulaSkillsPageClient must render PusulaSkillsList"
+    ).toBe(true);
     expect(
       src.includes("onSelectSkill"),
       "PusulaSkillsPageClient must pass onSelectSkill to PusulaSkillsList"
@@ -134,7 +135,9 @@ describe("PusulaSkillsPageClient.tsx", () => {
       "PusulaSandboxTab",
       "PusulaMarketplaceTab",
     ]) {
-      expect(src.includes(component), `PusulaSkillsPageClient must render <${component}>`).toBe(true);
+      expect(src.includes(component), `PusulaSkillsPageClient must render <${component}>`).toBe(
+        true
+      );
     }
   });
 

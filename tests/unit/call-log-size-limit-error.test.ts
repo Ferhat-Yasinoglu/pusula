@@ -10,9 +10,8 @@ useDecollidedMigrationsDir();
 const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-call-log-size-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 
-const { writeCallArtifact, readCallArtifact } = await import(
-  "../../src/lib/usage/callLogArtifacts.ts"
-);
+const { writeCallArtifact, readCallArtifact } =
+  await import("../../src/lib/usage/callLogArtifacts.ts");
 
 const OMITTED = "[omitted: call log artifact size limit exceeded]";
 const TRUNCATED = "[truncated: call log artifact size limit exceeded]";

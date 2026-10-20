@@ -54,9 +54,7 @@ describe("compressionHeaderEcho (#6422)", () => {
       "default; source=request-header"
     );
     assert.equal(
-      withCompressionHeaderEcho(new Response(""), "Engine:Rtk").headers.get(
-        "X-Pusula-Compression"
-      ),
+      withCompressionHeaderEcho(new Response(""), "Engine:Rtk").headers.get("X-Pusula-Compression"),
       "engine:rtk; source=request-header"
     );
   });

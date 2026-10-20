@@ -17,9 +17,7 @@ const source = fs.readFileSync(TASKS_ROUTE, "utf-8");
 const { tokensMatch, authenticateA2A } = await import("../../src/app/api/a2a/tasks/route.ts");
 
 function hasImport(src: string, name: string, from: string): boolean {
-  const pattern = new RegExp(
-    `import\\s+\\{[^}]*\\b${name}\\b[^}]*\\}\\s+from\\s+["']${from}["']`
-  );
+  const pattern = new RegExp(`import\\s+\\{[^}]*\\b${name}\\b[^}]*\\}\\s+from\\s+["']${from}["']`);
   return pattern.test(src);
 }
 

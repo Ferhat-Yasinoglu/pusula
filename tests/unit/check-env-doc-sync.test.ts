@@ -222,8 +222,7 @@ test("repository contract is in sync (live data)", () => {
 // ─── CLI entry guard ────────────────────────────────────────────────────────
 
 test("isMainEntry: absolute argv[1] matches the module URL (normal CLI invocation)", () => {
-  const moduleUrl =
-    "file:///home/runner/work/Pusula/Pusula/scripts/check/check-env-doc-sync.mjs";
+  const moduleUrl = "file:///home/runner/work/Pusula/Pusula/scripts/check/check-env-doc-sync.mjs";
   const argv1 = "/home/runner/work/Pusula/Pusula/scripts/check/check-env-doc-sync.mjs";
   assert.equal(isMainEntry(argv1, moduleUrl), true);
 });
@@ -231,15 +230,13 @@ test("isMainEntry: absolute argv[1] matches the module URL (normal CLI invocatio
 test("isMainEntry: path with characters that import.meta.url percent-encodes still matches", () => {
   // A checkout path containing a space is the common macOS case; the module
   // URL carries %20 while process.argv[1] carries the raw character.
-  const moduleUrl =
-    "file:///Users/dev/My%20Projects/Pusula/scripts/check/check-env-doc-sync.mjs";
+  const moduleUrl = "file:///Users/dev/My%20Projects/Pusula/scripts/check/check-env-doc-sync.mjs";
   const argv1 = "/Users/dev/My Projects/Pusula/scripts/check/check-env-doc-sync.mjs";
   assert.equal(isMainEntry(argv1, moduleUrl), true);
 });
 
 test("isMainEntry: different entry target or missing argv[1] does not trigger the CLI", () => {
-  const moduleUrl =
-    "file:///home/runner/work/Pusula/Pusula/scripts/check/check-env-doc-sync.mjs";
+  const moduleUrl = "file:///home/runner/work/Pusula/Pusula/scripts/check/check-env-doc-sync.mjs";
   assert.equal(
     isMainEntry("/home/runner/work/Pusula/Pusula/tests/unit/x.test.ts", moduleUrl),
     false

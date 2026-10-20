@@ -5,8 +5,7 @@ import os from "node:os";
 import path from "node:path";
 
 const TEST_DATA_DIR =
-  process.env.DATA_DIR ??
-  fs.mkdtempSync(path.join(os.tmpdir(), "pusula-issue-agent-execution-"));
+  process.env.DATA_DIR ?? fs.mkdtempSync(path.join(os.tmpdir(), "pusula-issue-agent-execution-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.APP_LOG_TO_FILE = "false";
 

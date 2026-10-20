@@ -250,10 +250,7 @@ test("getCloudflaredStartArgs runs a named tunnel from a config file instead of 
 });
 
 test("normalizeCloudflaredHostname coerces bare hosts and full URLs to an https origin", () => {
-  assert.equal(
-    normalizeCloudflaredHostname("pusula.example.com"),
-    "https://pusula.example.com"
-  );
+  assert.equal(normalizeCloudflaredHostname("pusula.example.com"), "https://pusula.example.com");
   assert.equal(
     normalizeCloudflaredHostname("https://pusula.example.com/"),
     "https://pusula.example.com"

@@ -62,12 +62,9 @@ test("every new PUSULA_PROVIDER_BREAKER_* env var is wired in constants.ts", () 
   const src = readConstants();
   for (const envName of NEW_ENV_VARS) {
     const re = new RegExp(
-      `envInt\\(\\s*"${envName.replace(/[.+*?^${}()|[\]\\]/g, "\\$&")}"\\s*,\\s*\\d+\\s*\\)`,
+      `envInt\\(\\s*"${envName.replace(/[.+*?^${}()|[\]\\]/g, "\\$&")}"\\s*,\\s*\\d+\\s*\\)`
     );
-    assert.ok(
-      re.test(src),
-      `constants.ts is missing envInt(...) wrapping for ${envName}`,
-    );
+    assert.ok(re.test(src), `constants.ts is missing envInt(...) wrapping for ${envName}`);
   }
 });
 
@@ -76,7 +73,7 @@ test("all 15 new provider-breaker env vars are documented in ENVIRONMENT.md", ()
   for (const envName of NEW_ENV_VARS) {
     assert.ok(
       env.includes(`\`${envName}\``),
-      `ENVIRONMENT.md is missing the ${envName} row (env-doc-sync gate will fail)`,
+      `ENVIRONMENT.md is missing the ${envName} row (env-doc-sync gate will fail)`
     );
   }
 });
@@ -86,7 +83,7 @@ test("all 15 new provider-breaker env vars are listed in .env.example", () => {
   for (const envName of NEW_ENV_VARS) {
     assert.ok(
       env.includes(`# ${envName}=`),
-      `.env.example is missing the commented ${envName} entry (env-doc-sync gate will fail)`,
+      `.env.example is missing the commented ${envName} entry (env-doc-sync gate will fail)`
     );
   }
 });
@@ -110,11 +107,8 @@ test("historical defaults preserved when no PUSULA_PROVIDER_BREAKER_* env vars s
   ];
   for (const [envName, defaultValue] of defaults) {
     const re = new RegExp(
-      `envInt\\(\\s*"${envName.replace(/[.+*?^${}()|[\]\\]/g, "\\$&")}"\\s*,\\s*${defaultValue}\\s*\\)`,
+      `envInt\\(\\s*"${envName.replace(/[.+*?^${}()|[\]\\]/g, "\\$&")}"\\s*,\\s*${defaultValue}\\s*\\)`
     );
-    assert.ok(
-      re.test(src),
-      `default for ${envName} should be ${defaultValue}; check constants.ts`,
-    );
+    assert.ok(re.test(src), `default for ${envName} should be ${defaultValue}; check constants.ts`);
   }
 });

@@ -18,12 +18,9 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-process.env.DATA_DIR = fs.mkdtempSync(
-  path.join(os.tmpdir(), "pusula-accesstoken-fallback-")
-);
+process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-accesstoken-fallback-"));
 
-const { getCredentialRefreshExecutor } =
-  await import("../../open-sse/executors/credential.ts");
+const { getCredentialRefreshExecutor } = await import("../../open-sse/executors/credential.ts");
 const { refreshAndUpdateCredentials } = await import("../../src/lib/usage/providerLimits.ts");
 
 // `gemini` is a non-rotating (no rotation lock group), non-github OAuth provider,

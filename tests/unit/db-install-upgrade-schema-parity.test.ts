@@ -69,9 +69,9 @@ function hasTable(name: string): boolean {
 
 test("a clean install applies every migration file on disk", () => {
   const ledger = new Set(
-    (
-      db.prepare("SELECT version FROM _pusula_migrations").all() as Array<{ version: string }>
-    ).map((row) => row.version)
+    (db.prepare("SELECT version FROM _pusula_migrations").all() as Array<{ version: string }>).map(
+      (row) => row.version
+    )
   );
   const unapplied = migrationFiles()
     .filter((m) => !ledger.has(m.version))
