@@ -1,10 +1,16 @@
+# Changelog (فارسی)
+
+🌐 **Languages:** 🇺🇸 [English](../../../CHANGELOG.md) · 🇩🇪 [de](../de/CHANGELOG.md) · 🇮🇷 [fa](../fa/CHANGELOG.md) · 🇹🇷 [tr](../tr/CHANGELOG.md)
+
+---
+
 # تاریخچهٔ تغییرات
 
 همهٔ تغییرات مهم Pusula در این فایل ثبت می‌شود. قالب از
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) و شماره‌گذاری نسخه‌ها از
 [نسخه‌بندی معنایی](https://semver.org/) پیروی می‌کند.
 
-## [منتشرنشده]
+## [Unreleased]
 
 ## [1.0.0] - 2026-10-20
 

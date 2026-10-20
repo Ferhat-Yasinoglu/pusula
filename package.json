@@ -1,7 +1,7 @@
 {
   "name": "pusula",
   "version": "1.0.0",
-  "description": "Pusula: unified AI gateway with hundreds of providers, RTK+Caveman compression, auto fallback, MCP/A2A, desktop, PWA, and OpenAI-compatible APIs.",
+  "description": "Pusula: unified AI gateway with 358 providers, RTK+Caveman compression, auto fallback, MCP/A2A, desktop, PWA, and OpenAI-compatible APIs.",
   "type": "module",
   "bin": {
     "pusula": "bin/pusula.mjs",

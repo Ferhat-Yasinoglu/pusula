@@ -20,7 +20,9 @@ test("offers page uses only local settings, sync, and cache routes", () => {
   assert.match(source, /fetch\("\/api\/radar\/settings"\)/);
   assert.match(source, /fetch\("\/api\/radar\/offers\/sync",\s*\{\s*method:\s*"POST"/);
   assert.match(source, /fetch\("\/api\/radar\/offers"\)/);
-  assert.doesNotMatch(source, /RADAR_FEED_URL|radar\.pusula\.online|localDb|getDbInstance/);
+  // Local-only page: no env read, no feed-host literal (Radar is self-hosted
+  // only and the client never embeds an upstream URL), no DB.
+  assert.doesNotMatch(source, /RADAR_FEED_URL|https?:\/\/|localDb|getDbInstance/);
 });
 
 test("offers UI is live-key gated, filters expiry, localizes, and labels partnerships", () => {

@@ -27,6 +27,9 @@ const { publicKey, privateKey } = crypto.generateKeyPairSync("ed25519");
 process.env.RADAR_FEED_PUBKEY = publicKey
   .export({ type: "spki", format: "der" })
   .toString("base64");
+// Radar is self-hosted only: there is no default feed host, so the sync tests
+// below point RADAR_FEED_URL at a neutral placeholder server.
+process.env.RADAR_FEED_URL = "https://radar.example.com";
 
 const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-radar-generated-at-"));
 process.env.DATA_DIR = TEST_DATA_DIR;

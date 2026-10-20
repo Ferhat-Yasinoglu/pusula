@@ -7,6 +7,9 @@ const { publicKey, privateKey } = crypto.generateKeyPairSync("ed25519");
 process.env.RADAR_FEED_PUBKEY = publicKey
   .export({ type: "spki", format: "der" })
   .toString("base64");
+// Radar is self-hosted only: there is no default feed host, so the sync tests
+// below point RADAR_FEED_URL at a neutral placeholder server.
+process.env.RADAR_FEED_URL = "https://radar.example.com";
 
 const offersSync = await import("../../src/lib/radar/offersSync.ts");
 
@@ -49,6 +52,41 @@ test("offers sync gates flag, opt-in, and missing supporter key before fetch", a
   }
 });
 
+test("offers sync without RADAR_FEED_URL => not_configured, one skip log line, no fetch, no cache write", async () => {
+  const savedUrl = process.env.RADAR_FEED_URL;
+  const savedWarn = console.warn;
+  const warnings: string[] = [];
+  delete process.env.RADAR_FEED_URL;
+  console.warn = (...args: unknown[]) => {
+    warnings.push(args.map(String).join(" "));
+  };
+  try {
+    let fetched = false;
+    let written = false;
+    const result = await offersSync.syncRadarOffers({
+      getFlag: () => true,
+      getSettings: () => liveSettings(),
+      getCache: () => null,
+      setCache: () => {
+        written = true;
+      },
+      fetch: (async () => {
+        fetched = true;
+        return response(Buffer.from("{}"));
+      }) as typeof fetch,
+    });
+    assert.equal(result.status, "not_configured");
+    assert.match((result as { reason: string }).reason, /RADAR_FEED_URL/);
+    assert.equal(fetched, false);
+    assert.equal(written, false);
+    assert.equal(warnings.length, 1);
+    assert.match(warnings[0]!, /Radar feed URL not configured; skipping/);
+  } finally {
+    console.warn = savedWarn;
+    process.env.RADAR_FEED_URL = savedUrl;
+  }
+});
+
 test("valid live offer feed sends Bearer server-side and caches exact signed bytes", async () => {
   const feed = await fixtureFeed();
   const bytes = Buffer.from(JSON.stringify(feed));
@@ -74,7 +112,7 @@ test("valid live offer feed sends Bearer server-side and caches exact signed byt
   });
 
   assert.deepEqual(result, { status: "updated", version: "2026.08.09.1" });
-  assert.equal(requestUrl, "https://radar.pusula.online/v1/offers/latest");
+  assert.equal(requestUrl, "https://radar.example.com/v1/offers/latest");
   assert.equal(authorization, `Bearer omr_${"a".repeat(40)}`);
   assert.equal(writes[0]!.payload, bytes.toString("utf8"));
   assert.equal(writes[0]!.signature, signature);

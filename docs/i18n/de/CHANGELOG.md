@@ -1,10 +1,16 @@
+# Changelog (Deutsch)
+
+🌐 **Languages:** 🇺🇸 [English](../../../CHANGELOG.md) · 🇩🇪 [de](../de/CHANGELOG.md) · 🇮🇷 [fa](../fa/CHANGELOG.md) · 🇹🇷 [tr](../tr/CHANGELOG.md)
+
+---
+
 # Changelog
 
 Alle wesentlichen Änderungen an Pusula werden in dieser Datei festgehalten. Das Format
 folgt [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), die Versionen folgen
 [Semantic Versioning](https://semver.org/lang/de/).
 
-## [Unveröffentlicht]
+## [Unreleased]
 
 ## [1.0.0] - 2026-10-20
 

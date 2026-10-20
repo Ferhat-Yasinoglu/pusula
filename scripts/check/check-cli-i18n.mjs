@@ -2,7 +2,7 @@
 /**
  * Validates that:
  *   1. All t("key") calls in bin/cli/commands/ resolve to existing keys in en.json.
- *   2. pt-BR.json has the same top-level shape as en.json (no missing top-level sections).
+ *   2. tr.json (the reference translation) has the same top-level shape as en.json.
  *   3. No raw string literals are passed to .description() in commands without going
  *      through t() — only warns, does not fail hard (many descriptions use || fallback).
  */
@@ -68,8 +68,8 @@ function loadJson(file) {
 const files = walk(COMMANDS_DIR);
 const usedKeys = collectTKeys(files);
 const en = loadJson(join(LOCALES_DIR, "en.json"));
-const ptBR = loadJson(join(LOCALES_DIR, "pt-BR.json"));
-const zhLocales = ["zh-CN", "zh-TW"].map((n) => [n, loadJson(join(LOCALES_DIR, `${n}.json`))]);
+const ptBR = loadJson(join(LOCALES_DIR, "tr.json"));
+const zhLocales = ["de", "fa"].map((n) => [n, loadJson(join(LOCALES_DIR, `${n}.json`))]);
 const enKeys = flattenKeys(en);
 
 let errors = 0;
@@ -84,19 +84,19 @@ if (missingInEn.length > 0) {
   console.log(`[cli-i18n] ✓ All ${usedKeys.size} t() keys found in en.json`);
 }
 
-// Check 2: pt-BR.json has the same top-level sections as en.json
+// Check 2: tr.json has the same top-level sections as en.json
 const enTopLevel = Object.keys(en);
 const ptTopLevel = new Set(Object.keys(ptBR));
 const missingTopLevel = enTopLevel.filter((k) => !ptTopLevel.has(k));
 if (missingTopLevel.length > 0) {
-  console.error("[cli-i18n] Top-level sections in en.json missing from pt-BR.json:");
+  console.error("[cli-i18n] Top-level sections in en.json missing from tr.json:");
   for (const k of missingTopLevel) console.error(`  ✗ ${k}`);
   errors += missingTopLevel.length;
 } else {
-  console.log(`[cli-i18n] ✓ pt-BR.json has all ${enTopLevel.length} top-level sections`);
+  console.log(`[cli-i18n] ✓ tr.json has all ${enTopLevel.length} top-level sections`);
 }
 
-// Check 3: zh-CN and zh-TW have full key parity with en.json
+// Check 3: de and fa have full key parity with en.json
 for (const [name, cat] of zhLocales) {
   const catKeys = flattenKeys(cat);
   const missingKeys = [...enKeys].filter((k) => !catKeys.has(k));

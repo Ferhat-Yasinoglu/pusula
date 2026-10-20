@@ -361,12 +361,15 @@ test("POST /api/radar/sync: authenticated, invalid body => 400", async () => {
 
 // ---------------------------------------------------------------------------
 // FIX 3 — GET /api/radar/settings: { optIn, hasSupporterKey, supporterKeyMasked }
-// F4/T7 — same response also relays contributorClaimUrl/supporterPlansUrl.
+// F4/T7 — same response also relays contributorClaimUrl/supporterPlansUrl
+// (each `null` unless the operator configured it — Radar is self-hosted only).
 // ---------------------------------------------------------------------------
 
-test("GET /api/radar/settings: flag on, authenticated, default state => optIn false, no key", async () => {
+test("GET /api/radar/settings: flag on, authenticated, default state => optIn false, no key, no claim/plans links", async () => {
   resetStorage();
   process.env.RADAR_ENABLED = "true";
+  delete process.env.RADAR_CONTRIBUTOR_CLAIM_URL;
+  delete process.env.RADAR_SUPPORTER_PLANS_URL;
 
   const { GET } = await import("../../src/app/api/radar/settings/route.ts");
   const response = await GET(
@@ -378,9 +381,11 @@ test("GET /api/radar/settings: flag on, authenticated, default state => optIn fa
   assert.equal(body.optIn, false);
   assert.equal(body.hasSupporterKey, false);
   assert.equal(body.supporterKeyMasked, null);
-  // F4/T7: default claim/plans links are always present, opt-in or not.
-  assert.equal(body.contributorClaimUrl, "https://radar.pusula.online/auth/github");
-  assert.equal(body.supporterPlansUrl, "https://radar.pusula.online/planos");
+  // F4/T7: there is NO default upstream service — with neither env var set the
+  // links relay as explicit `null` so the dashboard hides both buttons.
+  assert.ok("contributorClaimUrl" in body && "supporterPlansUrl" in body);
+  assert.equal(body.contributorClaimUrl, null);
+  assert.equal(body.supporterPlansUrl, null);
 });
 
 test("GET /api/radar/settings: flag on, authenticated, after opt-in + key => reflects persisted state, never raw key", async () => {
@@ -460,11 +465,11 @@ test("POST /api/radar/settings: opt-in+key submitted together => both persist, P
   assert.ok(!getText.includes(RAW_KEY), "raw key must NEVER appear in the GET response body");
 });
 
-test("GET /api/radar/settings: F4/T7 claim/plans links honor env overrides (fork-friendly)", async () => {
+test("GET /api/radar/settings: F4/T7 claim/plans links relay the operator's self-hosted URLs when set", async () => {
   resetStorage();
   process.env.RADAR_ENABLED = "true";
-  process.env.RADAR_CONTRIBUTOR_CLAIM_URL = "https://fork.example.com/auth/github";
-  process.env.RADAR_SUPPORTER_PLANS_URL = "https://fork.example.com/plans";
+  process.env.RADAR_CONTRIBUTOR_CLAIM_URL = "https://radar.example.com/auth/github";
+  process.env.RADAR_SUPPORTER_PLANS_URL = "https://radar.example.com/plans";
 
   try {
     const { GET } = await import("../../src/app/api/radar/settings/route.ts");
@@ -474,10 +479,31 @@ test("GET /api/radar/settings: F4/T7 claim/plans links honor env overrides (fork
     const body = await response.json();
 
     assert.equal(response.status, 200);
-    assert.equal(body.contributorClaimUrl, "https://fork.example.com/auth/github");
-    assert.equal(body.supporterPlansUrl, "https://fork.example.com/plans");
+    assert.equal(body.contributorClaimUrl, "https://radar.example.com/auth/github");
+    assert.equal(body.supporterPlansUrl, "https://radar.example.com/plans");
   } finally {
     delete process.env.RADAR_CONTRIBUTOR_CLAIM_URL;
+    delete process.env.RADAR_SUPPORTER_PLANS_URL;
+  }
+});
+
+test("GET /api/radar/settings: a single configured link relays alone — the other stays null", async () => {
+  resetStorage();
+  process.env.RADAR_ENABLED = "true";
+  process.env.RADAR_SUPPORTER_PLANS_URL = "https://radar.example.com/plans";
+  delete process.env.RADAR_CONTRIBUTOR_CLAIM_URL;
+
+  try {
+    const { GET } = await import("../../src/app/api/radar/settings/route.ts");
+    const response = await GET(
+      mockGetRequest("http://localhost:20128/api/radar/settings", await authHeaders())
+    );
+    const body = await response.json();
+
+    assert.equal(response.status, 200);
+    assert.equal(body.contributorClaimUrl, null);
+    assert.equal(body.supporterPlansUrl, "https://radar.example.com/plans");
+  } finally {
     delete process.env.RADAR_SUPPORTER_PLANS_URL;
   }
 });

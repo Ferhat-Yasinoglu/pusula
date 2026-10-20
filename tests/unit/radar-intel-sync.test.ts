@@ -7,6 +7,9 @@ const { publicKey, privateKey } = crypto.generateKeyPairSync("ed25519");
 process.env.RADAR_FEED_PUBKEY = publicKey
   .export({ type: "spki", format: "der" })
   .toString("base64");
+// Radar is self-hosted only: there is no default feed host, so the sync tests
+// below point RADAR_FEED_URL at a neutral placeholder server.
+process.env.RADAR_FEED_URL = "https://radar.example.com";
 
 const intelSync = await import("../../src/lib/radar/intelSync.ts");
 const { RadarIntelFeedSchema } = await import("../../src/lib/radar/intelFeedSchema.ts");
@@ -93,6 +96,46 @@ test("Intel sync gates before fetch and only accepts exact signed live bytes", a
   assert.match(writes[0]?.supporterIdentity ?? "", /^radar:[a-f0-9]{64}$/);
   assert.deepEqual(supporterIdentities, [writes[0]?.supporterIdentity]);
   assert.ok(!writes[0]?.supporterIdentity.includes(supporterKey));
+});
+
+test("Intel sync without RADAR_FEED_URL => not_configured, one skip log line, no fetch, no cache write", async () => {
+  const savedUrl = process.env.RADAR_FEED_URL;
+  const savedWarn = console.warn;
+  const warnings: string[] = [];
+  delete process.env.RADAR_FEED_URL;
+  console.warn = (...args: unknown[]) => {
+    warnings.push(args.map(String).join(" "));
+  };
+  try {
+    let fetched = false;
+    let written = false;
+    const recognized: string[] = [];
+    const result = await intelSync.syncRadarIntel({
+      getFlag: () => true,
+      getSettings: () => liveSettings,
+      getCache: () => null,
+      setCache: () => {
+        written = true;
+      },
+      recognizeSupporter: async (identity) => {
+        recognized.push(identity);
+      },
+      fetch: (async () => {
+        fetched = true;
+        return response(Buffer.from("{}"));
+      }) as typeof fetch,
+    });
+    assert.equal(result.status, "not_configured");
+    assert.match((result as { reason: string }).reason, /RADAR_FEED_URL/);
+    assert.equal(fetched, false);
+    assert.equal(written, false);
+    assert.deepEqual(recognized, [], "no supporter recognition without a verified live sync");
+    assert.equal(warnings.length, 1);
+    assert.match(warnings[0]!, /Radar feed URL not configured; skipping/);
+  } finally {
+    console.warn = savedWarn;
+    process.env.RADAR_FEED_URL = savedUrl;
+  }
 });
 
 test("Intel sync preserves the good cache on signature, tier, schema, replay, and size failures", async () => {

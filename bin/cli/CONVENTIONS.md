@@ -136,12 +136,12 @@ export const RETRY_DEFAULTS = {
 
 - Every user-facing string goes through `t("module.key", vars)`.
 - Catalogs live in `bin/cli/locales/{locale}.json` (nested objects).
-  43 files ship out-of-the-box: `en`, `pt-BR`, and 41 additional locales.
+  4 files ship out-of-the-box: `en`, `tr`, `de` and `fa`.
   11 locales are scaffold-only (empty `{}`); all keys fall back to `en` automatically.
 - Detection order: `--lang` flag → `PUSULA_LANG` env → `LC_ALL` → `LC_MESSAGES` → `LANG` → `en`.
 - Locale persisted via `config lang set <code>` — saves `PUSULA_LANG` to `~/.pusula/.env`.
 - Missing keys return the key itself (no crash).
-- PRs that add new strings **must** update `en.json` and `pt-BR.json`.
+- PRs that add new strings **must** update `en.json` and `tr.json`.
   Other locale files are best-effort; missing keys silently fall back to `en`.
 - `normalize()` in `i18n.mjs` validates locale codes via `/^[a-zA-Z0-9-]+$/` to
   prevent path traversal — never pass raw filesystem paths.

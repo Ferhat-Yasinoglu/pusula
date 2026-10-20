@@ -31,6 +31,10 @@ const PUB_KEY_B64 = PUB_KEY_DER.toString("base64");
 // Inject as env override so pinnedKeys.ts picks it up (fork path)
 process.env.RADAR_FEED_PUBKEY = PUB_KEY_B64;
 
+// Radar is self-hosted only: there is no default feed host, so the sync tests
+// below point RADAR_FEED_URL at a neutral placeholder server.
+process.env.RADAR_FEED_URL = "https://radar.example.com";
+
 // ---------------------------------------------------------------------------
 // Load the fixture
 // ---------------------------------------------------------------------------
@@ -329,6 +333,126 @@ test("syncRadar: opt-in false => opt_out, no fetch call", async () => {
 
   assert.deepEqual(result, { status: "opt_out" });
   assert.equal(fetchCalled, false, "fetch must NOT be called when opt-in is false");
+});
+
+// ---------------------------------------------------------------------------
+// Self-hosted only: no default feed URL
+// ---------------------------------------------------------------------------
+
+/** Run `fn` with RADAR_FEED_URL set to `value` (deleted when undefined), capturing console.warn. */
+async function withFeedUrl<T>(
+  value: string | undefined,
+  fn: (warnings: string[]) => Promise<T>
+): Promise<T> {
+  const savedUrl = process.env.RADAR_FEED_URL;
+  const savedWarn = console.warn;
+  const warnings: string[] = [];
+  if (value === undefined) delete process.env.RADAR_FEED_URL;
+  else process.env.RADAR_FEED_URL = value;
+  console.warn = (...args: unknown[]) => {
+    warnings.push(args.map(String).join(" "));
+  };
+  try {
+    return await fn(warnings);
+  } finally {
+    console.warn = savedWarn;
+    if (savedUrl === undefined) delete process.env.RADAR_FEED_URL;
+    else process.env.RADAR_FEED_URL = savedUrl;
+  }
+}
+
+test("syncRadar: RADAR_FEED_URL unset => not_configured, no fetch call, no cache write, one skip log line", async () => {
+  await withFeedUrl(undefined, async (warnings) => {
+    let fetchCalled = false;
+    let cacheWritten = false;
+    const result = await syncMod.syncRadar({
+      getFlag: () => true,
+      getSettings: () => ({ optIn: true, supporterKey: null }),
+      getCache: () => null,
+      setCache: () => {
+        cacheWritten = true;
+      },
+      fetch: (() => {
+        fetchCalled = true;
+        return Promise.resolve(mockResponse(Buffer.from("{}")));
+      }) as unknown as typeof globalThis.fetch,
+    });
+
+    assert.equal(result.status, "not_configured");
+    assert.match(
+      (result as { status: "not_configured"; reason: string }).reason,
+      /RADAR_FEED_URL/,
+      "reason must tell the operator which variable to set"
+    );
+    assert.equal(fetchCalled, false, "fetch must NOT be called without a feed URL");
+    assert.equal(cacheWritten, false, "cache must stay untouched");
+    assert.equal(warnings.length, 1, "exactly one log line");
+    assert.match(warnings[0]!, /Radar feed URL not configured; skipping/);
+  });
+});
+
+test("syncRadar: empty, whitespace, relative or non-http RADAR_FEED_URL => not_configured, fetch never sees a relative URL", async () => {
+  for (const value of ["", "   ", "/v1", "radar.example.com", "ftp://radar.example.com"]) {
+    await withFeedUrl(value, async () => {
+      let fetchCalled = false;
+      const result = await syncMod.syncRadar({
+        getFlag: () => true,
+        getSettings: () => ({ optIn: true, supporterKey: null }),
+        getCache: () => null,
+        setCache: () => {},
+        fetch: (() => {
+          fetchCalled = true;
+          return Promise.resolve(mockResponse(Buffer.from("{}")));
+        }) as unknown as typeof globalThis.fetch,
+      });
+      assert.equal(result.status, "not_configured", `value=${JSON.stringify(value)}`);
+      assert.equal(fetchCalled, false, `fetch must NOT be called for ${JSON.stringify(value)}`);
+    });
+  }
+});
+
+test("syncRadar: flag off / opt-out still win over the feed-URL gate — no log line without opt-in", async () => {
+  await withFeedUrl(undefined, async (warnings) => {
+    const off = await syncMod.syncRadar({ getFlag: () => false });
+    const optOut = await syncMod.syncRadar({
+      getFlag: () => true,
+      getSettings: () => ({ optIn: false, supporterKey: null }),
+    });
+    assert.deepEqual(off, { status: "disabled" });
+    assert.deepEqual(optOut, { status: "opt_out" });
+    assert.equal(warnings.length, 0, "a flag-off / opted-out install must stay silent");
+  });
+});
+
+test("syncRadar: requests ${RADAR_FEED_URL}/v1/catalog/latest with trailing slashes trimmed", async () => {
+  await withFeedUrl("https://radar.example.com///", async () => {
+    const sig = signBytes(FIXTURE_BYTES);
+    let requestedUrl = "";
+    const result = await syncMod.syncRadar({
+      getFlag: () => true,
+      getSettings: () => ({ optIn: true, supporterKey: null }),
+      getCache: () => null,
+      setCache: () => {},
+      fetch: ((url: string) => {
+        requestedUrl = String(url);
+        return Promise.resolve(mockResponse(FIXTURE_BYTES, { "x-pusula-feed-signature": sig }));
+      }) as unknown as typeof globalThis.fetch,
+      now: () => new Date("2026-08-03T12:00:00Z"),
+    });
+    assert.equal(result.status, "updated");
+    assert.equal(requestedUrl, "https://radar.example.com/v1/catalog/latest");
+  });
+});
+
+test("sync modules embed no URL literal — there is no upstream host to fall back to", () => {
+  for (const file of ["sync.ts", "referralsSync.ts", "offersSync.ts", "intelSync.ts", "feedUrl.ts"]) {
+    const source = fs.readFileSync(
+      path.resolve(import.meta.dirname!, "../../src/lib/radar", file),
+      "utf-8"
+    );
+    assert.doesNotMatch(source, /https?:\/\/[a-z0-9.-]+\.[a-z]{2,}/i, `${file} must embed no URL`);
+    assert.doesNotMatch(source, /DEFAULT_FEED_BASE_URL/, `${file} must have no default feed host`);
+  }
 });
 
 test("syncRadar: valid signature => cache updated, payload byte-identical to fixture", async () => {

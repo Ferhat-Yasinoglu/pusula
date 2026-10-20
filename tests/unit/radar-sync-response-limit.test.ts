@@ -7,6 +7,9 @@ import test from "node:test";
 const { publicKey, privateKey } = crypto.generateKeyPairSync("ed25519");
 const publicKeyDer = publicKey.export({ type: "spki", format: "der" });
 process.env.RADAR_FEED_PUBKEY = publicKeyDer.toString("base64");
+// Radar is self-hosted only: there is no default feed host, so the sync tests
+// below point RADAR_FEED_URL at a neutral placeholder server.
+process.env.RADAR_FEED_URL = "https://radar.example.com";
 
 const fixturePath = path.resolve(import.meta.dirname!, "../fixtures/radar-feed-canonical.json");
 const fixtureBytes = fs.readFileSync(fixturePath);

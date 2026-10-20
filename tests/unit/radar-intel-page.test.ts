@@ -12,7 +12,9 @@ test("Radar links to a dedicated local-only Intel page", () => {
   const source = fs.readFileSync(pagePath, "utf8");
   assert.match(source, /fetch\("\/api\/radar\/intel"\)/);
   assert.match(source, /fetch\("\/api\/radar\/intel\/sync",\s*\{\s*method:\s*"POST"/);
-  assert.doesNotMatch(source, /RADAR_FEED_URL|radar\.pusula\.online|omr_|getDbInstance/);
+  // Local-only page: no env read, no feed-host literal (Radar is self-hosted
+  // only and the client never embeds an upstream URL), no key, no DB.
+  assert.doesNotMatch(source, /RADAR_FEED_URL|https?:\/\/|omr_|getDbInstance/);
 });
 
 test("Intel page exposes methodology, ranking, freshness, trend, and verified supporter badge only", () => {

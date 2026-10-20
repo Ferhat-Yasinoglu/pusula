@@ -31,6 +31,10 @@ const PUB_KEY_B64 = PUB_KEY_DER.toString("base64");
 // pinned key backs both the catalog and the referrals feed.
 process.env.RADAR_FEED_PUBKEY = PUB_KEY_B64;
 
+// Radar is self-hosted only: there is no default feed host, so the sync tests
+// below point RADAR_FEED_URL at a neutral placeholder server.
+process.env.RADAR_FEED_URL = "https://radar.example.com";
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -198,6 +202,60 @@ test("syncRadarReferrals: opt-in false => opt_out, no fetch call", async () => {
   });
   assert.deepEqual(result, { status: "opt_out" });
   assert.equal(fetchCalled, false);
+});
+
+test("syncRadarReferrals: RADAR_FEED_URL unset => not_configured, one skip log line, no fetch, no cache write", async () => {
+  const savedUrl = process.env.RADAR_FEED_URL;
+  const savedWarn = console.warn;
+  const warnings: string[] = [];
+  delete process.env.RADAR_FEED_URL;
+  console.warn = (...args: unknown[]) => {
+    warnings.push(args.map(String).join(" "));
+  };
+  try {
+    let fetchCalled = false;
+    let cacheWritten = false;
+    const result = await referralsSync.syncRadarReferrals({
+      getFlag: () => true,
+      getSettings: () => ({ optIn: true, supporterKey: null }),
+      getCache: () => null,
+      setCache: () => {
+        cacheWritten = true;
+      },
+      fetch: (() => {
+        fetchCalled = true;
+        return Promise.resolve(mockResponse(Buffer.from("{}")));
+      }) as unknown as typeof globalThis.fetch,
+    });
+    assert.equal(result.status, "not_configured");
+    assert.match((result as { reason: string }).reason, /RADAR_FEED_URL/);
+    assert.equal(fetchCalled, false);
+    assert.equal(cacheWritten, false);
+    assert.equal(warnings.length, 1);
+    assert.match(warnings[0]!, /Radar feed URL not configured; skipping/);
+  } finally {
+    console.warn = savedWarn;
+    process.env.RADAR_FEED_URL = savedUrl;
+  }
+});
+
+test("syncRadarReferrals: requests ${RADAR_FEED_URL}/v1/referrals/latest", async () => {
+  const bytes = feedBytes(baseReferralsFeed());
+  let requestedUrl = "";
+  const result = await referralsSync.syncRadarReferrals({
+    getFlag: () => true,
+    getSettings: () => ({ optIn: true, supporterKey: null }),
+    getCache: () => null,
+    setCache: () => {},
+    fetch: ((url: string) => {
+      requestedUrl = String(url);
+      return Promise.resolve(
+        mockResponse(bytes, { "x-pusula-feed-signature": signBytes(bytes) })
+      );
+    }) as unknown as typeof globalThis.fetch,
+  });
+  assert.equal(result.status, "updated");
+  assert.equal(requestedUrl, "https://radar.example.com/v1/referrals/latest");
 });
 
 // ===========================================================================

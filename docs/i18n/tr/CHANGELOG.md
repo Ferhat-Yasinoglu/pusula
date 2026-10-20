@@ -1,10 +1,16 @@
+# Changelog (Türkçe)
+
+🌐 **Languages:** 🇺🇸 [English](../../../CHANGELOG.md) · 🇩🇪 [de](../de/CHANGELOG.md) · 🇮🇷 [fa](../fa/CHANGELOG.md) · 🇹🇷 [tr](../tr/CHANGELOG.md)
+
+---
+
 # Değişiklik Günlüğü
 
 Pusula'daki tüm önemli değişiklikler bu dosyada tutulur. Biçim
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) standardını, sürümler
 [Anlamsal Sürümleme](https://semver.org/lang/tr/) kurallarını izler.
 
-## [Yayımlanmamış]
+## [Unreleased]
 
 ## [1.0.0] - 2026-10-20
 
