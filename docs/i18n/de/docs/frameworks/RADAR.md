@@ -6,10 +6,11 @@
 
 > **Maßgebliche Quelle:** `src/lib/radar/`, `src/lib/db/radar.ts`, `src/app/api/radar/`
 > **Zuletzt aktualisiert:** 2026-09-01 — v3.8.51
-> **Nachweisgrenze für den gehosteten Dienst:** Die hier beschriebenen serverseitigen Regeln wurden am
-> 2026-09-01 anhand des bewusst privaten Radar-Servers in der exakten Revision
-> `main@dce70f004364912f3f144cdb69f4cbcde16093ed` verifiziert. Diese Implementierung wird nicht in
-> diesem OSS-Repository bereitgestellt; die Verfügbarkeit des gehosteten Dienstes bleibt ein separater Betriebszustand.
+> **Ausschließlich selbst gehostet:** Dieses Projekt betreibt keinen Radar-Feed-Dienst und liefert keinen
+> Standard-Upstream-Host mit. Radar bleibt netzwerkinaktiv, bis der Betreiber einen eigenen Feed-Server betreibt
+> und `RADAR_FEED_URL` setzt (siehe [So hosten Sie einen Feed selbst](#how-to-self-host-a-feed)). Die unten
+> beschriebenen serverseitigen Regeln sind der Vertrag, den ein solcher Server umsetzen muss — keine Beschreibung
+> eines von diesem Repository angebotenen gehosteten Dienstes.
 
 Radar ist ein **optionales Add-on**, das einen signierten, aktuell kuratierten Katalog kostenloser Modelle
 über den Release-Basisbestand (`FREE_MODEL_BUDGETS` in
@@ -29,19 +30,19 @@ wird auf dem Datenträger niemals verändert — siehe nachfolgend
 
 ## Bereitstellungsstatus in v3.8.51
 
-Der folgende Status unterscheidet zwischen dem, was dieses OSS-Release implementiert, und späteren
-Radar-Arbeitsbereichen. Es handelt sich um einen Status auf Codeebene, nicht um eine Zusage, dass eine bestimmte
-gehostete Bereitstellung oder externe Integration derzeit verfügbar ist.
+Der folgende Status unterscheidet zwischen dem, was dieses OSS-Release implementiert, und dem, was zum
+selbst gehosteten Feed-Server des Betreibers gehört. Es handelt sich um einen Status auf Codeebene; dieses Projekt
+stellt keine gehostete Bereitstellung und keine externe Integration bereit.
 
 | Bereich                                 | Status in diesem Release                                                                                                                                                                                                                                                                                    |
 | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Client für signierten Katalog           | Hinter `RADAR_ENABLED` implementiert, mit separater Zustimmung, Ed25519-Verifizierung, lokalen verschlüsselten Einstellungen und Caches, dauerhaften Anzeige- und Aktivierungsüberschreibungen, reversiblen Tombstones, Scheduler und Dashboard.                                                            |
-| Aktivierung für Mitwirkende             | Das Dashboard verlinkt auf den vom Server gehosteten GitHub-Claim-Ablauf und akzeptiert einen vorhandenen `omr_…`-Schlüssel. Die Berechtigung Mitwirkender wird vom privaten Dienst ermittelt; der OSS-Client enthält weder GitHub-Token noch Ausgabelogik.                                                 |
+| Aktivierung für Mitwirkende             | Das Dashboard zeigt einen optionalen Claim-Link nur dann, wenn der Betreiber `RADAR_CONTRIBUTOR_CLAIM_URL` auf einen Ablauf seines eigenen Feed-Servers setzt, und akzeptiert einen vorhandenen `omr_…`-Schlüssel. Die Berechtigung wird von diesem Server ermittelt; der OSS-Client enthält weder GitHub-Token noch Ausgabelogik. |
 | Aktivierung per Unterstützerschlüssel   | Implementiert. Der Rohschlüssel wird validiert, im Ruhezustand verschlüsselt, bei Lesezugriffen maskiert und nur durch die serverseitige Synchronisierung gesendet. Das Ändern oder Löschen des Schlüssels invalidiert alle vier berechtigungsabhängigen Feed-Caches.                                       |
 | Empfehlungslinks                        | Als separat signierter, stündlich aktualisierter Feed implementiert. Feste Links stehen der Community-Stufe sofort zur Verfügung; zeitlich begrenzte Kampagnen bleiben Live-Stufendaten.                                                                                                                    |
 | Unterstützerangebote                    | Als separater signierter, ausschließlich live verfügbarer Feed und als Dashboard-Seite implementiert. Der Client revalidiert das geschlossene Vorteilschema, bewahrt den letzten gültigen Cache, filtert abgelaufene Einträge und kennzeichnet Partnerangebote ausdrücklich.                                |
 | Informationen und Unterstützererkennung | Als strikter signierter, ausschließlich live verfügbarer Feed mit Radar-eigener ELO, sachlichen Angaben zu Aktualität und Trends des Katalogs, einem verifizierten lokalen Unterstützerabzeichen, einer Dashboard-Seite und ausschließlich lokalen CLI-Status- und Synchronisierungsbefehlen implementiert. |
-| Zahlungen und Transaktions-E-Mails      | Im OSS-Client nicht implementiert. Kauf, Spende, Belegprüfung, Wiederherstellung und E-Mail-Versand gehören zum privaten Dienst; die Verfügbarkeit des gehosteten Dienstes hängt weiterhin von dessen überwachter Bereitstellung und Anbieterkonfiguration ab.                                              |
+| Schlüsselausgabe, Zahlungen, E-Mails    | Im OSS-Client nicht implementiert. Das Ausstellen, Gewähren, Wiederherstellen oder Versenden von Supporter-Schlüsseln ist ausschließlich Sache des selbst gehosteten Feed-Servers; dieses Repository enthält keinen Zahlungscode und verlinkt auf keinen gehosteten Dienst.                           |
 | Arbeitsbereich Forschungsagent          | Nicht Bestandteil dieses Client-Releases. Die Inhalte des kuratierten Feeds bleiben serverseitige Daten; in einer Pusula-Installation wird kein autonomer Forschungsagent ausgeführt.                                                                                                                    |
 
 ---
@@ -63,9 +64,10 @@ Konfigurationen, Nutzungsdatensätze oder lokale Verwerfungszustände gesendet.
 - Auswahl der neuesten aktiven Ankündigung zuerst, Rückgriff auf Englisch, wenn die gewünschte Sprache nicht verfügbar ist, sowie lokale Verwerfung pro ID.
 
 Der Parser akzeptiert vorübergehend die frühere singuläre Form `{ active, title, message, ... }`, damit
-ältere Forks ohne eine defekte Changelog-Ansicht migriert werden können. Ungültige Feeds bleiben wirkungslos. Der Radar-Launch-
-Eintrag wird mit `active: false` ausgeliefert; die Änderung auf `true` ist eine separate Release-Aktion nach dem Merge und nach dem Deployment
-und ändert weder `RADAR_ENABLED` noch die unabhängige Zustimmung zur Feed-Synchronisierung.
+ältere Forks ohne eine defekte Changelog-Ansicht migriert werden können. Ungültige Feeds bleiben wirkungslos. Die ausgelieferte
+`news.json` ist ein leerer v2-Feed (`{ "schemaVersion": 2, "items": [] }`); ein Betreiber, der Ankündigungen wünscht, veröffentlicht dort
+seine eigenen Einträge. Das Umschalten des `active`-Flags eines Eintrags ändert weder `RADAR_ENABLED` noch die unabhängige
+Zustimmung zur Feed-Synchronisierung.
 
 ---
 
@@ -102,24 +104,25 @@ Migration `136_radar_cache_settings.sql`). `syncRadar()` prüft das Flag _und_ d
 Zustimmung, bevor ein Netzwerkaufruf ausgeführt wird:
 
 ```
-Flag deaktiviert → { status: "disabled" }   — kein Netzwerkaufruf
-Zustimmung fehlt → { status: "opt_out" }    — kein Netzwerkaufruf
+Flag deaktiviert             → { status: "disabled" }        — kein Netzwerkaufruf
+Zustimmung fehlt             → { status: "opt_out" }         — kein Netzwerkaufruf
+RADAR_FEED_URL nicht gesetzt → { status: "not_configured" }  — eine Protokollzeile „Radar feed URL not configured; skipping“, kein Netzwerkaufruf
 ```
 
-Wenn beide aktiviert sind, sieht der Synchronisierungspfad wie folgt aus:
+Wenn alle drei Bedingungen erfüllt sind, sieht der Synchronisierungspfad wie folgt aus:
 
-1. `GET <Feed-Basis-URL>/v1/catalog/latest` mit `x-pusula-radar-schema: 2` und einem optionalen
+1. `GET ${RADAR_FEED_URL}/v1/catalog/latest` (z. B. `https://radar.example.com/v1/catalog/latest`) mit
+   `x-pusula-radar-schema: 2` und einem optionalen
    `Authorization: Bearer <Supporter-Schlüssel>`-Header (siehe unten). Server verwenden standardmäßig das separat
    signierte v1-Übergangsartefakt, wenn der Schema-Header fehlt, sodass ältere installierte Clients weiterhin
    Aktualisierungen erhalten.
-2. Dies ist ein reiner Download-Ablauf der Anwendung, dennoch handelt es sich um eine HTTPS-Anfrage. Die gehostete
-   Infrastruktur empfängt gewöhnliche Verbindungsmetadaten wie die Quell-IP-Adresse. Wenn ein Supporter-
-   Schlüssel konfiguriert ist, sendet die Synchronisierung diesen Schlüssel außerdem im Bearer-Header, damit der Dienst die
-   Berechtigung ermitteln kann. In genau der privaten Server-Revision, die innerhalb der oben beschriebenen Nachweisgrenze angegeben ist,
-   verwendet die Erfassung von Feed-Anfragen Schlüssel-Hashes, aggregierte Nutzung und einen täglich wechselnden gekürzten HMAC
-   der IP-Adresse für die manuelle Missbrauchsprüfung; in diesen Tabellen werden weder der Schlüssel noch die IP-Adresse in Rohform gespeichert.
-   Infrastruktur-Zugriffsprotokolle und die verschlüsselte Versand-Outbox bilden separate betriebliche
-   Grenzen.
+2. Dies ist ein reiner Download-Ablauf der Anwendung, dennoch handelt es sich um eine HTTPS-Anfrage. Der von Ihnen
+   betriebene Feed-Server empfängt gewöhnliche Verbindungsmetadaten wie die Quell-IP-Adresse. Wenn ein Supporter-
+   Schlüssel konfiguriert ist, sendet die Synchronisierung diesen Schlüssel außerdem im Bearer-Header, damit Ihr Server die
+   Berechtigung ermitteln kann. Was der Server über Anfragen speichert, ist die Richtlinie des Betreibers; der
+   Referenzvertrag verwendet Schlüssel-Hashes, aggregierte Nutzung und einen täglich wechselnden gekürzten HMAC
+   der IP-Adresse für die manuelle Missbrauchsprüfung statt roher Schlüssel oder IP-Adressen.
+   Infrastruktur-Zugriffsprotokolle bilden eine separate betriebliche Grenze.
 3. Pusula sendet niemals Prompts, Antworten, Konversationen, Provider-Anmeldedaten, Modellverkehr,
    Verfügbarkeit, Latenz oder die lokale Provider-Konfiguration an den Radar-Dienst.
 4. Die Antwort wird verifiziert, validiert und lokal zwischengespeichert (siehe
@@ -147,7 +150,9 @@ mit dem der Feed-Dienst entscheidet, welche Stufe bereitgestellt wird (siehe
 
 Das inaktive Dashboard zeigt diese Regeln aus
 `src/app/(dashboard)/dashboard/radar/RadarAccessExplainer.tsx` **vor** einer der beiden Aktivierungsaktionen an.
-Die verbindliche Zugriffsskala lautet:
+Der Erklärtext beschreibt die nachstehende Referenz-Zugriffsskala. Welche Stufen tatsächlich existieren und wer sie
+erhält, entscheidet ausschließlich der selbst gehostete Feed-Server (über den ausgelieferten Header
+`x-pusula-feed-tier`); der OSS-Client unterscheidet immer nur `community` von `live`:
 
 | Stufe                     | Berechtigung                                                                                                                          | Zugriff                                                       | Wiederholungs-/Ablaufregel                                                                       |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
@@ -163,17 +168,16 @@ unabhängig von der Anzahl der PRs keine Berechtigung für Mitwirkende. Befriste
 manuelle Gewährungen werden ab dem aktuellen Ablaufdatum kumuliert; eine lebenslange Berechtigung hat Vorrang. Eine Änderung des Rangs
 widerruft oder verkürzt bereits gewährte Zeit niemals rückwirkend.
 
-Die gehostete Lizenz ist personenbezogen, und die für Benutzer sichtbare Regel erlaubt jeweils nur eine aktive Installation. Dieses
+Jede Lizenz- oder Anti-Sharing-Richtlinie liegt beim Betreiber des Feed-Servers. Dieses
 Release beansprucht **keine** Hardwarebindung: Die OSS-Synchronisierung erstellt keinen Hardware-Fingerabdruck und verwaltet keine
-kryptografische Geräte-Lease. Bei der oben genannten verifizierten Revision des privaten Servers besteht die implementierte Durchsetzung
-aus der Validierung der Berechtigung sowie einem Signal zur manuellen Überprüfung, wenn derselbe aktive Schlüssel innerhalb von 24 Stunden von einer vierten
-eindeutigen IP-Adresse erkannt wird. Dieses Signal sperrt oder widerruft einen Schlüssel niemals automatisch. Die Wiederherstellung
-widerruft und ersetzt den verlorenen Schlüssel unter Beibehaltung des bestehenden Ablaufdatums; sie startet den
-gekauften oder gewährten Zeitraum nicht neu.
+kryptografische Geräte-Lease. Der Referenz-Serververtrag setzt die Validierung der Berechtigung sowie ein Signal zur manuellen
+Überprüfung durch, wenn derselbe aktive Schlüssel innerhalb von 24 Stunden von einer vierten eindeutigen IP-Adresse erkannt wird;
+dieses Signal sperrt oder widerruft einen Schlüssel niemals automatisch. Die Wiederherstellung — sofern ein Server sie anbietet —
+widerruft und ersetzt den verlorenen Schlüssel unter Beibehaltung des bestehenden Ablaufdatums.
 
 Live-Angebote werden manuell kuratiert und können sich ändern oder ablaufen. Der Opt-in-Bildschirm benennt außerdem die genaue
 Datenschutzgrenze: Signierte Katalog-/Referral-Metadaten werden heruntergeladen; ein gültiger Schlüssel schaltet zusätzlich
-signierte Angebote und Intel frei; der Bearer-Schlüssel und normale Verbindungsmetadaten erreichen den gehosteten Dienst;
+signierte Angebote und Intel frei; der Bearer-Schlüssel und normale Verbindungsmetadaten erreichen den Feed-Server des Betreibers;
 Prompts, Antworten, Unterhaltungen, Anbieter-Zugangsdaten, Modell-Traffic, Verfügbarkeit, Latenz und die lokale
 Anbieterkonfiguration hingegen nicht.
 
@@ -181,51 +185,53 @@ Anbieterkonfiguration hingegen nicht.
 
 ## Einen Supporter-Schlüssel erhalten
 
-Der Aktivierungsbildschirm (`/dashboard/radar`) verweist auf zwei Abläufe zum **Erhalt** eines
-Supporter-Schlüssels. Das OSS-Repository selbst stellt niemals einen Schlüssel aus, führt keinen Zahlungscode aus und
-**nennt niemals einen Preis** — die Preisgestaltung wird vollständig auf den
-Zielseiten festgelegt und angezeigt, nicht in diesem Repository (Spezifikationsentscheidung D14).
+Supporter-Schlüssel (`omr_` + 40 Hexadezimalzeichen) werden vom eigenen, selbst gehosteten Radar-Feed-Server des
+Betreibers ausgestellt — dieses Repository stellt niemals einen Schlüssel aus, führt keinen Zahlungscode aus und
+**nennt niemals einen Preis** (Spezifikationsentscheidung D14). Der Aktivierungsbildschirm (`/dashboard/radar`) kann
+auf zwei optionale Abläufe auf diesem Server verweisen. Jede Schaltfläche wird nur gerendert, wenn ihre URL konfiguriert
+ist; ist keine der beiden gesetzt, verschwindet der gesamte Abschnitt:
 
-- **„Ich bin Mitwirkender“** — öffnet `RADAR_CONTRIBUTOR_CLAIM_URL` (Standard:
-  `https://radar.pusula.online/auth/github`), einen auf dem privaten Radar-Server gehosteten
-  GitHub-OAuth-Ablauf zur Anforderung. Er prüft das jüngste vollständig abgeschlossene wöchentliche Ranking: Die Top 10 erhalten 365 Tage
-  und die Plätze 11–100 erhalten 90 Tage. Außerhalb der Top 100 gewährt die Anzahl der PRs niemals Zugriff; stattdessen
-  prüft der Ablauf die separate, einmalig nutzbare Stufe für Stern + Folgen.
-- **„Projekt unterstützen“** — öffnet `RADAR_SUPPORTER_PLANS_URL` (Standard:
-  `https://radar.pusula.online/planos`), die gehostete Seite mit den einmaligen Optionen für 6 Monate, 1 Jahr und
-  lebenslange Nutzung. Die OSS-Seite zeigt weiterhin keinen Geldbetrag an.
+- **„Ich bin Mitwirkender“** — öffnet `RADAR_CONTRIBUTOR_CLAIM_URL` (z. B.
+  `https://radar.example.com/auth/github`), einen Claim-Ablauf auf Ihrem Feed-Server — typischerweise GitHub OAuth —,
+  der die Berechtigung Mitwirkender anhand Ihrer eigenen Ranking-Regeln prüft (in der Referenzskala oben: Die Top 10
+  erhalten 365 Tage, die Plätze 11–100 erhalten 90 Tage, die Anzahl der PRs allein gewährt niemals Zugriff, und die
+  Stufe Stern + Folgen ist einmalig nutzbar).
+- **„Projekt unterstützen“** — öffnet `RADAR_SUPPORTER_PLANS_URL` (z. B.
+  `https://radar.example.com/plans`), also die Seite, über die Ihr Server Supporter-Schlüssel vergibt. Die OSS-Seite
+  zeigt keinen Geldbetrag an.
 
-Beide URLs werden serverseitig aufgelöst (`src/lib/radar/links.ts`, dasselbe Muster für Umgebungsüberschreibungen
-wie bei `RADAR_FEED_URL`) und über die bestehende Antwort von
-`GET /api/radar/settings` (`contributorClaimUrl`, `supporterPlansUrl`) an das Dashboard weitergeleitet — die
-Client-Komponente liest `process.env` niemals selbst aus.
+Beide URLs werden serverseitig aufgelöst (`src/lib/radar/links.ts`, dasselbe reine Umgebungsvariablen-Muster wie bei
+`RADAR_FEED_URL`), ausschließlich als absolute http(s)-URLs akzeptiert und über die bestehende Antwort von
+`GET /api/radar/settings` (`contributorClaimUrl`, `supporterPlansUrl`, jeweils `null`, wenn nicht gesetzt) an das
+Dashboard weitergeleitet — die Client-Komponente liest `process.env` niemals selbst aus.
 
-| Variable                      | Zweck                                                                                                          |
-| ----------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `RADAR_CONTRIBUTOR_CLAIM_URL` | Überschreibt die URL zur Anforderung für Mitwirkende (Standard: `https://radar.pusula.online/auth/github`). |
-| `RADAR_SUPPORTER_PLANS_URL`   | Überschreibt die URL für Supporter-Optionen (Standard: `https://radar.pusula.online/planos`).               |
+| Variable                      | Zweck                                                                                                                                    |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `RADAR_CONTRIBUTOR_CLAIM_URL` | Optionale URL zur Anforderung für Mitwirkende auf Ihrem Feed-Server. Kein Standardwert — ohne Wert bleibt die Schaltfläche ausgeblendet. |
+| `RADAR_SUPPORTER_PLANS_URL`   | Optionale URL der Supporter-Optionsseite auf Ihrem Feed-Server. Kein Standardwert — ohne Wert bleibt die Schaltfläche ausgeblendet.      |
 
 ### Einen verlorenen Supporter-Schlüssel wiederherstellen
 
-Der Einstiegspunkt des gehosteten Dienstes zur Wiederherstellung lautet `https://radar.pusula.online/recover`; er ist außerdem
-auf der Seite mit den Optionen verlinkt. Die Wiederherstellung bleibt vollständig außerhalb des OSS-Clients, da die lokale
-Installation niemals die E-Mail-Adresse des Käufers/Mitwirkenden erhält und aus ihren verschlüsselten Einstellungen keinen
-unverschlüsselten Schlüssel rekonstruieren kann.
+Die Wiederherstellung von Schlüsseln — sofern angeboten — findet auf dem selbst gehosteten Feed-Server statt (zum
+Beispiel `https://radar.example.com/recover`, verlinkt von dessen Optionsseite). Sie bleibt vollständig außerhalb des
+OSS-Clients, da die lokale Installation niemals die E-Mail-Adresse des Käufers/Mitwirkenden erhält und aus ihren
+verschlüsselten Einstellungen keinen unverschlüsselten Schlüssel rekonstruieren kann. Der Referenzablauf, den ein Server
+umsetzen kann:
 
-1. Übermitteln Sie die mit dem Schlüssel verknüpfte E-Mail-Adresse. Der Dienst gibt unabhängig davon, ob eine
+1. Übermitteln Sie die mit dem Schlüssel verknüpfte E-Mail-Adresse. Der Server gibt unabhängig davon, ob eine
    wiederherstellbare Lizenz vorhanden ist, dieselbe Bestätigungsseite zurück, sodass das Formular keine Konten offenlegt.
 2. Falls eine Berechtigung besteht, sendet der Zustellungs-Worker einen kurzlebigen, einmalig nutzbaren Link. Beim Öffnen wird
    das Token sofort in ein temporäres, verschlüsseltes `HttpOnly`/`Secure`-Cookie verschoben und auf die bereinigte
    `/recover`-URL weitergeleitet; die Seite enthält weder Token noch E-Mail-Adresse, alten Schlüssel oder Ersatzschlüssel.
-3. Bestätigen Sie den Widerruf. Der private Dienst widerruft den bisherigen Schlüssel, erstellt den Ersatz mit
+3. Bestätigen Sie den Widerruf. Der Server widerruft den bisherigen Schlüssel, erstellt den Ersatz mit
    derselben Option/demselben Ablaufdatum und reiht ihn innerhalb einer Transaktion für den E-Mail-Versand ein. Der Ersatz wird niemals
    an den Browser zurückgegeben.
 4. Fügen Sie den Ersatz in `/dashboard/radar` ein. Der alte Schlüssel muss nun auf `community` zurückgestuft werden; der
    Ersatz muss eine verifizierte `live`-Synchronisierung bewirken. Das erneute Öffnen desselben Wiederherstellungslinks muss
    mit einer generischen Antwort für einen ungültigen/abgelaufenen Link fehlschlagen.
 
-Die gehostete Wiederherstellungsroute und der Mail-Worker können im Code vorhanden sein, in einer bestimmten
-Bereitstellung jedoch trotzdem nicht verfügbar sein. Bezeichnen Sie den Ablauf erst dann als produktionsbereit, wenn der Server bereitgestellt,
+Eine Wiederherstellungsroute und ein Mail-Worker können im Server-Code vorhanden sein, in einer bestimmten
+Bereitstellung jedoch trotzdem nicht verfügbar sein. Bezeichnen Sie den Ablauf erst dann als produktionsbereit, wenn Ihr Server bereitgestellt,
 der Zustellungsanbieter mit einem kontrollierten Empfänger konfiguriert und der vollständige einmalig nutzbare Link getestet wurde.
 
 Sobald ein Besucher einen Schlüssel besitzt (`omr_` + 40 Hexadezimalzeichen), bietet der Aktivierungsbildschirm
@@ -237,25 +243,25 @@ mit der gemeinsamen Hilfsfunktion `isValidSupporterKeyFormat()` (`src/lib/radar/
 geprüft; maßgeblich ist in jedem Fall das Zod-Schema des Servers. Sobald ein
 Schlüssel gesetzt ist, zeigt der Aktivierungsbildschirm statt eines leeren Eingabefelds die maskierte Form (`supporterKeyMasked` aus
 `GET /api/radar/settings`) sowie ein Steuerelement „Schlüssel ändern“ zum
-Einfügen eines neuen Schlüssels an — der unverschlüsselte Schlüssel wird niemals erneut angezeigt. Die beiden Schaltflächen für Anforderung/Optionen oben
-bleiben der Weg, um überhaupt erst einen Schlüssel zu _erhalten_; in diesem Eingabefeld aktiviert ihn ein Betreiber,
+Einfügen eines neuen Schlüssels an — der unverschlüsselte Schlüssel wird niemals erneut angezeigt. Die optionalen Links für Anforderung/Optionen oben
+verweisen — sofern der Betreiber sie konfiguriert hat — auf den Server, der Schlüssel ausstellt; in diesem Eingabefeld aktiviert ihn ein Betreiber,
 der bereits einen besitzt.
 
 ### Durchgängige Aktivierung und geführte Einrichtung
 
-Der private Feed-Dienst und dieser OSS-Client besitzen bewusst eine klar abgegrenzte Schnittstelle: Der Dienst
+Ihr selbst gehosteter Feed-Server und dieser OSS-Client besitzen bewusst eine klar abgegrenzte Schnittstelle: Der Server
 stellt den Supporter-Schlüssel aus und validiert ihn, während die lokale Pusula-Installation den Schlüssel verschlüsselt,
 signierte Artefakte serverseitig synchronisiert und durch die Anbietereinrichtung führt. Die Reihenfolge der unterstützten Validierung lautet:
 
-1. Beziehen Sie einen neu ausgestellten oder wiederhergestellten Schlüssel über den Anspruch für Mitwirkende, Pläne/Checkout, den Wiederherstellungsprozess oder einen autorisierten Betreiber eines privaten Servers. Fügen Sie den Rohschlüssel nicht in Protokolle, Screenshots, Issue-Kommentare oder Befehlszeilenargumente ein.
-2. Aktivieren Sie das Feature-Flag `RADAR_ENABLED` in der lokalen Pusula-Installation. Dadurch wird die Benutzeroberfläche verfügbar, bleibt jedoch netzwerkinaktiv, bis die separate Einwilligung gespeichert wurde.
+1. Beziehen Sie einen Schlüssel von Ihrem Feed-Server (über dessen Claim-Ablauf, Optionsseite, Wiederherstellungsprozess oder eine manuelle Gewährung durch dessen Betreiber). Fügen Sie den Rohschlüssel nicht in Protokolle, Screenshots, Issue-Kommentare oder Befehlszeilenargumente ein.
+2. Setzen Sie `RADAR_FEED_URL` (und den passenden `RADAR_FEED_PUBKEY`) für diesen Server und aktivieren Sie anschließend das Feature-Flag `RADAR_ENABLED` in der lokalen Pusula-Installation. Dadurch wird die Benutzeroberfläche verfügbar, bleibt jedoch netzwerkinaktiv, bis die separate Einwilligung gespeichert wurde.
 3. Öffnen Sie `/dashboard/radar`, fügen Sie den Schlüssel ein und aktivieren Sie ihn. Der Browser sendet einmalig lokal einen `POST /api/radar/settings` mit `{ optIn: true, supporterKey }`; der Schlüssel wird lokal verschlüsselt, und die Antwort enthält nur `omr_****<last4>`.
 4. Lassen Sie auf dem Aktivierungsbildschirm die Katalogsynchronisierung durchlaufen oder wählen Sie **Jetzt synchronisieren**. Vergewissern Sie sich, dass die Seite `live`, eine Feed-Version und eine Abrufzeit meldet. Für eine authentifizierte lokale Diagnose meldet `GET /api/radar/status` den Einwilligungs-/Schlüsselstatus sowie die vier Cache-Zustände, ohne den Schlüssel zurückzugeben. Mit `POST /api/radar/sync-all` können Katalog, Empfehlungen, Angebote und Intel explizit aktualisiert werden.
 5. Öffnen Sie `/dashboard/radar/setup?provider=<provider>`. Folgen Sie der vom Anbieter bereitgestellten Anmeldedaten-URL, wählen Sie **API-Schlüssel hinzufügen**, speichern Sie über das tatsächliche Anbieterformular, kehren Sie zur Anleitung zurück und führen Sie **Verbindung testen** aus. Die Anleitung verwendet die regulären Routen `/api/providers` und `/api/providers/<connection-id>/test`; sie erstellt keine separaten Radar-Anmeldedaten.
 6. Öffnen Sie `/dashboard/radar/combos`, nachdem mindestens zwei kompatible Anbieterverbindungen aktiv sind. Prüfen Sie die vorgeschlagene Familie und erstellen Sie die Kombination über die bestehende Combo-API. Angebote und Intel bleiben separate, ausschließlich für `live` verfügbare signierte Caches und können auf ihren jeweiligen Radar-Seiten geprüft werden.
 7. Laden Sie `/dashboard/radar` und die Einrichtungsseite neu. Die Einwilligung, der maskierte Schlüsselstatus, der verifizierte Cache, die gespeicherte Anbieterverbindung und die Testaktion müssen das Neuladen überstehen. Erfassen Sie Nachweise erst, nachdem der Rohschlüssel und die Anbieter-Anmeldedaten nicht mehr sichtbar sind.
 
-Das Speichern eines Schlüssels ist für sich genommen kein Nachweis einer gültigen Live-Berechtigung. Der Nachweis ergibt sich aus der Kombination des Ergebnisses von `GET /v1/license/check` des privaten Dienstes, der vom OSS-Katalog bereitgestellten Stufe `live`, eines verifizierten signierten Caches und des tatsächlichen Verbindungs-/Testablaufs für den Anbieter. Bei einem ungültigen, abgelaufenen oder widerrufenen Schlüssel wird der Katalog sicher auf `community` zurückgestuft; dies darf nicht als erfolgreiche Validierung eines Live-Schlüssels gemeldet werden.
+Das Speichern eines Schlüssels ist für sich genommen kein Nachweis einer gültigen Live-Berechtigung. Der Nachweis ergibt sich aus der Kombination der Lizenzprüfung Ihres Feed-Servers (`GET /v1/license/check` im Referenzvertrag), der vom OSS-Katalog bereitgestellten Stufe `live`, eines verifizierten signierten Caches und des tatsächlichen Verbindungs-/Testablaufs für den Anbieter. Bei einem ungültigen, abgelaufenen oder widerrufenen Schlüssel wird der Katalog sicher auf `community` zurückgestuft; dies darf nicht als erfolgreiche Validierung eines Live-Schlüssels gemeldet werden.
 
 ### Link zum privaten Admin-Panel
 
@@ -285,16 +291,15 @@ Der öffentliche Schlüssel zur Überprüfung ist in `src/lib/radar/pinnedKeys.t
 Rotation vorangestellt werden kann, während ältere zwischengespeicherte Feeds, die mit einem vorherigen Schlüssel signiert wurden, gültig bleiben, bis sie
 erneut synchronisiert werden.
 
-### Fork-freundliche Umgebungsvariablen zum Überschreiben
+### Umgebungsvariablen für den Feed-Server (kein integrierter Host)
 
-Zwei Umgebungsvariablen ermöglichen Forks und selbstgehosteten Installationen, den Client statt auf den
-standardmäßigen Pusula-Dienst auf einen eigenen Feed zu verweisen — siehe
-[So hosten Sie einen Feed selbst](#how-to-self-host-a-feed) weiter unten:
+Radar wird ohne jeglichen Feed-Host ausgeliefert. Zwei Umgebungsvariablen verweisen den Client auf den von Ihnen
+betriebenen Feed-Server — siehe [So hosten Sie einen Feed selbst](#how-to-self-host-a-feed) weiter unten:
 
-| Variable            | Zweck                                                                                                                                               |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `RADAR_FEED_URL`    | Überschreibt die Basis-URL des Feeds (Standard: `https://radar.pusula.online`).                                                                  |
-| `RADAR_FEED_PUBKEY` | Überschreibt den angehefteten öffentlichen Schlüssel (Base64-DER-SPKI oder PEM) und ersetzt das integrierte Array durch diesen einzelnen Schlüssel. |
+| Variable            | Zweck                                                                                                                                                                                                                                                                                                                 |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `RADAR_FEED_URL`    | Absolute http(s)-Basis-URL Ihres Feed-Servers, z. B. `https://radar.example.com`. **Erforderlich:** Solange sie nicht gesetzt ist, protokolliert jede Synchronisierung eine Zeile `Radar feed URL not configured; skipping` und gibt `{ status: "not_configured" }` zurück, ohne das Netzwerk zu berühren (`src/lib/radar/feedUrl.ts`). |
+| `RADAR_FEED_PUBKEY` | Öffentlicher Teil des Ed25519-Schlüsselpaars, mit dem Ihr Server signiert (Base64-DER-SPKI oder PEM); ersetzt das angeheftete Schlüssel-Array durch diesen einzelnen Schlüssel.                                                                                                                                         |
 
 ### Versionsuntergrenze
 
@@ -729,18 +734,18 @@ Lose Kopplung als bewusstes Designprinzip:
 
 ## So hosten Sie einen Feed selbst
 
-Ein Fork oder Selbsthoster, der die vollständige Kontrolle über den Katalog haben möchte, kann einen eigenen Feed-Dienst betreiben, ohne den Client-Code zu ändern:
+Radar kommuniziert ausschließlich mit einem Feed-Server, den Sie selbst betreiben — es gibt keinen gehosteten Dienst und keinen Standard-Host als Rückfalloption. Für die Inbetriebnahme sind keine Änderungen am Client-Code erforderlich:
 
 1. Stellen Sie einen Endpunkt `GET /v1/catalog/latest` bereit, der einen JSON-Body zurückgibt, der `RadarFeedSchema` (`src/lib/radar/feedSchema.ts`) erfüllt — auf oberster Ebene `feed:
 "pusula-radar"`, `schemaVersion: 2`, `version`, `tier`, `providers`, `models`,
    `quirks` und `totals`. Berücksichtigen Sie `x-pusula-radar-schema: 2`; ein übergangskompatibler Server sollte Anfragen ohne diesen Header standardmäßig mit einem separat signierten v1-Artefakt beantworten.
 2. Signieren Sie die exakten Antwortbytes mit einem Ed25519-Schlüsselpaar und geben Sie die Base64-Signatur im Antwort-Header `x-pusula-feed-signature` zurück.
-3. Setzen Sie `RADAR_FEED_URL` auf die neue Basis-URL und `RADAR_FEED_PUBKEY` auf den zugehörigen öffentlichen Schlüssel (Base64-DER-SPKI oder PEM) — siehe die
-   [Referenz der Umgebungsvariablen](../reference/ENVIRONMENT.md#27-radar-feed-self-hosting).
+3. Setzen Sie `RADAR_FEED_URL` auf die Basis-URL des Servers (z. B. `https://radar.example.com`) und `RADAR_FEED_PUBKEY` auf den zugehörigen öffentlichen Schlüssel (Base64-DER-SPKI oder PEM) — siehe die
+   [Referenz der Umgebungsvariablen](../reference/ENVIRONMENT.md#27-radar-feed-self-hosting). Setzen Sie optional `RADAR_CONTRIBUTOR_CLAIM_URL` / `RADAR_SUPPORTER_PLANS_URL` auf Seiten desselben Servers, falls er Supporter-Schlüssel ausstellt; solange sie nicht gesetzt sind, blendet das Dashboard diese Schaltflächen aus.
 4. Aktivieren Sie `RADAR_ENABLED` und stimmen Sie über `POST /api/radar/settings` zu
    (`{ optIn: true }`).
 
-Es sind keine weiteren Codeänderungen erforderlich — `verifyFeedBytes()` übernimmt die Überschreibung automatisch (`getFeedPublicKeys()` in `src/lib/radar/pinnedKeys.ts`), und Versionsvergleich, Schemavalidierung sowie die Zusammenführungsregeln werden auf einen selbst gehosteten Feed identisch angewendet.
+Es sind keine weiteren Codeänderungen erforderlich — `verifyFeedBytes()` übernimmt den Schlüssel automatisch (`getFeedPublicKeys()` in `src/lib/radar/pinnedKeys.ts`), und Versionsvergleich, Schemavalidierung sowie die Zusammenführungsregeln werden auf einen selbst gehosteten Feed identisch angewendet.
 
 Empfehlungslinks (siehe [Empfehlungslinks (kostenlose Guthaben)](#referral-links-free-credits)
 oben) sind ein separates, optionales Artefakt: Ein Fork, der nur `/v1/catalog/latest` bereitstellt, funktioniert weiterhin vollständig — `syncRadarReferrals()` wechselt bei einem `404` von `/v1/referrals/latest` auf `{ status: "error" }`, und der Cache bleibt einfach leer, sodass `GET /api/radar/referrals` weiterhin `{ fixed: [], campaigns: [], tier: null }` zurückgibt, anstatt den Rest der Seite fehlschlagen zu lassen. Um zusätzlich Empfehlungslinks anzubieten, stellen Sie `GET /v1/referrals/latest` so bereit, dass es `RadarReferralsFeedSchema` (`src/lib/radar/referralsFeedSchema.ts`) erfüllt, und signieren Sie es mit demselben Ed25519-Schlüsselpaar wie den Katalog-Feed.

@@ -71,13 +71,16 @@ describe("ProviderPageHeader — referral-link note", () => {
     ["kimi-web", "Kimi Web", "https://www.kimi.ai"],
     ["cheaperinference", "Cheaper Inference", "https://cheaperinference.com"],
     ["openai", "OpenAI", "https://openai.com"],
-  ])("does NOT flag %s's plain catalog website link (no per-provider partner note)", (id, name, website) => {
-    const el = renderHeader(id, name, website);
-    const link = el.querySelector(`a[href="${website}"]`);
-    expect(link).not.toBeNull();
-    expect(link?.getAttribute("title")).toBeNull();
-    expect(link?.getAttribute("aria-label")).toBeNull();
-    expect(el.textContent).not.toContain("Referral link");
-    expect(el.textContent).not.toContain("Partner link");
-  });
+  ])(
+    "does NOT flag %s's plain catalog website link (no per-provider partner note)",
+    (id, name, website) => {
+      const el = renderHeader(id, name, website);
+      const link = el.querySelector(`a[href="${website}"]`);
+      expect(link).not.toBeNull();
+      expect(link?.getAttribute("title")).toBeNull();
+      expect(link?.getAttribute("aria-label")).toBeNull();
+      expect(el.textContent).not.toContain("Referral link");
+      expect(el.textContent).not.toContain("Partner link");
+    }
+  );
 });

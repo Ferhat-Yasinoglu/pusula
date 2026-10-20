@@ -56,13 +56,34 @@ test("filterConfiguredProviderEntries sorts former sponsor providers alphabetica
 
 test("filterConfiguredProviderEntries keeps a mixed oauth-shaped category alphabetical", () => {
   const entries = [
-    { providerId: "claude", provider: { name: "Claude" }, stats: { total: 1 }, displayAuthType: "oauth", toggleAuthType: "oauth" },
-    { providerId: "kimi-coding", provider: { name: "Kimi Code CLI" }, stats: { total: 0 }, displayAuthType: "oauth", toggleAuthType: "oauth" },
-    { providerId: "amazon-q", provider: { name: "Amazon Q" }, stats: { total: 0 }, displayAuthType: "oauth", toggleAuthType: "oauth" },
+    {
+      providerId: "claude",
+      provider: { name: "Claude" },
+      stats: { total: 1 },
+      displayAuthType: "oauth",
+      toggleAuthType: "oauth",
+    },
+    {
+      providerId: "kimi-coding",
+      provider: { name: "Kimi Code CLI" },
+      stats: { total: 0 },
+      displayAuthType: "oauth",
+      toggleAuthType: "oauth",
+    },
+    {
+      providerId: "amazon-q",
+      provider: { name: "Amazon Q" },
+      stats: { total: 0 },
+      displayAuthType: "oauth",
+      toggleAuthType: "oauth",
+    },
   ];
 
   const visible = providerPageUtils.filterConfiguredProviderEntries(entries, false);
-  assert.deepEqual(visible.map((e) => e.providerId), ["amazon-q", "claude", "kimi-coding"]);
+  assert.deepEqual(
+    visible.map((e) => e.providerId),
+    ["amazon-q", "claude", "kimi-coding"]
+  );
 });
 
 // ── Section-scoped proof against the REAL catalog (not synthetic mocks) ───────

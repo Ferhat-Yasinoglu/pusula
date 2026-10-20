@@ -1549,8 +1549,10 @@ Beş değişkenin tümü varsayılan olarak ayarlanmamıştır — bunları yaln
 
 RADAR_ENABLED özellik bayrağıyla etkinleştirilen isteğe bağlı eklenti (varsayılan olarak kapalıdır — bu bir ortam değişkeni değil, Ayarlar/DB aracılığıyla değiştirilen bir özellik bayrağıdır; bkz.
 [docs/frameworks/RADAR.md](../frameworks/RADAR.md#flag-radar_enabled-default-off)).
-Aşağıdaki ilk dört değişken, kendi sunucunuzda barındırılan veya çatallanmış bir akış ve
-destekçi anahtarı akışları için isteğe bağlı geçersiz kılmalardır. Beşinci değişken olan `RADAR_ADMIN_URL`, sahibin
+Radar yalnızca kendi sunucunuzda barındırılır: bu proje hiçbir akış hizmeti işletmez ve varsayılan bir ana makine
+içermez. `RADAR_FEED_URL` (eşleşen `RADAR_FEED_PUBKEY` ile birlikte) istemciyi sizin işlettiğiniz akış sunucusuna
+yönlendirir; iki bağlantı değişkeni isteğe bağlıdır ve varsayılan değerleri yoktur — ayarlanmadıkları sürece pano
+düğmeleri gizli kalır. Beşinci değişken olan `RADAR_ADMIN_URL`, sahibin
 özel operasyon paneline yönlendiren, ayrı ve varsayılan değeri olmayan bir bağlantıdır. Modülün tüm
 belgeleri ve
 [uçtan uca etkinleştirme ve yönlendirmeli kurulum sırası](../frameworks/RADAR.md#end-to-end-activation-and-guided-setup) için [docs/frameworks/RADAR.md](../frameworks/RADAR.md) sayfasına bakın.

@@ -1542,7 +1542,7 @@ auf denen der Dokumentationsübersetzer ausgeführt werden darf.
 
 Optionales Add-on, das durch das Feature-Flag RADAR_ENABLED gesteuert wird (standardmäßig deaktiviert — ein über Einstellungen/DB umgeschaltetes Feature-Flag, keine Umgebungsvariable; siehe
 [docs/frameworks/RADAR.md](../frameworks/RADAR.md#flag-radar_enabled-default-off)).
-Die ersten vier Variablen unten sind optionale Überschreibungen für einen selbst gehosteten oder geforkten Feed sowie für Unterstützerschlüssel-Abläufe. Die fünfte Variable, `RADAR_ADMIN_URL`, ist ein separater Link ohne Standardwert zum privaten Betriebsbereich des Eigentümers. Die vollständige
+Radar wird ausschließlich selbst gehostet: Dieses Projekt betreibt keinen Feed-Dienst und liefert keinen Standard-Host mit. `RADAR_FEED_URL` (zusammen mit dem passenden `RADAR_FEED_PUBKEY`) verweist den Client auf den von Ihnen betriebenen Feed-Server; die beiden Link-Variablen sind optional und ohne Standardwert — ihre Dashboard-Schaltflächen bleiben ausgeblendet, solange sie nicht gesetzt sind. Die fünfte Variable, `RADAR_ADMIN_URL`, ist ein separater Link ohne Standardwert zum privaten Betriebsbereich des Eigentümers. Die vollständige
 Moduldokumentation und die
 [End-to-End-Sequenz für Aktivierung und geführte Einrichtung](../frameworks/RADAR.md#end-to-end-activation-and-guided-setup)
 finden Sie unter [docs/frameworks/RADAR.md](../frameworks/RADAR.md).

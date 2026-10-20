@@ -113,9 +113,7 @@ export default function ProviderPageHeader({
               className="text-3xl font-semibold tracking-tight hover:underline inline-flex items-center gap-2"
               style={{ color: providerInfo.color }}
               title={isReferralLink ? referralLinkNote : undefined}
-              aria-label={
-                isReferralLink ? `${providerInfo.name} — ${referralLinkNote}` : undefined
-              }
+              aria-label={isReferralLink ? `${providerInfo.name} — ${referralLinkNote}` : undefined}
             >
               {providerInfo.name}
               <span className="material-symbols-outlined text-lg opacity-60">open_in_new</span>

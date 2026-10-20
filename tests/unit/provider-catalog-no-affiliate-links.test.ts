@@ -52,7 +52,10 @@ test("no static catalog website/hint/notice URL carries an affiliate or UTM trac
 test("former sponsor providers remain in the catalog and link to their plain product pages", () => {
   assert.equal(providers.APIKEY_PROVIDERS.moonshot.website, "https://platform.kimi.ai");
   assert.equal(providers.APIKEY_PROVIDERS.kimi.website, "https://platform.kimi.ai");
-  assert.equal(providers.APIKEY_PROVIDERS["kimi-coding-apikey"].website, "https://www.kimi.ai/code");
+  assert.equal(
+    providers.APIKEY_PROVIDERS["kimi-coding-apikey"].website,
+    "https://www.kimi.ai/code"
+  );
   assert.equal(providers.OAUTH_PROVIDERS["kimi-coding"].website, "https://www.kimi.ai/code");
   assert.equal(providers.WEB_COOKIE_PROVIDERS["kimi-web"].website, "https://www.kimi.ai");
   assert.equal(providers.APIKEY_PROVIDERS.cheaperinference.website, "https://cheaperinference.com");
