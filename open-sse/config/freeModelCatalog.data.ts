@@ -275,7 +275,7 @@ export const FREE_MODEL_BUDGETS: FreeModelBudget[] = [
   { provider: "llm7", modelId: "deepseek-r1-0528", displayName: "DeepSeek R1 (LLM7)", monthlyTokens: 0, creditTokens: 0, freeType: "recurring-daily", poolKey: "llm7-free", tos: "caution" },
   { provider: "llm7", modelId: "qwen2.5-coder-32b-instruct", displayName: "Qwen2.5 Coder 32B (LLM7)", monthlyTokens: 0, creditTokens: 0, freeType: "recurring-daily", poolKey: "llm7-free", tos: "caution" },
   { provider: "longcat", modelId: "LongCat-2.0", displayName: "LongCat-2.0", monthlyTokens: 0, creditTokens: 10000000, freeType: "one-time-initial", poolKey: "longcat-free", tos: "caution" },
-  // evidence: console-verified 2026-09-02 pelo mantenedor (https://console.mistral.ai → Limits, Free mode,
+  // evidence: console-verified 2026-09-02 por upstream-maintainer (https://console.mistral.ai → Limits, Free mode,
   // "Tokens per month" = 1,000,000,000). Public pages only confirm that the cap exists:
   // https://docs.mistral.ai/admin/billing-usage/usage-limits — "Free mode lets you create API keys and use
   // included monthly usage within the limits shown on the Limits page";

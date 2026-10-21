@@ -4,7 +4,7 @@ import path from "node:path";
 import test from "node:test";
 import i18nConfig from "../../config/i18n.json" with { type: "json" };
 
-function radarCopy(locale: "en" | "pt-BR"): Record<string, string> {
+function radarCopy(locale: "en" | "tr"): Record<string, string> {
   const file = path.resolve(process.cwd(), `src/i18n/messages/${locale}.json`);
   const messages = JSON.parse(fs.readFileSync(file, "utf8")) as {
     radarPage?: Record<string, unknown>;
@@ -39,30 +39,31 @@ const ENGLISH_RULES = {
     "Never collected — prompts, responses, conversations, provider credentials, model traffic, uptime, latency, and local provider configuration are never sent to Radar.",
 } as const;
 
-const PORTUGUESE_RULES = {
-  accessScaleTitle: "Entenda o acesso ao Radar antes de ativar",
+const TURKISH_RULES = {
+  accessScaleTitle: "Etkinleştirmeden önce Radar erişimini anlayın",
   accessScaleIntro:
-    "O Radar permanece sem fazer chamadas de rede até você aceitar o opt-in. Depois de revisar estas regras, escolha o acesso Comunidade ou ative uma chave pessoal de apoiador.",
-  accessCommunityRule: "Comunidade — sem chave: catálogo completo com 30 dias de atraso.",
+    "Siz katılmayı seçene kadar Radar hiçbir ağ etkinliği gerçekleştirmez. Bu kuralları inceledikten sonra Community erişimini seçin veya kişisel destekçi anahtarınızı etkinleştirin.",
+  accessCommunityRule: "Community — anahtar gerekmez: 30 günlük gecikmeyle eksiksiz katalog.",
   accessSingleUseRule:
-    "Estrela + seguir — depois que o GitHub OAuth confirmar as duas ações, sua conta do GitHub recebe uma única leitura do catálogo ao vivo; depois o acesso volta para Comunidade. Esse acesso único não pode ser reemitido para essa conta.",
+    "Yıldız + takip — GitHub OAuth her ikisini de doğruladıktan sonra GitHub hesabınız canlı kataloğa bir kez erişim kazanır; ardından erişim Community düzeyine döner. Bu tek seferlik erişim söz konusu hesap için yeniden verilemez.",
   accessContributorRule:
-    "Contribuidores — PRs mergeadas, commits e linhas servem somente para ordenar o ranking semanal. Top 10 recebem 365 dias; posições 11–100 recebem 90 dias; fora do Top 100 não há concessão, independentemente da quantidade de PRs. Sair do ranking nunca encurta o período já concedido.",
+    "Katkıda bulunanlar — birleştirilmiş PR'lar, commit'ler ve satırlar yalnızca haftalık sıralamayı belirler. İlk 10'a girenler 365 gün, 11–100. sıralardakiler 90 gün erişim kazanır; ilk 100 dışında kalan katkıda bulunanlara PR sayısından bağımsız olarak erişim verilmez. Sıralamadan çıkmak, daha önce verilmiş süreyi hiçbir zaman kısaltmaz.",
   accessSupporterRule:
-    "Apoiadores — compras únicas concedem 6 meses, 1 ano ou acesso vitalício, sem renovação automática. Compras, doações, períodos de contribuidor e concessões manuais se acumulam; o vitalício sempre prevalece.",
-  accessUseTitle: "Uso pessoal, recuperação e revisão",
+    "Destekçiler — tek seferlik satın alımlar, otomatik yenileme olmadan 6 aylık, 1 yıllık veya ömür boyu erişim sağlar. Satın alımlar, bağışlar, katkıda bulunma dönemleri ve manuel olarak verilen süreler birikir; ömür boyu erişim her zaman önceliklidir.",
+  accessUseTitle: "Kişisel kullanım, kurtarma ve inceleme",
   accessInstallationRule:
-    "Licença pessoal — use a chave em uma instalação ativa por vez. O Pusula não cria fingerprint de hardware. A recuperação revoga e substitui uma chave perdida sem reiniciar a validade.",
+    "Kişisel lisans — anahtarı aynı anda yalnızca bir etkin kurulumda kullanın. Pusula donanım parmak izi oluşturmaz. Kurtarma işlemi, kayıp bir anahtarı iptal edip son kullanma tarihini sıfırlamadan yenisiyle değiştirir.",
   accessAbuseRule:
-    "Revisão de abuso — o 4º IP distinto em 24 horas cria somente uma sinalização para revisão manual; nunca bloqueia nem revoga a chave automaticamente.",
-  accessOffersRule: "As ofertas ao vivo passam por curadoria manual e podem mudar ou expirar.",
-  privacyTitle: "O que o Radar troca com o serviço",
+    "Kötüye kullanım incelemesi — 24 saat içinde 4. farklı IP yalnızca manuel inceleme işareti oluşturur; bir anahtarı hiçbir zaman otomatik olarak engellemez veya iptal etmez.",
+  accessOffersRule:
+    "Canlı teklifler manuel olarak seçilir ve değişebilir ya da süreleri dolabilir.",
+  privacyTitle: "Radar hangi verileri aktarır?",
   privacyDownloadsRule:
-    "Download — sua instalação recebe metadados assinados criptograficamente de catálogo e indicações; uma chave ao vivo válida também libera ofertas e Intel assinados.",
+    "İndirilenler — kurulumunuz kriptografik olarak imzalanmış katalog ve yönlendirme meta verilerini alır; geçerli bir canlı erişim anahtarı ayrıca imzalanmış tekliflerin ve Intel'in kilidini açar.",
   privacySendsRule:
-    "Envio — a sincronização server-side envia a chave de apoiador como token Bearer, e a infraestrutura HTTPS recebe o IP da conexão. A contabilidade das requisições não guarda nenhum dos dois em formato bruto: mantém hashes de chave, uso agregado e um HMAC truncado do IP com rotação diária para revisão de abuso.",
+    "Gönderilenler — sunucu tarafı eşitleme, destekçi anahtarını Bearer token olarak gönderir ve HTTPS altyapısı bağlantı IP'sini alır. Akış isteği ölçümleri bu değerlerin hiçbirini ham hâliyle saklamaz; yalnızca anahtar karmalarını, toplu kullanım verilerini ve kötüye kullanım incelemesi için her gün değişen, kısaltılmış bir IP HMAC'sini tutar.",
   privacyNeverRule:
-    "Nunca coletado — prompts, respostas, conversas, credenciais de provedores, tráfego de modelos, uptime, latência e configuração local de provedores nunca são enviados ao Radar.",
+    "Asla toplanmayanlar — istemler, yanıtlar, konuşmalar, sağlayıcı kimlik bilgileri, model trafiği, çalışma süresi, gecikme ve yerel sağlayıcı yapılandırması hiçbir zaman Radar'a gönderilmez.",
 } as const;
 
 test("English Radar opt-in copy states the complete D32 contract without a PR-count grant", () => {
@@ -80,23 +81,23 @@ test("English Radar opt-in copy states the complete D32 contract without a PR-co
   );
 });
 
-test("Brazilian Portuguese Radar opt-in copy states D32 without a PR-count grant", () => {
-  const copy = radarCopy("pt-BR");
+test("Turkish Radar opt-in copy states D32 without a PR-count grant", () => {
+  const copy = radarCopy("tr");
 
-  for (const [key, expected] of Object.entries(PORTUGUESE_RULES)) {
-    assert.equal(copy[key], expected, `pt-BR: radarPage.${key}`);
+  for (const [key, expected] of Object.entries(TURKISH_RULES)) {
+    assert.equal(copy[key], expected, `tr: radarPage.${key}`);
   }
 
   const allRadarCopy = Object.values(copy).join("\n");
   assert.doesNotMatch(
     allRadarCopy,
-    /(?:5\+|cinco ou mais|\d+\+?)\s+(?:PRs?|pull requests?).{0,100}(?:chave|concessão|libera|acesso)/i,
-    "pt-BR: uma quantidade fixa de PRs nunca pode conceder acesso ao Radar"
+    /(?:5\+|beş veya daha fazla|\d+\+?)\s+(?:PR'?ler?|pull request'?ler?).{0,100}(?:anahtar|erişim|verir|açar)/i,
+    "tr: a fixed number of PRs must never grant Radar access"
   );
-  assert.equal(copy.activateButton, "Ativar Comunidade");
-  assert.equal(copy.activateWithKeyButton, "Ativar como apoiador");
-  assert.equal(copy.contributorButton, "Sou contribuidor");
-  assert.equal(copy.supporterButton, "Apoiar o projeto");
+  assert.equal(copy.activateButton, "Community'yi etkinleştir");
+  assert.equal(copy.activateWithKeyButton, "Destekçi erişimini etkinleştir");
+  assert.equal(copy.contributorButton, "Katkıda bulunan biriyim");
+  assert.equal(copy.supporterButton, "Projeyi destekle");
 });
 
 test("every UI locale carries the D32 keys and none retains the superseded 5+ PR promise", () => {

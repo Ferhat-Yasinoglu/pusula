@@ -517,16 +517,27 @@ export function migrateUsageJsonToSqlite() {
 
 migrateLegacyUsageFiles();
 
-if (shouldPersistToDisk) {
-  try {
-    await archiveLegacyRequestLogs();
-  } catch (error) {
-    console.error("[usageDb] Failed to archive legacy request logs:", (error as Error).message);
-  }
-
-  try {
-    migrateUsageJsonToSqlite();
-  } catch {
-    // Best-effort startup migration.
-  }
-}
+/**
+ * Startup migrations that touch the on-disk legacy layouts. Kicked off on module load
+ * (every importer used to get the same side effect) but deliberately NOT awaited at the
+ * top level: a top-level `await` here turns every module that transitively imports this
+ * file into an async ESM initializer, and the bundled MCP server (esbuild, one file)
+ * then deadlocks on the quotaCache → usage → openrouter → quotaPreflight → quotaCache
+ * import cycle — the re-entrant initializer awaits its own pending promise and the
+ * process exits with "unsettled top-level await" (exit 13). The boot sequence in
+ * src/instrumentation-node.ts awaits this promise explicitly, so the archive still
+ * completes before the later startup steps run.
+ */
+export const legacyStartupMigrations: Promise<void> = shouldPersistToDisk
+  ? archiveLegacyRequestLogs()
+      .catch((error) => {
+        console.error("[usageDb] Failed to archive legacy request logs:", (error as Error).message);
+      })
+      .then(() => {
+        try {
+          migrateUsageJsonToSqlite();
+        } catch {
+          // Best-effort startup migration.
+        }
+      })
+  : Promise.resolve();

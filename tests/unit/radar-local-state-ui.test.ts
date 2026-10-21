@@ -41,8 +41,8 @@ test("Radar catalog exposes edit, reset, hide, and restore controls", () => {
   assert.match(controlsSource, /type="checkbox"/);
 });
 
-test("English and Brazilian Portuguese catalogs include the local state copy", () => {
-  for (const locale of ["en", "pt-BR"]) {
+test("English and Turkish catalogs include the local state copy", () => {
+  for (const locale of ["en", "tr"]) {
     const messages = JSON.parse(
       fs.readFileSync(path.join(process.cwd(), `src/i18n/messages/${locale}.json`), "utf8")
     ) as { radarPage: Record<string, string> };

@@ -59,7 +59,7 @@ test("normalizeExecutorResult rejects malformed executor output", () => {
     /must contain a Response/
   );
 });
-test("executeWithUpstreamStartTimeout leaves no abort listener on the client signal after a resolving execute", async () => {
+test("executeWithUpstreamStartTimeout keeps only the client→upstream abort link after a resolving execute", async () => {
   const client = new AbortController();
   const before = getEventListeners(client.signal, "abort").length;
   const result = await executeWithUpstreamStartTimeout({
@@ -71,10 +71,19 @@ test("executeWithUpstreamStartTimeout leaves no abort listener on the client sig
     execute: async () => "ok",
   });
   assert.equal(result, "ok");
+  // The response body is still streaming on the combined signal once execute() resolves, so
+  // the client→upstream abort link (a `once` listener) deliberately stays; only the race's
+  // own abortPromise listener must be gone.
+  assert.equal(
+    getEventListeners(client.signal, "abort").length,
+    before + 1,
+    "exactly the client→upstream abort link may remain once the race settles"
+  );
+  client.abort();
   assert.equal(
     getEventListeners(client.signal, "abort").length,
     before,
-    "every listener registered for the race must be removed once it settles"
+    "the surviving link is a once-listener and leaves nothing behind after the abort"
   );
 });
 

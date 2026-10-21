@@ -58,6 +58,7 @@ fehlschlägt (osv-scanner nicht im PATH, osv.dev/Netzwerk unerreichbar, ungülti
 - **Nicht** `extract-zip` über `package.json` `overrides` aliasen – der einzig praktikable Drop-in-Ersatz ist Electron-org-intern und API-inkompatibel mit den eigenen `onEntry`/`defaultDirMode`/`defaultFileMode`-Prüfungen von `@openai/codex-security`; ein Überschreiben würde die Sicherheitsprüfungen dieses Pakets stillschweigend außer Kraft setzen.
 - **Baseline:** Der gemessene osv `vulnCount` (3) liegt bereits deutlich unter der eingefrorenen `config/quality/quality-baseline.json`-Baseline (27) – keine Ratschenänderung erforderlich.
 - **Regressionsschutz:** `tests/unit/extract-zip-14482-exposure.test.ts` bestätigt die Kette und die oben genannte Invariante des Nicht-Produktionsimports; es lässt CI fehlschlagen, falls eine davon jemals bricht (z.B. ein zukünftiger PR `extract-zip` aus der Produktion erreichbar macht).
+- **Stand (promptfoo ≥ 0.124.1):** Die Kette existiert nicht mehr – promptfoo hängt nicht mehr von `@openai/codex-security` ab, daher kommt `extract-zip` in der `package-lock.json` gar nicht mehr vor. Der Regressionsschutz besteht, solange das Paket fehlt, und prüft die Kette nur erneut, falls es jemals wieder auftaucht.
 - **Verfolgung:** Issue #14482.
 
 ## Backlog: Scorecard-Hinweis → blockierend
