@@ -72,18 +72,47 @@ export function FlowCanvas({
   // Bumped on every onInit so queued fitView calls can be invalidated when
   // a new ReactFlow instance mounts (e.g. via fitKey change).
   const generationRef = useRef(0);
+  // The deferred initial fitView, so an unmount can cancel it: without this the
+  // timer outlives the component and calls fitView on a torn-down instance
+  // (React Flow then dispatches state on an unmounted store).
+  const initFitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // React Flow hands out onInit on its own 1ms timer (useOnInitHandler), so the callback
+  // can arrive AFTER this component unmounted — a fast remount, or a test tearing down right
+  // after render. A late init must not re-arm the fitView timer the unmount just cleared.
+  const mountedRef = useRef(true);
 
   const onInit = useCallback((instance: ReactFlowInstance) => {
+    if (!mountedRef.current) return;
     const generation = ++generationRef.current;
     rfInstance.current = instance;
     // Defer fitView until ReactFlow has measured its viewport, but guard
     // against the instance being replaced (generation mismatch) before the
     // timer fires — see Bug #4 in the audit report.
-    setTimeout(() => {
+    if (initFitTimerRef.current) clearTimeout(initFitTimerRef.current);
+    initFitTimerRef.current = setTimeout(() => {
+      initFitTimerRef.current = null;
       if (generationRef.current === generation) {
         instance.fitView(FIT_VIEW_OPTIONS);
       }
     }, REFIT_DELAY_MS);
+  }, []);
+
+  useEffect(() => {
+    // Capture the ref objects (not their values) so the cleanup reads them at unmount time.
+    const mounted = mountedRef;
+    const generation = generationRef;
+    const initFitTimer = initFitTimerRef;
+    mounted.current = true;
+    return () => {
+      // Invalidate every queued fitView, drop the deferred onInit fit, and ignore any onInit
+      // React Flow still delivers after this point.
+      mounted.current = false;
+      generation.current++;
+      if (initFitTimer.current) {
+        clearTimeout(initFitTimer.current);
+        initFitTimer.current = null;
+      }
+    };
   }, []);
 
   useEffect(() => {

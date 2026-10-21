@@ -5,8 +5,11 @@
 // vulnerable npm package). It is a reachability/exposure proof: it asserts the two
 // premises the triage relies on to call this "accepted risk, doc-only fix" rather than
 // "code bug, needs a patch":
-//   1. extract-zip is reachable ONLY through the promptfoo (devDependency) ->
-//      @openai/codex-security chain — never through a production dependency.
+//   1. extract-zip, when it is in the lockfile at all, is reachable ONLY through the
+//      promptfoo (devDependency) -> @openai/codex-security chain — never through a
+//      production dependency. promptfoo >= 0.124 dropped @openai/codex-security, so the
+//      package is normally absent from the tree altogether; that is the ideal state and
+//      passes outright.
 //   2. Pusula's own source (src/, open-sse/, bin/, electron/ *code*, not its
 //      package-lock.json) never imports the "extract-zip" npm package directly.
 // If either assertion ever breaks (e.g. a future PR adds extract-zip as a direct or
@@ -67,9 +70,32 @@ test("extract-zip (GHSA-7pqw-9j4j-h8q3 / GHSA-jmr9-qjv8-65gv) is reachable only 
     "root project must not depend on extract-zip directly (dev)"
   );
 
-  // 2. Exactly one package in the whole tree declares a dependency on extract-zip,
-  //    and it must be @openai/codex-security.
+  // promptfoo itself must be a devDependency, never a production dependency —
+  //    this is what makes `npm audit --omit=dev` correctly report 0 for this chain.
+  assert.ok(
+    Object.prototype.hasOwnProperty.call(root.devDependencies ?? {}, "promptfoo"),
+    "promptfoo must be listed under devDependencies"
+  );
+  assert.ok(
+    !Object.prototype.hasOwnProperty.call(root.dependencies ?? {}, "promptfoo"),
+    "promptfoo must NOT also be listed under production dependencies"
+  );
+
+  // 2. Either nothing in the tree depends on extract-zip (promptfoo >= 0.124 no longer
+  //    pulls @openai/codex-security, so the package is gone — the ideal state), or exactly
+  //    one package declares it and it must be @openai/codex-security.
   const extractZipDependents = declaredDependents(lock, "extract-zip");
+  const extractZipInstalled = Object.keys(lock.packages ?? {}).filter((key) =>
+    /(^|\/)node_modules\/extract-zip$/.test(key)
+  );
+  if (extractZipDependents.length === 0) {
+    assert.deepEqual(
+      extractZipInstalled,
+      [],
+      `extract-zip has no dependents but is still in the lockfile: ${extractZipInstalled.join(", ")}`
+    );
+    return;
+  }
   assert.deepEqual(
     extractZipDependents,
     ["node_modules/@openai/codex-security"],
@@ -82,17 +108,6 @@ test("extract-zip (GHSA-7pqw-9j4j-h8q3 / GHSA-jmr9-qjv8-65gv) is reachable only 
     codexSecurityDependents,
     ["node_modules/promptfoo"],
     `expected only promptfoo to depend on @openai/codex-security, got: ${codexSecurityDependents.join(", ")}`
-  );
-
-  // 4. promptfoo itself must be a devDependency, never a production dependency —
-  //    this is what makes `npm audit --omit=dev` correctly report 0 for this chain.
-  assert.ok(
-    Object.prototype.hasOwnProperty.call(root.devDependencies ?? {}, "promptfoo"),
-    "promptfoo must be listed under devDependencies"
-  );
-  assert.ok(
-    !Object.prototype.hasOwnProperty.call(root.dependencies ?? {}, "promptfoo"),
-    "promptfoo must NOT also be listed under production dependencies"
   );
 });
 

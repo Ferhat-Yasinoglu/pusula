@@ -438,8 +438,7 @@ export default function HermesAgentToolCard({
               // Badge logic per user's spec:
               // - If user has selected something in this session (pending): show as via Pusula
               // - Else if current from disk: show real provider name + "(not Pusula)" or "Pusula"
-              let badge: { label: string; pending: boolean; outsidePusula: boolean } | null =
-                null;
+              let badge: { label: string; pending: boolean; outsidePusula: boolean } | null = null;
 
               if (sel) {
                 // pending change made via the Select modal / quick apply → will be routed via Pusula
@@ -450,12 +449,12 @@ export default function HermesAgentToolCard({
                   outsidePusula: false,
                 };
               } else if (current) {
-                const isOmni =
+                const isPusula =
                   current?.provider === "pusula" ||
                   (current?.base_url || "").includes("20128") ||
                   (current?.base_url || "").includes("localhost");
 
-                if (isOmni) {
+                if (isPusula) {
                   badge = { label: "Pusula", pending: false, outsidePusula: false };
                 } else {
                   const realProvider = current.provider || t("other");
