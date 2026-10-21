@@ -227,6 +227,14 @@ export default function CompressionPanel() {
   const saveGenRef = useRef(0);
   const lastConfirmedRef = useRef(config);
   const lastAckedGenRef = useRef(0);
+  // Pending "saved" → "" reset. Cancelled on unmount so it cannot fire after the panel is gone.
+  const savedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(
+    () => () => {
+      if (savedTimerRef.current) clearTimeout(savedTimerRef.current);
+    },
+    []
+  );
 
   useEffect(() => {
     fetch("/api/settings/compression")
@@ -306,7 +314,9 @@ export default function CompressionPanel() {
         if (res.ok) {
           setStatus("saved");
           const savedGen = gen;
-          setTimeout(() => {
+          if (savedTimerRef.current) clearTimeout(savedTimerRef.current);
+          savedTimerRef.current = setTimeout(() => {
+            savedTimerRef.current = null;
             if (savedGen === saveGenRef.current) setStatus("");
           }, 2000);
         } else {

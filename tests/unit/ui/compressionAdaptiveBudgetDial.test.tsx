@@ -617,6 +617,39 @@ describe("CompressionPanel adaptive context-budget dial", () => {
     }
   });
 
+  it("cancels the pending saved-status timeout when the panel unmounts", async () => {
+    vi.useFakeTimers();
+    try {
+      setupFetchMock(undefined);
+      const { default: CompressionPanel } =
+        await import("../../../src/app/(dashboard)/dashboard/context/settings/CompressionPanel");
+      let container!: HTMLElement;
+      await act(async () => {
+        container = mount(<CompressionPanel />);
+      });
+      await flush();
+
+      const mode = container.querySelector(
+        `[data-testid="context-budget-mode-select"]`
+      ) as HTMLSelectElement;
+      await act(async () => {
+        mode.value = "floor";
+        mode.dispatchEvent(new Event("change", { bubbles: true }));
+      });
+      await flush();
+      expect(container.textContent).toContain("saved");
+
+      // The 2s reset from "saved" is still pending. Unmounting must cancel it, or it fires
+      // after the panel (and, in CI, the jsdom environment) is torn down.
+      await act(async () => {
+        roots.pop()?.unmount();
+      });
+      expect(vi.getTimerCount()).toBe(0);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it("hydrates GET contextBudget and changing policy PUTs the merged object", async () => {
     const { puts } = setupFetchMock({
       contextBudget: {
