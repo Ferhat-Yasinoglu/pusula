@@ -21,7 +21,9 @@ vi.mock("@xyflow/react", async (importOriginal) => {
   }) {
     const { onInit } = props;
     React.useEffect(() => {
-      onInit?.({ fitView });
+      // Mirrors @xyflow/react's useOnInitHandler: onInit is delivered on a 1ms timer that
+      // the library does not cancel on unmount, so it can land after the consumer is gone.
+      setTimeout(() => onInit?.({ fitView }), 1);
     }, [onInit]);
     return <div className="react-flow-stub">{props.children}</div>;
   }
@@ -88,10 +90,32 @@ describe("FlowCanvas deferred fitView lifecycle", () => {
     act(() => {
       root.render(<FlowCanvas nodes={nodes} edges={edges} fitKey="x" />);
     });
+    // Let React Flow's deferred onInit land (1ms) so the fitView timer is armed, then unmount
+    // before that timer fires.
+    act(() => {
+      vi.advanceTimersByTime(1);
+    });
     act(() => {
       root.unmount();
     });
     // Re-create a root for afterEach to tear down (the one above is gone).
+    root = createRoot(container);
+
+    act(() => {
+      vi.runAllTimers();
+    });
+    expect(fitView).not.toHaveBeenCalled();
+  });
+
+  it("ignores an onInit that React Flow delivers after the canvas already unmounted", () => {
+    act(() => {
+      root.render(<FlowCanvas nodes={nodes} edges={edges} fitKey="x" />);
+    });
+    // Unmount while the library's 1ms onInit timer is still pending: the late onInit must not
+    // re-arm the fitView the unmount just cleared (the jsdom "window is not defined" leak).
+    act(() => {
+      root.unmount();
+    });
     root = createRoot(container);
 
     act(() => {

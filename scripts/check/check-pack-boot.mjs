@@ -311,7 +311,14 @@ function spawnServer(binPath, port, dataDir) {
   return { child, tail };
 }
 
-function derivePackagedCliToken(packageRoot) {
+/**
+ * Derive the machine token exactly as the packaged CLI would, against the SAME DATA_DIR the
+ * smoke boots the server with. Both sides persist a random salt in
+ * `<DATA_DIR>/cli-token-salt.json` (#10148); deriving here without that DATA_DIR used the
+ * default `~/.pusula` salt, so the token never matched the isolated server's and
+ * /api/monitoring/health answered with the anonymous liveness view (no `version`).
+ */
+function derivePackagedCliToken(packageRoot, dataDir) {
   const cliModuleUrl = pathToFileURL(
     path.join(packageRoot, "bin", "cli", "utils", "cliToken.mjs")
   ).href;
@@ -323,7 +330,7 @@ function derivePackagedCliToken(packageRoot) {
       "import(process.argv[1]).then(async m => process.stdout.write(await m.getCliToken()))",
       cliModuleUrl,
     ],
-    { encoding: "utf8", env: { ...process.env } }
+    { encoding: "utf8", env: { ...process.env, DATA_DIR: dataDir } }
   ).trim();
 }
 
@@ -454,7 +461,7 @@ async function main() {
     const dataDir = path.join(tmp, "data");
     fs.mkdirSync(dataDir, { recursive: true });
     const binPath = path.join(prefix, "bin", "pusula");
-    const packagedCliToken = derivePackagedCliToken(packageRoot);
+    const packagedCliToken = derivePackagedCliToken(packageRoot, dataDir);
 
     // BOOT #1 — boot, prove the forced sql.js tier, PATCH a setting, then shut down cleanly
     // so the sql.js adapter's graceful persist actually lands on disk. The in-flow stopChild

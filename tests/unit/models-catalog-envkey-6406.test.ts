@@ -13,6 +13,11 @@ import path from "node:path";
 const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-envkey-6406-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.API_KEY_SECRET = process.env.API_KEY_SECRET || "catalog-envkey-secret";
+// Give the cold catalog build generous headroom under a contended shared runner — the
+// default 8s bound (CATALOG_BUILD_TIMEOUT_MS_DEFAULT) is tuned for a real deployment and
+// answered 503 catalog_build_timeout on a loaded CI box; this test only cares about the
+// env-var master key seeing the full catalog, not build latency.
+process.env.CATALOG_BUILD_TIMEOUT_MS = process.env.CATALOG_BUILD_TIMEOUT_MS || "30000";
 
 const core = await import("../../src/lib/db/core.ts");
 const apiKeysDb = await import("../../src/lib/db/apiKeys.ts");
