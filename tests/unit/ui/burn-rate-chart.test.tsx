@@ -43,16 +43,16 @@ vi.mock("next/dynamic", () => ({
   },
 }));
 
-const { default: BurnRateChart } = await import(
-  "../../../src/app/(dashboard)/dashboard/costs/quota-share/components/BurnRateChart"
-);
+const { default: BurnRateChart } =
+  await import("../../../src/app/(dashboard)/dashboard/costs/quota-share/components/BurnRateChart");
 
 let container: HTMLDivElement | null = null;
 let root: ReturnType<typeof createRoot> | null = null;
 
 async function render(props: Parameters<typeof BurnRateChart>[0]) {
-  (globalThis as typeof globalThis & { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT =
-    true;
+  (
+    globalThis as typeof globalThis & { IS_REACT_ACT_ENVIRONMENT?: boolean }
+  ).IS_REACT_ACT_ENVIRONMENT = true;
   container = document.createElement("div");
   document.body.appendChild(container);
   await act(async () => {
@@ -61,16 +61,17 @@ async function render(props: Parameters<typeof BurnRateChart>[0]) {
   });
   // Let the mocked next/dynamic's `fn().then(setComponent)` resolve and commit the
   // re-render that swaps in BurnRateChartInner. The FIRST import of this module (which
-  // pulls in recharts) needs a real transform, not just a microtask — polling a few
-  // real ticks is more reliable here than a fixed Promise.resolve() count.
-  for (let i = 0; i < 20 && container!.innerHTML === ""; i++) {
+  // pulls in recharts) needs a real transform, and under CI load that can take far longer
+  // than a few ticks, so poll against a wall-clock deadline instead of a fixed tick count.
+  const deadline = Date.now() + 15_000;
+  while (container!.innerHTML === "" && Date.now() < deadline) {
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 10));
     });
   }
 }
 
-describe("BurnRateChart", { timeout: 10000 }, () => {
+describe("BurnRateChart", { timeout: 30000 }, () => {
   afterEach(() => {
     if (root && container) act(() => root!.unmount());
     container?.remove();
