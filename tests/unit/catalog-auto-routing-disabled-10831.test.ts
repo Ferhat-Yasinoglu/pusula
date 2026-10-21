@@ -17,6 +17,10 @@ import path from "node:path";
 
 const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-auto-routing-10831-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
+// A cold catalog build is bounded by CATALOG_BUILD_TIMEOUT_MS (8s by default). Under CI load it can
+// exceed that and answer 503 instead of the routing filter being tested. The bound is not the subject
+// of this test, so give it the same headroom as the sibling catalog tests do.
+process.env.CATALOG_BUILD_TIMEOUT_MS = process.env.CATALOG_BUILD_TIMEOUT_MS || "120000";
 
 const core = await import("../../src/lib/db/core.ts");
 const settingsDb = await import("../../src/lib/db/settings.ts");
