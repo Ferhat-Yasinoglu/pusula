@@ -19,6 +19,12 @@ test.before(async () => {
     const params = new URL(req.url ?? "/", "http://local").searchParams;
     setTimeout(
       () => {
+        // `destroy=1` drops the socket instead of answering: a fetch that FAILS after the
+        // delay, so the failure happens once the dispatch has already returned.
+        if (params.get("destroy") === "1") {
+          req.socket.destroy();
+          return;
+        }
         res.writeHead(Number(params.get("code") ?? 200), { "content-type": "application/json" });
         res.end("{}");
       },
@@ -71,7 +77,7 @@ test("a fetch still running when the dispatch returns does not change the status
       const res = await fetch(`${baseUrl}/v1?code=429`);
       background = Promise.all([
         fetch(`${baseUrl}/finish?code=200&delay=50`).then((r) => r.text()),
-        fetch("http://127.0.0.1:1/finish").catch(() => null),
+        fetch(`${baseUrl}/finish?destroy=1&delay=50`).catch(() => null),
       ]);
       return res;
     });

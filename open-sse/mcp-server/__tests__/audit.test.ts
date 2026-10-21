@@ -21,7 +21,15 @@ function createStatementMock() {
 // The shutdown tests inject through the audit connection cache
 // (globalThis.__pusulaMcpAuditDb), and the fallback test uses the
 // __setBetterSqliteLoaderForTests seam.
-describe("MCP audit shutdown", () => {
+//
+// Suite-wide generous timeout (vitest default is 5000ms): every case does
+// vi.resetModules() + a fresh dynamic import of audit.ts, and under contended
+// CI-runner load (the UI config spawns up to 20 worker threads) that import
+// alone can exceed the default budget although the behavior is correct
+// (issue #6803). A single timed-out case is not isolated either: its late
+// continuation re-populates globalThis.__pusulaMcpAuditDb while the next case
+// is already running, which cascades into bogus "totalCalls: 0" failures.
+describe("MCP audit shutdown", { timeout: 120_000 }, () => {
   let dataDir: string;
   let dbFile: string;
 
@@ -60,9 +68,7 @@ describe("MCP audit shutdown", () => {
     expect(mockDb.pragma).toHaveBeenCalledWith("wal_checkpoint(TRUNCATE)");
     expect(mockDb.close).toHaveBeenCalledTimes(1);
     expect(audit.closeAuditDb()).toBe(false);
-  }, // calls can exceed the default budget though the behavior is correct // CI-runner load, vi.resetModules() + a fresh dynamic import + mocked DB // Explicit generous timeout (vitest default is 5000ms): under contended
-  // (issue #6803).
-  30000);
+  });
 
   it("still closes the audit database when checkpoint fails", async () => {
     const mockDb: MockAuditDb = {

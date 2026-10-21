@@ -31,8 +31,11 @@ export function handlePreContentStreamRetry(
   },
   modelStr: string
 ): boolean {
+  // validateResponseQuality reports `streaming upstream error` optionally followed by
+  // `: <upstream detail>` — match the prefix, not the exact string, or the detailed form
+  // silently disables the same-target retry.
   if (
-    quality.reason !== "streaming upstream error" ||
+    !quality.reason?.startsWith("streaming upstream error") ||
     retry >= deps.maxRetries ||
     deps.signal?.aborted
   ) {

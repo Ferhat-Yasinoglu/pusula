@@ -153,7 +153,8 @@ test("bounded read abandons past the cap without buffering everything", async ()
 });
 
 test("bounded read returns small bodies intact", async () => {
-  const body = sse(chatChunk({ content: "hi" }));
+  // Content-free turn: a content fragment would stop the read early (see early-pass below).
+  const body = sse(chatChunk({ role: "assistant" }));
   const res = new Response(body, { status: 200 });
   const out = await readBoundedResponseText(res, FLUSH_EMPTY_RETRY_MAX_BYTES);
   assert.equal(out, body);
@@ -183,7 +184,7 @@ test("bounded read outcome tells a read failure apart from an over-cap body", as
   );
   assert.equal(skipped.kind, "skipped", "an over-cap body is passed through, not retried");
 
-  const body = sse(chatChunk({ content: "hi" }));
+  const body = sse(chatChunk({ role: "assistant" }));
   const ok = await readBoundedResponseOutcome(
     new Response(body, { status: 200 }),
     FLUSH_EMPTY_RETRY_MAX_BYTES
@@ -251,13 +252,15 @@ test("a stalled stream that already carries content is passed through, not repla
     FLUSH_EMPTY_RETRY_MAX_BYTES,
     50
   );
-  assert.equal(out.kind, "idle");
+  // The first content fragment is the stop point: the clone is dropped before the idle
+  // budget even starts, and the live stream is passed through untouched.
+  assert.equal(out.kind, "early-pass");
   const verdict = judgeBufferedTurn(out, FORMATS.OPENAI, FORMATS.OPENAI, false);
   assert.equal(verdict.kind, "pass", "content already produced is worth keeping");
 });
 
 test("bounded read keeps no budget when the idle budget is zero", async () => {
-  const body = sse(chatChunk({ content: "hi" }));
+  const body = sse(chatChunk({ role: "assistant" }));
   const out = await readBoundedResponseOutcome(new Response(body, { status: 200 }), 256_000, 0);
   assert.deepEqual(out, { kind: "text", text: body }, "a disabled budget must not change reads");
 });

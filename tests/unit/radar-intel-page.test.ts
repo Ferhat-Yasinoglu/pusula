@@ -32,8 +32,8 @@ test("Intel page exposes methodology, ranking, freshness, trend, and verified su
   assert.doesNotMatch(source, /\bhealth\b|\buptime\b|\blatency\b|\btelemetry\b/i);
 });
 
-test("Intel UI strings exist in English and Brazilian Portuguese", () => {
-  for (const locale of ["en", "pt-BR"]) {
+test("Intel UI strings exist in English and Turkish", () => {
+  for (const locale of ["en", "tr"]) {
     const messages = JSON.parse(
       fs.readFileSync(path.resolve(process.cwd(), `src/i18n/messages/${locale}.json`), "utf8")
     ) as { radarIntelPage?: Record<string, unknown>; radarPage?: Record<string, unknown> };

@@ -143,6 +143,6 @@ Grup B tarafından eklenen ad alanları:
 | `sidebar.costsOverview` | Maliyetler genel bakış öğesi                                          |
 | `activity.*`            | Tüm Etkinlik sayfası dizeleri (başlık, fiiller, filtreler, boş durum) |
 
-Ana kaynak yerel ayarları: `pt-BR` ve `en`. Diğer 40 yerel ayarın tümü,
+Ana kaynak yerel ayarı: `en`. Diğer üç yerel ayar (`de`, `fa`, `tr`),
 `next-intl` geri dönüş mekanizması (`src/i18n/config.ts` içinde yapılandırılmıştır)
 aracılığıyla İngilizceye geri döner.

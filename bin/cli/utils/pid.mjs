@@ -104,6 +104,24 @@ export async function findListeningPids(port, deps = {}) {
 // attempt means the port is held; EACCES (privileged port) and friends are
 // reported as free — the guard must not block a legitimate start it cannot
 // actually observe (#14518 keeps the false-"busy" failure mode the worse one).
+/**
+ * Who holds `port`, for the serve preflight: `[]` when it is free, the listening pids when
+ * discovery works, and `[null]` when the port is busy but the owner is unknown (no lsof /
+ * netstat on the host, or discovery failed). Discovery returning `null` is "unknown", never
+ * "free": the bind probe decides. The old inline guard dereferenced that `null` and crashed
+ * `pusula serve` with "Cannot read properties of null (reading 'length')" on every host
+ * without lsof whose port happened to be free (GitHub-hosted runners, slim containers).
+ */
+export async function resolvePortOccupants(port, deps = {}) {
+  const discover = deps.findListeningPids || findListeningPids;
+  const probe = deps.probePortFree || probePortFree;
+  const pids = await discover(port, deps);
+  if (pids === null || pids.length === 0) {
+    return (await probe(port, deps)) ? [] : [null];
+  }
+  return pids;
+}
+
 export async function probePortFree(port, deps = {}) {
   const net = deps.net || (await import("node:net"));
   return new Promise((resolve) => {

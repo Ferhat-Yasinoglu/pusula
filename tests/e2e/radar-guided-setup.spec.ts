@@ -138,12 +138,9 @@ test.describe("Radar guided setup", () => {
     const connectionId = created.connection?.id;
     expect(connectionId).toBeTruthy();
 
-    const importDialog = page.getByRole("dialog").last();
-    const closeImportButton = importDialog.getByRole("button", { name: "Close" }).last();
-    await expect(closeImportButton).toBeVisible({
-      timeout: NAVIGATION_TIMEOUT_MS,
-    });
-    await closeImportButton.click();
+    // Since #11324 saving an API key does not open the model-import modal (autoFetchModels is
+    // opt-in); the add dialog simply closes once the connection has been created.
+    await expect(addDialog).toBeHidden({ timeout: NAVIGATION_TIMEOUT_MS });
 
     await page.goto("/dashboard/radar/setup?provider=groq", {
       waitUntil: "commit",

@@ -3,7 +3,7 @@
  *
  * Verifies:
  *  1. All 46 skill IDs from the catalog have a skills/{id}/ folder with SKILL.md.
- *  2. Zero pusula-* folders remain (post-prune: old pusula-* skill dirs were removed).
+ *  2. skills/ contains only the catalog IDs plus README (no stray folders).
  *  3. 14 specific IDs have <!-- skill:custom-start --> ... <!-- skill:custom-end --> blocks:
  *     pusula-mcp, pusula-compression, cli-providers, cli-eval, pusula-agents-a2a,
  *     pusula-combos-routing, pusula-auth, pusula-resilience, pusula-inference, cli-serve.
@@ -64,23 +64,7 @@ test("all 46 catalog IDs have a skills/{id}/SKILL.md file", () => {
   assert.deepEqual(missing, [], `Missing SKILL.md files: ${missing.join(", ")}`);
 });
 
-// ── §2: No pusula-* directories remain ────────────────────────────────────
-
-test("skills/ has zero pusula-* directories (all pruned)", () => {
-  if (!fs.existsSync(SKILLS_DIR)) {
-    // If skills dir doesn't exist at all, nothing to prune
-    return;
-  }
-  const entries = fs.readdirSync(SKILLS_DIR, { withFileTypes: true });
-  const pusulaDirs = entries
-    .filter((e) => e.isDirectory() && e.name.startsWith("pusula-"))
-    .map((e) => e.name);
-  assert.deepEqual(
-    pusulaDirs,
-    [],
-    `Found pusula-* directories that should have been pruned: ${pusulaDirs.join(", ")}`
-  );
-});
+// ── §2: skills/ holds nothing but the catalog IDs ───────────────────────────
 
 test("skills/ directory only contains expected catalog IDs plus README", () => {
   if (!fs.existsSync(SKILLS_DIR)) return;

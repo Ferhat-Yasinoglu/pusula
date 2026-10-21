@@ -9,7 +9,7 @@ Popüler açık kaynaklı yapay zekâ yönlendiricileriyle nesnel özellik karş
 > **Metodoloji**: Herkese açık depolar 2026-Q2 döneminde denetlendi. Sürümler listelendiği gibidir.
 > Düzeltmeleri PR aracılığıyla gönderin — bunun doğru olmasını istiyoruz.
 
-| Özellik                                             |                Pusula 3.8                 |   LiteLLM 1.x   | OpenRouter (SaaS) |  Portkey   |
+| Özellik                                             |                  Pusula 3.8                  |   LiteLLM 1.x   | OpenRouter (SaaS) |  Portkey   |
 | --------------------------------------------------- | :------------------------------------------: | :-------------: | :---------------: | :--------: |
 | **Sağlayıcılar**                                    |                   **329**                    |      ~100       |        ~50        |    ~30     |
 | **Ücretsiz/kimlik doğrulamasız katalog girdileri**  |                   **155**                    |       yok       |  doğrudan geçiş   |    yok     |
@@ -32,7 +32,7 @@ Popüler açık kaynaklı yapay zekâ yönlendiricileriyle nesnel özellik karş
 | **Sistem tepsili CLI (Electron olmadan)**           |                      ✅                      |       ❌        |        yok        |    yok     |
 | **CLI makine kimliğiyle otomatik doğrulama**        |                      ✅                      |       ❌        |        yok        |    yok     |
 | **Kontrol paneli**                                  |                  Next.js 16                  |      temel      |     tescilli      |  tescilli  |
-| **i18n**                                            |              **42 yerel ayar**               |       ❌        |        ❌         |     ⚠      |
+| **i18n**                                            |               **4 yerel ayar**               |       ❌        |        ❌         |     ⚠      |
 | **Herkese açık ajan becerileri (SKILL.md)**         |                    ✅ 45                     |       ❌        |        ❌         |     ❌     |
 | **Tünel desteği (Cloudflared, Tailscale, Ngrok)**   |                      ✅                      |       ❌        |        yok        |    yok     |
 | **Lisans**                                          |                     MIT                      |       MIT       |     tescilli      |  tescilli  |

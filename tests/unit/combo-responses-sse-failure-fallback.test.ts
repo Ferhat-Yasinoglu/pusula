@@ -48,7 +48,7 @@ test("streaming quality rejects a pre-content response.failed event", async () =
   );
 
   assert.equal(result.valid, false);
-  assert.equal(result.reason, "streaming upstream error");
+  assert.match(result.reason ?? "", /^streaming upstream error\b/);
 });
 
 test("streaming quality rejects a pre-content top-level error envelope", async () => {
@@ -64,7 +64,7 @@ test("streaming quality rejects a pre-content top-level error envelope", async (
   const result = await validateResponseQuality(sseResponse(body), true, silentLog());
 
   assert.equal(result.valid, false);
-  assert.equal(result.reason, "streaming upstream error");
+  assert.match(result.reason ?? "", /^streaming upstream error\b/);
 });
 
 test("combo advances to the next target after a pre-content Responses SSE failure", async () => {
