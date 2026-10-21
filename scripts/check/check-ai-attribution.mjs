@@ -9,6 +9,10 @@
 //       `Claude-Session:` trailers, …).
 // Human collaborators MAY be credited with standard `Co-authored-by: Name <email>` trailers — the
 // upstream-port workflows depend on it — so only the AI/bot signatures below are rejected.
+// One exemption: the `Signed-off-by: dependabot[bot] <support@github.com>` line that Dependabot appends
+// to every commit it creates names the bot's own identity, so it is no AI credit. It is accepted only on
+// a commit authored by dependabot[bot] with its noreply e-mail. The range scan knows the author; the
+// commit-msg hook and the PR title/body do not, so they still reject that line.
 //
 // Incident record: 8 contributor commits reached release/v3.8.51 with such trailers through squash
 // merges that copied the PR commit bodies (#14436). This gate runs:
@@ -40,11 +44,27 @@ const AI_EMAIL_RE =
 const AI_FOOTER_RE =
   /(generated (?:with|by)\s+\[?(?:claude|chatgpt|gpt|copilot|codex|gemini|cursor|devin|aider|windsurf|an? ai)|made with (?:claude|chatgpt|gpt|copilot|codex|gemini|cursor|devin|aider|windsurf)|🤖 generated with|^\s*claude-session:|^\s*codex-session:|^\s*(?:ai|llm)-generated\s*:)/i;
 
+/** Dependabot's sign-off on the commits it creates, and the identity that must author them (see header). */
+const DEPENDABOT_AUTHOR_NAME = "dependabot[bot]";
+const DEPENDABOT_AUTHOR_EMAIL_RE = /^\d+\+dependabot\[bot\]@users\.noreply\.github\.com$/i;
+const DEPENDABOT_SIGNOFF_VALUE = "dependabot[bot] <support@github.com>";
+
+/** True when a trailer is Dependabot's sign-off on a commit that Dependabot authored. */
+function isDependabotSignOff(key, value, author) {
+  return (
+    key.toLowerCase() === "signed-off-by" &&
+    value.trim().toLowerCase() === DEPENDABOT_SIGNOFF_VALUE &&
+    author?.name === DEPENDABOT_AUTHOR_NAME &&
+    DEPENDABOT_AUTHOR_EMAIL_RE.test(author?.email ?? "")
+  );
+}
+
 /**
  * Return the offending lines of one message (empty array = clean).
- * Exported for the unit test; pure function of the text.
+ * `author` ({ name, email }) is the commit author when known; without it nothing is exempt.
+ * Exported for the unit test; pure function of its arguments.
  */
-export function findAiAttribution(text) {
+export function findAiAttribution(text, author) {
   const hits = [];
   for (const raw of text.split(/\r?\n/)) {
     const line = raw.trim();
@@ -54,6 +74,7 @@ export function findAiAttribution(text) {
     );
     if (trailer) {
       const who = trailer[2];
+      if (isDependabotSignOff(trailer[1], who, author)) continue;
       // name part = everything before the first "<" (not HTML sanitization — CodeQL js/incomplete-multi-character-sanitization does not apply)
       const name = who.split("<")[0];
       if (AI_NAME_RE.test(name) || AI_EMAIL_RE.test(who)) {
@@ -72,11 +93,11 @@ function git(args) {
 
 /** Every commit in `range` → [{ hash, subject, hits }] for the ones that hit. */
 export function scanRange(range) {
-  const out = git(["log", "--format=%x01%H%x02%s%x02%B", range]);
+  const out = git(["log", "--format=%x01%H%x02%s%x02%an%x02%ae%x02%B", range]);
   const bad = [];
   for (const rec of out.split("\u0001").filter(Boolean)) {
-    const [hash, subject, body = ""] = rec.split("\u0002");
-    const hits = findAiAttribution(body);
+    const [hash, subject, name = "", email = "", body = ""] = rec.split("\u0002");
+    const hits = findAiAttribution(body, { name, email });
     if (hits.length) bad.push({ hash: hash.slice(0, 10), subject: subject.trim(), hits });
   }
   return bad;

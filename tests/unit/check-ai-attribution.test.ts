@@ -145,3 +145,79 @@ test("inputsFromGithubEvent: pull_request payload → range + title + body; othe
     fs.rmSync(dir, { recursive: true, force: true });
   }
 });
+
+const DEPENDABOT = {
+  name: "dependabot[bot]",
+  email: "49699333+dependabot[bot]@users.noreply.github.com",
+};
+const DEPENDABOT_SIGNOFF = "Signed-off-by: dependabot[bot] <support@github.com>";
+
+test("findAiAttribution: exempts Dependabot's own sign-off only for a commit Dependabot authored", () => {
+  const body = `deps: bump oven/bun from 1.4.2-slim to 1.4.3-slim\n\nBumps oven/bun.\n\n${DEPENDABOT_SIGNOFF}\n`;
+  assert.deepEqual(findAiAttribution(body, DEPENDABOT), []);
+  // the same line on a human-authored commit is still a bot signature
+  assert.deepEqual(findAiAttribution(body, { name: "Jane Doe", email: "jane@example.com" }), [
+    DEPENDABOT_SIGNOFF,
+  ]);
+  // no author context (commit-msg hook, PR title/body): nothing is exempt
+  assert.deepEqual(findAiAttribution(body), [DEPENDABOT_SIGNOFF]);
+});
+
+test("findAiAttribution: the exemption covers only the exact Dependabot sign-off", () => {
+  const flagged = [
+    "Signed-off-by: dependabot[bot] <evil@example.com>",
+    "Signed-off-by: dependabot[bot]",
+    "Co-Authored-By: dependabot[bot] <support@github.com>",
+    "Signed-off-by: Claude Opus 5 <noreply@anthropic.com>",
+    "Signed-off-by: someone[bot] <someone@example.com>",
+  ];
+  for (const line of flagged) {
+    assert.deepEqual(findAiAttribution(`subject\n\n${line}\n`, DEPENDABOT), [line], line);
+  }
+});
+
+test("findAiAttribution: a Dependabot author name is not enough without its noreply e-mail", () => {
+  const spoofed = { name: "dependabot[bot]", email: "someone@example.com" };
+  assert.deepEqual(findAiAttribution(`subject\n\n${DEPENDABOT_SIGNOFF}\n`, spoofed), [
+    DEPENDABOT_SIGNOFF,
+  ]);
+});
+
+function gitAs(cwd: string, author: { name: string; email: string }, ...args: string[]): string {
+  return execFileSync("git", args, {
+    cwd,
+    encoding: "utf8",
+    env: {
+      ...process.env,
+      GIT_AUTHOR_NAME: author.name,
+      GIT_AUTHOR_EMAIL: author.email,
+      GIT_COMMITTER_NAME: "t",
+      GIT_COMMITTER_EMAIL: "t@example.com",
+      GIT_CONFIG_GLOBAL: "/dev/null",
+      GIT_CONFIG_NOSYSTEM: "1",
+    },
+  }).trim();
+}
+
+test("scanRange: the Dependabot sign-off passes on its commit and is flagged on a human's", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "ai-attr-dependabot-"));
+  const cwd = process.cwd();
+  const human = { name: "Jane Doe", email: "jane@example.com" };
+  const message = `deps: bump something\n\n${DEPENDABOT_SIGNOFF}`;
+  try {
+    gitAs(dir, human, "init", "-q", "-b", "main");
+    gitAs(dir, human, "commit", "-q", "--allow-empty", "-m", "root");
+    const base = gitAs(dir, human, "rev-parse", "HEAD");
+    gitAs(dir, DEPENDABOT, "commit", "-q", "--allow-empty", "-m", message);
+    process.chdir(dir);
+    assert.deepEqual(scanRange(`${base}..HEAD`), []);
+    gitAs(dir, human, "commit", "-q", "--allow-empty", "-m", message);
+    const bad = scanRange(`${base}..HEAD`);
+    assert.equal(bad.length, 1);
+    assert.equal(bad[0].subject, "deps: bump something");
+    assert.deepEqual(bad[0].hits, [DEPENDABOT_SIGNOFF]);
+  } finally {
+    process.chdir(cwd);
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
