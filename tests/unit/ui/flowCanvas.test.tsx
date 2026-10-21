@@ -16,12 +16,14 @@ beforeAll(() => {
 });
 
 const containers: HTMLElement[] = [];
+const roots: Array<ReturnType<typeof createRoot>> = [];
 
 function mount(ui: React.ReactElement): HTMLElement {
   const container = document.createElement("div");
   document.body.appendChild(container);
   containers.push(container);
   const root = createRoot(container);
+  roots.push(root);
   act(() => {
     root.render(ui);
   });
@@ -35,6 +37,14 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  // Unmount before the jsdom environment is torn down: a root left mounted keeps React
+  // scheduler work queued and it fires after teardown as "window is not defined".
+  while (roots.length > 0) {
+    const root = roots.pop();
+    act(() => {
+      root?.unmount();
+    });
+  }
   while (containers.length > 0) {
     containers.pop()?.remove();
   }
@@ -60,7 +70,7 @@ describe("FlowCanvas (U0 — shared ReactFlow wrapper)", () => {
     const container = mount(
       <FlowCanvas nodes={nodes} edges={edges} className="pusula-test-canvas h-[300px]" />
     );
-    expect(container.querySelector(".omni-test-canvas")).toBeTruthy();
+    expect(container.querySelector(".pusula-test-canvas")).toBeTruthy();
   });
 
   it("themes controls through React Flow variables so library shorthands cannot override them", () => {

@@ -366,7 +366,7 @@ export async function registerNodejs(): Promise<void> {
   await ensureSecrets();
   await Promise.all([
     import("@/lib/env/runtimeEnv").then(({ enforceWebRuntimeEnv }) => enforceWebRuntimeEnv()),
-    import("@/lib/usage/migrations"),
+    import("@/lib/usage/migrations").then((m) => m.legacyStartupMigrations),
     import("@/lib/consoleInterceptor").then(({ initConsoleInterceptor }) =>
       initConsoleInterceptor()
     ),
@@ -485,8 +485,7 @@ export async function registerNodejs(): Promise<void> {
 
     // Restore Global System Prompt into in-memory config (#2468/#2470)
     if (settings.systemPrompt) {
-      const { setSystemPromptConfig } =
-        await import("@pusula/open-sse/services/systemPrompt.ts");
+      const { setSystemPromptConfig } = await import("@pusula/open-sse/services/systemPrompt.ts");
       setSystemPromptConfig(settings.systemPrompt);
       console.log("[STARTUP] Global System Prompt restored from settings");
     }

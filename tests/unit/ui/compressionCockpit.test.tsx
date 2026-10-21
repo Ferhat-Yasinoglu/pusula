@@ -36,12 +36,14 @@ const { CompressionCockpit } =
 // ── Helpers ───────────────────────────────────────────────────────────────
 
 const containers: HTMLElement[] = [];
+const roots: Array<ReturnType<typeof createRoot>> = [];
 
 function mount(ui: React.ReactElement): HTMLElement {
   const container = document.createElement("div");
   document.body.appendChild(container);
   containers.push(container);
   const root = createRoot(container);
+  roots.push(root);
   act(() => {
     root.render(
       <NextIntlClientProvider
@@ -68,6 +70,14 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  // Unmount before the jsdom environment is torn down: a root left mounted keeps React
+  // scheduler work queued and it fires after teardown as "window is not defined".
+  while (roots.length > 0) {
+    const root = roots.pop();
+    act(() => {
+      root?.unmount();
+    });
+  }
   while (containers.length > 0) {
     containers.pop()?.remove();
   }

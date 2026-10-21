@@ -119,7 +119,7 @@ src/
 ├── domain/              # منطق خالص دامنه (موتور خطمشی، سازوکار جایگزین، هزینه، قفلشدن، comboResolver، ارزیابی)
 ├── server/              # ماژولهای مختص سرور (خط لوله authz، ‏cors، میانافزار احراز هویت) — امکان import از کلاینت وجود ندارد
 ├── shared/              # موارد مشترک میان سرور و کلاینت، در جاهایی که ایمن باشد (ثابتها، نوعها، اعتبارسنجی، قراردادها، ابزارها)
-├── i18n/                # پیکربندی next-intl + فایلهای JSON پیام برای هر locale (۴۲ locale)
+├── i18n/                # پیکربندی next-intl + فایلهای JSON پیام برای هر locale (۴ locale)
 ├── middleware/          # میانافزار Next.js (غنیسازی درخواست، تشخیص locale)
 ├── mitm/                # هسته پروکسی MITM: تولید/نصب گواهی، کنترلگرها، مقصدها، بازرس، ماسکها، عبور مستقیم
 │   ├── handlers/        # ۹ کلاس کنترلگر عامل IDE که MitmHandlerBase را توسعه میدهند (antigravity، kiro، copilot، codex، cursor، zed، claudeCode، openCode، trae)
@@ -299,7 +299,7 @@ open-sse/
 | فایل             | هدف                                                                                     |
 | ---------------- | --------------------------------------------------------------------------------------- |
 | `main.js`        | فرایند اصلی Electron (BrowserWindow، سرور توکار Next.js، سینی سیستم، بهروزرسانی خودکار) |
-| `preload.js`     | پل IPC (contextBridge → `window.pusula`)                                             |
+| `preload.js`     | پل IPC (contextBridge → `window.pusula`)                                                |
 | `package.json`   | پیکربندی electron-builder + وابستگیهای Electron 41 و electron-builder 26.10             |
 | `assets/`        | آیکونهای برنامه (Windows .ico، macOS .icns، Linux .png)                                 |
 | `dist-electron/` | خروجی ساخت (نادیدهگرفتهشده توسط git)                                                    |
@@ -310,28 +310,28 @@ open-sse/
 
 ## `bin/` — CLI
 
-| فایل                                                                                                        | کاربرد                                                                                                                      |
-| ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `pusula.mjs`                                                                                             | ورودی اصلی CLI — `pusula serve`، `pusula setup`، `pusula doctor`، `pusula providers`، `pusula combos` و غیره |
-| `reset-password.mjs`                                                                                        | CLI مستقل برای بازنشانی گذرواژه                                                                                             |
-| `cli/commands/setup.mjs`                                                                                    | راهانداز تعاملی و غیرتعاملی تنظیمات                                                                                         |
-| `cli/commands/doctor.mjs`                                                                                   | عیبیابی سلامت سیستم (بیش از ۸ بررسی)                                                                                        |
-| `cli/commands/providers.mjs`                                                                                | فهرستکردن/آزمایش/اعتبارسنجی ارائهدهندگان                                                                                    |
-| `cli/{args,data-dir,encryption,io,provider-catalog,provider-store,provider-test,settings-store,sqlite}.mjs` | ماژولهای کمکی CLI                                                                                                           |
-| `cli/tray/tray.ts`                                                                                          | یکپارچهسازی با سینی سیستم (چندسکویی: NotifyIcon در Windows، systray2 در macOS/Linux)                                        |
-| `cli/tray/tray.ps1`                                                                                         | بکاند PowerShell مبتنی بر NotifyIcon (Windows، بدون باینری جدید)                                                            |
-| `cli/tray/autostart.ts`                                                                                     | اجرای خودکار چندسکویی (LaunchAgent / .desktop / registry)                                                                   |
-| `cli/runtime/sqliteRuntime.mjs`                                                                             | زنجیرهٔ ۵ مرحلهای شناسایی درایور SQLite (همراه برنامه ← زمان اجرا ← نصب تنبل ← node:sqlite ← sql.js)                        |
-| `cli/runtime/magicBytes.mjs`                                                                                | اعتبارسنجی بایتهای جادویی فایل باینری (ELF / Mach-O / Mach-O fat / PE)                                                      |
-| `cli/runtime/index.mjs`                                                                                     | `warmUpRuntimes()` — درایورها را هنگام postinstall / نخستین راهاندازی از پیش شناسایی میکند                                  |
-| `nodeRuntimeSupport.mjs`                                                                                    | اعتبارسنجی نسخهٔ پشتیبانیشدهٔ Node.js هنگام نصب                                                                             |
+| فایل                                                                                                        | کاربرد                                                                                                       |
+| ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `pusula.mjs`                                                                                                | ورودی اصلی CLI — `pusula serve`، `pusula setup`، `pusula doctor`، `pusula providers`، `pusula combos` و غیره |
+| `reset-password.mjs`                                                                                        | CLI مستقل برای بازنشانی گذرواژه                                                                              |
+| `cli/commands/setup.mjs`                                                                                    | راهانداز تعاملی و غیرتعاملی تنظیمات                                                                          |
+| `cli/commands/doctor.mjs`                                                                                   | عیبیابی سلامت سیستم (بیش از ۸ بررسی)                                                                         |
+| `cli/commands/providers.mjs`                                                                                | فهرستکردن/آزمایش/اعتبارسنجی ارائهدهندگان                                                                     |
+| `cli/{args,data-dir,encryption,io,provider-catalog,provider-store,provider-test,settings-store,sqlite}.mjs` | ماژولهای کمکی CLI                                                                                            |
+| `cli/tray/tray.ts`                                                                                          | یکپارچهسازی با سینی سیستم (چندسکویی: NotifyIcon در Windows، systray2 در macOS/Linux)                         |
+| `cli/tray/tray.ps1`                                                                                         | بکاند PowerShell مبتنی بر NotifyIcon (Windows، بدون باینری جدید)                                             |
+| `cli/tray/autostart.ts`                                                                                     | اجرای خودکار چندسکویی (LaunchAgent / .desktop / registry)                                                    |
+| `cli/runtime/sqliteRuntime.mjs`                                                                             | زنجیرهٔ ۵ مرحلهای شناسایی درایور SQLite (همراه برنامه ← زمان اجرا ← نصب تنبل ← node:sqlite ← sql.js)         |
+| `cli/runtime/magicBytes.mjs`                                                                                | اعتبارسنجی بایتهای جادویی فایل باینری (ELF / Mach-O / Mach-O fat / PE)                                       |
+| `cli/runtime/index.mjs`                                                                                     | `warmUpRuntimes()` — درایورها را هنگام postinstall / نخستین راهاندازی از پیش شناسایی میکند                   |
+| `nodeRuntimeSupport.mjs`                                                                                    | اعتبارسنجی نسخهٔ پشتیبانیشدهٔ Node.js هنگام نصب                                                              |
 
 ---
 
 ## `skills/` — مهارتهای عمومی عاملها
 
-| فایل                         | هدف                                                                                     |
-| ---------------------------- | --------------------------------------------------------------------------------------- |
+| فایل                      | هدف                                                                                     |
+| ------------------------- | --------------------------------------------------------------------------------------- |
 | `skills/pusula*/SKILL.md` | ۱۰ مانیفست مهارت برای عاملهای هوش مصنوعی خارجی (Claude Desktop، ChatGPT، Cursor، Cline) |
 
 ---
@@ -393,8 +393,8 @@ open-sse/
 | `RELEASE_CHECKLIST.md`      | فرایند کامل انتشار (مهارتها، husky، conventional commits، استقرار)                                |
 | `COVERAGE_PLAN.md`          | اهداف پوشش و وضعیت فعلی                                                                           |
 | `FREE_TIERS.md`             | ارائهدهندگان منتخب دارای سطح رایگان (بیش از 48 مورد رایگان + 11 مورد OAuth)                       |
-| `CLI-TOOLS.md`              | یکپارچهسازیهای خارجی CLI + رابط خط فرمان داخلی Pusula                                          |
-| `I18N.md`                   | معماری i18n، افزودن زبان، 42 زبان محلی                                                            |
+| `CLI-TOOLS.md`              | یکپارچهسازیهای خارجی CLI + رابط خط فرمان داخلی Pusula                                             |
+| `I18N.md`                   | معماری i18n، افزودن زبان، 4 زبان محلی                                                             |
 | `UNINSTALL.md`              | مراحل حذف نصب پاک                                                                                 |
 | `PROVIDER_REFERENCE.md`     | فهرست **تولیدشده بهصورت خودکار** از 355 ارائهدهنده (تولید مجدد: `npm run gen:provider-reference`) |
 
@@ -480,7 +480,7 @@ open-sse/
 
 | مسیر                                          | هدف                                                                                         |
 | --------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| `config/i18n.json`                            | فهرست زبانها + فراداده (منبع مرجع برای تعداد 42 زبان)                                       |
+| `config/i18n.json`                            | فهرست زبانها + فراداده (منبع مرجع برای تعداد 4 زبان)                                        |
 | `config/i18n-schema.json`                     | شِمای JSON برای اعتبارسنجی `i18n.json`                                                      |
 | `config/payloadRules.json`                    | قواعد پاکسازی بار دادهٔ بالادستی                                                            |
 | `config/quality/quality-baseline.json`        | خط مبنای ضامن چندمعیاره (`scripts/quality/check-quality-ratchet.mjs`)                       |

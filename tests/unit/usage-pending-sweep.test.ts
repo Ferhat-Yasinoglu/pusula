@@ -150,8 +150,16 @@ test("trackPendingRequest reuses the same id across a combo's target-attempt ret
   });
 
   assert.equal(secondId, firstId, "retry attempt must reuse the first attempt's id");
-  assert.equal(getPendingById().has(firstId), true, "reused id is live again under the new attempt");
-  assert.equal(getPendingById().get(firstId)?.model, "model-b", "entry reflects the NEW attempt's target");
+  assert.equal(
+    getPendingById().has(firstId),
+    true,
+    "reused id is live again under the new attempt"
+  );
+  assert.equal(
+    getPendingById().get(firstId)?.model,
+    "model-b",
+    "entry reflects the NEW attempt's target"
+  );
 
   clearPendingRequests();
 });
@@ -252,8 +260,11 @@ test("entries without an account are marked in the map and still fall under the 
 
     // The cap is the only removal path and still reaches map-only entries:
     // age sweep marks but never removes, so push past the cap with fresh
-    // entries sharing one account (bounded: exactly the cap overflow).
-    for (let i = 0; i < 5000; i++) {
+    // entries sharing one account. Fill until the map really exceeds the cap
+    // instead of exactly 5000 iterations: ids are `<ms>-<6 hex chars>`, and a
+    // tight loop lands thousands of entries in the same millisecond, where a
+    // birthday collision silently overwrites one and leaves the map at the cap.
+    for (let i = 0; i < 6000 && getPendingById().size <= 5000; i++) {
       trackPendingRequest("m", "p", "c-fresh-cap", true);
     }
     assert.ok(getPendingById().size > 5000);

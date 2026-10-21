@@ -9,7 +9,7 @@ Objektiver Funktionsvergleich mit beliebten Open-Source-KI-Routern.
 > **Methodik**: Öffentliche Repositories wurden im 2. Quartal 2026 geprüft. Versionen wie angegeben.
 > Reichen Sie Korrekturen per PR ein — uns ist wichtig, dass diese Angaben korrekt sind.
 
-| Funktion                                                       |                Pusula 3.8                |    LiteLLM 1.x    | OpenRouter (SaaS) |      Portkey       |
+| Funktion                                                       |                 Pusula 3.8                  |    LiteLLM 1.x    | OpenRouter (SaaS) |      Portkey       |
 | -------------------------------------------------------------- | :-----------------------------------------: | :---------------: | :---------------: | :----------------: |
 | **Anbieter**                                                   |                   **329**                   |       ~100        |        ~50        |        ~30         |
 | **Kostenlose/ohne Authentifizierung nutzbare Katalogeinträge** |                   **155**                   |       k. A.       |   Weiterleitung   |       k. A.        |
@@ -32,7 +32,7 @@ Objektiver Funktionsvergleich mit beliebten Open-Source-KI-Routern.
 | **CLI mit System-Tray (ohne Electron)**                        |                     ✅                      |        ❌         |       k. A.       |       k. A.        |
 | **Automatische CLI-Authentifizierung per Maschinen-ID**        |                     ✅                      |        ❌         |       k. A.       |       k. A.        |
 | **Dashboard**                                                  |                 Next.js 16                  |    grundlegend    |    proprietär     |     proprietär     |
-| **i18n**                                                       |               **42 Locales**                |        ❌         |        ❌         |         ⚠          |
+| **i18n**                                                       |                **4 Locales**                |        ❌         |        ❌         |         ⚠          |
 | **Öffentliche Agent-Fähigkeiten (SKILL.md)**                   |                    ✅ 45                    |        ❌         |        ❌         |         ❌         |
 | **Tunnel-Unterstützung (Cloudflared, Tailscale, Ngrok)**       |                     ✅                      |        ❌         |       k. A.       |       k. A.        |
 | **Lizenz**                                                     |                     MIT                     |        MIT        |    proprietär     |     proprietär     |

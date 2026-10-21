@@ -8,8 +8,7 @@ import {
   writePidFile,
   cleanupPidFile,
   waitForServer,
-  findListeningPids,
-  probePortFree,
+  resolvePortOccupants,
   resolveReadyTimeoutMs,
 } from "../utils/pid.mjs";
 import {
@@ -72,13 +71,11 @@ export function registerServe(program) {
     )
     .option(
       "--tls-cert <path>",
-      t("serve.tls_cert") ||
-        "Path to a TLS certificate (PEM) to serve HTTPS (also PUSULA_TLS_CERT)"
+      t("serve.tls_cert") || "Path to a TLS certificate (PEM) to serve HTTPS (also PUSULA_TLS_CERT)"
     )
     .option(
       "--tls-key <path>",
-      t("serve.tls_key") ||
-        "Path to the TLS private key (PEM) to serve HTTPS (also PUSULA_TLS_KEY)"
+      t("serve.tls_key") || "Path to the TLS private key (PEM) to serve HTTPS (also PUSULA_TLS_KEY)"
     )
     .action(async (opts) => {
       await runServe(opts);
@@ -249,15 +246,11 @@ export async function runServe(opts = {}) {
   // findListeningPids() returning null means the discovery tool itself is
   // missing or unusable (Termux, slim containers, #14518) — fall back to a
   // bind probe so the guard still answers before spawning the doomed child.
-  let busyPids = await findListeningPids(dashboardPort);
-  if (busyPids === null) {
-    // Discovery tool missing/unusable (#14518): the bind probe is the guard.
-    if (!(await probePortFree(dashboardPort))) busyPids = [null];
-  } else if (busyPids.length === 0) {
-    // Discovery ran and saw nothing, but that window can race a starting
-    // instance; a bind probe costs nothing and doubles as confirmation.
-    if (!(await probePortFree(dashboardPort))) busyPids = [null];
-  }
+  // resolvePortOccupants() folds both cases: a missing tool falls back to the bind probe,
+  // and an empty discovery is still bind-probed (that window can race a starting instance).
+  // It never returns null — the old inline guard did when discovery failed on a FREE port,
+  // and `pusula serve` died on `.length` before serving (packed-tarball boot smoke).
+  const busyPids = await resolvePortOccupants(dashboardPort);
   if (busyPids.length > 0) {
     reportPortInUse(dashboardPort, busyPids);
     process.exit(1);

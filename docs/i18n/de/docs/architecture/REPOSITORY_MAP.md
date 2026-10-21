@@ -119,7 +119,7 @@ src/
 ├── domain/              # Reine Domänenlogik (Policy-Engine, Fallback, Kosten, Sperrung, comboResolver, Bewertung)
 ├── server/              # Ausschließlich serverseitige Module (Autorisierungspipeline, CORS, Authentifizierungs-Middleware) — können nicht vom Client importiert werden
 ├── shared/              # Gemeinsame, sicher zwischen Server und Client nutzbare Komponenten (Konstanten, Typen, Validierung, Verträge, Hilfsfunktionen)
-├── i18n/                # next-intl-Konfiguration + Nachrichten-JSON je Gebietsschema (42 Gebietsschemas)
+├── i18n/                # next-intl-Konfiguration + Nachrichten-JSON je Gebietsschema (4 Gebietsschemas)
 ├── middleware/          # Next.js-Middleware (Anreicherung von Anfragen, Erkennung des Gebietsschemas)
 ├── mitm/                # MITM-Proxy-Kern: Zertifikatserzeugung/-installation, Handler, Ziele, Inspektor, Masken, Durchleitung
 │   ├── handlers/        # 9 IDE-Agent-Handlerklassen, die MitmHandlerBase erweitern (antigravity, kiro, copilot, codex, cursor, zed, claudeCode, openCode, trae)
@@ -299,7 +299,7 @@ open-sse/
 | Datei            | Zweck                                                                                                  |
 | ---------------- | ------------------------------------------------------------------------------------------------------ |
 | `main.js`        | Electron-Hauptprozess (BrowserWindow, eingebetteter Next.js-Server, Tray, automatische Aktualisierung) |
-| `preload.js`     | IPC-Bridge (contextBridge → `window.pusula`)                                                        |
+| `preload.js`     | IPC-Bridge (contextBridge → `window.pusula`)                                                           |
 | `package.json`   | electron-builder-Konfiguration + Abhängigkeiten Electron 41 + electron-builder 26.10                   |
 | `assets/`        | App-Symbole (Windows .ico, macOS .icns, Linux .png)                                                    |
 | `dist-electron/` | Build-Ausgabe (von Git ignoriert)                                                                      |
@@ -310,28 +310,28 @@ open-sse/
 
 ## `bin/` — CLI
 
-| Datei                                                                                                       | Zweck                                                                                                                               |
-| ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `pusula.mjs`                                                                                             | Haupt-CLI-Einstiegspunkt — `pusula serve`, `pusula setup`, `pusula doctor`, `pusula providers`, `pusula combos` usw. |
-| `reset-password.mjs`                                                                                        | Eigenständige CLI zum Zurücksetzen des Passworts                                                                                    |
-| `cli/commands/setup.mjs`                                                                                    | Interaktiver und nicht interaktiver Einrichtungsassistent                                                                           |
-| `cli/commands/doctor.mjs`                                                                                   | Systemdiagnose (8+ Prüfungen)                                                                                                       |
-| `cli/commands/providers.mjs`                                                                                | Anbieter auflisten/testen/validieren                                                                                                |
-| `cli/{args,data-dir,encryption,io,provider-catalog,provider-store,provider-test,settings-store,sqlite}.mjs` | CLI-Hilfsmodule                                                                                                                     |
-| `cli/tray/tray.ts`                                                                                          | Taskleistenintegration (plattformübergreifend: NotifyIcon unter Windows, systray2 unter macOS/Linux)                                |
-| `cli/tray/tray.ps1`                                                                                         | PowerShell-NotifyIcon-Backend (Windows, keine neuen Binärdateien)                                                                   |
-| `cli/tray/autostart.ts`                                                                                     | Plattformübergreifender Autostart (LaunchAgent / .desktop / Registrierung)                                                          |
-| `cli/runtime/sqliteRuntime.mjs`                                                                             | 5-stufige Auflösungskette für SQLite-Treiber (gebündelt → Laufzeit → verzögerte Installation → node:sqlite → sql.js)                |
-| `cli/runtime/magicBytes.mjs`                                                                                | Validierung binärer Magic Bytes (ELF / Mach-O / Mach-O Fat / PE)                                                                    |
-| `cli/runtime/index.mjs`                                                                                     | `warmUpRuntimes()` — löst Treiber bei der Nachinstallation / beim ersten Start vorab auf                                            |
-| `nodeRuntimeSupport.mjs`                                                                                    | Unterstützte Node.js-Version bei der Installation validieren                                                                        |
+| Datei                                                                                                       | Zweck                                                                                                                |
+| ----------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `pusula.mjs`                                                                                                | Haupt-CLI-Einstiegspunkt — `pusula serve`, `pusula setup`, `pusula doctor`, `pusula providers`, `pusula combos` usw. |
+| `reset-password.mjs`                                                                                        | Eigenständige CLI zum Zurücksetzen des Passworts                                                                     |
+| `cli/commands/setup.mjs`                                                                                    | Interaktiver und nicht interaktiver Einrichtungsassistent                                                            |
+| `cli/commands/doctor.mjs`                                                                                   | Systemdiagnose (8+ Prüfungen)                                                                                        |
+| `cli/commands/providers.mjs`                                                                                | Anbieter auflisten/testen/validieren                                                                                 |
+| `cli/{args,data-dir,encryption,io,provider-catalog,provider-store,provider-test,settings-store,sqlite}.mjs` | CLI-Hilfsmodule                                                                                                      |
+| `cli/tray/tray.ts`                                                                                          | Taskleistenintegration (plattformübergreifend: NotifyIcon unter Windows, systray2 unter macOS/Linux)                 |
+| `cli/tray/tray.ps1`                                                                                         | PowerShell-NotifyIcon-Backend (Windows, keine neuen Binärdateien)                                                    |
+| `cli/tray/autostart.ts`                                                                                     | Plattformübergreifender Autostart (LaunchAgent / .desktop / Registrierung)                                           |
+| `cli/runtime/sqliteRuntime.mjs`                                                                             | 5-stufige Auflösungskette für SQLite-Treiber (gebündelt → Laufzeit → verzögerte Installation → node:sqlite → sql.js) |
+| `cli/runtime/magicBytes.mjs`                                                                                | Validierung binärer Magic Bytes (ELF / Mach-O / Mach-O Fat / PE)                                                     |
+| `cli/runtime/index.mjs`                                                                                     | `warmUpRuntimes()` — löst Treiber bei der Nachinstallation / beim ersten Start vorab auf                             |
+| `nodeRuntimeSupport.mjs`                                                                                    | Unterstützte Node.js-Version bei der Installation validieren                                                         |
 
 ---
 
 ## `skills/` — Öffentliche Agenten-Skills
 
-| Datei                        | Zweck                                                                              |
-| ---------------------------- | ---------------------------------------------------------------------------------- |
+| Datei                     | Zweck                                                                              |
+| ------------------------- | ---------------------------------------------------------------------------------- |
 | `skills/pusula*/SKILL.md` | 10 Skill-Manifeste für externe KI-Agenten (Claude Desktop, ChatGPT, Cursor, Cline) |
 
 ---
@@ -393,8 +393,8 @@ open-sse/
 | `RELEASE_CHECKLIST.md`      | Vollständiger Release-Ablauf (Skills, Husky, Conventional Commits, Bereitstellung)                      |
 | `COVERAGE_PLAN.md`          | Abdeckungsziele und aktueller Stand                                                                     |
 | `FREE_TIERS.md`             | Kuratierte Anbieter mit kostenlosen Tarifen (48+ kostenlos + 11 OAuth)                                  |
-| `CLI-TOOLS.md`              | Externe CLI-Integrationen + interne Pusula-CLI                                                       |
-| `I18N.md`                   | i18n-Architektur, Hinzufügen einer Sprache, 42 Gebietsschemata                                          |
+| `CLI-TOOLS.md`              | Externe CLI-Integrationen + interne Pusula-CLI                                                          |
+| `I18N.md`                   | i18n-Architektur, Hinzufügen einer Sprache, 4 Gebietsschemata                                           |
 | `UNINSTALL.md`              | Schritte zur vollständigen Deinstallation                                                               |
 | `PROVIDER_REFERENCE.md`     | **Automatisch generierter** Katalog mit 355 Anbietern (Regenerierung: `npm run gen:provider-reference`) |
 
@@ -446,7 +446,7 @@ open-sse/
 
 | Unterverzeichnis      | Zweck                                                                                                                                                                                                                                                 |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `docs/i18n/`          | Lokalisierte Übersetzungen der Dokumentation (41 Sprachversionen)                                                                                                                                                                                     |
+| `docs/i18n/`          | Lokalisierte Übersetzungen der Dokumentation (3 Sprachversionen)                                                                                                                                                                                      |
 | `docs/screenshots/`   | Bildressourcen für Anleitungen                                                                                                                                                                                                                        |
 | `_tasks/superpowers/` | Pläne/Spezifikationen aus superpowers (`writing-plans`/`brainstorming`) + Recherche — isoliertes, separat versioniertes Repository, das vom Haupt-Repository per gitignore ausgeschlossen wird. Siehe CLAUDE.md → „Planungs- und Rechercheartefakte“. |
 
@@ -478,19 +478,19 @@ open-sse/
 Ausgelieferte Konfigurationsvorlagen sowie die eingecheckten Quality-Gate-Baselines
 (in v3.8.26 aus dem Repository-Stammverzeichnis hierher verschoben, um dieses schlank zu halten).
 
-| Pfad                                          | Zweck                                                                                           |
-| --------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| `config/i18n.json`                            | Liste der Gebietsschemata + Metadaten (kanonische Quelle für die Anzahl von 42 Gebietsschemata) |
-| `config/i18n-schema.json`                     | JSON-Schema zur Validierung von `i18n.json`                                                     |
-| `config/payloadRules.json`                    | Regeln zur Bereinigung von Upstream-Payloads                                                    |
-| `config/quality/quality-baseline.json`        | Ratchet-Baseline mit mehreren Metriken (`scripts/quality/check-quality-ratchet.mjs`)            |
-| `config/quality/complexity-baseline.json`     | Eingefrorene ESLint-Komplexitätsbaseline (`check-complexity.mjs`)                               |
-| `config/quality/duplication-baseline.json`    | Eingefrorene jscpd-Duplikationsbaseline (`check-duplication.mjs`)                               |
-| `config/quality/file-size-baseline.json`      | Eingefrorene Baseline für die Größe einzelner Dateien (`check-file-size.mjs`)                   |
-| `config/quality/test-discovery-baseline.json` | Eingefrorene Baseline für verwaiste Tests (`check-test-discovery.mjs`)                          |
-| `config/quality/dependency-allowlist.json`    | Positivliste genehmigter Abhängigkeiten (`check-deps.mjs`)                                      |
-| `config/quality/.license-allowlist.json`      | Positivliste für SPDX-Lizenzen (`check-licenses.mjs`)                                           |
-| `config/quality/quality-metrics.json`         | Temporär erfasste Metriken (generiert von `collect-metrics.mjs`; **von Git ignoriert**)         |
+| Pfad                                          | Zweck                                                                                          |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `config/i18n.json`                            | Liste der Gebietsschemata + Metadaten (kanonische Quelle für die Anzahl von 4 Gebietsschemata) |
+| `config/i18n-schema.json`                     | JSON-Schema zur Validierung von `i18n.json`                                                    |
+| `config/payloadRules.json`                    | Regeln zur Bereinigung von Upstream-Payloads                                                   |
+| `config/quality/quality-baseline.json`        | Ratchet-Baseline mit mehreren Metriken (`scripts/quality/check-quality-ratchet.mjs`)           |
+| `config/quality/complexity-baseline.json`     | Eingefrorene ESLint-Komplexitätsbaseline (`check-complexity.mjs`)                              |
+| `config/quality/duplication-baseline.json`    | Eingefrorene jscpd-Duplikationsbaseline (`check-duplication.mjs`)                              |
+| `config/quality/file-size-baseline.json`      | Eingefrorene Baseline für die Größe einzelner Dateien (`check-file-size.mjs`)                  |
+| `config/quality/test-discovery-baseline.json` | Eingefrorene Baseline für verwaiste Tests (`check-test-discovery.mjs`)                         |
+| `config/quality/dependency-allowlist.json`    | Positivliste genehmigter Abhängigkeiten (`check-deps.mjs`)                                     |
+| `config/quality/.license-allowlist.json`      | Positivliste für SPDX-Lizenzen (`check-licenses.mjs`)                                          |
+| `config/quality/quality-metrics.json`         | Temporär erfasste Metriken (generiert von `collect-metrics.mjs`; **von Git ignoriert**)        |
 
 ---
 

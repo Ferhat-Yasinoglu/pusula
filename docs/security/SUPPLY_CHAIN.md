@@ -78,6 +78,10 @@ Per the "no upstream fix" branch of the CVE Variance remedy above, this is an
 - **Regression guard:** `tests/unit/extract-zip-14482-exposure.test.ts` asserts the
   chain and the no-production-import invariant above; it fails CI if either ever
   breaks (e.g. a future PR makes `extract-zip` reachable from production).
+- **Status (promptfoo ≥ 0.124.1):** the chain is gone — promptfoo no longer depends on
+  `@openai/codex-security`, so `extract-zip` is absent from `package-lock.json` altogether.
+  The regression guard passes outright while the package is absent and re-checks the chain
+  only if it ever reappears.
 - **Tracking:** issue #14482.
 
 ## Backlog: Scorecard advisory → blocking

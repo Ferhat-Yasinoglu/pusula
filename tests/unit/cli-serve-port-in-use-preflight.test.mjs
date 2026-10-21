@@ -19,7 +19,7 @@ import assert from "node:assert/strict";
 import net from "node:net";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { findListeningPids } from "../../bin/cli/utils/pid.mjs";
+import { findListeningPids, resolvePortOccupants } from "../../bin/cli/utils/pid.mjs";
 
 const execFileAsync = promisify(execFile);
 
@@ -208,4 +208,45 @@ test("reportPortInUse names the port, the owning pid, and how to resolve it", as
   assert.match(out, /19348/, "must name the process already holding it");
   assert.match(out, /pusula stop/, "must tell the user how to free the port");
   assert.match(out, /--port/, "must offer running on a different port");
+});
+
+// The preflight itself, as `serve` consumes it. A host without lsof/netstat (GitHub-hosted
+// runners, slim containers) makes discovery return null; with the port FREE the old inline
+// guard left `busyPids` null and crashed on `.length` — the packed-tarball boot smoke died
+// with "Cannot read properties of null (reading 'length')" before serving.
+test("resolvePortOccupants: unknown discovery + free port → nothing busy (no null deref)", async () => {
+  const occupants = await resolvePortOccupants(20128, {
+    findListeningPids: async () => null,
+    probePortFree: async () => true,
+  });
+  assert.deepEqual(occupants, []);
+});
+
+test("resolvePortOccupants: unknown discovery + busy port → busy with an unknown owner", async () => {
+  const occupants = await resolvePortOccupants(20128, {
+    findListeningPids: async () => null,
+    probePortFree: async () => false,
+  });
+  assert.deepEqual(occupants, [null]);
+});
+
+test("resolvePortOccupants: empty discovery still bind-probes (#14518)", async () => {
+  const occupants = await resolvePortOccupants(20128, {
+    findListeningPids: async () => [],
+    probePortFree: async () => false,
+  });
+  assert.deepEqual(occupants, [null]);
+});
+
+test("resolvePortOccupants: discovered pids win without probing", async () => {
+  let probed = false;
+  const occupants = await resolvePortOccupants(20128, {
+    findListeningPids: async () => [4242],
+    probePortFree: async () => {
+      probed = true;
+      return true;
+    },
+  });
+  assert.deepEqual(occupants, [4242]);
+  assert.equal(probed, false, "a known owner needs no bind probe");
 });
