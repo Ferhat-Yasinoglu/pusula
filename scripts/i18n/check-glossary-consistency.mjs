@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Pusula — Chinese terminology glossary consistency gate (zh-CN + zh-TW).
+ * Pusula — terminology glossary / protected-term consistency gate.
  *
  * Complements the existing parity (check-ui-keys-coverage.mjs) and ICU
  * (validate_translation.py) checks with a native-quality layer:
@@ -15,8 +15,8 @@
  *     `protectedTermMistranslations` object in the locale's glossary file (ko).
  *
  * Usage:
- *   node scripts/i18n/check-glossary-consistency.mjs                 # zh-CN, exit 1 on drift
- *   node scripts/i18n/check-glossary-consistency.mjs --locale=ko
+ *   node scripts/i18n/check-glossary-consistency.mjs                 # every locale in config/i18n.json, exit 1 on drift
+ *   node scripts/i18n/check-glossary-consistency.mjs --locale=tr
  *   node scripts/i18n/check-glossary-consistency.mjs --json
  *   node scripts/i18n/check-glossary-consistency.mjs --report        # print, always exit 0
  */
@@ -131,7 +131,7 @@ export function checkGlossaryConsistency(localeMessages, glossary, protectedTerm
 }
 
 function parseArgs(argv) {
-  const opts = { locale: "zh-CN", json: false, report: false };
+  const opts = { locale: null, json: false, report: false };
   for (const arg of argv.slice(2)) {
     if (arg.startsWith("--locale=")) {
       opts.locale = arg.slice(9);
@@ -144,7 +144,7 @@ function parseArgs(argv) {
         [
           "Usage: node scripts/i18n/check-glossary-consistency.mjs [options]",
           "",
-          "  --locale=<code>   Locale to check (default zh-CN)",
+          "  --locale=<code>   Locale to check (default: every locale in config/i18n.json except the source)",
           "  --json            Emit JSON report to stdout",
           "  --report          Print violations, exit 0 regardless",
         ].join("\n")
@@ -160,50 +160,76 @@ async function loadJson(filePath) {
   return JSON.parse(raw);
 }
 
+async function configuredLocales() {
+  const config = await loadJson(path.join(ROOT, "config", "i18n.json"));
+  const source = config.default || "en";
+  return (config.locales || []).map((l) => l.code).filter((code) => code && code !== source);
+}
+
+// A locale without scripts/i18n/glossary/<locale>.json has no canonical-term layer yet; the
+// gate then reduces to the protected-term check, which applies to every locale.
+async function loadGlossary(locale) {
+  const glossaryPath = path.join(GLOSSARY_DIR, `${locale}.json`);
+  try {
+    return await loadJson(glossaryPath);
+  } catch (err) {
+    if (err?.code === "ENOENT") return { version: 1, locale, terms: {} };
+    throw err;
+  }
+}
+
+async function checkLocale(locale, protectedTerms) {
+  const messages = await loadJson(path.join(MESSAGES_DIR, `${locale}.json`));
+  const glossary = await loadGlossary(locale);
+  return checkGlossaryConsistency(messages, glossary, protectedTerms).violations;
+}
+
 async function main() {
   const opts = parseArgs(process.argv);
+  const locales = opts.locale ? [opts.locale] : await configuredLocales();
 
-  const messagesPath = path.join(MESSAGES_DIR, `${opts.locale}.json`);
-  const glossaryPath = path.join(GLOSSARY_DIR, `${opts.locale}.json`);
-  const protectedPath = path.join(GLOSSARY_DIR, "protected-terms.json");
-
-  const [messages, glossary, protectedData] = await Promise.all([
-    loadJson(messagesPath),
-    loadJson(glossaryPath),
-    loadJson(protectedPath),
-  ]);
+  const protectedData = await loadJson(path.join(GLOSSARY_DIR, "protected-terms.json"));
   const protectedTerms = Array.isArray(protectedData.terms) ? protectedData.terms : [];
 
-  const { violations } = checkGlossaryConsistency(messages, glossary, protectedTerms);
+  const reports = [];
+  for (const locale of locales) {
+    reports.push({ locale, violations: await checkLocale(locale, protectedTerms) });
+  }
+  const failed = reports.filter((r) => r.violations.length > 0);
 
   if (opts.json) {
+    const payload = reports.map((r) => ({
+      locale: r.locale,
+      ok: r.violations.length === 0,
+      violations: r.violations,
+    }));
     process.stdout.write(
-      JSON.stringify({ locale: opts.locale, ok: violations.length === 0, violations }, null, 2) +
-        "\n"
+      JSON.stringify(payload.length === 1 ? payload[0] : payload, null, 2) + "\n"
     );
-    if (violations.length && !opts.report) process.exit(1);
+    if (failed.length && !opts.report) process.exit(1);
     return;
   }
 
-  if (violations.length === 0) {
-    logInfo(`PASS — ${opts.locale} has no glossary/protected-term drift.`);
-    return;
-  }
-
-  logInfo(`FAIL — ${violations.length} violation(s) in ${opts.locale}.`);
-  for (const v of violations.slice(0, 50)) {
-    if (v.type === "glossary-synonym") {
-      console.log(
-        `  - [${v.concept}] ${v.path}: found "${v.found}", canonical is "${v.canonical}"`
-      );
-    } else {
-      console.log(`  - [protected-term] ${v.path}: "${v.term}" rendered as "${v.found}"`);
+  for (const { locale, violations } of reports) {
+    if (violations.length === 0) {
+      logInfo(`PASS — ${locale} has no glossary/protected-term drift.`);
+      continue;
+    }
+    logInfo(`FAIL — ${violations.length} violation(s) in ${locale}.`);
+    for (const v of violations.slice(0, 50)) {
+      if (v.type === "glossary-synonym") {
+        console.log(
+          `  - [${v.concept}] ${v.path}: found "${v.found}", canonical is "${v.canonical}"`
+        );
+      } else {
+        console.log(`  - [protected-term] ${v.path}: "${v.term}" rendered as "${v.found}"`);
+      }
+    }
+    if (violations.length > 50) {
+      console.log(`  ... and ${violations.length - 50} more`);
     }
   }
-  if (violations.length > 50) {
-    console.log(`  ... and ${violations.length - 50} more`);
-  }
-  if (!opts.report) process.exit(1);
+  if (failed.length && !opts.report) process.exit(1);
 }
 
 const isDirectRun = import.meta.url === pathToFileURL(process.argv[1]).href;

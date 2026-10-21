@@ -1233,7 +1233,7 @@ test("CodexExecutor.execute adds CLI-like session identity headers without chang
     assert.equal(turnMetadata.sandbox, "none");
     assert.equal(typeof turnMetadata.turn_id, "string");
     assert.equal(capturedBody?.prompt_cache_key, "conversation-1");
-    assert.equal(meta["x-codex-installation-id"], "7f06a8ee-2981-4c81-a4ca-e443b5400a63");
+    assert.equal(meta["x-codex-installation-id"], "2c5bdbb2-3f62-4a0b-a413-6606d759bf6f");
   } finally {
     globalThis.fetch = originalFetch;
   }

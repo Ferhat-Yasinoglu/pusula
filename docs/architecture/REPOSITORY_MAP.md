@@ -121,7 +121,7 @@ src/
 ├── domain/              # Pure domain logic (policy engine, fallback, cost, lockout, comboResolver, assessment)
 ├── server/              # Server-only modules (authz pipeline, cors, auth middleware) — cannot import from client
 ├── shared/              # Shared between server and client where safe (constants, types, validation, contracts, utils)
-├── i18n/                # next-intl config + per-locale message JSON (42 locales)
+├── i18n/                # next-intl config + per-locale message JSON (4 locales)
 ├── middleware/          # Next.js middleware (request enrichment, locale detection)
 ├── mitm/                # MITM proxy core: cert gen/install, handlers, targets, inspector, masks, passthrough
 │   ├── handlers/        # 9 IDE-agent handler classes extending MitmHandlerBase (antigravity, kiro, copilot, codex, cursor, zed, claudeCode, openCode, trae)
@@ -301,7 +301,7 @@ open-sse/
 | File             | Purpose                                                                           |
 | ---------------- | --------------------------------------------------------------------------------- |
 | `main.js`        | Electron main process (BrowserWindow, embedded Next.js server, tray, auto-update) |
-| `preload.js`     | IPC bridge (contextBridge → `window.pusula`)                                   |
+| `preload.js`     | IPC bridge (contextBridge → `window.pusula`)                                      |
 | `package.json`   | electron-builder config + Electron 41 + electron-builder 26.10 deps               |
 | `assets/`        | App icons (Windows .ico, macOS .icns, Linux .png)                                 |
 | `dist-electron/` | Build output (gitignored)                                                         |
@@ -312,28 +312,28 @@ open-sse/
 
 ## `bin/` — CLI
 
-| File                                                                                                        | Purpose                                                                                                                    |
-| ----------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `pusula.mjs`                                                                                             | Main CLI entry — `pusula serve`, `pusula setup`, `pusula doctor`, `pusula providers`, `pusula combos`, etc. |
-| `reset-password.mjs`                                                                                        | Standalone password reset CLI                                                                                              |
-| `cli/commands/setup.mjs`                                                                                    | Interactive + non-interactive setup wizard                                                                                 |
-| `cli/commands/doctor.mjs`                                                                                   | System health diagnostics (8+ checks)                                                                                      |
-| `cli/commands/providers.mjs`                                                                                | Provider list/test/validate                                                                                                |
-| `cli/{args,data-dir,encryption,io,provider-catalog,provider-store,provider-test,settings-store,sqlite}.mjs` | CLI helper modules                                                                                                         |
-| `cli/tray/tray.ts`                                                                                          | System tray integration (cross-platform: NotifyIcon on Windows, systray2 on macOS/Linux)                                   |
-| `cli/tray/tray.ps1`                                                                                         | PowerShell NotifyIcon backend (Windows, zero new binaries)                                                                 |
-| `cli/tray/autostart.ts`                                                                                     | Cross-platform autostart (LaunchAgent / .desktop / registry)                                                               |
-| `cli/runtime/sqliteRuntime.mjs`                                                                             | 5-step SQLite driver resolution chain (bundled → runtime → lazy-install → node:sqlite → sql.js)                            |
-| `cli/runtime/magicBytes.mjs`                                                                                | Binary magic-byte validation (ELF / Mach-O / Mach-O fat / PE)                                                              |
-| `cli/runtime/index.mjs`                                                                                     | `warmUpRuntimes()` — pre-resolves drivers at postinstall / first startup                                                   |
-| `nodeRuntimeSupport.mjs`                                                                                    | Validate supported Node.js version on install                                                                              |
+| File                                                                                                        | Purpose                                                                                                     |
+| ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `pusula.mjs`                                                                                                | Main CLI entry — `pusula serve`, `pusula setup`, `pusula doctor`, `pusula providers`, `pusula combos`, etc. |
+| `reset-password.mjs`                                                                                        | Standalone password reset CLI                                                                               |
+| `cli/commands/setup.mjs`                                                                                    | Interactive + non-interactive setup wizard                                                                  |
+| `cli/commands/doctor.mjs`                                                                                   | System health diagnostics (8+ checks)                                                                       |
+| `cli/commands/providers.mjs`                                                                                | Provider list/test/validate                                                                                 |
+| `cli/{args,data-dir,encryption,io,provider-catalog,provider-store,provider-test,settings-store,sqlite}.mjs` | CLI helper modules                                                                                          |
+| `cli/tray/tray.ts`                                                                                          | System tray integration (cross-platform: NotifyIcon on Windows, systray2 on macOS/Linux)                    |
+| `cli/tray/tray.ps1`                                                                                         | PowerShell NotifyIcon backend (Windows, zero new binaries)                                                  |
+| `cli/tray/autostart.ts`                                                                                     | Cross-platform autostart (LaunchAgent / .desktop / registry)                                                |
+| `cli/runtime/sqliteRuntime.mjs`                                                                             | 5-step SQLite driver resolution chain (bundled → runtime → lazy-install → node:sqlite → sql.js)             |
+| `cli/runtime/magicBytes.mjs`                                                                                | Binary magic-byte validation (ELF / Mach-O / Mach-O fat / PE)                                               |
+| `cli/runtime/index.mjs`                                                                                     | `warmUpRuntimes()` — pre-resolves drivers at postinstall / first startup                                    |
+| `nodeRuntimeSupport.mjs`                                                                                    | Validate supported Node.js version on install                                                               |
 
 ---
 
 ## `skills/` — Public Agent Skills
 
-| File                         | Purpose                                                                            |
-| ---------------------------- | ---------------------------------------------------------------------------------- |
+| File                      | Purpose                                                                            |
+| ------------------------- | ---------------------------------------------------------------------------------- |
 | `skills/pusula*/SKILL.md` | 10 skill manifests for external AI agents (Claude Desktop, ChatGPT, Cursor, Cline) |
 
 ---
@@ -395,31 +395,31 @@ open-sse/
 | `RELEASE_CHECKLIST.md`      | Full release flow (skills, husky, conventional commits, deploy)                       |
 | `COVERAGE_PLAN.md`          | Coverage goals and current state                                                      |
 | `FREE_TIERS.md`             | Curated free-tier providers (48+ free + 11 OAuth)                                     |
-| `CLI-TOOLS.md`              | External CLI integrations + Internal Pusula CLI                                    |
-| `I18N.md`                   | i18n architecture, adding a language, 42 locales                                      |
+| `CLI-TOOLS.md`              | External CLI integrations + Internal Pusula CLI                                       |
+| `I18N.md`                   | i18n architecture, adding a language, 4 locales                                       |
 | `UNINSTALL.md`              | Clean uninstall steps                                                                 |
 | `PROVIDER_REFERENCE.md`     | **Auto-generated** catalog of 355 providers (regen: `npm run gen:provider-reference`) |
 
 ### Subsystem deep-dives
 
-| Doc                        | Purpose                                                              |
-| -------------------------- | -------------------------------------------------------------------- |
-| `MCP-SERVER.md`            | MCP server: 110 tools, 3 transports, 33 scopes, REST endpoints       |
-| `A2A-SERVER.md`            | A2A v0.3: JSON-RPC, 6 skills, REST helpers, agent card               |
-| `AGENT_PROTOCOLS_GUIDE.md` | Unified guide: A2A vs ACP vs Cloud Agents                            |
-| `CLOUD_AGENT.md`           | Codex Cloud / Devin / Jules orchestration                            |
-| `SKILLS.md`                | Skills framework (built-in + marketplace + SkillsSH + sandbox)       |
-| `RADAR.md`                 | Radar free-model catalog overlay (`RADAR_ENABLED`, off by default)   |
-| `MEMORY.md`                | Memory system (SQLite FTS5 + Qdrant)                                 |
-| `EVALS.md`                 | Eval framework (suites, runs, rubrics)                               |
-| `GUARDRAILS.md`            | PII masker, prompt injection, vision bridge                          |
-| `COMPLIANCE.md`            | Audit log, retention, noLog opt-out                                  |
-| `WEBHOOKS.md`              | HMAC-signed webhook delivery                                         |
-| `REASONING_REPLAY.md`      | Hybrid memory/SQLite cache for `reasoning_content`                   |
-| `AUTHZ_GUIDE.md`           | Authorization pipeline (`classify` → `policies` → `enforce`)         |
-| `RESILIENCE_GUIDE.md`      | Circuit breaker + cooldown + model lockout                           |
-| `docs/security/STEALTH_GUIDE.md` (git only)         | TLS fingerprinting (JA3/JA4), Claude Code CCH, MITM cert             |
-| `AUTO-COMBO.md`            | Auto Combo engine (16-factor scoring, 6 mode packs, virtual factory) |
+| Doc                                         | Purpose                                                              |
+| ------------------------------------------- | -------------------------------------------------------------------- |
+| `MCP-SERVER.md`                             | MCP server: 110 tools, 3 transports, 33 scopes, REST endpoints       |
+| `A2A-SERVER.md`                             | A2A v0.3: JSON-RPC, 6 skills, REST helpers, agent card               |
+| `AGENT_PROTOCOLS_GUIDE.md`                  | Unified guide: A2A vs ACP vs Cloud Agents                            |
+| `CLOUD_AGENT.md`                            | Codex Cloud / Devin / Jules orchestration                            |
+| `SKILLS.md`                                 | Skills framework (built-in + marketplace + SkillsSH + sandbox)       |
+| `RADAR.md`                                  | Radar free-model catalog overlay (`RADAR_ENABLED`, off by default)   |
+| `MEMORY.md`                                 | Memory system (SQLite FTS5 + Qdrant)                                 |
+| `EVALS.md`                                  | Eval framework (suites, runs, rubrics)                               |
+| `GUARDRAILS.md`                             | PII masker, prompt injection, vision bridge                          |
+| `COMPLIANCE.md`                             | Audit log, retention, noLog opt-out                                  |
+| `WEBHOOKS.md`                               | HMAC-signed webhook delivery                                         |
+| `REASONING_REPLAY.md`                       | Hybrid memory/SQLite cache for `reasoning_content`                   |
+| `AUTHZ_GUIDE.md`                            | Authorization pipeline (`classify` → `policies` → `enforce`)         |
+| `RESILIENCE_GUIDE.md`                       | Circuit breaker + cooldown + model lockout                           |
+| `docs/security/STEALTH_GUIDE.md` (git only) | TLS fingerprinting (JA3/JA4), Claude Code CCH, MITM cert             |
+| `AUTO-COMBO.md`                             | Auto Combo engine (16-factor scoring, 6 mode packs, virtual factory) |
 
 ### Compression
 
@@ -448,7 +448,7 @@ open-sse/
 
 | Subdir                | Purpose                                                                                                                                                                                        |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `docs/i18n/`          | Localized doc translations (41 locales)                                                                                                                                                        |
+| `docs/i18n/`          | Localized doc translations (3 locales)                                                                                                                                                         |
 | `docs/screenshots/`   | Image assets for guides                                                                                                                                                                        |
 | `_tasks/superpowers/` | Plans/specs from superpowers (`writing-plans`/`brainstorming`) + research — isolated, separately-versioned repo, gitignored by the main tree. See CLAUDE.md → "Planning & Research Artifacts". |
 
@@ -482,7 +482,7 @@ Shipped configuration templates plus the committed quality-gate baselines
 
 | Path                                          | Purpose                                                                          |
 | --------------------------------------------- | -------------------------------------------------------------------------------- |
-| `config/i18n.json`                            | Locale list + metadata (canonical source for the 42-locale count)                |
+| `config/i18n.json`                            | Locale list + metadata (canonical source for the 4-locale count)                 |
 | `config/i18n-schema.json`                     | JSON schema validating `i18n.json`                                               |
 | `config/payloadRules.json`                    | Upstream payload sanitization rules                                              |
 | `config/quality/quality-baseline.json`        | Multi-metric ratchet baseline (`scripts/quality/check-quality-ratchet.mjs`)      |

@@ -136,7 +136,14 @@ function assertNoSyncEsmAwait(outputFile: string): void {
     findSyncEsmAwaitViolations(outputFile);
 
   assert.ok(initializerCount > 0, "expected bundle to contain __esm initializers");
-  assert.ok(asyncInitializerCount > 0, "expected bundle to exercise async initialization");
+  // A bundle with no async initializer at all is the ideal state: nothing uses top-level
+  // await, so no initializer can deadlock on its own promise (the legacy usage migrations
+  // moved off top-level await for exactly that reason). When async initializers do exist,
+  // every synchronous one must still be free of a direct `await`.
+  if (asyncInitializerCount === 0) {
+    assert.deepEqual(violations, [], "a bundle without async initializers cannot await at all");
+    return;
+  }
   assert.deepEqual(
     violations,
     [],

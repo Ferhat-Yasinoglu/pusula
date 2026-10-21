@@ -4,6 +4,16 @@ import { act } from "react";
 import { createRoot } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
+// jsdom does not implement scrollIntoView; the lazily loaded Chat tab scrolls its message
+// list on mount once the dynamic import settles (see afterEach below).
+if (typeof Element.prototype.scrollIntoView === "undefined") {
+  Object.defineProperty(Element.prototype, "scrollIntoView", {
+    value: () => {},
+    configurable: true,
+    writable: true,
+  });
+}
+
 // ── Mocks ─────────────────────────────────────────────────────────────────────
 
 vi.mock("next-intl", () => ({
@@ -145,7 +155,10 @@ describe("PlaygroundStudio", () => {
     ).IS_REACT_ACT_ENVIRONMENT = true;
   });
 
-  afterEach(() => {
+  afterEach(async () => {
+    // The Build tab is a lazy import; a module still loading when the file ends surfaces
+    // as an EnvironmentTeardownError. Wait for every pending dynamic import first.
+    await vi.dynamicImportSettled();
     for (const { root, el } of containers.splice(0)) {
       act(() => root.unmount());
       el.remove();
@@ -268,7 +281,10 @@ describe("PlaygroundStudio", () => {
 });
 
 describe("PlaygroundStudio — deep-link ?tab=chat", () => {
-  afterEach(() => {
+  afterEach(async () => {
+    // The Build tab is a lazy import; a module still loading when the file ends surfaces
+    // as an EnvironmentTeardownError. Wait for every pending dynamic import first.
+    await vi.dynamicImportSettled();
     for (const { root, el } of containers.splice(0)) {
       act(() => root.unmount());
       el.remove();

@@ -82,22 +82,22 @@ test("#12561 all canonical locales define the 7 usage.kilo* keys without untrans
   }
 });
 
-test("#12561 pt.json defines featureFlagPusulaDisableThinkingLevelVariantsDescription", () => {
-  const ptPath = path.join(MESSAGES_DIR, "pt.json");
+test("#12561 tr.json defines featureFlagPusulaDisableThinkingLevelVariantsDescription", () => {
+  const ptPath = path.join(MESSAGES_DIR, "tr.json");
   assert.ok(fs.existsSync(ptPath), `Catalog file missing: ${ptPath}`);
 
-  const pt = readCatalog(ptPath, "pt.json");
-  assert.ok(pt && typeof pt === "object" && !Array.isArray(pt), "pt.json must be a valid object");
+  const pt = readCatalog(ptPath, "tr.json");
+  assert.ok(pt && typeof pt === "object" && !Array.isArray(pt), "tr.json must be a valid object");
   const ptObj = pt as Record<string, unknown>;
 
   const key = "featureFlagPusulaDisableThinkingLevelVariantsDescription";
-  assert.ok(key in ptObj, `pt.json missing ${key}`);
+  assert.ok(key in ptObj, `tr.json missing ${key}`);
   const rawVal = ptObj[key];
-  assert.equal(typeof rawVal, "string", `pt.json ${key} must be a string, got ${typeof rawVal}`);
+  assert.equal(typeof rawVal, "string", `tr.json ${key} must be a string, got ${typeof rawVal}`);
   const val = rawVal as string;
-  assert.ok(val.trim().length > 0, `pt.json has empty ${key}`);
+  assert.ok(val.trim().length > 0, `tr.json has empty ${key}`);
   assert.ok(
     !val.trim().startsWith(UNTRANSLATED_SENTINEL),
-    `pt.json has untranslated sentinel for ${key}: ${val}`
+    `tr.json has untranslated sentinel for ${key}: ${val}`
   );
 });
