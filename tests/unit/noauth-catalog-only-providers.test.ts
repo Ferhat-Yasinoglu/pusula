@@ -5,6 +5,7 @@ import { buildNoAuthModelsResponse } from "../../src/app/api/providers/[id]/mode
 import { isDegradedDiscovery } from "../../src/app/api/providers/[id]/sync-models/degradedLocalCatalog";
 import { NOAUTH_PROVIDERS } from "../../src/shared/constants/providers/noauth";
 import { getModelsByProviderId } from "../../src/shared/constants/models";
+import { getRegistryEntry } from "../../open-sse/config/providerRegistry.ts";
 
 /**
  * A no-auth provider whose registry entry exposes no remote models endpoint has
@@ -23,6 +24,10 @@ function catalogOnlyNoAuthProviders(): string[] {
   for (const id of Object.keys(NOAUTH_PROVIDERS)) {
     // Only providers that actually ship a catalog can be asserted on.
     if (!(getModelsByProviderId(id) || []).length) continue;
+    // A provider with a `modelsUrl` is not catalog-only: it would make a live
+    // upstream fetch here, so the result depends on that service being up.
+    const modelsUrl = getRegistryEntry(id)?.modelsUrl;
+    if (typeof modelsUrl === "string" && modelsUrl.length > 0) continue;
     ids.push(id);
   }
   return ids;
