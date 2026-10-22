@@ -31,25 +31,21 @@ This guide is based on a verified working configuration for the current project.
 The `fly.toml` in the current repository has been confirmed to contain the following key items:
 
 ```toml
-app = 'pusula-fyajan'
-primary_region = 'fra'
-
-[build]
-  build-target = 'runner-base'
+app = 'pusula'
+primary_region = 'sin'
 
 [[mounts]]
   source = 'data'
   destination = '/data'
 
 [processes]
-  app = 'node dev/run-standalone.mjs'
+  app = 'node run-standalone.mjs'
 
 [http_service]
   internal_port = 20128
 
 [env]
-  TZ = "Europe/Istanbul"
-  DATA_DIR = "/data"
+  TZ = "Asia/Shanghai"
   HOST = "0.0.0.0"
   HOSTNAME = "0.0.0.0"
   BIND = "0.0.0.0"
@@ -57,11 +53,9 @@ primary_region = 'fra'
 
 Notes:
 
-- `app = 'pusula-fyajan'` determines which Fly application the deployment targets (Fly app names are global; pick your own)
-- `build-target = 'runner-base'` builds the lean proxy image instead of the Dockerfile's last stage (`runner-cli`)
-- `node dev/run-standalone.mjs` is where the standalone build places the launcher
+- `app = 'pusula'` determines which Fly application the deployment targets
 - `destination = '/data'` determines the persistent volume mount directory
-- `DATA_DIR=/data` is set in `[env]`; without it the database and keys will be written to the container's temporary directory
+- This project must set `DATA_DIR=/data`, otherwise the database and keys will be written to the container's temporary directory
 
 ---
 
