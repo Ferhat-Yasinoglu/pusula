@@ -1,0 +1,81 @@
+name: Deploy to Fly.io
+
+# Deploys the public instance (fly.toml → app `pusula-fyajan`) whenever `main`
+# moves, and on demand from the Actions tab. Nothing happens until the
+# repository secret FLY_API_TOKEN exists: without it the job prints a warning
+# and ends green, so a fork or a checkout without Fly access never fails CI.
+#
+# One-time setup (repository owner):
+#   1. Fly dashboard → Tokens → create a deploy token for app `pusula-fyajan`
+#      (or on a machine with flyctl: `fly tokens create deploy -a pusula-fyajan`).
+#   2. GitHub → Settings → Secrets and variables → Actions → New repository
+#      secret → name `FLY_API_TOKEN`, value = the token.
+#   3. Actions → "Deploy to Fly.io" → "Run workflow" for the first deploy.
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deploy at a time; a second push queues behind the running one instead of
+# racing it (two concurrent `fly deploy` runs would fight over the machines).
+concurrency:
+  group: deploy-fly-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: fly deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Check FLY_API_TOKEN
+        id: token
+        run: |
+          if [ -z "${FLY_API_TOKEN:-}" ]; then
+            echo "::warning title=Deploy skipped::FLY_API_TOKEN is not set. Add it under Settings → Secrets and variables → Actions, then re-run this workflow."
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install flyctl
+        if: steps.token.outputs.present == 'true'
+        run: |
+          curl -fsSL https://fly.io/install.sh | sh
+          echo "$HOME/.fly/bin" >> "$GITHUB_PATH"
+
+      - name: Deploy
+        if: steps.token.outputs.present == 'true'
+        run: |
+          flyctl version
+          # --remote-only: the image is built by Fly's builders, not on this
+          # runner; --ha=false matches the single-machine [[vm]] in fly.toml.
+          flyctl deploy --remote-only --ha=false --config fly.toml
+
+      - name: Health check (gates the deploy)
+        if: steps.token.outputs.present == 'true'
+        run: |
+          ok=0
+          for _ in $(seq 1 20); do
+            if curl -sf -m 10 "https://pusula.fyajan.com/api/monitoring/health" >/dev/null; then
+              ok=1
+              break
+            fi
+            sleep 6
+          done
+          if [ "$ok" != "1" ]; then
+            echo "::error title=Deploy unhealthy::/api/monitoring/health did not answer within 2 minutes after deploy."
+            exit 1
+          fi
+          echo "healthy"
