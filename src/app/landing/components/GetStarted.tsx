@@ -1,117 +1,103 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { copyToClipboard } from "@/shared/utils/clipboard";
 import { useDisplayBaseUrl } from "@/shared/hooks";
+import SectionHeading from "./SectionHeading";
 
+const INSTALL_COMMAND = "npx pusula";
+
+/**
+ * The one numbered sequence on the page: three steps that are really
+ * sequential. The terminal on the right shows what the first step prints.
+ */
 export default function GetStarted() {
   const t = useTranslations("landing");
+  const baseUrl = useDisplayBaseUrl();
   const [copied, setCopied] = useState(false);
 
-  const endpoint = useDisplayBaseUrl();
-  const dashboardUrl = `${endpoint}/dashboard`;
-  const command = "npx pusula";
-
-  const handleCopy = async (text: string) => {
-    await copyToClipboard(text);
+  const copy = async () => {
+    await copyToClipboard(INSTALL_COMMAND);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    window.setTimeout(() => setCopied(false), 1800);
   };
 
+  const steps = [
+    { title: t("startStep1Title"), desc: t("startStep1Desc") },
+    { title: t("startStep2Title"), desc: t("startStep2Desc") },
+    { title: t("startStep3Title"), desc: t("startStep3Desc", { url: `${baseUrl}/v1` }) },
+  ];
+
   return (
-    <section className="py-24 px-6 bg-[#080A0F]">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col lg:flex-row gap-16 items-start">
-          {/* Left: Steps */}
-          <div className="flex-1">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">{t("getStartedIn30Seconds")}</h2>
-            <p className="text-gray-400 text-lg mb-8">{t("getStartedDescription")}</p>
+    <section
+      id="start"
+      className="scroll-mt-20 border-t border-[var(--rule-soft)] px-4 py-20 sm:px-6 lg:py-28"
+    >
+      <div className="mx-auto max-w-7xl">
+        <SectionHeading title={t("startTitle")} lead={t("startLead")} />
 
-            <div className="flex flex-col gap-6">
-              <div className="flex gap-4 min-w-0">
-                <div className="flex-none w-8 h-8 rounded-full bg-[#0F8F83]/20 text-[#0F8F83] flex items-center justify-center font-bold">
-                  1
-                </div>
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
+          <ol className="space-y-8 lg:col-span-5">
+            {steps.map((step, i) => (
+              <li key={step.title} className="grid grid-cols-[2.5rem_1fr] gap-4">
+                <span className="readout flex size-9 items-center justify-center rounded-full border border-[var(--rule)] text-sm text-[var(--teal-bright)]">
+                  {i + 1}
+                </span>
                 <div>
-                  <h4 className="font-bold text-lg">{t("installPusula")}</h4>
-                  <p className="text-sm text-gray-500 mt-1">{t("installStepDescription")}</p>
+                  <h3 className="text-base font-semibold text-[var(--foam)]">{step.title}</h3>
+                  <p className="mt-1 text-sm leading-6 text-[var(--mist)]">{step.desc}</p>
                 </div>
-              </div>
+              </li>
+            ))}
+          </ol>
 
-              <div className="flex gap-4 min-w-0">
-                <div className="flex-none w-8 h-8 rounded-full bg-[#0F8F83]/20 text-[#0F8F83] flex items-center justify-center font-bold">
-                  2
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">{t("openDashboard")}</h4>
-                  <p className="text-sm text-gray-500 mt-1">{t("openDashboardStepDescription")}</p>
-                </div>
-              </div>
-
-              <div className="flex gap-4 min-w-0">
-                <div className="flex-none w-8 h-8 rounded-full bg-[#0F8F83]/20 text-[#0F8F83] flex items-center justify-center font-bold">
-                  3
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">{t("routeRequests")}</h4>
-                  <p className="text-sm text-gray-500 mt-1">
-                    {t("routeRequestsStepDescription", { endpoint })}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right: Code block */}
-          <div className="flex-1 w-full">
-            <div className="rounded-xl overflow-hidden bg-[#161B22] border border-[#2D333B] shadow-2xl">
-              {/* Terminal header */}
-              <div className="flex items-center gap-2 px-4 py-3 bg-[#111520] border-b border-gray-700">
-                <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                <div className="ml-2 text-xs text-gray-500 font-mono">{t("terminal")}</div>
-              </div>
-
-              {/* Terminal content */}
-              <div className="p-6 font-mono text-sm leading-relaxed overflow-x-hidden">
-                <div
-                  className="flex items-center gap-2 mb-4 group cursor-pointer min-w-0"
-                  onClick={() => handleCopy(command)}
+          <div className="lg:col-span-7">
+            <div className="overflow-hidden rounded-lg border border-[var(--rule)] bg-[var(--ink-deep)]">
+              <div className="flex items-center justify-between border-b border-[var(--rule-soft)] px-3 py-2">
+                <span className="readout text-[11px] text-[var(--mist-dim)]">
+                  {t("startTerminal")}
+                </span>
+                <button
+                  type="button"
+                  onClick={copy}
+                  className="readout flex h-8 items-center gap-1 rounded px-2 text-xs text-[var(--mist)] transition-colors hover:bg-[var(--chart)] hover:text-[var(--foam)]"
+                  aria-live="polite"
                 >
-                  <span className="text-green-400">$</span>
-                  <span className="text-white break-all">{command}</span>
-                  <span className="ml-auto text-gray-500 text-xs opacity-0 group-hover:opacity-100">
-                    {copied ? t("copied") : t("copy")}
+                  <span className="material-symbols-outlined text-[16px]" aria-hidden="true">
+                    {copied ? "check" : "content_copy"}
                   </span>
-                </div>
-
-                <div className="text-gray-400 mb-6">
-                  <span className="text-[#0F8F83]">&gt;</span> {t("startingPusula")}
-                  <br />
-                  <span className="text-[#0F8F83]">&gt;</span> {t("serverRunningOnLabel")}{" "}
-                  <span className="text-blue-400 break-all">{endpoint}</span>
-                  <br />
-                  <span className="text-[#0F8F83]">&gt;</span> {t("dashboardLabel")}:{" "}
-                  <span className="text-blue-400 break-all">{dashboardUrl}</span>
-                  <br />
-                  <span className="text-green-400">&gt;</span> {t("readyToRoute")}
-                </div>
-
-                <div className="text-xs text-gray-500 mb-2 border-t border-gray-700 pt-4">
-                  {t("configureProvidersNote")}
-                </div>
-
-                <div className="text-gray-400 text-xs">
-                  <span className="text-purple-400">{t("dataLocation")}</span>
-                  <br />
-                  <span className="text-gray-500">{t("dataLocationMacLinux")}</span>{" "}
-                  <span className="break-all">~/.pusula/db.json</span>
-                  <br />
-                  <span className="text-gray-500">{t("dataLocationWindows")}</span>{" "}
-                  <span className="break-all">%APPDATA%/pusula/db.json</span>
-                </div>
+                  {copied ? t("copied") : t("copy")}
+                </button>
               </div>
+              <pre className="readout overflow-x-auto p-4 text-[13px] leading-6" dir="ltr">
+                <code>
+                  <span className="text-[var(--mist-dim)]">$ </span>
+                  <span className="text-[var(--teal-bright)]">{INSTALL_COMMAND}</span>
+                  {"\n"}
+                  <span className="text-[var(--mist)]">{t("startRunning")}</span>
+                  {"\n"}
+                  <span className="text-[var(--mist)]">{t("startApi")}</span>{" "}
+                  <span className="text-[var(--foam)]">{baseUrl}/v1</span>
+                  {"\n"}
+                  <span className="text-[var(--mist)]">{t("startDashboard")}</span>{" "}
+                  <span className="text-[var(--foam)]">{baseUrl}/dashboard</span>
+                </code>
+              </pre>
+            </div>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/dashboard"
+                className="inline-flex h-11 items-center justify-center rounded-md bg-[var(--teal)] px-6 text-sm font-semibold text-[var(--foam)] transition-colors hover:bg-[var(--teal-ink)]"
+              >
+                {t("navOpenDashboard")}
+              </Link>
+              <Link
+                href="/docs"
+                className="inline-flex h-11 items-center justify-center rounded-md border border-[var(--rule)] px-6 text-sm font-semibold text-[var(--foam)] transition-colors hover:border-[var(--teal)]"
+              >
+                {t("navDocs")}
+              </Link>
             </div>
           </div>
         </div>

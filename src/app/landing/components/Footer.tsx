@@ -2,127 +2,105 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import PusulaLogo from "@/shared/components/PusulaLogo";
+import type { LandingStats } from "../landingTypes";
 
-export default function Footer() {
+const REPO_URL = "https://github.com/Ferhat-Yasinoglu/pusula";
+const UPSTREAM_URL = "https://github.com/diegosouzapw/OmniRoute";
+
+export default function Footer({ stats }: { stats: LandingStats }) {
   const t = useTranslations("landing");
   const year = new Date().getFullYear();
 
+  const columns = [
+    {
+      title: t("footerProduct"),
+      links: [
+        { label: t("navOpenDashboard"), href: "/dashboard" },
+        { label: t("navCatalog"), href: "#catalog" },
+        { label: t("navRouting"), href: "#routing" },
+        { label: t("footerChangelog"), href: "/dashboard/changelog" },
+      ],
+    },
+    {
+      title: t("footerResources"),
+      links: [
+        { label: t("navDocs"), href: "/docs" },
+        { label: t("navGithub"), href: REPO_URL, external: true },
+        { label: t("footerNpm"), href: "https://www.npmjs.com/package/pusula", external: true },
+      ],
+    },
+    {
+      title: t("footerLegal"),
+      links: [
+        { label: t("footerLicense"), href: `${REPO_URL}/blob/main/LICENSE`, external: true },
+        { label: t("footerPrivacy"), href: "/privacy" },
+        { label: t("footerTerms"), href: "/terms" },
+      ],
+    },
+  ];
+
   return (
-    <footer className="border-t border-[#2D333B] bg-[#080A0F] pt-16 pb-8 px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-16">
-          {/* Brand */}
-          <div className="col-span-2 lg:col-span-2">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="size-6 rounded bg-[#0F8F83] flex items-center justify-center text-white">
-                <PusulaLogo size={16} className="text-white" />
-              </div>
-              <h3 className="text-white text-lg font-bold">{t("brandName")}</h3>
+    <footer className="border-t border-[var(--rule-soft)] bg-[var(--ink-deep)] px-4 pb-10 pt-16 sm:px-6">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-10 md:grid-cols-12">
+          <div className="md:col-span-5">
+            <div className="flex items-center gap-2.5">
+              <span className="flex size-7 items-center justify-center rounded-md bg-[var(--teal)] text-[var(--foam)]">
+                <PusulaLogo size={18} />
+              </span>
+              <span className="text-lg font-bold">{t("brandName")}</span>
+              <span className="readout ms-1 text-xs text-[var(--mist-dim)]">v{stats.version}</span>
             </div>
-            <p className="text-gray-500 text-sm max-w-xs mb-6 break-words">{t("footerTagline")}</p>
-            <div className="flex gap-4">
-              <a
-                className="text-gray-400 hover:text-white transition-colors"
-                href="https://github.com/Ferhat-Yasinoglu/pusula"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="material-symbols-outlined" aria-hidden="true">
-                  code
-                </span>
-              </a>
-            </div>
+            <p className="mt-4 max-w-sm text-sm leading-6 text-[var(--mist)]">
+              {t("footerTagline", { providers: stats.providers })}
+            </p>
           </div>
 
-          {/* Product */}
-          <div className="flex flex-col gap-4">
-            <h4 className="font-bold text-white">{t("product")}</h4>
-            <a
-              className="text-gray-400 hover:text-[#0F8F83] text-sm transition-colors"
-              href="#features"
-            >
-              {t("featuresLink")}
-            </a>
-            <a
-              className="text-gray-400 hover:text-[#0F8F83] text-sm transition-colors"
-              href="/dashboard"
-            >
-              {t("dashboardLink")}
-            </a>
-            <a
-              className="text-gray-400 hover:text-[#0F8F83] text-sm transition-colors"
-              href="https://github.com/Ferhat-Yasinoglu/pusula/releases"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {t("changelog")}
-            </a>
-          </div>
-
-          {/* Resources */}
-          <div className="flex flex-col gap-4">
-            <h4 className="font-bold text-white">{t("resources")}</h4>
-            <Link
-              className="text-gray-400 hover:text-[#0F8F83] text-sm transition-colors"
-              href="/docs"
-            >
-              {t("documentation")}
-            </Link>
-            <a
-              className="text-gray-400 hover:text-[#0F8F83] text-sm transition-colors"
-              href="https://github.com/Ferhat-Yasinoglu/pusula"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {t("github")}
-            </a>
-            <a
-              className="text-gray-400 hover:text-[#0F8F83] text-sm transition-colors"
-              href="https://www.npmjs.com/package/pusula"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {t("npm")}
-            </a>
-          </div>
-
-          {/* Legal */}
-          <div className="flex flex-col gap-4">
-            <h4 className="font-bold text-white">{t("legal")}</h4>
-            <a
-              className="text-gray-400 hover:text-[#0F8F83] text-sm transition-colors"
-              href="https://github.com/Ferhat-Yasinoglu/pusula/blob/main/LICENSE"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {t("mitLicense")}
-            </a>
-          </div>
+          {columns.map((column) => (
+            <nav key={column.title} className="md:col-span-2" aria-label={column.title}>
+              <h3 className="text-sm font-semibold text-[var(--foam)]">{column.title}</h3>
+              <ul className="mt-3 space-y-2">
+                {column.links.map((link) =>
+                  link.external ? (
+                    <li key={link.href}>
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-[var(--mist)] transition-colors hover:text-[var(--foam)]"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ) : (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className="text-sm text-[var(--mist)] transition-colors hover:text-[var(--foam)]"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  )
+                )}
+              </ul>
+            </nav>
+          ))}
         </div>
 
-        {/* Bottom */}
-        <div className="border-t border-[#2D333B] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-600 text-sm break-words text-center md:text-left">
-            {t("copyright", { year })}
+        <div className="mt-12 flex flex-col gap-2 border-t border-[var(--rule-soft)] pt-6 text-xs text-[var(--mist-dim)] sm:flex-row sm:items-center sm:justify-between">
+          <p>{t("copyright", { year })}</p>
+          <p>
+            {t("footerUpstream")}{" "}
+            <a
+              href={UPSTREAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[var(--mist)] underline-offset-4 hover:underline"
+            >
+              OmniRoute
+            </a>
           </p>
-          <div className="flex gap-6">
-            <a
-              className="text-gray-600 hover:text-white text-sm transition-colors"
-              href="https://github.com/Ferhat-Yasinoglu/pusula"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {t("github")}
-            </a>
-            <a
-              className="text-gray-600 hover:text-white text-sm transition-colors"
-              href="https://www.npmjs.com/package/pusula"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {t("npm")}
-            </a>
-          </div>
         </div>
       </div>
     </footer>

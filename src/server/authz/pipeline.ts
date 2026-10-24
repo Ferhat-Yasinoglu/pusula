@@ -4,6 +4,8 @@ import { getCachedSettings } from "../../lib/db/readCache";
 import { isDraining } from "../../lib/gracefulShutdown";
 import { checkBodySize, getBodySizeLimit } from "../../shared/middleware/bodySizeGuard";
 import { verifyDashboardSessionToken } from "@/shared/utils/dashboardSessionToken";
+import { isAuthRequired, isDashboardSessionAuthenticated } from "@/shared/utils/apiAuth";
+import { resolveRootDestination } from "@/shared/utils/rootDestination";
 import { generateRequestId } from "../../shared/utils/requestId";
 import { applyCorsHeaders } from "../cors/origins";
 import { validateBrowserMutationOrigin } from "../origin/publicOrigin";
@@ -275,20 +277,23 @@ export async function runAuthzPipeline(
     // path. When the dashboard's own loopback port is reused as native_app_port
     // (see src/lib/oauth/providers/zed-hosted.ts), that redirect lands HERE. The
     // root page (src/app/page.tsx) is meant to forward the payload to the
-    // /callback relay, but this middleware runs first and the redirect below
+    // /callback relay, but this middleware runs first and an earlier version
     // only built `basePath + "/dashboard"` — dropping the query string and
-    // silently losing the zed-hosted / native_app_signin result. Detect the
-    // native callback and forward it straight to /callback preserving the
-    // params, mirroring page.tsx.
+    // silently losing the zed-hosted / native_app_signin result (#13140).
+    //
+    // Everyone else is sent by `resolveRootDestination` (shared with page.tsx):
+    // the operator (signed in, or an instance that needs no login) to the
+    // dashboard, a visitor to a public instance to the landing page.
     const { searchParams, search } = request.nextUrl;
-    const hasNativeCallback = searchParams.get("user_id") && searchParams.get("access_token");
+    const hasZedCallback = Boolean(searchParams.get("user_id") && searchParams.get("access_token"));
+    const destination = resolveRootDestination({
+      hasZedCallback,
+      query: search.startsWith("?") ? search.slice(1) : search,
+      requireLogin: await isAuthRequired(request),
+      authenticated: hasZedCallback ? false : await isDashboardSessionAuthenticated(request),
+    });
     const response = NextResponse.redirect(
-      new URL(
-        hasNativeCallback
-          ? `${request.nextUrl.basePath}/callback${search}`
-          : `${request.nextUrl.basePath}/dashboard`,
-        request.url
-      )
+      new URL(`${request.nextUrl.basePath}${destination}`, request.url)
     );
     return stampRouteResponse(response, requestId, "MANAGEMENT");
   }
