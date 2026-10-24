@@ -30,6 +30,12 @@ declare namespace NodeJS {
   }
 }
 
+/* ─── Stylesheets ───────────────────────────────────────── */
+// Side-effect CSS imports (`import "./landing.css"`). Next's generated
+// `next-env.d.ts` declares these too, but it does not exist in a fresh
+// clone, and TypeScript 6 rejects unresolved side-effect imports.
+declare module "*.css";
+
 /* ─── Untyped Modules ───────────────────────────────────── */
 declare module "node-machine-id" {
   export function machineIdSync(original?: boolean): string;

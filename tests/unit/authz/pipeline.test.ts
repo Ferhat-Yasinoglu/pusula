@@ -92,8 +92,32 @@ test.after(() => {
   globalThis.__pusulaShutdown = { init: false, shuttingDown: false, activeRequests: 0 };
 });
 
-test("runAuthzPipeline redirects root to dashboard before management auth", async () => {
+test("runAuthzPipeline sends an anonymous visitor at root to the landing page when login is required", async () => {
   await forceAuthRequired();
+
+  const response = await pipeline.runAuthzPipeline(request("http://localhost/"), { enforce: true });
+
+  assert.equal(response.status, 307);
+  assert.equal(response.headers.get("location"), "http://localhost/landing");
+  assert.equal(response.headers.get("x-pusula-route-class"), "MANAGEMENT");
+});
+
+test("runAuthzPipeline sends a signed-in operator at root straight to the dashboard", async () => {
+  await forceAuthRequired();
+
+  const response = await pipeline.runAuthzPipeline(
+    request("http://localhost/", { headers: { cookie: await dashboardCookie() } }),
+    { enforce: true }
+  );
+
+  assert.equal(response.status, 307);
+  assert.equal(response.headers.get("location"), "http://localhost/dashboard");
+});
+
+test("runAuthzPipeline sends root to the dashboard when the instance requires no login", async () => {
+  // setupComplete too: with INITIAL_PASSWORD set, getSettings() auto-completes
+  // onboarding for headless deploys and forces requireLogin back on.
+  await settingsDb.updateSettings({ requireLogin: false, setupComplete: true });
 
   const response = await pipeline.runAuthzPipeline(request("http://localhost/"), { enforce: true });
 
@@ -116,7 +140,7 @@ test("runAuthzPipeline forwards zed-hosted native-app callback from root to /cal
   );
 });
 
-test("runAuthzPipeline still redirects root to dashboard when only one native-app callback param is present (#13140)", async () => {
+test("runAuthzPipeline treats root with only one native-app callback param as an ordinary visit (#13140)", async () => {
   await forceAuthRequired();
 
   const response = await pipeline.runAuthzPipeline(request("http://localhost/?user_id=abc123"), {
@@ -124,7 +148,7 @@ test("runAuthzPipeline still redirects root to dashboard when only one native-ap
   });
 
   assert.equal(response.status, 307);
-  assert.equal(response.headers.get("location"), "http://localhost/dashboard");
+  assert.equal(response.headers.get("location"), "http://localhost/landing");
 });
 
 test("runAuthzPipeline redirects unauthenticated dashboard pages to login", async () => {
@@ -168,7 +192,7 @@ test("runAuthzPipeline redirects unauthenticated /home/* nested paths to login (
 // PUSULA_BASE_PATH. Next.js strips the basePath from nextUrl.pathname
 // before route classification, so the redirect targets must re-add it via
 // request.nextUrl.basePath to stay inside the deployed subpath.
-test("runAuthzPipeline prefixes the root-to-dashboard redirect with basePath when set", async () => {
+test("runAuthzPipeline prefixes the root redirect with basePath when set", async () => {
   await forceAuthRequired();
 
   const req = new NextRequest("http://localhost/pusula/", {
@@ -178,7 +202,14 @@ test("runAuthzPipeline prefixes the root-to-dashboard redirect with basePath whe
   const response = await pipeline.runAuthzPipeline(req, { enforce: true });
 
   assert.equal(response.status, 307);
-  assert.equal(response.headers.get("location"), "http://localhost/pusula/dashboard");
+  assert.equal(response.headers.get("location"), "http://localhost/pusula/landing");
+
+  const signedIn = new NextRequest("http://localhost/pusula/", {
+    nextConfig: { basePath: "/pusula" },
+    headers: { cookie: await dashboardCookie() },
+  });
+  const operatorResponse = await pipeline.runAuthzPipeline(signedIn, { enforce: true });
+  assert.equal(operatorResponse.headers.get("location"), "http://localhost/pusula/dashboard");
 });
 
 test("runAuthzPipeline prefixes the dashboard login redirect with basePath when set", async () => {
