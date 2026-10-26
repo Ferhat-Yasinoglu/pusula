@@ -6,6 +6,10 @@ All notable changes to Pusula are documented in this file. The format follows
 
 ## [Unreleased]
 
+### 🔧 CI / Build
+
+- **ci(fly):** removed the `Deploy to Fly.io` workflow. It never deployed without a `FLY_API_TOKEN` and the public instance runs on our own server, so it was a no-op on every push to `main`.
+
 ## [1.0.0] - 2026-10-20
 
 ### ✨ New Features
