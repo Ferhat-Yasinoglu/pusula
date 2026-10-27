@@ -7,9 +7,16 @@ import { useEffect, useRef, useState, useSyncExternalStore, type RefObject } fro
  * their OS for less motion gets a still, fully readable page.
  */
 
-const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+export const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
-function subscribeReducedMotion(onChange: () => void): () => void {
+/**
+ * Listens for the OS reduced-motion setting changing. Exported for the
+ * runtime (`runtime/heartbeat.ts`), which has to stop its loop outside React.
+ */
+export function subscribeReducedMotion(onChange: () => void): () => void {
+  if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+    return () => {};
+  }
   const query = window.matchMedia(REDUCED_MOTION_QUERY);
   query.addEventListener("change", onChange);
   return () => query.removeEventListener("change", onChange);
@@ -17,6 +24,15 @@ function subscribeReducedMotion(onChange: () => void): () => void {
 
 function readReducedMotion(): boolean {
   return window.matchMedia(REDUCED_MOTION_QUERY).matches;
+}
+
+/**
+ * Non-hook read of the reduced-motion preference, safe to call anywhere:
+ * `false` on the server and wherever `matchMedia` is missing.
+ */
+export function prefersReducedMotion(): boolean {
+  if (typeof window === "undefined" || typeof window.matchMedia !== "function") return false;
+  return readReducedMotion();
 }
 
 /** Server snapshot: assume motion is fine; the client corrects it before paint. */
