@@ -10103,7 +10103,6 @@
     "heroTitle": "Her yapay zeka sağlayıcısı için tek uç nokta ve rotayı seçen bir pusula.",
     "heroLead": "Claude Code, Codex, Cursor ve diğer araçlarını olduğu gibi bırak. Temel adreslerini Pusula'ya çevir; her istek {providers} sağlayıcı arasında yönlendirilir, {free} tanesi ücretsiz, biri düşer ya da sınıra takılırsa otomatik yedek devreye girer.",
     "heroCtaDashboard": "Paneli aç",
-    "heroCtaSelfHost": "GitHub'dan kendin barındır",
     "heroInstallHint": "Kendi makinende çalışır, hesap gerekmez",
     "instrumentAria": "Canlı yönlendirme gösterimi",
     "instrumentRequest": "Gelen istek",

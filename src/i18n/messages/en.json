@@ -10103,7 +10103,6 @@
     "heroTitle": "One endpoint for every AI provider, and a compass that picks the route.",
     "heroLead": "Keep Claude Code, Codex, Cursor and your other tools exactly as they are. Point their base URL at Pusula and every request is routed across {providers} providers, {free} of them free, with automatic fallback when one is down or rate-limited.",
     "heroCtaDashboard": "Open dashboard",
-    "heroCtaSelfHost": "Self-host from GitHub",
     "heroInstallHint": "Runs on your own machine, no account needed",
     "instrumentAria": "Live routing demonstration",
     "instrumentRequest": "Incoming request",

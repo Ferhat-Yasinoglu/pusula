@@ -6,7 +6,6 @@ import { copyToClipboard } from "@/shared/utils/clipboard";
 import type { LandingStats } from "../landingTypes";
 import RoutingInstrument from "./RoutingInstrument";
 
-const REPO_URL = "https://github.com/Ferhat-Yasinoglu/pusula";
 const INSTALL_COMMAND = "npx pusula";
 
 export default function Hero({ stats }: { stats: LandingStats }) {
@@ -39,14 +38,6 @@ export default function Hero({ stats }: { stats: LandingStats }) {
             >
               {t("heroCtaDashboard")}
             </Link>
-            <a
-              href={REPO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-12 items-center justify-center rounded-md border border-[var(--rule)] px-6 text-base font-semibold text-[var(--foam)] transition-colors hover:border-[var(--teal)] hover:bg-[var(--chart)]"
-            >
-              {t("heroCtaSelfHost")}
-            </a>
           </div>
 
           <div className="mt-8 max-w-md">

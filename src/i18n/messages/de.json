@@ -10103,7 +10103,6 @@
     "heroTitle": "Ein Endpunkt für jeden KI-Anbieter und ein Kompass, der die Route wählt.",
     "heroLead": "Lass Claude Code, Codex, Cursor und deine anderen Werkzeuge genau so, wie sie sind. Richte ihre Basis-URL auf Pusula, und jede Anfrage wird über {providers} Anbieter geleitet, {free} davon kostenlos, mit automatischem Fallback, wenn einer ausfällt oder ans Limit stößt.",
     "heroCtaDashboard": "Dashboard öffnen",
-    "heroCtaSelfHost": "Selbst hosten von GitHub",
     "heroInstallHint": "Läuft auf deinem Rechner, kein Konto nötig",
     "instrumentAria": "Live-Demonstration des Routings",
     "instrumentRequest": "Eingehende Anfrage",
