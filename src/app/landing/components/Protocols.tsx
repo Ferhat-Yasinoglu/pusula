@@ -20,7 +20,7 @@ export default function Protocols({ stats }: { stats: LandingStats }) {
       <div className="mx-auto max-w-7xl">
         <SectionHeading title={t("protocolsTitle")} lead={t("protocolsLead")} />
 
-        <div className="grid gap-10 md:grid-cols-2 md:gap-14">
+        <div className="reveal grid gap-10 md:grid-cols-2 md:gap-14">
           <div className="border-t border-[var(--rule)] pt-6">
             <h3 className="text-xl font-semibold text-[var(--foam)]">{t("protocolsMcpTitle")}</h3>
             <p className="mt-3 text-sm leading-6 text-[var(--mist)]">
@@ -50,7 +50,7 @@ export default function Protocols({ stats }: { stats: LandingStats }) {
                 </dt>
               </div>
             </dl>
-            <code className="readout mt-5 block text-xs text-[var(--teal-bright)]" dir="ltr">
+            <code className="readout mt-5 block text-xs text-[var(--gold-bright)]" dir="ltr">
               POST /api/mcp/stream
             </code>
           </div>
@@ -68,7 +68,7 @@ export default function Protocols({ stats }: { stats: LandingStats }) {
               ].map((skill) => (
                 <li key={skill} className="flex items-center gap-2">
                   <span
-                    className="size-1 rounded-full bg-[var(--teal-bright)]"
+                    className="size-1 rounded-full bg-[var(--gold-bright)]"
                     aria-hidden="true"
                   />
                   <code className="readout text-xs" dir="ltr">
@@ -77,7 +77,7 @@ export default function Protocols({ stats }: { stats: LandingStats }) {
                 </li>
               ))}
             </ul>
-            <code className="readout mt-5 block text-xs text-[var(--teal-bright)]" dir="ltr">
+            <code className="readout mt-5 block text-xs text-[var(--gold-bright)]" dir="ltr">
               POST /a2a
             </code>
           </div>
@@ -86,7 +86,7 @@ export default function Protocols({ stats }: { stats: LandingStats }) {
         <p className="mt-10 text-sm text-[var(--mist)]">
           <Link
             href="/docs"
-            className="text-[var(--teal-bright)] underline-offset-4 hover:underline"
+            className="text-[var(--gold-bright)] underline-offset-4 hover:underline"
           >
             {t("protocolsDocsLink")}
           </Link>

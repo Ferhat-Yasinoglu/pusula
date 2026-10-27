@@ -37,11 +37,11 @@ export default function GetStarted() {
       <div className="mx-auto max-w-7xl">
         <SectionHeading title={t("startTitle")} lead={t("startLead")} />
 
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
+        <div className="reveal grid gap-12 lg:grid-cols-12 lg:gap-10">
           <ol className="space-y-8 lg:col-span-5">
             {steps.map((step, i) => (
               <li key={step.title} className="grid grid-cols-[2.5rem_1fr] gap-4">
-                <span className="readout flex size-9 items-center justify-center rounded-full border border-[var(--rule)] text-sm text-[var(--teal-bright)]">
+                <span className="readout flex size-9 items-center justify-center rounded-full border border-[var(--rule)] text-sm text-[var(--gold-bright)]">
                   {i + 1}
                 </span>
                 <div>
@@ -73,7 +73,7 @@ export default function GetStarted() {
               <pre className="readout overflow-x-auto p-4 text-[13px] leading-6" dir="ltr">
                 <code>
                   <span className="text-[var(--mist-dim)]">$ </span>
-                  <span className="text-[var(--teal-bright)]">{INSTALL_COMMAND}</span>
+                  <span className="text-[var(--gold-bright)]">{INSTALL_COMMAND}</span>
                   {"\n"}
                   <span className="text-[var(--mist)]">{t("startRunning")}</span>
                   {"\n"}
@@ -88,13 +88,13 @@ export default function GetStarted() {
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/dashboard"
-                className="inline-flex h-11 items-center justify-center rounded-md bg-[var(--teal)] px-6 text-sm font-semibold text-[var(--foam)] transition-colors hover:bg-[var(--teal-ink)]"
+                className="inline-flex h-11 items-center justify-center btn-gold rounded-full px-6 text-sm font-bold"
               >
                 {t("navOpenDashboard")}
               </Link>
               <Link
                 href="/docs"
-                className="inline-flex h-11 items-center justify-center rounded-md border border-[var(--rule)] px-6 text-sm font-semibold text-[var(--foam)] transition-colors hover:border-[var(--teal)]"
+                className="inline-flex h-11 items-center justify-center rounded-md border border-[var(--rule)] px-6 text-sm font-semibold text-[var(--foam)] transition-colors hover:border-[var(--gold)]"
               >
                 {t("navDocs")}
               </Link>

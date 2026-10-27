@@ -38,12 +38,12 @@ export default function Compression({ stats }: { stats: LandingStats }) {
     >
       <div className="mx-auto max-w-7xl">
         <SectionHeading title={t("compressionTitle")} lead={t("compressionLead")} />
-        <div className="grid gap-x-10 gap-y-10 md:grid-cols-3">
+        <div className="reveal grid gap-x-10 gap-y-10 md:grid-cols-3">
           {items.map((item) => (
             <div key={item.code} className="border-t border-[var(--rule)] pt-5">
               <h3 className="text-base font-semibold text-[var(--foam)]">{item.title}</h3>
               <p className="mt-2 text-sm leading-6 text-[var(--mist)]">{item.desc}</p>
-              <code className="readout mt-4 block text-xs text-[var(--teal-bright)]" dir="ltr">
+              <code className="readout mt-4 block text-xs text-[var(--gold-bright)]" dir="ltr">
                 {item.code}
               </code>
             </div>

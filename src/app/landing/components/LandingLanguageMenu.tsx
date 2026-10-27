@@ -51,7 +51,7 @@ export default function LandingLanguageMenu() {
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label={t("languageMenu")}
-        className="flex h-9 items-center gap-1.5 rounded-md border border-[var(--rule)] px-2.5 text-xs font-semibold tracking-wide text-[var(--mist)] transition-colors hover:border-[var(--teal)] hover:text-[var(--foam)]"
+        className="flex h-9 items-center gap-1.5 rounded-md border border-[var(--rule)] px-2.5 text-xs font-semibold tracking-wide text-[var(--mist)] transition-colors hover:border-[var(--gold)] hover:text-[var(--foam)]"
       >
         <span className="material-symbols-outlined text-[16px]" aria-hidden="true">
           language
@@ -73,7 +73,7 @@ export default function LandingLanguageMenu() {
                   onClick={() => select(entry.code)}
                   className={`flex w-full items-center justify-between px-3 py-2 text-sm transition-colors ${
                     active
-                      ? "text-[var(--teal-bright)]"
+                      ? "text-[var(--gold-bright)]"
                       : "text-[var(--foam)] hover:bg-[var(--chart-raised)]"
                   }`}
                 >

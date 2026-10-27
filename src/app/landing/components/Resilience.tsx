@@ -37,7 +37,7 @@ export default function Resilience() {
       <div className="mx-auto max-w-7xl">
         <SectionHeading title={t("resilienceTitle")} lead={t("resilienceLead")} />
 
-        <div className="grid items-center gap-12 lg:grid-cols-12">
+        <div className="reveal grid items-center gap-12 lg:grid-cols-12">
           <figure className="lg:col-span-5">
             <svg
               viewBox="0 0 280 280"
@@ -54,7 +54,7 @@ export default function Resilience() {
                     fill={
                       i === 2 ? "var(--chart-raised)" : i === 1 ? "var(--chart)" : "transparent"
                     }
-                    stroke={i === 2 ? "var(--amber)" : "var(--teal-bright)"}
+                    stroke={i === 2 ? "var(--signal)" : "var(--gold-bright)"}
                     strokeOpacity={i === 2 ? 1 : 0.6 + i * 0.2}
                     strokeWidth={i === 2 ? 1.5 : 1}
                     strokeDasharray={i === 0 ? "3 5" : undefined}

@@ -26,7 +26,7 @@ export default function Routing({ stats }: { stats: LandingStats }) {
       <div className="mx-auto max-w-7xl">
         <SectionHeading title={t("routingTitle")} lead={t("routingLead")} />
 
-        <div className="grid gap-14 lg:grid-cols-12 lg:gap-10">
+        <div className="reveal grid gap-14 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-5">
             <h3 className="text-lg font-semibold text-[var(--foam)]">
               {t("routingStrategiesTitle", { count: stats.strategies.length })}
@@ -40,7 +40,7 @@ export default function Routing({ stats }: { stats: LandingStats }) {
                   <li key={id} className="grid grid-cols-[9.5rem_1fr] gap-3 py-2.5">
                     <code
                       className={`readout text-sm ${
-                        isAuto ? "text-[var(--amber)]" : "text-[var(--teal-bright)]"
+                        isAuto ? "text-[var(--signal)]" : "text-[var(--gold-bright)]"
                       }`}
                       dir="ltr"
                     >
@@ -76,7 +76,7 @@ export default function Routing({ stats }: { stats: LandingStats }) {
                           className="block h-full rounded-full"
                           style={{
                             width: `${Math.max((factor.weight / maxWeight) * 100, silent ? 0 : 2)}%`,
-                            background: silent ? "transparent" : "var(--teal)",
+                            background: silent ? "transparent" : "var(--gold)",
                           }}
                         />
                       </span>

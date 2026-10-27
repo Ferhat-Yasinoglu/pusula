@@ -8,6 +8,7 @@ import LandingLanguageMenu from "./LandingLanguageMenu";
 const REPO_URL = "https://github.com/Ferhat-Yasinoglu/pusula";
 
 const SECTION_LINKS = [
+  { key: "navMap", href: "#network" },
   { key: "navCatalog", href: "#catalog" },
   { key: "navRouting", href: "#routing" },
   { key: "navTools", href: "#tools" },
@@ -22,10 +23,10 @@ export default function Navigation() {
     "text-sm text-[var(--mist)] transition-colors hover:text-[var(--foam)] whitespace-nowrap";
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-[var(--rule-soft)] bg-[rgba(6,26,32,0.78)] backdrop-blur-md">
+    <header className="fixed top-0 z-50 w-full border-b border-[var(--rule-soft)] bg-[rgba(7,8,10,0.62)] backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link href="/landing" className="flex items-center gap-2.5" aria-label={t("navigateHome")}>
-          <span className="flex size-8 items-center justify-center rounded-md bg-[var(--teal)] text-[var(--foam)]">
+          <span className="flex size-8 items-center justify-center rounded-lg btn-gold">
             <PusulaLogo size={20} />
           </span>
           <span className="text-lg font-bold tracking-tight">{t("brandName")}</span>
@@ -49,7 +50,7 @@ export default function Navigation() {
           <LandingLanguageMenu />
           <Link
             href="/dashboard"
-            className="hidden h-9 items-center rounded-md bg-[var(--teal)] px-4 text-sm font-semibold text-[var(--foam)] transition-colors hover:bg-[var(--teal-ink)] sm:inline-flex"
+            className="hidden h-9 items-center btn-gold rounded-full px-4 text-sm font-bold sm:inline-flex"
           >
             {t("navOpenDashboard")}
           </Link>
@@ -102,7 +103,7 @@ export default function Navigation() {
             <Link
               href="/dashboard"
               onClick={() => setOpen(false)}
-              className="mt-2 inline-flex h-11 items-center justify-center rounded-md bg-[var(--teal)] text-base font-semibold text-[var(--foam)]"
+              className="mt-2 inline-flex h-11 items-center justify-center btn-gold rounded-full text-base font-bold"
             >
               {t("navOpenDashboard")}
             </Link>

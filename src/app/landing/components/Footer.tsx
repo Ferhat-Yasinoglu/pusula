@@ -45,7 +45,7 @@ export default function Footer({ stats }: { stats: LandingStats }) {
         <div className="grid gap-10 md:grid-cols-12">
           <div className="md:col-span-5">
             <div className="flex items-center gap-2.5">
-              <span className="flex size-7 items-center justify-center rounded-md bg-[var(--teal)] text-[var(--foam)]">
+              <span className="flex size-7 items-center justify-center rounded-lg btn-gold">
                 <PusulaLogo size={18} />
               </span>
               <span className="text-lg font-bold">{t("brandName")}</span>

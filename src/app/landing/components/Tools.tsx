@@ -76,7 +76,7 @@ export default function Tools({ stats }: { stats: LandingStats }) {
           lead={t("toolsLead", { count: stats.cliTools.length })}
         />
 
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
+        <div className="reveal grid gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-5">
             <ul className="flex flex-wrap gap-x-5 gap-y-2" aria-label={t("toolsListAria")}>
               {stats.cliTools.map((tool) => (
@@ -91,7 +91,7 @@ export default function Tools({ stats }: { stats: LandingStats }) {
           <div className="lg:col-span-7">
             <div className="mb-3 flex items-center justify-between gap-3">
               <span className="text-xs text-[var(--mist-dim)]">{t("toolsBaseUrl")}</span>
-              <code className="readout text-xs text-[var(--teal-bright)]" dir="ltr">
+              <code className="readout text-xs text-[var(--gold-bright)]" dir="ltr">
                 {baseUrl}/v1
               </code>
             </div>
@@ -109,7 +109,7 @@ export default function Tools({ stats }: { stats: LandingStats }) {
                         onClick={() => setLang(entry.id)}
                         className={`relative px-3 py-2.5 text-xs font-medium transition-colors ${
                           active
-                            ? "text-[var(--foam)] after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:bg-[var(--teal-bright)]"
+                            ? "text-[var(--foam)] after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:bg-[var(--gold-bright)]"
                             : "text-[var(--mist)] hover:text-[var(--foam)]"
                         }`}
                       >

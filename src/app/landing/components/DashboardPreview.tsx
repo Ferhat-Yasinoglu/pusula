@@ -38,14 +38,14 @@ export default function DashboardPreview() {
           aside={
             <Link
               href="/dashboard"
-              className="inline-flex h-10 items-center rounded-md border border-[var(--rule)] px-4 text-sm font-semibold text-[var(--foam)] transition-colors hover:border-[var(--teal)]"
+              className="inline-flex h-10 items-center rounded-md border border-[var(--rule)] px-4 text-sm font-semibold text-[var(--foam)] transition-colors hover:border-[var(--gold)]"
             >
               {t("navOpenDashboard")}
             </Link>
           }
         />
 
-        <div className="grid gap-10 lg:grid-cols-12">
+        <div className="reveal grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-8">
             <div className="overflow-hidden rounded-xl border border-[var(--rule)] bg-[var(--chart)] shadow-[0_40px_90px_-40px_rgba(0,0,0,0.8)]">
               <div className="flex items-center gap-2 border-b border-[var(--rule-soft)] px-3 py-2">
@@ -72,7 +72,7 @@ export default function DashboardPreview() {
             {facts.map((fact) => (
               <div key={fact.icon} className="flex gap-3">
                 <span
-                  className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-[var(--teal-bright)]"
+                  className="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-[var(--gold-bright)]"
                   aria-hidden="true"
                 >
                   {fact.icon}

@@ -32,7 +32,7 @@ function Name({ entry }: { entry: CatalogEntry }) {
     <li className="flex items-baseline gap-1.5 whitespace-nowrap text-sm leading-7 text-[var(--mist)]">
       {entry.free ? (
         <span
-          className="inline-block size-1.5 shrink-0 rounded-full bg-[var(--teal-bright)]"
+          className="inline-block size-1.5 shrink-0 rounded-full bg-[var(--gold-bright)]"
           aria-hidden="true"
         />
       ) : (
@@ -69,7 +69,7 @@ export default function Catalog({ stats }: { stats: LandingStats }) {
           aside={
             <p className="flex items-center gap-2 text-xs text-[var(--mist)]">
               <span
-                className="inline-block size-1.5 rounded-full bg-[var(--teal-bright)]"
+                className="inline-block size-1.5 rounded-full bg-[var(--gold-bright)]"
                 aria-hidden="true"
               />
               {t("catalogFreeMark")}
@@ -77,7 +77,7 @@ export default function Catalog({ stats }: { stats: LandingStats }) {
           }
         />
 
-        <div className="space-y-10">
+        <div className="reveal space-y-10">
           {groups.map(({ kind, entries }) => {
             const collapsed = kind === "llm" && !expanded;
             const visible = collapsed ? entries.slice(0, COLLAPSED_CHAT_COUNT) : entries;
@@ -99,7 +99,7 @@ export default function Catalog({ stats }: { stats: LandingStats }) {
                       type="button"
                       onClick={() => setExpanded((value) => !value)}
                       aria-expanded={expanded}
-                      className="mt-4 inline-flex h-9 items-center gap-1.5 rounded-md border border-[var(--rule)] px-3 text-sm text-[var(--foam)] transition-colors hover:border-[var(--teal)]"
+                      className="mt-4 inline-flex h-9 items-center gap-1.5 rounded-md border border-[var(--rule)] px-3 text-sm text-[var(--foam)] transition-colors hover:border-[var(--gold)]"
                     >
                       <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
                         {expanded ? "unfold_less" : "unfold_more"}
