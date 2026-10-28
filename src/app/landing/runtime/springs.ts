@@ -34,7 +34,6 @@ export const CAMERA: SpringConfig = { stiffness: 40, damping: 1 };
 export const UI: SpringConfig = { stiffness: 180, damping: 0.7 };
 
 export const SPRINGS = { NEEDLE, INTRO_NEEDLE, TAPE, RECALL, CAMERA, UI } as const;
-export type SpringName = keyof typeof SPRINGS;
 
 /** Longest single integration step; `springStep` itself caps at 1/30 s. */
 const MAX_SUBSTEP = 1 / 60;

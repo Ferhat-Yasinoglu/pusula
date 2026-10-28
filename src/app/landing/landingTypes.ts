@@ -94,9 +94,6 @@ export const SAMPLE_CANDIDATES = [
   { id: "ollama", catalogId: "ollama-local", alias: "ollama", profile: "local" },
 ] as const;
 
-export type BreakerProfileId = (typeof BREAKER_PROFILES)[number]["id"];
-export type SampleCandidate = (typeof SAMPLE_CANDIDATES)[number];
-
 export type CatalogKind =
   "llm" | "webSearch" | "imageToText" | "webFetch" | "embedding" | "video" | "other";
 

@@ -10,9 +10,9 @@
  *   border → spokes and breaker roads → pillars of light → city beacons →
  *   ripples → breaker rings → city nodes → flights (comets) → sparks and codes.
  *
- * The dots are round, as in the reference image: one path of arcs and one
- * fill per band (five `fillStyle` changes), which profiled no slower than the
- * spec's `fillRect` squares (≈0.9 ms per desktop frame, all layers).
+ * The dot matrix (its grid, ripples and pillars of light) lives in
+ * `mapDots.ts` and the palette in `mapPalette.ts`; this module owns the scene,
+ * the camera, the heat and every other layer.
  *
  * Flights come from the deck's `routed` / `dropped` events, handed over by
  * the station through `launch()`; each plays as hub-arc legs (client → Kabul,
@@ -26,14 +26,13 @@
  * clock fed by the heartbeat's clamped `dt`, so a frozen or hidden stage
  * resumes where it stopped instead of fast-forwarding.
  */
-import { BORDER_POINTS, MAP_HEIGHT, MAP_WIDTH, buildDotGrid } from "../../landingGeometry";
+import { BORDER_POINTS, MAP_HEIGHT, MAP_WIDTH } from "../../landingGeometry";
 import { BREAKER_PROFILES, SAMPLE_CANDIDATES } from "../../landingTypes";
 import {
   PROJECTED_STRIDE,
   arcPoint3,
   makeCamera,
   project3,
-  ringPolyline,
   updateCamera,
   vec3,
   type Arc3,
@@ -47,6 +46,29 @@ import { getQualityTier } from "../../runtime/heartbeat";
 import { CAMERA, springAt, stepSpring } from "../../runtime/springs";
 import type { StageSize } from "../../runtime/useCanvasStage";
 import {
+  clearRipples,
+  drawDots,
+  drawPillars,
+  drawRipples,
+  ensureDots,
+  startRipple,
+  updateRipples,
+} from "./mapDots";
+import {
+  CODE_FONT,
+  DASH_CUT,
+  DASH_HUB,
+  DASH_NONE,
+  DASH_SPOKE,
+  EMBER,
+  EMBER_GOLD,
+  GOLD,
+  GOLD_HI,
+  GOLD_LO,
+  PHOSPHOR,
+  VOID,
+} from "./mapPalette";
+import {
   BREATH_YAW_DEG,
   CITY_COUNT,
   CLIENT_HEAT_KICK,
@@ -55,7 +77,6 @@ import {
   FLOW_YAW_DEG,
   HEAT_HALF_LIFE_S,
   HEAT_KICK,
-  HEAT_SIGMA_SPACINGS,
   HUB_ARCS,
   HUB_HEAT_KICK,
   HUB_INDEX,
@@ -64,7 +85,6 @@ import {
   NODE_POINTS,
   PARALLAX_YAW_DEG,
   PERSPECTIVE_F,
-  PILLAR_THRESHOLD,
   PIN_PITCH_DEG,
   TILT_FEATURES_DEG,
   candidateAtNode,
@@ -73,7 +93,6 @@ import {
   fitMap,
   flowPitch,
   kickHeat,
-  pillarHeight,
   pinCameraTarget,
   planFlight,
   providerNode,
@@ -144,36 +163,6 @@ export function getFrameCount(): number {
 }
 
 /* ------------------------------------------------------------------------ */
-/* Palette (landing.css tokens)                                             */
-/* ------------------------------------------------------------------------ */
-
-const GOLD = "#d4a840";
-const GOLD_HI = "#ffd36e";
-const GOLD_LO = "#8c6a1e";
-const PHOSPHOR = "#fff1c9";
-const EMBER = "#ff7a45";
-const VOID = "#040405";
-/** Ember-gold, the tint of a fallback leg (between --ember and --gold-hi). */
-const EMBER_GOLD = "#ffa65a";
-const CODE_FONT = "600 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
-
-/** Five dot bands, dim gold to phosphor: [r, g, b, alpha]. */
-const BAND_RGBA: readonly (readonly [number, number, number, number])[] = [
-  [140, 106, 30, 0.62],
-  [176, 136, 48, 0.78],
-  [212, 168, 64, 0.9],
-  [255, 211, 110, 0.96],
-  [255, 241, 201, 1],
-];
-const BANDS = BAND_RGBA.length;
-const BAND_FILL: readonly string[] = BAND_RGBA.map(([r, g, b, a]) => `rgba(${r},${g},${b},${a})`);
-const DASH_NONE: number[] = [];
-const DASH_HUB: number[] = [3, 4];
-const DASH_CUT: number[] = [5, 5];
-/** The poster's spoke dash (`strokeDasharray="3 5"` in MapPoster). */
-const DASH_SPOKE: number[] = [3, 5];
-
-/* ------------------------------------------------------------------------ */
 /* Scene state                                                              */
 /* ------------------------------------------------------------------------ */
 
@@ -194,74 +183,6 @@ const BREATH_RATE = 0.26;
 const HALF_W = MAP_WIDTH / 2;
 const HALF_H = MAP_HEIGHT / 2;
 
-// Dot matrix ------------------------------------------------------------------
-const DOT_RADIUS = 1.3;
-const CELL = 32;
-const CELLS_X = Math.ceil(MAP_WIDTH / CELL);
-const CELLS_Y = Math.ceil(MAP_HEIGHT / CELL);
-let builtSpacing = 0;
-let dotCount = 0;
-let dotX = new Float32Array(0);
-let dotY = new Float32Array(0);
-let dotBase = new Float32Array(0);
-/** Per dot, the influence weight of each city: `exp(−d² / 2σ²)`, σ = 4 · spacing. */
-let dotWeight = new Float32Array(0);
-let dotLift = new Float32Array(0);
-let cellStart = new Int32Array(CELLS_X * CELLS_Y + 1);
-let cellDots = new Int32Array(0);
-/** Per band: x, y, radius records. */
-let bandData: Float32Array[] = [];
-const bandCount = new Int32Array(BANDS);
-let pillarLines = new Float32Array(0);
-let pillarTops = new Float32Array(0);
-let pillarStrength = new Float32Array(0);
-let pillarCount = 0;
-
-function buildDots(spacing: number): void {
-  const dots = buildDotGrid(spacing);
-  dotCount = dots.length;
-  dotX = new Float32Array(dotCount);
-  dotY = new Float32Array(dotCount);
-  dotBase = new Float32Array(dotCount);
-  dotWeight = new Float32Array(dotCount * CITY_COUNT);
-  dotLift = new Float32Array(dotCount);
-  const sigma = HEAT_SIGMA_SPACINGS * spacing;
-  const twoSigma2 = 2 * sigma * sigma;
-  const counts = new Int32Array(CELLS_X * CELLS_Y);
-  for (let i = 0; i < dotCount; i++) {
-    const dot = dots[i];
-    dotX[i] = dot.x - HALF_W;
-    dotY[i] = dot.y - HALF_H;
-    // At rest every dot is gold (bands 0–2); only heat lifts one to gold-hi
-    // and phosphor, so the flat map reads as the reference's gold matrix.
-    dotBase[i] = 0.2 + 0.085 * dot.level;
-    for (let c = 0; c < CITY_COUNT; c++) {
-      const p = NODE_POINTS[c];
-      const d2 = (p.x - dot.x) ** 2 + (p.y - dot.y) ** 2;
-      dotWeight[i * CITY_COUNT + c] = Math.exp(-d2 / twoSigma2);
-    }
-    counts[cellOf(dot.x, dot.y)]++;
-  }
-  cellStart = new Int32Array(CELLS_X * CELLS_Y + 1);
-  for (let c = 0; c < counts.length; c++) cellStart[c + 1] = cellStart[c] + counts[c];
-  cellDots = new Int32Array(dotCount);
-  const fill = cellStart.slice(0, counts.length);
-  for (let i = 0; i < dotCount; i++) {
-    cellDots[fill[cellOf(dotX[i] + HALF_W, dotY[i] + HALF_H)]++] = i;
-  }
-  bandData = Array.from({ length: BANDS }, () => new Float32Array(dotCount * 3));
-  pillarLines = new Float32Array(dotCount * 4);
-  pillarTops = new Float32Array(dotCount * 4);
-  pillarStrength = new Float32Array(dotCount);
-  builtSpacing = spacing;
-}
-
-function cellOf(x: number, y: number): number {
-  const cx = Math.min(CELLS_X - 1, Math.max(0, Math.floor(x / CELL)));
-  const cy = Math.min(CELLS_Y - 1, Math.max(0, Math.floor(y / CELL)));
-  return cy * CELLS_X + cx;
-}
-
 // Heat ------------------------------------------------------------------------
 const heat = new Float32Array(CITY_COUNT);
 
@@ -281,7 +202,6 @@ const arcSamples: (Float32Array | null)[] = HUB_ARCS.map((arc) => {
 });
 const arcScreen = new Float32Array((ARC_SEGMENTS + 1) * PROJECTED_STRIDE);
 const borderScreen = new Float32Array(BORDER_POINTS.length * PROJECTED_STRIDE);
-const ringScreen = new Float32Array(49 * PROJECTED_STRIDE);
 const point3 = vec3();
 const scratch = new Float32Array(PROJECTED_STRIDE * 2);
 
@@ -311,14 +231,7 @@ const flights: Flight[] = Array.from({ length: MAX_FLIGHTS }, () => ({
 const failedNodes: number[] = [];
 const trailScreen = new Float32Array(TRAIL_POINTS * PROJECTED_STRIDE);
 
-// Ripples, sparks, code labels, flashes ----------------------------------------
-const MAX_RIPPLES = 4;
-const RIPPLE_MS = 900;
-const RIPPLE_RADIUS = 140;
-const RIPPLE_BAND = 10;
-const rippleNode = new Int32Array(MAX_RIPPLES).fill(-1);
-const rippleStart = new Float64Array(MAX_RIPPLES);
-
+// Sparks, code labels, flashes ------------------------------------------------
 const SPARKS_PER_BURST = 12;
 const MAX_SPARKS = SPARKS_PER_BURST * 4;
 const SPARK_MS = 700;
@@ -362,7 +275,7 @@ function resetScene(): void {
   yawSpring.angle = 0;
   yawSpring.velocity = 0;
   heat.fill(0);
-  rippleNode.fill(-1);
+  clearRipples();
   sparkStart.fill(-1e9);
   codeNode.fill(-1);
   flashStart.fill(-1e9);
@@ -423,14 +336,12 @@ export function setup(_ctx: CanvasRenderingContext2D, s: StageSize): void {
   phosphor32 = getSprite("phosphor", 32);
   ember16 = getSprite("ember", 16);
   ember32 = getSprite("ember", 32);
-  const spacing = wantedSpacing(s.w, getQualityTier());
-  if (spacing !== builtSpacing) buildDots(spacing);
+  ensureDots(wantedSpacing(s.w, getQualityTier()));
 }
 
 export function draw(ctx: CanvasRenderingContext2D, s: StageSize, dt: number): void {
   const tier = getQualityTier();
-  const spacing = wantedSpacing(s.w, tier);
-  if (spacing !== builtSpacing) buildDots(spacing);
+  ensureDots(wantedSpacing(s.w, tier));
 
   clockMs += dt * 1000;
   const now = clockMs;
@@ -516,7 +427,7 @@ export function draw(ctx: CanvasRenderingContext2D, s: StageSize, dt: number): v
   }
 
   updateRipples(now, tier);
-  drawDots(ctx, tier, tilt);
+  drawDots(ctx, cam, heat, tier, tilt);
 
   // Border: a soft underlay and a crisp line whose alpha breathes .6 ↔ 1 over 4 s.
   projectBorder(0);
@@ -533,9 +444,9 @@ export function draw(ctx: CanvasRenderingContext2D, s: StageSize, dt: number): v
 
   const world = getWorld();
   drawSpokes(ctx, now, world.candidates, tiltShare);
-  if (tier === 0 && tilt > 0) drawPillars(ctx, tilt);
+  if (tier === 0 && tilt > 0) drawPillars(ctx, tilt, goldHi16);
   if (tilt > 0) drawBeacons(ctx, tilt, world.candidates);
-  if (tier < 1) drawRipples(ctx, now);
+  if (tier < 1) drawRipples(ctx, cam, now);
   drawBreakerRings(ctx, world.candidates, nodeK);
   drawNodes(ctx, now, nodeK, world.candidates);
   drawFlights(ctx, now, tier);
@@ -566,151 +477,6 @@ function strokeBorder(ctx: CanvasRenderingContext2D): void {
   }
   ctx.closePath();
   ctx.stroke();
-}
-
-function updateRipples(now: number, tier: number): void {
-  dotLift.fill(0);
-  if (tier >= 1) return;
-  for (let r = 0; r < MAX_RIPPLES; r++) {
-    const node = rippleNode[r];
-    if (node < 0) continue;
-    const t = (now - rippleStart[r]) / RIPPLE_MS;
-    if (t >= 1) {
-      rippleNode[r] = -1;
-      continue;
-    }
-    const radius = RIPPLE_RADIUS * (1 - (1 - t) * (1 - t));
-    const amount = 4 * (1 - t);
-    const p = NODE_POINTS[node];
-    const reach = radius + RIPPLE_BAND;
-    const x0 = Math.max(0, Math.floor((p.x - reach) / CELL));
-    const x1 = Math.min(CELLS_X - 1, Math.floor((p.x + reach) / CELL));
-    const y0 = Math.max(0, Math.floor((p.y - reach) / CELL));
-    const y1 = Math.min(CELLS_Y - 1, Math.floor((p.y + reach) / CELL));
-    const px = p.x - HALF_W;
-    const py = p.y - HALF_H;
-    for (let cy = y0; cy <= y1; cy++) {
-      for (let cx = x0; cx <= x1; cx++) {
-        const cell = cy * CELLS_X + cx;
-        for (let k = cellStart[cell]; k < cellStart[cell + 1]; k++) {
-          const i = cellDots[k];
-          const d = Math.hypot(dotX[i] - px, dotY[i] - py);
-          const off = Math.abs(d - radius);
-          if (off < RIPPLE_BAND) dotLift[i] += amount * (1 - off / RIPPLE_BAND);
-        }
-      }
-    }
-  }
-}
-
-function drawDots(ctx: CanvasRenderingContext2D, tier: number, tilt: number): void {
-  bandCount.fill(0);
-  pillarCount = 0;
-  const pillars = tier === 0 && tilt > 0;
-  const scale = cam.scale;
-  let hot = 0;
-  for (let c = 0; c < CITY_COUNT; c++) if (heat[c] > 0.01) hot++;
-  for (let i = 0; i < dotCount; i++) {
-    let h = 0;
-    if (hot > 0) {
-      const base = i * CITY_COUNT;
-      for (let c = 0; c < CITY_COUNT; c++) h += heat[c] * dotWeight[base + c];
-    }
-    const lift = dotLift[i];
-    const s = project3(cam, dotX[i], dotY[i], lift, scratch, 0);
-    const brightness = dotBase[i] + 0.42 * Math.min(h, 1.3) + lift * 0.08;
-    const band = Math.min(BANDS - 1, Math.max(0, Math.floor(brightness * BANDS)));
-    const o = bandCount[band]++ * 3;
-    const data = bandData[band];
-    data[o] = scratch[0];
-    data[o + 1] = scratch[1];
-    data[o + 2] = (DOT_RADIUS + 0.13 * band) * scale * s;
-    if (pillars && h > PILLAR_THRESHOLD) {
-      project3(cam, dotX[i], dotY[i], lift + pillarHeight(h) * tilt, scratch, PROJECTED_STRIDE);
-      const q = pillarCount * 4;
-      pillarLines[q] = scratch[0];
-      pillarLines[q + 1] = scratch[1];
-      pillarLines[q + 2] = scratch[PROJECTED_STRIDE];
-      pillarLines[q + 3] = scratch[PROJECTED_STRIDE + 1];
-      pillarTops[q] = scratch[PROJECTED_STRIDE];
-      pillarTops[q + 1] = scratch[PROJECTED_STRIDE + 1];
-      // Soft edge: pillars at the rim of a heat field are short-lived and dim.
-      const strength = Math.min(1, (h - PILLAR_THRESHOLD) / 0.5);
-      pillarTops[q + 2] = (3 + 5 * strength) * Math.min(1.2, scale);
-      pillarTops[q + 3] = (0.3 + 0.6 * strength) * tilt;
-      pillarStrength[pillarCount] = strength;
-      pillarCount++;
-    }
-  }
-  // One path and one fill per band: five fillStyle changes for the whole matrix.
-  for (let b = 0; b < BANDS; b++) {
-    const data = bandData[b];
-    const count = bandCount[b];
-    if (count === 0) continue;
-    ctx.fillStyle = BAND_FILL[b];
-    ctx.beginPath();
-    for (let k = 0; k < count; k++) {
-      const o = k * 3;
-      const r = data[o + 2];
-      ctx.moveTo(data[o] + r, data[o + 1]);
-      ctx.arc(data[o], data[o + 1], r, 0, Math.PI * 2);
-    }
-    ctx.fill();
-  }
-}
-
-/** Pillar strength bins: [from, to) and the alpha of each bin's light. */
-const PILLAR_BINS: readonly (readonly [number, number, number])[] = [
-  [0, 0.34, 0.35],
-  [0.34, 0.67, 0.65],
-  [0.67, 1.01, 1],
-];
-
-/**
- * Pillars of light: a dim shaft from the dot, a brighter upper half and a
- * glowing tip, binned by strength so the rim of a heat field fades out.
- */
-function drawPillars(ctx: CanvasRenderingContext2D, tilt: number): void {
-  if (pillarCount === 0) return;
-  ctx.globalCompositeOperation = "lighter";
-  ctx.lineCap = "butt";
-  for (let bin = 0; bin < PILLAR_BINS.length; bin++) {
-    const from = PILLAR_BINS[bin][0];
-    const to = PILLAR_BINS[bin][1];
-    const alpha = PILLAR_BINS[bin][2];
-    // Shaft.
-    ctx.strokeStyle = GOLD;
-    ctx.lineWidth = 1;
-    ctx.globalAlpha = 0.22 * alpha * tilt;
-    ctx.beginPath();
-    for (let i = 0; i < pillarCount; i++) {
-      const f = pillarStrength[i];
-      if (f < from || f >= to) continue;
-      const q = i * 4;
-      ctx.moveTo(pillarLines[q], pillarLines[q + 1]);
-      ctx.lineTo(pillarLines[q + 2], pillarLines[q + 3]);
-    }
-    ctx.stroke();
-    // The upper half burns brighter.
-    ctx.strokeStyle = GOLD_HI;
-    ctx.lineWidth = 1.2;
-    ctx.globalAlpha = 0.55 * alpha * tilt;
-    ctx.beginPath();
-    for (let i = 0; i < pillarCount; i++) {
-      const f = pillarStrength[i];
-      if (f < from || f >= to) continue;
-      const q = i * 4;
-      const mx = pillarLines[q] + (pillarLines[q + 2] - pillarLines[q]) * 0.55;
-      const my = pillarLines[q + 1] + (pillarLines[q + 3] - pillarLines[q + 1]) * 0.55;
-      ctx.moveTo(mx, my);
-      ctx.lineTo(pillarLines[q + 2], pillarLines[q + 3]);
-    }
-    ctx.stroke();
-  }
-  ctx.lineCap = "round";
-  ctx.globalAlpha = 1;
-  ctx.globalCompositeOperation = "source-over";
-  if (goldHi16) drawGlowBatch(ctx, goldHi16, pillarTops, pillarCount, 4);
 }
 
 /**
@@ -767,28 +533,6 @@ function drawBeacons(
 
 const BEACON_HEIGHT = 90;
 const BEACON_SEGMENTS = 6;
-
-function drawRipples(ctx: CanvasRenderingContext2D, now: number): void {
-  ctx.strokeStyle = GOLD_HI;
-  ctx.lineWidth = 1.2;
-  for (let r = 0; r < MAX_RIPPLES; r++) {
-    const node = rippleNode[r];
-    if (node < 0) continue;
-    const t = (now - rippleStart[r]) / RIPPLE_MS;
-    if (t >= 1 || t < 0) continue;
-    const radius = RIPPLE_RADIUS * (1 - (1 - t) * (1 - t));
-    const p = NODE_POINTS[node];
-    ringPolyline(cam, Math.max(radius, 1), 0, 48, ringScreen, p.x - HALF_W, p.y - HALF_H, 0);
-    ctx.globalAlpha = 0.55 * (1 - t);
-    ctx.beginPath();
-    ctx.moveTo(ringScreen[0], ringScreen[1]);
-    for (let i = 1; i <= 48; i++) {
-      ctx.lineTo(ringScreen[i * PROJECTED_STRIDE], ringScreen[i * PROJECTED_STRIDE + 1]);
-    }
-    ctx.stroke();
-  }
-  ctx.globalAlpha = 1;
-}
 
 function projectArc(node: number): boolean {
   const samples = arcSamples[node];
@@ -1184,18 +928,7 @@ function legLanded(flight: Flight, leg: LegPlan, now: number): void {
   }
   if (leg.final && leg.node < CITY_COUNT) {
     heat[leg.node] = kickHeat(heat[leg.node], HEAT_KICK);
-    let slot = -1;
-    let oldest = 0;
-    for (let r = 0; r < MAX_RIPPLES; r++) {
-      if (rippleNode[r] < 0) {
-        slot = r;
-        break;
-      }
-      if (rippleStart[r] < rippleStart[oldest]) oldest = r;
-    }
-    if (slot < 0) slot = oldest;
-    rippleNode[slot] = leg.node;
-    rippleStart[slot] = now;
+    startRipple(leg.node, now);
   }
 }
 

@@ -493,14 +493,8 @@ function subscribeHeartbeat(listener: () => void): () => void {
 }
 
 const serverFalse = () => false;
-const serverTier = (): QualityTier => 0;
 
 /** The Pause toggle as React state. Server and hydration render `false`. */
 export function usePaused(): boolean {
   return useSyncExternalStore(subscribeHeartbeat, isPaused, serverFalse);
-}
-
-/** 0 = full quality; 1 and 2 = progressively lighter rendering. Server renders 0. */
-export function useQualityTier(): QualityTier {
-  return useSyncExternalStore(subscribeHeartbeat, getQualityTier, serverTier);
 }

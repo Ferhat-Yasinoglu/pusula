@@ -722,16 +722,6 @@ export function writeParticles(L: IntroLayout, t: number, out: Float32Array): nu
   return visible;
 }
 
-/** The whole frame at `t` (tests and debugging; the renderer calls the two parts itself). */
-export function introFrame(
-  t: number,
-  L: IntroLayout
-): { scalars: IntroScalars; particles: Float32Array; visible: number } {
-  const particles = new Float32Array(L.n * PARTICLE_STRIDE);
-  const visible = writeParticles(L, t, particles);
-  return { scalars: introScalars(t), particles, visible };
-}
-
 /** Skip: jump forward to the converged frame, never back. */
 export function skipTo(t: number): number {
   return Math.max(t, INTRO_T.handoff);

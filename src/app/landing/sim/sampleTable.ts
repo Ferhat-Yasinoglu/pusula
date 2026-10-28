@@ -274,10 +274,6 @@ export function measurement(sample: SampleKey, candidate: CandidateId, factorId:
   return typeof value === "number" ? value : NEUTRAL_MEASUREMENT;
 }
 
-export function isSampleKey(value: unknown): value is SampleKey {
-  return typeof value === "string" && (SAMPLE_KEYS as readonly string[]).includes(value);
-}
-
 export function isCandidateId(value: unknown): value is CandidateId {
   return typeof value === "string" && (CANDIDATE_IDS as readonly string[]).includes(value);
 }

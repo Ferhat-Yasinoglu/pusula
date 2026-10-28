@@ -59,8 +59,6 @@ export const CANDIDATE_OF_CITY: Readonly<Partial<Record<CityId, CandidateId>>> =
   (Object.entries(PROVIDER_CITY) as [CandidateId, CityId][]).map(([id, city]) => [city, id])
 );
 
-export const CLIENT_CITIES: readonly CityId[] = ["ghazni", "faizabad"];
-
 export type CityRole = "hub" | "provider" | "client";
 
 export function cityRole(id: CityId): CityRole {

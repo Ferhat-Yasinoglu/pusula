@@ -250,15 +250,6 @@ export function buildDotGrid(spacing: number): Dot[] {
   return dots;
 }
 
-/** All dots of one band as a single path of tiny circles — thousands of dots, five nodes. */
-export function dotsPath(dots: readonly Dot[], radius: number): string {
-  const r = round2(radius);
-  const d = round2(radius * 2);
-  return dots
-    .map((dot) => `M${round2(dot.x - r)} ${dot.y}a${r} ${r} 0 1 0 ${d} 0a${r} ${r} 0 1 0 ${-d} 0`)
-    .join("");
-}
-
 /** Control point for a flight arc: the chord's midpoint pushed "up" by `bulge` × length. */
 export function arcControl(from: Point, to: Point, bulge = 0.28): Point {
   const mx = (from.x + to.x) / 2;
@@ -282,9 +273,4 @@ export function quadraticPoint(from: Point, control: Point, to: Point, t: number
     x: u * u * from.x + 2 * u * t * control.x + t * t * to.x,
     y: u * u * from.y + 2 * u * t * control.y + t * t * to.y,
   };
-}
-
-export function arcPath(from: Point, to: Point, bulge?: number): string {
-  const c = arcControl(from, to, bulge);
-  return `M ${from.x} ${from.y} Q ${c.x} ${c.y} ${to.x} ${to.y}`;
 }

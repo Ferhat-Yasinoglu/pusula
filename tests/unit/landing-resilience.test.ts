@@ -269,6 +269,8 @@ test("the station never changes the page-wide speed (the dock owns it)", () => {
     new URL("../../src/app/landing/components/resilience/ResilienceStation.tsx", import.meta.url),
     "utf8"
   );
+  // Anchor first: if the station moves out of this file, the guard below must not pass on air.
+  assert.match(source, /export default function ResilienceStation\(/);
   assert.equal(source.includes("setSpeed"), false);
 });
 

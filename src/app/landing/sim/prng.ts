@@ -65,20 +65,9 @@ export function hash32(...parts: (string | number)[]): number {
   return h >>> 0;
 }
 
-/** A uniform float in [min, max). */
-export function range(rng: Rng, min: number, max: number): number {
-  return min + (max - min) * rng();
-}
-
 /** A uniform integer in [min, max] (both inclusive). */
 export function int(rng: Rng, min: number, max: number): number {
   return min + Math.floor(rng() * (max - min + 1));
-}
-
-/** One element, uniformly. Throws on an empty list rather than returning undefined. */
-export function pick<T>(rng: Rng, items: readonly T[]): T {
-  if (items.length === 0) throw new Error("pick: empty list");
-  return items[Math.floor(rng() * items.length)];
 }
 
 /** In-place Fisher–Yates shuffle; returns the same array. */
