@@ -11,6 +11,8 @@ import path from "node:path";
 
 const { getCliRuntimeStatus, getKnownToolPaths, normalizeCliToolId, CLI_TOOL_IDS } =
   await import("../../src/shared/services/cliRuntime.ts");
+const { getCachedLoginShellPath, __setLoginShellPathCacheForTests } =
+  await import("../../src/shared/services/loginShellPath.ts");
 
 // ─── Helpers ──────────────────────────────────────────────────
 
@@ -246,8 +248,12 @@ describe("Continue CLI detection", () => {
   it("should not report Continue as installed when the cn binary is absent", async () => {
     const previousPath = process.env.PATH;
     const previousOverride = process.env.CLI_CONTINUE_BIN;
+    // Earlier lookups cached the login-shell PATH, which under `npm run` still carries
+    // node_modules/.bin, where the fumadocs `cn` helper package ships a `cn` bin.
+    const previousLoginShellPath = getCachedLoginShellPath();
     process.env.PATH = "";
     delete process.env.CLI_CONTINUE_BIN;
+    __setLoginShellPathCacheForTests(null);
 
     try {
       const result = await getCliRuntimeStatus("continue");
@@ -260,6 +266,7 @@ describe("Continue CLI detection", () => {
       else process.env.PATH = previousPath;
       if (previousOverride === undefined) delete process.env.CLI_CONTINUE_BIN;
       else process.env.CLI_CONTINUE_BIN = previousOverride;
+      __setLoginShellPathCacheForTests(previousLoginShellPath);
     }
   });
 
