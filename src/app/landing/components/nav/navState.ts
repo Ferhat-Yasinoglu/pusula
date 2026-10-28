@@ -1,7 +1,7 @@
 "use client";
 import { useSyncExternalStore } from "react";
 import { canAnimate } from "../../runtime/heartbeat";
-import type { StationId } from "../../runtime/stations";
+import { isStationId, type StationId } from "../../runtime/stations";
 
 /**
  * State shared between the nav bar, its station menu and the SimDock, which
@@ -43,58 +43,10 @@ const SCROLL_IDLE_MS = 160;
 const NO_SCROLL_MS = 320;
 /** Longest wait for one scroll to end before the landing is checked anyway. */
 const SETTLE_CAP_MS = 3000;
-/** A primed travel that never starts releases the forced layout after this long. */
-const PRIME_RELEASE_MS = 2500;
 /** Visitor input that ends the corrections: the visitor has taken the helm. */
 const HELM_EVENTS = ["wheel", "touchstart", "keydown", "pointerdown"] as const;
-/** Root attribute that lays out every lazily rendered station for real (`nav.css`). */
-const TRAVEL_ATTR = "data-nav-travel";
 
 let travelSeq = 0;
-/** `innerWidth` at which every station was last laid out for real; their sizes are remembered. */
-let laidOutWidth = -1;
-let primeTimer: number | undefined;
-
-/**
- * Stations below the fold render lazily (`content-visibility: auto` with an
- * estimated 900px height), so a travel aimed at the estimate lands short once
- * the real heights arrive. While a travel is under way the root carries
- * `data-nav-travel`, which lays every station out for real (`nav.css`); the
- * stations' `contain-intrinsic-size: auto` then remembers those heights, so
- * the layout only needs forcing again after the width changes.
- */
-function forceLayout(): void {
-  if (laidOutWidth === window.innerWidth) return;
-  document.documentElement.setAttribute(TRAVEL_ATTR, "");
-}
-
-/** Release the forced layout two frames on, once the sizes have been remembered. */
-function releaseLayout(seq: number): void {
-  const root = document.documentElement;
-  if (!root.hasAttribute(TRAVEL_ATTR)) return;
-  const width = window.innerWidth;
-  requestAnimationFrame(() =>
-    requestAnimationFrame(() => {
-      if (seq !== travelSeq) return;
-      root.removeAttribute(TRAVEL_ATTR);
-      laidOutWidth = width;
-    })
-  );
-}
-
-/**
- * Start laying the stations out ahead of a travel that begins shortly (the
- * menu primes it on a pick, so the one-off layout overlaps its needle swing).
- */
-export function primeTravel(): void {
-  if (typeof window === "undefined") return;
-  forceLayout();
-  window.clearTimeout(primeTimer);
-  const seq = travelSeq;
-  primeTimer = window.setTimeout(() => {
-    if (seq === travelSeq) releaseLayout(seq);
-  }, PRIME_RELEASE_MS);
-}
 
 /** Calls `done` once the page has stopped scrolling; returns a canceller. */
 function afterScroll(done: () => void): () => void {
@@ -124,7 +76,7 @@ function afterScroll(done: () => void): () => void {
  * Pause) that lands the station's top under the nav (its
  * `scroll-margin-top`).
  *
- * The stations are laid out for real first (`forceLayout`), so the first
+ * Every station is laid out for real (none renders lazily), so the first
  * scroll aims at the true position. Each time the scroll ends the landing is
  * measured again and, while it is more than 3px off (content that sized
  * itself on the way), the scroll is re-aimed, at most five times. Visitor
@@ -132,16 +84,15 @@ function afterScroll(done: () => void): () => void {
  * a newer travel supersedes this one.
  *
  * A keyboard activation (`viaKeyboard`) also moves focus to the station's
- * heading so the next Tab continues from there.
+ * heading so the next Tab continues from there. `instant` skips the smooth
+ * scroll (an arrival by deep link).
  */
-export function travelTo(id: StationId, viaKeyboard = false): void {
+export function travelTo(id: StationId, viaKeyboard = false, instant = false): void {
   if (typeof window === "undefined") return;
   const target = document.getElementById(id);
   if (!target) return;
   const seq = ++travelSeq;
-  window.clearTimeout(primeTimer);
-  forceLayout();
-  const behavior: ScrollBehavior = canAnimate() ? "smooth" : "instant";
+  const behavior: ScrollBehavior = !instant && canAnimate() ? "smooth" : "instant";
 
   /** Where the page should rest: the station under the nav, clamped to the scroll range. */
   const destination = () => {
@@ -164,7 +115,6 @@ export function travelTo(id: StationId, viaKeyboard = false): void {
   const end = () => {
     cancelWait();
     for (const type of HELM_EVENTS) window.removeEventListener(type, onHelm, { capture: true });
-    releaseLayout(seq);
   };
   const check = () => {
     if (seq !== travelSeq || helmTaken) return end();
@@ -180,6 +130,25 @@ export function travelTo(id: StationId, viaKeyboard = false): void {
   window.scrollTo({ top: destination(), behavior });
   if (viaKeyboard) focusStation(id);
   cancelWait = afterScroll(check);
+}
+
+/**
+ * A deep link (`/landing#routing`) lands on its station. The page streams in
+ * behind the app's loading boundary, so the browser's own fragment scroll can
+ * run before the stations are revealed and leave the page at the top; once
+ * the nav has mounted the page arrives there at once, with the same landing
+ * corrections as any travel.
+ */
+export function landOnHash(): void {
+  if (typeof window === "undefined") return;
+  let id = "";
+  try {
+    id = decodeURIComponent(window.location.hash.slice(1));
+  } catch {
+    return;
+  }
+  if (!isStationId(id) || id === "bridge") return;
+  travelTo(id, false, true);
 }
 
 /**

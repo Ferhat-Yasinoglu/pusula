@@ -247,7 +247,7 @@ function BrandMark({ motion }: { motion: boolean }) {
   );
 }
 
-function FooterAnchor({ link, newTab }: { link: FooterLink; newTab: string | null }) {
+function FooterAnchor({ link, newTab }: { link: FooterLink; newTab: string }) {
   const body = (
     <>
       {/* The margin tick: an ember pencil mark against the chosen entry (hover, focus, press). */}
@@ -256,7 +256,7 @@ function FooterAnchor({ link, newTab }: { link: FooterLink; newTab: string | nul
         {link.label}
         <span className="lb-link-line" aria-hidden="true" />
       </span>
-      {link.external && newTab ? <span className="sr-only"> {newTab}</span> : null}
+      {link.external ? <span className="sr-only"> {newTab}</span> : null}
       <span className={cx("lb-link-icon", link.external && "lb-link-icon-ext")} aria-hidden="true">
         <Glyph name={link.external ? "external" : "arrow"} size={16} tone="current" />
       </span>
@@ -527,7 +527,7 @@ export default function Logbook({ stats }: { stats: LandingStats }) {
   // server snapshot (no year: "© Pusula…"), then React re-renders with the
   // visitor's year, so a server/client year difference can never stick.
   const year = useSyncExternalStore(subscribeNever, clientYear, serverYear);
-  const newTab = t.has("opensInNewTab") ? t("opensInNewTab") : null;
+  const newTab = t("opensInNewTab");
 
   useEffect(() => {
     const node = footerRef.current;

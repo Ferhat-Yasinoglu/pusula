@@ -383,9 +383,7 @@ export default function RoutingStation({ stats }: { stats: LandingStats }) {
               <details className="rt-retune">
                 <summary className="rt-retune-summary">
                   {/* the ranges, not a drag: touch never drags the rose */}
-                  <span>
-                    {t.has("routingRetuneRanges") ? t("routingRetuneRanges") : t("routingRetune")}
-                  </span>
+                  <span>{t("routingRetuneRanges")}</span>
                 </summary>
                 <div className="rt-ranges">
                   <p className="rt-sum readout" dir="ltr">

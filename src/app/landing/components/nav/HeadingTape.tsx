@@ -30,7 +30,11 @@ import "./nav.css";
  * springs the heading and calls `apply(heading)`, which writes the strip's
  * `transform` and lights the waypoint under the caret (opacity crossfade).
  * The strip is always `direction: ltr`: degrees increase to the right in
- * every locale.
+ * every locale. Each label is its own bidi paragraph (`dir="auto"`), so a
+ * mixed-script label ("فشرده‌سازی و MCP") keeps its word order.
+ *
+ * `CompassNav` feeds the stepped tape heading (`tapeHeading`), so the
+ * waypoint nearest the caret is the station under the middle of the viewport.
  */
 
 export type HeadingTapeHandle = {
@@ -144,11 +148,15 @@ export default function HeadingTape({ onTravel, onPreview, ref }: HeadingTapePro
                   onBlur={canonical ? () => onPreview(null) : undefined}
                 >
                   <span className="tape-face">
-                    <span className="tape-label">{label}</span>
+                    <span className="tape-label" dir="auto">
+                      {label}
+                    </span>
                     <span className="tape-num">{numeral}</span>
                   </span>
                   <span className="tape-face tape-face-hi" aria-hidden="true">
-                    <span className="tape-label">{label}</span>
+                    <span className="tape-label" dir="auto">
+                      {label}
+                    </span>
                     <span className="tape-num">{numeral}</span>
                   </span>
                 </a>

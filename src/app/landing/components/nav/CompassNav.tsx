@@ -15,6 +15,8 @@ import { usePrefersReducedMotion } from "../../landingMotion";
 import { usePaused } from "../../runtime/heartbeat";
 import { TAPE, isSettled, springAt, stepSpring } from "../../runtime/springs";
 import {
+  HEADING_ANCHOR,
+  STATIONS,
   getStation,
   useActiveStation,
   useHeading,
@@ -30,8 +32,8 @@ import { cx, formatBearing, watchView } from "../primitives/primitiveKit";
 import HeadingTape, { type HeadingTapeHandle } from "./HeadingTape";
 import LandingLanguageMenu from "./LandingLanguageMenu";
 import StationMenu from "./StationMenu";
-import { navBearingText, progressShare } from "./navModel";
-import { setMenuOpen, travelTo } from "./navState";
+import { homeHeading, navBearingText, progressShare, tapeHeading } from "./navModel";
+import { landOnHash, setMenuOpen, travelTo } from "./navState";
 import "./nav.css";
 
 /**
@@ -49,7 +51,11 @@ import "./nav.css";
  *
  * One dom-lane loop springs the tape (`TAPE`) towards the heading and writes
  * the strip and the progress line, only while they change. Under reduced
- * motion or Pause there is no loop: both follow the heading directly.
+ * motion or Pause there is no loop: both follow the heading directly. The
+ * tape follows the stepped `tapeHeading` (it holds each station's bearing
+ * while the station fills the middle of the viewport and turns across the
+ * seams), so its lit waypoint names the station being read; the progress line
+ * and the logo follow the continuous page heading.
  *
  * The root carries `.nav-bar` (the intro gate slides it in) and is never
  * transformed by this component; the station menu renders as a sibling.
@@ -58,6 +64,42 @@ import "./nav.css";
 const REPO_URL = "https://github.com/Ferhat-Yasinoglu/pusula";
 const SCROLLED_PX = 40;
 const DESKTOP_QUERY = "(min-width: 1024px)";
+
+/**
+ * The page heading at which the footer's top crosses the middle of the
+ * viewport: where the tape turns home to north. Measured from layout
+ * (ResizeObserver on the body, window resize), never per scroll.
+ */
+function useHomeHeading(): MutableRefObject<number> {
+  const ref = useRef(360);
+  useEffect(() => {
+    if (typeof ResizeObserver === "undefined") return;
+    const lastId = STATIONS[STATIONS.length - 1].id;
+    const measure = () => {
+      const station = document.getElementById(lastId);
+      const footer = document.querySelector(".pusula-landing footer");
+      if (!station || !footer) return;
+      const y = window.scrollY;
+      const viewport = window.innerHeight;
+      const max = Math.max(0, document.documentElement.scrollHeight - viewport);
+      ref.current = homeHeading(
+        station.getBoundingClientRect().top + y,
+        footer.getBoundingClientRect().top + y,
+        viewport,
+        max,
+        HEADING_ANCHOR
+      );
+    };
+    const observer = new ResizeObserver(measure);
+    observer.observe(document.body);
+    window.addEventListener("resize", measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
+  return ref;
+}
 
 /** Follows the 10 Hz heading state; mounted only while the loop cannot run. */
 function HeadingFollower({ onHeading }: { onHeading: (heading: number) => void }) {
@@ -150,6 +192,7 @@ export default function CompassNav({ stats }: { stats: LandingStats }) {
   const progressWritten = useRef(0);
   const desktopRef = useRef(true);
   const bridgeInViewRef = useRef(true);
+  const homeRef = useHomeHeading();
   const [menuOpen, setMenu] = useState(false);
 
   useEffect(() => {
@@ -169,6 +212,12 @@ export default function CompassNav({ stats }: { stats: LandingStats }) {
     if (line) line.style.transform = `scaleX(${share.toFixed(4)})`;
   }, []);
 
+  /** Where the bar points for a page heading: the stepped tape course, or the voyage share. */
+  const course = useCallback(
+    (heading: number) => (desktopRef.current ? tapeHeading(heading, homeRef.current) : heading),
+    [homeRef]
+  );
+
   /** Jump straight to `heading` (mount, layout switch, no-loop modes). */
   const snap = useCallback(
     (heading: number) => {
@@ -186,18 +235,18 @@ export default function CompassNav({ stats }: { stats: LandingStats }) {
     const sync = () => {
       desktopRef.current = query.matches;
       progressWritten.current = -1;
-      snap(previewRef.current ?? headingRef.current);
+      snap(previewRef.current ?? course(headingRef.current));
       if (query.matches) setMenu(false);
     };
     sync();
     query.addEventListener("change", sync);
     return () => query.removeEventListener("change", sync);
-  }, [snap, headingRef]);
+  }, [snap, course, headingRef]);
 
   useDomLoop(
     "nav-tape",
     (dt) => {
-      const target = previewRef.current ?? headingRef.current;
+      const target = previewRef.current ?? course(headingRef.current);
       const spring = springRef.current;
       if (isSettled(spring, target, 0.01)) {
         if (spring.angle !== target) snap(target);
@@ -212,16 +261,16 @@ export default function CompassNav({ stats }: { stats: LandingStats }) {
   const preview = useCallback(
     (bearing: number | null) => {
       previewRef.current = bearing;
-      if (!motionRef.current) snap(bearing ?? headingRef.current);
+      if (!motionRef.current) snap(bearing ?? course(headingRef.current));
     },
-    [snap, headingRef]
+    [snap, course, headingRef]
   );
 
   const followStatic = useCallback(
     (heading: number) => {
-      if (previewRef.current === null) snap(heading);
+      if (previewRef.current === null) snap(course(heading));
     },
-    [snap]
+    [snap, course]
   );
 
   // Glass once the page has moved; a scroll listener writes the attribute on change only.
@@ -271,6 +320,7 @@ export default function CompassNav({ stats }: { stats: LandingStats }) {
     setMenuOpen(menuOpen);
   }, [menuOpen]);
   useEffect(() => () => setMenuOpen(false), []);
+  useEffect(() => landOnHash(), []);
 
   const openMenu = useCallback(() => setMenu(true), []);
   const closeMenu = useCallback(() => setMenu(false), []);
@@ -308,8 +358,9 @@ export default function CompassNav({ stats }: { stats: LandingStats }) {
           </div>
 
           <div className="nav-end">
-            <Link href="/docs" className="nav-link nav-docs">
-              {t("navDocs")}
+            <Link href="/docs" className="nav-link nav-docs" aria-label={t("navDocs")}>
+              <Glyph name="docs" size={16} tone="current" className="nav-docs-mark" />
+              <span className="nav-docs-text">{t("navDocs")}</span>
             </Link>
             <a
               href={REPO_URL}

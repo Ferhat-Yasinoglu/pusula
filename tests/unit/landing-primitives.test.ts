@@ -323,7 +323,7 @@ const rendererPromise = loadRenderer();
 test("Glyph: every name renders an aria-hidden 1.5px SVG; only arrow and chevron mirror", async () => {
   const { h, render, primitives } = await rendererPromise;
   const { Glyph, GLYPH_NAMES } = primitives;
-  assert.equal(GLYPH_NAMES.length, 17);
+  assert.equal(GLYPH_NAMES.length, 19);
   for (const name of GLYPH_NAMES) {
     const html = render("en", h(Glyph, { name, size: 16 }));
     assert.match(html, /^<svg /);
@@ -451,7 +451,7 @@ test("Station renders the section shell and the compass kicker", async () => {
   const html = render("en", h(Station, { id: "routing", title: "Routing", lead: "Lead." }, "x"));
   assert.match(
     html,
-    /^<section id="routing" data-station="routing" data-bearing="135" data-align="start" aria-labelledby="routing-title" class="station station-cv">/
+    /^<section id="routing" data-station="routing" data-bearing="135" data-align="start" aria-labelledby="routing-title" class="station">/
   );
   assert.match(html, /class="seam" data-bearing="135"/);
   assert.match(html, /<span dir="ltr">135°<\/span> · Routing<\/span>/);

@@ -413,9 +413,15 @@ export function candidateBearing(id: CandidateId): number {
   return i < 0 ? 0 : i * (360 / CANDIDATE_IDS.length);
 }
 
-/** The id a provider answers with in `X-Pusula-Provider` (its catalog id). */
+/** A candidate's real catalog id (the name on the hub's stops). */
 export function catalogIdOf(id: CandidateId): string {
   for (const c of SAMPLE_CANDIDATES) if (c.id === id) return c.catalogId;
+  return id;
+}
+
+/** The value a provider answers with in `X-Pusula-Provider`: its alias (`getProviderAlias`). */
+export function headerProviderOf(id: CandidateId): string {
+  for (const c of SAMPLE_CANDIDATES) if (c.id === id) return c.alias;
   return id;
 }
 
@@ -432,7 +438,7 @@ export type RunResult = {
   served: boolean;
   stops: readonly RunStop[];
   winner: CandidateId | null;
-  /** `X-Pusula-Provider` value (catalog id), null when nothing could serve. */
+  /** `X-Pusula-Provider` value (the provider's alias), null when nothing could serve. */
   provider: string | null;
   /**
    * `X-Pusula-Fallback-Attempts`: targets passed over before the answer, open
@@ -520,7 +526,7 @@ export function buildRun(featured: Featured, skipped: readonly CandidateId[]): R
     served: featured.served,
     stops,
     winner,
-    provider: winner ? catalogIdOf(winner) : null,
+    provider: winner ? headerProviderOf(winner) : null,
     fallbackAttempts: skipped.length + featured.fallbackAttempts,
     latencyMs,
     requestId: seededUuid(hash32("tools-request", featured.take)),
@@ -528,9 +534,12 @@ export function buildRun(featured: Featured, skipped: readonly CandidateId[]): R
 }
 
 /**
- * The response headers a run shows, in order: the provider only when
- * something answered, and the fallback count only when it is above zero (the
- * gateway omits the header otherwise).
+ * The response headers a run shows, in order, exactly as the gateway sends
+ * them on a served (non-streaming) answer (`nonStreamingResponseHeaders.ts`,
+ * `buildPusulaResponseMetaHeaders`): the provider's alias, the fallback count
+ * only when it is above zero (a zero is omitted), the latency and the request
+ * id. A request nothing could serve gets the combo's error response
+ * (`errorResponseWithComboDiagnostics`), which carries none of them.
  */
 export function runHeaders(
   run: RunResult,
@@ -542,11 +551,12 @@ export function runHeaders(
   }
 ): { name: string; value: string }[] {
   const out: { name: string; value: string }[] = [];
+  if (!run.served) return out;
   if (run.provider) out.push({ name: names.provider, value: run.provider });
   if (run.fallbackAttempts > 0) {
     out.push({ name: names.fallbackAttempts, value: String(run.fallbackAttempts) });
   }
-  if (run.served) out.push({ name: names.latencyMs, value: String(run.latencyMs) });
+  out.push({ name: names.latencyMs, value: String(run.latencyMs) });
   out.push({ name: names.requestId, value: run.requestId });
   return out;
 }

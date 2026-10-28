@@ -151,8 +151,7 @@
  */
 .pusula-landing .tools-bay-head > span:first-child:lang(fa),
 .pusula-landing .tools-term .tools-cmt .tl-t:not(.tl-kw):lang(fa),
-.pusula-landing .tools-reply:lang(fa),
-.pusula-landing .tools-rig .sim-pill:lang(fa) {
+.pusula-landing .tools-reply:lang(fa) {
   font-family: var(--font-sans);
   letter-spacing: 0;
 }

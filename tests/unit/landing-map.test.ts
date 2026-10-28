@@ -19,6 +19,7 @@ import {
   HEAT_CAP,
   HUB_ARCS,
   HUB_INDEX,
+  LABEL_GAP_PX,
   LABEL_SIDE,
   MAP_CANDIDATES,
   MAP_FITS,
@@ -26,6 +27,8 @@ import {
   NODE_POINTS,
   PASSIVE_NODES,
   PERSPECTIVE_F,
+  PIN_TILT_END,
+  PIN_TRACK_VH,
   PROVIDER_CITY,
   PROVIDER_NODES,
   cityAt,
@@ -45,6 +48,7 @@ import {
   pillarHeight,
   pinCameraTarget,
   planFlight,
+  plateShift,
   providerNode,
   shortHeader,
   tiltFrame,
@@ -267,15 +271,20 @@ test("hit test: only the six provider cities take a tap; the hub never steals on
   assert.equal(cityAt(screen, 196, 150, true), HUB_INDEX);
 });
 
-test("camera: flat reference look at p = 0, fully tilted from p = .5, phone tilt over 1.6 s", () => {
+test("camera: flat reference look at p = 0, fully tilted from p = .6, phone tilt over 1.6 s", () => {
   const deg = Math.PI / 180;
+  // A 140vh track pins for 40vh: the tilt takes 60% of it, the rest is free play.
+  assert.equal(PIN_TRACK_VH, 140);
+  assert.equal(PIN_TILT_END, 0.6);
   const flat = pinCameraTarget(0);
   assert.equal(flat.pitch, 0);
   assert.equal(Math.abs(flat.yaw), 0);
+  const full = pinCameraTarget(PIN_TILT_END);
+  assert.ok(Math.abs(full.pitch - 52 * deg) < 1e-9);
+  assert.ok(Math.abs(full.yaw + 10 * deg) < 1e-9);
+  assert.deepEqual(pinCameraTarget(1), full);
   const half = pinCameraTarget(0.5);
-  assert.ok(Math.abs(half.pitch - 52 * deg) < 1e-9);
-  assert.ok(Math.abs(half.yaw + 10 * deg) < 1e-9);
-  assert.deepEqual(pinCameraTarget(1), half);
+  assert.ok(half.pitch > 0.9 * full.pitch && half.pitch < full.pitch);
   const quarter = pinCameraTarget(0.25);
   assert.ok(quarter.pitch > 0 && quarter.pitch < half.pitch);
   assert.equal(flowPitch(0), 0);
@@ -288,6 +297,40 @@ test("labels: every city has a side in both layouts", () => {
     assert.match(LABEL_SIDE.pin[city.id], /^[nsew]$/);
     assert.match(LABEL_SIDE.flow[city.id], /^[nsew]$/);
     assert.equal(LABEL_SIDE.pin[city.id], city.label);
+  }
+  assert.deepEqual(LABEL_GAP_PX, { pin: 20, flow: 16 });
+});
+
+test("labels: a plate that would cross the gutter slides back inside it (390px phone)", () => {
+  const W = 390;
+  const M = 16;
+  const gap = LABEL_GAP_PX.flow;
+  // Fits: no shift, whatever the side.
+  assert.equal(plateShift(200, 80, "e", gap, W, M), 0);
+  assert.equal(plateShift(200, 80, "w", gap, W, M), 0);
+  assert.equal(plateShift(200, 80, "n", gap, W, M), 0);
+  // Jalalabad flows east: a 180px plate from x 268 would end at 448; it slides to end at 374.
+  assert.equal(plateShift(252, 180, "e", gap, W, M), W - M - (252 + gap + 180));
+  // Herat's centred plate (x 62, 125px wide) would start at -0.5; it slides right to 16.
+  assert.equal(plateShift(62, 125, "s", gap, W, M), M - (62 - 125 / 2));
+  // Mazar flows west: a 160px plate ending at x 156 would start at -4; it slides right.
+  assert.equal(plateShift(172, 160, "w", gap, W, M), M - (172 - gap - 160));
+  // Wider than the room: its left edge stays inside.
+  const shift = plateShift(300, 420, "e", gap, W, M);
+  assert.equal(300 + gap + shift, M);
+  // Not measured yet (width 0) or no stage: untouched.
+  assert.equal(plateShift(380, 0, "e", gap, W, M), 0);
+  assert.equal(plateShift(380, 90, "e", gap, 0, M), 0);
+  // Every shifted plate lands inside [M, W - M].
+  for (const side of ["e", "w", "n", "s"] as const) {
+    for (let x = 0; x <= W; x += 13) {
+      for (const width of [40, 90, 180, 300]) {
+        const s = plateShift(x, width, side, gap, W, M);
+        const left = (side === "e" ? x + gap : side === "w" ? x - gap - width : x - width / 2) + s;
+        assert.ok(left >= M - 1e-9, `${side} x=${x} w=${width}: left ${left}`);
+        assert.ok(left + width <= W - M + 1e-9, `${side} x=${x} w=${width}: right ${left + width}`);
+      }
+    }
   }
 });
 

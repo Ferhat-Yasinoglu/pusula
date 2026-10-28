@@ -4,7 +4,7 @@
  *
  * Phone and tablet (< 1024px): ordinary flow, not pinned — the canvas, then
  * the counters, the log, the legend, the hint and reset.
- * Desktop (≥ 1024px): a 160vh pinned track whose sticky 100svh stage holds a
+ * Desktop (≥ 1024px): a 140vh pinned track whose sticky 100svh stage holds a
  * full-bleed canvas. Afghanistan's open corners are its north-west and
  * south-east, and geography is never mirrored, so the title rides over the
  * top-left and the legend sits top-right in both directions; the flight board
@@ -28,12 +28,6 @@
 
   .pusula-landing .station.netmap > .station-head {
     gap: var(--s-3);
-  }
-
-  /* "routed / requests" on two lines leaves the disclosure two lines, not three. */
-  .pusula-landing .netmap-count dt {
-    max-width: 9ch;
-    line-height: 1.3;
   }
 }
 
@@ -118,8 +112,12 @@
   transition: opacity 300ms linear;
 }
 
-/* Live labels take over from the poster's names when the canvas has drawn. */
-.pusula-landing .netmap-canvas[data-live="on"] ~ .netmap-labels {
+/*
+ * Live labels take over from the poster's names when the canvas has drawn and
+ * they sit on their nodes (`data-placed`, set by the first placement): never
+ * a stack of plates at the figure's corner.
+ */
+.pusula-landing .netmap-canvas[data-live="on"] ~ .netmap-labels[data-placed] {
   opacity: 1;
 }
 
@@ -161,7 +159,11 @@
 }
 
 /* A provider's name is a tap target too (only once the live labels show). */
-.pusula-landing .netmap-canvas[data-live="on"] ~ .netmap-labels [data-city] > .netmap-lbody,
+.pusula-landing
+  .netmap-canvas[data-live="on"]
+  ~ .netmap-labels[data-placed]
+  [data-city]
+  > .netmap-lbody,
 .pusula-landing .stage:not([data-live="on"]) .netmap-pname[data-city] > .netmap-lbody {
   pointer-events: auto;
   cursor: pointer;
@@ -297,6 +299,11 @@
   }
 
   .pusula-landing .netmap-label .netmap-lsep {
+    display: none;
+  }
+
+  /* A cut road says "✕ 503" alone; the breaker word shows only without the latch. */
+  .pusula-landing .netmap-label .netmap-lword[data-latched] {
     display: none;
   }
 }
@@ -557,6 +564,41 @@
   color: var(--gold-hi);
 }
 
+@media (max-width: 639.98px) {
+  /*
+   * The board stacks: the disclosure (pill, note beside it), then the counts
+   * on a row of their own, each label as wide as its words need (Turkish
+   * "yönlendirilen" is 13 characters: no column cap fits every locale), then
+   * the log.
+   */
+  .pusula-landing .netmap-board {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "badge"
+      "counts"
+      "log";
+    gap: var(--s-3);
+  }
+
+  .pusula-landing .netmap-badge {
+    flex-wrap: nowrap;
+  }
+
+  .pusula-landing .netmap-badge .sim-note {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .pusula-landing .netmap-counts {
+    flex-wrap: wrap;
+    row-gap: var(--s-2);
+  }
+
+  .pusula-landing .netmap-count dt {
+    line-height: 1.3;
+  }
+}
+
 .pusula-landing .netmap-log {
   grid-area: log;
   display: grid;
@@ -751,8 +793,10 @@
 /* ------------------------------------------------------------------------ */
 
 @media (min-width: 1024px) {
+  /* The stage's bottom is the section's: the next seam follows the released map. */
   .pusula-landing .station.netmap {
     --netmap-head-w: min(30vw, 30rem);
+    padding-block-end: 0;
   }
 
   /*

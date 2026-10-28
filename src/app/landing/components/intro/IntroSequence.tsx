@@ -38,6 +38,7 @@ import {
   createScalars,
   introScalars,
   needleSpinAt,
+  retimeStarfield,
   skipTo,
 } from "./introTimeline";
 import { aimIntroGyro, createIntroCanvas, renderIntro, type IntroCanvas } from "./introRender";
@@ -52,6 +53,14 @@ import "./intro.css";
  * - Plays only when the inline gate (`introGate.ts`) set `data-intro="play"`
  *   before first paint. Everything is server-rendered (the layers are
  *   `display: none` without the gate) and the hero underneath is complete.
+ * - Alive from first paint: the curtain carries the ignition (point, glow,
+ *   crosshair), the HUD fade-in and the typed `$ npx pusula` as CSS
+ *   keyframes on the storyboard's own curves, which then hold their 480ms
+ *   frame (`INTRO_T.cssHold`). Once frames come smoothly after mount (at
+ *   most 900ms later) the script reads when those keyframes started, resumes
+ *   the timeline at that point (capped at the hold), retimes the starfield
+ *   so it fades in rather than pops, and marks the layers `data-live` so the
+ *   CSS stands down in the frame the canvas first draws.
  * - One canvas on the heartbeat's canvas lane (top priority while it runs),
  *   a closed-form timeline, and the hero's own `drawGyro` for the last
  *   quarter second, so the hand-off is seamless.
@@ -75,17 +84,29 @@ const STATE_CODE = {
   halfOpen: CAND_HALF_OPEN,
 };
 /**
- * Mounts this late (ms after navigation start) mean the visitor already
- * waited behind the curtain: the first shortens the intro to its last act
- * (the map winding into the compass), the second goes straight to the
- * hand-off.
+ * Mounts this late mean the visitor already waited behind the curtain (ms
+ * since it painted, or since navigation start when that is unknown): the
+ * first shortens the intro to its last act (the map winding into the
+ * compass), the second goes straight to the hand-off.
  */
 const LATE_MOUNT_MS = 2400;
 const VERY_LATE_MOUNT_MS = 3800;
+/** The CSS ignition's keyframes (`intro.css`): the timeline resumes from their start. */
+const IGNITION_KEYFRAMES = "intro-ig-";
 /** Frame intervals ignored before sampling (hydration and first-paint stalls). */
 const SAFETY_WARMUP = 3;
 const SAFETY_FRAMES = 10;
 const SAFETY_MEDIAN_MS = 34;
+/**
+ * The canvas takes over from the CSS ignition only once frames come
+ * smoothly (two in a row under 50ms): hydration's long tasks would otherwise
+ * make the wall-clock timeline jump past the glow's fade. The compositor keeps
+ * the CSS alive meanwhile. Never longer than 900ms after mount, and at once
+ * on a skip.
+ */
+const TAKEOVER_SMOOTH_MS = 50;
+const TAKEOVER_FRAMES = 2;
+const TAKEOVER_MAX_WAIT_MS = 900;
 
 /* `html[data-intro]` as an external store: the layers exist only while it reads "play". */
 function subscribeIntro(onChange: () => void): () => void {
@@ -98,6 +119,35 @@ const readIntro = () => document.documentElement.getAttribute("data-intro") ?? "
 const serverIntro = () => "ssr";
 
 const CARDINALS = ["N", "E", "S", "W"] as const;
+
+/**
+ * When the CSS ignition started (performance.now() time base: the document
+ * timeline shares the time origin), or NaN. Falls back to the first paint,
+ * which is when a server-rendered keyframe starts.
+ */
+function ignitionStart(root: Element | null): number {
+  // The earliest one: a composited keyframe can report its start a frame late.
+  let start = Infinity;
+  try {
+    for (const animation of root?.getAnimations?.({ subtree: true }) ?? []) {
+      const name = (animation as CSSAnimation).animationName ?? "";
+      const at = animation.startTime;
+      if (name.startsWith(IGNITION_KEYFRAMES) && typeof at === "number" && at < start) start = at;
+    }
+  } catch {
+    // Web Animations unavailable: use the paint timing below.
+  }
+  if (Number.isFinite(start)) return start;
+  try {
+    const paint =
+      performance.getEntriesByName("first-contentful-paint")[0] ??
+      performance.getEntriesByName("first-paint")[0];
+    if (paint) return paint.startTime;
+  } catch {
+    // No paint timing either: the timeline starts from its first frame.
+  }
+  return Number.NaN;
+}
 
 export default function IntroSequence({ stats }: { stats: LandingStats }) {
   const t = useTranslations("landing");
@@ -196,6 +246,8 @@ export default function IntroSequence({ stats }: { stats: LandingStats }) {
 
     const scene = createGyroScene(stats.catalog, CANDIDATE_IDS);
     let view: IntroCanvas | null = null;
+    /** Where the starfield's fade-in begins (moved to the resume point on the first frame). */
+    let starsFrom: number = INTRO_T.starfield;
 
     const measure = () => {
       const w = canvas.clientWidth || window.innerWidth;
@@ -226,6 +278,7 @@ export default function IntroSequence({ stats }: { stats: LandingStats }) {
         F: GYRO_F,
         free: scene.free,
       });
+      retimeStarfield(layout, starsFrom);
       view = createIntroCanvas(ctx, { w, h, dpr }, layout, scene, geom, sky);
 
       // City labels sit beside their markers (map px, never mirrored).
@@ -271,12 +324,12 @@ export default function IntroSequence({ stats }: { stats: LandingStats }) {
     const S = createScalars();
     let t0 = -1;
     const mountedAt = performance.now();
+    const ignitedAt = ignitionStart(curtainRef.current);
+    // While the CSS ignition held the curtain alive the wait was the intro's
+    // own first beat; only the time since the curtain painted counts.
+    const waited = mountedAt - (Number.isFinite(ignitedAt) ? ignitedAt : 0);
     let offset =
-      mountedAt > VERY_LATE_MOUNT_MS
-        ? INTRO_T.handoff
-        : mountedAt > LATE_MOUNT_MS
-          ? INTRO_T.trans
-          : 0;
+      waited > VERY_LATE_MOUNT_MS ? INTRO_T.handoff : waited > LATE_MOUNT_MS ? INTRO_T.trans : 0;
     let springOn = offset >= INTRO_T.handoff;
     if (springOn) {
       gyroState.needle.angle = 0;
@@ -289,9 +342,13 @@ export default function IntroSequence({ stats }: { stats: LandingStats }) {
     let shownTyped = -1;
     const shown = new Float32Array(16).fill(-1);
     let lastT = 0;
+    let calm = 0;
+    let lastWait = -1;
+    let skipped = false;
 
     const skip = () => {
       if (done || lastT >= INTRO_T.handoff) return;
+      skipped = true;
       offset += skipTo(lastT) - lastT;
       springOn = true;
       gyroState.needle.angle = 0;
@@ -308,7 +365,24 @@ export default function IntroSequence({ stats }: { stats: LandingStats }) {
 
     const tick = (dt: number, now: number) => {
       if (done || !view) return;
-      if (t0 < 0) t0 = now;
+      if (t0 < 0) {
+        calm = lastWait >= 0 && now - lastWait < TAKEOVER_SMOOTH_MS ? calm + 1 : 0;
+        lastWait = now;
+        if (!skipped && calm < TAKEOVER_FRAMES && now - mountedAt < TAKEOVER_MAX_WAIT_MS) return;
+        t0 = now;
+        // Resume where the CSS ignition is (it holds at `cssHold`); a late
+        // mount or an early skip is already further on and stays there.
+        const css = Number.isFinite(ignitedAt) ? now - ignitedAt : 0;
+        const resume = Math.min(INTRO_T.cssHold, Math.max(0, css));
+        if (resume > offset) {
+          offset = resume;
+          starsFrom = resume;
+          retimeStarfield(view.layout, resume);
+        }
+        // The canvas draws this very frame: the CSS layers stand down with it.
+        curtainRef.current?.setAttribute("data-live", "");
+        hudRef.current?.setAttribute("data-live", "");
+      }
       // Safety valve: a device that cannot hold ~30fps skips to the hand-off.
       // The first intervals are ignored (hydration's one-off stalls) and the
       // median of the next ten decides, so a single long frame never trips it.
@@ -438,7 +512,15 @@ export default function IntroSequence({ stats }: { stats: LandingStats }) {
 
   return (
     <>
-      <div ref={curtainRef} className="intro-layer intro-curtain" aria-hidden="true" />
+      <div ref={curtainRef} className="intro-layer intro-curtain" aria-hidden="true">
+        {/* Ignition in CSS from first paint (intro.css); the canvas takes over. */}
+        <div className="intro-ignite">
+          <i className="intro-ig-h" />
+          <i className="intro-ig-v" />
+          <i className="intro-ig-glow" />
+          <i className="intro-ig-point" />
+        </div>
+      </div>
       <canvas ref={canvasRef} className="intro-layer intro-canvas" aria-hidden="true" />
       <div ref={hudRef} className="intro-layer intro-hud" aria-hidden="true">
         <p ref={brandRef} className="intro-brand">
@@ -480,10 +562,16 @@ export default function IntroSequence({ stats }: { stats: LandingStats }) {
           ))}
         </div>
         <div ref={logRef} className="intro-log">
-          {/* Empty until the timeline types it: the first beat never un-types. */}
+          {/*
+           * The whole command is server-rendered and typed by a CSS mask from
+           * first paint; the timeline writes the same slices once it runs.
+           */}
           <p className="intro-cmd" dir="ltr">
-            <span ref={cmdRef} />
+            <span ref={cmdRef}>{BOOT_COMMAND}</span>
             <span className="intro-caret" />
+            <span className="intro-cmd-mask">
+              <span className="intro-caret" />
+            </span>
           </p>
           {bootLines.map((line, k) => (
             <p key={k} className="intro-boot" data-on={k < boot ? "1" : undefined}>

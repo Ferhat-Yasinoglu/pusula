@@ -50,9 +50,9 @@ import type { BenchInput } from "./benchRender";
  *   3. the DOM overlay: lens labels and their hit targets, the source and
  *      mirror captions.
  *
- * "New prompt" sends a fresh prompt (cache MISS: the stack runs, savings are
- * the tiles this prompt lost); "Send it again" repeats it (cache HIT, the
- * port stays dark). The header terminal types the outcome when the tiles
+ * "New prompt" sends a fresh prompt (cache MISS: the stack runs, and the
+ * compression header's `tokens=` annotation counts this prompt's tiles before
+ * and after); "Send it again" repeats it (cache HIT, the port stays dark). The header terminal types the outcome when the tiles
  * land, so every example value comes from the illustration itself.
  */
 
@@ -307,14 +307,19 @@ export default function CompressionBench({ stats }: { stats: LandingStats }) {
       },
       ...headers.map((h, i) => {
         const valueClass = h.value === "HIT" ? "accent" : /^[\d.]+$/.test(h.value) ? "num" : "str";
+        // One token per `; ` field, so a long value wraps between fields, never inside one.
+        const fields = h.value.split("; ");
+        const valueTokens = fields.flatMap((field, k) => {
+          const token = {
+            t: k < fields.length - 1 ? `${field};` : field,
+            c: valueClass as "accent" | "num" | "str",
+          };
+          return k === 0 ? [token] : [{ t: " " }, token];
+        });
         return {
           id: `h${i}`,
           text: `${h.name}: ${h.value}`,
-          tokens: [
-            { t: h.name, c: "kw" as const },
-            { t: ": " },
-            { t: h.value, c: valueClass as "accent" | "num" | "str" },
-          ],
+          tokens: [{ t: h.name, c: "kw" as const }, { t: ": " }, ...valueTokens],
           caret: i === headers.length - 1,
         };
       }),

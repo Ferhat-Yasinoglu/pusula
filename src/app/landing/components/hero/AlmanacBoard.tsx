@@ -68,7 +68,13 @@ export default function AlmanacBoard({ stats }: { stats: LandingStats }) {
   }, [count]);
 
   return (
-    <div ref={boardRef} className="almanac" role="group" aria-label={t("statsAria")}>
+    <div
+      ref={boardRef}
+      className="almanac"
+      role="group"
+      aria-label={t("statsAria")}
+      data-dock-clear=""
+    >
       <ul className="almanac-row">
         {cells.map((cell, i) => (
           <li key={i} className="almanac-cell">

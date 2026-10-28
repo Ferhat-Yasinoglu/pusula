@@ -360,9 +360,60 @@ function storePaused(paused: boolean): void {
   }
 }
 
+/** While paused: settles one-shot CSS animations as soon as the DOM starts new ones. */
+let settleObserver: MutationObserver | null = null;
+
+/**
+ * Pause freezes the page's loops, never its content. The `.is-paused` rule
+ * (landing.css) pauses every CSS animation under the root at once, so a loop
+ * stops without a frame of motion, even one that starts while paused. A
+ * one-shot animation (a finite iteration count: an entrance, an arrival, a
+ * toast) paused at its first keyframe would hold content invisible, so these
+ * are settled at their end state instead (`finish()`, which also fires
+ * `animationend` for code that waits on it). Resuming never replays them:
+ * CSS resumes a finished animation without rewinding it. The intro's layers
+ * are left to their own failsafe.
+ */
+function settleOneShots(): void {
+  if (typeof CSSAnimation === "undefined") return;
+  const roots = document.querySelectorAll(".pusula-landing");
+  for (let i = 0; i < roots.length; i++) {
+    const root = roots[i];
+    if (typeof root.getAnimations !== "function") continue;
+    for (const animation of root.getAnimations({ subtree: true })) {
+      if (!(animation instanceof CSSAnimation) || animation.playState === "finished") continue;
+      const effect = animation.effect;
+      const end = effect?.getComputedTiming().endTime;
+      if (typeof end !== "number" || !Number.isFinite(end)) continue;
+      const target = effect instanceof KeyframeEffect ? effect.target : null;
+      if (target?.closest(".intro-layer")) continue;
+      try {
+        animation.finish();
+      } catch {
+        // A zero playback rate cannot finish; it is not moving anyway.
+      }
+    }
+  }
+}
+
 function syncPausedClass(paused: boolean): void {
   const roots = document.querySelectorAll(".pusula-landing");
   for (let i = 0; i < roots.length; i++) roots[i].classList.toggle(PAUSED_CLASS, paused);
+  if (!paused) {
+    settleObserver?.disconnect();
+    settleObserver = null;
+    return;
+  }
+  settleOneShots();
+  // A mutation is what starts a new entrance (a class, an attribute, a node).
+  // Observer callbacks run before the next paint, so it is never seen at its start.
+  if (settleObserver || typeof MutationObserver === "undefined") return;
+  settleObserver = new MutationObserver(settleOneShots);
+  for (let i = 0; i < roots.length; i++) {
+    settleObserver.observe(roots[i], { subtree: true, childList: true, attributes: true });
+  }
+  // The intro hand-off (`data-intro`) starts the nav's drop-in from the root element.
+  settleObserver.observe(document.documentElement, { attributes: true });
 }
 
 function createBrowserHost(): HeartbeatHost {

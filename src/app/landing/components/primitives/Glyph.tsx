@@ -32,7 +32,9 @@ export type GlyphName =
   | "star4"
   | "star8"
   | "compass"
-  | "github";
+  | "github"
+  | "docs"
+  | "scales";
 
 export type GlyphSize = 16 | 20 | 24;
 
@@ -63,6 +65,8 @@ export const GLYPH_NAMES: readonly GlyphName[] = [
   "star8",
   "compass",
   "github",
+  "docs",
+  "scales",
 ];
 
 /** Glyphs that point along the reading direction and therefore mirror in RTL. */
@@ -123,6 +127,18 @@ const PATHS: Record<GlyphName, ReactNode> = {
     <>
       <path d="M15 21v-3.25c0-.95-.3-1.65-.85-2.15 2.75-.3 5.35-1.35 5.35-5.75 0-1.25-.45-2.3-1.2-3.1.1-.4.5-1.6-.1-3.15 0 0-1-.3-3.25 1.2a11.2 11.2 0 0 0-5.9 0C5.8 3.3 4.8 3.6 4.8 3.6c-.6 1.55-.2 2.75-.1 3.15-.75.8-1.2 1.85-1.2 3.1 0 4.4 2.6 5.45 5.35 5.75-.4.35-.7.9-.8 1.65V21" />
       <path d="M8.95 18.6c-3.45 1.05-3.45-1.6-4.95-2" />
+    </>
+  ),
+  /* An open book: two pages on a spine (documentation). */
+  docs: (
+    <path d="M12 6.75C10.1 5.2 7.5 4.6 3.75 4.75v13.5c3.75-.15 6.35.45 8.25 2 1.9-1.55 4.5-2.15 8.25-2V4.75c-3.75-.15-6.35.45-8.25 2zM12 6.75v13.5" />
+  ),
+  /* A balance: post, foot, beam and two hanging pans (a judge weighing replies). */
+  scales: (
+    <>
+      <path d="M12 4.5v15M8.5 19.5h7M4.75 7.5h14.5" />
+      <path d="M4.75 7.5L2.5 13M4.75 7.5L7 13M2.5 13h4.5a2.25 2.25 0 0 1-4.5 0z" />
+      <path d="M19.25 7.5L17 13M19.25 7.5L21.5 13M17 13h4.5a2.25 2.25 0 0 1-4.5 0z" />
     </>
   ),
 };

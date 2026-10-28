@@ -107,19 +107,92 @@ export const COPIED_MS = 1800;
 /** The burnt fuse stays ember this long after the spark lands, then cools. */
 export const COOL_MS = 2600;
 
-/** When row `index` starts typing, in ms after power-on. */
-export function rowStartMs(index: number): number {
-  return POWER_MS + index * ROW_MS;
+/**
+ * How the self-test rows boot: the first row may start `lead` ms after
+ * power-on, then one row every `row` ms; each types its title in `type` ms and
+ * shows its tick `tick` ms after it started (before the next row starts).
+ * The rows also wait for the list itself to come into view (its top above
+ * `PANEL_VIEW_MARGIN`), so the clock below runs from whichever is later.
+ */
+export type BootPace = { lead: number; row: number; tick: number; type: number };
+
+/** Beside the monitor (≥ 1024px): the rows follow the CRT power-on, 300ms each. */
+export const PACE_WIDE: BootPace = {
+  lead: POWER_MS,
+  row: ROW_MS,
+  tick: ROW_MS - 40,
+  type: ROW_MS - 70,
+};
+
+/**
+ * Stacked under the monitor (phone, tablet): the list boots on its own view and
+ * all four rows have landed within ~600ms of it entering, so a momentum
+ * scroll never passes a half-empty panel.
+ */
+export const PACE_COMPACT: BootPace = { lead: 120, row: 130, tick: 100, type: 80 };
+
+/** The list counts as in view once its top crosses 85% of the viewport height. */
+export const PANEL_VIEW_MARGIN = "0px 0px -15% 0px";
+
+/** When row `index` starts typing, in ms after power-on (list already in view). */
+export function rowStartMs(index: number, pace: BootPace = PACE_WIDE): number {
+  return pace.lead + index * pace.row;
 }
 
 /** When row `index` shows its tick (just before the next row starts). */
-export function rowDoneMs(index: number): number {
-  return rowStartMs(index) + ROW_MS - 40;
+export function rowDoneMs(index: number, pace: BootPace = PACE_WIDE): number {
+  return rowStartMs(index, pace) + pace.tick;
 }
 
 /** When the whole boot (power-on plus every row) is over. */
-export function bootDoneMs(rows: number): number {
-  return rowStartMs(rows);
+export function bootDoneMs(rows: number, pace: BootPace = PACE_WIDE): number {
+  return rowStartMs(rows, pace);
+}
+
+/* ---- idle scan and tilt hint ---- */
+
+/** A scan sweep starts at most this often... */
+export const SCAN_EVERY_MS = 6000;
+/** ...and crosses the screen in this long (the CSS `launch-scan` duration). */
+export const SCAN_RUN_MS = 3300;
+/** The first sweep after the loop starts comes this soon. */
+export const SCAN_FIRST_MS = 1400;
+/** Traverse progress band in which the monitor counts as near the middle of the viewport. */
+export const SCAN_BAND: readonly [number, number] = [0.3, 0.7];
+/** The scroll tilt settles here: CSS `--tilt: min(1, p × 2.2)`. */
+export const TILT_SETTLE_P = 1 / 2.2;
+
+/** Whether the monitor (traverse progress `p`) is near the middle of the viewport. */
+export function inScanBand(p: number): boolean {
+  return p >= SCAN_BAND[0] && p <= SCAN_BAND[1];
+}
+
+/** Whether the scroll tilt is still moving at progress `p` (the layer hint is worth it). */
+export function tiltMoving(p: number): boolean {
+  return p < TILT_SETTLE_P;
+}
+
+/** The scan's clock: ms since the last sweep started, and whether one is running. */
+export type ScanClock = { t: number; on: boolean };
+
+export function scanClock(): ScanClock {
+  return { t: SCAN_EVERY_MS - SCAN_FIRST_MS, on: false };
+}
+
+/**
+ * Advance the scan clock by `ms`. A sweep starts only while the monitor is
+ * `centred` and a full cycle has passed since the last one; once started it
+ * runs to its end. Returns whether a sweep is running now.
+ */
+export function stepScan(clock: ScanClock, ms: number, centred: boolean): boolean {
+  clock.t += ms > 0 ? ms : 0;
+  if (clock.on) {
+    if (clock.t >= SCAN_RUN_MS) clock.on = false;
+  } else if (centred && clock.t >= SCAN_EVERY_MS) {
+    clock.on = true;
+    clock.t = 0;
+  }
+  return clock.on;
 }
 
 /** Characters per second so `chars` characters type in at most `ms` (≥ 1). */

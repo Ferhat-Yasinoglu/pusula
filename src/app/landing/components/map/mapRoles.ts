@@ -407,7 +407,7 @@ export function cityAt(screen: ArrayLike<number>, x: number, y: number, passive:
 
 export const DEG = Math.PI / 180;
 
-/** Desktop pin: tilt and turn over the first half of the track. */
+/** Desktop pin: tilt and turn over the first `PIN_TILT_END` of the track. */
 export const PIN_PITCH_DEG = 52;
 export const PIN_YAW_DEG = -10;
 /** Phone: a time-based tilt on first sight. */
@@ -439,12 +439,16 @@ export function easeInOutCubic(value: number): number {
 
 export type CameraTarget = { pitch: number; yaw: number };
 
+/** Desktop: the track is 140vh, so the pin lasts 40vh; the tilt takes its first 60%. */
+export const PIN_TRACK_VH = 140;
+export const PIN_TILT_END = 0.6;
+
 /**
  * Desktop camera target (radians) for pin progress `p`: flat at 0 (the
- * reference image), fully tilted from .5 on. Written into `out`.
+ * reference image), fully tilted from `PIN_TILT_END` on. Written into `out`.
  */
 export function pinCameraTarget(p: number, out: CameraTarget = { pitch: 0, yaw: 0 }): CameraTarget {
-  const e = smoothstep(clamp01(p) / 0.5);
+  const e = smoothstep(clamp01(p) / PIN_TILT_END);
   out.pitch = PIN_PITCH_DEG * DEG * e;
   out.yaw = PIN_YAW_DEG * DEG * e;
   return out;
@@ -482,6 +486,32 @@ export const LABEL_SIDE: Readonly<Record<MapLayout, Readonly<Record<CityId, Labe
 /** Label opacity by depth: the far (northern) edge of a tilted map dims a little. */
 export function labelOpacity(depth: number): number {
   return Math.max(0.7, Math.min(1, 1 - depth / 1200));
+}
+
+/** Node centre to label plate, in px (`--netmap-gap` in map.css): past the breaker ring plus 6px. */
+export const LABEL_GAP_PX: Readonly<Record<MapLayout, number>> = { pin: 20, flow: 16 };
+
+/**
+ * How far (px, along x) a label plate `width` wide must slide to stay inside
+ * `[margin, stageW − margin]`, for a node at `x` with the plate on `side` of
+ * it (`gap` px away for "e"/"w", centred for "n"/"s"). 0 when it fits. A
+ * plate wider than the room keeps its left edge inside (the figure is LTR).
+ */
+export function plateShift(
+  x: number,
+  width: number,
+  side: LabelSide,
+  gap: number,
+  stageW: number,
+  margin: number
+): number {
+  if (!(width > 0) || !(stageW > 0)) return 0;
+  const left = side === "e" ? x + gap : side === "w" ? x - gap - width : x - width / 2;
+  const right = left + width;
+  const maxRight = stageW - margin;
+  if (left < margin) return margin - left;
+  if (right > maxRight) return Math.max(margin - left, maxRight - right);
+  return 0;
 }
 
 /* ------------------------------------------------------------------------ */

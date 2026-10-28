@@ -535,8 +535,32 @@
   gap: var(--s-6) var(--s-8);
 }
 
+/*
+ * The compression header (value and annotation) is longer than the terminal
+ * at every width: it wraps rather than scroll out of sight, and it keeps its
+ * literal ASCII (no `->` ligature).
+ */
 .pusula-landing .bench-term .term-pre {
   min-height: calc(4 * 1.75em + 2 * var(--s-4));
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  font-variant-ligatures: none;
+}
+
+/* Each `; ` field of a header value is one token: lines break between fields only. */
+.pusula-landing .bench-term .tl-t {
+  white-space: nowrap;
+}
+
+/*
+ * Phone: the MISS compression header wraps to three lines (five in all), so
+ * the terminal reserves them and keeps its height while the lines type:
+ * a block that shrinks and regrows above a nav travel's target moves it.
+ */
+@media (max-width: 639px) {
+  .pusula-landing .bench-term .term-pre {
+    min-height: calc(5 * 1.75em + 2 * var(--s-3));
+  }
 }
 
 .pusula-landing .bench-foot {
@@ -725,12 +749,6 @@
   .pusula-landing .bench-out {
     gap: var(--s-4);
     margin-block-start: var(--s-4);
-  }
-
-  /* A phone line is shorter than the compression header: wrap it rather than hide it. */
-  .pusula-landing .bench-term .term-pre {
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
   }
 
   /* Two equal buttons on one row; a longer pair (de) takes a row each. */

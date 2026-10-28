@@ -9,6 +9,8 @@
  *
  *   0–300      ignition: a gold point, its glow, a sextant crosshair
  *   0–480      the boot log types `$ npx pusula`
+ *              (0–480 is also played by CSS alone from first paint, before
+ *              any script runs: see `cssHold` and `intro.css`)
  *   120–800    starfield: every particle fades in on a slowly yawing sphere
  *   560–1160   boot lines roll the gateway's real figures
  *   700–1500   landfall: particles fall onto the dot-matrix Afghanistan,
@@ -45,6 +47,8 @@ import { starPhase, starSize as gyroStarSize } from "../hero/gyro";
 /** Storyboard windows (ms). */
 export const INTRO_T = {
   igniteEnd: 300,
+  /** Top HUD fade-in. */
+  hudIn: 200,
   typeCps: 25,
   starfield: 120,
   starfieldSpread: 480,
@@ -78,6 +82,14 @@ export const INTRO_T = {
   lock: [2300, 2600],
   handoff: 2350,
   done: 2600,
+  /**
+   * The server-rendered curtain plays the ignition, the HUD fade and the
+   * typing in CSS from first paint (`intro.css`, the same curves), then holds
+   * this frame until the script takes over. The canvas resumes at
+   * `min(time since the CSS started, cssHold)`, so the hand-over is seamless
+   * and a slow hydration never shows a black screen.
+   */
+  cssHold: 480,
   /** The JS failsafe: the end state is forced this long after mount. */
   failsafe: 4000,
 } as const;
@@ -139,6 +151,8 @@ export type IntroLayout = {
   /** Starfield: unit vectors (xyz), sphere centre and radius (px). */
   starU: Float32Array;
   starSize: Float32Array;
+  /** Per particle, 0..1: its seeded place in the starfield fade-in (see `retimeStarfield`). */
+  fadeSeed: Float32Array;
   fieldCx: number;
   fieldCy: number;
   fieldR: number;
@@ -221,6 +235,7 @@ export function buildIntroLayout(input: IntroLayoutInput): IntroLayout {
   const rng = mulberry32(hash32("landfall", n));
   const starU = new Float32Array(n * 3);
   const starSize = new Float32Array(n);
+  const fadeSeed = new Float32Array(n);
   const fadeAt = new Float32Array(n);
   const landAt = new Float32Array(n);
   for (let j = 0; j < n; j++) {
@@ -231,7 +246,8 @@ export function buildIntroLayout(input: IntroLayoutInput): IntroLayout {
     starU[j * 3 + 1] = r * Math.sin(phi);
     starU[j * 3 + 2] = z;
     starSize[j] = 0.6 + rng();
-    fadeAt[j] = INTRO_T.starfield + (hash32("fade", j) / 4294967296) * INTRO_T.starfieldSpread;
+    fadeSeed[j] = hash32("fade", j) / 4294967296;
+    fadeAt[j] = INTRO_T.starfield + fadeSeed[j] * INTRO_T.starfieldSpread;
     // West to east, whatever the reading direction.
     landAt[j] = INTRO_T.land + ((dots[j].x - minX) / Math.max(1, maxX - minX)) * INTRO_T.landSweep;
   }
@@ -361,6 +377,7 @@ export function buildIntroLayout(input: IntroLayoutInput): IntroLayout {
     dotR: Math.max(0.9, spacing * scale * 0.19),
     starU,
     starSize,
+    fadeSeed,
     fieldCx: vw / 2,
     fieldCy: vh / 2,
     fieldR: 0.6 * Math.max(vw, vh),
@@ -388,6 +405,21 @@ export function buildIntroLayout(input: IntroLayoutInput): IntroLayout {
     borderLen,
     dial: { ...dial },
   };
+}
+
+/**
+ * The canvas resumes the intro at `from` ms (the CSS ignition ran until
+ * then): stars that would already be part-way into their fade-in start it
+ * from `from` instead, so the starfield never pops in at once. Their order is
+ * kept and they all finish by the usual time (the spread shrinks to a
+ * quarter at most). `from` at or before the starfield's start restores the
+ * storyboard exactly. In place; cheap (one pass).
+ */
+export function retimeStarfield(L: IntroLayout, from: number): void {
+  const T = INTRO_T;
+  const start = Math.max(from, T.starfield);
+  const spread = T.starfieldSpread * Math.max(0.25, 1 - (start - T.starfield) / T.starfieldSpread);
+  for (let j = 0; j < L.n; j++) L.fadeAt[j] = start + L.fadeSeed[j] * spread;
 }
 
 /* ------------------------------------------------------------------------ */
@@ -502,7 +534,7 @@ export function introScalars(t: number, out: IntroScalars = createScalars()): In
   out.point = ramp(t, 0, 60) * (1 - ramp(t, 700, 900));
   out.crossLen = easeOutCubic(ig);
   out.cross = 0.35 * ramp(t, 0, 80) * (1 - ramp(t, T.crossOut[0], T.crossOut[1]));
-  out.hud = ramp(t, 0, 200) * (1 - ramp(t, T.handoff, T.done));
+  out.hud = ramp(t, 0, T.hudIn) * (1 - ramp(t, T.handoff, T.done));
 
   // Boot log.
   out.typed = Math.min(BOOT_COMMAND.length, Math.floor(t / (1000 / T.typeCps)));

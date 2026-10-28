@@ -29,8 +29,9 @@ import "./primitives.css";
  * `overflow` or `content-visibility`, which would break `position: sticky`.
  * Pass the same `minWidth` to `useScrollProgress(trackRef, { mode: "pin" })`.
  *
- * Non-pinned stations skip rendering while far off screen
- * (`content-visibility: auto; contain-intrinsic-size: auto 900px`).
+ * No station uses `content-visibility`: an estimated placeholder height put
+ * every station below it (and so every nav jump and anchor link) in the wrong
+ * place until it rendered. The canvases already pause off screen.
  */
 
 export type StationProps = {
@@ -80,13 +81,7 @@ export default function Station({
       data-align={align}
       data-pin-min={pinned ? pinBreakpoint(pin.minWidth) : undefined}
       aria-labelledby={titleId}
-      className={cx(
-        "station",
-        tone === "graticule" && "graticule",
-        // content-visibility contains its subtree: never on a pinned station.
-        !pinned && id !== "bridge" && "station-cv",
-        className
-      )}
+      className={cx("station", tone === "graticule" && "graticule", className)}
     >
       <CourseSeam bearing={station.bearing} />
       <header className="station-inner station-head">

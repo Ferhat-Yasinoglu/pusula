@@ -18,10 +18,13 @@ import {
   kindTotal,
   labelFitBucket,
   matchCatalog,
-  pickOrder,
   presentKinds,
+  revealDirection,
+  SCROLL_EDGE_SLACK_PX,
+  scrollEdges,
   spectrumLayout,
   wallContentHeight,
+  WALL_MAX_COLUMNS,
   type MatchResult,
 } from "../../src/app/landing/components/catalog/catalogModel";
 
@@ -169,14 +172,6 @@ test("collapsedPicks: pinned ids, a local bridge, exactly 40, deterministic", ()
   assert.ok(picks.slice(0, 60).some(Boolean));
   assert.ok(picks.slice(300).some(Boolean));
 
-  const order = pickOrder(picks);
-  const seen = Array.from(order).filter((v) => v >= 0);
-  assert.deepEqual(
-    seen,
-    Array.from({ length: COLLAPSED_COUNT }, (_, k) => k)
-  );
-  assert.equal(order[1], picks[1] ? order[1] : -1);
-
   // Small catalogs pick everything.
   assert.equal(
     Array.from(collapsedPicks(SMALL, [])).reduce((n, v) => n + v, 0),
@@ -248,4 +243,36 @@ test("filterKey: same search regardless of case and padding; chip and kind count
   assert.equal(filterKey({ query: "ollama", flag: "all", kind: null }), base);
   assert.notEqual(filterKey({ query: "ollama", flag: "free", kind: null }), base);
   assert.notEqual(filterKey({ query: "ollama", flag: "all", kind: "webSearch" }), base);
+});
+
+test("revealDirection: uncover upwards only when the wall comes in across the top edge", () => {
+  // Scrolling down: the wall's top enters at the bottom of the viewport.
+  assert.equal(revealDirection(876, 2328, 900), "down");
+  // A jump into the middle of the wall: it spans the viewport.
+  assert.equal(revealDirection(-300, 1152, 900), "down");
+  // Scrolling back up: its bottom enters at the top of the viewport.
+  assert.equal(revealDirection(-1430, 22, 900), "up");
+  // A wall shorter than the viewport, fully in view: from its top.
+  assert.equal(revealDirection(120, 600, 844), "down");
+  // The shutters cover the widest layout's columns.
+  assert.equal(WALL_MAX_COLUMNS, 6);
+});
+
+test("scrollEdges: which ends of a horizontal scroller hide content", () => {
+  // Nothing to scroll (or only sub-slack rounding).
+  assert.equal(scrollEdges(0, 390, 390), null);
+  assert.equal(scrollEdges(0, 390 + SCROLL_EDGE_SLACK_PX, 390), null);
+  // At the start, in the middle, at the end.
+  assert.equal(scrollEdges(0, 610, 390), "end");
+  assert.equal(scrollEdges(105, 610, 390), "both");
+  assert.equal(scrollEdges(220, 610, 390), "start");
+  // Within the slack of either end counts as that end.
+  assert.equal(scrollEdges(1, 610, 390), "end");
+  assert.equal(scrollEdges(219, 610, 390), "start");
+  // RTL: scrollLeft runs negative from 0 to -(max); only the magnitude counts.
+  assert.equal(scrollEdges(-0, 484, 390), "end");
+  assert.equal(scrollEdges(-47, 484, 390), "both");
+  assert.equal(scrollEdges(-94, 484, 390), "start");
+  // Overscroll past either end is clamped.
+  assert.equal(scrollEdges(-500, 484, 390), "start");
 });

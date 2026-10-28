@@ -189,6 +189,40 @@ export function railGeometry(width: number): RailGeometry {
   };
 }
 
+/**
+ * Length of a served comet's route (hub → band → middle lane → its middle gate
+ * → upstream), in CSS px: what the comet speed is scaled to, so a comet takes
+ * the same time to cross a phone rail as a desktop one.
+ */
+export function servedRouteLength(g: RailGeometry): number {
+  const pts = [
+    g.srcX,
+    g.mid,
+    g.bandX0,
+    g.mid,
+    g.laneX0,
+    g.laneMid[1],
+    g.laneEndX,
+    g.laneMid[1],
+    g.gateX0,
+    g.slotMid[4],
+    g.gateX1,
+    g.slotMid[4],
+    g.bandX1,
+    g.mid,
+    g.upX - g.upR,
+    g.mid,
+  ];
+  let length = 0;
+  for (let p = 2; p < pts.length; p += 2) {
+    length += Math.hypot(pts[p] - pts[p - 2], pts[p + 1] - pts[p - 1]);
+  }
+  return length;
+}
+
+/** Seconds a comet takes along `servedRouteLength` at ×1 (`cometPace` shortens it). */
+export const COMET_TRAVEL_S = 2.3;
+
 /** Centre x of breaker cell `i` of `count`, the row centred on the band (as the CSS flex row). */
 export function cellCenterX(g: RailGeometry, i: number, count: number): number {
   const row = count * g.cellW + Math.max(0, count - 1) * g.cellGap;
@@ -205,12 +239,50 @@ export function bandPerimeter(g: RailGeometry): number {
 }
 
 /* ------------------------------------------------------------------------ */
+/* The rail's own time-lapse                                                */
+/* ------------------------------------------------------------------------ */
+
+/**
+ * The storm rail is a time-lapse. At the real pace the focused provider sees
+ * about one request every two seconds, so a ×1 rail reads empty and a breaker
+ * takes ten seconds to trip. While the rail is on screen and the visitor's
+ * dock runs at ×1, the rail runs the deck `RAIL_LAPSE` times as fast itself
+ * (the extra sim time of each heartbeat step, `lapseExtraMs`) and says so on
+ * the rail ("Time-lapse ×5"). The dock's speed is never touched: it stays
+ * what the visitor set, and a faster dock speed is simply used as it is.
+ */
+export const RAIL_LAPSE = 5;
+
+/** The pace the rail runs at: the dock's speed, or the rail's own lapse over a ×1 dock. */
+export function railSpeed(deckSpeed: number, lapse: boolean): number {
+  if (deckSpeed > 1) return deckSpeed;
+  return lapse ? RAIL_LAPSE : 1;
+}
+
+/** Extra sim ms the rail adds to one heartbeat step of `stepMs` (none over a faster dock). */
+export function lapseExtraMs(deckSpeed: number, stepMs: number): number {
+  if (deckSpeed > 1 || !(stepMs > 0)) return 0;
+  return stepMs * (RAIL_LAPSE - 1);
+}
+
+/**
+ * How much faster comets travel at a given rail speed. Deliberately much less
+ * than the speed itself: a comet takes about two seconds from hub to upstream
+ * at ×5, so the rail always carries several of them (4–6 in flight on average
+ * for every focus) instead of a few quick sparks.
+ */
+export function cometPace(speed: number): number {
+  return speed >= 10 ? 1.6 : speed >= 5 ? 1.25 : 1;
+}
+
+/* ------------------------------------------------------------------------ */
 /* Autoplay                                                                 */
 /* ------------------------------------------------------------------------ */
 
 /**
- * The autoplay script: soon after the rail comes into view (`AUTOPLAY_IDLE_S`),
- * a loop at ×5 time-lapse walks the three scopes in turn —
+ * The autoplay script: soon after most of the rail is in view (`AUTOPLAY_IDLE_S`
+ * after `AUTOPLAY_VISIBLE` of it shows), a loop in the rail's time-lapse walks
+ * the three scopes in turn —
  *
  *   0 s   OAuth (claude): 429 latch on model 2; the model locks, siblings serve.
  *   4 s   off.
@@ -225,15 +297,15 @@ export function bandPerimeter(g: RailGeometry): number {
  * The provider beat waits for the real breaker (it never fakes a state), so
  * its length follows the simulated traffic; caps keep the loop moving.
  *
- * It starts after only a moment in view: at the real pace the focused provider
- * sees about one request every two seconds, so an idle rail would read empty
- * to a visitor scrolling past. After a visitor's input it waits out the
- * cool-off instead.
+ * The traffic itself flows from the moment the rail nears the screen (the
+ * time-lapse above); the script starts after a short look at healthy flow.
+ * After a visitor's input it waits out the cool-off instead.
  */
 export const AUTOPLAY_IDLE_S = 0.8;
+/** Share of the rail that must be on screen before autoplay counts idle time. */
+export const AUTOPLAY_VISIBLE = 0.4;
 /** Any input stops autoplay for this long. */
 export const AUTOPLAY_COOLOFF_S = 20;
-export const AUTOPLAY_SPEED = 5;
 
 export type AutoplayPhase =
   "model" | "modelRest" | "key" | "keyRest" | "provider" | "providerOpen" | "recover" | "hold";

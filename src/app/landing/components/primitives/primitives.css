@@ -107,13 +107,7 @@
 
 .pusula-landing .station {
   position: relative;
-  padding-block: var(--station-pad);
-}
-
-/* Off-screen stations skip rendering. Never on a pinned station (sticky). */
-.pusula-landing .station-cv {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 900px;
+  padding-block: var(--station-pad) var(--station-pad-end);
 }
 
 .pusula-landing .station-inner {
@@ -123,12 +117,20 @@
   padding-inline: var(--gutter);
 }
 
+/* A compact head on phones (the stations' height budgets), roomier from 640px. */
 .pusula-landing .station-head {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--s-4);
-  margin-block-end: var(--s-8);
+  gap: var(--s-3);
+  margin-block-end: var(--s-6);
+}
+
+@media (min-width: 640px) {
+  .pusula-landing .station-head {
+    gap: var(--s-4);
+    margin-block-end: var(--s-7);
+  }
 }
 
 .pusula-landing .station[data-align="center"] .station-head {
@@ -1029,11 +1031,6 @@
   letter-spacing: var(--track-readout);
   color: var(--foam);
   white-space: nowrap;
-}
-
-/* Persian is never letter-spaced: it would break the joining of its letters. */
-.pusula-landing .sim-pill:lang(fa) {
-  letter-spacing: 0;
 }
 
 .pusula-landing .sim-dot {

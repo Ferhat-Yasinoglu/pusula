@@ -25,7 +25,7 @@ import {
   type StratPick,
   type StratState,
 } from "../../sim/landingStrategies";
-import { SimBadge } from "../primitives";
+import { Glyph, SimBadge } from "../primitives";
 import {
   HOP_POINTS,
   cardDoor,
@@ -653,11 +653,9 @@ export default function StrategyLanes({ strategy, compact, rtl, onInteract }: St
             <circle r="3.5" className="rt-hub-dot" />
             <g className="rt-judge">
               <circle r={compact ? 13 : 15} className="rt-judge-ring" />
-              {/* a small balance: beam, post, two pans */}
-              <path
-                className="rt-judge-glyph"
-                d="M-7 -4H7M0 -7V6M-4 6H4M-7 -4L-9.5 1.5H-4.5ZM7 -4L4.5 1.5H9.5Z"
-              />
+              <g transform="translate(-8 -8)">
+                <Glyph name="scales" size={16} tone="current" className="rt-judge-glyph" />
+              </g>
             </g>
           </g>
 

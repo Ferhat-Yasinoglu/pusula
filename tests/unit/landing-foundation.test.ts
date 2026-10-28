@@ -14,7 +14,7 @@
  *   browser, deterministically, and without claiming its canvas is live.
  */
 import { register } from "node:module";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -136,11 +136,53 @@ test("foundation: every station renders its compass spine with real messages", (
       );
       const kicker = `${digits.format(station.bearing)}°</span> · ${t[station.navKey]}`;
       assert.ok(html.includes(kicker), `${locale} ${station.id}: kicker "${kicker}"`);
-      assert.equal(
-        html.includes("station-cv"),
-        station.id !== "bridge",
-        `${station.id}: content-visibility only below the bridge`
-      );
+      // No lazy placeholder: an estimated height put nav jumps and anchors off target.
+      assert.ok(!html.includes("station-cv"), `${station.id}: no content-visibility`);
     }
   }
+});
+
+test("no loading boundary wraps /landing: the page is in the first flush, also without JavaScript", () => {
+  // React streams a completed Suspense boundary larger than ~12.8 KB as its
+  // fallback plus a hidden <div> that an inline script swaps in. A
+  // `loading.tsx` at the app root or in the landing folder would wrap the
+  // landing in one: a light spinner flash on every load, nothing at all
+  // without JavaScript.
+  for (const dir of [
+    ["src", "app"],
+    ["src", "app", "landing"],
+  ]) {
+    for (const ext of ["tsx", "ts", "jsx", "js"]) {
+      const file = join(process.cwd(), ...dir, `loading.${ext}`);
+      assert.equal(existsSync(file), false, `${dir.join("/")}/loading.${ext} must not exist`);
+    }
+  }
+});
+
+test("first paint: the page opens on the landing's black before any of its CSS loads", async () => {
+  const { FIRST_PAINT_STYLE } = await import("../../src/app/landing/firstPaint.ts");
+  const css = readFileSync(join(process.cwd(), "src", "app", "landing", "landing.css"), "utf8");
+  const voidToken = /--void:\s*(#[0-9a-f]{6})/i.exec(css)?.[1];
+  assert.ok(voidToken, "--void token not found in landing.css");
+  assert.ok(
+    FIRST_PAINT_STYLE.includes(`background:${voidToken}`),
+    "first-paint colour drifted from --void"
+  );
+  assert.ok(
+    FIRST_PAINT_STYLE.includes("body::before{content:none}"),
+    "the app's grid must not paint first"
+  );
+
+  // page.tsx renders the style ahead of the gate script and the page body. (A
+  // full server render of the route needs the Next app router, so the order
+  // is pinned on the source.)
+  const page = readFileSync(join(process.cwd(), "src", "app", "landing", "page.tsx"), "utf8");
+  const styleAt = page.indexOf("<style>{FIRST_PAINT_STYLE}</style>");
+  const gateAt = page.indexOf("__html: INTRO_GATE");
+  const bodyAt = page.indexOf("<LandingPage");
+  assert.ok(styleAt >= 0, "page.tsx must render <style>{FIRST_PAINT_STYLE}</style>");
+  assert.ok(
+    styleAt < gateAt && gateAt < bodyAt,
+    `order: style ${styleAt}, gate ${gateAt}, body ${bodyAt}`
+  );
 });

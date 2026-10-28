@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useSyncExternalStore, type MutableRefObject } from "react";
+import { refreshScrollPosition, retainScrollPosition, scrollPosition } from "./scrollPosition";
 
 /**
  * The compass spine of the page: eight stations on the eight principal winds,
@@ -11,7 +12,10 @@ import { useEffect, useSyncExternalStore, type MutableRefObject } from "react";
  *   It is piecewise-linear over the stations' document offsets, which are
  *   measured by a ResizeObserver on `<main>` (and on window resize), never
  *   per scroll event; a scroll event only interpolates over the cached
- *   offsets.
+ *   offsets (and the scroll offset cached once per event, `scrollPosition.ts`).
+ * - Width changes (a phone rotating, a window resized) keep the visitor's
+ *   place: the station under the nav and how far through it they were are
+ *   restored after the stations reflow (`reanchorTarget`).
  * - `useActiveStation()`: the station crossing the middle band of the
  *   viewport, from ONE shared IntersectionObserver with
  *   `rootMargin "-45% 0px -45% 0px"`.
@@ -143,6 +147,55 @@ export function pickActiveStation(
   return best ? best.id : previous;
 }
 
+/** Where the visitor is reading: a station and how far through it, or a distance from the bottom. */
+export type ReadingAnchor =
+  { kind: "station"; index: number; fraction: number } | { kind: "bottom"; fromBottom: number };
+
+/**
+ * The reading anchor at `scrollY`: the last station whose top is at or above
+ * the line just under the nav (`lineOffset` below the viewport top), and the
+ * fraction of that station's height the line has passed. Below the last
+ * station (the footer) the anchor is the distance from the bottom instead.
+ */
+export function readingAnchor(
+  tops: readonly number[],
+  heights: readonly number[],
+  scrollY: number,
+  lineOffset: number,
+  maxScroll: number
+): ReadingAnchor | null {
+  const count = Math.min(tops.length, heights.length);
+  if (count === 0) return null;
+  const line = scrollY + lineOffset;
+  const last = count - 1;
+  if (line >= tops[last] + heights[last]) {
+    return { kind: "bottom", fromBottom: Math.max(0, maxScroll - scrollY) };
+  }
+  let index = 0;
+  for (let i = 1; i < count; i++) if (tops[i] <= line) index = i;
+  const height = heights[index];
+  const fraction = height > 0 ? Math.min(1, Math.max(0, (line - tops[index]) / height)) : 0;
+  return { kind: "station", index, fraction };
+}
+
+/** The scroll offset that puts `anchor` back under the nav in a re-measured layout. */
+export function reanchorTarget(
+  anchor: ReadingAnchor,
+  tops: readonly number[],
+  heights: readonly number[],
+  lineOffset: number,
+  maxScroll: number
+): number | null {
+  let target: number;
+  if (anchor.kind === "bottom") {
+    target = maxScroll - anchor.fromBottom;
+  } else {
+    if (anchor.index >= tops.length || anchor.index >= heights.length) return null;
+    target = tops[anchor.index] + anchor.fraction * heights[anchor.index] - lineOffset;
+  }
+  return Math.round(Math.min(Math.max(target, 0), Math.max(maxScroll, 0)));
+}
+
 /* ------------------------------------------------------------------------ */
 /* Shared DOM tracker                                                       */
 /* ------------------------------------------------------------------------ */
@@ -167,6 +220,42 @@ let observedStations: Element[] = [];
 const intersecting = new Set<StationId>();
 let notifyTimer: ReturnType<typeof setTimeout> | null = null;
 let lastNotifyAt = 0;
+let releaseScroll: (() => void) | null = null;
+
+/*
+ * Keeping the visitor's place across width changes. `measuredWidth`,
+ * `stationTops`, `stationHeights`, `lineOffset` and `measuredMax` describe the
+ * layout of the last measure; `placeY` is the scroll offset in that layout.
+ * When a measure finds a new width, the anchor is taken from the old layout
+ * and the page is put back on it; for `REANCHOR_MS` after (stations keep
+ * reflowing as their own media queries and observers catch up) every
+ * re-measure re-applies it, until the visitor takes the helm (input, or any
+ * scroll that lands somewhere the re-anchoring did not put the page).
+ */
+const REANCHOR_MS = 1200;
+const HELM_EVENTS = ["wheel", "touchstart", "keydown", "pointerdown"] as const;
+let measuredWidth = -1;
+let stationTops: number[] = [];
+let stationHeights: number[] = [];
+let lineOffset = 0;
+let measuredMax = 0;
+let placeY = 0;
+let reanchor: { anchor: ReadingAnchor; until: number; placed: number } | null = null;
+
+function endReanchor(): void {
+  if (!reanchor) return;
+  reanchor = null;
+  for (const type of HELM_EVENTS) window.removeEventListener(type, endReanchor, { capture: true });
+}
+
+function beginReanchor(anchor: ReadingAnchor): void {
+  if (!reanchor) {
+    for (const type of HELM_EVENTS) {
+      window.addEventListener(type, endReanchor, { capture: true, passive: true });
+    }
+  }
+  reanchor = { anchor, until: performance.now() + REANCHOR_MS, placed: placeY };
+}
 
 function findMain(): HTMLElement | null {
   return document.getElementById("main-content") ?? document.querySelector("main");
@@ -195,7 +284,11 @@ function scheduleHeadingNotify(): void {
 }
 
 function updateHeading(): void {
-  headingRef.current = headingAt(knots, window.scrollY);
+  const scrollY = scrollPosition();
+  // The re-anchoring's own scrolls are not the visitor's place; any other scroll ends it.
+  if (reanchor && Math.abs(scrollY - reanchor.placed) > 2) endReanchor();
+  if (!reanchor) placeY = scrollY;
+  headingRef.current = headingAt(knots, scrollY);
   scheduleHeadingNotify();
 }
 
@@ -212,19 +305,46 @@ function observeBand(elements: Element[]): void {
 
 /** Layout changed: re-measure station offsets (the only layout reads here). */
 function measure(): void {
+  const width = window.innerWidth;
+  if (measuredWidth >= 0 && width !== measuredWidth) {
+    // Taken from the layout the visitor was reading, before the new measure replaces it.
+    const anchor = readingAnchor(stationTops, stationHeights, placeY, lineOffset, measuredMax);
+    if (anchor) beginReanchor(anchor);
+  }
   const elements = stationElements();
   observeBand(elements);
-  const scrollY = window.scrollY;
+  const scrollY = refreshScrollPosition();
   const tops: number[] = [];
+  const heights: number[] = [];
   const bearings: number[] = [];
   for (const element of elements) {
-    tops.push(element.getBoundingClientRect().top + scrollY);
+    const rect = element.getBoundingClientRect();
+    tops.push(rect.top + scrollY);
+    heights.push(rect.height);
     bearings.push(getStation(element.id as StationId).bearing);
   }
   const viewportHeight = window.innerHeight;
   const maxScroll = Math.max(0, document.documentElement.scrollHeight - viewportHeight);
   knots = buildHeadingKnots(tops, bearings, viewportHeight, maxScroll);
-  updateHeading();
+  measuredWidth = width;
+  stationTops = tops;
+  stationHeights = heights;
+  measuredMax = maxScroll;
+  // The line under the nav: the stations' own `scroll-margin-top` (the nav's height).
+  const second = elements[1];
+  lineOffset = second ? parseFloat(getComputedStyle(second).scrollMarginTop) || 0 : 0;
+
+  if (reanchor && performance.now() > reanchor.until) endReanchor();
+  if (reanchor) {
+    const target = reanchorTarget(reanchor.anchor, tops, heights, lineOffset, maxScroll);
+    if (target !== null && Math.abs(target - scrollY) > 1) {
+      window.scrollTo({ top: target, behavior: "instant" });
+    }
+    placeY = target ?? scrollY;
+    reanchor.placed = placeY;
+  }
+  headingRef.current = headingAt(knots, refreshScrollPosition());
+  scheduleHeadingNotify();
 }
 
 function onBandChange(entries: IntersectionObserverEntry[]): void {
@@ -251,6 +371,7 @@ function startTracking(): void {
     mainObserver.observe(findMain() ?? document.body);
     mainObserver.observe(document.body);
   }
+  releaseScroll = retainScrollPosition();
   window.addEventListener("scroll", updateHeading, { passive: true });
   window.addEventListener("resize", measure);
   measure();
@@ -267,6 +388,10 @@ function stopTracking(): void {
   bandObserver = null;
   observedStations = [];
   intersecting.clear();
+  releaseScroll?.();
+  releaseScroll = null;
+  endReanchor();
+  measuredWidth = -1;
   if (notifyTimer !== null) clearTimeout(notifyTimer);
   notifyTimer = null;
 }

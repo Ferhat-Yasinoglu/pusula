@@ -15,6 +15,7 @@ import { usePrefersReducedMotion } from "../../landingMotion";
 import {
   CANDIDATE_IDS,
   act,
+  advance,
   advanceUntil,
   candidate,
   probeInMs,
@@ -30,7 +31,7 @@ import {
   subscribeEvents,
   useDeck,
 } from "../../runtime/deckStore";
-import { canAnimate, usePaused } from "../../runtime/heartbeat";
+import { canAnimate, register, usePaused } from "../../runtime/heartbeat";
 import { useCanvasStage } from "../../runtime/useCanvasStage";
 import { useDomLoop } from "../../runtime/useDomLoop";
 import {
@@ -46,7 +47,7 @@ import { cx, numberFormat, watchView } from "../primitives/primitiveKit";
 import type { StormInput } from "./stormRender";
 import {
   AUTOPLAY_COOLOFF_S,
-  AUTOPLAY_SPEED,
+  AUTOPLAY_VISIBLE,
   FAULT_KEY,
   FAULT_MODEL,
   LATCH_RESOLVE_MAX_MS,
@@ -60,9 +61,11 @@ import {
   autoplayTargets,
   ceilSeconds,
   createAutoplay,
+  lapseExtraMs,
   latchShown,
   lowestBit,
   meterLevel,
+  railSpeed,
   stepAutoplay,
   tenthSeconds,
   type LatchKind,
@@ -89,7 +92,11 @@ import "./resilience.css";
  *   (the active row is the choice). Three latches act on the page's one deck,
  *   so a fault caused here shows on the hero star and the map road too; DOM
  *   readouts mirror the breaker.
- * - Autoplay: a moment after the rail comes into view, a ×5 time-lapse walks
+ * - Time-lapse: while the rail is on screen over a ×1 dock, the rail runs the
+ *   deck ×5 itself (`RAIL_LAPSE`, extra sim time on each heartbeat step) and
+ *   says so on the rail, so traffic always flows through it. The dock's speed
+ *   is never touched: it stays what the visitor set.
+ * - Autoplay: a moment after most of the rail is in view, the script walks
  *   429 → 401 → 503 and back to CLOSED (`stormModel.ts`). Using a control
  *   stops it for 20 s; scrolling past does not.
  */
@@ -197,11 +204,9 @@ const selectClock = (id: CandidateId) =>
 
 const FOCUS_IDS = PROFILE_IDS.map((p) => PROFILE_FOCUS[p]);
 
-/** Every breaker the rail can show is CLOSED. */
-function allClosed(w: World): boolean {
-  for (const id of FOCUS_IDS) if (candidate(w, id).breaker.state !== "closed") return false;
-  return true;
-}
+/** The rail's time-lapse step: the extra sim time of one heartbeat step (set just before each dispatch). */
+let lapseStepMs = 0;
+const lapseStep = (w: World) => advance(w, lapseStepMs);
 
 /** Any fault latched on one of the rail's three candidates (autoplay never runs over a visitor's fault). */
 function anyLatch(w: World): boolean {
@@ -385,7 +390,10 @@ export default function ResilienceStation({ stats }: { stats: LandingStats }) {
   const railRef = useRef<HTMLElement>(null);
   const flashRef = useRef<HTMLDivElement>(null);
   const ignoredRefs = useRef<(HTMLSpanElement | null)[]>([]);
-  const [inView, setInView] = useState(false);
+  /** The rail is near or on screen: its time-lapse runs. */
+  const [near, setNear] = useState(false);
+  /** Most of the rail is in view: autoplay may count idle time. */
+  const [engaged, setEngaged] = useState(false);
   const [announcement, setAnnouncement] = useState("");
   const [staticIgnored, setStaticIgnored] = useState(-1);
   /** Phone: which fold under the console is open (the defaults table or the scope descriptions). */
@@ -395,6 +403,7 @@ export default function ResilienceStation({ stats }: { stats: LandingStats }) {
 
   /* ---- renderer: loaded near the viewport, never under reduced motion ---- */
   const [renderer, setRenderer] = useState<RendererModule | null>(null);
+  const lapseOn = near && !reduced && !paused;
   const input = useRef<StormInput>({ focus, rtl, flash: null, rail: null });
   useEffect(() => {
     input.current.focus = focus;
@@ -402,6 +411,24 @@ export default function ResilienceStation({ stats }: { stats: LandingStats }) {
     input.current.flash = flashRef.current;
     input.current.rail = railRef.current;
   }, [focus, rtl]);
+
+  /*
+   * ---- the rail's own time-lapse ----
+   * On the sim lane, right beside the deck's own step: each 100 ms step of a
+   * ×1 deck gets `RAIL_LAPSE − 1` more steps' worth of sim time, exactly what
+   * the dock's ×5 would do, without changing the page-wide speed.
+   */
+  useEffect(() => {
+    if (!lapseOn) return;
+    return register({
+      id: "resilience-lapse",
+      lane: "sim",
+      tick: (dt) => {
+        lapseStepMs = lapseExtraMs(getWorld().speed, dt * 1000);
+        if (lapseStepMs > 0) dispatch(lapseStep);
+      },
+    });
+  }, [lapseOn]);
 
   useEffect(() => {
     if (reduced) return;
@@ -454,7 +481,9 @@ export default function ResilienceStation({ stats }: { stats: LandingStats }) {
   /*
    * ---- power-on: armed below the fold, lit when the rail scrolls in ----
    * A pure presentation attribute, written straight to the DOM (React never
-   * renders it): the server HTML shows the rail fully drawn.
+   * renders it): the server HTML shows the rail fully drawn. The time-lapse
+   * starts a little before the rail shows, so its traffic is already flowing
+   * when it does; autoplay waits until most of the rail is in view.
    */
   useEffect(() => {
     const node = railRef.current;
@@ -464,14 +493,28 @@ export default function ResilienceStation({ stats }: { stats: LandingStats }) {
     } else if (node.getBoundingClientRect().top > window.innerHeight) {
       node.setAttribute("data-power", "armed");
     }
-    return watchView(node, {
+    const stopNear = watchView(node, {
+      onNear: () => setNear(true),
+      onFar: () => setNear(false),
+      // Wider than the canvas's own 100px margin: the lapse runs whenever the rail can move.
+      nearMargin: "120px 0px 160px 0px",
+    });
+    const stopPower = watchView(node, {
       onEnter: () => {
         if (node.hasAttribute("data-power")) node.setAttribute("data-power", "on");
-        setInView(true);
       },
-      onExit: () => setInView(false),
       enterThreshold: 0.15,
     });
+    const stopEngaged = watchView(node, {
+      onEnter: () => setEngaged(true),
+      onExit: () => setEngaged(false),
+      enterThreshold: AUTOPLAY_VISIBLE,
+    });
+    return () => {
+      stopNear();
+      stopPower();
+      stopEngaged();
+    };
   }, [reduced]);
 
   /* ---- events: the ignored flash, and polite announcements of visitor-caused changes ---- */
@@ -513,7 +556,6 @@ export default function ResilienceStation({ stats }: { stats: LandingStats }) {
     st: createAutoplay(),
     idle: 0,
     sinceInput: AUTOPLAY_COOLOFF_S,
-    ownSpeed: false,
     latched: null as CandidateId | null,
   });
   const profileRef = useRef(profile);
@@ -533,34 +575,13 @@ export default function ResilienceStation({ stats }: { stats: LandingStats }) {
     if (c.upstreamDown) dispatch(act.setUpstreamDown(id, false));
   }, []);
 
-  /**
-   * The rail engages a ×5 time-lapse (badge shown) for autoplay and while a
-   * visitor's fault from this console plays out: at the real pace the focused
-   * provider sees about one request every two seconds, so a breaker would
-   * take ten seconds to trip. It is handed back (×1) once everything here is
-   * healthy again, or when the rail leaves the screen. The rail only takes the
-   * speed from ×1 and gives up its claim as soon as anyone else changes the
-   * speed (the dock), so a visitor's pick is never undone.
-   */
-  const boostSpeed = useCallback(() => {
-    if (!canAnimate() || getWorld().speed !== 1) return;
-    dispatch(act.setSpeed(AUTOPLAY_SPEED));
-    auto.current.ownSpeed = true;
-  }, []);
-  const restoreSpeed = useCallback(() => {
-    const a = auto.current;
-    if (a.ownSpeed && getWorld().speed === AUTOPLAY_SPEED) dispatch(act.setSpeed(1));
-    a.ownSpeed = false;
-  }, []);
-
   const stopAutoplay = useCallback(() => {
     const a = auto.current;
     a.idle = 0;
     if (!a.running) return;
     a.running = false;
     clearAutoLatches();
-    restoreSpeed();
-  }, [clearAutoLatches, restoreSpeed]);
+  }, [clearAutoLatches]);
 
   /** A visitor used a control: autoplay stops and stays off for the cool-off. */
   const noteInput = useCallback(() => {
@@ -569,35 +590,22 @@ export default function ResilienceStation({ stats }: { stats: LandingStats }) {
   }, [stopAutoplay]);
 
   useEffect(() => {
-    if (inView && !reduced && !paused) return;
+    if (engaged && !reduced && !paused) return;
     stopAutoplay();
-    restoreSpeed();
-  }, [inView, reduced, paused, stopAutoplay, restoreSpeed]);
-  useEffect(
-    () => () => {
-      stopAutoplay();
-      restoreSpeed();
-    },
-    [stopAutoplay, restoreSpeed]
-  );
+  }, [engaged, reduced, paused, stopAutoplay]);
+  useEffect(() => () => stopAutoplay(), [stopAutoplay]);
 
   useDomLoop(
     "resilience-autoplay",
     (dt) => {
       const a = auto.current;
       const w = getWorld();
-      // Someone else (the dock) changed the speed: it is theirs now.
-      if (a.ownSpeed && w.speed !== AUTOPLAY_SPEED) a.ownSpeed = false;
       if (!a.running) {
         a.idle += dt;
         a.sinceInput += dt;
-        const latched = anyLatch(w);
-        // A visitor's storm has blown over: hand the speed back.
-        if (a.ownSpeed && !latched && allClosed(w)) restoreSpeed();
-        if (!autoplayMayStart(a.idle, a.sinceInput, latched)) return;
+        if (!autoplayMayStart(a.idle, a.sinceInput, anyLatch(w))) return;
         a.running = true;
         a.st = createAutoplay();
-        boostSpeed();
       }
       const before = a.st.phase;
       const focusNow = PROFILE_FOCUS[autoplayTargets(before).profile];
@@ -619,7 +627,7 @@ export default function ResilienceStation({ stats }: { stats: LandingStats }) {
       }
       if (c.upstreamDown !== want.provider) dispatch(act.setUpstreamDown(id, want.provider));
     },
-    { enabled: inView && !reduced && !paused }
+    { enabled: engaged && !reduced && !paused }
   );
 
   /* ---- visitor controls (each one counts as input: touch scrolling does not) ---- */
@@ -632,7 +640,6 @@ export default function ResilienceStation({ stats }: { stats: LandingStats }) {
   const setFault = (kind: LatchKind, on: boolean) => {
     noteInput();
     setStaticIgnored(-1);
-    if (on) boostSpeed();
     const id = focus;
     if (kind === "model") dispatch(act.setModelRateLimited(id, FAULT_MODEL, on), { user: true });
     else if (kind === "key") dispatch(act.setKeyRevoked(id, FAULT_KEY, on), { user: true });
@@ -654,7 +661,9 @@ export default function ResilienceStation({ stats }: { stats: LandingStats }) {
   const meter = meterLevel(view.failures, view.state, degradesAfter, opensAfter);
   const modelLatched = (view.limited & (1 << FAULT_MODEL)) !== 0;
   const keyLatched = (view.revoked & (1 << FAULT_KEY)) !== 0;
-  const lapse = view.speed > 1 ? t("simTimelapse", { factor: fmt.format(view.speed) }) : null;
+  // The rail's pace: the dock's speed, or its own time-lapse over a ×1 dock (never while still).
+  const pace = reduced || paused ? 1 : railSpeed(view.speed, lapseOn);
+  const lapse = pace > 1 ? t("simTimelapse", { factor: fmt.format(pace) }) : null;
   const level = (k: number) => Math.floor(view.levels / 4 ** k) % 4;
   const lockedModel = view.locked & (1 << FAULT_MODEL) ? FAULT_MODEL : lowestBit(view.locked);
   const keyTag = (k: number) => `#${fmt.format(k + 1)}`;
@@ -860,7 +869,11 @@ export default function ResilienceStation({ stats }: { stats: LandingStats }) {
               <span className="res-tag res-tag-connection">{t("resilienceConnection")}</span>
               <span className="res-tag res-tag-model">{t("resilienceModel")}</span>
               <ServedCount focus={focus} reduced={reduced} />
-              <span className="res-tag res-tag-next">{t("resilienceNextTarget")}</span>
+              {/* Under the fallback rail; the compact rail's time-lapse chip leads this row. */}
+              <span className="res-foot">
+                {lapse ? <span className="res-lapse res-lapse-low readout">{lapse}</span> : null}
+                <span className="res-tag res-tag-next">{t("resilienceNextTarget")}</span>
+              </span>
             </div>
             <div ref={flashRef} className="res-flash" />
           </div>
@@ -869,12 +882,6 @@ export default function ResilienceStation({ stats }: { stats: LandingStats }) {
             <SimBadge />
             {lapse ? <span className="res-lapse readout">{lapse}</span> : null}
           </div>
-          {/* The compact rail has no room up there: its time-lapse chip sits under the fallback rail. */}
-          {lapse ? (
-            <span className="res-lapse res-lapse-low readout" aria-hidden="true">
-              {lapse}
-            </span>
-          ) : null}
         </figure>
 
         {/* ---------------- scopes, under the rail (≥ 640px) ---------------- */}

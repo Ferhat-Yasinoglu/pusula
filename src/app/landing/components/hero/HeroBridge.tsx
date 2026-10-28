@@ -8,6 +8,7 @@ import {
   useState,
   type CSSProperties,
   type KeyboardEvent as ReactKeyboardEvent,
+  type MouseEvent as ReactMouseEvent,
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
 } from "react";
@@ -39,6 +40,7 @@ import {
   SAMPLE_KEYS,
   act,
   nextTake,
+  normalizeWeights,
   rank,
   type BreakerState,
   type Featured,
@@ -52,7 +54,7 @@ import MagneticButton from "../primitives/MagneticButton";
 import SimBadge from "../primitives/SimBadge";
 import TypeLine, { type TypeToken } from "../primitives/TypeLine";
 import WordReveal from "../primitives/WordReveal";
-import { hasFinePointer, numberFormat } from "../primitives/primitiveKit";
+import { hasFinePointer, numberFormat, splitWords, watchView } from "../primitives/primitiveKit";
 import {
   CAND_CLOSED,
   CAND_DEGRADED,
@@ -157,6 +159,37 @@ const KIND_KEY: Record<CatalogKind, string> = {
 };
 
 const selectFeatured = (w: World) => w.featured;
+/**
+ * The visitor has retuned the scoring weights (the routing rose): the hero's
+ * scores are theirs. Shares within 0.1% of the shipped ones (rounding, a
+ * no-op drag at a cap) are not a retune.
+ */
+const selectTuned = (w: World): boolean => {
+  const shipped = normalizeWeights(w.defaults, w.defaults);
+  for (let i = 0; i < shipped.length; i++) {
+    if (Math.abs((w.weights[i] ?? 0) - shipped[i]) > 1e-3) return true;
+  }
+  return false;
+};
+
+/**
+ * A selector that keeps returning what it first read: off screen the hero
+ * stops following the deck (no re-render, no retyping, spec §7.6), and the
+ * live selector takes over again when it comes back.
+ */
+function frozenSelector<T>(select: (w: World) => T): (w: World) => T {
+  let held: { value: T } | null = null;
+  return (w: World) => (held ??= { value: select(w) }).value;
+}
+
+/** Words in the headline: the subtitle's words rise after them (one reveal, 55ms apart). */
+function wordCount(lines: readonly string[], locale: string): number {
+  let n = 0;
+  for (const line of lines) for (const piece of splitWords(line, locale)) if (!piece.space) n++;
+  return n;
+}
+
+const REVEAL_STAGGER_MS = 55;
 /** [down, state, failures] per candidate, flat, for `shallowEqual`. */
 const selectBreakers = (w: World): number[] => {
   const out: number[] = [];
@@ -175,6 +208,13 @@ const LABEL_GAP = SIDE_GAP;
 /** Hover radius for stars (fine pointer / touch). */
 const HIT_FINE = 14;
 const HIT_TOUCH = 22;
+/**
+ * Space kept between candidate plates (px): a thumb needs more than a mouse.
+ * Their hit areas (hero.css) may still overlap, so a tap goes to the plate
+ * nearest the touch point (`nearestLabel`), never just the topmost one.
+ */
+const LABEL_GAP_FINE = 4;
+const LABEL_GAP_TOUCH = 10;
 /** A pointer that moves this far horizontally is spinning the sphere, not clicking. */
 const DRAG_SLOP = 6;
 /** A label keeps its side until its star is this far past the sphere's centre line. */
@@ -350,23 +390,58 @@ export default function HeroBridge({ stats, poster }: { stats: LandingStats; pos
 
   /* ---- deck state ------------------------------------------------------ */
 
-  const featured = useDeck(selectFeatured);
-  const breakers = useDeck(selectBreakers, shallowEqual);
-  // What the copy shows lags the needle: it updates once the sequence lands.
-  const [shown, setShown] = useState<Featured>(featured);
+  // Near the viewport the copy follows the deck; away from it it holds still.
+  const sectionRef = useRef<HTMLElement>(null);
+  const [near, setNear] = useState(true);
   useEffect(() => {
-    if (featured === shown) return;
+    const node = sectionRef.current;
+    if (!node) return;
+    return watchView(node, {
+      nearMargin: "50% 0px",
+      onNear: () => setNear(true),
+      onFar: () => setNear(false),
+    });
+  }, []);
+  const featuredOf = useMemo(
+    () => (near ? selectFeatured : frozenSelector(selectFeatured)),
+    [near]
+  );
+  const breakersOf = useMemo(
+    () => (near ? selectBreakers : frozenSelector(selectBreakers)),
+    [near]
+  );
+  const tunedOf = useMemo(() => (near ? selectTuned : frozenSelector(selectTuned)), [near]);
+  const featured = useDeck(featuredOf);
+  const breakers = useDeck(breakersOf, shallowEqual);
+  const tuned = useDeck(tunedOf);
+  // What the copy shows lags the needle: it updates once the sequence lands.
+  // Back from off screen it lands at once, like the canvas.
+  const [shown, setShown] = useState<Featured>(featured);
+  const returnedRef = useRef(false);
+  useEffect(() => {
+    if (!near) {
+      returnedRef.current = true;
+      return;
+    }
+    if (featured === shown) {
+      returnedRef.current = false;
+      return;
+    }
     const delay =
-      canAnimate() && featured.take > shown.take ? sequenceMs(featured.attempts.length) : 0;
-    const id = window.setTimeout(() => setShown(featured), delay);
+      !returnedRef.current && canAnimate() && featured.take > shown.take
+        ? sequenceMs(featured.attempts.length)
+        : 0;
+    const id = window.setTimeout(() => {
+      returnedRef.current = false;
+      setShown(featured);
+    }, delay);
     return () => window.clearTimeout(id);
-  }, [featured, shown]);
+  }, [featured, shown, near]);
 
   const [announce, setAnnounce] = useState("");
 
   /* ---- refs and geometry ----------------------------------------------- */
 
-  const sectionRef = useRef<HTMLElement>(null);
   const dialRef = useRef<HTMLElement>(null);
   const frontRef = useRef<HTMLDivElement>(null);
   const cardinalRefs = useRef<(HTMLSpanElement | null)[]>([]);
@@ -397,6 +472,8 @@ export default function HeroBridge({ stats, poster }: { stats: LandingStats; pos
   const placedRef = useRef(false);
   /** Whether the S cardinal is shown (desktop only); measured on resize. */
   const southRef = useRef(false);
+  /** A coarse (touch) primary pointer: the labels keep more space between them. */
+  const coarseRef = useRef(false);
   const copyRef = useRef<HTMLDivElement>(null);
   const hudRef = useRef<HTMLDivElement>(null);
   const noteRef = useRef<HTMLParagraphElement>(null);
@@ -535,6 +612,8 @@ export default function HeroBridge({ stats, poster }: { stats: LandingStats; pos
     rtlRef.current = getComputedStyle(stage.parentElement ?? stage).direction === "rtl";
     const mono = getComputedStyle(stage).getPropertyValue("--font-mono").trim();
     fontRef.current = `600 12px ${mono || "ui-monospace, monospace"}`;
+    coarseRef.current =
+      typeof window.matchMedia === "function" && window.matchMedia("(pointer: coarse)").matches;
     written.current.fill(NaN);
     for (let i = 0; i < CANDIDATES.length; i++) {
       const el = labelRefs.current[i];
@@ -628,7 +707,15 @@ export default function HeroBridge({ stats, poster }: { stats: LandingStats; pos
       boxes[b + L_FLAGS] =
         (front ? LABEL_FRONT : 0) | (left ? LABEL_FLIP : 0) | (keep ? LABEL_KEEP : 0);
     }
-    resolveLabels(boxes, count, zones, zc, orderRef.current, bounds);
+    resolveLabels(
+      boxes,
+      count,
+      zones,
+      zc,
+      orderRef.current,
+      bounds,
+      coarseRef.current ? LABEL_GAP_TOUCH : LABEL_GAP_FINE
+    );
     for (let c = 0; c < count; c++) {
       const el = labelRefs.current[c];
       if (!el || scene.candStar[c] < 0) continue;
@@ -695,7 +782,8 @@ export default function HeroBridge({ stats, poster }: { stats: LandingStats; pos
         syncOverlay();
       }
     });
-    for (const el of [dialRef.current, copyRef.current, hudRef.current, ...labelRefs.current]) {
+    const watched = [dialRef.current, copyRef.current, hudRef.current, noteRef.current];
+    for (const el of [...watched, ...labelRefs.current]) {
       if (el) observer.observe(el);
     }
     return () => observer.disconnect();
@@ -752,6 +840,50 @@ export default function HeroBridge({ stats, poster }: { stats: LandingStats; pos
     },
     [requestDraw, syncOverlay, t]
   );
+
+  /**
+   * The candidate a pointer click meant: the visible plate nearest the point
+   * (distance to its box; the one clicked wins a tie). The plates' 44px hit
+   * areas overlap where labels crowd, and the topmost is not always the one
+   * aimed at. Keyboard and assistive-technology clicks (no point) keep theirs.
+   */
+  const nearestLabel = useCallback((slot: number, x: number, y: number): number => {
+    let best = slot;
+    let bestD = Infinity;
+    for (let c = 0; c < CANDIDATES.length; c++) {
+      const el = labelRefs.current[c];
+      if (!el || el.dataset.hidden === "1") continue;
+      const r = el.getBoundingClientRect();
+      if (!(r.width > 0)) continue;
+      const dx = Math.max(r.left - x, 0, x - r.right);
+      const dy = Math.max(r.top - y, 0, y - r.bottom);
+      const d = dx * dx + dy * dy;
+      if (d < bestD || (d === bestD && c === slot)) {
+        best = c;
+        bestD = d;
+      }
+    }
+    return best;
+  }, []);
+
+  const onLabelClick = useCallback(
+    (slot: number, event: ReactMouseEvent<HTMLButtonElement>) => {
+      const picked = event.detail > 0 ? nearestLabel(slot, event.clientX, event.clientY) : slot;
+      if (picked !== slot && document.activeElement === event.currentTarget) {
+        labelRefs.current[picked]?.focus({ preventScroll: true });
+      }
+      toggleCandidate(picked);
+    },
+    [nearestLabel, toggleCandidate]
+  );
+
+  const resetWeights = useCallback(() => {
+    dispatch(act.resetWeights());
+    if (!canAnimate()) {
+      requestDraw();
+      syncOverlay();
+    }
+  }, [requestDraw, syncOverlay]);
 
   const advanceSample = useCallback(() => {
     dispatch((w: World) => nextTake(w));
@@ -847,8 +979,9 @@ export default function HeroBridge({ stats, poster }: { stats: LandingStats; pos
       if (!canAnimate()) gyroState.spin = 0;
       return;
     }
-    // A tap without a drag: touch shows the nearest star's tooltip.
-    if (event.pointerType !== "mouse") {
+    // A tap without a drag: touch shows the nearest star's tooltip (a tap on a
+    // plate toggles that provider instead, and shows nothing here).
+    if (event.pointerType !== "mouse" && !(event.target as HTMLElement).closest("button")) {
       showTip(hitStar(event.clientX, event.clientY, HIT_TOUCH));
     }
   };
@@ -917,15 +1050,28 @@ export default function HeroBridge({ stats, poster }: { stats: LandingStats; pos
   const failedIds = shown.attempts
     .slice(0, shown.fallbackAttempts)
     .map((id) => CANDIDATES[slotOf(id)]?.catalogId ?? id);
-  // Two header lines, as a response would carry them.
-  const headerText = `${HEADER.provider}: ${winnerId}\n${HEADER.fallbackAttempts}: ${shown.fallbackAttempts}`;
-  const headerTokens: TypeToken[] = [
-    { t: `${HEADER.provider}: `, c: "kw" },
-    { t: winnerId, c: "str" },
-    { t: "\n" },
-    { t: `${HEADER.fallbackAttempts}: `, c: "kw" },
-    { t: String(shown.fallbackAttempts), c: shown.fallbackAttempts > 0 ? "accent" : "num" },
-  ];
+  // The X-Pusula lines the response carries (`buildPusulaResponseMetaHeaders`):
+  // the provider's alias, then the fallback count only above zero (the gateway
+  // omits a zero). A request nothing could serve gets the combo's error
+  // response, which carries neither.
+  const winnerAlias = winnerSlot >= 0 ? CANDIDATES[winnerSlot].alias : shown.winner;
+  const headerTokens: TypeToken[] = [];
+  if (shown.served) {
+    headerTokens.push({ t: `${HEADER.provider}: `, c: "kw" }, { t: winnerAlias, c: "str" });
+    // The header carries the provider's alias ("cc"); a dim gloss names it.
+    const winnerName = winnerSlot >= 0 ? CANDIDATES[winnerSlot].catalogId : "";
+    if (winnerName && !winnerName.startsWith(winnerAlias)) {
+      headerTokens.push({ t: `  # ${winnerName}` });
+    }
+    if (shown.fallbackAttempts > 0) {
+      headerTokens.push(
+        { t: "\n" },
+        { t: `${HEADER.fallbackAttempts}: `, c: "kw" },
+        { t: String(shown.fallbackAttempts), c: "accent" }
+      );
+    }
+  }
+  const headerText = headerTokens.map((token) => token.t).join("");
   const sampleText = t(shown.sample);
   const tokenText = sampleTokens(shown.sample);
   const tokenValue = tokenCount(tokenText);
@@ -934,6 +1080,11 @@ export default function HeroBridge({ stats, poster }: { stats: LandingStats; pos
     : tokenText;
   const scoreFmt = numberFormat(locale, SCORE_FORMAT);
   const hovered = hover >= 0 ? stats.catalog[hover] : null;
+  const titleLines = [
+    t("heroCardLine1"),
+    t("heroCardLine2", { providers: fmt.format(stats.providers) }),
+  ];
+  const titleWords = wordCount(titleLines, locale);
 
   return (
     <section
@@ -1022,7 +1173,7 @@ export default function HeroBridge({ stats, poster }: { stats: LandingStats; pos
                 data-side={flip ? "start" : "end"}
                 aria-pressed={down}
                 aria-label={t("heroToggleAria", { down: String(down), provider: cand.catalogId })}
-                onClick={() => toggleCandidate(slot)}
+                onClick={(event) => onLabelClick(slot, event)}
                 style={{
                   transformOrigin: flip ? "100% 50%" : "0 50%",
                   transform: `translate3d(calc(${round2(anchor.x / 10)}cqw ${flip ? "- 100% - " : "+ "}${LABEL_GAP}px), calc(${round2(anchor.y / 10)}cqh - 50%), 0) scale(${anchor.front ? 1 : 0.85})`,
@@ -1076,6 +1227,12 @@ export default function HeroBridge({ stats, poster }: { stats: LandingStats; pos
 
           <p ref={noteRef} className="bridge-scores">
             <SimBadge note={t("instrumentSampleNote")} />
+            {tuned ? (
+              <button type="button" className="bridge-tuned" onClick={resetWeights}>
+                <span className="bridge-tuned-dot" aria-hidden="true" />
+                {t("routingResetWeights")}
+              </button>
+            ) : null}
           </p>
 
           <figcaption id="bridge-dial-caption" className="sr-only">
@@ -1094,14 +1251,19 @@ export default function HeroBridge({ stats, poster }: { stats: LandingStats; pos
           <WordReveal
             as="h1"
             trigger="intro"
+            stagger={REVEAL_STAGGER_MS}
             id="bridge-title"
             className="serif-display bridge-title"
-            lines={[
-              t("heroCardLine1"),
-              t("heroCardLine2", { providers: fmt.format(stats.providers) }),
-            ]}
+            lines={titleLines}
           />
-          <p className="italic-line bridge-line3">{t("heroCardLine3")}</p>
+          <WordReveal
+            as="p"
+            trigger="intro"
+            delay={titleWords * REVEAL_STAGGER_MS}
+            stagger={REVEAL_STAGGER_MS}
+            className="italic-line bridge-line3"
+            lines={[t("heroCardLine3")]}
+          />
           <button type="button" className="bridge-hud-line" onClick={advanceSample}>
             <SimBadge />
             {failedIds.length > 0 ? (

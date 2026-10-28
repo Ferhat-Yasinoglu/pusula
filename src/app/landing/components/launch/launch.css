@@ -7,6 +7,10 @@
  * and border changes are instant); hidden start states exist only under
  * `[data-motion="on"]` and only after the component armed them on the
  * client; Pause and reduced motion leave everything visible and at rest.
+ * One-shots end on their element's own resting style and fill `backwards`,
+ * never `both`/`forwards`: a finished composited animation left filling
+ * (the power LED, under the tilted 3D frame) kept Chrome's compositor
+ * redrawing the monitor every frame.
  * The screenshot is never mirrored (`dir="ltr"` on the figure); the steps,
  * the fuse and the layout follow the page direction.
  */
@@ -20,8 +24,13 @@
 /* Part A: monitor and self-test                                             */
 /* ------------------------------------------------------------------------ */
 
+/* One explicit, shrinkable column when stacked: an implicit `auto` track
+ * grows to its items' min-content, so a long window-bar tag (tr "ekran
+ * görüntüsü") once pushed the monitor and the self-test list 19px past the
+ * 16px gutter. */
 .pusula-landing .lx-a {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--s-7);
 }
 
@@ -67,17 +76,24 @@
 .pusula-landing .lx-mon {
   --p: 0.5;
   position: relative;
+  min-width: 0;
   margin: 0;
   perspective: 1600px;
   perspective-origin: 50% 30%;
 }
 
-/* Scroll tilt: rotateX(14°) rotateY(−6°) → rotateX(4°) by the time it is centred. */
+/* Scroll tilt: rotateX(14°) rotateY(−6°) → rotateX(4°) by the time it is centred
+ * (settled from p = 1/2.2, `TILT_SETTLE_P`). The layer is only hinted while the
+ * tilt still moves (`data-tilting`, set by the component): a settled 3D frame
+ * needs no will-change, and the scan then composites over a plain layer. */
 .pusula-landing .lx-mon-tilt {
   --tilt: min(1, calc(var(--p) * 2.2));
   position: relative;
   transform: rotateX(calc(14deg - 10deg * var(--tilt))) rotateY(calc(-6deg + 6deg * var(--tilt)));
   transform-origin: 50% 72%;
+}
+
+.pusula-landing .lx-mon[data-tilting] .lx-mon-tilt {
   will-change: transform;
 }
 
@@ -123,10 +139,17 @@
   box-shadow: 0 0 10px var(--gold-glow);
 }
 
+/* The address gives way (ellipsis) before the honesty tag does. */
 .pusula-landing .lx-mon-url {
+  flex: 0 1 auto;
+  min-width: 0;
   color: var(--mist);
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.pusula-landing .lx-mon-sep {
+  flex: none;
 }
 
 .pusula-landing .lx-mon-tag {
@@ -159,7 +182,10 @@
   aspect-ratio: 16 / 9;
 }
 
-/* Scan bar: crosses the screen in 3.3s, every 6s. */
+/* Scan bar: crosses the screen in 3.3s, every 6s, and only while the monitor
+ * is near the middle of the viewport. The component sets `data-scan` for one
+ * sweep (`SCAN_RUN_MS`) and clears it for the rest of the cycle, so between
+ * sweeps nothing over the tilted screen asks the compositor for frames. */
 .pusula-landing .lx-mon-scan {
   position: absolute;
   inset: 0;
@@ -181,15 +207,17 @@
     rgba(255, 241, 201, 0) 100%
   );
   transform: translateY(-100%);
-  animation: launch-scan 6s linear infinite;
+}
+
+.pusula-landing .lx-mon[data-scan] .lx-mon-scan::before {
+  animation: launch-scan 3.3s linear;
 }
 
 @keyframes launch-scan {
-  0% {
+  from {
     transform: translateY(-100%);
   }
-  55%,
-  100% {
+  to {
     transform: translateY(625%);
   }
 }
@@ -223,7 +251,7 @@
 }
 
 .pusula-landing .lx-mon[data-power="on"] .lx-mon-beam {
-  animation: launch-beam 460ms var(--ease-out) both;
+  animation: launch-beam 460ms var(--ease-out) backwards;
 }
 
 @keyframes launch-beam {
@@ -250,7 +278,7 @@
 }
 
 .pusula-landing .lx-mon[data-power="on"] .lx-mon-bloom {
-  animation: launch-bloom 820ms var(--ease-out) both;
+  animation: launch-bloom 820ms var(--ease-out) backwards;
 }
 
 @keyframes launch-bloom {
@@ -287,14 +315,36 @@
   block-size: 20px;
 }
 
+/* The power LED: steady (a loop here, inside the tilted 3D frame, kept the
+ * compositor busy every frame); dim while the screen is off, up at power-on. */
 .pusula-landing .lx-mon-led {
   inline-size: 5px;
   block-size: 5px;
   border-radius: var(--r-pill);
   background: var(--gold);
   box-shadow: 0 0 8px var(--gold-glow);
-  --breathe-from: 0.35;
-  --breathe-to: 1;
+}
+
+.pusula-landing[data-motion="on"] .lx-mon[data-power="off"] .lx-mon-led {
+  opacity: 0.25;
+}
+
+.pusula-landing .lx-mon[data-power="on"] .lx-mon-led {
+  animation: launch-led 620ms var(--ease-out) backwards;
+}
+
+@keyframes launch-led {
+  0% {
+    opacity: 0.25;
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.6);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .pusula-landing .lx-mon-floor {
@@ -374,27 +424,29 @@
   transition: transform var(--t-mech) var(--ease-lift);
 }
 
+/* A hotspot pulses once as the idle sequence lights it (one ring at a time,
+ * so the tilted frame never carries three endless loops), and keeps pulsing
+ * while the visitor holds it. */
 .pusula-landing .lx-hot-pulse {
   inline-size: var(--ring-h);
   block-size: var(--ring-h);
   border: 1px solid var(--gold-hi);
   border-radius: 50%;
   opacity: 0;
-  animation: launch-pulse 2.4s var(--ease-out) infinite;
   pointer-events: none;
+}
+
+.pusula-landing .lx-hot[data-lit] .lx-hot-pulse {
+  animation: launch-pulse 1.4s var(--ease-out) backwards;
+}
+
+.pusula-landing .lx-hot[data-hold] .lx-hot-pulse {
+  animation: launch-pulse 2.4s var(--ease-out) infinite;
 }
 
 .pusula-landing .lx-hot[data-shape="pill"] .lx-hot-pulse {
   --pulse-sx: 1.12;
   --pulse-sy: 1.9;
-}
-
-.pusula-landing .lx-hot:nth-of-type(2) .lx-hot-pulse {
-  animation-delay: 0.8s;
-}
-
-.pusula-landing .lx-hot:nth-of-type(3) .lx-hot-pulse {
-  animation-delay: 1.6s;
 }
 
 @keyframes launch-pulse {
@@ -734,11 +786,11 @@
 }
 
 .pusula-landing .lx-row[data-boot="on"] .lx-row-ok {
-  animation: launch-tick 380ms var(--ease-lift) both;
+  animation: launch-tick 380ms var(--ease-lift) backwards;
 }
 
 .pusula-landing .lx-row[data-boot="on"] .lx-row-desc {
-  animation: launch-desc 360ms var(--ease-out) both;
+  animation: launch-desc 360ms var(--ease-out) backwards;
 }
 
 @keyframes launch-tick {
@@ -809,7 +861,7 @@
   z-index: 0;
   overflow: visible;
   pointer-events: none;
-  animation: launch-fade-in 600ms var(--ease-out) both;
+  animation: launch-fade-in 600ms var(--ease-out) backwards;
 }
 
 @keyframes launch-fade-in {
@@ -1036,7 +1088,7 @@
 }
 
 .pusula-landing .lx-step[data-ok] .lx-node::after {
-  animation: launch-ring 700ms var(--ease-out) both;
+  animation: launch-ring 700ms var(--ease-out) backwards;
 }
 
 @keyframes launch-ring {
@@ -1306,6 +1358,27 @@
   text-align: left;
 }
 
+/* Phone: with the unindented lines (see `termLine`), a 12px inset lets the
+ * longest one fit from 375px up without scrolling inside the card. */
+@media (max-width: 639px) {
+  .pusula-landing .lx-term .term-pre {
+    padding-inline: 12px;
+  }
+
+  /* Persian takes no tracking, so its label column tightens instead (a longer
+   * label still grows its box; the two URLs stay aligned). */
+  .pusula-landing .lx-term-wrap[data-rtl] .tl:not(:first-child) > .tl-t:nth-child(2) {
+    min-inline-size: 4.25em;
+  }
+}
+
+/* Narrower still (360): a touch of tracking instead of a smaller face (12px floor). */
+@media (max-width: 374px) {
+  .pusula-landing .lx-term .term-pre {
+    letter-spacing: -0.03em;
+  }
+}
+
 /* ---- the finale ---- */
 
 /* Phone: the closing line beside the compass, both buttons on one row below,
@@ -1564,8 +1637,8 @@
 /* ------------------------------------------------------------------------ */
 
 /* Paused: the monitor settles flat-ish where it would rest, and nothing is
- * left frozen mid-loop (no stray pulse halo, scan band or blinked-off dot);
- * one-shot entrances jump to their end. */
+ * left frozen mid-loop (no stray pulse halo, scan band or blinked-off dot).
+ * One-shot entrances need no rule: Pause settles them at their end. */
 .pusula-landing.is-paused .lx-mon-tilt {
   --tilt: 1;
 }
@@ -1574,18 +1647,7 @@
   visibility: hidden;
 }
 
-.pusula-landing.is-paused
-  :is(
-    .lx-mon-dot,
-    .lx-mon-led,
-    .lx-cmd-caret,
-    .lx-fuse,
-    .lx-mon-beam,
-    .lx-mon-bloom,
-    .lx-row-ok,
-    .lx-row-desc
-  ),
-.pusula-landing.is-paused .lx-node::after,
+.pusula-landing.is-paused :is(.lx-mon-dot, .lx-mon-led, .lx-cmd-caret),
 .pusula-landing.is-paused .lx-step:first-child .lx-node::before {
   animation: none !important;
 }
@@ -1599,13 +1661,15 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pusula-landing .lx-mon-tilt {
+  .pusula-landing .lx-mon-tilt,
+  .pusula-landing .lx-mon[data-tilting] .lx-mon-tilt {
     transform: none;
     will-change: auto;
   }
 
-  .pusula-landing .lx-mon-scan::before,
-  .pusula-landing .lx-hot-pulse,
+  .pusula-landing .lx-mon[data-scan] .lx-mon-scan::before,
+  .pusula-landing .lx-hot:is([data-lit], [data-hold]) .lx-hot-pulse,
+  .pusula-landing .lx-mon[data-power="on"] .lx-mon-led,
   .pusula-landing .lx-cmd-caret,
   .pusula-landing .lx-step:first-child .lx-node::before {
     animation: none;

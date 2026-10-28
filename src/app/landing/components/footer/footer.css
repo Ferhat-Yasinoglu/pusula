@@ -116,7 +116,6 @@
  * letters unjoined. The counters keep their tabular figures in the sans.
  */
 .pusula-landing .lb-line:lang(fa),
-.pusula-landing .lb-badge .sim-pill:lang(fa),
 .pusula-landing .lb-nav-title:lang(fa) {
   font-family: var(--font-sans);
   letter-spacing: 0;

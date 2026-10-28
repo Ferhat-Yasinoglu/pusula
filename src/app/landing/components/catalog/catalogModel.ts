@@ -247,14 +247,6 @@ export function collapsedPicks(
   return picks;
 }
 
-/** Order of each picked index among the picks (for the phone reveal stagger), -1 elsewhere. */
-export function pickOrder(picks: Uint8Array): Int16Array {
-  const order = new Int16Array(picks.length).fill(-1);
-  let k = 0;
-  for (let i = 0; i < picks.length; i++) if (picks[i]) order[i] = k++;
-  return order;
-}
-
 /**
  * How many matching names a collapsed phone wall leaves out: everything but
  * the picks when nothing is filtered, otherwise the matches past the first
@@ -279,4 +271,42 @@ export function hiddenWhenCollapsed(
  */
 export function wallContentHeight(names: number, columns: number, rowPx = 24): number {
   return Math.ceil(Math.max(0, names) / Math.max(1, columns)) * rowPx;
+}
+
+/** The most columns the wall has (≥1280px); `catalog.css` shows one reveal shutter per column. */
+export const WALL_MAX_COLUMNS = 6;
+
+/**
+ * Which way the reveal uncovers the wall, from where it is as it comes into
+ * view (CSS px, viewport-relative): "up" when it enters across the top edge
+ * (scrolling back up into it), so the rows in view are uncovered first;
+ * "down" otherwise (entering from below, or a jump into its middle).
+ */
+export function revealDirection(
+  top: number,
+  bottom: number,
+  viewportHeight: number
+): "down" | "up" {
+  return top < 0 && bottom <= viewportHeight ? "up" : "down";
+}
+
+/** Below this many px of hidden content an edge does not count as cut. */
+export const SCROLL_EDGE_SLACK_PX = 2;
+
+/**
+ * Which ends of a horizontal scroller hide content (its fade masks): "start",
+ * "end", "both" or null. `offset` is how far it is scrolled from its
+ * inline start, as a magnitude (RTL `scrollLeft` is negative).
+ */
+export function scrollEdges(
+  offset: number,
+  scrollWidth: number,
+  clientWidth: number
+): "start" | "end" | "both" | null {
+  const max = scrollWidth - clientWidth;
+  if (max <= SCROLL_EDGE_SLACK_PX) return null;
+  const at = Math.min(max, Math.max(0, Math.abs(offset)));
+  const start = at > SCROLL_EDGE_SLACK_PX;
+  const end = max - at > SCROLL_EDGE_SLACK_PX;
+  return start && end ? "both" : start ? "start" : end ? "end" : null;
 }

@@ -38,9 +38,11 @@ import {
   kindTotal,
   labelFitBucket,
   matchCatalog,
-  pickOrder,
+  revealDirection,
+  scrollEdges,
   spectrumLayout,
   wallContentHeight,
+  WALL_MAX_COLUMNS,
   type CatalogFilter,
   type CatalogFlag,
 } from "./catalogModel";
@@ -62,6 +64,12 @@ import "./catalog.css";
  * catalog entry ember, with the take spelled out beside a `SimBadge`. Off
  * screen the CSS loops pause; under reduced motion or Pause none of it runs
  * and filtering is instant.
+ *
+ * Scroll: as the first row comes into view, one shutter per column slides
+ * off the wall behind a gold scan band, column by column. Nothing on the
+ * names themselves animates or changes box on any of this (a ping or an echo
+ * only starts an opacity animation on an always-present overlay), because
+ * any layout change in the 358-name multicol relays out the whole wall.
  */
 
 const WALL_ID = "catalog-wall";
@@ -79,20 +87,25 @@ const NAV_CLEAR_PX = 60;
  * last row at the bottom edge do not count as visible for a ping.
  */
 const PING_ROOT_MARGIN = "-132px 0px -24px 0px";
+/** The reveal starts once the wall's first row (24px) is on screen. */
+const REVEAL_ROOT_MARGIN = "0px 0px -24px 0px";
+/** One reveal shutter per column at the widest layout; CSS hides the extra ones. */
+const SHUTTERS = Array.from({ length: WALL_MAX_COLUMNS }, (_, k) => k);
 
 /** The catalog entries the deck's sample candidates stand for. */
 const CATALOG_ID_OF = new Map<CandidateId, string>(
   SAMPLE_CANDIDATES.map((c) => [c.id as CandidateId, c.catalogId])
 );
 const PINNED_IDS: readonly string[] = SAMPLE_CANDIDATES.map((c) => c.catalogId);
+/** The only entries the deck echo can flash (they carry its overlay boxes). */
+const SAMPLE_IDS: ReadonlySet<string> = new Set(PINNED_IDS);
 
 /** Private-use sentinel: splits `catalogShowing` around the rolling number. */
 const SENTINEL = "";
 
 type WallNameProps = {
   entry: CatalogEntry;
-  index: number;
-  pick: number;
+  picked: boolean;
   match: boolean;
   filtering: boolean;
   freeLabel: string;
@@ -104,8 +117,7 @@ const TOOLTIP_CHARS = 18;
 
 const WallName = memo(function WallName({
   entry,
-  index,
-  pick,
+  picked,
   match,
   filtering,
   freeLabel,
@@ -123,8 +135,6 @@ const WallName = memo(function WallName({
     : entry.name.length > TOOLTIP_CHARS
       ? entry.name
       : undefined;
-  const style: Record<string, number> =
-    pick >= 0 ? { "--i": index, "--j": pick } : { "--i": index };
   return (
     <li
       className="cw-li"
@@ -133,10 +143,10 @@ const WallName = memo(function WallName({
       data-free={entry.free ? "1" : undefined}
       data-local={entry.local ? "1" : undefined}
       data-match={match ? "1" : "0"}
-      data-pick={pick >= 0 ? "1" : undefined}
+      data-pick={picked ? "1" : undefined}
+      data-sample={SAMPLE_IDS.has(entry.id) ? "1" : undefined}
       aria-hidden={filtering && !match ? true : undefined}
       title={title}
-      style={style as CSSProperties}
     >
       {markLabel ? (
         <span className="cw-mark" role="img" aria-label={markLabel}>
@@ -227,14 +237,12 @@ export default function CatalogWall({ stats }: { stats: LandingStats }) {
   const slots = useMemo(() => spectrumLayout(stats.kindCounts), [stats.kindCounts]);
   const index = useMemo(() => buildSearchIndex(catalog), [catalog]);
   const picks = useMemo(() => collapsedPicks(catalog, PINNED_IDS), [catalog]);
-  const order = useMemo(() => pickOrder(picks), [picks]);
   const names = useMemo(() => new Map(catalog.map((e) => [e.id, e.name])), [catalog]);
-  // The reveal stagger, and the wall's `content-visibility` placeholder at 4,
-  // 5 and 6 columns (the phone wall renders for real; see `catalog.css`).
+  // The wall's `content-visibility` placeholder at 4, 5 and 6 columns (the
+  // phone wall renders for real; see `catalog.css`).
   const wallStyle = useMemo(
     () =>
       ({
-        "--cw-step": `${(1300 / Math.max(1, total)).toFixed(2)}ms`,
         "--cw-h4": `${wallContentHeight(total, 4)}px`,
         "--cw-h5": `${wallContentHeight(total, 5)}px`,
         "--cw-h6": `${wallContentHeight(total, 6)}px`,
@@ -281,6 +289,63 @@ export default function CatalogWall({ stats }: { stats: LandingStats }) {
         node.removeAttribute("data-onscreen");
       },
     });
+  }, []);
+
+  // ---- The reveal: uncover the wall as its first row comes into view ------
+  // Its own observer, not the shared `.reveal` one: that one waits for 8% of
+  // the element (≈190px of a 1452px wall), leaving bare columns on screen.
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+    if (typeof IntersectionObserver === "undefined") {
+      wrap.setAttribute("data-shown", "down");
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const box = entry.boundingClientRect;
+          const viewport = entry.rootBounds?.height ?? window.innerHeight;
+          wrap.setAttribute("data-shown", revealDirection(box.top, box.bottom, viewport));
+          observer.disconnect();
+        }
+      },
+      { rootMargin: REVEAL_ROOT_MARGIN, threshold: 0 }
+    );
+    observer.observe(wrap);
+    return () => observer.disconnect();
+  }, []);
+
+  // ---- Phone scrollers: fade the end that hides more chips ----------------
+  const chipsRef = useRef<HTMLDivElement>(null);
+  const kindsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const scrollers = [chipsRef.current, kindsRef.current].filter(
+      (node): node is HTMLDivElement => node !== null
+    );
+    const update = (node: HTMLElement) => {
+      const edges = scrollEdges(node.scrollLeft, node.scrollWidth, node.clientWidth);
+      if (edges === null) node.removeAttribute("data-cut");
+      else if (node.getAttribute("data-cut") !== edges) node.setAttribute("data-cut", edges);
+    };
+    const onScroll = (event: Event) => update(event.currentTarget as HTMLElement);
+    const resize =
+      typeof ResizeObserver === "undefined"
+        ? null
+        : new ResizeObserver((entries) => {
+            for (const entry of entries) update(entry.target as HTMLElement);
+          });
+    for (const node of scrollers) {
+      update(node);
+      node.addEventListener("scroll", onScroll, { passive: true });
+      resize?.observe(node);
+    }
+    return () => {
+      resize?.disconnect();
+      for (const node of scrollers) node.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   // ---- Which names are in view (the ping pool), outside the loop ----------
@@ -356,6 +421,7 @@ export default function CatalogWall({ stats }: { stats: LandingStats }) {
   }, []);
 
   // ---- The loop: the sweep, and a ping every 900ms ------------------------
+  // The sweep starts in its rest: the reveal's scan is the wall's first pass.
   const loop = useRef<{
     sweepT: number;
     bandY: number;
@@ -363,7 +429,7 @@ export default function CatalogWall({ stats }: { stats: LandingStats }) {
     acc: number;
     last: number;
     rng: Rng | null;
-  }>({ sweepT: 0, bandY: Number.NaN, bandOn: false, acc: 0, last: -1, rng: null });
+  }>({ sweepT: SWEEP_PASS_S, bandY: Number.NaN, bandOn: false, acc: 0, last: -1, rng: null });
 
   useEffect(() => {
     loop.current.rng = mulberry32(hash32("catalog-ping"));
@@ -549,7 +615,7 @@ export default function CatalogWall({ stats }: { stats: LandingStats }) {
             ) : null}
           </form>
 
-          <div className="cw-chips">
+          <div ref={chipsRef} className="cw-chips">
             <button
               type="button"
               className="cw-chip"
@@ -602,7 +668,7 @@ export default function CatalogWall({ stats }: { stats: LandingStats }) {
         {/* Spectrum: one segment per kind, proportional; zero kinds omitted. */}
         <div className="cw-spectrum reveal" data-active={kind ? "1" : undefined}>
           <div className="cw-spec-track" aria-hidden="true" />
-          <div className="cw-spec-row">
+          <div ref={kindsRef} className="cw-spec-row">
             {slots.map((slot, k) => {
               const label = kindLabel(slot.kind);
               const count = fmt.format(slot.count);
@@ -674,7 +740,7 @@ export default function CatalogWall({ stats }: { stats: LandingStats }) {
           <ul
             id={WALL_ID}
             ref={wallRef}
-            className="cw-wall reveal"
+            className="cw-wall"
             data-filtering={filtering ? "on" : "off"}
             data-collapsed={expanded ? "off" : "on"}
             style={wallStyle}
@@ -683,8 +749,7 @@ export default function CatalogWall({ stats }: { stats: LandingStats }) {
               <WallName
                 key={entry.id}
                 entry={entry}
-                index={i}
-                pick={order[i]}
+                picked={picks[i] === 1}
                 match={result.match[i] === 1}
                 filtering={filtering}
                 freeLabel={freeLabel}
@@ -694,6 +759,11 @@ export default function CatalogWall({ stats }: { stats: LandingStats }) {
           </ul>
           <span className="cw-sweep" aria-hidden="true">
             <span ref={bandRef} className="cw-sweep-band" />
+          </span>
+          <span className="cw-shutters" aria-hidden="true">
+            {SHUTTERS.map((k) => (
+              <i key={k} className="cw-shutter" style={{ "--k": k } as CSSProperties} />
+            ))}
           </span>
         </div>
 

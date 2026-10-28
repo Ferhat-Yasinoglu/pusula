@@ -5,17 +5,21 @@ import { DEFAULT_WEIGHTS } from "../../open-sse/services/autoCombo/scoring.ts";
 import { BREAKER_PROFILES, SAMPLE_CANDIDATES } from "../../src/app/landing/landingTypes.ts";
 import {
   act,
+  advance,
   advanceUntil,
   candidate,
   createWorld,
+  nextTake,
   step,
+  type CandidateId,
   type World,
 } from "../../src/app/landing/sim/landingSim.ts";
 import {
   AUTOPLAY_BEATS,
   AUTOPLAY_COOLOFF_S,
   AUTOPLAY_IDLE_S,
-  AUTOPLAY_SPEED,
+  AUTOPLAY_VISIBLE,
+  COMET_TRAVEL_S,
   COMPACT_MAX_WIDTH,
   FAULT_KEY,
   FAULT_MODEL,
@@ -23,19 +27,24 @@ import {
   PROFILE_FOCUS,
   PROFILE_IDS,
   RAIL_COMPACT,
+  RAIL_LAPSE,
   RAIL_WIDE,
   autoplayMayStart,
   autoplayTargets,
   bandPerimeter,
   ceilSeconds,
   cellCenterX,
+  cometPace,
   createAutoplay,
   decayShare,
+  lapseExtraMs,
   latchShown,
   lowestBit,
   meterLevel,
   railGeometry,
   railMetrics,
+  railSpeed,
+  servedRouteLength,
   shareOf,
   stepAutoplay,
   tenthSeconds,
@@ -213,14 +222,112 @@ test("autoplay waits for idle time, the cool-off and a clean deck", () => {
   assert.equal(autoplayMayStart(AUTOPLAY_IDLE_S, AUTOPLAY_COOLOFF_S - 0.1, false), false);
   assert.equal(autoplayMayStart(60, 60, true), false, "never over a visitor's fault");
   assert.equal(AUTOPLAY_COOLOFF_S, 20);
-  assert.equal(AUTOPLAY_SPEED, 5);
+  assert.equal(RAIL_LAPSE, 5);
 });
 
-test("autoplay starts within a second of the rail coming into view", () => {
-  // At ×1 the focused provider sees about one request every two seconds: a
-  // visitor scrolling past must not meet an empty rail.
+test("autoplay starts within a second of most of the rail coming into view", () => {
   assert.ok(AUTOPLAY_IDLE_S > 0 && AUTOPLAY_IDLE_S <= 1, `${AUTOPLAY_IDLE_S}`);
+  assert.ok(AUTOPLAY_VISIBLE >= 0.4 && AUTOPLAY_VISIBLE < 1, `${AUTOPLAY_VISIBLE}`);
   assert.equal(autoplayMayStart(AUTOPLAY_IDLE_S, AUTOPLAY_COOLOFF_S, false), true);
+});
+
+/* ------------------------------------------------------------------------ */
+/* The rail's own time-lapse                                                */
+/* ------------------------------------------------------------------------ */
+
+test("the rail's time-lapse runs a ×1 deck ×5 and leaves a faster dock speed alone", () => {
+  assert.equal(railSpeed(1, true), RAIL_LAPSE);
+  assert.equal(railSpeed(1, false), 1);
+  assert.equal(railSpeed(5, true), 5, "the dock's ×5 is used as it is");
+  assert.equal(railSpeed(10, true), 10, "the dock's ×10 is used as it is");
+  assert.equal(railSpeed(10, false), 10);
+  assert.equal(lapseExtraMs(1, 100), 100 * (RAIL_LAPSE - 1));
+  assert.equal(lapseExtraMs(5, 100), 0);
+  assert.equal(lapseExtraMs(10, 100), 0);
+  assert.equal(lapseExtraMs(1, 0), 0);
+  assert.equal(lapseExtraMs(1, -5), 0);
+});
+
+test("a ×1 deck plus the rail's extra time is exactly the deck at ×5, and its speed stays ×1", () => {
+  const lapsed = world();
+  const fast = world();
+  act.setSpeed(5)(fast);
+  for (let frame = 0; frame < 300; frame++) {
+    step(lapsed, 100);
+    advance(lapsed, lapseExtraMs(lapsed.speed, 100));
+    step(fast, 100);
+  }
+  assert.equal(lapsed.speed, 1, "the page-wide speed is untouched");
+  assert.equal(lapsed.simMs, fast.simMs);
+  for (const id of ["claude", "glm", "ollama"] as const) {
+    assert.equal(candidate(lapsed, id).served, candidate(fast, id).served, `${id} served`);
+  }
+});
+
+test("the station never changes the page-wide speed (the dock owns it)", () => {
+  const source = readFileSync(
+    new URL("../../src/app/landing/components/resilience/ResilienceStation.tsx", import.meta.url),
+    "utf8"
+  );
+  assert.equal(source.includes("setSpeed"), false);
+});
+
+test("comets take the same time to cross a phone rail as a desktop one, about 2 s at ×5", () => {
+  for (const width of [358, 390, 639, 640, 960, 1360]) {
+    const g = railGeometry(width);
+    const length = servedRouteLength(g);
+    const span = g.upX - g.upR - g.srcX;
+    assert.ok(length >= span - 1e-6, `${width}: the route spans the rail`);
+    assert.ok(length < span * 1.25, `${width}: and barely bends`);
+  }
+  const travel = COMET_TRAVEL_S / cometPace(RAIL_LAPSE);
+  assert.ok(travel >= 1.6 && travel <= 2.2, `${travel}`);
+  assert.equal(cometPace(1), 1);
+  assert.ok(cometPace(10) > cometPace(5) && cometPace(5) > cometPace(1));
+});
+
+/**
+ * The rail's comets in flight over time, against the real deck at the rail's
+ * time-lapse: one comet per request that reaches the focused provider (as the
+ * renderer sees them, sampled once per 100 ms step), each in flight for the
+ * comet's travel time.
+ */
+function inFlight(focus: CandidateId): { mean: number; empty: number } {
+  const w = world();
+  const travelMs = (COMET_TRAVEL_S / cometPace(RAIL_LAPSE)) * 1000;
+  const seen = new Set<number>();
+  const starts: number[] = [];
+  let realMs = 0;
+  for (let frame = 0; frame < 1200; frame++) {
+    step(w, 100);
+    advance(w, lapseExtraMs(w.speed, 100));
+    realMs += 100;
+    if (frame % 36 === 35) nextTake(w);
+    for (const req of w.inflight) {
+      if (req.to !== focus || seen.has(req.id)) continue;
+      seen.add(req.id);
+      starts.push(realMs);
+    }
+  }
+  let sum = 0;
+  let samples = 0;
+  let empty = 0;
+  for (let t = 5000; t < realMs; t += 50) {
+    let n = 0;
+    for (const s of starts) if (s <= t && s > t - travelMs) n++;
+    sum += n;
+    samples++;
+    if (n === 0) empty++;
+  }
+  return { mean: sum / samples, empty: empty / samples };
+}
+
+test("traffic always flows: 4–6 comets in flight on average for every profile's provider", () => {
+  for (const profile of PROFILE_IDS) {
+    const { mean, empty } = inFlight(PROFILE_FOCUS[profile]);
+    assert.ok(mean >= 4, `${profile}: ${mean.toFixed(2)} in flight`);
+    assert.ok(empty < 0.15, `${profile}: empty ${(empty * 100).toFixed(0)}% of the time`);
+  }
 });
 
 test("the timed beats follow the script: 429 (0–4 s), rest, 401 (5–10 s), rest, then 503", () => {
@@ -280,7 +387,6 @@ test("the provider beat waits for the real breaker: off soon after OPEN, then he
 
 test("against the real deck at ×5, the script trips the API-key breaker and sees it close again", () => {
   const w = world();
-  act.setSpeed(AUTOPLAY_SPEED)(w);
   const st = createAutoplay();
   const states = new Set<string>();
   let looped = false;
@@ -295,7 +401,9 @@ test("against the real deck at ×5, the script trips the API-key breaker and see
     act.setModelRateLimited(id, FAULT_MODEL, want.model)(w);
     act.setKeyRevoked(id, FAULT_KEY, want.key)(w);
     act.setUpstreamDown(id, want.provider)(w);
+    // A ×1 deck with the rail's own time-lapse, as the station runs it.
     step(w, 100);
+    advance(w, lapseExtraMs(w.speed, 100));
     if (want.profile === "apikey") {
       const c = candidate(w, "glm");
       states.add(c.breaker.state);

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState, useSyncExternalStore, type RefObject } from "react";
+import { useEffect, useSyncExternalStore, type RefObject } from "react";
 
 /**
  * Motion helpers shared by the landing page's animated pieces. Every animation
@@ -45,56 +45,6 @@ export function usePrefersReducedMotion(): boolean {
 }
 
 /**
- * True while the element is on screen. Animation loops use it to stop drawing
- * when scrolled away, so an idle tab costs nothing.
- */
-export function useInView<T extends Element>(rootMargin = "0px"): [RefObject<T | null>, boolean] {
-  const ref = useRef<T>(null);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node || typeof IntersectionObserver === "undefined") {
-      setInView(true);
-      return;
-    }
-    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), {
-      rootMargin,
-    });
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [rootMargin]);
-
-  return [ref, inView];
-}
-
-/**
- * Runs `frame(dt, now)` on every animation frame while `active` is true.
- * `dt` is seconds since the previous frame. The latest `frame` is always
- * called, so callers can close over fresh props without restarting the loop.
- */
-export function useAnimationFrame(frame: (dt: number, now: number) => void, active: boolean): void {
-  const frameRef = useRef(frame);
-  useEffect(() => {
-    frameRef.current = frame;
-  });
-
-  useEffect(() => {
-    if (!active) return;
-    let id = 0;
-    let last = performance.now();
-    const tick = (now: number) => {
-      const dt = (now - last) / 1000;
-      last = now;
-      frameRef.current(dt, now);
-      id = window.requestAnimationFrame(tick);
-    };
-    id = window.requestAnimationFrame(tick);
-    return () => window.cancelAnimationFrame(id);
-  }, [active]);
-}
-
-/**
  * Adds `is-revealed` to every `.reveal` element as it scrolls into view. The
  * hidden starting state only applies once `data-reveal="on"` is set on the
  * root, which happens here on the client, so the page is fully visible
@@ -121,4 +71,61 @@ export function useScrollReveal(root: RefObject<HTMLElement | null>, enabled: bo
       node.removeAttribute("data-reveal");
     };
   }, [root, enabled]);
+}
+
+/** How far outside the viewport a station still counts as on screen. */
+const OFFSCREEN_MARGIN = "25% 0px";
+
+/**
+ * Marks the elements under `node` that run an endless CSS loop (`data-loop`),
+ * so landing.css can pause exactly those. Finished one-shots are left alone:
+ * pausing every animation would turn each settled entrance (hundreds of
+ * words and names) back into an active, paused animation, and the
+ * compositor then pays for all of them on every frame.
+ */
+function markLoops(node: Element): void {
+  if (typeof node.getAnimations !== "function" || typeof CSSAnimation === "undefined") return;
+  for (const animation of node.getAnimations({ subtree: true })) {
+    if (!(animation instanceof CSSAnimation)) continue;
+    const effect = animation.effect;
+    if (!(effect instanceof KeyframeEffect) || !effect.target) continue;
+    if (Number.isFinite(effect.getComputedTiming().endTime)) continue;
+    if (!effect.target.hasAttribute("data-loop")) effect.target.setAttribute("data-loop", "");
+  }
+}
+
+/**
+ * Pauses the CSS loops of every station that is off screen (§7.6): one
+ * IntersectionObserver watches each station (`main [data-station]`) and the
+ * footer. As one moves more than a quarter of a viewport away it is marked
+ * `data-offscreen` and its endless loops `data-loop`; landing.css pauses the
+ * marked loops until it comes near again. The fixed chrome (nav, SimDock) is
+ * always on screen and never marked.
+ */
+export function useOffscreenPause(root: RefObject<HTMLElement | null>): void {
+  useEffect(() => {
+    const node = root.current;
+    if (!node || typeof IntersectionObserver === "undefined") return;
+    const targets = Array.from(
+      node.querySelectorAll<HTMLElement>(":scope > main [data-station], :scope > footer")
+    );
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.removeAttribute("data-offscreen");
+          } else {
+            markLoops(entry.target);
+            entry.target.setAttribute("data-offscreen", "");
+          }
+        }
+      },
+      { rootMargin: OFFSCREEN_MARGIN }
+    );
+    for (const target of targets) observer.observe(target);
+    return () => {
+      observer.disconnect();
+      for (const target of targets) target.removeAttribute("data-offscreen");
+    };
+  }, [root]);
 }

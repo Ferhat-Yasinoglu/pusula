@@ -23,7 +23,7 @@ import {
   MCP_TRANSPORTS,
   SAMPLE_CANDIDATES,
 } from "../../src/app/landing/landingTypes.ts";
-import { AI_PROVIDERS } from "../../src/shared/constants/providers.ts";
+import { AI_PROVIDERS, getProviderAlias } from "../../src/shared/constants/providers.ts";
 import { PUSULA_RESPONSE_HEADERS } from "../../src/shared/constants/headers.ts";
 import { ENGINE_CATALOG, ENGINE_IDS } from "../../open-sse/services/compression/engineCatalog.ts";
 
@@ -236,6 +236,11 @@ test("landing constants: sample candidates are real catalog providers", () => {
     assert.ok(candidate.catalogId in providers, `${candidate.catalogId} is not in AI_PROVIDERS`);
     assert.ok(catalogIds.has(candidate.catalogId), `${candidate.catalogId} is not in the catalog`);
     assert.ok(profiles.has(candidate.profile), `unknown breaker profile ${candidate.profile}`);
+    assert.equal(
+      candidate.alias,
+      getProviderAlias(candidate.catalogId),
+      `${candidate.catalogId}: X-Pusula-Provider carries the provider's alias`
+    );
     assert.ok(!ids.has(candidate.id), `duplicate candidate ${candidate.id}`);
     ids.add(candidate.id);
   }

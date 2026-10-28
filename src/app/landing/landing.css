@@ -19,8 +19,9 @@
  *   `width` or `height`; glows never animate, only their opacity may;
  * - no `mix-blend-mode` on full-screen or animated layers;
  * - `backdrop-filter` only on the nav and the SimDock;
- * - `.is-paused` on the root freezes every CSS animation (Pause control), and
- *   the one reduced-motion block at the end of the file stills the page.
+ * - `.is-paused` on the root freezes every looping CSS animation (Pause
+ *   control; one-shots are settled at their end, see below), and the one
+ *   reduced-motion block at the end of the file stills the page.
  */
 
 /* ---- Tokens ------------------------------------------------------------- */
@@ -142,21 +143,34 @@
   --s-10: 144px;
   --gutter: 16px; /* 24px ≥640, 32px ≥1024 */
   --content: 1360px;
-  --station-pad: clamp(72px, 9vw, 144px);
+  /*
+   * Station shell rhythm (revised §4 budgets): the top pad holds the course
+   * seam at half its height, the end pad is shorter so two stations never
+   * meet across a band of black. Wider screens set both again below.
+   */
+  --station-pad: 48px;
+  --station-pad-end: 40px;
   /* Fixed nav height (§6.1): anchors land below it. */
   --nav-h: 52px;
 
   /*
-   * Old token names, kept until the old section components are deleted
-   * (Phase 3, spec §8.3). New code uses the names above.
+   * The SimDock's footprint (nav.css), for content that must keep clear of
+   * it. The pill rests in the bottom inline-start corner; on desktop its
+   * toasts line up beside it, in the same band. `--dock-clear-block` is the
+   * height of that band from the viewport's bottom edge (inset, pill, air);
+   * `--dock-clear-inline` is the pill's reach from the inline-start edge
+   * (SimDock refines it from the pill's measured width). While the dock
+   * climbs the hero's board it rises by the board's height plus
+   * `--dock-lift-gap` (`DOCK_LIFT_GAP_PX` in navModel.ts).
    */
-  --ink: var(--void);
-  --ink-deep: var(--void);
-  --chart: var(--hull);
-  --chart-raised: var(--deck);
-  --signal: var(--ember);
-  --signal-soft: var(--ember-soft);
-  --gold-bright: var(--gold-hi);
+  --dock-inset: 16px;
+  --dock-pill-h: 40px;
+  --dock-air: 12px;
+  --dock-lift-gap: 12px;
+  --dock-clear-block: calc(
+    var(--dock-inset) + env(safe-area-inset-bottom, 0px) + var(--dock-pill-h) + var(--dock-air)
+  );
+  --dock-clear-inline: 300px;
 
   background: var(--void);
   color: var(--foam);
@@ -172,13 +186,19 @@
 @media (min-width: 640px) {
   .pusula-landing {
     --gutter: 24px;
+    --station-pad: clamp(56px, 8vw, 88px);
+    --station-pad-end: 48px;
   }
 }
 
 @media (min-width: 1024px) {
   .pusula-landing {
     --gutter: 32px;
+    --station-pad: clamp(56px, 8svh, 96px);
     --nav-h: 56px;
+    --dock-inset: 24px;
+    --dock-pill-h: 44px;
+    --dock-clear-inline: 430px;
   }
 }
 
@@ -195,6 +215,57 @@
   --track-display: 0;
   --track-readout: 0;
   --track-kicker: 0;
+}
+
+/*
+ * Persian never sets in the mono face: a monospace font has no Arabic-script
+ * joining, so the letters fall apart. The shared mono UI labels (station
+ * kicker, SimBadge pill, terminal title, SimDock word, rate, time-lapse chip
+ * and toasts) switch to the sans in Persian; the LTR islands inside them
+ * (bearings, units, code) keep the mono. Station-specific mono labels carry
+ * their own rule next to their styles.
+ */
+.pusula-landing
+  :is(.kicker, .sim-pill, .term-title, .dock-status, .dock-rate, .dock-pace, .dock-toast):lang(fa) {
+  font-family: var(--font-sans);
+  letter-spacing: normal;
+}
+
+.pusula-landing
+  :is(.kicker, .sim-pill, .term-title, .dock-status, .dock-rate, .dock-pace, .dock-toast):lang(fa)
+  [dir="ltr"] {
+  font-family: var(--font-mono);
+}
+
+/* ---- The document behind the page --------------------------------------- */
+
+/*
+ * The app's root is light. While the landing is mounted the document itself
+ * is the landing's black (`--void`, written out: the tokens live on the
+ * root div), so iOS rubber-band overscroll above the nav and below the
+ * footer never shows a light band, and the canvas, scrollbars and native
+ * controls are dark (the viewport's theme-color in `page.tsx` matches).
+ */
+:root:has(.pusula-landing),
+body:has(.pusula-landing) {
+  background: #040405;
+  color-scheme: dark;
+}
+
+/*
+ * The app's "Skip to content" link (root layout) sits before the landing in
+ * the DOM, so the fixed nav would paint over it when it is focused. On the
+ * landing it rides above the nav, in the page's own gold.
+ */
+body:has(.pusula-landing) > a[href="#main-content"]:focus {
+  position: fixed;
+  z-index: 100;
+  background: #ffd36e;
+  color: #040405;
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 2px #040405,
+    0 0 0 4px #ffd36e;
 }
 
 /* ---- Page-wide rules ---------------------------------------------------- */
@@ -215,20 +286,54 @@
   scroll-margin-top: var(--nav-h);
 }
 
-/* Pause control: freezes every CSS animation under the root. */
+/*
+ * Keyboard focus is never hidden under the fixed chrome (WCAG 2.4.11): a
+ * control scrolled into view by Tab keeps clear of the nav above and of the
+ * SimDock's band below. Only focusable controls in the page's flow get the
+ * margin, so the stations' own anchors (`scroll-margin-top` above, read by
+ * the nav's travel) and fragment jumps land exactly as before.
+ */
+.pusula-landing
+  :is(main, footer)
+  :is(a[href], button, input, select, textarea, summary, [tabindex], [contenteditable="true"]) {
+  scroll-margin-block: calc(var(--nav-h) + 12px) calc(var(--dock-clear-block) + 12px);
+}
+
+/*
+ * Pause control: freezes every CSS animation under the root at once, so a
+ * loop stops without a frame of motion (also one that starts while paused).
+ * One-shot animations (a finite iteration count: entrances, arrivals,
+ * toasts) are not left frozen at their first keyframe, where they would hold
+ * content invisible: the heartbeat settles each at its end state as soon as
+ * it starts (`settleOneShots` in runtime/heartbeat.ts). So stations need no
+ * Pause rule for their entrances; a Pause rule is only for how a frozen loop
+ * should rest.
+ */
 .pusula-landing.is-paused *,
 .pusula-landing.is-paused *::before,
 .pusula-landing.is-paused *::after {
   animation-play-state: paused !important;
 }
 
-/*
- * Except one-shot entrances and the intro failsafe: frozen at their first
- * keyframe they would hold content invisible (or the nav off screen) for as
- * long as a visitor's stored pause lasts.
- */
-.pusula-landing.is-paused :is(.intro-layer, .nav-bar, .rise, .dial-enter, .swap-in) {
+/* Except the intro failsafe, which must still hide the intro layers on time. */
+.pusula-landing.is-paused .intro-layer {
   animation-play-state: running !important;
+}
+
+/*
+ * Everything pauses off screen (§7.6). `useOffscreenPause` (landingMotion.ts)
+ * marks each station and the footer `data-offscreen` while it is more than a
+ * quarter of a viewport away, and the endless loops inside it `data-loop`
+ * (SimBadge dots, carets, pulses, breathing LEDs, scans, button glows, the
+ * course seam). Those hold still instead of invalidating style every frame.
+ * Settled one-shots are not touched (pausing them would make each an active
+ * animation again, which costs the compositor on every frame), and both
+ * attributes only ever come from the client: server HTML keeps its loops.
+ */
+.pusula-landing [data-offscreen] [data-loop],
+.pusula-landing [data-offscreen] [data-loop]::before,
+.pusula-landing [data-offscreen] [data-loop]::after {
+  animation-play-state: paused !important;
 }
 
 /*
@@ -614,292 +719,6 @@
   100% {
     opacity: 0;
   }
-}
-
-/* ---- Legacy: old section components ------------------------------------- */
-
-/*
- * Classes used only by the old section components (Hero, Astrolabe, RouteMap,
- * SectionHeading, …). They keep rendering on the new tokens until each is
- * replaced, and this block is deleted with the last of them (Phase 3, spec
- * §8.3). Do not use these in new code. Filter, background-position and glow
- * animations were removed to meet the motion rules above.
- */
-
-.pusula-landing .display {
-  font-size: clamp(2.35rem, 1.8rem + 3.2vw, 4.6rem);
-  line-height: 1.02;
-  letter-spacing: -0.03em;
-  font-weight: 800;
-  text-wrap: balance;
-}
-
-/* Gold leaf on the old headline, now static. */
-.pusula-landing .gilded {
-  background: linear-gradient(
-    100deg,
-    var(--foam) 0%,
-    var(--foam) 38%,
-    var(--gold-hi) 46%,
-    #fff6dc 50%,
-    var(--gold) 54%,
-    var(--foam) 62%,
-    var(--foam) 100%
-  );
-  background-size: 260% 100%;
-  background-position: 30% 0;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.pusula-landing .section-title {
-  font-size: clamp(1.9rem, 1.4rem + 1.7vw, 2.75rem);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  font-weight: 750;
-  text-wrap: balance;
-}
-
-.pusula-landing .lead {
-  font-size: 1.0625rem;
-  line-height: 1.65;
-  color: var(--mist);
-  max-width: 62ch;
-  text-wrap: pretty;
-}
-
-.pusula-landing .rule-mark::before {
-  content: "";
-  display: block;
-  width: 3rem;
-  height: 2px;
-  background: linear-gradient(90deg, var(--gold-deep), var(--gold-hi));
-  margin-bottom: 1.25rem;
-  border-radius: 1px;
-  box-shadow: 0 0 12px rgba(255, 211, 110, 0.5);
-}
-
-.pusula-landing .glass {
-  background:
-    linear-gradient(160deg, rgba(255, 211, 110, 0.06), rgba(255, 211, 110, 0) 40%),
-    rgba(14, 13, 12, 0.88);
-  border: 1px solid rgba(212, 168, 64, 0.22);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 228, 160, 0.08),
-    0 40px 100px -40px rgba(0, 0, 0, 0.9),
-    0 0 0 1px rgba(0, 0, 0, 0.4);
-}
-
-.pusula-landing .btn-gold {
-  background: linear-gradient(180deg, var(--gold-hi), var(--gold));
-  color: var(--void);
-  box-shadow: var(--glow-cta);
-  transition: transform var(--t-hover) ease;
-}
-
-.pusula-landing .btn-gold:hover {
-  transform: translateY(-1px);
-}
-
-@keyframes pusula-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.pusula-landing .spin-slow,
-.pusula-landing .spin-reverse,
-.pusula-landing .spin-sweep {
-  transform-box: view-box;
-  transform-origin: 50% 50%;
-}
-
-.pusula-landing .spin-slow {
-  animation: pusula-spin 240s linear infinite;
-}
-
-.pusula-landing .spin-reverse {
-  animation: pusula-spin 90s linear infinite reverse;
-}
-
-.pusula-landing .spin-sweep {
-  animation: pusula-spin 6s linear infinite;
-}
-
-.pusula-landing .spin-hub {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: pusula-spin 9s linear infinite;
-}
-
-@keyframes pusula-dial-enter {
-  from {
-    opacity: 0;
-    transform: scale(0.86) rotate(-24deg);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.pusula-landing .dial-enter {
-  animation: pusula-dial-enter 1400ms var(--ease-out) both;
-}
-
-@keyframes pusula-beam {
-  to {
-    stroke-dashoffset: -18;
-  }
-}
-
-.pusula-landing .beam-flow {
-  animation: pusula-beam 0.8s linear infinite;
-}
-
-.pusula-landing .score-bar {
-  background: linear-gradient(90deg, var(--gold-deep), var(--gold));
-}
-
-.pusula-landing .score-bar-hot {
-  background: linear-gradient(90deg, #c2491d, var(--ember), #ffb08a);
-  box-shadow: 0 0 10px rgba(255, 122, 69, 0.6);
-}
-
-@keyframes pusula-progress {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
-}
-
-.pusula-landing .sample-progress {
-  transform-origin: 0 50%;
-  animation-name: pusula-progress;
-  animation-timing-function: linear;
-  animation-fill-mode: both;
-  box-shadow: 0 0 8px rgba(255, 211, 110, 0.8);
-}
-
-:root[dir="rtl"] .pusula-landing .sample-progress {
-  transform-origin: 100% 50%;
-}
-
-@keyframes pusula-swap-in {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.pusula-landing .swap-in {
-  animation: pusula-swap-in 520ms var(--ease-out) both;
-}
-
-@keyframes pusula-ping {
-  0% {
-    transform: scale(0.6);
-    opacity: 0.9;
-  }
-  100% {
-    transform: scale(3);
-    opacity: 0;
-  }
-}
-
-/* SVG only: the new catalog uses `.ping` on its names for a different flash. */
-.pusula-landing svg .ping {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: pusula-ping 1.6s cubic-bezier(0.2, 0.7, 0.3, 1) infinite;
-}
-
-@keyframes pusula-scan {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(1100px);
-  }
-}
-
-.pusula-landing .map-scan {
-  animation: pusula-scan 7.5s var(--ease-io) infinite;
-}
-
-@keyframes pusula-border-breathe {
-  0%,
-  100% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-.pusula-landing .map-border {
-  animation: pusula-border-breathe var(--loop-breathe) ease-in-out infinite;
-}
-
-@keyframes pusula-city-pulse {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(4.5);
-    opacity: 0;
-  }
-}
-
-.pusula-landing .city-pulse {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: pusula-city-pulse 900ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
-}
-
-/* The old map scales down to a phone; its labels must not (CSS beats the SVG attribute). */
-@media (max-width: 640px) {
-  .pusula-landing .map-label {
-    font-size: 24px;
-  }
-  .pusula-landing .map-label-hub {
-    font-size: 28px;
-  }
-}
-
-/* The old page has no `data-motion`; `useScrollReveal` drives it the same way. */
-.pusula-landing[data-reveal="on"]:not([data-motion]) .reveal {
-  transition:
-    opacity var(--t-reveal) var(--ease-out),
-    transform var(--t-reveal) var(--ease-out);
-}
-
-.pusula-landing[data-reveal="on"]:not([data-motion]) .reveal:not(.is-revealed) {
-  opacity: 0;
-  transform: translateY(28px);
-}
-
-@keyframes pusula-rise {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.pusula-landing .rise {
-  animation: pusula-rise 900ms var(--ease-out) both;
 }
 
 /* ---- Reduced motion ----------------------------------------------------- */

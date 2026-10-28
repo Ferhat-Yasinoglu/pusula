@@ -549,7 +549,7 @@ export default function ToolsUplink({ stats }: { stats: LandingStats }) {
         a.user = false;
         // The same lines the response shows (a zero fallback count is not one of them).
         const parts = result.provider ? [`${HEADER.provider}: ${result.provider}`] : ["503"];
-        if (result.fallbackAttempts > 0) {
+        if (result.served && result.fallbackAttempts > 0) {
           parts.push(`${HEADER.fallbackAttempts}: ${result.fallbackAttempts}`);
         }
         if (text) parts.push(text);
@@ -1219,7 +1219,6 @@ export default function ToolsUplink({ stats }: { stats: LandingStats }) {
                       >
                         {t("toolsRun")}
                       </MagneticButton>
-                      <SimBadge />
                     </div>
                     <div className="tools-resp" dir="ltr">
                       <p className="tools-resp-line tools-resp-reply">

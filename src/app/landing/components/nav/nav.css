@@ -11,22 +11,6 @@
  */
 
 /* ------------------------------------------------------------------------ */
-/* Travel                                                                   */
-/* ------------------------------------------------------------------------ */
-
-/*
- * While a nav travel is under way (`navState.travelTo`), everything that
- * renders lazily (`content-visibility: auto`: the stations, and any lazy
- * block inside them) is laid out for real, so the destination stops moving
- * while the page scrolls to it. `contain-intrinsic-size: auto` keeps the
- * measured heights once the attribute is gone, so this happens once per
- * viewport width.
- */
-:root[data-nav-travel] .pusula-landing main * {
-  content-visibility: visible !important;
-}
-
-/* ------------------------------------------------------------------------ */
 /* Bar                                                                      */
 /* ------------------------------------------------------------------------ */
 
@@ -506,15 +490,17 @@
     margin-inline-start: var(--s-2);
   }
 
-  /* 1024–1279: GitHub folds into a 40px icon button. */
-  .pusula-landing .nav-gh {
+  /* 1024–1279: Docs and GitHub fold into 40px icon buttons. */
+  .pusula-landing .nav-gh,
+  .pusula-landing .nav-docs {
     justify-content: center;
     width: 40px;
     padding: 0;
   }
 
   .pusula-landing .nav-gh-text,
-  .pusula-landing .nav-gh-ext {
+  .pusula-landing .nav-gh-ext,
+  .pusula-landing .nav-docs-text {
     display: none;
   }
 }
@@ -524,14 +510,21 @@
     width: 520px;
   }
 
-  .pusula-landing .nav-gh {
+  .pusula-landing .nav-gh,
+  .pusula-landing .nav-docs {
     width: auto;
     padding-inline: 10px;
   }
 
   .pusula-landing .nav-gh-text,
-  .pusula-landing .nav-gh-ext {
+  .pusula-landing .nav-gh-ext,
+  .pusula-landing .nav-docs-text {
     display: inline-block;
+  }
+
+  /* With room for the word, Docs is the word alone. */
+  .pusula-landing .nav-docs-mark {
+    display: none;
   }
 }
 
@@ -1039,15 +1032,18 @@
 
 /*
  * The dock is a fixed wrapper (position, lift, arrival, hiding) holding the
- * toast stack and the glass pill. The pill can be stowed on its own (over the
- * board of real figures on a phone) while the toasts it raised stay readable.
+ * live region its messages are read from and the glass pill they are shown
+ * in. The pill can be stowed on its own (over the board of real figures on a
+ * phone); its messages are still read out. Its geometry comes from the
+ * `--dock-*` footprint tokens (landing.css), so content that keeps clear of
+ * it reads the same numbers.
  */
 .pusula-landing .sim-dock {
   --dock-lift: 0px;
   position: fixed;
   /* Clear a landscape notch on the dock's side (physical, so per direction). */
-  inset-inline-start: max(16px, env(safe-area-inset-left, 0px));
-  inset-block-end: calc(16px + env(safe-area-inset-bottom));
+  inset-inline-start: max(var(--dock-inset), env(safe-area-inset-left, 0px));
+  inset-block-end: calc(var(--dock-inset) + env(safe-area-inset-bottom, 0px));
   z-index: var(--z-dock);
   pointer-events: none;
   transform: translate3d(0, calc(-1 * var(--dock-lift)), 0);
@@ -1071,7 +1067,7 @@
   display: flex;
   align-items: center;
   gap: 2px;
-  height: 40px;
+  height: var(--dock-pill-h);
   padding-inline: 12px 4px;
   border: 1px solid rgba(212, 168, 64, 0.24);
   border-radius: var(--r-pill);
@@ -1100,7 +1096,7 @@
 }
 
 .pusula-landing .sim-dock:dir(rtl) {
-  inset-inline-start: max(16px, env(safe-area-inset-right, 0px));
+  inset-inline-start: max(var(--dock-inset), env(safe-area-inset-right, 0px));
 }
 
 /* After the intro hands off (t = 2600ms) the dock arrives at t = 3200ms. */
@@ -1123,6 +1119,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
   padding-inline-end: 6px;
   font-family: var(--font-mono);
   font-size: var(--fs-micro);
@@ -1135,6 +1132,7 @@
 .pusula-landing .dock-dot {
   position: relative;
   flex: none;
+  box-sizing: border-box;
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -1148,6 +1146,93 @@
   border: 1px solid var(--ember);
   border-radius: 50%;
   opacity: 0;
+}
+
+/* While a message holds the pill the dot takes its tone: failure is ember plus a dashed stroke. */
+.pusula-landing .dock-pill[data-tone="fail"] .dock-dot {
+  border: 1.5px dashed var(--ember);
+  background: transparent;
+  box-shadow: none;
+}
+
+.pusula-landing .dock-pill[data-tone="warn"] .dock-dot {
+  background: var(--gold);
+  box-shadow: 0 0 10px rgba(212, 168, 64, 0.45);
+}
+
+.pusula-landing .dock-pill[data-tone="ok"] .dock-dot {
+  background: var(--gold-hi);
+  box-shadow: 0 0 10px rgba(255, 211, 110, 0.5);
+}
+
+/*
+ * The word slot: "Simulation", or for a few seconds a visitor-caused event
+ * told in its place (one line, crossfaded; the slot is as wide as the longer
+ * of the two, so the pill grows towards its inline end while a message shows).
+ */
+.pusula-landing .dock-say {
+  display: inline-grid;
+  align-items: center;
+  min-width: 0;
+  max-width: calc(100vw - 2 * var(--dock-inset) - 148px);
+}
+
+.pusula-landing .dock-say > * {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+
+.pusula-landing .dock-word {
+  transition: opacity var(--t-hover) linear;
+}
+
+.pusula-landing .dock-pill[data-msg="show"] .dock-word {
+  opacity: 0;
+}
+
+.pusula-landing .dock-msg {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  animation: dock-msg-in 280ms var(--ease-out) both;
+}
+
+.pusula-landing .dock-pill[data-msg="leave"] .dock-msg {
+  animation: dock-msg-out 240ms var(--ease-io) both;
+}
+
+@keyframes dock-msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes dock-msg-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* Below 1024px the deck's own short form ("claude × 503 → openai") stands in for the sentence. */
+.pusula-landing .dock-msg-long:has(+ .dock-msg-short) {
+  display: none;
+}
+
+.pusula-landing .dock-msg-x {
+  color: var(--ember);
+}
+
+.pusula-landing .dock-msg-to {
+  color: var(--gold-hi);
 }
 
 .pusula-landing .dock-rate {
@@ -1168,38 +1253,73 @@
   color: var(--gold-hi);
 }
 
-/* The Pause toggle and the pace chip sit flush in the pill; their hit areas reach 44px. */
-.pusula-landing .sim-dock .tg {
+/* Paused: nothing flows, and the rate says so. */
+.pusula-landing .dock-rate[data-paused] .dock-rate-n {
+  color: var(--mist-dim);
+}
+
+/*
+ * One Pause button: ⏸ while the deck runs, ▶ (lit ember) once engaged. Its
+ * hit area reaches 44px.
+ */
+.pusula-landing .dock-pause {
   position: relative;
-  min-height: 40px;
-  padding-inline: 8px;
-  gap: 8px;
-  border-color: transparent;
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--gold);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.pusula-landing .sim-dock .tg:hover {
-  border-color: transparent;
-}
-
-.pusula-landing .sim-dock .tg::after,
-.pusula-landing .dock-pace::after {
+.pusula-landing .dock-pause::after {
   content: "";
   position: absolute;
-  inset: -2px 0;
+  inset: -4px;
+  border-radius: 50%;
 }
 
-.pusula-landing .dock-pace::after {
-  inset: -6px 0;
+@media (hover: hover) {
+  .pusula-landing .dock-pause:hover:not(:disabled) {
+    border-color: var(--gold-lo);
+    color: var(--gold-hi);
+  }
 }
 
-.pusula-landing .sim-dock .tg:disabled {
+.pusula-landing .dock-pause[aria-pressed="true"] {
+  border-color: rgba(255, 122, 69, 0.6);
+  background: var(--ember-soft);
+  color: var(--ember);
+}
+
+.pusula-landing .dock-pause:focus-visible,
+.pusula-landing .dock-pace:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+/* Under reduced motion the deck never steps: Pause rests engaged. */
+.pusula-landing .dock-pause:disabled {
+  cursor: default;
   opacity: 0.8;
 }
 
+/* The time-lapse chip: » and the factor (×1 → ×5 → ×10); its full name is its label. */
 .pusula-landing .dock-pace {
   position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 4px;
   min-height: 32px;
-  padding-inline: 12px;
+  margin-inline-start: 2px;
+  padding-inline: 10px 12px;
   border: 1px solid var(--rule);
   border-radius: var(--r-pill);
   background: transparent;
@@ -1208,13 +1328,31 @@
   font-size: var(--fs-micro);
   line-height: 1;
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
 
-.pusula-landing .dock-pace:hover:not(:disabled) {
-  border-color: var(--gold-lo);
-  color: var(--foam);
+.pusula-landing .dock-pace::after {
+  content: "";
+  position: absolute;
+  inset: -6px -2px;
+}
+
+.pusula-landing .dock-pace-mark {
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (hover: hover) {
+  .pusula-landing .dock-pace:hover:not(:disabled) {
+    border-color: var(--gold-lo);
+    color: var(--foam);
+  }
 }
 
 /* Under reduced motion the deck never steps: the chip rests, like the engaged Pause. */
@@ -1230,130 +1368,77 @@
   color: var(--foam);
 }
 
-/* Toasts: stacked above the pill, newest nearest to it. */
-.pusula-landing .dock-toasts {
-  position: absolute;
-  inset-inline-start: 0;
-  inset-block-end: calc(100% + 10px);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: min(320px, calc(100vw - 32px));
-  pointer-events: none;
+/*
+ * Folded (below 1024px, while the page scrolls down): the dot and Pause only;
+ * a message still unfolds the word slot. What comes back on unfolding fades
+ * in (the pill's own width changes at once).
+ */
+@media (max-width: 1023.98px) {
+  .pusula-landing .dock-pill[data-folded] .dock-pace,
+  .pusula-landing .dock-pill[data-folded]:not([data-msg]) .dock-say {
+    display: none;
+  }
+
+  /* A message that unfolded the word slot gives it back without the word. */
+  .pusula-landing .dock-pill[data-folded] .dock-word {
+    opacity: 0;
+  }
+
+  .pusula-landing .dock-pill[data-folded] {
+    padding-inline-start: 14px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .pusula-landing .dock-pill:not([data-folded]) .dock-pace,
+  .pusula-landing .dock-pill:not([data-folded]) .dock-say {
+    animation: dock-unfold 220ms var(--ease-out) both;
+  }
 }
 
-.pusula-landing .dock-toast {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin: 0;
-  padding: 10px 12px;
-  border: 1px solid var(--rule);
-  border-radius: var(--r-md);
-  background: var(--deck);
-  box-shadow: var(--shadow-lift);
-  font-family: var(--font-mono);
-  font-size: var(--fs-micro);
-  line-height: 1.5;
-  color: var(--foam);
-  animation: dock-toast-in 280ms var(--ease-out) both;
-}
-
-.pusula-landing .dock-toast[data-leaving] {
-  animation: dock-toast-out 240ms var(--ease-io) both;
-}
-
-@keyframes dock-toast-in {
+@keyframes dock-unfold {
   from {
     opacity: 0;
-    transform: translateY(8px);
   }
   to {
     opacity: 1;
-    transform: none;
   }
-}
-
-@keyframes dock-toast-out {
-  from {
-    opacity: 1;
-    transform: none;
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-}
-
-.pusula-landing .dock-toast-mark {
-  flex: none;
-  width: 9px;
-  height: 9px;
-  margin-block-start: 4px;
-  border-radius: 50%;
-  background: var(--gold);
-}
-
-/* Failure is ember plus a dashed stroke. */
-.pusula-landing .dock-toast[data-kind="failing"] .dock-toast-mark,
-.pusula-landing .dock-toast[data-state="open"] .dock-toast-mark {
-  border: 1.5px dashed var(--ember);
-  background: transparent;
-}
-
-.pusula-landing .dock-toast[data-state="closed"] .dock-toast-mark {
-  background: var(--gold-hi);
-}
-
-/* Persian has no glyphs in the mono face. */
-.pusula-landing :is(.dock-toast, .dock-word):lang(fa) {
-  font-family: var(--font-sans);
-  letter-spacing: 0;
 }
 
 @media (min-width: 1024px) {
   .pusula-landing .sim-dock,
   .pusula-landing .sim-dock:dir(rtl) {
-    inset-inline-start: 24px;
-    inset-block-end: 24px;
+    inset-inline-start: var(--dock-inset);
+    inset-block-end: var(--dock-inset);
   }
 
-  .pusula-landing .dock-pill {
-    height: 44px;
+  .pusula-landing .dock-say {
+    max-width: min(480px, calc(100vw - 2 * var(--dock-inset) - 260px));
+  }
+
+  /* Desktop has room for the sentence. */
+  .pusula-landing .dock-msg-long:has(+ .dock-msg-short) {
+    display: inline;
+  }
+
+  .pusula-landing .dock-msg-short {
+    display: none;
   }
 
   .pusula-landing .dock-rate {
     display: inline-flex;
   }
 
-  .pusula-landing .sim-dock .tg {
-    min-height: 44px;
+  .pusula-landing .dock-pause {
+    width: 40px;
+    height: 40px;
   }
 
-  .pusula-landing .sim-dock .tg::after {
-    inset: 0;
+  .pusula-landing .dock-pause::after {
+    inset: -2px;
   }
-}
 
-/* ------------------------------------------------------------------------ */
-/* Pause and reduced motion                                                 */
-/* ------------------------------------------------------------------------ */
-
-/*
- * One-shot interface entrances keep running under Pause: frozen at their
- * first keyframe they would hold the menu, a toast or the chip invisible.
- * The reduced-motion block in landing.css already cuts them to 1ms.
- */
-.pusula-landing.is-paused
-  :is(
-    .nav-chip-face,
-    .nav-menu,
-    .nav-rose,
-    .nav-menu-row,
-    .nav-menu-close .glyph,
-    .lang-panel,
-    .dock-toast,
-    .sim-dock
-  ) {
-  animation-play-state: running !important;
+  .pusula-landing .dock-pace {
+    min-height: 34px;
+  }
 }

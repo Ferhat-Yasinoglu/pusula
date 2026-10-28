@@ -16,6 +16,8 @@ import {
   buildHeadingKnots,
   headingAt,
   pickActiveStation,
+  reanchorTarget,
+  readingAnchor,
   type StationId,
 } from "../../src/app/landing/runtime/stations.ts";
 import {
@@ -361,6 +363,36 @@ test("active station: the deepest station in the band wins, none keeps the last"
   assert.equal(pickActiveStation(set("catalog", "network"), "bridge"), "catalog");
   assert.equal(pickActiveStation(set(), "launch"), "launch");
   assert.equal(pickActiveStation(set("bridge"), "network"), "bridge");
+});
+
+test("re-anchor: a width change puts the station being read back under the nav", () => {
+  // Portrait: routing at 2400, 1830 tall; the visitor has its top just under a 52px nav.
+  const tops = [0, 977, 1739, 2916, 4746];
+  const heights = [977, 762, 1177, 1830, 1009];
+  const anchor = readingAnchor(tops, heights, 2916 - 52, 52, 9000);
+  assert.deepEqual(anchor, { kind: "station", index: 3, fraction: 0 });
+  // Landscape: everything above reflowed; the same station top lands under the nav again.
+  const wideTops = [0, 390, 1600, 4200, 6600];
+  const wideHeights = [390, 1210, 2600, 2400, 1500];
+  assert.equal(reanchorTarget(anchor!, wideTops, wideHeights, 52, 20000), 4200 - 52);
+  // Halfway through a station stays halfway through it.
+  const half = readingAnchor(tops, heights, 2916 + 915 - 52, 52, 9000);
+  assert.ok(half && half.kind === "station" && Math.abs(half.fraction - 0.5) < 1e-9);
+  assert.equal(reanchorTarget(half!, wideTops, wideHeights, 56, 20000), 4200 + 1200 - 56);
+});
+
+test("re-anchor: below the last station keeps the distance from the bottom, targets clamp", () => {
+  const anchor = readingAnchor([0, 1000], [1000, 1000], 2400, 52, 2600);
+  assert.deepEqual(anchor, { kind: "bottom", fromBottom: 200 });
+  assert.equal(reanchorTarget(anchor!, [0, 800], [800, 800], 52, 1900), 1700);
+  assert.equal(readingAnchor([], [], 0, 52, 0), null);
+  // A station index the new layout lacks gives no target; out-of-range targets clamp.
+  assert.equal(reanchorTarget({ kind: "station", index: 4, fraction: 0 }, [0], [10], 0, 100), null);
+  assert.equal(
+    reanchorTarget({ kind: "station", index: 1, fraction: 1 }, [0, 90], [90, 90], 0, 100),
+    100
+  );
+  assert.equal(reanchorTarget({ kind: "station", index: 0, fraction: 0 }, [0], [90], 52, 100), 0);
 });
 
 /* ------------------------------------------------------------------------ */

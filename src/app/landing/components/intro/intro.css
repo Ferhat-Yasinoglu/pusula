@@ -2,8 +2,9 @@
  * "Landfall" (spec §5): the intro's HUD and skip control. Layer geometry
  * (`.intro-curtain`, `.intro-canvas`, `.intro-hud`, `.intro-skip`) and the
  * gate come from `landing.css`; everything here is scoped to those layers.
- * Only opacity and transform change, and only from script (closed-form
- * timeline) or one-shot transitions.
+ * Only opacity and transform change (plus the typed command's clip width):
+ * from CSS keyframes before the script runs (the ignition below), then from
+ * script (closed-form timeline) or one-shot transitions.
  */
 
 /*
@@ -20,6 +21,228 @@
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
+  }
+}
+
+/*
+ * Ignition in CSS, from first paint (storyboard 0–480ms, `INTRO_T.cssHold`).
+ * The page's script takes a moment to arrive, so the curtain does not wait
+ * for it: the gold point, its glow and the sextant crosshair rise on the
+ * timeline's own curves (`introScalars`), the brand line fades in and the
+ * command types itself. Then the frame holds (the glow breathes) until the
+ * canvas takes over at the same `t` and sets `data-live` on the curtain and
+ * the HUD, which removes every keyframe below in that same frame.
+ *
+ * Pixel parity with `renderIntro`: the crosshair is the canvas's 1px gold-hi
+ * hairlines at .35 growing from the centre (easeOutCubic over 300ms), the
+ * glow is the `goldHi` sprite's gradient (`glowAlphaAt` at `GLOW_STOPS`),
+ * 240px across at full size, added with `plus-lighter` like the canvas's
+ * "lighter", and the point is the canvas's 1.5px square.
+ */
+.pusula-landing .intro-ignite {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.pusula-landing .intro-curtain[data-live] .intro-ignite {
+  display: none;
+}
+
+.pusula-landing .intro-ig-h,
+.pusula-landing .intro-ig-v,
+.pusula-landing .intro-ig-glow,
+.pusula-landing .intro-ig-point {
+  position: absolute;
+  display: block;
+  opacity: 0;
+}
+
+.pusula-landing .intro-ig-h {
+  left: 0;
+  right: 0;
+  top: 50%;
+  block-size: 1px;
+  background: var(--gold-hi);
+  transform: scaleX(0);
+}
+
+.pusula-landing .intro-ig-v {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  inline-size: 1px;
+  background: var(--gold-hi);
+  transform: scaleY(0);
+}
+
+.pusula-landing .intro-ig-glow {
+  left: calc(50% - 120px);
+  top: calc(50% - 120px);
+  inline-size: 240px;
+  block-size: 240px;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 211, 110, 1) 0%,
+    rgba(255, 211, 110, 0.974) 8%,
+    rgba(255, 211, 110, 0.876) 18%,
+    rgba(255, 211, 110, 0.692) 30%,
+    rgba(255, 211, 110, 0.484) 42%,
+    rgba(255, 211, 110, 0.272) 56%,
+    rgba(255, 211, 110, 0.125) 70%,
+    rgba(255, 211, 110, 0.038) 85%,
+    rgba(255, 211, 110, 0) 100%
+  );
+  transform: scale(0);
+  mix-blend-mode: screen;
+  mix-blend-mode: plus-lighter;
+}
+
+.pusula-landing .intro-ig-point {
+  left: calc(50% - 0.75px);
+  top: calc(50% - 0.75px);
+  inline-size: 1.5px;
+  block-size: 1.5px;
+  background: var(--gold-hi);
+}
+
+/* Crosshair: alpha .35 over 80ms, length easeOutCubic over 300ms. */
+:root[data-intro="play"] .pusula-landing .intro-curtain:not([data-live]) .intro-ig-h {
+  animation:
+    intro-ig-cross 80ms linear both,
+    intro-ig-span-x 300ms cubic-bezier(0.33, 1, 0.68, 1) both;
+}
+
+:root[data-intro="play"] .pusula-landing .intro-curtain:not([data-live]) .intro-ig-v {
+  animation:
+    intro-ig-cross 80ms linear both,
+    intro-ig-span-y 300ms cubic-bezier(0.33, 1, 0.68, 1) both;
+}
+
+/* Glow: radius 0 → 120 (easeOutCubic), alpha 0 → .9 → .35 over 300ms; then it breathes. */
+:root[data-intro="play"] .pusula-landing .intro-curtain:not([data-live]) .intro-ig-glow {
+  animation:
+    intro-ig-glow 300ms linear both,
+    intro-ig-grow 300ms cubic-bezier(0.33, 1, 0.68, 1) both,
+    intro-ig-breathe 1400ms ease-in-out 480ms infinite alternate;
+}
+
+/* Point: alpha 0 → 1 over 60ms. */
+:root[data-intro="play"] .pusula-landing .intro-curtain:not([data-live]) .intro-ig-point {
+  animation: intro-ig-in 60ms linear both;
+}
+
+/* Brand line: fades in over 200ms (`INTRO_T.hudIn`). */
+:root[data-intro="play"] .pusula-landing .intro-hud:not([data-live]) .intro-brand {
+  animation: intro-ig-in 200ms linear both;
+}
+
+/*
+ * `$ npx pusula` (12 characters) types at 40ms a character (`INTRO_T.typeCps`).
+ * The whole command is in the page; a void mask carrying its own caret slides
+ * off it one character per step (a stepped transform, so it keeps time on the
+ * compositor while hydration keeps the main thread busy). The timeline writes
+ * the same slices once it runs (`floor(t / 40)` characters) and the mask goes
+ * with `data-live`. The intro test pins these numbers to the timeline.
+ */
+.pusula-landing .intro-cmd-mask {
+  display: none;
+}
+
+:root[data-intro="play"] .pusula-landing .intro-hud:not([data-live]) .intro-cmd-mask {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  display: block;
+  inline-size: calc(12ch + 2em);
+  background: var(--void);
+  animation: intro-ig-type 480ms steps(12, end) both;
+}
+
+/* The mask stays inside the command's own box (the crosshair passes behind it). */
+:root[data-intro="play"] .pusula-landing .intro-hud:not([data-live]) .intro-cmd {
+  overflow: hidden;
+}
+
+/* The real caret waits under the mask; the mask's own caret leads the text. */
+:root[data-intro="play"] .pusula-landing .intro-hud:not([data-live]) .intro-cmd > .intro-caret {
+  visibility: hidden;
+}
+
+@keyframes intro-ig-cross {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.35;
+  }
+}
+
+@keyframes intro-ig-span-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes intro-ig-span-y {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes intro-ig-glow {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes intro-ig-grow {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* A held frame still breathes: the glow swells slightly (the canvas resumes at its rest size). */
+@keyframes intro-ig-breathe {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes intro-ig-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes intro-ig-type {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(12ch);
   }
 }
 
@@ -54,6 +277,9 @@
 }
 
 .pusula-landing .intro-cmd {
+  position: relative;
+  /* The whole command's width from the start: typing never moves it (RTL anchors it at the end). */
+  min-inline-size: calc(12ch + 0.55em + 2px);
   margin-block-end: 6px !important;
   font-size: var(--fs-readout);
   color: var(--gold);

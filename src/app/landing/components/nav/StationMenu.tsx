@@ -26,7 +26,7 @@ import Toggle from "../primitives/Toggle";
 import { formatBearing } from "../primitives/primitiveKit";
 import LandingLanguageMenu from "./LandingLanguageMenu";
 import { navBearingText } from "./navModel";
-import { focusStation, primeTravel, travelTo } from "./navState";
+import { focusStation, travelTo } from "./navState";
 import "./nav.css";
 
 /**
@@ -194,8 +194,6 @@ export default function StationMenu({ open, onClose }: StationMenuProps) {
     pickingRef.current = true;
     setPreview(station);
     aim(station.bearing);
-    // Lay the stations out now, while the needle swings, so the travel aims true.
-    primeTravel();
     window.clearTimeout(swingTimer.current);
     const go = () => {
       pendingRef.current = { id: station.id, viaKeyboard };

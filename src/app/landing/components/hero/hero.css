@@ -267,11 +267,22 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* A 44px hit area around the 26px plate (24px on a phone). */
+/* A 44px hit area around the 26px plate. */
 .pusula-landing .bridge-cand::after {
   content: "";
   position: absolute;
   inset: -10px -4px;
+}
+
+/*
+ * Touch: at least 44px even for a back-hemisphere plate (24px scaled to .85:
+ * (24 + 2·14)·.85 = 44). Where hit areas overlap, a tap goes to the nearest
+ * plate (HeroBridge `nearestLabel`).
+ */
+@media (pointer: coarse) {
+  .pusula-landing .bridge-cand::after {
+    inset: -14px -6px;
+  }
 }
 
 .pusula-landing .bridge-cand:hover {
@@ -281,6 +292,13 @@
 .pusula-landing .bridge-cand[data-front="0"] {
   opacity: 0.35;
   z-index: 0;
+}
+
+/* Touch: a back-hemisphere plate stays legible enough to aim at. */
+@media (pointer: coarse) {
+  .pusula-landing .bridge-cand[data-front="0"] {
+    opacity: 0.55;
+  }
 }
 
 /*
@@ -343,11 +361,6 @@
 .pusula-landing .bridge-cand-num {
   display: inline-block;
   animation: bridge-score-in 260ms var(--ease-detent) both;
-}
-
-/* Paused, a re-keyed score would freeze on its first keyframe: show it settled. */
-.pusula-landing.is-paused .bridge-cand-num {
-  animation: none;
 }
 
 @keyframes bridge-score-in {
@@ -466,8 +479,68 @@
   position: absolute;
   top: 1%;
   right: 2%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
   margin: 0;
   pointer-events: none;
+}
+
+/*
+ * While the visitor's own weights (the routing rose) drive the deck, the
+ * caption says so: these scores are theirs, and one tap restores the
+ * shipped weights.
+ */
+.pusula-landing .bridge-tuned {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-block-size: 28px;
+  padding: 4px 10px;
+  border: 1px solid rgba(255, 122, 69, 0.55);
+  border-radius: var(--r-pill);
+  background: rgba(10, 10, 12, 0.82);
+  color: var(--foam);
+  font-family: var(--font-sans);
+  font-size: var(--fs-micro);
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  pointer-events: auto;
+  animation: bridge-tuned-in var(--t-mech) var(--ease-out) both;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* A 44px hit area around the 28px chip. */
+.pusula-landing .bridge-tuned::after {
+  content: "";
+  position: absolute;
+  inset: -8px -4px;
+}
+
+.pusula-landing .bridge-tuned:hover {
+  border-color: var(--ember);
+}
+
+.pusula-landing .bridge-tuned-dot {
+  inline-size: 6px;
+  block-size: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--ember);
+}
+
+@keyframes bridge-tuned-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .pusula-landing .bridge-scores .sim-pill {
@@ -681,6 +754,8 @@
 }
 
 .pusula-landing .bridge-hud-header {
+  /* Room for both header lines, so the card keeps its height when a line is omitted. */
+  min-block-size: 3.2em;
   padding: 10px 14px 0;
   font-family: var(--font-mono);
   font-size: var(--fs-micro);
@@ -690,6 +765,11 @@
 
 .pusula-landing .bridge-hud-header .tl {
   white-space: pre-line;
+}
+
+/* The alias gloss ("  # claude") after the header value: a dim comment. */
+.pusula-landing .bridge-hud-header .tl-t:not(.tl-kw, .tl-str, .tl-num, .tl-accent) {
+  color: var(--mist-dim);
 }
 
 .pusula-landing .bridge-hud-hint {
@@ -758,8 +838,12 @@
     --S: min(56vw, 860px, calc((var(--sky-h) * 0.46 - var(--nav-h) - 4px) / 0.44));
     --dial-x: 57%;
     --dial-top: calc(var(--dial-cy) - var(--S) / 2);
-    /* The SimDock rests above the board in the copy's corner (12px gap + 44px + 12px + 12px). */
-    --dock-reserve: 92px;
+    /*
+     * The SimDock (and its toasts) rests above the board in the copy's
+     * corner: it climbs the board by its height plus the lift gap, and the
+     * board's 88px are already below the sky.
+     */
+    --dock-reserve: calc(var(--dock-clear-block) + var(--dock-lift-gap));
     --haze-r: 0.8;
   }
 
@@ -802,6 +886,7 @@
   .pusula-landing .bridge:dir(rtl) .bridge-scores {
     right: auto;
     left: 1%;
+    align-items: flex-start;
   }
 
   .pusula-landing .bridge-scores .sim-pill {
@@ -954,9 +1039,9 @@
 
 /* Small desktops: the label goes under its number, and the band grows to fit. */
 @media (min-width: 1024px) and (max-width: 1279px) {
-  /* The board is taller here (labels under the numbers), so the dock rests higher. */
+  /* The board is 32px taller here (labels under the numbers), so the dock rests higher. */
   .pusula-landing .bridge {
-    --dock-reserve: 124px;
+    --dock-reserve: calc(var(--dock-clear-block) + var(--dock-lift-gap) + 32px);
   }
 
   /* Too narrow for the hint beside the calls to action. */

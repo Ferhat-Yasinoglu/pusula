@@ -47,16 +47,6 @@
 }
 
 @media (min-width: 1280px) {
-  /*
-   * The rose pins inside the station's own track, so the strategy band stays
-   * in flow. Nothing above a sticky stage may contain it: the station's
-   * `content-visibility` is lifted here.
-   */
-  .pusula-landing .station.rt.station-cv {
-    content-visibility: visible;
-    contain-intrinsic-size: none;
-  }
-
   /* the stage plus 50vh of pinned scroll (the spec's 150vh track for a full-height stage) */
   .pusula-landing .rt-track {
     height: calc(var(--rt-stage-h, 100svh) + 50vh);
@@ -1297,11 +1287,6 @@
   animation: routing-swap var(--t-swap) var(--ease-out) both;
 }
 
-/* a one-shot entrance: never left frozen at its first keyframe by Pause */
-.pusula-landing.is-paused .rt-strat-desc {
-  animation: none;
-}
-
 @keyframes routing-swap {
   from {
     opacity: 0;
@@ -1450,11 +1435,7 @@
 }
 
 .pusula-landing .rt-judge-glyph {
-  fill: none;
-  stroke: var(--gold-hi);
-  stroke-width: 1.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  color: var(--gold-hi);
 }
 
 .pusula-landing .rt-card-box {

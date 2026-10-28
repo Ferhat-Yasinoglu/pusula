@@ -43,7 +43,9 @@ import {
   LINE_MS,
   LIT_MS,
   NUMERALS,
-  ROW_MS,
+  PACE_COMPACT,
+  PACE_WIDE,
+  PANEL_VIEW_MARGIN,
   SPARK_MS,
   SPIN_MS,
   beadOpacity,
@@ -58,17 +60,23 @@ import {
   fuseWaypoints,
   glintAt,
   hotspotOf,
+  inScanBand,
   legProgress,
   nextLit,
   nodeThresholds,
   rowDoneMs,
   rowStartMs,
+  scanClock,
   sparkIndex,
   spinOffset,
+  stepScan,
+  tiltMoving,
+  type BootPace,
   type Fuse,
   type FuseLayout,
   type FuseLeg,
   type FusePoint,
+  type ScanClock,
 } from "./launchModel";
 import "./launch.css";
 
@@ -81,9 +89,13 @@ import "./launch.css";
  * under CSS perspective. It tilts from rotateX(14°) rotateY(−6°) to
  * rotateX(4°) as it crosses the viewport (traverse `--p`), powers on like a
  * CRT the first time it is seen (the screen layer opens from scaleY(.004)
- * with a fading bloom), then the self-test rows type in, 300ms each. Idle, a
- * scan bar crosses the screen every 6s and the three hotspots light in
- * sequence every 1.6s, each lighting its self-test row. Hovering, focusing or
+ * with a fading bloom), then the self-test rows type in once the list itself
+ * is in view: 300ms each beside the monitor, faster when stacked under it (all
+ * four within ~600ms). Idle, a scan bar crosses the screen every 6s while the
+ * monitor is near the middle of the viewport, and the three hotspots light in
+ * sequence every 1.6s, each pulsing once and lighting its self-test row. (No
+ * endless loop runs inside the tilted 3D frame: each one there kept the
+ * compositor redrawing it every frame.) Hovering, focusing or
  * tapping a hotspot or a row holds the pair lit for 6s (and, on desktop,
  * opens that row's description).
  *
@@ -125,13 +137,42 @@ type BootState = {
   phase: BootPhase;
   /** ms since power-on. */
   t: number;
+  /** Whether the self-test list is in view now (its top above 85% of the viewport). */
+  panelIn: boolean;
+  /** ms since the rows were released (power-on lead over, list in view); -1: not yet. */
+  rowsT: number;
+  /** Whether this boot blanked the rows (false when the list was already on screen). */
+  rowsArmed: boolean;
   /** Rows that started typing / that show their tick. */
   started: number;
   done: number;
   /** ms towards the next idle step, and the hotspot lit now (-1: none). */
   cycle: number;
   lit: number;
+  /** The idle scan sweep, and what the figure's `data-scan` / `data-tilting` show. */
+  scan: ScanClock;
+  scanShown: boolean;
+  tilting: boolean;
 };
+
+/** Stacked layouts (the list under the monitor) boot the rows faster. */
+const COMPACT_QUERY = "(max-width: 1023px)";
+/** Phone: the terminal's address lines drop their indent to fit the narrow card. */
+const PHONE_QUERY = "(max-width: 639px)";
+
+/** Whether `query` matches (false on the server and on the first client render). */
+function useMediaMatch(query: string): boolean {
+  const [matches, setMatches] = useState(false);
+  useEffect(() => {
+    if (typeof window.matchMedia !== "function") return;
+    const list = window.matchMedia(query);
+    const sync = () => setMatches(list.matches);
+    sync();
+    list.addEventListener("change", sync);
+    return () => list.removeEventListener("change", sync);
+  }, [query]);
+  return matches;
+}
 
 /** The fact row paired with a hotspot. */
 function factOfHotspot(hotspot: number): number {
@@ -159,24 +200,39 @@ function DashboardMonitor() {
   const bootRef = useRef<BootState>({
     phase: "rest",
     t: 0,
+    panelIn: false,
+    rowsT: -1,
+    rowsArmed: false,
     started: 0,
     done: 0,
     cycle: 0,
     lit: -1,
+    scan: scanClock(),
+    scanShown: false,
+    tilting: false,
   });
+  /** Row pace for this layout; the TypeLine speed follows it. */
+  const pace = useMediaMatch(COMPACT_QUERY) ? PACE_COMPACT : PACE_WIDE;
+  const paceRef = useRef<BootPace>(pace);
+  useEffect(() => {
+    paceRef.current = pace;
+  }, [pace]);
   /** The fact row the visitor is holding lit (hover, focus or tap), or null. */
   const [hold, setHold] = useState<number | null>(null);
   const holdRef = useRef<number | null>(null);
   const holdTimer = useRef(0);
 
-  useScrollProgress(figRef, { mode: "traverse" });
+  const progressRef = useScrollProgress(figRef, { mode: "traverse" });
 
   const titles = FACTS.map((fact) => t(fact.title));
   const descId = (i: number) => `lx-${uid}-d${i}`;
 
-  /** Power state on the monitor and the self-test panel (its brackets close in with it). */
-  const setPower = useCallback((state: "off" | "on" | null) => {
-    for (const node of [figRef.current, panelRef.current]) {
+  /**
+   * Power state on the monitor and, unless `panel` is false, on the self-test
+   * panel (its brackets close in with it).
+   */
+  const setPower = useCallback((state: "off" | "on" | null, panel = true) => {
+    for (const node of panel ? [figRef.current, panelRef.current] : [figRef.current]) {
       if (!node) continue;
       if (state) node.setAttribute("data-power", state);
       else node.removeAttribute("data-power");
@@ -214,12 +270,19 @@ function DashboardMonitor() {
     [setPower, setRow]
   );
 
-  /** Just below the fold: screen off, rows blank, ready to boot. */
+  /**
+   * Near the viewport: screen off, ready to boot. The rows blank too, unless
+   * the list is already on screen (coming back up from below, or a load that
+   * lands here): what the reader can see never disappears under them.
+   */
   const arm = useCallback(() => {
     const boot = bootRef.current;
     if (boot.phase !== "rest" || !canAnimate()) return;
+    const panel = panelRef.current?.getBoundingClientRect();
+    boot.rowsArmed = !panel || panel.top >= window.innerHeight || panel.bottom <= 0;
     boot.phase = "armed";
-    setPower("off");
+    setPower("off", boot.rowsArmed);
+    if (!boot.rowsArmed) return;
     for (let i = 0; i < FACTS.length; i++) {
       setRow(i, "off");
       typeRefs.current[i]?.reset();
@@ -236,9 +299,10 @@ function DashboardMonitor() {
     if (boot.phase === "armed" && canAnimate()) {
       boot.phase = "power";
       boot.t = 0;
-      boot.started = 0;
-      boot.done = 0;
-      setPower("on");
+      boot.rowsT = -1;
+      // Rows left on screen at rest have nothing to type.
+      boot.started = boot.done = boot.rowsArmed ? 0 : FACTS.length;
+      setPower("on", boot.rowsArmed);
       return;
     }
     if (boot.phase === "rest" || boot.phase === "armed") {
@@ -258,11 +322,35 @@ function DashboardMonitor() {
     });
   }, [arm, disarm, powerOn]);
 
-  // Reduced motion or Pause: no boot left half-done, no idle light.
+  // The rows type when the list itself is in view. A fling that lands on the
+  // list with the monitor barely showing powers the monitor on there and then.
+  useEffect(() => {
+    const node = panelRef.current;
+    if (!node) return;
+    return watchView(node, {
+      onEnter: () => {
+        bootRef.current.panelIn = true;
+        if (bootRef.current.phase === "armed") powerOn();
+      },
+      onExit: () => {
+        bootRef.current.panelIn = false;
+      },
+      enterMargin: PANEL_VIEW_MARGIN,
+    });
+  }, [powerOn]);
+
+  // Reduced motion or Pause: no boot left half-done, no idle light, no scan
+  // or layer hint left on.
   useEffect(() => {
     if (motion) return;
     const boot = bootRef.current;
     if (boot.phase === "armed" || boot.phase === "power") settle("idle");
+    const fig = figRef.current;
+    fig?.removeAttribute("data-scan");
+    fig?.removeAttribute("data-tilting");
+    boot.scan = scanClock();
+    boot.scanShown = false;
+    boot.tilting = false;
     if (reduced) {
       boot.lit = -1;
       writeLit(-1);
@@ -273,17 +361,41 @@ function DashboardMonitor() {
     (dt: number) => {
       const boot = bootRef.current;
       const ms = dt * 1000;
+      const fig = figRef.current;
+      const p = progressRef.current;
+
+      // The layer hint only while the tilt still moves; the scan only near the middle.
+      const tilting = tiltMoving(p);
+      if (tilting !== boot.tilting) {
+        boot.tilting = tilting;
+        fig?.toggleAttribute("data-tilting", tilting);
+      }
+      const scanning = boot.phase !== "armed" && stepScan(boot.scan, ms, inScanBand(p));
+      if (scanning !== boot.scanShown) {
+        boot.scanShown = scanning;
+        fig?.toggleAttribute("data-scan", scanning);
+      }
+
       if (boot.phase === "power") {
+        const rowPace = paceRef.current;
         boot.t += ms;
-        while (boot.started < FACTS.length && boot.t >= rowStartMs(boot.started)) {
-          setRow(boot.started, "type");
-          typeRefs.current[boot.started]?.play();
-          boot.started++;
+        if (boot.rowsT >= 0) boot.rowsT += ms;
+        else if (boot.done < FACTS.length && boot.panelIn && boot.t >= rowPace.lead) {
+          boot.rowsT = 0;
         }
-        while (boot.done < boot.started && boot.t >= rowDoneMs(boot.done)) {
-          typeRefs.current[boot.done]?.complete();
-          setRow(boot.done, "on");
-          boot.done++;
+        if (boot.rowsT >= 0) {
+          // The rows' clock on the power-on timeline, as if the list had been in view all along.
+          const at = rowPace.lead + boot.rowsT;
+          while (boot.started < FACTS.length && at >= rowStartMs(boot.started, rowPace)) {
+            setRow(boot.started, "type");
+            typeRefs.current[boot.started]?.play();
+            boot.started++;
+          }
+          while (boot.done < boot.started && at >= rowDoneMs(boot.done, rowPace)) {
+            typeRefs.current[boot.done]?.complete();
+            setRow(boot.done, "on");
+            boot.done++;
+          }
         }
         if (boot.done >= FACTS.length) {
           boot.phase = "idle";
@@ -298,7 +410,7 @@ function DashboardMonitor() {
       boot.lit = nextLit(boot.lit, HOTSPOTS.length);
       writeLit(boot.lit);
     },
-    [setRow, writeLit]
+    [progressRef, setRow, writeLit]
   );
 
   // Gated on the whole block: on a phone the list is often on screen without the monitor.
@@ -403,7 +515,7 @@ function DashboardMonitor() {
               <span className="lx-mon-glass" aria-hidden="true" />
             </div>
             <div className="lx-mon-chin" aria-hidden="true">
-              <span className="lx-mon-led breathe" />
+              <span className="lx-mon-led" />
             </div>
           </div>
         </div>
@@ -445,7 +557,7 @@ function DashboardMonitor() {
                           }}
                           text={title}
                           startOn="manual"
-                          cps={cpsFor(title.length, ROW_MS - 70)}
+                          cps={cpsFor(title.length, pace.type)}
                         />
                       </span>
                     </span>
@@ -513,16 +625,23 @@ type CopyState = "idle" | "copied" | "blocked";
  * the label to that many characters (mono locales); 0 leaves a plain gap
  * (RTL, where CSS gives the label its width).
  */
+/**
+ * One address line: indent, label (always token 2), padding, URL. On a phone
+ * (`narrow`) the indent goes and the gap is one space, so the longest line
+ * ("Dashboard http://localhost:20128/dashboard") fits a 375px card unscrolled.
+ */
 function termLine(
   id: string,
   label: string,
   url: string,
   padTo: number,
-  caret: boolean
+  caret: boolean,
+  narrow = false
 ): TypeLineProps {
-  const gap = " ".repeat(Math.max(0, padTo - label.length) + 2);
-  const tokens = [{ t: "  " }, { t: label }, { t: gap }, { t: url, c: "num" as const }];
-  const text = `  ${label}${gap}${url}`;
+  const indent = narrow ? "" : "  ";
+  const gap = " ".repeat(Math.max(0, padTo - label.length) + (narrow ? 1 : 2));
+  const tokens = [{ t: indent }, { t: label }, { t: gap }, { t: url, c: "num" as const }];
+  const text = `${indent}${label}${gap}${url}`;
   return { id, text, tokens, cps: cpsFor(text.length, LINE_MS), caret };
 }
 
@@ -540,10 +659,7 @@ function center(rect: DOMRect, box: DOMRect): FusePoint {
 
 function LaunchDeck() {
   const t = useTranslations("landing");
-  // Until the integrator adds the key, a blocked copy keeps the launch label
-  // and announces nothing (the capsule still shows the failure).
-  const hasBlocked = t.has("launchCopyBlocked");
-  const blockedLabel = hasBlocked ? t("launchCopyBlocked") : t("launchCopy");
+  const blockedLabel = t("launchCopyBlocked");
   const locale = useLocale();
   const baseUrl = useDisplayBaseUrl();
   const reduced = usePrefersReducedMotion();
@@ -896,6 +1012,7 @@ function LaunchDeck() {
   // (no bidi control characters end up in the copied text), and the labels
   // get a fixed width there so the URLs still line up.
   const labelWidth = Math.max(api.length, dash.length);
+  const narrow = useMediaMatch(PHONE_QUERY);
   const termLines = useMemo<TypeLineProps[]>(
     () => [
       {
@@ -904,10 +1021,10 @@ function LaunchDeck() {
         tokens: [{ t: "● ", c: "accent" }, { t: running }],
         cps: cpsFor(running.length + 2, LINE_MS),
       },
-      termLine("api", api, apiUrl, rtl ? 0 : labelWidth, false),
-      termLine("dashboard", dash, dashboardUrl, rtl ? 0 : labelWidth, true),
+      termLine("api", api, apiUrl, rtl ? 0 : labelWidth, false, narrow),
+      termLine("dashboard", dash, dashboardUrl, rtl ? 0 : labelWidth, true, narrow),
     ],
-    [running, api, dash, labelWidth, rtl, apiUrl, dashboardUrl]
+    [running, api, dash, labelWidth, rtl, apiUrl, dashboardUrl, narrow]
   );
 
   const step3 = t("startStep3Desc", { url: URL_MARK }).split(URL_MARK);
@@ -935,11 +1052,7 @@ function LaunchDeck() {
     { state: "blocked", text: blockedLabel },
   ];
   const announce =
-    copyState === "copied"
-      ? t("copied")
-      : copyState === "blocked" && hasBlocked
-        ? blockedLabel
-        : "";
+    copyState === "copied" ? t("copied") : copyState === "blocked" ? blockedLabel : "";
 
   return (
     <section id="start" className="station-inner lx-b" aria-labelledby="launch-start-title">
@@ -1122,7 +1235,7 @@ function LaunchDeck() {
           </svg>
           <Needle size={88} angleRef={angleRef} bearing={aimDeg} className="lx-compass-needle" />
         </div>
-        <div className="lx-final-ctas">
+        <div className="lx-final-ctas" data-dock-avoid="">
           <MagneticButton
             ref={ctaRef}
             variant="gold"

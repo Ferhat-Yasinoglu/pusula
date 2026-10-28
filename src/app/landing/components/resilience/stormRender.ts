@@ -11,6 +11,12 @@
  *   a hop to a sibling lane while the old lane flashes (401), or a lightning
  *   strike and a drop onto the fallback rail, where the hub retries the next
  *   target (503). A half-open breaker's probe is a phosphor comet.
+ *   The rail runs as a time-lapse (`railSpeed`), and a comet takes about two
+ *   seconds from hub to upstream (`cometPace`), so several are always in
+ *   flight. When the rail starts (or switches provider, or comes back on
+ *   screen) it is not drawn empty: the focused provider's requests served in
+ *   the last moments (the deck's `routed` events) are placed along the route
+ *   where they would be now, on lanes and gates that are free.
  * - Every request the hub receives arrives as a faint mote at the source.
  *   While the breaker is OPEN, the provider's usual share of them is
  *   diverted at the entry straight down onto the fallback rail.
@@ -36,7 +42,17 @@ import {
   type InflightRequest,
   type World,
 } from "../../sim/landingSim";
-import { bandPerimeter, cellCenterX, railGeometry, shareOf, decayShare } from "./stormModel";
+import {
+  COMET_TRAVEL_S,
+  bandPerimeter,
+  cellCenterX,
+  cometPace,
+  decayShare,
+  railGeometry,
+  railSpeed,
+  servedRouteLength,
+  shareOf,
+} from "./stormModel";
 import type { RailGeometry, ShareMeter } from "./stormModel";
 
 /** What the station hands the renderer (a mutable object it owns). */
@@ -139,6 +155,8 @@ const flashTimes = new Float64Array(3).fill(-Infinity);
 /* ------------------------------------------------------------------------ */
 
 let geo: RailGeometry | null = null;
+/** A comet's speed at ×1 (px/s): its route over `COMET_TRAVEL_S`. */
+let cometBase = 520;
 /** The feeders' stroke: gold that fades in from the origin nodes (built per layout). */
 let feederFade: CanvasGradient | null = null;
 let poolSize = MAX;
@@ -163,6 +181,8 @@ let sweep = -1;
 let railGlow = 0;
 let divertCarry = 0;
 let padlockLane = -1;
+/** The rail (re)started, switched provider or came back: fill it on the next moving frame. */
+let warmPending = false;
 /** 0..1: how much "weather" shows while the provider's 503 latch is on. */
 let storm = 0;
 let stormClock = 0;
@@ -189,6 +209,7 @@ const CORE = [GOLD_HI, PHOSPHOR, "rgb(255,252,240)", "rgb(255,176,140)"] as cons
 
 export function setup(ctx: CanvasRenderingContext2D, s: StageSize, _input: StormInput): void {
   geo = railGeometry(s.w);
+  cometBase = servedRouteLength(geo) / COMET_TRAVEL_S;
   feederFade = ctx.createLinearGradient(FEED_X0, 0, geo.srcX - geo.srcR, 0);
   feederFade.addColorStop(0, "rgba(212,168,64,0.05)");
   feederFade.addColorStop(1, "rgba(212,168,64,0.32)");
@@ -305,10 +326,6 @@ function pendShift(i: number): void {
     pPendM[base + j - 1] = pPendM[base + j];
   }
   pPendN[i] = n > 0 ? n - 1 : 0;
-}
-
-function speedScale(speed: number): number {
-  return speed >= 10 ? 2.1 : speed >= 5 ? 1.7 : 1;
 }
 
 /* ------------------------------------------------------------------------ */
@@ -481,7 +498,7 @@ function trackAttempts(w: World, c: CandidateState, g: RailGeometry, pace: numbe
       g.srcX,
       g.mid,
       req.probe ? C_PHOSPHOR : C_HI,
-      (g.compact ? 250 : 520) * pace,
+      cometBase * pace,
       req.probe ? 1.5 : 1
     );
     if (i < 0) continue;
@@ -574,6 +591,91 @@ function playOutcomes(i: number, g: RailGeometry, input: StormInput): void {
     routeServed(i, g);
     pendShift(i);
     return;
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Warm start                                                               */
+/* ------------------------------------------------------------------------ */
+
+/** A warm start fills the rail up to this many comets. */
+const SEED_MAX = 6;
+/** Fast-forward step for a placed comet (the normal motion code, run ahead). */
+const SEED_DT = 1 / 30;
+/** Served this close together (sim ms), requests count as one batch: one session, one key. */
+const SEED_BATCH_MS = 400;
+
+/** The first key from `start` that serves now (not revoked, not cooling), or −1. */
+function freeKey(w: World, c: CandidateState, start: number): number {
+  for (let j = 0; j < c.keys.length; j++) {
+    const k = (start + j) % c.keys.length;
+    if (!c.keys[k].revoked && c.keys[k].coolingUntilMs <= w.simMs) return k;
+  }
+  return -1;
+}
+
+/** The first model from `start` that serves now (not rate-limited, not locked), or −1. */
+function freeModel(w: World, c: CandidateState, start: number): number {
+  for (let j = 0; j < c.models.length; j++) {
+    const m = (start + j) % c.models.length;
+    if (!c.models[m].rateLimited && c.models[m].lockedUntilMs <= w.simMs) return m;
+  }
+  return -1;
+}
+
+/**
+ * Place the focused provider's most recently served requests (the deck's
+ * `routed` events) where their comets would be now, newest first, so a rail
+ * that just started, switched provider or came back on screen is not drawn
+ * empty. The event names the provider, not the key or model: as in the deck,
+ * a batch shares one key (its lane) and the models take turns, all among the
+ * keys and models that serve now.
+ */
+function seedRecent(
+  w: World,
+  c: CandidateState,
+  g: RailGeometry,
+  speed: number,
+  pace: number,
+  input: StormInput
+): void {
+  // Nothing gets through an open breaker, and while the upstream is down a served comet would lie.
+  if (c.breaker.state === "open" || c.upstreamDown) return;
+  let live = 0;
+  for (let i = 0; i < poolSize; i++) {
+    if (pActive[i] && pKind[i] === K_ATTEMPT && pFade[i] === 0) live++;
+  }
+  // Only comets still short of the upstream are placed.
+  const reach = (COMET_TRAVEL_S / pace) * 0.92;
+  const tailStep = g.compact ? 4 : 6;
+  const events = w.events;
+  let batchT = -Infinity;
+  let batchKey = -1;
+  for (let e = events.length - 1; e >= 0 && live < SEED_MAX; e--) {
+    const ev = events[e];
+    if (ev.kind !== "routed") continue;
+    const age = (w.simMs - ev.t) / speed / 1000;
+    if (age >= reach) break;
+    if (ev.to !== c.id || ev.probe) continue;
+    const sameBatch =
+      batchKey >= 0 && batchT - ev.t < SEED_BATCH_MS && freeKey(w, c, batchKey) === batchKey;
+    // Going back in time, the batch before used the key before (keys take turns).
+    const key = sameBatch ? batchKey : freeKey(w, c, batchKey < 0 ? ev.n % 3 : batchKey + 2);
+    const model = freeModel(w, c, ev.n % 3);
+    if (key < 0 || model < 0) continue;
+    batchT = ev.t;
+    batchKey = key;
+    const i = spawn(K_ATTEMPT, g.srcX, g.mid, C_HI, cometBase * pace, 1);
+    if (i < 0) return;
+    routeToGate(i, g, key, model);
+    pendPush(i, O_SERVED, -1, -1);
+    live++;
+    for (let t = 0; t < age && pActive[i]; t += SEED_DT) {
+      pAge[i] += Math.min(SEED_DT, age - t);
+      move(i, Math.min(SEED_DT, age - t), tailStep);
+      if (pWpI[i] >= pWpN[i]) arrive(i);
+      playOutcomes(i, g, input);
+    }
   }
 }
 
@@ -1077,7 +1179,14 @@ export function draw(
   const w = getWorld();
   const c = findFocus(w, input.focus);
   if (!c) return;
-  if (lastFocus !== c.id) retarget(c, w, input);
+  // The rail only moves while its time-lapse runs (it starts before the canvas does,
+  // ahead of the canvas's own margin), so its pace is the lapsed one.
+  const speed = railSpeed(w.speed, true);
+  const pace = cometPace(speed);
+  if (lastFocus !== c.id) {
+    retarget(c, w, input);
+    warmPending = true;
+  }
   // Back on screen after the deck ran on without us: catch up silently, no burst of effects.
   if (lastSimMs >= 0 && w.simMs - lastSimMs > RESYNC_SIM_MS) {
     lastState = c.breaker.state;
@@ -1085,10 +1194,15 @@ export function draw(
     lastRequestId = w.nextRequestId;
     nextMoteId = w.nextRequestId;
     strikesOwed = 0;
+    warmPending = true;
   }
   lastSimMs = w.simMs;
+  // On the first moving frame (a still paint at setup comes before the rail is on screen).
+  if (warmPending && dt > 0) {
+    warmPending = false;
+    seedRecent(w, c, g, speed, pace, input);
+  }
   const profile = breakerProfile(c.profile);
-  const pace = speedScale(w.speed);
   const state = c.breaker.state;
 
   // Breaker transitions.

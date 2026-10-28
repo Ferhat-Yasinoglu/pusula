@@ -2,13 +2,13 @@
  * Pure maths of the compass nav and the SimDock (spec §6.1): the heading
  * tape's geometry, which waypoint sits under the caret, the time-lapse cycle,
  * the dock's lift over a short band at the bottom of the viewport, and the
- * toast gate that turns visitor-caused deck events into at most one toast per
- * outage beat.
+ * toast gate, pacer and source ledger that turn visitor-caused deck events
+ * into at most one message per outage beat.
  *
  * No React, no DOM, no clock: everything takes its inputs as arguments so it
  * is unit-tested (`tests/unit/landing-nav.test.ts`) and SSR-safe.
  */
-import type { BreakerState, CandidateId, DeckEvent, Speed } from "../../sim/landingSim";
+import type { BreakerState, CandidateId, DeckEvent, FailCode, Speed } from "../../sim/landingSim";
 
 /* ------------------------------------------------------------------------ */
 /* Heading tape                                                             */
@@ -102,6 +102,77 @@ export function nearestWaypoint(heading: number, bearings: readonly number[]): n
   return best;
 }
 
+/**
+ * Share of a station's span of the page heading spent turning the tape at
+ * each seam, on either side of the boundary between two stations.
+ */
+export const TAPE_SEAM = 0.12;
+/** Bearing of the last station, after which the voyage turns home to 360°. */
+const LAST_BEARING = 360 - TAPE_WAYPOINT_DEG;
+
+function smoothstep(x: number): number {
+  const t = Math.min(Math.max(x, 0), 1);
+  return t * t * (3 - 2 * t);
+}
+
+/**
+ * The tape's heading for a page heading: stepped, so the tape holds each
+ * station's bearing while that station covers the middle of the viewport and
+ * turns to the next one only across the seam between them.
+ *
+ * The page heading (`runtime/stations.ts`) reaches a station's bearing as the
+ * station's top crosses the middle of the viewport and is linear in between,
+ * so the fraction of each 45° span is how far the station above has passed
+ * that line. Each turn is centred on a boundary (`seam` of a span on either
+ * side), so the waypoint nearest the tape's heading changes exactly as the
+ * next station's top crosses the middle: the lit waypoint always names the
+ * station under the middle of the viewport.
+ *
+ * The voyage starts at north without a turn. The last turn, home to north,
+ * is centred on `homeAt` (the page heading at which the footer's top crosses
+ * the middle, `homeHeading`) and always ends by 360°, where the page heading
+ * arrives only at the very bottom of the page.
+ */
+export function tapeHeading(heading: number, homeAt = 360, seam = TAPE_SEAM): number {
+  if (!(heading > 0)) return 0;
+  const h = Math.min(heading, 360);
+  const w = Math.min(Math.max(seam, 0.01), 1 / 3);
+  const k = Math.min(Math.floor(h / TAPE_WAYPOINT_DEG), LAST_BEARING / TAPE_WAYPOINT_DEG);
+  const base = k * TAPE_WAYPOINT_DEG;
+  const f = (h - base) / TAPE_WAYPOINT_DEG;
+  // The second half of the turn into this station.
+  if (k >= 1 && f < w) return base + TAPE_WAYPOINT_DEG * (smoothstep((f + w) / (2 * w)) - 1);
+  if (base < LAST_BEARING) {
+    // The first half of the turn into the next station.
+    if (f > 1 - w) return base + TAPE_WAYPOINT_DEG * smoothstep((f - (1 - w)) / (2 * w));
+    return base;
+  }
+  // Home: centred where the footer arrives, clear of the turn in, finished by 360°.
+  const centre = Number.isFinite(homeAt) ? (homeAt - LAST_BEARING) / TAPE_WAYPOINT_DEG : 1;
+  const start = Math.min(Math.max(centre - w, w), 1 - 2 * w);
+  return base + TAPE_WAYPOINT_DEG * smoothstep((f - start) / (2 * w));
+}
+
+/**
+ * The page heading at which the footer's top crosses the middle of the
+ * viewport, given document offsets: the heading runs linearly from the last
+ * station's bearing (its top at the middle line) to 360° at the maximum
+ * scroll (`buildHeadingKnots`). 360 when the layout gives no span.
+ */
+export function homeHeading(
+  lastTop: number,
+  footerTop: number,
+  viewportHeight: number,
+  maxScroll: number,
+  anchor = 0.5
+): number {
+  const from = lastTop - viewportHeight * anchor;
+  const span = maxScroll - from;
+  if (!(span > 0) || !Number.isFinite(footerTop)) return 360;
+  const share = Math.min(Math.max((footerTop - viewportHeight * anchor - from) / span, 0), 1);
+  return LAST_BEARING + TAPE_WAYPOINT_DEG * share;
+}
+
 /** Share of the voyage (0..1) for the phone progress line. */
 export function progressShare(heading: number): number {
   if (!(heading > 0)) return 0;
@@ -164,13 +235,34 @@ export const DOCK_PULSE_MIN_GAP_S = 0.34;
 /* Toasts                                                                   */
 /* ------------------------------------------------------------------------ */
 
-export const TOAST_LIMIT = 2;
+/*
+ * Visitor-caused events are told in the dock's own pill (its word
+ * "Simulation" gives way to the message for a few seconds), one at a time,
+ * never more often than every `TOAST_GAP_MS` (a message that comes too soon
+ * waits for its turn, and the newest waiting one wins), and not at all while
+ * the station that caused them is on screen and already shows them (the
+ * hero's HUD, the map's roads, the resilience console).
+ */
+
+/** How long a message holds the pill: desktop, and below 1024px. */
 export const TOAST_MS = 4000;
+export const TOAST_MS_COMPACT = 3000;
+/** Shortest gap between two messages. */
+export const TOAST_GAP_MS = 5000;
 /** A provider's "is failing" toast repeats at most this often while its outage lasts. */
 export const FAILING_REPEAT_MS = 15000;
+/** A station covering at least this share of the viewport is "on screen" for its own events. */
+export const TOAST_SOURCE_COVER = 0.35;
+/** A visitor's press this long before an outage's first message names the station that caused it. */
+export const TOAST_SOURCE_WINDOW_MS = 6000;
 
 export type ToastSpec =
-  | { readonly kind: "failing"; readonly id: CandidateId; readonly fallback: CandidateId }
+  | {
+      readonly kind: "failing";
+      readonly id: CandidateId;
+      readonly code: FailCode;
+      readonly fallback: CandidateId;
+    }
   | { readonly kind: "state"; readonly id: CandidateId; readonly state: BreakerState };
 
 export type ToastGate = {
@@ -203,7 +295,7 @@ export function createToastGate(): ToastGate {
         const last = failingAt.get(id);
         if (last !== undefined && nowMs - last < FAILING_REPEAT_MS) return null;
         failingAt.set(id, nowMs);
-        return { kind: "failing", id, fallback: event.to };
+        return { kind: "failing", id, code: event.codes[0] ?? 503, fallback: event.to };
       }
       if (event.kind === "breaker") {
         let seen = statesSeen.get(event.id);
@@ -231,35 +323,85 @@ export function createToastGate(): ToastGate {
   };
 }
 
-export type ToastEntry = {
-  readonly key: number;
-  readonly spec: ToastSpec;
-  readonly leaving: boolean;
+export type ToastPacer = {
+  /** True (and the slot is taken) when at least `gapMs` has passed since the last message. */
+  allow(nowMs: number): boolean;
+  /** ms until the next message may show (0: now). */
+  wait(nowMs: number): number;
+  reset(): void;
 };
 
 /**
- * Add a toast to the stack (oldest first). A provider's breaker-state toast
- * is updated in place (degraded → open → half-open) instead of stacking, so
- * the headline "is failing, rerouted" toast is not pushed out by the states
- * that follow it; otherwise the oldest toasts beyond `limit` leave.
+ * At most one message per `gapMs`. The caller holds back a refused message
+ * (only the newest: a later beat of an outage supersedes an earlier one) and
+ * offers it again after `wait()`.
  */
-export function pushToast(
-  list: readonly ToastEntry[],
-  entry: ToastEntry,
-  limit: number = TOAST_LIMIT
-): ToastEntry[] {
-  const spec = entry.spec;
-  if (spec.kind === "state") {
-    const i = list.findIndex(
-      (toast) => !toast.leaving && toast.spec.kind === "state" && toast.spec.id === spec.id
-    );
-    if (i >= 0) {
-      const next = list.slice();
-      next[i] = entry;
-      return next;
-    }
-  }
-  return [...list, entry].slice(-limit);
+export function createToastPacer(gapMs: number = TOAST_GAP_MS): ToastPacer {
+  let last = -Infinity;
+  return {
+    allow(nowMs) {
+      if (nowMs - last < gapMs) return false;
+      last = nowMs;
+      return true;
+    },
+    wait(nowMs) {
+      return Math.max(0, last + gapMs - nowMs);
+    },
+    reset() {
+      last = -Infinity;
+    },
+  };
+}
+
+export type SourceLedger<S extends string> = {
+  /** A visitor pressed something inside `station`. */
+  touch(station: S, nowMs: number): void;
+  /**
+   * The station that caused a provider's current outage: fixed by its first
+   * message, from the last press within `windowMs` before it (null if none).
+   */
+  sourceOf(id: CandidateId, nowMs: number): S | null;
+  /** The outage is over (its breaker closed). */
+  end(id: CandidateId): void;
+};
+
+export function createSourceLedger<S extends string>(
+  windowMs: number = TOAST_SOURCE_WINDOW_MS
+): SourceLedger<S> {
+  let lastStation: S | null = null;
+  let lastAt = -Infinity;
+  const sources = new Map<CandidateId, S | null>();
+  return {
+    touch(station, nowMs) {
+      lastStation = station;
+      lastAt = nowMs;
+    },
+    sourceOf(id, nowMs) {
+      const known = sources.get(id);
+      if (known !== undefined) return known;
+      const source = lastStation !== null && nowMs - lastAt <= windowMs ? lastStation : null;
+      sources.set(id, source);
+      return source;
+    },
+    end(id) {
+      sources.delete(id);
+    },
+  };
+}
+
+/** Share (0..1) of a viewport `viewportHeight` tall that a box from `top` to `bottom` covers. */
+export function viewCoverage(top: number, bottom: number, viewportHeight: number): number {
+  if (!(viewportHeight > 0)) return 0;
+  const visible = Math.min(bottom, viewportHeight) - Math.max(top, 0);
+  return visible > 0 ? Math.min(visible / viewportHeight, 1) : 0;
+}
+
+/** The dock dot's tone while a message holds the pill. */
+export type ToastTone = "fail" | "warn" | "ok";
+
+export function toastTone(spec: ToastSpec): ToastTone {
+  if (spec.kind === "failing" || spec.state === "open") return "fail";
+  return spec.state === "closed" ? "ok" : "warn";
 }
 
 /** `landing.*` key of each breaker state's word. */

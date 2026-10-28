@@ -29,20 +29,6 @@
 }
 
 /*
- * The station's own `content-visibility` is lifted at every width:
- * - the control bar is sticky on desktop, and nothing above a sticky element
- *   may contain it;
- * - its 900px placeholder is far from the station's real height (≈1.2k px on
- *   a phone, 2.2–2.7k px on desktop), so every station below would sit in the
- *   wrong place until this one rendered, and the nav's jumps would miss.
- * The wall keeps its own, sized exactly (see "The wall"); the rest is light.
- */
-.pusula-landing .station.cw-station.station-cv {
-  content-visibility: visible;
-  contain-intrinsic-size: none;
-}
-
-/*
  * Persian: a monospace face has no joined Arabic-script forms (the fallback
  * draws isolated letters), so every translated run is set in the sans. The
  * provider names stay mono: they are Latin.
@@ -56,8 +42,7 @@
     .cw-seg-name,
     .cw-count,
     .cw-more,
-    .cw-nomatch,
-    .cw-echo .sim-pill
+    .cw-nomatch
   ),
 :lang(fa)
   .pusula-landing
@@ -69,8 +54,7 @@
     .cw-seg-name,
     .cw-count,
     .cw-more,
-    .cw-nomatch,
-    .cw-echo .sim-pill
+    .cw-nomatch
   ) {
   font-family: var(--font-sans);
 }
@@ -182,13 +166,15 @@
   pointer-events: none;
 }
 
+/* Over the field's 1px border, as the clear button is: a full 44px tap target. */
 .pusula-landing .cw-input {
-  width: 100%;
-  height: 100%;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  min-height: 44px;
   min-width: 0;
-  margin: 0;
+  margin: -1px;
   padding-block: 0;
-  padding-inline: 46px 44px;
+  padding-inline: 47px 45px;
   border: 0;
   border-radius: inherit;
   background: transparent;
@@ -289,6 +275,46 @@
 
 .pusula-landing .cw-chips::-webkit-scrollbar {
   display: none;
+}
+
+/*
+ * A scroller's cut end fades out, so it reads as "more this way" rather
+ * than a clipped chip. `data-cut` ("start", "end" or "both") is set by
+ * CatalogWall from the scroll position; the mask is static and follows the
+ * inline direction. (The kinds row cannot take a mask: the spectrum's
+ * segments are its descendants, drawn on the bar above it, and would be
+ * masked away. It gets overlays instead, below.)
+ */
+.pusula-landing .cw-chips[data-cut] {
+  --cw-fade-to: to right;
+  --cw-fade-s: 0px;
+  --cw-fade-e: 0px;
+  -webkit-mask-image: linear-gradient(
+    var(--cw-fade-to),
+    transparent 0,
+    #000 var(--cw-fade-s),
+    #000 calc(100% - var(--cw-fade-e)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    var(--cw-fade-to),
+    transparent 0,
+    #000 var(--cw-fade-s),
+    #000 calc(100% - var(--cw-fade-e)),
+    transparent 100%
+  );
+}
+
+.pusula-landing .cw-chips[data-cut]:dir(rtl) {
+  --cw-fade-to: to left;
+}
+
+.pusula-landing .cw-chips:is([data-cut="start"], [data-cut="both"]) {
+  --cw-fade-s: 36px;
+}
+
+.pusula-landing .cw-chips:is([data-cut="end"], [data-cut="both"]) {
+  --cw-fade-e: 44px;
 }
 
 @media (min-width: 1024px) {
@@ -473,6 +499,44 @@
 
   .pusula-landing .cw-spec-row::-webkit-scrollbar {
     display: none;
+  }
+
+  /* The cut ends of the row fade into the void (see `.cw-chips[data-cut]`). */
+  .pusula-landing .cw-spectrum::before,
+  .pusula-landing .cw-spectrum::after {
+    content: "";
+    position: absolute;
+    top: calc(var(--cw-bar-h) + 14px);
+    bottom: 0;
+    z-index: 1;
+    width: 44px;
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  .pusula-landing .cw-spectrum::before {
+    inset-inline-start: calc(-1 * var(--gutter));
+    width: 36px;
+    background: linear-gradient(to right, var(--void), rgba(4, 4, 5, 0));
+  }
+
+  .pusula-landing .cw-spectrum::after {
+    inset-inline-end: calc(-1 * var(--gutter));
+    background: linear-gradient(to left, var(--void), rgba(4, 4, 5, 0));
+  }
+
+  .pusula-landing .cw-spectrum:dir(rtl)::before {
+    background: linear-gradient(to left, var(--void), rgba(4, 4, 5, 0));
+  }
+
+  .pusula-landing .cw-spectrum:dir(rtl)::after {
+    background: linear-gradient(to right, var(--void), rgba(4, 4, 5, 0));
+  }
+
+  .pusula-landing
+    .cw-spectrum:has(> .cw-spec-row:is([data-cut="start"], [data-cut="both"]))::before,
+  .pusula-landing .cw-spectrum:has(> .cw-spec-row:is([data-cut="end"], [data-cut="both"]))::after {
+    opacity: 1;
   }
 
   .pusula-landing .cw-kind {
@@ -1095,6 +1159,7 @@
  * when it renders. The phone wall is short and renders for real.
  */
 .pusula-landing .cw-wall {
+  contain: layout style;
   margin: 0;
   padding: 6px 10px;
   list-style: none;
@@ -1111,8 +1176,19 @@
     columns: 4;
     column-gap: 22px;
     font-size: var(--fs-readout);
+    contain: layout style paint;
     content-visibility: auto;
     contain-intrinsic-size: auto var(--cw-h4, 2160px);
+  }
+
+  /*
+   * Once revealed (so rendered), the wall stays rendered: left to `auto`,
+   * it is skipped again whenever it is far off screen, and coming back to
+   * it costs a full style and layout of the 358 names. With the same
+   * containment held by `contain`, the switch only drops the skipping.
+   */
+  .pusula-landing .cw-wall-wrap[data-shown] .cw-wall {
+    content-visibility: visible;
   }
 }
 
@@ -1209,8 +1285,22 @@
 
 /* ---- Idle ping: one name flares phosphor for 500ms ---------------------- */
 
+/*
+ * The flare (`::after`, phosphor) and the deck echo (`::before`, ember) are
+ * copies of the name laid over it. Their boxes always exist, at opacity 0
+ * (an invisible layer is not painted): a ping or an echo only starts an
+ * opacity animation on the compositor. Giving them `content` only while
+ * pinged added and removed a box each time, and every such change relaid
+ * out the whole 358-name multicol wall (a ~40ms frame about once a second).
+ * Only the deck's sample providers (`data-sample`) can echo, so only they
+ * carry the echo's boxes: every box costs when the wall first lays out.
+ * The empty alternative text keeps the copies out of the accessibility tree;
+ * the first declaration is the fallback where it is not supported.
+ */
 .pusula-landing .cw-n::after,
-.pusula-landing .cw-n::before {
+.pusula-landing .cw-li[data-sample] .cw-n::before {
+  content: attr(data-n);
+  content: attr(data-n) / "";
   position: absolute;
   inset: 0;
   overflow: hidden;
@@ -1220,10 +1310,12 @@
   opacity: 0;
 }
 
-.pusula-landing .cw-li[data-ping] .cw-n::after {
-  content: attr(data-n);
+.pusula-landing .cw-n::after {
   color: var(--phosphor);
   text-shadow: 0 0 10px var(--gold-glow);
+}
+
+.pusula-landing .cw-li[data-ping] .cw-n::after {
   animation: catalog-ping 520ms var(--ease-out);
 }
 
@@ -1279,8 +1371,7 @@
 
 /* ---- Deck echo: the featured winner's entry flashes ember for 1.2s ------ */
 
-.pusula-landing .cw-li[data-echo] .cw-n::before {
-  content: attr(data-n);
+.pusula-landing .cw-n::before {
   color: var(--ember);
   text-shadow: var(--glow-text-ember);
 }
@@ -1293,7 +1384,7 @@
   animation: catalog-echo-b 1.2s var(--ease-out);
 }
 
-.pusula-landing .cw-li::after {
+.pusula-landing .cw-li[data-sample]::after {
   content: "";
   position: absolute;
   inset-inline: 16px 0;
@@ -1380,23 +1471,19 @@
   color: var(--phosphor);
 }
 
-.pusula-landing .cw-li::before {
+/* The row highlight and the crosshair exist on the targeted row only. */
+.pusula-landing .cw-li[data-target]::before {
   content: "";
   position: absolute;
   inset: 2px -6px;
   border-radius: var(--r-xs);
   background: rgba(255, 211, 110, 0.09);
   box-shadow: inset 0 0 0 1px rgba(255, 211, 110, 0.28);
-  opacity: 0;
   pointer-events: none;
-}
-
-.pusula-landing .cw-li[data-target]::before {
-  opacity: 1;
   animation: catalog-target-row 600ms var(--ease-out);
 }
 
-.pusula-landing .cw-mark::before {
+.pusula-landing .cw-li[data-target] .cw-mark::before {
   content: "";
   position: absolute;
   top: 50%;
@@ -1409,22 +1496,17 @@
     linear-gradient(var(--gold-hi), var(--gold-hi)) 50% 0 / 1px 7px no-repeat,
     linear-gradient(var(--gold-hi), var(--gold-hi)) 50% 100% / 1px 7px no-repeat,
     linear-gradient(var(--gold-hi), var(--gold-hi)) 0 50% / 7px 1px no-repeat;
-  opacity: 0;
   pointer-events: none;
+  animation: catalog-lock 700ms var(--ease-lift);
 }
 
 /* RTL: the side tick points away from the name, as in LTR. */
-.pusula-landing .cw-mark:dir(rtl)::before {
+.pusula-landing .cw-li[data-target] .cw-mark:dir(rtl)::before {
   background-position:
     0 0,
     50% 0,
     50% 100%,
     100% 50%;
-}
-
-.pusula-landing .cw-li[data-target] .cw-mark::before {
-  opacity: 1;
-  animation: catalog-lock 700ms var(--ease-lift);
 }
 
 @keyframes catalog-lock {
@@ -1478,42 +1560,120 @@
   will-change: transform;
 }
 
-/* ---- Scroll reveal: names stagger in, column by column ------------------ */
+/* ---- Scroll reveal: the wall is uncovered column by column -------------- */
 
-.pusula-landing .cw-li {
-  --cw-delay: calc(var(--i) * var(--cw-step, 4ms));
+/*
+ * One shutter per column covers the wall, names and column rules alike,
+ * until its first row scrolls into view (`data-shown` on `.cw-wall-wrap`,
+ * from CatalogWall's own observer). Then each shutter slides off along its
+ * column, 70ms after the one before it, led by a gold scan band like the idle
+ * sweep: the names appear behind the scan, column by column. That is a few
+ * transforms on the compositor and nothing on the 358 names, so the reveal
+ * costs no style or layout work on the wall. A wall entered from below
+ * (scrolling back up) is uncovered upwards (`data-shown="up"`).
+ *
+ * The shutters exist only once the client runs the reveal (motion on and
+ * `data-reveal="on"`), so server HTML, no-JS and reduced motion show every
+ * name. Their resting revealed state is off the wall (the wrap clips it) and
+ * the animation only fills backwards, so Pause, which settles one-shots at
+ * their end, shows the names at once.
+ */
+.pusula-landing .cw-shutters {
+  display: none;
 }
 
-@media (max-width: 767px) {
-  .pusula-landing .cw-li {
-    --cw-delay: calc(var(--i) * 3ms);
+.pusula-landing[data-motion="on"][data-reveal="on"] .cw-shutters {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  pointer-events: none;
+}
+
+/* The body runs 32px past both ends of the wall, so its soft edges start hidden. */
+.pusula-landing .cw-shutter {
+  position: relative;
+  flex: 1 1 0;
+  margin-block: -32px;
+  background: linear-gradient(
+    180deg,
+    rgba(4, 4, 5, 0) 0,
+    var(--void) 32px,
+    var(--void) calc(100% - 32px),
+    rgba(4, 4, 5, 0) 100%
+  );
+}
+
+/* As many shutters as the wall has columns (2, 4, 5, 6). */
+.pusula-landing .cw-shutter:nth-child(n + 3) {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .pusula-landing .cw-shutter:nth-child(-n + 4) {
+    display: block;
   }
-  .pusula-landing .cw-li[data-pick] {
-    --cw-delay: calc(var(--j) * 26ms);
+}
+
+@media (min-width: 1024px) {
+  .pusula-landing .cw-shutter:nth-child(5) {
+    display: block;
   }
 }
 
-/* The list itself stays put; its names do the revealing. */
-.pusula-landing[data-motion="on"][data-reveal="on"] .cw-wall.reveal:not(.is-revealed) {
-  opacity: 1;
-  transform: none;
+@media (min-width: 1280px) {
+  .pusula-landing .cw-shutter:nth-child(6) {
+    display: block;
+  }
 }
 
-.pusula-landing[data-motion="on"][data-reveal="on"] .cw-wall.reveal:not(.is-revealed) .cw-li {
-  opacity: 0;
+/* The scan band: on the edge that travels, outside the body (clipped at rest). */
+.pusula-landing .cw-shutter::before,
+.pusula-landing .cw-shutter::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  height: 64px;
 }
 
-.pusula-landing[data-motion="on"][data-reveal="on"] .cw-wall.reveal.is-revealed .cw-li {
-  animation: catalog-in 640ms var(--ease-out) var(--cw-delay) backwards;
+.pusula-landing .cw-shutter::before {
+  bottom: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 211, 110, 0) 0%,
+    rgba(255, 211, 110, 0.07) 70%,
+    rgba(255, 211, 110, 0.22) 100%
+  );
 }
 
-@keyframes catalog-in {
+.pusula-landing .cw-shutter::after {
+  top: 100%;
+  background: linear-gradient(
+    0deg,
+    rgba(255, 211, 110, 0) 0%,
+    rgba(255, 211, 110, 0.07) 70%,
+    rgba(255, 211, 110, 0.22) 100%
+  );
+}
+
+.pusula-landing .cw-wall-wrap[data-shown] .cw-shutter {
+  --cw-off: calc(100% + 64px);
+  transform: translateY(var(--cw-off));
+  animation: catalog-uncover 900ms cubic-bezier(0.33, 0, 0.3, 1) calc(var(--k) * 70ms) backwards;
+}
+
+.pusula-landing .cw-wall-wrap[data-shown="up"] .cw-shutter {
+  --cw-off: calc(-100% - 64px);
+}
+
+@media (min-width: 768px) {
+  .pusula-landing .cw-wall-wrap[data-shown] .cw-shutter {
+    animation-duration: 1500ms;
+  }
+}
+
+/* To the shutter's resting (revealed) transform, from covering the wall. */
+@keyframes catalog-uncover {
   from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
     transform: none;
   }
 }
@@ -1567,23 +1727,17 @@
 /* Pause and reduced motion: everything visible and at rest                 */
 /* ------------------------------------------------------------------------ */
 
-.pusula-landing.is-paused .cw-li,
-.pusula-landing.is-paused .cw-seg,
-.pusula-landing.is-paused .cw-echo-line {
-  animation-name: none !important;
-}
-
 .pusula-landing.is-paused .cw-sweep {
   display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .pusula-landing .cw-sweep,
+  .pusula-landing .cw-shutters,
   .pusula-landing .cw-caret {
     display: none;
   }
 
-  .pusula-landing .cw-li,
   .pusula-landing .cw-li::after,
   .pusula-landing .cw-li::before,
   .pusula-landing .cw-seg,

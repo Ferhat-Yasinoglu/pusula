@@ -2,7 +2,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import "./landing.css";
 import type { LandingStats } from "./landingTypes";
-import { usePrefersReducedMotion, useScrollReveal } from "./landingMotion";
+import { useOffscreenPause, usePrefersReducedMotion, useScrollReveal } from "./landingMotion";
 import { initDeck, primeDeck } from "./runtime/deckStore";
 import IntroSequence from "./components/intro/IntroSequence";
 import CompassNav from "./components/nav/CompassNav";
@@ -35,6 +35,7 @@ export default function LandingPage({
   primeDeck(stats);
   useEffect(() => initDeck(stats), [stats]);
   useScrollReveal(rootRef, !reduced);
+  useOffscreenPause(rootRef);
 
   return (
     <div ref={rootRef} className="pusula-landing" data-motion={reduced ? "off" : "on"}>

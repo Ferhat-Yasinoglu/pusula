@@ -28,7 +28,7 @@ import {
 } from "../../sim/landingSim";
 import { dispatch, getWorld, subscribeEvents, useDeck } from "../../runtime/deckStore";
 import { canAnimate } from "../../runtime/heartbeat";
-import { useCanvasStage } from "../../runtime/useCanvasStage";
+import { useCanvasStage, type StageDraw } from "../../runtime/useCanvasStage";
 import { useDomLoop } from "../../runtime/useDomLoop";
 import { useScrollProgress } from "../../runtime/scrollProgress";
 import { LiveNumber, SimBadge, Station, type LiveNumberHandle } from "../primitives";
@@ -40,6 +40,7 @@ import {
   CITY_COUNT,
   HUB_CITY,
   HUB_INDEX,
+  LABEL_GAP_PX,
   LABEL_SIDE,
   MAP_CANDIDATES,
   NODE_POINTS,
@@ -53,6 +54,8 @@ import {
   labelOpacity,
   logKind,
   packCandidate,
+  PIN_TRACK_VH,
+  plateShift,
   providerNode,
   shortHeader,
   unpackDown,
@@ -68,8 +71,9 @@ import "./map.css";
  * every request the deck routes flies here, client → Kabul → provider, and a
  * failing provider is visibly retried by the hub.
  *
- * - Desktop (≥1024): a 160vh pinned track; the first half of it tilts the map
- *   into 3D (pillars of light, lifted arcs), the second half is free play.
+ * - Desktop (≥1024): a 140vh pinned track; its first 60% tilts the map into
+ *   3D (pillars of light, lifted arcs), the rest is free play. The stage's
+ *   bottom is the section's: the next station follows the released map.
  *   Title top-left, legend top-right (Afghanistan's open corners, never
  *   mirrored), flight board at the bottom inline-end corner (the SimDock owns
  *   the bottom inline-start one).
@@ -77,6 +81,10 @@ import "./map.css";
  * - Tap a provider city (or its name) to cut its road
  *   (`act.setUpstreamDown`), the same latch the hero and the resilience rail
  *   show.
+ * - Labels follow the camera on the heartbeat's dom lane, and are placed at
+ *   once after any frame drawn outside it (first paint, resize, Pause), so a
+ *   still frame never shows unplaced plates. Every plate is kept inside the
+ *   page gutter (`plateShift`), measured by a ResizeObserver, not per frame.
  *
  * Counters and the flight board count what this map has shown since it came
  * on screen (no backlog), and render 0 on the server.
@@ -114,6 +122,12 @@ type Scene = {
   /** Figure size (ResizeObserver) and page offset (refreshed lazily after a scroll). */
   box: { w: number; h: number; left: number; top: number; stale: boolean };
   labelEls: (HTMLSpanElement | null)[];
+  /** Each label's plate (`.netmap-lbody`), its measured width and its last written x shift. */
+  bodyEls: (HTMLSpanElement | null)[];
+  plateW: Float32Array;
+  plateShift: Float32Array;
+  /** The page gutter (`--gutter`), read on resize: plates stay inside it. */
+  gutter: number;
   /** Per label: last written x, y, opacity. */
   labelPos: Float32Array;
   /** Node positions at pitch 0 (no live canvas). */
@@ -123,7 +137,10 @@ type Scene = {
   visible: boolean;
   pointer: { x: number; y: number };
   tipFlip: { x: boolean; y: boolean };
+  /** The renderer frame the labels were last placed for (−1: place again). */
   lastFrame: number;
+  /** `data-placed` is on the label layer (set once, after the first placement). */
+  placed: boolean;
 };
 
 function createScene(progress: { current: number }): Scene {
@@ -131,6 +148,10 @@ function createScene(progress: { current: number }): Scene {
     input: { layout: "flow", progress, revealed: false, parallax: 0, hover: -1, rtl: false },
     box: { w: 0, h: 0, left: 0, top: 0, stale: true },
     labelEls: [],
+    bodyEls: [],
+    plateW: new Float32Array(CITY_COUNT),
+    plateShift: new Float32Array(CITY_COUNT),
+    gutter: 16,
     labelPos: new Float32Array(CITY_COUNT * 3).fill(-1),
     flatScreen: new Float32Array(CITY_COUNT * 4),
     cityCounters: [],
@@ -139,6 +160,7 @@ function createScene(progress: { current: number }): Scene {
     pointer: { x: 0, y: 0 },
     tipFlip: { x: false, y: false },
     lastFrame: -1,
+    placed: false,
   };
 }
 
@@ -197,6 +219,7 @@ export default function NetworkMap({ poster }: { poster: ReactNode }) {
   const progress = useScrollProgress(trackRef, { mode: "pin", minWidth: PIN_MIN_WIDTH });
   const figureRef = useRef<HTMLElement>(null);
   const tipRef = useRef<HTMLDivElement>(null);
+  const labelsRef = useRef<HTMLDivElement>(null);
   const tipCountRef = useRef<LiveNumberHandle>(null);
   const routedRef = useRef<LiveNumberHandle>(null);
   const reroutedRef = useRef<LiveNumberHandle>(null);
@@ -300,14 +323,105 @@ export default function NetworkMap({ poster }: { poster: ReactNode }) {
     [bumpCity, scene]
   );
 
+  /* ---- the hover card sits beside its city, flipped away from the stage edges ---- */
+  const placeTip = useCallback(
+    (x: number, y: number) => {
+      const tip = tipRef.current;
+      if (!tip) return;
+      const { box: figureBox, tipFlip } = scene();
+      tip.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
+      const flipX = figureBox.w > 0 && x > figureBox.w - 340;
+      const flipY = figureBox.h > 0 && y > figureBox.h * 0.5;
+      if (flipX !== tipFlip.x) {
+        tipFlip.x = flipX;
+        if (flipX) tip.setAttribute("data-flipx", "on");
+        else tip.removeAttribute("data-flipx");
+      }
+      if (flipY !== tipFlip.y) {
+        tipFlip.y = flipY;
+        if (flipY) tip.setAttribute("data-flipy", "on");
+        else tip.removeAttribute("data-flipy");
+      }
+    },
+    [scene]
+  );
+
+  /**
+   * Put every label on its node as the renderer last drew it, its plate slid
+   * inside the gutter. Writes only transform/opacity, and only what changed;
+   * a no-op until the renderer has drawn, and for a frame already placed.
+   */
+  const placeLabels = useCallback(() => {
+    const mod = rendererRef.current;
+    if (!mod) return;
+    const frame = mod.getFrameCount();
+    const s = scene();
+    if (frame === 0 || frame === s.lastFrame) return;
+    s.lastFrame = frame;
+    const { labelEls, bodyEls, labelPos, plateW, plateShift: shifts, box: figureBox } = s;
+    const layout = s.input.layout;
+    const sides = LABEL_SIDE[layout];
+    const gap = LABEL_GAP_PX[layout];
+    const screen = mod.nodeScreen;
+    for (let i = 0; i < CITY_COUNT; i++) {
+      const el = labelEls[i];
+      if (!el) continue;
+      const x = screen[i * 4];
+      const y = screen[i * 4 + 1];
+      if (Math.abs(x - labelPos[i * 3]) > 0.25 || Math.abs(y - labelPos[i * 3 + 1]) > 0.25) {
+        labelPos[i * 3] = x;
+        labelPos[i * 3 + 1] = y;
+        el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
+      }
+      const opacity = labelOpacity(screen[i * 4 + 3]);
+      if (Math.abs(opacity - labelPos[i * 3 + 2]) > 0.02) {
+        labelPos[i * 3 + 2] = opacity;
+        el.style.opacity = opacity.toFixed(2);
+      }
+      const body = bodyEls[i];
+      if (!body) continue;
+      const shift = plateShift(x, plateW[i], sides[CITIES[i].id], gap, figureBox.w, s.gutter);
+      if (Math.abs(shift - shifts[i]) > 0.25) {
+        shifts[i] = shift;
+        body.style.transform = shift === 0 ? "" : `translateX(${shift.toFixed(1)}px)`;
+      }
+    }
+    if (!s.placed) {
+      s.placed = true;
+      labelsRef.current?.setAttribute("data-placed", "on");
+    }
+    const hovered = s.input.hover;
+    if (hovered >= 0) placeTip(screen[hovered * 4], screen[hovered * 4 + 1]);
+  }, [scene, placeTip]);
+
   /* ---- the canvas ---- */
-  const { wrapRef, canvasRef } = useCanvasStage({
+  /**
+   * A frame drawn outside a running heartbeat (first paint, resize, a redraw
+   * while paused) comes with dt 0: the dom lane may never tick after it, so
+   * its labels are placed here and then.
+   */
+  const drawMap = useCallback<StageDraw>(
+    (ctx, size, dt) => {
+      const mod = rendererRef.current;
+      if (!mod) return;
+      mod.draw(ctx, size, dt);
+      if (dt === 0) placeLabels();
+    },
+    [placeLabels]
+  );
+
+  const { wrapRef, canvasRef, requestDraw } = useCanvasStage({
     id: "network-map",
     priority: 1,
     enabled: renderer !== null,
     setup: renderer?.setup,
-    draw: renderer?.draw,
+    draw: renderer ? drawMap : undefined,
   });
+
+  /* ---- Pause (or a hidden heartbeat): a cut, a reset or a hover still shows on the still frame ---- */
+  useEffect(() => {
+    if (!canAnimate()) requestDraw();
+  }, [packed, hover, requestDraw]);
 
   /* ---- renderer binding ---- */
   useEffect(() => {
@@ -341,7 +455,8 @@ export default function NetworkMap({ poster }: { poster: ReactNode }) {
   useEffect(() => {
     const node = figureRef.current;
     if (!node) return;
-    const figureBox = scene().box;
+    const s = scene();
+    const figureBox = s.box;
     const markStale = () => {
       figureBox.stale = true;
     };
@@ -355,6 +470,11 @@ export default function NetworkMap({ poster }: { poster: ReactNode }) {
         figureBox.w = entry.contentRect.width;
         figureBox.h = entry.contentRect.height;
         figureBox.stale = true;
+        const gutter = parseFloat(getComputedStyle(node).getPropertyValue("--gutter"));
+        if (gutter >= 0) s.gutter = gutter;
+        // The plates' room changed: place them again (now, if no frame is coming).
+        s.lastFrame = -1;
+        if (!canAnimate()) placeLabels();
       });
       observer.observe(node);
     }
@@ -363,7 +483,25 @@ export default function NetworkMap({ poster }: { poster: ReactNode }) {
       window.removeEventListener("resize", markStale);
       observer?.disconnect();
     };
-  }, [scene]);
+  }, [scene, placeLabels]);
+
+  /* ---- label plates: their widths, measured only when their text changes ---- */
+  useEffect(() => {
+    if (typeof ResizeObserver === "undefined") return;
+    const s = scene();
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const i = s.bodyEls.indexOf(entry.target as HTMLSpanElement);
+        if (i < 0) continue;
+        const size = entry.borderBoxSize?.[0];
+        s.plateW[i] = size ? size.inlineSize : (entry.target as HTMLElement).offsetWidth;
+      }
+      s.lastFrame = -1;
+      if (!canAnimate()) placeLabels();
+    });
+    for (const el of s.bodyEls) if (el) observer.observe(el);
+    return () => observer.disconnect();
+  }, [scene, placeLabels]);
 
   /* ---- announcements: user-caused breaker changes, politely, ≤ 1 per 3 s ---- */
   const announceRef = useRef({ text: "", last: -Infinity, timer: 0 });
@@ -411,62 +549,11 @@ export default function NetworkMap({ poster }: { poster: ReactNode }) {
     [announce, finish, providerName, reachHub, scene, wrapRef, t]
   );
 
-  /* ---- the hover card sits beside its city, flipped away from the stage edges ---- */
-  const placeTip = useCallback(
-    (x: number, y: number) => {
-      const tip = tipRef.current;
-      if (!tip) return;
-      const { box: figureBox, tipFlip } = scene();
-      tip.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
-      const flipX = figureBox.w > 0 && x > figureBox.w - 340;
-      const flipY = figureBox.h > 0 && y > figureBox.h * 0.5;
-      if (flipX !== tipFlip.x) {
-        tipFlip.x = flipX;
-        if (flipX) tip.setAttribute("data-flipx", "on");
-        else tip.removeAttribute("data-flipx");
-      }
-      if (flipY !== tipFlip.y) {
-        tipFlip.y = flipY;
-        if (flipY) tip.setAttribute("data-flipy", "on");
-        else tip.removeAttribute("data-flipy");
-      }
-    },
-    [scene]
-  );
-
   /* ---- labels follow the camera (dom lane, after the canvas lane) ---- */
-  useDomLoop(
-    "network-labels",
-    () => {
-      const mod = rendererRef.current;
-      if (!mod) return;
-      const s = scene();
-      const frame = mod.getFrameCount();
-      if (frame === s.lastFrame) return;
-      s.lastFrame = frame;
-      const { labelEls, labelPos } = s;
-      const screen = mod.nodeScreen;
-      for (let i = 0; i < CITY_COUNT; i++) {
-        const el = labelEls[i];
-        if (!el) continue;
-        const x = screen[i * 4];
-        const y = screen[i * 4 + 1];
-        if (Math.abs(x - labelPos[i * 3]) > 0.25 || Math.abs(y - labelPos[i * 3 + 1]) > 0.25) {
-          labelPos[i * 3] = x;
-          labelPos[i * 3 + 1] = y;
-          el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
-        }
-        const opacity = labelOpacity(screen[i * 4 + 3]);
-        if (Math.abs(opacity - labelPos[i * 3 + 2]) > 0.02) {
-          labelPos[i * 3 + 2] = opacity;
-          el.style.opacity = opacity.toFixed(2);
-        }
-      }
-      const hovered = s.input.hover;
-      if (hovered >= 0) placeTip(screen[hovered * 4], screen[hovered * 4 + 1]);
-    },
-    { target: figureRef, enabled: renderer !== null && !reduced }
-  );
+  useDomLoop("network-labels", () => placeLabels(), {
+    target: figureRef,
+    enabled: renderer !== null && !reduced,
+  });
 
   /* ---- pointer: hover, parallax, tap to cut a road ---- */
   const layout: MapLayout = pinned ? "pin" : "flow";
@@ -524,7 +611,8 @@ export default function NetworkMap({ poster }: { poster: ReactNode }) {
       input.hover = city;
       setHoverCount(city >= 0 ? counts.city[city] : 0);
       setHover(city);
-      if (city >= 0 && rendererRef.current === null) {
+      // No dom lane to follow (no renderer yet, or a still frame): place the card now.
+      if (city >= 0 && (rendererRef.current === null || !canAnimate())) {
         const screen = nodeScreen();
         placeTip(screen[city * 4], screen[city * 4 + 1]);
       }
@@ -566,7 +654,7 @@ export default function NetworkMap({ poster }: { poster: ReactNode }) {
       id="network"
       title={t("mapTitle")}
       lead={t("mapLead")}
-      pin={{ minWidth: PIN_MIN_WIDTH, vh: 160 }}
+      pin={{ minWidth: PIN_MIN_WIDTH, vh: PIN_TRACK_VH }}
       trackRef={trackRef}
       className="netmap"
     >
@@ -586,7 +674,7 @@ export default function NetworkMap({ poster }: { poster: ReactNode }) {
             <div className="stage-poster">{poster}</div>
             <canvas ref={canvasRef} aria-hidden="true" />
           </div>
-          <div className="netmap-labels" aria-hidden="true">
+          <div ref={labelsRef} className="netmap-labels" aria-hidden="true">
             {CITIES.map((city, i) => {
               const role = cityRole(city.id);
               const candidate = CANDIDATE_OF_CITY[city.id];
@@ -608,7 +696,12 @@ export default function NetworkMap({ poster }: { poster: ReactNode }) {
                   data-open={tapped === i || hover === i ? "on" : undefined}
                   data-trouble={down || state === "open" ? "on" : undefined}
                 >
-                  <span className="netmap-lbody">
+                  <span
+                    ref={(el) => {
+                      scene().bodyEls[i] = el;
+                    }}
+                    className="netmap-lbody"
+                  >
                     <span className="netmap-lname">
                       {cityName(city.id)}
                       <LiveNumber
@@ -787,7 +880,12 @@ function Arrow() {
   );
 }
 
-/** What a troubled road says on its label: the latch ("✕ 503") and any non-closed breaker state. */
+/**
+ * What a troubled road says on its label: the latch ("✕ 503") and any
+ * non-closed breaker state. Below 1024px a latched road shows the latch alone
+ * (`data-latched` hides the word in map.css): the plate must fit beside its
+ * city on a phone, and the flight log and the dock's toasts say the rest.
+ */
 function TroubleText({ down, state }: { down: boolean; state: BreakerState }) {
   const t = useTranslations("landing");
   return (
@@ -797,8 +895,12 @@ function TroubleText({ down, state }: { down: boolean; state: BreakerState }) {
           ✕ <span dir="ltr">503</span>
         </span>
       ) : null}
-      {down && state !== "closed" ? " · " : null}
-      {state !== "closed" ? t(STATE_KEY[state]) : null}
+      {state !== "closed" ? (
+        <span className="netmap-lword" data-latched={down ? "on" : undefined}>
+          {down ? " · " : null}
+          {t(STATE_KEY[state])}
+        </span>
+      ) : null}
     </>
   );
 }
@@ -853,8 +955,7 @@ function FlightLog({ ref }: { ref: Ref<FlightLogHandle> }) {
   const provider = (id: CandidateId) => t(`mapCity_${PROVIDER_CITY[id]}`);
   const arrow = <Arrow />;
   const fallbackLabel = shortHeader(HEADER.fallbackAttempts);
-  // New key (reported to the integrator); a bare ✕ until it lands.
-  const notServed = t.has("mapDropped") ? t("mapDropped") : null;
+  const notServed = t("mapDropped");
 
   return (
     <ol className="netmap-log">
@@ -896,10 +997,7 @@ function FlightLog({ ref }: { ref: Ref<FlightLogHandle> }) {
                   <b>{provider(entry.to)}</b>
                 </>
               ) : (
-                <span className="netmap-drop">
-                  {" · ✕"}
-                  {notServed ? ` ${notServed}` : null}
-                </span>
+                <span className="netmap-drop">{` · ✕ ${notServed}`}</span>
               )}
               {kind === "fallback" ? (
                 <span className="netmap-hdr">

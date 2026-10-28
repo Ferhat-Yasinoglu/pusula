@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import {
   INTRO_GATE,
   INTRO_GATE_TIMER,
@@ -9,6 +10,7 @@ import {
   type IntroGateEnv,
 } from "../../src/app/landing/components/intro/introGate.ts";
 import {
+  BOOT_COMMAND,
   INTRO_T,
   NEEDLE_SPIN,
   PARTICLE_STRIDE,
@@ -20,6 +22,7 @@ import {
   introScalars,
   needleSpinAt,
   providerParticle,
+  retimeStarfield,
   skipTo,
   writeParticles,
   type IntroLayout,
@@ -236,6 +239,73 @@ test("intro needle: the closed-form spin hands the spring its exact state", () =
   assert.ok(Math.abs(end.velocity - NEEDLE_SPIN.v) < 1e-9);
 });
 
+/* ---- CSS ignition (alive from first paint) -------------------------------- */
+
+const INTRO_CSS = readFileSync(
+  new URL("../../src/app/landing/components/intro/intro.css", import.meta.url),
+  "utf8"
+);
+
+test("intro ignition: the CSS keyframes play the timeline's own 0–480ms", () => {
+  const ms = (re: RegExp) => Number(re.exec(INTRO_CSS)?.[1]);
+  // Typing: one character per `1000 / typeCps` ms, the whole command by the hold.
+  const typing = /intro-ig-type (\d+)ms steps\((\d+), end\)/.exec(INTRO_CSS);
+  assert.ok(typing, "typing keyframe");
+  assert.equal(Number(typing[2]), BOOT_COMMAND.length);
+  assert.equal(Number(typing[1]), (BOOT_COMMAND.length * 1000) / INTRO_T.typeCps);
+  assert.equal(Number(typing[1]), INTRO_T.cssHold);
+  assert.match(INTRO_CSS, new RegExp(`translateX\\(${BOOT_COMMAND.length}ch\\)`));
+  assert.match(INTRO_CSS, new RegExp(`inline-size: calc\\(${BOOT_COMMAND.length}ch \\+ 2em\\)`));
+  assert.equal(introScalars(INTRO_T.cssHold).typed, BOOT_COMMAND.length);
+  // Glow, crosshair, point and brand on the scalars' windows.
+  assert.equal(ms(/intro-ig-glow (\d+)ms/), INTRO_T.igniteEnd);
+  assert.equal(ms(/intro-ig-grow (\d+)ms/), INTRO_T.igniteEnd);
+  assert.equal(ms(/intro-ig-span-x (\d+)ms/), INTRO_T.igniteEnd);
+  assert.equal(ms(/intro-ig-breathe \d+ms ease-in-out (\d+)ms/), INTRO_T.cssHold);
+  assert.equal(ms(/\.intro-brand \{\s*animation: intro-ig-in (\d+)ms/), INTRO_T.hudIn);
+  const mid = introScalars(INTRO_T.igniteEnd / 2);
+  const end = introScalars(INTRO_T.igniteEnd);
+  assert.ok(Math.abs(mid.glow - 0.9) < 1e-9 && Math.abs(end.glow - 0.35) < 1e-9);
+  assert.ok(
+    /50% \{\s*opacity: 0\.9;/.test(INTRO_CSS) && /100% \{\s*opacity: 0\.35;/.test(INTRO_CSS)
+  );
+  assert.equal(end.glowR, 120);
+  assert.match(INTRO_CSS, /inline-size: 240px/);
+  assert.match(INTRO_CSS, /to \{\s*opacity: 0\.35;/);
+  // The held frame is the timeline's: nothing in the scalars moves from the
+  // ignition's end to the hold (so the canvas resumes on the same pixels).
+  const held = introScalars(INTRO_T.cssHold);
+  for (const key of ["glow", "glowR", "point", "cross", "crossLen", "hud"] as const) {
+    assert.ok(Math.abs(held[key] - end[key]) < 1e-9, key);
+  }
+  // Boot lines and the map only start after the hold.
+  assert.ok(INTRO_T.boot > INTRO_T.cssHold && INTRO_T.land > INTRO_T.cssHold);
+});
+
+test("intro ignition: resuming late retimes the starfield so no star pops in", () => {
+  const L = layout(390, 844);
+  const out = new Float32Array(L.n * PARTICLE_STRIDE);
+  const original = Float32Array.from(L.fadeAt);
+  // At or before the starfield's start the storyboard is untouched.
+  retimeStarfield(L, 0);
+  assert.deepEqual(Array.from(L.fadeAt), Array.from(original));
+  for (const from of [200, 300, INTRO_T.cssHold]) {
+    retimeStarfield(L, from);
+    // One frame after the resume, every star is at most one frame into its fade.
+    writeParticles(L, from + 16, out);
+    let max = 0;
+    for (let j = 0; j < L.n; j++) max = Math.max(max, out[j * PARTICLE_STRIDE + 3]);
+    assert.ok(max <= 16 / INTRO_T.starFade + 1e-6, `from ${from}: alpha ${max}`);
+    // Order is kept and all have started before the first dot lands.
+    for (let j = 0; j < L.n; j++) {
+      assert.ok(L.fadeAt[j] >= from && L.fadeAt[j] <= INTRO_T.starfield + INTRO_T.starfieldSpread);
+    }
+    for (let j = 1; j < L.n; j++) {
+      assert.equal(original[j] < original[0], L.fadeAt[j] < L.fadeAt[0]);
+    }
+  }
+});
+
 /* ---- Gyro geometry (§6.2) ------------------------------------------------- */
 
 test("gyro: compass bearings, nutation factor and factor weights", () => {
@@ -346,6 +416,31 @@ test("labels: beside the star, never overlapping, the higher priority keeps its 
   assert.equal(at(boxes, 2, L_X), 600 - SIDE_GAP - 80);
   assert.ok(at(boxes, 2, L_FLAGS) & LABEL_FLIP);
   for (let i = 0; i < 3; i++) assert.ok(!hidden(boxes, i));
+});
+
+test("labels: the touch gap keeps crowded plates a thumb apart", () => {
+  // Four stars bunched within 20px: on touch every pair of plates that shares
+  // columns ends at least 10px apart (the mouse default packs them at 4px).
+  for (const gap of [4, 10]) {
+    const boxes = new Float32Array(4 * LABEL_STRIDE);
+    label(boxes, 0, 300, 300, 4);
+    label(boxes, 1, 305, 308, 3);
+    label(boxes, 2, 298, 316, 2);
+    label(boxes, 3, 310, 296, 1);
+    resolveLabels(boxes, 4, new Float32Array(0), 0, new Int8Array(4), STAGE, gap);
+    for (let i = 0; i < 4; i++) {
+      assert.ok(!hidden(boxes, i), `label ${i} shown at gap ${gap}`);
+      for (let j = i + 1; j < 4; j++) {
+        const xi = at(boxes, i, L_X);
+        const xj = at(boxes, j, L_X);
+        if (xi + 80 + gap <= xj || xj + 80 + gap <= xi) continue;
+        const yi = at(boxes, i, L_Y);
+        const yj = at(boxes, j, L_Y);
+        const apart = Math.max(yj - (yi + 26), yi - (yj + 26));
+        assert.ok(apart >= gap - 1e-6, `gap ${gap}: labels ${i},${j} are ${apart}px apart`);
+      }
+    }
+  }
 });
 
 test("labels: a blocked side tries the other side, then above and below, before hiding", () => {

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, type MutableRefObject, type RefObject } from "react";
 import { register } from "./heartbeat";
+import { refreshScrollPosition, retainScrollPosition, scrollPosition } from "./scrollPosition";
 
 /**
  * Scroll-linked progress for one element, without layout reads per scroll.
@@ -15,7 +16,10 @@ import { register } from "./heartbeat";
  *
  * The element's document offset and size are cached and refreshed by a
  * ResizeObserver and window resizes. The passive scroll listener only marks
- * the state dirty; the heartbeat's `dom` lane computes `p` (clamped to 0..1),
+ * the state dirty; the heartbeat's `dom` lane computes `p` (clamped to 0..1)
+ * from the scroll offset cached once per scroll event (`scrollPosition.ts`:
+ * reading `window.scrollY` here, after other entries' writes, forced a style
+ * and layout pass per tracker per frame),
  * stores it in the returned ref and writes `--p` (4 decimals) plus
  * `data-active="on"` (while 0 < p < 1) on the element, only when they change.
  * The lane is registered only while the element is near the viewport.
@@ -70,6 +74,7 @@ type Tracker = {
 /* One scroll listener, one resize listener and one ResizeObserver serve every tracker. */
 const trackers = new Set<Tracker>();
 let sharedObserver: ResizeObserver | null = null;
+let releaseScroll: (() => void) | null = null;
 
 const onScroll = () => {
   for (const tracker of trackers) tracker.markDirty();
@@ -80,6 +85,7 @@ const remeasureAll = () => {
 
 function attachShared(tracker: Tracker, node: Element): void {
   if (trackers.size === 0) {
+    releaseScroll = retainScrollPosition();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", remeasureAll);
     if (typeof ResizeObserver !== "undefined") {
@@ -101,6 +107,8 @@ function detachShared(tracker: Tracker, node: Element): void {
     window.removeEventListener("resize", remeasureAll);
     sharedObserver?.disconnect();
     sharedObserver = null;
+    releaseScroll?.();
+    releaseScroll = null;
   }
 }
 
@@ -125,7 +133,7 @@ export function trackScrollProgress(
 
   const compute = () => {
     dirty = false;
-    const scrollY = window.scrollY;
+    const scrollY = scrollPosition();
     const p = pinApplies(mode, viewportWidth, minWidth)
       ? pinProgress(scrollY, top, height, viewportHeight)
       : traverseProgress(scrollY, top, height, viewportHeight);
@@ -146,7 +154,7 @@ export function trackScrollProgress(
   const tracker: Tracker = {
     measure() {
       const rect = node.getBoundingClientRect();
-      top = rect.top + window.scrollY;
+      top = rect.top + refreshScrollPosition();
       height = rect.height;
       viewportHeight = window.innerHeight || 1;
       viewportWidth = window.innerWidth;

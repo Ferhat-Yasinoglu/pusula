@@ -1,5 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
 import {
   BENCH_COMPACT,
   BENCH_WIDE,
@@ -8,8 +10,10 @@ import {
   PROMPT_TILES,
   RATIO_MAX,
   RATIO_MIN,
+  CACHE_LATENCY_VALUE,
   COMPRESSION_VALUE,
   a2aExchange,
+  compressionAnnotation,
   anchorCss,
   anchorX,
   envelopeAt,
@@ -36,7 +40,12 @@ import {
   MCP_TOOL_COUNT,
   type CompressionEngine,
 } from "../../src/app/landing/landingTypes.ts";
-import { formatCompressionMeta } from "../../open-sse/services/compression/planResolution.ts";
+import {
+  formatCompressionAnnotation,
+  formatCompressionMeta,
+} from "../../open-sse/services/compression/planResolution.ts";
+import { buildNonStreamingResponseHeaders } from "../../open-sse/handlers/chatCore/nonStreamingResponseHeaders.ts";
+import { PUSULA_RESPONSE_HEADERS } from "../../src/shared/constants/headers.ts";
 
 /** The shipped stack (ENGINE_IDS order, `guidance.lossy`), as `buildCompressionEngineList` returns it. */
 const ENGINES: CompressionEngine[] = [
@@ -136,24 +145,66 @@ test("prompt outcome: always inside the documented band and self-consistent", ()
   assert.deepEqual(promptOutcome(3, ENGINES, false), promptOutcome(3, ENGINES, false));
 });
 
-test("headers: real names, illustration values", () => {
+test("headers: a MISS shows what the gateway sends, with the illustration's token counts", () => {
   const miss = missHeaders(29);
   assert.deepEqual(
     miss.map((h) => h.name),
-    [HEADER.cache, HEADER.compression, HEADER.savingsTokens]
+    [HEADER.cache, HEADER.compression]
   );
   assert.equal(miss[0].value, "MISS");
-  assert.equal(miss[1].value, "stacked; source=active-profile");
-  // The value is exactly what the gateway renders for a stacked plan from the active profile.
+  assert.equal(miss[1].value, "stacked; source=active-profile; tokens=48->19; rules: …");
+  // The value is exactly what the gateway renders for a stacked plan from the active profile…
   assert.equal(
     formatCompressionMeta({ mode: "stacked", stackedPipeline: [], source: "active-profile" }),
     COMPRESSION_VALUE
   );
-  assert.equal(miss[2].value, "29");
+  // …followed by its annotation, whose rule list the page elides.
+  const real = formatCompressionAnnotation({
+    originalTokens: PROMPT_TILES,
+    compressedTokens: PROMPT_TILES - 29,
+    rulesApplied: ["hedging", "pleasantries", "hedging"],
+  } as Parameters<typeof formatCompressionAnnotation>[0]);
+  const shown = compressionAnnotation(29);
+  assert.ok(shown.endsWith("rules: …"));
+  assert.ok(real.startsWith(shown.slice(0, -1)), `${real} does not start like ${shown}`);
+  assert.equal(compressionAnnotation(0), "tokens=48->48; rules: …");
+
+  // A cache MISS carries the cache marker and the compression header, never Savings-Tokens.
+  const sent = buildNonStreamingResponseHeaders(
+    {
+      provider: "openai",
+      model: "gpt",
+      startTime: 0,
+      responseUsage: null,
+      estimatedCost: 0,
+      requestId: "r",
+      compressionResponseMeta: `${COMPRESSION_VALUE}; ${real}`,
+    },
+    { attachPusulaMetaHeaders: () => {}, now: () => 0 }
+  );
+  assert.equal(sent[PUSULA_RESPONSE_HEADERS.cache], miss[0].value);
+  assert.ok(sent[PUSULA_RESPONSE_HEADERS.compression].startsWith(miss[1].value.slice(0, -1)));
+  assert.equal(sent[PUSULA_RESPONSE_HEADERS.savingsTokens], undefined);
+});
+
+test("headers: an exact repeat HIT shows only what the cache sends for it", () => {
   const hit = hitHeaders();
   assert.deepEqual(
     hit.map((h) => `${h.name}: ${h.value}`),
-    [`${HEADER.cache}: HIT`, `${HEADER.cacheSimilarity}: 1.0000`]
+    [`${HEADER.cache}: HIT`, `${HEADER.cacheLatency}: synthetic`]
+  );
+  assert.equal(CACHE_LATENCY_VALUE, "synthetic");
+  // Pinned to the cache's own code: these two are set on every hit, the similarity only on a
+  // semantic one (never on the exact repeat "Send it again" depicts).
+  const source = fs.readFileSync(
+    path.join(process.cwd(), "open-sse/handlers/chatCore/semanticCache.ts"),
+    "utf8"
+  );
+  assert.match(source, /\[PUSULA_RESPONSE_HEADERS\.cache\]: "HIT"/);
+  assert.match(source, /\[PUSULA_RESPONSE_HEADERS\.cacheLatency\]: "synthetic"/);
+  assert.match(
+    source,
+    /if \(hitType === "semantic"[^\n]*\)\s*\{\s*headers\[PUSULA_RESPONSE_HEADERS\.cacheSimilarity\]/
   );
 });
 

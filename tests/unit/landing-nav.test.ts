@@ -3,24 +3,31 @@ import assert from "node:assert/strict";
 import {
   DOCK_LIFT_GAP_PX,
   FAILING_REPEAT_MS,
+  TOAST_GAP_MS,
+  TOAST_SOURCE_WINDOW_MS,
   TAPE_MAX_DEG,
+  TAPE_SEAM,
   TAPE_MIN_DEG,
   TAPE_PX_PER_DEG,
   TAPE_STRIP_WIDTH,
   angleDelta,
   buildTapeNumerals,
   buildTapeTicks,
+  createSourceLedger,
   createToastGate,
+  createToastPacer,
   dockClearance,
+  homeHeading,
   navBearingText,
   nearestWaypoint,
   nextSpeed,
   progressShare,
-  pushToast,
+  tapeHeading,
   tapeOffsetPx,
   tapeX,
+  toastTone,
+  viewCoverage,
   waypointCopies,
-  type ToastEntry,
 } from "../../src/app/landing/components/nav/navModel";
 import { SPEEDS, type DeckEvent } from "../../src/app/landing/sim/landingSim";
 
@@ -86,6 +93,67 @@ test("the waypoint under the caret is the circularly nearest one", () => {
   assert.equal(nearestWaypoint(10, []), -1);
 });
 
+test("the tape holds each station's bearing and turns across the seams", () => {
+  // The voyage starts at north without a turn.
+  assert.equal(tapeHeading(0), 0);
+  assert.equal(tapeHeading(-4), 0);
+  assert.equal(tapeHeading(Number.NaN), 0);
+  assert.equal(tapeHeading(10), 0);
+  // Held while a station fills the middle of the viewport.
+  for (const bearing of BEARINGS.slice(1, -1)) {
+    for (const f of [TAPE_SEAM + 0.01, 0.5, 1 - TAPE_SEAM - 0.01]) {
+      assert.equal(tapeHeading(bearing + 45 * f), bearing, `${bearing} at ${f}`);
+    }
+  }
+  // Without a measured footer the last station turns home over the end of its span.
+  for (const f of [TAPE_SEAM + 0.01, 0.5, 1 - 2 * TAPE_SEAM - 0.01]) {
+    assert.equal(tapeHeading(315 + 45 * f), 315, `315 at ${f}`);
+  }
+  // Each turn is centred on a boundary: half-way exactly as the next station arrives.
+  for (const bearing of BEARINGS.slice(1)) {
+    assert.ok(Math.abs(tapeHeading(bearing) - (bearing - 22.5)) < 1e-9, `boundary ${bearing}`);
+  }
+  // Continuous and monotonic across the whole voyage.
+  let previous = tapeHeading(0);
+  for (let h = 0.05; h <= 360; h += 0.05) {
+    const next = tapeHeading(h);
+    assert.ok(next >= previous - 1e-9, `monotonic at ${h}`);
+    assert.ok(next - previous < 3, `continuous at ${h}`);
+    previous = next;
+  }
+  // The very bottom is home (north again).
+  assert.equal(tapeHeading(360), 360);
+  assert.equal(tapeHeading(400), 360);
+});
+
+test("the lit waypoint changes exactly as the next station reaches the middle", () => {
+  for (let i = 1; i < BEARINGS.length; i++) {
+    assert.equal(nearestWaypoint(tapeHeading(BEARINGS[i] - 0.01), BEARINGS), i - 1);
+    assert.equal(nearestWaypoint(tapeHeading(BEARINGS[i] + 0.01), BEARINGS), i);
+  }
+  // The launch station stays lit until the footer arrives, then north.
+  const home = 345;
+  assert.equal(nearestWaypoint(tapeHeading(home - 0.01, home), BEARINGS), 7);
+  assert.equal(nearestWaypoint(tapeHeading(home + 0.01, home), BEARINGS), 0);
+  assert.equal(nearestWaypoint(tapeHeading(359, home), BEARINGS), 0);
+  assert.equal(tapeHeading(360, home), 360);
+  // A footer arriving late still finishes the turn by 360°; an early one waits for the turn in.
+  assert.equal(tapeHeading(360, 360), 360);
+  assert.equal(nearestWaypoint(tapeHeading(350, 360), BEARINGS), 7);
+  assert.equal(tapeHeading(315 + 45 * TAPE_SEAM, 300), 315);
+});
+
+test("home heading: where the footer's top crosses the middle line", () => {
+  // Launch top at 10000, footer top at 11500, 900px viewport, max scroll 11771.
+  const at = homeHeading(10000, 11500, 900, 11771);
+  const from = 10000 - 450;
+  assert.ok(Math.abs(at - (315 + (45 * (11500 - 450 - from)) / (11771 - from))) < 1e-9);
+  assert.ok(at > 315 && at < 360);
+  assert.equal(homeHeading(10000, 99999, 900, 11771), 360);
+  assert.equal(homeHeading(10000, 0, 900, 11771), 315);
+  assert.equal(homeHeading(10000, 11500, 900, 0), 360);
+});
+
 test("progress line share", () => {
   assert.equal(progressShare(0), 0);
   assert.equal(progressShare(-5), 0);
@@ -145,6 +213,7 @@ test("toast gate: visitor-caused only, one failing toast per beat", () => {
   assert.deepEqual(gate.accept(routed(["claude"], "gpt"), true, 0), {
     kind: "failing",
     id: "claude",
+    code: 503,
     fallback: "gpt",
   });
   assert.equal(gate.accept(routed(["claude"], "gpt"), true, 1000), null);
@@ -179,40 +248,57 @@ test("toast gate: each breaker state once per episode, recovery closes it", () =
   assert.equal(gate.accept(breaker("claude", "degraded"), true, 0)?.kind, "state");
 });
 
-test("toasts: a provider's state updates in place, the stack stays at two", () => {
-  const failing: ToastEntry = {
-    key: 1,
-    spec: { kind: "failing", id: "claude", fallback: "gpt" },
-    leaving: false,
-  };
-  const degraded: ToastEntry = {
-    key: 2,
-    spec: { kind: "state", id: "claude", state: "degraded" },
-    leaving: false,
-  };
-  const open: ToastEntry = {
-    key: 3,
-    spec: { kind: "state", id: "claude", state: "open" },
-    leaving: false,
-  };
-  let list = pushToast([], failing, 2);
-  list = pushToast(list, degraded, 2);
-  list = pushToast(list, open, 2);
-  assert.deepEqual(
-    list.map((toast) => toast.key),
-    [1, 3]
-  );
-  const other: ToastEntry = {
-    key: 4,
-    spec: { kind: "state", id: "gemini", state: "open" },
-    leaving: false,
-  };
-  list = pushToast(list, other, 2);
-  assert.deepEqual(
-    list.map((toast) => toast.key),
-    [3, 4]
-  );
-  // A leaving toast is never reused.
-  const leaving = list.map((toast) => ({ ...toast, leaving: true }));
-  assert.equal(pushToast(leaving, { ...open, key: 5 }, 2).length, 2);
+test("messages: at most one per gap, the next one told when to come back", () => {
+  const pacer = createToastPacer();
+  assert.equal(pacer.wait(0), 0);
+  assert.equal(pacer.allow(1000), true);
+  assert.equal(pacer.wait(1000), TOAST_GAP_MS);
+  assert.equal(pacer.wait(1000 + TOAST_GAP_MS - 1), 1);
+  assert.equal(pacer.wait(1000 + TOAST_GAP_MS + 50), 0);
+  assert.equal(pacer.allow(1000 + TOAST_GAP_MS - 1), false);
+  // A refused message does not push the next slot back.
+  assert.equal(pacer.allow(1000 + TOAST_GAP_MS), true);
+  assert.equal(pacer.allow(1000 + TOAST_GAP_MS + 10), false);
+  pacer.reset();
+  assert.equal(pacer.allow(1000 + TOAST_GAP_MS + 10), true);
+  const quick = createToastPacer(100);
+  assert.equal(quick.allow(0), true);
+  assert.equal(quick.allow(100), true);
+});
+
+test("an outage keeps the station it came from until its breaker closes", () => {
+  const ledger = createSourceLedger<string>();
+  // No press yet: unknown source.
+  assert.equal(ledger.sourceOf("gemini", 0), null);
+  ledger.touch("bridge", 1000);
+  assert.equal(ledger.sourceOf("claude", 2500), "bridge");
+  // Later presses elsewhere do not move an outage that already has its source.
+  ledger.touch("tools", 3000);
+  assert.equal(ledger.sourceOf("claude", 20000), "bridge");
+  // A first message too long after the last press has no source.
+  assert.equal(ledger.sourceOf("glm", 3000 + TOAST_SOURCE_WINDOW_MS + 1), null);
+  // The unknown source sticks for the whole outage too.
+  ledger.touch("network", 30000);
+  assert.equal(ledger.sourceOf("gemini", 30001), null);
+  // Recovery ends the outage; the next one is attributed afresh.
+  ledger.end("claude");
+  assert.equal(ledger.sourceOf("claude", 30500), "network");
+});
+
+test("view coverage: the share of the viewport a station fills", () => {
+  assert.equal(viewCoverage(0, 900, 900), 1);
+  assert.equal(viewCoverage(-2000, 3000, 900), 1);
+  assert.equal(viewCoverage(450, 3000, 900), 0.5);
+  assert.equal(viewCoverage(-500, 90, 900), 0.1);
+  assert.equal(viewCoverage(900, 1500, 900), 0);
+  assert.equal(viewCoverage(-900, -10, 900), 0);
+  assert.equal(viewCoverage(0, 900, 0), 0);
+});
+
+test("the dock dot's tone follows the message", () => {
+  assert.equal(toastTone({ kind: "failing", id: "claude", code: 503, fallback: "gpt" }), "fail");
+  assert.equal(toastTone({ kind: "state", id: "claude", state: "open" }), "fail");
+  assert.equal(toastTone({ kind: "state", id: "claude", state: "degraded" }), "warn");
+  assert.equal(toastTone({ kind: "state", id: "claude", state: "halfOpen" }), "warn");
+  assert.equal(toastTone({ kind: "state", id: "claude", state: "closed" }), "ok");
 });

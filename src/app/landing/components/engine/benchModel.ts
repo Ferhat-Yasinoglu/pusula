@@ -12,7 +12,9 @@
  * - the end reduction stays inside the documented 15–95% band: about 60%
  *   with the full stack and about 20% with the lossless engines only;
  * - the example header values are produced by the illustration itself
- *   (`X-Pusula-Savings-Tokens` is the number of tiles this prompt lost).
+ *   (the `tokens=<orig>-><comp>` annotation of `X-Pusula-Compression` counts
+ *   this prompt's tiles before and after the stack), and the headers are
+ *   exactly the ones the gateway sends in that case (see "Response headers").
  */
 
 import { mulberry32 } from "../../sim/prng";
@@ -122,7 +124,7 @@ export function promptTiles(seed: number): PromptTile[] {
 export type PromptOutcome = {
   /** Lens index that removed each tile, or -1 when it reached upstream. */
   removedAt: Int8Array;
-  /** Tiles removed: the `X-Pusula-Savings-Tokens` value of this illustration. */
+  /** Tiles removed: the illustration's prompt goes from 48 tokens to `48 - removed`. */
   removed: number;
 };
 
@@ -174,23 +176,47 @@ export const STATUS_LINE = "HTTP/1.1 200 OK";
  * active compression profile reads like this.
  */
 export const COMPRESSION_VALUE = "stacked; source=active-profile";
-/** `similarity.toFixed(4)` for an exact repeat. */
-export const EXACT_SIMILARITY = "1.0000";
+/**
+ * The gateway appends `formatCompressionAnnotation(stats)` to that value:
+ * `tokens=<orig>-><comp>; rules: <rule>x<count>, …`. The rule names are
+ * engine-internal (`caveman` phrasing rules, `rtk:*` filters, …) and the
+ * illustration's tiles are abstract, so the page elides the list (the
+ * Unicode ellipsis is the page's, not a byte the gateway sends).
+ */
+export const RULES_ELIDED = "rules: …";
+/** The semantic cache marks every response it serves with this latency (no upstream call). */
+export const CACHE_LATENCY_VALUE = "synthetic";
 
-/** A fresh prompt: the cache misses, the stack runs, and the savings are this prompt's. */
-export function missHeaders(savings: number): HeaderLine[] {
+/** `formatCompressionAnnotation`'s token part for a prompt that lost `removed` of its tiles. */
+export function compressionAnnotation(removed: number, tiles: number = PROMPT_TILES): string {
+  const kept = Math.max(0, tiles - Math.max(0, removed));
+  return `tokens=${tiles}->${kept}; ${RULES_ELIDED}`;
+}
+
+/**
+ * A fresh prompt: the cache misses and the stack runs. These are the headers
+ * a non-cached response carries for it (`nonStreamingResponseHeaders.ts`);
+ * the per-request reduction is in the compression annotation.
+ * `X-Pusula-Savings-Tokens` is never sent on a MISS.
+ */
+export function missHeaders(removed: number): HeaderLine[] {
   return [
     { name: HEADER.cache, value: "MISS" },
-    { name: HEADER.compression, value: COMPRESSION_VALUE },
-    { name: HEADER.savingsTokens, value: String(savings) },
+    { name: HEADER.compression, value: `${COMPRESSION_VALUE}; ${compressionAnnotation(removed)}` },
   ];
 }
 
-/** The same prompt again: answered by the semantic cache, no upstream call. */
+/**
+ * The same prompt again: an exact repeat, answered by the cache with no
+ * upstream call (`chatCore/semanticCache.ts`). `X-Pusula-Cache-Similarity` is
+ * sent only for a near-identical (semantic) hit, and the hit's
+ * `X-Pusula-Savings-Tokens` counts the cached answer's tokens, which the
+ * illustration does not have, so neither is shown.
+ */
 export function hitHeaders(): HeaderLine[] {
   return [
     { name: HEADER.cache, value: "HIT" },
-    { name: HEADER.cacheSimilarity, value: EXACT_SIMILARITY },
+    { name: HEADER.cacheLatency, value: CACHE_LATENCY_VALUE },
   ];
 }
 

@@ -74,23 +74,24 @@ export const HEADER = {
   latencyMs: "X-Pusula-Latency-Ms",
   requestId: "X-Pusula-Request-Id",
   cache: "X-Pusula-Cache",
-  cacheSimilarity: "X-Pusula-Cache-Similarity",
+  cacheLatency: "X-Pusula-Cache-Latency",
   compression: "X-Pusula-Compression",
-  savingsTokens: "X-Pusula-Savings-Tokens",
 } as const;
 
 /**
  * The six providers the simulated deck routes between. `id` is the deck's
- * short name, `catalogId` the real `AI_PROVIDERS` id (shown in headers and on
- * the map), `profile` the breaker profile the gateway would apply to it.
+ * short name, `catalogId` the real `AI_PROVIDERS` id (shown on the sphere, the
+ * map and the wall), `alias` the value the gateway sends for it in
+ * `X-Pusula-Provider` (`getProviderAlias`; test-pinned), `profile` the breaker
+ * profile the gateway would apply to it.
  */
 export const SAMPLE_CANDIDATES = [
-  { id: "claude", catalogId: "claude", profile: "oauth" },
-  { id: "gpt", catalogId: "openai", profile: "apikey" },
-  { id: "gemini", catalogId: "gemini", profile: "apikey" },
-  { id: "glm", catalogId: "glm", profile: "apikey" },
-  { id: "cerebras", catalogId: "cerebras", profile: "apikey" },
-  { id: "ollama", catalogId: "ollama-local", profile: "local" },
+  { id: "claude", catalogId: "claude", alias: "cc", profile: "oauth" },
+  { id: "gpt", catalogId: "openai", alias: "openai", profile: "apikey" },
+  { id: "gemini", catalogId: "gemini", alias: "gemini", profile: "apikey" },
+  { id: "glm", catalogId: "glm", alias: "glm", profile: "apikey" },
+  { id: "cerebras", catalogId: "cerebras", alias: "cerebras", profile: "apikey" },
+  { id: "ollama", catalogId: "ollama-local", alias: "ollama", profile: "local" },
 ] as const;
 
 export type BreakerProfileId = (typeof BREAKER_PROFILES)[number]["id"];

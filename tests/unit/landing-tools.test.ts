@@ -43,6 +43,7 @@ import {
   cornerSeg,
   candidateBearing,
   catalogIdOf,
+  headerProviderOf,
   createRunFrame,
   dropCable,
   easeInOutCubic,
@@ -425,7 +426,10 @@ test("hub dial: six candidates, 60° apart clockwise from north; catalog ids", (
     CANDIDATE_IDS.map((id) => candidateBearing(id)),
     [0, 60, 120, 180, 240, 300]
   );
-  for (const c of SAMPLE_CANDIDATES) assert.equal(catalogIdOf(c.id), c.catalogId);
+  for (const c of SAMPLE_CANDIDATES) {
+    assert.equal(catalogIdOf(c.id), c.catalogId);
+    assert.equal(headerProviderOf(c.id), c.alias);
+  }
 });
 
 test("seeded ids: UUID v4 layout, deterministic per seed", () => {
@@ -439,7 +443,7 @@ test("run: the tick-0 take is claude, served, no fallback (what SSR shows)", () 
   const w = world();
   const run = buildRun(w.featured, []);
   assert.equal(run.winner, "claude");
-  assert.equal(run.provider, "claude");
+  assert.equal(run.provider, "cc", "X-Pusula-Provider carries the alias (getProviderAlias)");
   assert.equal(run.fallbackAttempts, 0);
   assert.deepEqual(run.stops, [{ id: "claude", kind: "win", code: null }]);
   assert.ok(run.latencyMs >= LATENCY_MS[0] && run.latencyMs <= LATENCY_MS[1]);
@@ -465,7 +469,7 @@ test("run: a failing winner shows the hub retrying the next target (503, attempt
   assert.equal(run.stops.at(-1)?.kind, "win");
   assert.notEqual(run.winner, "claude");
   assert.equal(run.fallbackAttempts, 1);
-  assert.equal(run.provider, catalogIdOf(run.winner ?? "claude"));
+  assert.equal(run.provider, headerProviderOf(run.winner ?? "claude"));
   const rows = runHeaders(run, HEADER);
   assert.deepEqual(rows.map((r) => [r.name, r.value]).slice(0, 2), [
     [HEADER.provider, run.provider],
@@ -516,10 +520,10 @@ test("run: nothing could serve → 503, no provider header, attempts counted", (
       ["gpt", "fail", 429],
     ]
   );
-  const rows = runHeaders(run, HEADER);
   assert.deepEqual(
-    rows.map((r) => r.name),
-    [HEADER.fallbackAttempts, HEADER.requestId]
+    runHeaders(run, HEADER),
+    [],
+    "the combo's error response carries no provider, attempts, latency or request id"
   );
 });
 

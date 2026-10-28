@@ -130,17 +130,14 @@
     --rail-cell-h: 18px;
     --rail-cell-gap: 4px;
     --res-served-w: 52px;
-    --res-served-end: 2px;
+    /* Keep the served label inside the 16px page gutter (the rail itself bleeds). */
+    --res-served-end: 16px;
     border-radius: 0;
   }
 }
 
-/* Under the fallback rail at the flow's start (compact rail only: RAIL_COMPACT.fbY + 6). */
+/* The compact rail's time-lapse chip leads the row under the fallback rail (see .res-foot). */
 .pusula-landing .res-lapse.res-lapse-low {
-  position: absolute;
-  z-index: 4;
-  inset-block-start: 258px;
-  inset-inline-start: var(--gutter);
   display: none;
 }
 
@@ -150,6 +147,10 @@
   }
   .pusula-landing .res-lapse.res-lapse-low {
     display: inline-flex;
+    flex: none;
+    /* The sans face: narrower than mono, so the chip and the caption share the row in every locale. */
+    font-family: var(--font-sans);
+    letter-spacing: 0;
   }
 }
 
@@ -581,10 +582,42 @@
   inset-block-start: calc(var(--rail-band-y1) + 8px);
 }
 
-.pusula-landing .res-tag-next {
+/* The row under the fallback rail: the caption at the rail's end (and, compact, the time-lapse chip). */
+.pusula-landing .res-foot {
   inset-inline-end: var(--rail-fb-end);
   inset-block-start: calc(var(--rail-fb-y) + 8px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.pusula-landing .res-tag-next {
   color: var(--mist-dim);
+}
+
+/*
+ * Compact: one row from gutter to gutter, chip at the start, caption at the
+ * end, never touching (a gap, and the caption gives way before the chip).
+ */
+@container res-rail (max-width: 639.98px) {
+  .pusula-landing .res-foot {
+    inset-inline: var(--gutter);
+    inset-block-start: calc(var(--rail-fb-y) + 4px);
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .pusula-landing .res-foot .res-tag-next {
+    flex: 0 1 auto;
+    min-inline-size: 0;
+    margin-inline-start: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: end;
+    letter-spacing: 0.08em;
+  }
+  .pusula-landing .res-foot .res-tag-next:lang(fa) {
+    letter-spacing: 0;
+  }
 }
 
 .pusula-landing .res-rail[data-state="open"] .res-tag-next {
