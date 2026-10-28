@@ -1,0 +1,1691 @@
+/*
+ * Station W, 270°: the engine room (spec §6.8). Part A is the compression
+ * bench, a full-bleed process band with its response terminal and facts;
+ * Part B is the MCP and A2A array.
+ *
+ * Everything is scoped under `.pusula-landing`. Only `transform` and
+ * `opacity` animate; glows are static box-shadows whose host fades by
+ * opacity. Under reduced motion every loop stops, the bench keeps its
+ * server poster (the static before/after), the lights sit still and both
+ * faces of the A2A card are shown side by side.
+ */
+
+/* ======================================================================== */
+/* Part A: the compression bench                                            */
+/* ======================================================================== */
+
+.pusula-landing .bench-wrap {
+  display: grid;
+  gap: var(--s-5);
+}
+
+/*
+ * Translated words never use the mono face in Persian: a fixed-width Latin
+ * mono breaks the joins of Arabic-script letters. Code, ids and endpoints
+ * keep it (they are `dir="ltr"` islands).
+ */
+.pusula-landing :is(.bench-legend, .bench-cap, .bench-readout-class, .engine-nums dt):lang(fa) {
+  font-family: var(--font-sans);
+}
+
+/* ◇ lossless / ◆ lossy: a 45° square, hollow or filled, in currentColor. */
+.pusula-landing .bench-mark {
+  display: inline-block;
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border: 1.25px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.pusula-landing .bench-mark[data-lossy] {
+  background: currentColor;
+}
+
+.pusula-landing .bench-legend {
+  display: flex;
+  gap: var(--s-2) var(--s-4);
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  line-height: 16px;
+  color: var(--mist);
+}
+
+.pusula-landing .bench-legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pusula-landing .bench-legend .bench-mark {
+  color: var(--gold);
+}
+
+/* ---- the band ---- */
+
+.pusula-landing .bench {
+  /* geometry: the wide (w) bench by default, the compact (c) one on a phone */
+  --h: var(--w-h);
+  --beam: var(--w-beam);
+  --env0: var(--w-env0);
+  --pitch: var(--w-pitch);
+  --tile-h: var(--w-tile-h);
+  --src-w: var(--w-src-w);
+  --src-top: var(--w-src-top);
+  --mirror-top: var(--w-mirror-top);
+  --mirror-bottom: var(--w-mirror-bottom);
+  --lens-rx: var(--w-lens-rx);
+  --lens-ry: var(--w-lens-ry);
+  --mark-y: var(--w-mark-y);
+  --label-y: var(--w-label-y);
+  --port-r: var(--w-port-r);
+
+  position: relative;
+  height: var(--h);
+  border-block: 1px solid var(--rule-soft);
+  background:
+    linear-gradient(to right, rgba(212, 168, 64, 0.045) 1px, transparent 1px) 0 0 / 48px 48px,
+    linear-gradient(
+      to bottom,
+      rgba(10, 10, 12, 0.4),
+      rgba(10, 10, 12, 0.92) 22%,
+      rgba(10, 10, 12, 0.92) 78%,
+      rgba(10, 10, 12, 0.4)
+    );
+}
+
+.pusula-landing .bench-at {
+  --x: var(--xw);
+}
+
+.pusula-landing .bench-seg {
+  --x1: var(--x1w);
+  --x2: var(--x2w);
+}
+
+.pusula-landing .bench-stage {
+  height: 100%;
+  border-radius: inherit;
+}
+
+/* The bench box: the geometry's frame, shared by poster, canvas and overlay. */
+.pusula-landing .bench-box {
+  position: absolute;
+  inset-block: 0;
+  inset-inline: 0;
+  width: min(100% - 2 * var(--gutter), 1440px);
+  margin-inline: auto;
+}
+
+/* An element anchored at `--x` in the box; children centre on it with `left: 50%`. */
+.pusula-landing .bench-at {
+  position: absolute;
+  inset-inline-start: var(--x);
+  width: 0;
+}
+
+/* ---- poster (server-rendered still) ---- */
+
+.pusula-landing .bench-rail {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(var(--beam) - 0.5px);
+  height: 1px;
+  background: rgba(212, 168, 64, 0.16);
+}
+
+.pusula-landing .bench-seg {
+  position: absolute;
+  inset-inline-start: var(--x1);
+  width: calc(var(--x2) - var(--x1));
+  top: calc(var(--beam) - var(--env0) * var(--r));
+  height: calc(2 * var(--env0) * var(--r));
+  border-block: 1px solid rgba(212, 168, 64, 0.28);
+  background: rgba(212, 168, 64, 0.07);
+}
+
+.pusula-landing .bench-src {
+  position: absolute;
+  inset-inline-start: 0;
+  top: var(--src-top);
+  width: var(--src-w);
+  height: calc(7 * var(--pitch) + var(--tile-h));
+}
+
+.pusula-landing .bench-tile {
+  position: absolute;
+  top: calc(var(--row) * var(--pitch));
+  height: var(--tile-h);
+  background: var(--gold);
+  opacity: 0.62;
+}
+
+.pusula-landing .bench-mirror {
+  top: var(--mirror-top);
+  height: calc(var(--mirror-bottom) - var(--mirror-top));
+}
+
+.pusula-landing .bench-mirror::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 0;
+  width: 10px;
+  height: 100%;
+  border-inline-end: 1px solid var(--gold-hi);
+  background: linear-gradient(
+    to bottom,
+    rgba(107, 74, 18, 0.15),
+    rgba(212, 168, 64, 0.55) 45%,
+    rgba(255, 211, 110, 0.62) 55%,
+    rgba(107, 74, 18, 0.15)
+  );
+  transform: skewY(-4deg);
+}
+
+.pusula-landing .bench-plens {
+  top: 0;
+  height: 100%;
+}
+
+.pusula-landing .bench-plens > i {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--beam) - var(--lens-ry));
+  width: calc(2 * var(--lens-rx));
+  height: calc(2 * var(--lens-ry));
+  translate: -50% 0;
+  border: 1.25px solid var(--gold);
+  border-radius: 50%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 211, 110, 0.3),
+    rgba(212, 168, 64, 0.06) 50%,
+    rgba(255, 211, 110, 0.18)
+  );
+}
+
+/* The ◇/◆ marker above each poster lens. */
+.pusula-landing .bench-plens::before {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: calc(var(--mark-y) - 4px);
+  width: 8px;
+  height: 8px;
+  border: 1.25px solid var(--gold);
+  transform: rotate(45deg) scale(0.75);
+}
+
+.pusula-landing .bench-plens[data-lossy]::before {
+  background: var(--gold);
+}
+
+.pusula-landing .bench-plens[data-off] > i,
+.pusula-landing .bench-plens[data-off]::before {
+  opacity: 0.28;
+}
+
+.pusula-landing .bench-after {
+  top: calc(var(--beam) - 3 * (var(--tile-h) + 2px));
+}
+
+.pusula-landing .bench-after-grid {
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  display: grid;
+  grid-template-rows: repeat(6, var(--tile-h));
+  grid-auto-flow: column;
+  grid-auto-columns: 7px;
+  gap: 2px 3px;
+}
+
+.pusula-landing .bench-after-grid > i {
+  background: var(--gold-hi);
+  opacity: 0.85;
+}
+
+.pusula-landing .bench-port {
+  top: calc(var(--beam) - var(--port-r));
+}
+
+.pusula-landing .bench-port > i {
+  position: absolute;
+  left: 50%;
+  width: calc(2 * var(--port-r));
+  height: calc(2 * var(--port-r));
+  translate: -50% 0;
+  border: 1.25px solid var(--gold);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--phosphor) 0 16%,
+    rgba(255, 211, 110, 0.4) 30%,
+    var(--bezel) 58%
+  );
+  box-shadow: 0 0 22px 2px var(--gold-glow);
+}
+
+/* A cache hit: reflected at the mirror, nothing reached upstream. */
+.pusula-landing .bench-reflect {
+  display: none;
+  top: calc(var(--beam) - 6px);
+}
+
+.pusula-landing .bench-reflect svg {
+  position: absolute;
+  right: 6px;
+  width: 64px;
+  height: 40px;
+  fill: none;
+  stroke: var(--ember);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pusula-landing .bench-reflect:dir(rtl) svg {
+  right: auto;
+  left: 6px;
+  transform: scaleX(-1);
+}
+
+.pusula-landing .bench-poster[data-mode="hit"] .bench-reflect {
+  display: block;
+}
+
+.pusula-landing .bench-poster[data-mode="hit"] .bench-after {
+  display: none;
+}
+
+.pusula-landing .bench-poster[data-mode="hit"] .bench-port > i {
+  background: radial-gradient(circle, #0c0b0a 0 58%, var(--bezel) 60%);
+  box-shadow: none;
+  opacity: 0.7;
+}
+
+.pusula-landing .bench-poster[data-mode="hit"] .bench-mirror::before {
+  box-shadow: 0 0 26px 4px var(--gold-glow);
+}
+
+/* ---- overlay: captions, legend, readout, lens labels and their hit targets ---- */
+
+.pusula-landing .bench-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.pusula-landing .bench-cap {
+  position: absolute;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  line-height: 1.3;
+  color: var(--mist-dim);
+  white-space: nowrap;
+}
+
+.pusula-landing .bench-cap-src {
+  inset-inline-start: 0;
+  top: calc(var(--src-top) + 7 * var(--pitch) + var(--tile-h) + 14px);
+  width: var(--src-w);
+  text-align: center;
+  color: var(--mist);
+}
+
+.pusula-landing .bench-cap-mirror {
+  top: calc(var(--mirror-top) - 26px);
+}
+
+.pusula-landing .bench-cap-mirror > span {
+  position: absolute;
+  left: 0;
+  translate: -50% 0;
+}
+
+/* The key to the markers, in the band's lower start corner (stacked, clear of the labels). */
+.pusula-landing .bench-legend-band {
+  position: absolute;
+  inset-inline-start: 0;
+  bottom: 14px;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pusula-landing .bench-legend-foot {
+  display: none;
+}
+
+/* Hover, focus or tap: the engine's name and class, at the band's top end. */
+.pusula-landing .bench-readout {
+  position: absolute;
+  top: 8px;
+  inset-inline-end: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin: 0;
+  font-size: var(--fs-readout);
+  line-height: 18px;
+  color: var(--gold-hi);
+  white-space: nowrap;
+}
+
+.pusula-landing .bench-readout-class {
+  color: var(--mist);
+}
+
+.pusula-landing .bench-lenses {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pusula-landing .bench-lens {
+  top: 0;
+  height: 100%;
+}
+
+.pusula-landing .bench-lens-hit {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--mark-y) - 16px);
+  width: 44px;
+  height: calc(var(--beam) + var(--lens-ry) - var(--mark-y) + 26px);
+  translate: -50% 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: none;
+  color: var(--mist);
+  pointer-events: auto;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pusula-landing .bench-lens-hit:focus-visible {
+  outline: 2px solid transparent;
+  box-shadow: var(--ring-focus);
+}
+
+/* The label hangs from the lens at -35°, its end under the lens. */
+.pusula-landing .bench-lens-label {
+  position: absolute;
+  right: 50%;
+  top: calc(var(--label-y) - var(--mark-y) + 16px);
+  margin-top: -8px;
+  padding-inline-end: 4px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  line-height: 16px;
+  color: var(--mist);
+  white-space: nowrap;
+  transform-origin: 100% 50%;
+  transform: rotate(-35deg);
+  transition:
+    opacity var(--t-reveal) var(--ease-out) calc(var(--i) * 70ms + 160ms),
+    transform var(--t-reveal) var(--ease-out) calc(var(--i) * 70ms + 160ms);
+}
+
+.pusula-landing .bench-lens[data-hi] .bench-lens-label,
+.pusula-landing .bench-lens-hit[aria-pressed="true"] .bench-lens-label {
+  color: var(--gold-hi);
+}
+
+.pusula-landing .bench-lens[data-off] .bench-lens-label {
+  color: var(--mist-dim);
+}
+
+.pusula-landing[data-motion="on"] .bench-lenses[data-power="armed"] .bench-lens-label {
+  opacity: 0;
+  transform: rotate(-35deg) translateX(10px);
+}
+
+/* ---- the engines as one snap row of chips (phone; touch tablets) ---- */
+
+.pusula-landing .bench-chips {
+  display: none;
+  gap: var(--s-2);
+  margin: 0;
+  padding: 0 var(--gutter);
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+}
+
+.pusula-landing .bench-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.pusula-landing .bench-chips > li {
+  display: flex;
+  flex: none;
+  scroll-snap-align: start;
+}
+
+.pusula-landing .bench-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 44px;
+  padding-inline: 14px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-pill);
+  background: var(--bezel);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  color: var(--mist);
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pusula-landing .bench-chip .bench-mark {
+  color: var(--gold);
+}
+
+.pusula-landing .bench-chip[data-hi] {
+  border-color: var(--gold-lo);
+  color: var(--foam);
+}
+
+.pusula-landing .bench-chip[aria-pressed="true"] {
+  border-color: var(--gold);
+  color: var(--gold-hi);
+}
+
+.pusula-landing .bench-chip[data-off] {
+  color: var(--mist-dim);
+}
+
+.pusula-landing .bench-chip[data-off] .bench-mark {
+  opacity: 0.45;
+}
+
+/* Touch tablets: the lenses are too close for 44px targets; the chips take over. */
+@media (min-width: 768px) and (max-width: 1023px) and (pointer: coarse) {
+  .pusula-landing .bench-chips {
+    display: flex;
+  }
+
+  .pusula-landing .bench-lens-hit {
+    visibility: hidden;
+  }
+
+  .pusula-landing .bench-lens-label {
+    visibility: visible;
+    pointer-events: none;
+  }
+}
+
+/* ---- the response (with the two sends and the switch) and, beside it, the facts ---- */
+
+.pusula-landing .bench-out {
+  display: grid;
+  grid-template-columns: minmax(0, 35rem) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--s-6) var(--s-8);
+}
+
+.pusula-landing .bench-term .term-pre {
+  min-height: calc(4 * 1.75em + 2 * var(--s-4));
+}
+
+.pusula-landing .bench-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+}
+
+.pusula-landing .bench-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.pusula-landing .bench-switch {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2) var(--s-4);
+}
+
+.pusula-landing .bench-notes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  min-width: 0;
+}
+
+.pusula-landing .bench-badge .sim-note {
+  max-width: 52ch;
+}
+
+/* The facts: a compact run-in list, title ◆ text, on hairlines. */
+.pusula-landing .bench-facts {
+  margin: 0;
+}
+
+.pusula-landing .bench-facts > div {
+  padding-block: var(--s-3);
+  border-top: 1px solid var(--rule-soft);
+  font-size: var(--fs-small);
+  line-height: 1.6;
+  color: var(--mist);
+}
+
+.pusula-landing .bench-facts > div:last-child {
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.pusula-landing .bench-facts dt {
+  display: inline;
+  font-weight: 600;
+  color: var(--foam);
+}
+
+.pusula-landing .bench-facts dt::after {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-inline: 10px 9px;
+  background: var(--gold);
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.pusula-landing .bench-facts dd {
+  display: inline;
+  margin: 0;
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .pusula-landing .bench-out {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    column-gap: var(--s-6);
+  }
+}
+
+@media (max-width: 1023px) {
+  .pusula-landing .bench-out {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---- phone ---- */
+
+@media (max-width: 767px) {
+  /* No row gaps: the chips sit inside the band (an empty row), the response follows the band. */
+  .pusula-landing .bench-wrap {
+    gap: 0;
+  }
+
+  .pusula-landing .bench {
+    --h: var(--c-h);
+    --beam: var(--c-beam);
+    --env0: var(--c-env0);
+    --pitch: var(--c-pitch);
+    --tile-h: var(--c-tile-h);
+    --src-w: var(--c-src-w);
+    --src-top: var(--c-src-top);
+    --mirror-top: var(--c-mirror-top);
+    --mirror-bottom: var(--c-mirror-bottom);
+    --lens-rx: var(--c-lens-rx);
+    --lens-ry: var(--c-lens-ry);
+    --mark-y: var(--c-mark-y);
+    --label-y: var(--c-label-y);
+    --port-r: var(--c-port-r);
+    margin-inline: var(--gutter);
+    border: 1px solid var(--rule-soft);
+    border-radius: var(--r-md);
+  }
+
+  .pusula-landing .bench-at {
+    --x: var(--xc);
+  }
+
+  .pusula-landing .bench-seg {
+    --x1: var(--x1c);
+    --x2: var(--x2c);
+  }
+
+  .pusula-landing .bench-box {
+    width: 100%;
+  }
+
+  .pusula-landing .bench-lenses,
+  .pusula-landing .bench-legend-band {
+    display: none;
+  }
+
+  /* The chips ride in the band's last 52px, under the lens ticks they name. */
+  .pusula-landing .bench-chips {
+    position: relative;
+    display: flex;
+    align-self: start;
+    margin: -52px calc(var(--gutter) + 1px) 0;
+    padding: 0 8px;
+    scroll-padding-inline: 8px;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 8px,
+      #000 calc(100% - 20px),
+      transparent
+    );
+  }
+
+  .pusula-landing .bench-chips:dir(rtl) {
+    mask-image: linear-gradient(
+      to left,
+      transparent,
+      #000 8px,
+      #000 calc(100% - 20px),
+      transparent
+    );
+  }
+
+  .pusula-landing .bench-mirror::before {
+    left: -3px;
+    width: 6px;
+  }
+
+  .pusula-landing .bench-plens::before {
+    left: -3px;
+    width: 6px;
+    height: 6px;
+    top: calc(var(--mark-y) - 3px);
+  }
+
+  .pusula-landing .bench-after-grid {
+    grid-auto-columns: 3px;
+    gap: 2px 2px;
+  }
+
+  .pusula-landing .bench-cap-mirror {
+    top: calc(var(--mirror-top) - 22px);
+  }
+
+  .pusula-landing .bench-readout {
+    top: 5px;
+    inset-inline-end: 10px;
+    font-size: var(--fs-micro);
+  }
+
+  .pusula-landing .bench-out {
+    gap: var(--s-4);
+    margin-block-start: var(--s-4);
+  }
+
+  /* A phone line is shorter than the compression header: wrap it rather than hide it. */
+  .pusula-landing .bench-term .term-pre {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  /* Two equal buttons on one row; a longer pair (de) takes a row each. */
+  .pusula-landing .bench-actions {
+    width: 100%;
+  }
+
+  .pusula-landing .bench-btn {
+    flex: 1 1 0;
+    min-width: max-content;
+  }
+
+  .pusula-landing .bench-switch {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .pusula-landing .bench-legend-foot {
+    display: flex;
+  }
+
+  .pusula-landing .bench-notes {
+    gap: var(--s-3);
+  }
+
+  .pusula-landing .bench-facts > div {
+    padding-block: 10px;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+}
+
+/* ======================================================================== */
+/* Part B: the MCP and A2A array                                            */
+/* ======================================================================== */
+
+.pusula-landing .engine-proto {
+  margin-block-start: var(--s-7);
+}
+
+.pusula-landing .engine-proto-rule {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-block-end: var(--s-5);
+  color: var(--gold);
+}
+
+.pusula-landing .engine-proto-rule::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--rule), rgba(46, 40, 27, 0));
+}
+
+.pusula-landing .engine-proto-rule:dir(rtl)::after {
+  background: linear-gradient(to left, var(--rule), rgba(46, 40, 27, 0));
+}
+
+/*
+ * One grid: the heading over the lanes and the plate, the card beside them
+ * from the heading down; the MCP text, the figures and the docs link below.
+ * The lanes meet the plate with no gap, each guide on its entry row.
+ */
+.pusula-landing .engine-array {
+  --pitch: 26px;
+  --led: 10px;
+  --plate-edge: 21px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(340px, 400px);
+  grid-template-areas:
+    "head  head  card"
+    "lanes plate card"
+    "mcp   nums  docs";
+  align-items: start;
+  gap: var(--s-5) 0;
+}
+
+.pusula-landing .engine-proto-head {
+  grid-area: head;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-4);
+  padding-inline-end: var(--s-8);
+}
+
+.pusula-landing .engine-h3 {
+  margin: 0;
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--foam);
+}
+
+.pusula-landing .engine-copy {
+  margin: 0;
+  font-size: var(--fs-small);
+  line-height: 1.6;
+  color: var(--mist);
+  text-wrap: pretty;
+}
+
+/* ---- transport waveguides ---- */
+
+.pusula-landing .engine-lanes {
+  grid-area: lanes;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  /* lane = 16px label + 8px gap + 12px guide; guides land on the plate's entry rows */
+  gap: calc(var(--entry-step) * var(--pitch) - 36px);
+  padding-block-start: calc(var(--plate-edge) + (var(--entry0) + 0.5) * var(--pitch) - 30px);
+}
+
+.pusula-landing .engine-lane {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pusula-landing .engine-lane-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  height: 16px;
+  margin: 0;
+  padding-inline-end: var(--s-4);
+  font-family: var(--font-mono);
+  font-size: var(--fs-readout);
+  line-height: 16px;
+}
+
+.pusula-landing .engine-lane-name {
+  color: var(--foam);
+}
+
+.pusula-landing .engine-lane-end {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.pusula-landing .engine-lane[data-pinned] .engine-lane-name {
+  color: var(--gold-hi);
+}
+
+.pusula-landing .engine-guide {
+  position: relative;
+  height: 12px;
+  border-block: 1px solid #4a3d22;
+  background: linear-gradient(
+    to bottom,
+    rgba(212, 168, 64, 0),
+    rgba(212, 168, 64, 0.08),
+    rgba(212, 168, 64, 0)
+  );
+}
+
+.pusula-landing .engine-guide::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  height: 1px;
+  background: rgba(212, 168, 64, 0.3);
+}
+
+/* Where the guide meets the plate: a lit port. */
+.pusula-landing .engine-guide::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: -1px;
+  top: -4px;
+  width: 3px;
+  height: 18px;
+  border-radius: 2px;
+  background: var(--gold);
+  box-shadow: 0 0 10px 1px var(--gold-glow);
+}
+
+.pusula-landing .engine-lane[data-pinned] .engine-guide {
+  border-color: var(--gold);
+}
+
+/* The port's flash when a packet arrives (opacity from the loop). */
+.pusula-landing .engine-port {
+  position: absolute;
+  inset-inline-end: -4px;
+  top: 50%;
+  width: 9px;
+  height: 30px;
+  margin-top: -15px;
+  border-radius: 5px;
+  background: radial-gradient(
+    closest-side,
+    var(--phosphor),
+    rgba(255, 211, 110, 0.55) 55%,
+    rgba(255, 211, 110, 0)
+  );
+  box-shadow: 0 0 18px 4px rgba(255, 211, 110, 0.35);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* A comet: a long tail into a bright head (PACKET_W in ProtocolArray.tsx). */
+.pusula-landing .engine-packet {
+  position: absolute;
+  inset-inline-start: 0;
+  top: 50%;
+  width: 44px;
+  height: 3px;
+  margin-top: -1.5px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 211, 110, 0),
+    rgba(255, 211, 110, 0.35) 55%,
+    var(--phosphor)
+  );
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.pusula-landing .engine-packet::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: -3px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  margin-top: -3.5px;
+  border-radius: 50%;
+  background: var(--phosphor);
+  box-shadow:
+    0 0 8px 2px rgba(255, 211, 110, 0.75),
+    0 0 20px 5px rgba(255, 211, 110, 0.22);
+}
+
+.pusula-landing .engine-packet:dir(rtl) {
+  background: linear-gradient(
+    to left,
+    rgba(255, 211, 110, 0),
+    rgba(255, 211, 110, 0.35) 55%,
+    var(--phosphor)
+  );
+}
+
+/* ---- the plate ---- */
+
+.pusula-landing .engine-plate {
+  grid-area: plate;
+  position: relative;
+  margin-inline-end: var(--s-8);
+  padding: 20px;
+  overflow: clip;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  background: linear-gradient(160deg, #17140f, #0c0b0a 70%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 228, 160, 0.07),
+    inset 0 0 0 5px rgba(0, 0, 0, 0.32),
+    inset 0 0 0 6px rgba(212, 168, 64, 0.08),
+    var(--shadow-panel);
+}
+
+.pusula-landing .engine-screw {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--gold-lo), #241b0c 75%);
+}
+
+.pusula-landing .engine-screw:nth-child(1) {
+  top: 7px;
+  left: 7px;
+}
+
+.pusula-landing .engine-screw:nth-child(2) {
+  top: 7px;
+  right: 7px;
+}
+
+.pusula-landing .engine-screw:nth-child(3) {
+  bottom: 7px;
+  left: 7px;
+}
+
+.pusula-landing .engine-screw:nth-child(4) {
+  bottom: 7px;
+  right: 7px;
+}
+
+/* A slow sheen crossing the plate: the lights seem to breathe as it passes. */
+.pusula-landing .engine-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    105deg,
+    rgba(255, 211, 110, 0) 38%,
+    rgba(255, 211, 110, 0.075) 50%,
+    rgba(255, 211, 110, 0) 62%
+  );
+  transform: translateX(-100%);
+  pointer-events: none;
+  animation: engine-plate-sheen 7.5s var(--ease-io) infinite;
+  animation-play-state: paused;
+}
+
+.pusula-landing .engine-plate[data-run] .engine-sheen {
+  animation-play-state: running;
+}
+
+@keyframes engine-plate-sheen {
+  0% {
+    transform: translateX(-100%);
+  }
+  60%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.pusula-landing .engine-leds {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), var(--pitch));
+  grid-auto-rows: var(--pitch);
+}
+
+.pusula-landing .engine-led {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+/* Unlit: a dim gold bead, each a little different (seeded, still). */
+.pusula-landing .engine-led > i {
+  width: var(--led);
+  height: var(--led);
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #7a5718, #2a2010 72%);
+  box-shadow: inset 0 0 0 1px rgba(212, 168, 64, 0.28);
+  opacity: calc(0.42 + var(--b) * 0.36);
+}
+
+/* A hit: a phosphor flash with a long afterglow (two names, so a repeat restarts it). */
+.pusula-landing .engine-led::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--led);
+  height: var(--led);
+  margin: calc(var(--led) / -2) 0 0 calc(var(--led) / -2);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--phosphor) 0 30%,
+    var(--gold-hi) 46%,
+    rgba(255, 211, 110, 0) 72%
+  );
+  box-shadow:
+    0 0 10px 3px rgba(255, 211, 110, 0.6),
+    0 0 24px 7px rgba(255, 211, 110, 0.18);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pusula-landing .engine-led[data-hit="a"]::after {
+  animation: engine-led-hit-a 2400ms linear;
+}
+
+.pusula-landing .engine-led[data-hit="b"]::after {
+  animation: engine-led-hit-b 2400ms linear;
+}
+
+@keyframes engine-led-hit-a {
+  0% {
+    opacity: 1;
+    transform: scale(2.3);
+  }
+  5% {
+    opacity: 1;
+    transform: scale(1.45);
+  }
+  22% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+  55% {
+    opacity: 0.36;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+@keyframes engine-led-hit-b {
+  0% {
+    opacity: 1;
+    transform: scale(2.3);
+  }
+  5% {
+    opacity: 1;
+    transform: scale(1.45);
+  }
+  22% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+  55% {
+    opacity: 0.36;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+/* Traces: a packet's path from the port to its light (transform and opacity from the loop). */
+.pusula-landing .engine-traces {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.pusula-landing .engine-leg {
+  position: absolute;
+  top: 0;
+  inset-inline-start: 0;
+  background: var(--gold-hi);
+  box-shadow: 0 0 6px 1px rgba(255, 211, 110, 0.5);
+  opacity: 0;
+  transform-origin: 0 0;
+}
+
+.pusula-landing .engine-leg:dir(rtl) {
+  transform-origin: 100% 0;
+}
+
+.pusula-landing .engine-leg[data-axis="h"] {
+  width: 100%;
+  height: 2px;
+}
+
+.pusula-landing .engine-leg[data-axis="v"] {
+  width: 2px;
+  height: 100%;
+}
+
+/* Power-on: a diagonal wave, 900ms corner to corner. */
+.pusula-landing[data-motion="on"] .engine-plate[data-power] .engine-led {
+  transition: opacity 300ms var(--ease-out) calc(var(--w) * 600ms);
+}
+
+.pusula-landing[data-motion="on"] .engine-plate[data-power="armed"] .engine-led {
+  opacity: 0;
+}
+
+/* ---- the real figures ---- */
+
+.pusula-landing .engine-nums {
+  grid-area: nums;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-3);
+  margin: 0;
+  margin-inline-end: var(--s-8);
+  text-align: center;
+}
+
+.pusula-landing .engine-nums > div {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: var(--s-1);
+}
+
+.pusula-landing .engine-nums dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: clamp(1.75rem, 1.35rem + 1.2vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--foam);
+}
+
+.pusula-landing .engine-nums dt {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  line-height: 1.3;
+  color: var(--mist-dim);
+}
+
+/* ---- MCP text ---- */
+
+.pusula-landing .engine-mcp {
+  grid-area: mcp;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-3);
+  padding-inline-end: var(--s-6);
+}
+
+.pusula-landing .engine-mcp .engine-copy {
+  max-width: 52ch;
+}
+
+/* ---- the A2A card ---- */
+
+.pusula-landing .engine-a2a {
+  grid-area: card;
+  perspective: 1100px;
+}
+
+/* The idle turn is written by the loop (rotateY), upright while read or used. */
+.pusula-landing .engine-a2a-sway {
+  transform-style: preserve-3d;
+}
+
+.pusula-landing .engine-a2a-flip {
+  display: grid;
+  transform-style: preserve-3d;
+  transition: transform var(--t-power) var(--ease-swing);
+  cursor: pointer;
+}
+
+.pusula-landing .engine-a2a[data-flipped] .engine-a2a-flip {
+  transform: rotateY(180deg);
+}
+
+.pusula-landing .engine-a2a-face {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  min-width: 0;
+  padding: var(--s-5);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  background: linear-gradient(165deg, #18150f, var(--deck) 42%, #0d0c0b);
+  box-shadow: var(--shadow-panel);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.pusula-landing .engine-a2a-back {
+  padding: 0;
+  transform: rotateY(180deg);
+}
+
+.pusula-landing .engine-a2a-sep {
+  margin-inline: 0.4em;
+  color: var(--gold-lo);
+}
+
+.pusula-landing .engine-a2a-rpc {
+  font-family: var(--font-mono);
+  font-size: var(--fs-readout);
+  font-weight: 500;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.pusula-landing .engine-skills {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin: var(--s-1) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pusula-landing .engine-skill {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  width: 100%;
+  min-height: 44px;
+  padding-inline: 12px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-pill);
+  background: var(--bezel);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  color: var(--mist);
+  text-align: start;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pusula-landing .engine-skill::before {
+  content: "";
+  flex: none;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold-lo);
+}
+
+.pusula-landing .engine-skill:hover {
+  border-color: var(--gold-lo);
+  color: var(--foam);
+}
+
+.pusula-landing .engine-skill[aria-pressed="true"] {
+  border-color: rgba(255, 122, 69, 0.55);
+  color: var(--foam);
+}
+
+.pusula-landing .engine-skill[aria-pressed="true"]::before {
+  background: var(--ember);
+}
+
+.pusula-landing .engine-a2a-ends {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1) var(--s-4);
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  color: var(--gold);
+}
+
+.pusula-landing .engine-a2a-ends code {
+  font-family: inherit;
+}
+
+/* The back: a borderless terminal filling the face; history above, dimmed. */
+.pusula-landing .engine-a2a-term {
+  height: 100%;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  box-shadow: none;
+}
+
+.pusula-landing .engine-a2a-term .term-pre {
+  flex: 1;
+}
+
+.pusula-landing .engine-log-old {
+  opacity: 0.45;
+}
+
+.pusula-landing .engine-a2a-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2) var(--s-3);
+}
+
+.pusula-landing .engine-a2a-return {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 44px;
+  padding-inline: var(--s-4);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-pill);
+  background: transparent;
+  font-size: var(--fs-small);
+  color: var(--foam);
+  cursor: pointer;
+}
+
+.pusula-landing .engine-a2a-return:hover {
+  border-color: var(--gold-lo);
+}
+
+/* "Back to the front": the arrow points to the inline start. */
+.pusula-landing .engine-back-glyph {
+  scale: -1 1;
+}
+
+/* ---- docs link ---- */
+
+.pusula-landing .engine-docs {
+  grid-area: docs;
+  margin: 0;
+}
+
+.pusula-landing .engine-docs-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 44px;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--gold-hi);
+  text-decoration: none;
+  text-underline-offset: 4px;
+}
+
+.pusula-landing .engine-docs-link:hover {
+  text-decoration: underline;
+}
+
+/* ---- tablet: the card below the lanes and the plate ---- */
+
+@media (max-width: 1099px) {
+  .pusula-landing .engine-array {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "head  head"
+      "lanes plate"
+      "mcp   nums"
+      "card  card"
+      "docs  docs";
+  }
+
+  .pusula-landing .engine-plate,
+  .pusula-landing .engine-nums {
+    margin-inline-end: 0;
+  }
+
+  .pusula-landing .engine-a2a {
+    justify-self: center;
+    width: min(100%, 460px);
+  }
+
+  .pusula-landing .engine-docs {
+    justify-self: center;
+  }
+}
+
+/* ---- phone: lanes feed a bus into the plate's top; the figures stand beside it ---- */
+
+@media (max-width: 767px) {
+  .pusula-landing .engine-proto {
+    margin-block-start: var(--s-6);
+  }
+
+  .pusula-landing .engine-proto-rule {
+    margin-block-end: var(--s-3);
+  }
+
+  .pusula-landing .engine-array {
+    --pitch: 22px;
+    --led: 8px;
+    --plate-edge: 15px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "head  head"
+      "lanes lanes"
+      "nums  plate"
+      "mcp   mcp"
+      "card  card"
+      "docs  docs";
+    gap: var(--s-5) var(--s-3);
+  }
+
+  .pusula-landing .engine-proto-head {
+    gap: var(--s-3);
+    padding-inline-end: 0;
+  }
+
+  .pusula-landing .engine-lanes {
+    gap: 0;
+    padding: 0;
+  }
+
+  /* The bus: down the inline end, over the plate's last column, into its top. */
+  .pusula-landing .engine-lanes::after {
+    content: "";
+    position: absolute;
+    inset-inline-end: 25px;
+    top: 29px;
+    bottom: calc(-1 * var(--s-5));
+    width: 1px;
+    background: linear-gradient(to bottom, rgba(212, 168, 64, 0.55), var(--gold));
+    box-shadow: 0 0 6px rgba(212, 168, 64, 0.35);
+  }
+
+  .pusula-landing .engine-lane {
+    gap: 6px;
+    padding-block: 3px;
+  }
+
+  /* Endpoints stop short of the bus. */
+  .pusula-landing .engine-lane-label {
+    padding-inline-end: 36px;
+    font-size: var(--fs-micro);
+  }
+
+  .pusula-landing .engine-guide {
+    height: 8px;
+    margin-inline-end: 25px;
+  }
+
+  .pusula-landing .engine-guide::after {
+    top: -3px;
+    height: 12px;
+  }
+
+  .pusula-landing .engine-port {
+    height: 22px;
+    margin-top: -11px;
+  }
+
+  .pusula-landing .engine-plate {
+    justify-self: end;
+    padding: 14px;
+  }
+
+  .pusula-landing .engine-nums {
+    grid-template-columns: minmax(0, 1fr);
+    align-self: stretch;
+    align-content: space-evenly;
+    gap: var(--s-4);
+  }
+
+  .pusula-landing .engine-nums dd {
+    font-size: 1.625rem;
+  }
+
+  /* "MCP server" runs into its paragraph, like the facts above. */
+  .pusula-landing .engine-mcp {
+    display: block;
+    padding-inline-end: 0;
+  }
+
+  .pusula-landing .engine-mcp .engine-h3 {
+    display: inline;
+    font-size: var(--fs-body);
+  }
+
+  .pusula-landing .engine-mcp .engine-h3::after {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-inline: 10px 9px;
+    background: var(--gold);
+    transform: translateY(-2px) rotate(45deg);
+  }
+
+  .pusula-landing .engine-mcp .engine-copy {
+    display: inline;
+  }
+
+  .pusula-landing .engine-mcp .sim-badge {
+    display: flex;
+    margin-block-start: var(--s-3);
+  }
+
+  .pusula-landing .engine-a2a {
+    width: 100%;
+  }
+
+  .pusula-landing .engine-a2a-face {
+    padding: var(--s-4);
+  }
+
+  .pusula-landing .engine-a2a-back {
+    padding: 0;
+  }
+
+  .pusula-landing .engine-docs {
+    justify-self: start;
+    margin-block-start: calc(-1 * var(--s-3));
+  }
+}
+
+/* The narrowest phones: the longest skill id needs the dot's room. */
+@media (max-width: 419px) {
+  .pusula-landing .engine-skill {
+    padding-inline: 10px;
+  }
+
+  .pusula-landing .engine-skill::before {
+    display: none;
+  }
+}
+
+/* ======================================================================== */
+/* Reduced motion: still, complete, readable                               */
+/* ======================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .pusula-landing .engine-led::after {
+    animation: none !important;
+  }
+
+  .pusula-landing .engine-sheen {
+    display: none;
+  }
+
+  .pusula-landing .engine-a2a {
+    perspective: none;
+  }
+
+  /* Both faces, side by side. */
+  .pusula-landing .engine-array {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "head  head"
+      "lanes plate"
+      "mcp   nums"
+      "card  card"
+      "docs  docs";
+  }
+
+  .pusula-landing .engine-plate,
+  .pusula-landing .engine-nums {
+    margin-inline-end: 0;
+  }
+
+  .pusula-landing .engine-a2a {
+    width: 100%;
+  }
+
+  .pusula-landing .engine-a2a-flip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-5);
+    transform: none !important;
+    cursor: auto;
+  }
+
+  .pusula-landing .engine-a2a-face {
+    grid-area: auto;
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+  }
+
+  .pusula-landing .engine-a2a-back {
+    transform: none;
+    border: 1px solid var(--rule);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (max-width: 767px) {
+  .pusula-landing .engine-array {
+    grid-template-areas:
+      "head  head"
+      "lanes lanes"
+      "nums  plate"
+      "mcp   mcp"
+      "card  card"
+      "docs  docs";
+  }
+
+  .pusula-landing .engine-a2a-flip {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

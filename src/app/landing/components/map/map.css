@@ -1,0 +1,1155 @@
+/*
+ * Network station (spec §6.3): the Afghanistan map. Everything is scoped
+ * under `.pusula-landing` and prefixed `netmap-`.
+ *
+ * Phone and tablet (< 1024px): ordinary flow, not pinned — the canvas, then
+ * the counters, the log, the legend, the hint and reset.
+ * Desktop (≥ 1024px): a 160vh pinned track whose sticky 100svh stage holds a
+ * full-bleed canvas. Afghanistan's open corners are its north-west and
+ * south-east, and geography is never mirrored, so the title rides over the
+ * top-left and the legend sits top-right in both directions; the flight board
+ * takes the bottom inline-end corner (the SimDock and its toasts own the
+ * bottom inline-start one), so it is bottom-right in LTR and bottom-left in
+ * RTL (where the map leans further right: `MAP_FITS` in mapRoles.ts).
+ *
+ * Only `transform` and `opacity` animate. The figure is always `dir="ltr"`.
+ */
+
+/* ------------------------------------------------------------------------ */
+/* Station shell                                                            */
+/* ------------------------------------------------------------------------ */
+
+/* A tighter shell on phones keeps the station inside its 860px budget. */
+@media (max-width: 639.98px) {
+  .pusula-landing .station.netmap {
+    --station-pad: 32px;
+    padding-block-end: 24px;
+  }
+
+  .pusula-landing .station.netmap > .station-head {
+    gap: var(--s-3);
+  }
+
+  /* "routed / requests" on two lines leaves the disclosure two lines, not three. */
+  .pusula-landing .netmap-count dt {
+    max-width: 9ch;
+    line-height: 1.3;
+  }
+}
+
+.pusula-landing .station.netmap > .station-head {
+  position: relative;
+  z-index: 3;
+  margin-block-end: 0;
+}
+
+.pusula-landing .netmap-deck {
+  position: relative;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Figure: canvas over the poster, DOM labels over both                     */
+/* ------------------------------------------------------------------------ */
+
+/*
+ * Phone: the tilted map is shallow, so the canvas is too (no dead band under
+ * the country); it tucks under the lead's last line-gap.
+ */
+.pusula-landing .netmap-figure {
+  position: relative;
+  z-index: 0;
+  margin: -44px 0 0;
+  width: 100%;
+  height: min(76vw, 64svh);
+  container: netmap / size;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.pusula-landing .netmap-figure[data-hover="provider"] {
+  cursor: pointer;
+}
+
+.pusula-landing .netmap-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+/* The camera's fit at pitch 0 (`MAP_FITS` in mapRoles.ts): `flow` here. */
+.pusula-landing .netmap-fit {
+  position: absolute;
+  left: 50%;
+  top: 56%;
+  width: min(92cqw, calc(86cqh * 825 / 643));
+  aspect-ratio: 825 / 643;
+  translate: -50% -50%;
+}
+
+.pusula-landing .netmap-poster-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* The canvas uses a 14-unit grid below 640px and 12 above; so does the poster. */
+.pusula-landing .netmap-pdots-12 {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .pusula-landing .netmap-pdots-12 {
+    display: inline;
+  }
+  .pusula-landing .netmap-pdots-14 {
+    display: none;
+  }
+}
+
+/* ---- City labels (poster names and live labels share the body styles) ---- */
+
+.pusula-landing .netmap-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 300ms linear;
+}
+
+/* Live labels take over from the poster's names when the canvas has drawn. */
+.pusula-landing .netmap-canvas[data-live="on"] ~ .netmap-labels {
+  opacity: 1;
+}
+
+.pusula-landing .netmap-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  will-change: transform;
+}
+
+.pusula-landing .netmap-pname {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+/*
+ * Every label sits on a soft void plate: the role line (mono 12, gold) and
+ * the counter stay legible over the brightest dots and the city's glow.
+ */
+.pusula-landing .netmap-lbody {
+  --netmap-gap: 16px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 2px 6px 3px;
+  border-radius: 6px;
+  background: rgba(4, 4, 5, 0.74);
+  box-shadow: 0 0 10px 3px rgba(4, 4, 5, 0.55);
+  white-space: nowrap;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--foam);
+}
+
+/* A provider's name is a tap target too (only once the live labels show). */
+.pusula-landing .netmap-canvas[data-live="on"] ~ .netmap-labels [data-city] > .netmap-lbody,
+.pusula-landing .stage:not([data-live="on"]) .netmap-pname[data-city] > .netmap-lbody {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* A hairline leader from the breaker ring to the plate. */
+.pusula-landing :is(.netmap-label, .netmap-pname)::before {
+  content: "";
+  position: absolute;
+  background: rgba(255, 211, 110, 0.55);
+}
+
+.pusula-landing .netmap-lname {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.pusula-landing [data-role="hub"] .netmap-lname {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--phosphor);
+}
+
+.pusula-landing [data-trouble="on"] .netmap-lname {
+  color: var(--ember);
+}
+
+.pusula-landing .netmap-lcount {
+  margin-inline-start: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gold-hi);
+}
+
+.pusula-landing .netmap-lrole {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gold-hi);
+}
+
+.pusula-landing .netmap-lstate {
+  color: var(--ember);
+}
+
+.pusula-landing .netmap-lstate[data-state="halfOpen"] {
+  color: var(--gold-hi);
+}
+
+.pusula-landing .netmap-latch {
+  color: var(--ember);
+}
+
+/*
+ * Sides, phone and tablet first (`LABEL_SIDE.flow`): the plate starts just
+ * past the breaker ring (10px here, 14px on desktop) plus 6px.
+ */
+.pusula-landing :is(.netmap-label, .netmap-pname)[data-flow="e"] > .netmap-lbody {
+  left: var(--netmap-gap);
+  top: -10px;
+  align-items: flex-start;
+}
+
+.pusula-landing :is(.netmap-label, .netmap-pname)[data-flow="w"] > .netmap-lbody {
+  right: var(--netmap-gap);
+  top: -10px;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.pusula-landing :is(.netmap-label, .netmap-pname)[data-flow="n"] > .netmap-lbody {
+  bottom: var(--netmap-gap);
+  left: 0;
+  translate: -50% 0;
+  flex-direction: column-reverse;
+  align-items: center;
+  text-align: center;
+}
+
+.pusula-landing :is(.netmap-label, .netmap-pname)[data-flow="s"] > .netmap-lbody {
+  top: var(--netmap-gap);
+  left: 0;
+  translate: -50% 0;
+  align-items: center;
+  text-align: center;
+}
+
+.pusula-landing :is(.netmap-label, .netmap-pname)[data-flow="e"]::before {
+  left: 11px;
+  top: 0;
+  width: 5px;
+  height: 1px;
+}
+
+.pusula-landing :is(.netmap-label, .netmap-pname)[data-flow="w"]::before {
+  right: 11px;
+  top: 0;
+  width: 5px;
+  height: 1px;
+}
+
+.pusula-landing :is(.netmap-label, .netmap-pname)[data-flow="n"]::before {
+  left: 0;
+  bottom: 11px;
+  width: 1px;
+  height: 5px;
+}
+
+.pusula-landing :is(.netmap-label, .netmap-pname)[data-flow="s"]::before {
+  left: 0;
+  top: 11px;
+  width: 1px;
+  height: 5px;
+}
+
+/*
+ * On a phone the role line shows on tap; a cut road shows only its trouble
+ * ("✕ 503 · open"), without the catalog id or a leading separator.
+ */
+@media (max-width: 1023.98px) {
+  .pusula-landing :is(.netmap-label, .netmap-pname):not([data-open], [data-trouble]) .netmap-lrole {
+    display: none;
+  }
+
+  .pusula-landing .netmap-label[data-trouble]:not([data-open]) .netmap-lid {
+    display: none;
+  }
+
+  /* The trouble takes its own line, so a tapped label stays inside a 390px screen. */
+  .pusula-landing .netmap-label .netmap-lstate {
+    display: block;
+  }
+
+  .pusula-landing .netmap-label .netmap-lsep {
+    display: none;
+  }
+}
+
+/* ---- Cut roads on the poster (no live canvas: reduced motion) ---- */
+
+.pusula-landing .netmap-cuts {
+  pointer-events: none;
+}
+
+.pusula-landing .netmap-canvas[data-live="on"] ~ .netmap-cuts {
+  display: none;
+}
+
+.pusula-landing .netmap-cut {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.pusula-landing .netmap-cut-x {
+  position: absolute;
+  left: -14px;
+  top: -14px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1.5px dashed var(--ember);
+  border-radius: 50%;
+  background: rgba(4, 4, 5, 0.7);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ember);
+}
+
+.pusula-landing .netmap-cut-state {
+  position: absolute;
+  left: 0;
+  top: -38px;
+  translate: -50% 0;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: rgba(4, 4, 5, 0.8);
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ember);
+}
+
+.pusula-landing .netmap-cut-state:lang(fa) {
+  font-family: var(--font-sans);
+}
+
+/* ---- Hover card (desktop, fine pointer) ---- */
+
+.pusula-landing .netmap-tip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--t-hover) linear;
+}
+
+.pusula-landing .netmap-tip[data-open] {
+  opacity: 1;
+}
+
+/* Touch screens get the label's role line on tap instead. */
+@media (hover: none) {
+  .pusula-landing .netmap-tip {
+    display: none;
+  }
+}
+
+.pusula-landing .netmap-tipbody {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  display: grid;
+  gap: 2px;
+  width: max-content;
+  min-width: 200px;
+  max-width: 280px;
+  padding: 10px 12px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-sm);
+  background: rgba(10, 10, 12, 0.94);
+  box-shadow: var(--shadow-lift);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--mist);
+}
+
+.pusula-landing .netmap-tipbody p {
+  margin: 0;
+}
+
+.pusula-landing .netmap-tip[data-flipx] .netmap-tipbody {
+  left: auto;
+  right: 24px;
+}
+
+.pusula-landing .netmap-tip[data-flipy] .netmap-tipbody {
+  top: auto;
+  bottom: 24px;
+}
+
+.pusula-landing .netmap-tipname {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-block-end: 2px;
+  font-weight: 600;
+  color: var(--foam);
+}
+
+.pusula-landing .netmap-tiprole,
+.pusula-landing .netmap-tipnum {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--gold-hi);
+}
+
+.pusula-landing .netmap-tipcount {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+
+.pusula-landing .netmap-tipstate {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pusula-landing .netmap-tipring {
+  flex: none;
+}
+
+.pusula-landing .netmap-tipwarn {
+  color: var(--ember);
+}
+
+.pusula-landing .netmap-tipdim {
+  font-size: 12px;
+  color: var(--mist-dim);
+}
+
+/* ------------------------------------------------------------------------ */
+/* Keyboard twins: six road switches, shown in flow when one takes focus    */
+/* ------------------------------------------------------------------------ */
+
+.pusula-landing .netmap-keys {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  list-style: none;
+}
+
+/* In flow under the legend text: never over the map the switches control. */
+.pusula-landing .netmap-keys:focus-within {
+  position: static;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  width: auto;
+  height: auto;
+  margin-block: var(--s-2);
+  overflow: visible;
+  clip-path: none;
+  white-space: normal;
+}
+
+.pusula-landing .netmap-key {
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-pill);
+  background: var(--bezel);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--foam);
+  cursor: pointer;
+}
+
+.pusula-landing .netmap-key[aria-pressed="true"] {
+  border-color: var(--ember);
+  border-style: dashed;
+  color: var(--ember);
+}
+
+/* ------------------------------------------------------------------------ */
+/* Flight board                                                             */
+/* ------------------------------------------------------------------------ */
+
+.pusula-landing .netmap-board {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    "counts badge"
+    "log log";
+  gap: var(--s-2) var(--s-5);
+  align-items: start;
+  width: 100%;
+  max-width: calc(var(--content) + 2 * var(--gutter));
+  margin: var(--s-1) auto 0;
+  padding-inline: var(--gutter);
+}
+
+.pusula-landing .netmap-badge {
+  grid-area: badge;
+}
+
+.pusula-landing .netmap-counts {
+  grid-area: counts;
+  display: flex;
+  gap: var(--s-5);
+  margin: 0;
+}
+
+.pusula-landing .netmap-count {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 2px;
+}
+
+.pusula-landing .netmap-count dt {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--mist);
+}
+
+.pusula-landing .netmap-count dd {
+  margin: 0;
+}
+
+.pusula-landing .netmap-num {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--gold-hi);
+}
+
+.pusula-landing .netmap-log {
+  grid-area: log;
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--mist);
+}
+
+.pusula-landing .netmap-logline {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  animation: netmap-logline-in 320ms var(--ease-out) both;
+}
+
+.pusula-landing .netmap-logline:nth-child(n + 4),
+.pusula-landing .netmap-hdr {
+  display: none;
+}
+
+.pusula-landing .netmap-logline[data-kind="idle"] {
+  color: var(--mist-dim);
+}
+
+.pusula-landing .netmap-logline b {
+  font-weight: 600;
+  color: var(--foam);
+}
+
+.pusula-landing .netmap-logline[data-kind="fallback"] b {
+  color: var(--gold-hi);
+}
+
+.pusula-landing :is(.netmap-x, .netmap-drop) {
+  color: var(--ember);
+}
+
+.pusula-landing .netmap-hdr {
+  color: var(--mist-dim);
+  white-space: nowrap;
+}
+
+.pusula-landing .netmap-arrow {
+  display: inline-block;
+  margin-inline: 0.45em;
+  color: var(--gold);
+}
+
+.pusula-landing .netmap-arrow:dir(rtl) {
+  transform: scaleX(-1);
+}
+
+@keyframes netmap-logline-in {
+  from {
+    opacity: 0.25;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pusula-landing .netmap-reset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--gold);
+  border-radius: var(--r-pill);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold-hi);
+  cursor: pointer;
+}
+
+.pusula-landing .netmap-reset:hover:not(:disabled) {
+  background: var(--bezel);
+}
+
+.pusula-landing .netmap-reset:disabled {
+  border-color: var(--rule);
+  color: var(--mist-dim);
+  cursor: default;
+}
+
+/* The board's reset is the desktop one; phones show the legend's, by the hint. */
+.pusula-landing .netmap-reset-board {
+  display: none;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Legend                                                                   */
+/* ------------------------------------------------------------------------ */
+
+.pusula-landing .netmap-legend {
+  box-sizing: border-box;
+  display: grid;
+  gap: var(--s-2);
+  width: 100%;
+  max-width: calc(var(--content) + 2 * var(--gutter));
+  margin: var(--s-3) auto 0;
+  padding-inline: var(--gutter);
+}
+
+/* The glyph key is a wide-desktop aid; elsewhere the labels and the mapping line say it. */
+.pusula-landing .netmap-glyphs {
+  display: none;
+  flex-wrap: wrap;
+  gap: var(--s-1) var(--s-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--mist);
+}
+
+.pusula-landing .netmap-glyphs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pusula-landing .netmap-glyph {
+  flex: none;
+  color: var(--gold);
+}
+
+.pusula-landing .netmap-sample {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--mist);
+}
+
+.pusula-landing .netmap-mapping {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--mist-dim);
+}
+
+.pusula-landing .netmap-mapping [dir="ltr"] {
+  color: var(--gold);
+}
+
+.pusula-landing .netmap-hintrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+}
+
+.pusula-landing .netmap-hint {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--mist-dim);
+}
+
+/* Persian never sets in the mono face (it would break the joining of its
+   letters); codes, ids and headers stay mono. */
+.pusula-landing
+  :is(
+    .netmap-log,
+    .netmap-count dt,
+    .netmap-glyphs,
+    .netmap-mapping,
+    .netmap-lrole,
+    .netmap-tiprole
+  ):lang(fa) {
+  font-family: var(--font-sans);
+}
+
+.pusula-landing :is(.netmap-log, .netmap-mapping, .netmap-lrole, .netmap-tiprole) [dir="ltr"] {
+  font-family: var(--font-mono);
+}
+
+/* ------------------------------------------------------------------------ */
+/* Desktop: the pinned, full-bleed theatre                                  */
+/* ------------------------------------------------------------------------ */
+
+@media (min-width: 1024px) {
+  .pusula-landing .station.netmap {
+    --netmap-head-w: min(30vw, 30rem);
+  }
+
+  /*
+   * The station head rides over the stage, sticky like it (it is not an
+   * ancestor of the pin, so the pin is untouched). It is exactly as tall as
+   * the stage below the nav, and the track is pulled up under it by that
+   * height: so its bottom edge meets the track's end at the very moment the
+   * stage unpins, and title and map leave together. (A negative margin on
+   * the head itself would not do: sticky insets ignore it.)
+   */
+  .pusula-landing .station.netmap > .station-head {
+    position: sticky;
+    top: var(--nav-h);
+    z-index: 4;
+    box-sizing: border-box;
+    height: calc(100svh - var(--nav-h));
+    margin-block-end: 0;
+    padding-block-start: var(--s-7);
+    pointer-events: none;
+  }
+
+  .pusula-landing .station.netmap > .station-track {
+    margin-block-start: calc(var(--nav-h) - 100svh);
+  }
+
+  .pusula-landing .station.netmap > .station-head > * {
+    pointer-events: auto;
+  }
+
+  /* RTL: the same top-left column (geography), one clean right edge. */
+  :root[dir="rtl"] .pusula-landing .station.netmap > .station-head {
+    align-items: stretch;
+  }
+
+  :root[dir="rtl"] .pusula-landing .station.netmap > .station-head > * {
+    width: var(--netmap-head-w);
+    max-width: none;
+    margin-inline-start: auto;
+  }
+
+  /* The scrim: a void wash under the title, bleeding into the map. */
+  .pusula-landing .station.netmap > .station-head::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: min(640px, 50%);
+    height: 400px;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse 66% 60% at 36% 44%,
+      rgba(4, 4, 5, 0.88) 0%,
+      rgba(4, 4, 5, 0.6) 55%,
+      rgba(4, 4, 5, 0) 100%
+    );
+  }
+
+  /* Both stay inside the map's open north-west, whatever the script's width. */
+  .pusula-landing .station.netmap > .station-head .station-title {
+    max-width: min(24ch, var(--netmap-head-w));
+  }
+
+  .pusula-landing .station.netmap > .station-head .station-lead {
+    max-width: min(40ch, var(--netmap-head-w));
+    font-size: 1rem;
+  }
+
+  .pusula-landing .netmap-deck {
+    height: 100%;
+  }
+
+  .pusula-landing .netmap-figure {
+    position: absolute;
+    inset: 0;
+    height: auto;
+    margin: 0;
+  }
+
+  /* `MAP_FITS.pin` / `.pinRtl`, then the compact ones, keyed on the stage width like the canvas. */
+  .pusula-landing .netmap-fit {
+    left: 58%;
+    top: 56%;
+    width: min(78cqw, calc(80cqh * 825 / 643));
+  }
+
+  :root[dir="rtl"] .pusula-landing .netmap-fit {
+    left: 61%;
+  }
+
+  @container netmap (max-width: 1279.98px) {
+    .pusula-landing .netmap-fit {
+      left: 62%;
+      top: 56%;
+      width: min(66cqw, calc(80cqh * 825 / 643));
+    }
+
+    :root[dir="rtl"] .pusula-landing .netmap-fit {
+      left: 63%;
+      top: 56%;
+      width: min(62cqw, calc(80cqh * 825 / 643));
+    }
+  }
+
+  /* Labels take the reference sides (`LABEL_SIDE.pin`), past the 14px ring. */
+  .pusula-landing .netmap-lbody {
+    --netmap-gap: 20px;
+    font-size: 14px;
+  }
+
+  .pusula-landing [data-role="hub"] .netmap-lname {
+    font-size: 16px;
+  }
+
+  .pusula-landing :is(.netmap-label, .netmap-pname)[data-pin] > .netmap-lbody {
+    inset: auto;
+    translate: none;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .pusula-landing :is(.netmap-label, .netmap-pname)[data-pin]::before {
+    inset: auto;
+    width: auto;
+    height: auto;
+  }
+
+  .pusula-landing :is(.netmap-label, .netmap-pname)[data-pin="e"] > .netmap-lbody {
+    left: var(--netmap-gap);
+    top: -11px;
+  }
+
+  .pusula-landing :is(.netmap-label, .netmap-pname)[data-pin="w"] > .netmap-lbody {
+    right: var(--netmap-gap);
+    top: -11px;
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .pusula-landing :is(.netmap-label, .netmap-pname)[data-pin="n"] > .netmap-lbody {
+    bottom: var(--netmap-gap);
+    left: 0;
+    translate: -50% 0;
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+  }
+
+  .pusula-landing :is(.netmap-label, .netmap-pname)[data-pin="s"] > .netmap-lbody {
+    top: var(--netmap-gap);
+    left: 0;
+    translate: -50% 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .pusula-landing :is(.netmap-label, .netmap-pname)[data-pin="e"]::before {
+    left: 15px;
+    top: 0;
+    width: 5px;
+    height: 1px;
+  }
+
+  .pusula-landing :is(.netmap-label, .netmap-pname)[data-pin="w"]::before {
+    right: 15px;
+    top: 0;
+    width: 5px;
+    height: 1px;
+  }
+
+  .pusula-landing :is(.netmap-label, .netmap-pname)[data-pin="n"]::before {
+    left: 0;
+    bottom: 15px;
+    width: 1px;
+    height: 5px;
+  }
+
+  .pusula-landing :is(.netmap-label, .netmap-pname)[data-pin="s"]::before {
+    left: 0;
+    top: 15px;
+    width: 1px;
+    height: 5px;
+  }
+
+  /*
+   * The flight board: an opaque hull panel (no blur) in the bottom inline-end
+   * corner. Badge pill and reset share its top row; no hint here, so it
+   * stays short enough to clear Jalalabad at 1024×768 in every locale.
+   */
+  .pusula-landing .netmap-board {
+    position: absolute;
+    z-index: 5;
+    inset-block-end: var(--s-5);
+    inset-inline-end: var(--gutter);
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "pill reset"
+      "note note"
+      "counts counts"
+      "log log";
+    gap: 0 var(--s-3);
+    align-items: center;
+    width: clamp(288px, 22vw, 340px);
+    max-width: none;
+    margin: 0;
+    padding: var(--s-3) var(--s-4) var(--s-4);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-lg);
+    background: rgba(10, 10, 12, 0.92);
+    box-shadow: var(--shadow-panel);
+  }
+
+  .pusula-landing .netmap-board .sim-badge {
+    display: contents;
+  }
+
+  .pusula-landing .netmap-board .sim-pill {
+    grid-area: pill;
+    justify-self: start;
+  }
+
+  .pusula-landing .netmap-board .sim-note {
+    grid-area: note;
+    margin-block: var(--s-1) var(--s-3);
+  }
+
+  .pusula-landing .netmap-board .netmap-reset-board {
+    display: inline-flex;
+    grid-area: reset;
+    padding: 0 14px;
+  }
+
+  .pusula-landing .netmap-counts {
+    margin-block-end: var(--s-3);
+    gap: var(--s-6);
+  }
+
+  .pusula-landing .netmap-num {
+    font-size: 40px;
+  }
+
+  .pusula-landing .netmap-logline:nth-child(n + 4) {
+    display: block;
+  }
+
+  /* A retried request's header gets its own line: the chain never breaks mid-arrow. */
+  .pusula-landing .netmap-hdr {
+    display: block;
+    padding-inline-start: 1.25em;
+  }
+
+  .pusula-landing .netmap-hdr > .netmap-hdrsep {
+    display: none;
+  }
+
+  /*
+   * The legend: top-right in both directions (above the Wakhan corridor, the
+   * map's open north-east), right-aligned to that edge. Hint here, reset in
+   * the board.
+   */
+  .pusula-landing .netmap-legend {
+    position: absolute;
+    z-index: 5;
+    top: calc(var(--nav-h) + var(--s-4));
+    right: var(--gutter);
+    left: auto;
+    gap: var(--s-1);
+    width: 300px;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+    isolation: isolate;
+  }
+
+  .pusula-landing .netmap-legend::before {
+    content: "";
+    position: absolute;
+    inset: -24px -32px -28px -48px;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse 70% 72% at 60% 46%,
+      rgba(4, 4, 5, 0.86) 0%,
+      rgba(4, 4, 5, 0.55) 58%,
+      rgba(4, 4, 5, 0) 100%
+    );
+  }
+
+  .pusula-landing .netmap-glyphs {
+    display: flex;
+    justify-content: flex-end;
+    margin-block-end: var(--s-1);
+  }
+
+  :root[dir="rtl"] .pusula-landing .netmap-glyphs {
+    justify-content: flex-start;
+  }
+
+  .pusula-landing .netmap-legend .netmap-hint {
+    font-size: 13px;
+    color: var(--gold);
+    text-wrap: balance;
+  }
+
+  .pusula-landing .netmap-legend .netmap-reset-legend {
+    display: none;
+  }
+
+  .pusula-landing .netmap-keys:focus-within {
+    justify-content: flex-end;
+  }
+
+  :root[dir="rtl"] .pusula-landing .netmap-keys:focus-within {
+    justify-content: flex-start;
+  }
+
+  /* The mapping is written on the map itself; keep it for screen readers. */
+  .pusula-landing .netmap-mapping {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* A narrower desktop: a slimmer board with three log lines, a slimmer legend without glyphs. */
+@media (min-width: 1024px) and (max-width: 1279.98px) {
+  /* The title column narrows so the flat map's west (Herat) stays clear of the lead. */
+  .pusula-landing .station.netmap {
+    --netmap-head-w: 28vw;
+  }
+
+  .pusula-landing .netmap-num {
+    font-size: 32px;
+  }
+
+  .pusula-landing .netmap-logline {
+    white-space: nowrap;
+  }
+
+  .pusula-landing :is(.netmap-logline:nth-child(n + 4), .netmap-hdr) {
+    display: none;
+  }
+
+  .pusula-landing .netmap-legend {
+    width: 240px;
+  }
+
+  .pusula-landing .netmap-glyphs {
+    display: none;
+  }
+}
+
+@media (min-width: 1280px) and (max-width: 1439.98px) {
+  /* Short laptop screens frame the map by height, so its north-west tip reaches further left. */
+  .pusula-landing .station.netmap {
+    --netmap-head-w: 27vw;
+  }
+
+  .pusula-landing .netmap-legend {
+    width: 260px;
+  }
+}
+
+/* A short desktop screen: three log lines, so the board never rises into the map's east. */
+@media (min-width: 1024px) and (max-height: 820px) {
+  .pusula-landing .netmap-logline {
+    white-space: nowrap;
+  }
+
+  .pusula-landing :is(.netmap-logline:nth-child(n + 4), .netmap-hdr) {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Reduced motion: no pin, the poster is the map                            */
+/* ------------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) and (min-width: 1024px) {
+  .pusula-landing .station.netmap[data-pin-min] .station-track {
+    height: auto;
+    margin-block-start: 0;
+  }
+
+  .pusula-landing .station.netmap[data-pin-min] .station-stage {
+    position: relative;
+    height: min(100svh, 920px);
+  }
+
+  .pusula-landing .station.netmap > .station-head {
+    position: relative;
+    top: auto;
+    height: 0;
+  }
+}
