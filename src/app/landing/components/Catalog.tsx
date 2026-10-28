@@ -65,7 +65,11 @@ export default function Catalog({ stats }: { stats: LandingStats }) {
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           title={t("catalogTitle", { count: stats.providers })}
-          lead={t("catalogLead", { free: stats.freeProviders, local: stats.localProviders })}
+          lead={t("catalogLead", {
+            kinds: Object.values(stats.kindCounts).filter((n) => n > 0).length,
+            free: stats.freeProviders,
+            local: stats.localProviders,
+          })}
           aside={
             <p className="flex items-center gap-2 text-xs text-[var(--mist)]">
               <span
