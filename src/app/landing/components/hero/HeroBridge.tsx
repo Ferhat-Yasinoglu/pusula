@@ -13,14 +13,7 @@ import {
   type ReactNode,
 } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import {
-  BREAKER_PROFILES,
-  HEADER,
-  INSTALL_COMMAND,
-  SAMPLE_CANDIDATES,
-  type CatalogKind,
-  type LandingStats,
-} from "../../landingTypes";
+import { HEADER, INSTALL_COMMAND, type LandingStats } from "../../landingTypes";
 import { round2 } from "../../landingGeometry";
 import { usePrefersReducedMotion } from "../../landingMotion";
 import { canAnimate, getQualityTier } from "../../runtime/heartbeat";
@@ -35,18 +28,7 @@ import {
   useDeck,
 } from "../../runtime/deckStore";
 import { CAMERA, INTRO_NEEDLE, NEEDLE, stepSpring } from "../../runtime/springs";
-import {
-  SAMPLES,
-  SAMPLE_KEYS,
-  act,
-  nextTake,
-  normalizeWeights,
-  rank,
-  type BreakerState,
-  type Featured,
-  type SampleKey,
-  type World,
-} from "../../sim/landingSim";
+import { act, nextTake, type Featured, type World } from "../../sim/landingSim";
 import { PROJECTED_STRIDE } from "../../sim/landingProjection";
 import CopyChip from "../primitives/CopyChip";
 import Glyph from "../primitives/Glyph";
@@ -57,8 +39,6 @@ import WordReveal from "../primitives/WordReveal";
 import { hasFinePointer, numberFormat, splitWords, watchView } from "../primitives/primitiveKit";
 import {
   CAND_CLOSED,
-  CAND_DEGRADED,
-  CAND_HALF_OPEN,
   CAND_OPEN,
   DEG,
   GYRO_R_RATIO,
@@ -100,6 +80,25 @@ import {
 } from "./heroFx";
 import AlmanacBoard from "./AlmanacBoard";
 import {
+  CANDIDATES,
+  CATALOG_IDS,
+  KIND_KEY,
+  OPENS_AFTER,
+  SCORE_FORMAT,
+  STATE_CODE,
+  STATE_KEY,
+  STATE_NAME,
+  TOKENS_FORMAT,
+  bestSampleFor,
+  frozenSelector,
+  sampleTokens,
+  selectBreakers,
+  selectFeatured,
+  selectTuned,
+  slotOf,
+  tokenCount,
+} from "./bridgeModel";
+import {
   BOUNDS_SIZE,
   LABEL_ABOVE,
   LABEL_BELOW,
@@ -120,6 +119,7 @@ import {
   ZONE_STRIDE,
   resolveLabels,
 } from "./labelLayout";
+import { MAX_ZONES, measureZones, writeZone } from "./labelZones";
 import "./hero.css";
 
 /**
@@ -134,54 +134,6 @@ import "./hero.css";
  * in front of it (the sandwich).
  */
 
-const CANDIDATES = SAMPLE_CANDIDATES;
-const CANDIDATE_IDS: readonly string[] = CANDIDATES.map((c) => c.id);
-const CATALOG_IDS: readonly string[] = CANDIDATES.map((c) => c.catalogId);
-const slotOf = (id: string) => CANDIDATE_IDS.indexOf(id);
-
-const STATE_CODE: Record<BreakerState, number> = {
-  closed: CAND_CLOSED,
-  degraded: CAND_DEGRADED,
-  open: CAND_OPEN,
-  halfOpen: CAND_HALF_OPEN,
-};
-const STATE_KEY = ["stateClosed", "stateDegraded", "stateOpen", "stateHalfOpen"] as const;
-const STATE_NAME = ["closed", "degraded", "open", "halfOpen"] as const;
-
-const KIND_KEY: Record<CatalogKind, string> = {
-  llm: "catalogKindLlm",
-  webSearch: "catalogKindSearch",
-  imageToText: "catalogKindImageToText",
-  webFetch: "catalogKindWebFetch",
-  embedding: "catalogKindEmbedding",
-  video: "catalogKindVideo",
-  other: "catalogKindOther",
-};
-
-const selectFeatured = (w: World) => w.featured;
-/**
- * The visitor has retuned the scoring weights (the routing rose): the hero's
- * scores are theirs. Shares within 0.1% of the shipped ones (rounding, a
- * no-op drag at a cap) are not a retune.
- */
-const selectTuned = (w: World): boolean => {
-  const shipped = normalizeWeights(w.defaults, w.defaults);
-  for (let i = 0; i < shipped.length; i++) {
-    if (Math.abs((w.weights[i] ?? 0) - shipped[i]) > 1e-3) return true;
-  }
-  return false;
-};
-
-/**
- * A selector that keeps returning what it first read: off screen the hero
- * stops following the deck (no re-render, no retyping, spec §7.6), and the
- * live selector takes over again when it comes back.
- */
-function frozenSelector<T>(select: (w: World) => T): (w: World) => T {
-  let held: { value: T } | null = null;
-  return (w: World) => (held ??= { value: select(w) }).value;
-}
-
 /** Words in the headline: the subtitle's words rise after them (one reveal, 55ms apart). */
 function wordCount(lines: readonly string[], locale: string): number {
   let n = 0;
@@ -190,18 +142,6 @@ function wordCount(lines: readonly string[], locale: string): number {
 }
 
 const REVEAL_STAGGER_MS = 55;
-/** [down, state, failures] per candidate, flat, for `shallowEqual`. */
-const selectBreakers = (w: World): number[] => {
-  const out: number[] = [];
-  for (const c of w.candidates) {
-    out.push(c.upstreamDown ? 1 : 0, STATE_CODE[c.breaker.state], c.breaker.failures);
-  }
-  return out;
-};
-
-const OPENS_AFTER = CANDIDATES.map(
-  (c) => BREAKER_PROFILES.find((p) => p.id === c.profile)?.opensAfter ?? 1
-);
 
 /** Label gap from its star, CSS px (the SSR anchors; `labelLayout` owns it after that). */
 const LABEL_GAP = SIDE_GAP;
@@ -230,144 +170,6 @@ type Geometry = GyroGeometry & {
   /** The fixed nav's height: labels stay below it. */
   navH: number;
 };
-
-const SCORE_FORMAT: Intl.NumberFormatOptions = {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-};
-const TOKENS_FORMAT: Intl.NumberFormatOptions = {
-  notation: "compact",
-  maximumFractionDigits: 1,
-};
-
-/** Static keep-out zones (copy, HUD, caption) plus four soft ones for the cardinal letters. */
-const MAX_STATIC_ZONES = 10;
-const MAX_ZONES = MAX_STATIC_ZONES + 4;
-
-function writeZone(
-  zones: Float32Array,
-  n: number,
-  x: number,
-  y: number,
-  w: number,
-  h: number,
-  soft: boolean
-): void {
-  const o = n * ZONE_STRIDE;
-  zones[o] = x;
-  zones[o + 1] = y;
-  zones[o + 2] = w;
-  zones[o + 3] = h;
-  zones[o + 4] = soft ? 1 : 0;
-}
-
-/**
- * Hard keep-out zones for the labels, in dial coordinates (read on resize
- * only): the headline's lines (their words, not the full block), the lead,
- * the CTA row, the HUD and the score caption; stacked layouts keep
- * everything below the headline's top.
- */
-function measureZones(
-  dial: HTMLElement,
-  copy: HTMLElement | null,
-  hud: HTMLElement | null,
-  note: HTMLElement | null,
-  zones: Float32Array,
-  countRef: { current: number }
-): void {
-  let n = 0;
-  const push = (x: number, y: number, w: number, h: number) => {
-    if (n >= MAX_STATIC_ZONES || !(w > 0) || !(h > 0)) return;
-    writeZone(zones, n, x - dial.offsetLeft, y - dial.offsetTop, w, h, false);
-    n++;
-  };
-  if (copy) {
-    const title = copy.querySelector<HTMLElement>(".bridge-title");
-    const stacked = window.innerWidth < 1024;
-    if (title && stacked) {
-      push(-1e4, copy.offsetTop + title.offsetTop - 6, 2e4, 1e5);
-    } else if (title) {
-      copy.querySelectorAll<HTMLElement>(".bridge-title .wr-line").forEach((line) => {
-        let left = Infinity;
-        let right = -Infinity;
-        line.querySelectorAll<HTMLElement>(".wr-w").forEach((word) => {
-          left = Math.min(left, word.offsetLeft);
-          right = Math.max(right, word.offsetLeft + word.offsetWidth);
-        });
-        if (right > left) {
-          // Lines and words are laid out against the copy block (their offset parent).
-          push(
-            copy.offsetLeft + left - 8,
-            copy.offsetTop + line.offsetTop,
-            right - left + 16,
-            line.offsetHeight
-          );
-        }
-      });
-      for (const sel of [".bridge-version", ".bridge-line3", ".bridge-lead", ".bridge-cta"]) {
-        const el = copy.querySelector<HTMLElement>(sel);
-        if (el && el.offsetWidth > 0)
-          push(
-            copy.offsetLeft + el.offsetLeft,
-            copy.offsetTop + el.offsetTop,
-            el.offsetWidth,
-            el.offsetHeight
-          );
-      }
-    }
-  }
-  if (hud && hud.offsetWidth > 0) {
-    push(hud.offsetLeft - 8, hud.offsetTop - 8, hud.offsetWidth + 16, hud.offsetHeight + 16);
-  }
-  if (note && note.offsetWidth > 0) {
-    // Inside the dial already: its own offsets are dial coordinates.
-    writeZone(
-      zones,
-      n,
-      note.offsetLeft - 4,
-      note.offsetTop - 4,
-      note.offsetWidth + 8,
-      note.offsetHeight + 8,
-      false
-    );
-    n++;
-  }
-  countRef.current = n;
-}
-
-/** "3.1k" → 3100: the sample table's token counts, for locale formatting. */
-function tokenCount(text: string): number {
-  const match = /^([\d.]+)\s*([kKmM]?)$/.exec(text.trim());
-  if (!match) return Number.NaN;
-  const unit = match[2].toLowerCase();
-  return Number(match[1]) * (unit === "k" ? 1e3 : unit === "m" ? 1e6 : 1);
-}
-
-/**
- * The sample this candidate ranks best on, so a visitor who makes it fail
- * sees the very next take try it first (503) and fall back.
- */
-function bestSampleFor(world: World, id: string): SampleKey {
-  let best: SampleKey = world.featured.sample;
-  let bestPos = Infinity;
-  let bestScore = -Infinity;
-  for (const key of SAMPLE_KEYS) {
-    const ranking = rank(world, key);
-    const pos = ranking.findIndex((entry) => entry.id === id);
-    if (pos < 0) continue;
-    const score = ranking[pos].score;
-    if (pos < bestPos || (pos === bestPos && score > bestScore)) {
-      best = key;
-      bestPos = pos;
-      bestScore = score;
-    }
-  }
-  return best;
-}
-
-function sampleTokens(key: string): string {
-  return SAMPLES.find((s) => s.key === key)?.tokens ?? "";
-}
 
 export default function HeroBridge({ stats, poster }: { stats: LandingStats; poster: ReactNode }) {
   const t = useTranslations("landing");

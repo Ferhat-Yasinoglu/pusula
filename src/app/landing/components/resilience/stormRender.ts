@@ -24,9 +24,10 @@
  *   white flash when the breaker opens (≤ 12%, at most 3 a second), and the
  *   clockwise gold sweep along the band when it closes.
  *
- * Allocation-free per frame: particles live in typed-array pools; bolts are
- * built only when one strikes. Glows are pre-rendered sprites ("lighter"),
- * never `shadowBlur`. RTL mirrors the whole drawing (x' = W − x).
+ * Allocation-free per frame: particles live in typed-array pools
+ * (`stormParticles.ts`); bolts are built only when one strikes. Glows are
+ * pre-rendered sprites ("lighter"), never `shadowBlur`. RTL mirrors the whole
+ * drawing (x' = W − x).
  */
 import { getWorld } from "../../runtime/deckStore";
 import { getQualityTier } from "../../runtime/heartbeat";
@@ -39,7 +40,6 @@ import {
   type BreakerState,
   type CandidateId,
   type CandidateState,
-  type InflightRequest,
   type World,
 } from "../../sim/landingSim";
 import {
@@ -54,6 +54,73 @@ import {
   shareOf,
 } from "./stormModel";
 import type { RailGeometry, ShareMeter } from "./stormModel";
+import {
+  MAX,
+  MAX_COMPACT,
+  PEND_MAX,
+  HIST,
+  K_ATTEMPT,
+  K_MOTE,
+  K_RUNNER,
+  END_FADE,
+  END_GATE,
+  END_UPSTREAM,
+  END_SOURCE,
+  END_RAIL,
+  C_GOLD,
+  C_HI,
+  C_PHOSPHOR,
+  C_EMBER,
+  O_SERVED,
+  O_RETRY_KEY,
+  O_RETRY_MODEL,
+  O_FAIL_503,
+  O_FAIL_OTHER,
+  pActive,
+  pKind,
+  pEnd,
+  pColor,
+  pWaiting,
+  pX,
+  pY,
+  pDx,
+  pDy,
+  pAlpha,
+  pFade,
+  pSize,
+  pAge,
+  pLane,
+  pModel,
+  pWpN,
+  pWpI,
+  pRef,
+  pSeen,
+  pStart,
+  pTriedK,
+  pTriedM,
+  pFailN,
+  pPend,
+  pPendK,
+  pPendM,
+  pPendN,
+  pHx,
+  pHy,
+  pHn,
+  pHead,
+  poolSize,
+  setPoolSize,
+  spawn,
+  wpPush,
+  leg,
+  pendPush,
+  pendShift,
+  move,
+  routeToGate,
+  hopLane,
+  bounceGate,
+  routeServed,
+  routeFallback,
+} from "./stormParticles";
 
 /** What the station hands the renderer (a mutable object it owns). */
 export type StormInput = {
@@ -66,74 +133,8 @@ export type StormInput = {
 };
 
 /* ------------------------------------------------------------------------ */
-/* Pools                                                                    */
+/* Effect pools                                                             */
 /* ------------------------------------------------------------------------ */
-
-const MAX = 120;
-const MAX_COMPACT = 70;
-const WP_MAX = 6;
-/** A failed comet hurries back to the hub. */
-const RETREAT_BOOST = 1.6;
-const PEND_MAX = 4;
-
-// Particle kinds.
-const K_ATTEMPT = 1;
-const K_MOTE = 2;
-const K_RUNNER = 3;
-// What happens when a particle runs out of waypoints.
-const END_FADE = 0;
-const END_GATE = 1;
-const END_UPSTREAM = 2;
-const END_SOURCE = 3;
-const END_RAIL = 4;
-// Colours.
-const C_GOLD = 0;
-const C_HI = 1;
-const C_PHOSPHOR = 2;
-const C_EMBER = 3;
-// Outcomes queued on an attempt.
-const O_SERVED = 1;
-const O_RETRY_KEY = 2;
-const O_RETRY_MODEL = 3;
-const O_FAIL_503 = 4;
-const O_FAIL_OTHER = 5;
-
-const pActive = new Uint8Array(MAX);
-const pKind = new Uint8Array(MAX);
-const pEnd = new Uint8Array(MAX);
-const pColor = new Uint8Array(MAX);
-const pWaiting = new Uint8Array(MAX);
-const pX = new Float32Array(MAX);
-const pY = new Float32Array(MAX);
-const pDx = new Float32Array(MAX);
-const pDy = new Float32Array(MAX);
-const pSpeed = new Float32Array(MAX);
-const pAlpha = new Float32Array(MAX);
-const pFade = new Float32Array(MAX);
-const pSize = new Float32Array(MAX);
-const pAge = new Float32Array(MAX);
-const pLane = new Int8Array(MAX);
-const pModel = new Int8Array(MAX);
-const pWp = new Float32Array(MAX * WP_MAX * 2);
-const pWpN = new Uint8Array(MAX);
-const pWpI = new Uint8Array(MAX);
-// Tracking a deck request (attempts only).
-const pRef: (InflightRequest | null)[] = new Array<InflightRequest | null>(MAX).fill(null);
-const pSeen = new Uint8Array(MAX);
-const pStart = new Float64Array(MAX);
-const pTriedK = new Uint8Array(MAX);
-const pTriedM = new Uint8Array(MAX);
-const pFailN = new Uint8Array(MAX);
-const pPend = new Uint8Array(MAX * PEND_MAX);
-const pPendK = new Int8Array(MAX * PEND_MAX);
-const pPendM = new Int8Array(MAX * PEND_MAX);
-const pPendN = new Uint8Array(MAX);
-// Comet tails: a short ring of past positions, sampled by distance, so a tail bends round corners.
-const HIST = 9;
-const pHx = new Float32Array(MAX * HIST);
-const pHy = new Float32Array(MAX * HIST);
-const pHn = new Uint8Array(MAX);
-const pHead = new Uint8Array(MAX);
 
 type Strike = { shape: Bolt; age: number; x: number; y: number };
 const MAX_STRIKES = 3;
@@ -159,7 +160,6 @@ let geo: RailGeometry | null = null;
 let cometBase = 520;
 /** The feeders' stroke: gold that fades in from the origin nodes (built per layout). */
 let feederFade: CanvasGradient | null = null;
-let poolSize = MAX;
 let rng: Rng = mulberry32(hash32("storm-rail"));
 let gold: GlowSprite | null = null;
 let goldHi: GlowSprite | null = null;
@@ -213,7 +213,7 @@ export function setup(ctx: CanvasRenderingContext2D, s: StageSize, _input: Storm
   feederFade = ctx.createLinearGradient(FEED_X0, 0, geo.srcX - geo.srcR, 0);
   feederFade.addColorStop(0, "rgba(212,168,64,0.05)");
   feederFade.addColorStop(1, "rgba(212,168,64,0.32)");
-  poolSize = geo.compact ? MAX_COMPACT : MAX;
+  setPoolSize(geo.compact ? MAX_COMPACT : MAX);
   gold = getSprite("gold", 32);
   goldHi = getSprite("goldHi", 32);
   phosphor = getSprite("phosphor", 32);
@@ -231,172 +231,6 @@ export function setup(ctx: CanvasRenderingContext2D, s: StageSize, _input: Storm
     pRef[i] = null;
     pFade[i] = Math.max(pFade[i], 4);
   }
-}
-
-/* ------------------------------------------------------------------------ */
-/* Particle helpers                                                         */
-/* ------------------------------------------------------------------------ */
-
-function alloc(): number {
-  for (let i = 0; i < poolSize; i++) if (!pActive[i]) return i;
-  return -1;
-}
-
-function spawn(kind: number, x: number, y: number, color: number, speed: number, size: number) {
-  const i = alloc();
-  if (i < 0) return -1;
-  pActive[i] = 1;
-  pKind[i] = kind;
-  pEnd[i] = END_FADE;
-  pColor[i] = color;
-  pWaiting[i] = 0;
-  pX[i] = x;
-  pY[i] = y;
-  pDx[i] = 1;
-  pDy[i] = 0;
-  pSpeed[i] = speed;
-  pAlpha[i] = 1;
-  pFade[i] = 0;
-  pSize[i] = size;
-  pAge[i] = 0;
-  pLane[i] = -1;
-  pModel[i] = -1;
-  pWpN[i] = 0;
-  pWpI[i] = 0;
-  pRef[i] = null;
-  pSeen[i] = 0;
-  pPendN[i] = 0;
-  pHn[i] = 0;
-  pHead[i] = 0;
-  return i;
-}
-
-/** Record the position into the tail ring when it has moved far enough. */
-function sampleTail(i: number, step: number): void {
-  const n = pHn[i];
-  if (n > 0) {
-    const last = i * HIST + pHead[i];
-    const dx = pX[i] - pHx[last];
-    const dy = pY[i] - pHy[last];
-    if (dx * dx + dy * dy < step * step) return;
-  }
-  const head = n === 0 ? 0 : (pHead[i] + 1) % HIST;
-  pHead[i] = head;
-  pHx[i * HIST + head] = pX[i];
-  pHy[i * HIST + head] = pY[i];
-  if (n < HIST) pHn[i] = n + 1;
-}
-
-function wpClear(i: number): void {
-  pWpN[i] = 0;
-  pWpI[i] = 0;
-  pWaiting[i] = 0;
-}
-
-function wpPush(i: number, x: number, y: number): void {
-  const n = pWpN[i];
-  if (n >= WP_MAX) return;
-  const o = (i * WP_MAX + n) * 2;
-  pWp[o] = x;
-  pWp[o + 1] = y;
-  pWpN[i] = n + 1;
-}
-
-/** Which leg of the route the particle is on (0 = before its first waypoint). */
-function leg(i: number): number {
-  return pWpI[i];
-}
-
-function pendPush(i: number, code: number, key: number, model: number): void {
-  const n = pPendN[i];
-  if (n >= PEND_MAX) return;
-  const o = i * PEND_MAX + n;
-  pPend[o] = code;
-  pPendK[o] = key;
-  pPendM[o] = model;
-  pPendN[i] = n + 1;
-}
-
-function pendShift(i: number): void {
-  const base = i * PEND_MAX;
-  const n = pPendN[i];
-  for (let j = 1; j < n; j++) {
-    pPend[base + j - 1] = pPend[base + j];
-    pPendK[base + j - 1] = pPendK[base + j];
-    pPendM[base + j - 1] = pPendM[base + j];
-  }
-  pPendN[i] = n > 0 ? n - 1 : 0;
-}
-
-/* ------------------------------------------------------------------------ */
-/* Routes                                                                   */
-/* ------------------------------------------------------------------------ */
-
-/** Hub → band entry → the key's lane → the model's gate; waits there for the outcome. */
-function routeToGate(i: number, g: RailGeometry, key: number, model: number): void {
-  wpClear(i);
-  wpPush(i, g.bandX0, g.mid);
-  wpPush(i, g.laneX0, g.laneMid[key]);
-  wpPush(i, g.laneEndX, g.laneMid[key]);
-  wpPush(i, g.gateX0, g.slotMid[key * 3 + model]);
-  pEnd[i] = END_GATE;
-  pLane[i] = key;
-  pModel[i] = model;
-}
-
-/** From wherever it is in the band to another lane (401: a sibling key), then on to the gate. */
-function hopLane(i: number, g: RailGeometry, key: number, model: number): void {
-  const x = Math.min(Math.max(pX[i] + 18, g.laneX0), g.laneEndX);
-  wpClear(i);
-  wpPush(i, x, g.laneMid[key]);
-  wpPush(i, g.laneEndX, g.laneMid[key]);
-  wpPush(i, g.gateX0, g.slotMid[key * 3 + model]);
-  pEnd[i] = END_GATE;
-  pLane[i] = key;
-  pModel[i] = model;
-}
-
-/** Bounce off a locked gate (429) and line up on a sibling model's slot. */
-function bounceGate(i: number, g: RailGeometry, key: number, model: number): void {
-  const old = (pLane[i] < 0 ? 0 : pLane[i]) * 3 + (pModel[i] < 0 ? 0 : pModel[i]);
-  wpClear(i);
-  wpPush(i, g.gateX0 - 14, g.slotMid[old]);
-  wpPush(i, g.laneEndX + g.fanW * 0.35, g.laneMid[key]);
-  wpPush(i, g.gateX0, g.slotMid[key * 3 + model]);
-  pEnd[i] = END_GATE;
-  pLane[i] = key;
-  pModel[i] = model;
-}
-
-/** Through the gate, out of the band and into the upstream node. */
-function routeServed(i: number, g: RailGeometry): void {
-  const slot = g.slotMid[Math.max(0, pLane[i]) * 3 + Math.max(0, pModel[i])];
-  wpClear(i);
-  wpPush(i, g.gateX1, slot);
-  wpPush(i, g.bandX1, g.mid);
-  wpPush(i, g.upX - g.upR, g.mid);
-  pEnd[i] = END_UPSTREAM;
-}
-
-/**
- * The target failed: the hub retries the next one. The comet runs back out of
- * the band to the hub's drop, then down and along the fallback rail (spec §7.4:
- * fallback is always the hub retrying, never the provider forwarding).
- */
-function routeFallback(i: number, g: RailGeometry): void {
-  const lane = pLane[i] < 0 ? 1 : pLane[i];
-  wpClear(i);
-  if (pX[i] > g.laneEndX + 0.5) wpPush(i, g.laneEndX, g.laneMid[lane]);
-  if (pX[i] > g.laneX0 + 0.5) wpPush(i, g.laneX0, g.laneMid[lane]);
-  wpPush(i, g.bandX0, g.mid);
-  wpPush(i, g.dropX, g.mid);
-  wpPush(i, g.dropX, g.fbY);
-  wpPush(i, g.fbX1, g.fbY);
-  pEnd[i] = END_RAIL;
-  pKind[i] = K_RUNNER;
-  pSpeed[i] *= RETREAT_BOOST;
-  pRef[i] = null;
-  pPendN[i] = 0;
 }
 
 /* ------------------------------------------------------------------------ */
@@ -761,36 +595,8 @@ function spawnArrivals(w: World, c: CandidateState, g: RailGeometry, pace: numbe
 }
 
 /* ------------------------------------------------------------------------ */
-/* Motion                                                                   */
+/* Arrival                                                                  */
 /* ------------------------------------------------------------------------ */
-
-function move(i: number, dt: number, tailStep: number): void {
-  if (pKind[i] !== K_MOTE) sampleTail(i, tailStep);
-  let budget = pSpeed[i] * dt;
-  let guard = 0;
-  while (budget > 0 && pWpI[i] < pWpN[i] && guard++ < WP_MAX + 1) {
-    const o = (i * WP_MAX + pWpI[i]) * 2;
-    const tx = pWp[o];
-    const ty = pWp[o + 1];
-    const dx = tx - pX[i];
-    const dy = ty - pY[i];
-    const dist = Math.hypot(dx, dy);
-    if (dist > 1e-3) {
-      pDx[i] = dx / dist;
-      pDy[i] = dy / dist;
-    }
-    if (dist <= budget) {
-      pX[i] = tx;
-      pY[i] = ty;
-      budget -= dist;
-      pWpI[i]++;
-    } else {
-      pX[i] += (dx / dist) * budget;
-      pY[i] += (dy / dist) * budget;
-      budget = 0;
-    }
-  }
-}
 
 function arrive(i: number): void {
   switch (pEnd[i]) {
