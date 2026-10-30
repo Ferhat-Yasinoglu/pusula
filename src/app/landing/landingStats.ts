@@ -16,19 +16,26 @@ import { ROUTING_STRATEGY_VALUES } from "@/shared/constants/routingStrategies";
 import { listCliTools } from "@/shared/constants/cliTools";
 import { APP_CONFIG } from "@/shared/constants/appConfig";
 import { DEFAULT_WEIGHTS } from "@pusula/open-sse/services/autoCombo/scoring";
-import { ENGINE_IDS } from "@pusula/open-sse/services/compression/engineCatalog";
+import { ENGINE_CATALOG, ENGINE_IDS } from "@pusula/open-sse/services/compression/engineCatalog";
 import {
   MCP_SCOPE_COUNT,
   MCP_TOOL_COUNT,
   MCP_TRANSPORT_COUNT,
   type CatalogEntry,
   type CatalogKind,
+  type CompressionEngine,
   type LandingStats,
   type ScoringFactor,
 } from "./landingTypes";
 
 export { BREAKER_PROFILES, MCP_TOOL_COUNT } from "./landingTypes";
-export type { CatalogEntry, CatalogKind, LandingStats, ScoringFactor } from "./landingTypes";
+export type {
+  CatalogEntry,
+  CatalogKind,
+  CompressionEngine,
+  LandingStats,
+  ScoringFactor,
+} from "./landingTypes";
 
 const KNOWN_KINDS: readonly CatalogKind[] = [
   "llm",
@@ -98,6 +105,19 @@ export function buildScoringFactors(weights: Record<string, number>): ScoringFac
     .sort((a, b) => b.weight - a.weight || a.id.localeCompare(b.id));
 }
 
+/**
+ * The compression engines in stack order, with the catalog's own label and
+ * lossy flag. The page names engines and marks them lossless or lossy; it
+ * never shows a per-engine saving, because the catalog does not measure one.
+ */
+export function buildCompressionEngineList(): CompressionEngine[] {
+  return ENGINE_IDS.map((id) => ({
+    id,
+    label: ENGINE_CATALOG[id].label,
+    lossy: ENGINE_CATALOG[id].guidance.lossy,
+  }));
+}
+
 export function getLandingStats(): LandingStats {
   const catalog = buildCatalog(AI_PROVIDERS as Record<string, ProviderLike>);
   return {
@@ -108,6 +128,7 @@ export function getLandingStats(): LandingStats {
     strategies: ROUTING_STRATEGY_VALUES,
     scoringFactors: buildScoringFactors(DEFAULT_WEIGHTS as unknown as Record<string, number>),
     compressionEngines: ENGINE_IDS.length,
+    compressionEngineList: buildCompressionEngineList(),
     cliTools: listCliTools().map((tool) => ({ id: tool.id, name: tool.name })),
     mcpTools: MCP_TOOL_COUNT,
     mcpScopes: MCP_SCOPE_COUNT,

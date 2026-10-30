@@ -1,0 +1,993 @@
+/*
+ * Station SW, 225°: the patch bay (spec §6.7). Scoped under .pusula-landing.
+ *
+ * Paint order inside the rig (its own stacking context): the bay panel's
+ * background, the jack plates (z 2), the hub and terminal (z 4). The cable
+ * SVG sits under the plates (z 1) when the cables hang behind the bay (the
+ * hub below it, or the phone funnel), and over them (z 3) when they are
+ * dressed through the gutters beside the hub ("tray"), so every pulse and
+ * every lit cable reads end to end; the hub and terminal still cover the
+ * cable ends.
+ *
+ * Only transform and opacity animate; colour and border changes are instant.
+ * `--tools-wire` tells the component how to wire the bay: one cable per jack
+ * ("jack") or a seven-line funnel under a chip cloud ("funnel", phones).
+ */
+
+.pusula-landing .tools-rig {
+  --tools-wire: jack;
+  --tools-gap: 6px;
+  --tools-dial: 152px;
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "bay"
+    "hub"
+    "term"
+    "note";
+  row-gap: var(--s-5);
+}
+
+/* Hub and terminal sit in the rig's grid, except where they stack as one column (1024–1399). */
+.pusula-landing .tools-side {
+  display: contents;
+}
+
+.pusula-landing .tools-wires {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.pusula-landing .tools-rig[data-wire="tray"] .tools-wires {
+  z-index: 3;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Cables and pulses                                                        */
+/* ------------------------------------------------------------------------ */
+
+.pusula-landing .tools-cable {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.4;
+  transition: opacity var(--t-hover) var(--ease-out);
+}
+
+/* A tool in focus: the rest of the loom steps back to a quarter. */
+.pusula-landing .tools-rig[data-focus] .tools-cable {
+  opacity: 0.25;
+}
+
+/* The patched cable, drawn over the loom: a gold-hi core in a soft glow. */
+.pusula-landing .tools-lit path {
+  fill: none;
+  stroke: var(--gold-hi);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pusula-landing .tools-lit-glow {
+  stroke-width: 6;
+  opacity: 0.16;
+}
+
+.pusula-landing .tools-lit-core {
+  stroke-width: 1.6;
+}
+
+.pusula-landing[data-motion="on"] .tools-lit {
+  animation: tools-lit-in var(--t-hover) var(--ease-out) both;
+}
+
+@keyframes tools-lit-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.pusula-landing .tools-trunk {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  opacity: 0.7;
+}
+
+.pusula-landing .tools-pulse-core {
+  fill: var(--phosphor);
+}
+
+.pusula-landing .tools-trail {
+  fill: var(--gold-hi);
+}
+
+.pusula-landing .tools-packet-core {
+  fill: var(--phosphor);
+  stroke: var(--ember);
+  stroke-width: 1.5;
+}
+
+/* ------------------------------------------------------------------------ */
+/* The bay                                                                  */
+/* ------------------------------------------------------------------------ */
+
+.pusula-landing .tools-bay {
+  grid-area: bay;
+  align-self: start;
+  min-width: 0;
+  padding: var(--s-3);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(212, 168, 64, 0.06), transparent 60%),
+    linear-gradient(180deg, #0e0d0f, #070708);
+  box-shadow: var(--shadow-panel);
+}
+
+.pusula-landing .tools-bay-head {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin: 0 var(--s-1) var(--s-3);
+}
+
+/*
+ * Persian inside mono contexts: monospace fonts lack Arabic-script shaping
+ * (letters fall apart), so Persian runs are set in the sans, untracked.
+ */
+.pusula-landing .tools-bay-head > span:first-child:lang(fa),
+.pusula-landing .tools-term .tools-cmt .tl-t:not(.tl-kw):lang(fa),
+.pusula-landing .tools-reply:lang(fa) {
+  font-family: var(--font-sans);
+  letter-spacing: 0;
+}
+
+.pusula-landing .tools-bay-count {
+  font-family: var(--font-mono);
+  color: var(--gold-hi);
+}
+
+.pusula-landing .tools-jacks {
+  display: grid;
+  grid-template-columns: repeat(var(--tools-cols, 6), minmax(0, 1fr));
+  gap: var(--tools-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pusula-landing .tools-jack-li {
+  display: flex;
+  min-width: 0;
+}
+
+.pusula-landing .tools-jack {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-2);
+  width: 100%;
+  min-width: 0;
+  min-height: 84px;
+  padding: var(--s-3) var(--s-1) var(--s-2);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--r-sm);
+  background: linear-gradient(180deg, #1c1813 0%, var(--bezel) 46%, #121010 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 228, 160, 0.06),
+    0 6px 14px -10px rgba(0, 0, 0, 0.9);
+  color: var(--mist);
+  font: 500 var(--fs-micro) / 1.25 var(--font-sans);
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--t-press) var(--ease-out);
+}
+
+.pusula-landing .tools-jack:active {
+  transform: scale(0.97);
+}
+
+.pusula-landing .tools-jack:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+.pusula-landing .tools-jack:hover,
+.pusula-landing .tools-jack[data-active] {
+  border-color: var(--gold-lo);
+  color: var(--foam);
+}
+
+.pusula-landing .tools-jack[aria-pressed="true"] {
+  border-color: var(--gold-hi);
+  color: var(--gold-hi);
+}
+
+/* The socket: a brass ring around a dark hole, with the cable's plug seated in it. */
+.pusula-landing .tools-socket {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 45%, #040404 0 46%, #2a2114 48% 60%, #0b0a08 62%);
+  box-shadow:
+    inset 0 0 0 1px var(--gold-deep),
+    0 0 0 1px rgba(0, 0, 0, 0.6);
+}
+
+.pusula-landing .tools-plug {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--gold-hi), var(--gold) 45%, var(--gold-deep));
+}
+
+.pusula-landing .tools-jack:hover .tools-socket,
+.pusula-landing .tools-jack[data-active] .tools-socket,
+.pusula-landing .tools-jack[aria-pressed="true"] .tools-socket {
+  box-shadow:
+    inset 0 0 0 1.5px var(--gold-hi),
+    0 0 14px -2px var(--gold-glow);
+}
+
+/* The jack's LED: dark until a pulse leaves it. */
+.pusula-landing .tools-led {
+  position: absolute;
+  top: 10px;
+  inset-inline-end: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #3a2c10;
+}
+
+.pusula-landing .tools-led::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--phosphor) 0 22%,
+    var(--gold-hi) 32%,
+    rgba(255, 211, 110, 0.35) 52%,
+    transparent 72%
+  );
+  opacity: 0;
+  transition: opacity 260ms var(--ease-out);
+}
+
+.pusula-landing .tools-led[data-tx]::after {
+  opacity: 1;
+  transition: none;
+}
+
+.pusula-landing .tools-name {
+  display: -webkit-box;
+  max-width: 100%;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow-wrap: anywhere;
+}
+
+.pusula-landing .tools-more {
+  position: relative;
+  z-index: 2;
+  display: none;
+}
+
+/* ------------------------------------------------------------------------ */
+/* The hub                                                                  */
+/* ------------------------------------------------------------------------ */
+
+.pusula-landing .tools-hub-col {
+  grid-area: hub;
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-2);
+  min-width: 0;
+  text-align: center;
+}
+
+.pusula-landing .tools-hub {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: var(--tools-dial);
+  height: var(--tools-dial);
+  margin-block-end: var(--s-2);
+  border-radius: 50%;
+  background: #060505;
+  box-shadow:
+    0 0 0 1px rgba(212, 168, 64, 0.22),
+    0 18px 48px -18px rgba(0, 0, 0, 0.9);
+}
+
+/* A slow brass glow behind the dial: opacity only. */
+.pusula-landing .tools-hub::before {
+  content: "";
+  position: absolute;
+  inset: -22%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 211, 110, 0.2), transparent 64%);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.pusula-landing[data-motion="on"] .tools-hub::before {
+  animation: tools-hub-breathe var(--loop-breathe) var(--ease-io) infinite alternate;
+}
+
+@keyframes tools-hub-breathe {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 0.85;
+  }
+}
+
+.pusula-landing .tools-dial {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.pusula-landing .tools-dial-rim {
+  fill: #0c0a07;
+  stroke: var(--gold-lo);
+  stroke-width: 1.25;
+}
+
+.pusula-landing .tools-dial-rx {
+  fill: none;
+  stroke: var(--gold-hi);
+  stroke-width: 2.5;
+  opacity: 0;
+  transition: opacity 320ms var(--ease-out);
+}
+
+.pusula-landing .tools-dial-rx[data-rx] {
+  opacity: 0.85;
+  transition: none;
+}
+
+.pusula-landing .tools-dial-face {
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.pusula-landing .tools-dial-minor {
+  stroke: var(--gold-deep);
+  stroke-width: 1;
+}
+
+.pusula-landing .tools-dial-tick line {
+  stroke: var(--gold-lo);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.pusula-landing .tools-dial-tick circle {
+  fill: var(--gold-deep);
+}
+
+.pusula-landing .tools-dial-tick[data-state="win"] line {
+  stroke: var(--gold-hi);
+}
+
+.pusula-landing .tools-dial-tick[data-state="win"] circle {
+  fill: var(--gold-hi);
+}
+
+.pusula-landing .tools-dial-tick:is([data-state="fail"], [data-state="skip"]) line {
+  stroke: var(--ember);
+  stroke-dasharray: 2 1.6;
+}
+
+.pusula-landing .tools-dial-tick:is([data-state="fail"], [data-state="skip"]) circle {
+  fill: var(--ember);
+}
+
+.pusula-landing .tools-hub-needle {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.pusula-landing .tools-hub-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-2);
+  min-width: 0;
+  max-width: 100%;
+}
+
+.pusula-landing .tools-hub-label {
+  margin: 0;
+  font-size: var(--fs-micro);
+  line-height: 1.4;
+  color: var(--mist);
+}
+
+.pusula-landing .tools-hub-url {
+  display: block;
+  max-width: 100%;
+  font-family: var(--font-mono);
+  font-size: var(--fs-readout);
+  line-height: 1.45;
+  color: var(--gold-hi);
+  overflow-wrap: anywhere;
+}
+
+/* The route the needle took: "auto → claude ✕ 503 → openai". */
+.pusula-landing .tools-route {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 2px var(--s-2);
+  min-height: 1.6em;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-readout);
+  line-height: 1.6;
+  color: var(--mist);
+}
+
+.pusula-landing .tools-route-auto {
+  color: var(--ember);
+}
+
+.pusula-landing .tools-stop {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.pusula-landing[data-motion="on"] .tools-stop {
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 220ms var(--ease-out),
+    transform 220ms var(--ease-out);
+}
+
+.pusula-landing[data-motion="on"] .tools-stop[data-on] {
+  opacity: 1;
+  transform: none;
+}
+
+.pusula-landing .tools-stop-arrow {
+  color: var(--mist-dim);
+}
+
+.pusula-landing .tools-stop[data-kind="win"] .tools-stop-id {
+  color: var(--gold-hi);
+}
+
+.pusula-landing .tools-stop:is([data-kind="fail"], [data-kind="skip"]) .tools-stop-id {
+  color: var(--ember);
+  text-decoration: underline dashed var(--ember);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+.pusula-landing .tools-stop-code {
+  color: var(--ember);
+}
+
+/* ------------------------------------------------------------------------ */
+/* The terminal                                                             */
+/* ------------------------------------------------------------------------ */
+
+.pusula-landing .tools-term {
+  grid-area: term;
+  position: relative;
+  z-index: 4;
+  align-self: start;
+  min-width: 0;
+}
+
+/* Lines light top to bottom as the request leaves. */
+.pusula-landing .tools-term .tl[data-hl] {
+  background: rgba(255, 211, 110, 0.12);
+  box-shadow:
+    -6px 0 0 rgba(255, 211, 110, 0.12),
+    6px 0 0 rgba(255, 211, 110, 0.12);
+}
+
+.pusula-landing .tools-term .tl[data-hl] .tl-t {
+  color: var(--phosphor);
+}
+
+/* "auto": ember, and pulsing twice once the snippet has typed. */
+.pusula-landing .tools-term .tl-accent {
+  position: relative;
+}
+
+.pusula-landing .tools-term .tl-accent::after {
+  content: "";
+  position: absolute;
+  inset: -1px -3px;
+  border-radius: var(--r-xs);
+  background: var(--ember-soft);
+  box-shadow: 0 0 0 1px rgba(255, 122, 69, 0.45);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pusula-landing[data-motion="on"] .tools-term[data-auto="a"] .tl-accent::after {
+  animation: tools-auto-a 1.6s var(--ease-io) both;
+}
+
+.pusula-landing[data-motion="on"] .tools-term[data-auto="b"] .tl-accent::after {
+  animation: tools-auto-b 1.6s var(--ease-io) both;
+}
+
+@keyframes tools-auto-a {
+  0%,
+  50%,
+  100% {
+    opacity: 0;
+  }
+  22%,
+  72% {
+    opacity: 1;
+  }
+}
+
+@keyframes tools-auto-b {
+  0%,
+  50%,
+  100% {
+    opacity: 0;
+  }
+  22%,
+  72% {
+    opacity: 1;
+  }
+}
+
+/* The comment on top: the base-URL caption, or a hovered tool's line, sliding in. */
+.pusula-landing .tools-term .tools-cmt .tl-t {
+  color: var(--mist-dim);
+}
+
+.pusula-landing .tools-term .tools-cmt-tool .tl-t {
+  color: var(--gold);
+}
+
+.pusula-landing .tools-term .tools-cmt .tl-kw {
+  color: var(--mist-dim);
+}
+
+.pusula-landing[data-motion="on"] .tools-term .tools-cmt-tool {
+  display: inline-block;
+  animation: tools-cmt-in 420ms var(--ease-out) both;
+}
+
+@keyframes tools-cmt-in {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pusula-landing .tools-foot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.pusula-landing .tools-run-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2) var(--s-4);
+}
+
+/* A request on its way: Run waits for it (it does not restart the run). */
+.pusula-landing .tools-run-row .mb {
+  transition: opacity var(--t-hover) var(--ease-out);
+}
+
+.pusula-landing .tools-run-row[data-busy] .mb {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+/* The response: status and reply, then the headers (room for all four). */
+.pusula-landing .tools-resp {
+  min-height: calc(5 * 1.7em + 2 * var(--s-2) + 2px);
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--r-md);
+  background: rgba(4, 4, 5, 0.6);
+  font-family: var(--font-mono);
+  font-size: var(--fs-readout);
+  line-height: 1.7;
+  color: var(--mist);
+  text-align: left;
+}
+
+/* Folded while the snippet types on first view: the answer comes after the question. */
+.pusula-landing .tools-term[data-armed] .tools-resp {
+  display: none;
+}
+
+.pusula-landing .tools-resp-line {
+  min-height: 1.7em;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.pusula-landing .tools-resp-reply {
+  margin-block-end: 2px;
+}
+
+.pusula-landing .tools-status {
+  display: inline-block;
+  margin-inline-end: var(--s-3);
+  padding-inline: 6px;
+  border-radius: var(--r-xs);
+  background: rgba(255, 211, 110, 0.12);
+  color: var(--gold-hi);
+}
+
+.pusula-landing .tools-status[data-wait] {
+  opacity: 0;
+}
+
+.pusula-landing .tools-status:not([data-ok]) {
+  background: var(--ember-soft);
+  color: var(--ember);
+}
+
+.pusula-landing .tools-reply {
+  color: var(--foam);
+}
+
+.pusula-landing .tools-h-k {
+  color: var(--gold);
+}
+
+.pusula-landing .tools-h-v {
+  color: var(--gold-hi);
+}
+
+.pusula-landing .tools-note {
+  grid-area: note;
+  max-width: 62ch;
+  margin: 0;
+  font-size: var(--fs-small);
+  line-height: var(--lh-body);
+  color: var(--mist-dim);
+}
+
+/* ------------------------------------------------------------------------ */
+/* Phone: a chip cloud over a funnel, the hub as one row                    */
+/* ------------------------------------------------------------------------ */
+
+@media (max-width: 767px) {
+  .pusula-landing .tools-rig {
+    --tools-wire: funnel;
+    --tools-dial: 96px;
+    row-gap: 0;
+  }
+
+  .pusula-landing .tools-bay {
+    padding: var(--s-2);
+  }
+
+  .pusula-landing .tools-jacks {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  /* The lead already counts the tools; the list keeps its accessible name. */
+  .pusula-landing .tools-bay-head {
+    display: none;
+  }
+
+  .pusula-landing .tools-rig:not([data-expanded]) .tools-jack-li[data-extra] {
+    display: none;
+  }
+
+  .pusula-landing .tools-jack {
+    flex-direction: row;
+    justify-content: center;
+    gap: 6px;
+    min-height: 40px;
+    padding: 0 10px;
+    border-radius: var(--r-pill);
+  }
+
+  /* 40px chips with a 4px gap: the hit area reaches 44px without overlapping. */
+  .pusula-landing .tools-jack::before {
+    content: "";
+    position: absolute;
+    inset: -2px 0;
+  }
+
+  .pusula-landing .tools-socket {
+    display: none;
+  }
+
+  .pusula-landing .tools-led {
+    position: relative;
+    top: auto;
+    inset-inline-end: auto;
+    flex: none;
+  }
+
+  .pusula-landing .tools-name {
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .pusula-landing .tools-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 44px;
+    margin-top: var(--s-2);
+    border: 1px dashed var(--rule);
+    border-radius: var(--r-pill);
+    background: transparent;
+    color: var(--gold);
+    font: 500 var(--fs-small) / 1.2 var(--font-sans);
+    cursor: pointer;
+  }
+
+  .pusula-landing .tools-more:focus-visible {
+    outline: none;
+    box-shadow: var(--ring-focus);
+  }
+
+  /* The funnel runs through this gap into the dial; the caption sits beside it. */
+  .pusula-landing .tools-hub-col {
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--s-4);
+    margin-top: var(--s-6);
+    text-align: start;
+  }
+
+  .pusula-landing .tools-hub {
+    margin: 0;
+  }
+
+  .pusula-landing .tools-hub-needle {
+    transform: scale(0.78);
+  }
+
+  .pusula-landing .tools-hub-text {
+    align-items: flex-start;
+    gap: var(--s-1);
+  }
+
+  /* The code's own comment line already says it. */
+  .pusula-landing .tools-hub-label {
+    display: none;
+  }
+
+  .pusula-landing .tools-route {
+    justify-content: flex-start;
+  }
+
+  .pusula-landing .tools-term {
+    margin-top: var(--s-5);
+  }
+
+  .pusula-landing .tools-resp {
+    line-height: 1.55;
+    min-height: calc(5 * 1.55em + 2 * var(--s-2) + 2px);
+  }
+
+  .pusula-landing .tools-resp-line {
+    min-height: 1.55em;
+  }
+
+  .pusula-landing .tools-note {
+    margin-top: var(--s-4);
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Small tablet: the full-width bay, its cables dropping into the hub below */
+/* ------------------------------------------------------------------------ */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .pusula-landing .tools-hub-col {
+    margin-top: var(--s-8);
+  }
+
+  .pusula-landing .tools-term {
+    margin-top: var(--s-6);
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Beside the hub (≥1024): trays between the rows carry the cables          */
+/* ------------------------------------------------------------------------ */
+
+@media (min-width: 1024px) {
+  .pusula-landing .tools-bay {
+    padding-inline: 10px;
+  }
+
+  /* Each row of plates has a tray above it: the gutter its ribbon runs in. */
+  .pusula-landing .tools-jacks {
+    row-gap: 16px;
+    padding-top: 16px;
+  }
+
+  .pusula-landing .tools-bay-head {
+    margin-bottom: 0;
+  }
+
+  .pusula-landing .tools-jack {
+    gap: 6px;
+    min-height: 76px;
+    padding: var(--s-2) 2px;
+  }
+
+  /* Whole words only: a long name takes another line rather than splitting. */
+  .pusula-landing .tools-name {
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+  }
+
+  /* The longest request line fits the terminal without a scroller. */
+  .pusula-landing .tools-term .term-pre {
+    padding-inline: var(--s-4);
+  }
+
+  /* Laptop: the bay (wide enough for a word per plate line), then the hub over the terminal. */
+  .pusula-landing .tools-rig {
+    grid-template-columns: minmax(500px, 1fr) minmax(0, 1.1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "bay side"
+      "note side";
+    column-gap: 40px;
+    row-gap: var(--s-4);
+  }
+
+  .pusula-landing .tools-side {
+    grid-area: side;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-5);
+    min-width: 0;
+  }
+
+  .pusula-landing .tools-term {
+    align-self: stretch;
+  }
+
+  .pusula-landing .tools-hub-col {
+    flex-direction: row;
+    gap: var(--s-5);
+    text-align: start;
+  }
+
+  .pusula-landing .tools-hub {
+    margin: 0;
+  }
+
+  .pusula-landing .tools-hub-text {
+    align-items: flex-start;
+  }
+
+  .pusula-landing .tools-route {
+    justify-content: flex-start;
+  }
+}
+
+/* A narrow side column: the terminal's tabs and copy chip need its title's room. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .pusula-landing .tools-term .term-title {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Desktop: bay, hub and terminal in one composition                        */
+/* ------------------------------------------------------------------------ */
+
+@media (min-width: 1440px) {
+  .pusula-landing .tools-rig {
+    grid-template-columns: minmax(0, 1fr) 184px 584px;
+    grid-template-areas:
+      "bay hub term"
+      "note hub term";
+    column-gap: 28px;
+  }
+
+  .pusula-landing .tools-side {
+    display: contents;
+  }
+
+  .pusula-landing .tools-term {
+    align-self: start;
+  }
+
+  .pusula-landing .tools-hub-col {
+    flex-direction: column;
+    align-self: center;
+    gap: var(--s-2);
+    text-align: center;
+  }
+
+  .pusula-landing .tools-hub {
+    margin-block-end: var(--s-2);
+  }
+
+  .pusula-landing .tools-hub-text {
+    align-items: center;
+  }
+
+  .pusula-landing .tools-hub-url {
+    font-size: var(--fs-micro);
+  }
+
+  .pusula-landing .tools-route {
+    justify-content: center;
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Reduced motion                                                           */
+/* ------------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .pusula-landing .tools-jack,
+  .pusula-landing .tools-cable,
+  .pusula-landing .tools-led::after,
+  .pusula-landing .tools-dial-rx,
+  .pusula-landing .tools-run-row .mb {
+    transition: none;
+  }
+}

@@ -1,0 +1,1444 @@
+/*
+ * The compass nav, its station menu, the language switch and the SimDock
+ * (spec §6.1). Everything is scoped under `.pusula-landing`.
+ *
+ * House rules (spec §2, §7): only `transform` and `opacity` animate or
+ * transition (colour changes are instant); `backdrop-filter` only on
+ * `.nav-bar` (its glass layer) and the SimDock's pill; the intro gate owns
+ * `.nav-bar`'s transform and animation, so neither is set here; text is never
+ * below 12px; every target is at least 44px on a phone. Keyframes are
+ * prefixed `nav-` / `dock-`.
+ */
+
+/* ------------------------------------------------------------------------ */
+/* Bar                                                                      */
+/* ------------------------------------------------------------------------ */
+
+.pusula-landing .nav-bar {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: var(--z-nav);
+  box-sizing: border-box;
+  /* Standalone / notched displays (`viewport-fit: cover`): the bar grows under the status bar. */
+  height: calc(var(--nav-h) + env(safe-area-inset-top, 0px));
+  padding-block-start: env(safe-area-inset-top, 0px);
+  color: var(--foam);
+}
+
+/* Glass, crossfaded in once the page has moved 40px. */
+.pusula-landing .nav-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-block-end: 1px solid var(--rule);
+  background: rgba(4, 4, 5, 0.74);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  backdrop-filter: blur(14px) saturate(1.15);
+  opacity: 0;
+  transition: opacity var(--t-mech) var(--ease-out);
+  pointer-events: none;
+}
+
+/* Over the hero: a soft void scrim keeps the bar legible on the instrument. */
+.pusula-landing .nav-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 -24px;
+  z-index: -2;
+  background: linear-gradient(180deg, rgba(4, 4, 5, 0.72), rgba(4, 4, 5, 0));
+  transition: opacity var(--t-mech) var(--ease-out);
+  pointer-events: none;
+}
+
+.pusula-landing .nav-bar[data-scrolled="on"]::before {
+  opacity: 1;
+}
+
+.pusula-landing .nav-bar[data-scrolled="on"]::after {
+  opacity: 0;
+}
+
+.pusula-landing .nav-inner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: var(--s-3);
+  height: 100%;
+  /* Physical sides: a landscape notch sits on the left or the right whatever the language. */
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+
+/* ---- Brand ---- */
+
+.pusula-landing .nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  border-radius: var(--r-sm);
+  color: var(--foam);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pusula-landing .nav-disk {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 32%, #2a2216 0%, var(--bezel) 52%, #0b0907 100%);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.65),
+    0 6px 14px -6px rgba(0, 0, 0, 0.9);
+}
+
+.pusula-landing .nav-disk-ring {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1;
+}
+
+.pusula-landing .nav-disk-ring circle {
+  stroke: var(--gold-lo);
+}
+
+.pusula-landing .nav-disk-fine {
+  stroke: var(--gold-lo);
+}
+
+.pusula-landing .nav-disk-needle {
+  position: relative;
+}
+
+.pusula-landing .nav-word {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.pusula-landing .nav-version {
+  display: none;
+  padding: 4px 8px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--mist);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Centre: the tape (desktop) or the station chip (phone) ---- */
+
+.pusula-landing .nav-centre {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+.pusula-landing .tape {
+  display: none;
+  position: relative;
+  flex: none;
+  width: 360px;
+  height: 36px;
+}
+
+.pusula-landing .tape-window {
+  position: absolute;
+  inset: 0;
+  overflow: clip;
+  direction: ltr;
+  /* A static fade at both ends; never animated. */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 20%, #000 80%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 20%, #000 80%, transparent 100%);
+}
+
+.pusula-landing .tape-strip {
+  position: absolute;
+  inset-block-start: 0;
+  left: 50%;
+  width: 2160px;
+  height: 36px;
+  will-change: transform;
+}
+
+.pusula-landing .tape-scale {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
+.pusula-landing .tape-rule {
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.pusula-landing .tape-tick {
+  stroke: var(--gold-lo);
+  stroke-width: 1;
+}
+
+.pusula-landing .tape-tick-major {
+  stroke: var(--gold);
+  opacity: 0.75;
+}
+
+.pusula-landing .tape-wp {
+  position: absolute;
+  inset-block-start: 0;
+  height: 36px;
+  padding-inline: 8px;
+  border-radius: var(--r-xs);
+  color: var(--mist);
+  text-decoration: none;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pusula-landing .tape-face {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-block-start: 6px;
+  transition: opacity var(--t-hover) linear;
+}
+
+.pusula-landing .tape-face-hi {
+  position: absolute;
+  inset: 0;
+  padding-inline: 8px;
+  opacity: 0;
+}
+
+.pusula-landing .tape-label {
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  line-height: 14px;
+}
+
+.pusula-landing .tape-num {
+  margin-block-start: 1px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  line-height: 13px;
+  color: var(--mist-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.pusula-landing .tape-wp:hover .tape-face:not(.tape-face-hi) .tape-label {
+  color: var(--foam);
+}
+
+.pusula-landing .tape-face-hi .tape-label {
+  color: var(--gold-hi);
+  text-shadow: 0 0 14px rgba(255, 211, 110, 0.5);
+}
+
+.pusula-landing .tape-face-hi .tape-num {
+  color: var(--gold);
+}
+
+.pusula-landing .tape-wp[data-on] .tape-face-hi {
+  opacity: 1;
+}
+
+.pusula-landing .tape-wp[data-on] .tape-face:not(.tape-face-hi) {
+  opacity: 0;
+}
+
+.pusula-landing .tape-wp:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--gold-hi);
+}
+
+/* The fixed lubber mark: an ember caret over a faint lens of light. */
+.pusula-landing .tape-lens {
+  position: absolute;
+  inset-block: 0;
+  left: 50%;
+  width: 132px;
+  margin-left: -66px;
+  background: radial-gradient(56px 26px at 50% 34%, rgba(255, 211, 110, 0.12), transparent 72%);
+  pointer-events: none;
+}
+
+.pusula-landing .tape-caret {
+  position: absolute;
+  inset-block-start: -1px;
+  left: 50%;
+  margin-left: -6px;
+  overflow: visible;
+  fill: var(--ember);
+  pointer-events: none;
+}
+
+/* ---- Station chip (phone) ---- */
+
+.pusula-landing .nav-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  height: 30px;
+  padding-inline: 12px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-pill);
+  background: rgba(10, 10, 12, 0.6);
+  cursor: pointer;
+  transition:
+    opacity var(--t-swap) var(--ease-out),
+    transform var(--t-swap) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* The tap area reaches 44px inside the 52px bar. */
+.pusula-landing .nav-chip::after {
+  content: "";
+  position: absolute;
+  inset: -7px 0;
+}
+
+/* On the bridge the wordmark already says "Pusula": the chip rests out of sight. */
+.pusula-landing .nav-chip[data-home="on"] {
+  opacity: 0;
+  transform: scale(0.94);
+  pointer-events: none;
+}
+
+/* Clips the crossfading faces (the chip itself must not clip its tap area). */
+.pusula-landing .nav-chip-track {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  height: 100%;
+  overflow: clip;
+}
+
+.pusula-landing .nav-chip-face {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.pusula-landing .nav-chip-face[data-state="in"] {
+  animation: nav-chip-in var(--t-swap) var(--ease-out) both;
+}
+
+.pusula-landing .nav-chip-face[data-state="out"] {
+  position: absolute;
+  inset-inline-start: 0;
+  animation: nav-chip-out var(--t-swap) var(--ease-out) both;
+}
+
+@keyframes nav-chip-in {
+  from {
+    opacity: 0;
+    transform: translateY(9px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes nav-chip-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-9px);
+  }
+}
+
+.pusula-landing .nav-chip-deg {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+
+.pusula-landing .nav-chip-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  color: var(--foam);
+}
+
+/* ---- End zone ---- */
+
+.pusula-landing .nav-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--s-2);
+}
+
+.pusula-landing .nav-link {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding-inline: 10px;
+  border-radius: var(--r-pill);
+  color: var(--mist);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.pusula-landing .nav-link:hover {
+  color: var(--foam);
+}
+
+.pusula-landing .nav-lang {
+  display: none;
+}
+
+.pusula-landing .nav-cta {
+  display: none;
+}
+
+.pusula-landing .nav-icon-btn {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-pill);
+  background: rgba(10, 10, 12, 0.55);
+  color: var(--foam);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pusula-landing .nav-icon-btn:hover {
+  border-color: var(--gold-lo);
+}
+
+/* The voyage line (phone): heading / 360 along the bar's bottom edge. */
+.pusula-landing .nav-progress {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: -1px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold-deep), var(--gold) 62%, var(--gold-hi));
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+.pusula-landing .nav-progress:dir(rtl) {
+  background: linear-gradient(270deg, var(--gold-deep), var(--gold) 62%, var(--gold-hi));
+  transform-origin: 100% 50%;
+}
+
+@media (min-width: 640px) {
+  .pusula-landing .nav-cta {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pusula-landing .nav-inner {
+    column-gap: var(--s-5);
+  }
+
+  .pusula-landing .nav-version,
+  .pusula-landing .tape {
+    display: block;
+  }
+
+  .pusula-landing .nav-chip,
+  .pusula-landing .nav-menu-btn,
+  .pusula-landing .nav-progress {
+    display: none;
+  }
+
+  .pusula-landing .nav-link,
+  .pusula-landing .nav-lang {
+    display: inline-flex;
+  }
+
+  .pusula-landing .nav-end {
+    gap: var(--s-1);
+  }
+
+  .pusula-landing .nav-cta {
+    margin-inline-start: var(--s-2);
+  }
+
+  /* 1024–1279: Docs and GitHub fold into 40px icon buttons. */
+  .pusula-landing .nav-gh,
+  .pusula-landing .nav-docs {
+    justify-content: center;
+    width: 40px;
+    padding: 0;
+  }
+
+  .pusula-landing .nav-gh-text,
+  .pusula-landing .nav-gh-ext,
+  .pusula-landing .nav-docs-text {
+    display: none;
+  }
+}
+
+@media (min-width: 1280px) {
+  .pusula-landing .tape {
+    width: 520px;
+  }
+
+  .pusula-landing .nav-gh,
+  .pusula-landing .nav-docs {
+    width: auto;
+    padding-inline: 10px;
+  }
+
+  .pusula-landing .nav-gh-text,
+  .pusula-landing .nav-gh-ext,
+  .pusula-landing .nav-docs-text {
+    display: inline-block;
+  }
+
+  /* With room for the word, Docs is the word alone. */
+  .pusula-landing .nav-docs-mark {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Language switch                                                          */
+/* ------------------------------------------------------------------------ */
+
+.pusula-landing .lang {
+  position: relative;
+}
+
+.pusula-landing .lang-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding-inline: 10px 12px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--mist);
+  cursor: pointer;
+}
+
+.pusula-landing .lang-btn:hover,
+.pusula-landing .lang-btn[aria-expanded="true"] {
+  border-color: var(--gold-lo);
+  color: var(--foam);
+}
+
+.pusula-landing .lang-code {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.pusula-landing .lang-panel {
+  position: absolute;
+  inset-block-start: calc(100% + 8px);
+  inset-inline-end: 0;
+  z-index: var(--z-menu);
+  width: 208px;
+  padding: 6px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  background: var(--deck);
+  box-shadow: var(--shadow-panel);
+  transform-origin: 100% 0;
+  animation: nav-pop-in var(--t-hover) var(--ease-out) both;
+}
+
+.pusula-landing .lang-panel:dir(rtl) {
+  transform-origin: 0 0;
+}
+
+.pusula-landing .lang-panel ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pusula-landing .lang-opt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  width: 100%;
+  min-height: 44px;
+  padding-inline: 12px;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--foam);
+  font-size: var(--fs-small);
+  text-align: start;
+  cursor: pointer;
+}
+
+.pusula-landing .lang-opt:hover,
+.pusula-landing .lang-opt:focus-visible {
+  background: rgba(212, 168, 64, 0.08);
+}
+
+.pusula-landing .lang-opt[aria-current="true"] {
+  color: var(--gold-hi);
+}
+
+.pusula-landing .lang-opt-code {
+  display: inline-flex;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  color: var(--mist-dim);
+}
+
+@keyframes nav-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pusula-landing .lang-inline {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.pusula-landing .lang-inline-opt {
+  min-height: 44px;
+  padding-inline: 4px;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  background: var(--hull);
+  color: var(--mist);
+  font-size: var(--fs-small);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.pusula-landing .lang-inline-opt[aria-pressed="true"] {
+  border-color: var(--gold);
+  background: rgba(212, 168, 64, 0.08);
+  color: var(--gold-hi);
+}
+
+/* ------------------------------------------------------------------------ */
+/* Station menu (phone)                                                     */
+/* ------------------------------------------------------------------------ */
+
+.pusula-landing .nav-menu {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: clip;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 0;
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(212, 168, 64, 0.1), transparent 60%),
+    radial-gradient(90% 40% at 50% 100%, rgba(255, 122, 69, 0.06), transparent 70%), var(--void);
+  color: var(--foam);
+}
+
+.pusula-landing .nav-menu::backdrop {
+  background: rgba(4, 4, 5, 0.7);
+}
+
+.pusula-landing .nav-menu[open] {
+  animation: nav-menu-in var(--t-swap) var(--ease-swing) both;
+}
+
+.pusula-landing .nav-menu[data-closing="on"] {
+  animation: nav-menu-out 220ms var(--ease-io) both;
+}
+
+@keyframes nav-menu-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes nav-menu-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+.pusula-landing .nav-menu-sheet {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  max-width: 560px;
+  margin-inline: auto;
+  padding-block-start: env(safe-area-inset-top, 0px);
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+
+.pusula-landing .nav-menu-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--nav-h);
+  flex: none;
+}
+
+.pusula-landing .nav-menu-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.pusula-landing .nav-menu[open] .nav-menu-close .glyph {
+  animation: nav-close-in var(--t-swap) var(--ease-out) both;
+}
+
+@keyframes nav-close-in {
+  from {
+    opacity: 0;
+    transform: rotate(-90deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pusula-landing .nav-rose-wrap {
+  display: flex;
+  justify-content: center;
+  padding-block-start: var(--s-2);
+}
+
+.pusula-landing .nav-rose {
+  width: min(300px, 100%);
+  height: auto;
+  overflow: visible;
+}
+
+.pusula-landing .nav-menu[open] .nav-rose {
+  animation: nav-rose-in 560ms var(--ease-out) both;
+}
+
+@keyframes nav-rose-in {
+  from {
+    opacity: 0;
+    transform: rotate(-45deg) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pusula-landing .nav-rose-ring {
+  fill: none;
+  stroke: var(--gold-lo);
+  stroke-width: 1;
+}
+
+.pusula-landing .nav-rose-ring-inner {
+  stroke: var(--rule);
+  stroke-dasharray: 2 4;
+}
+
+.pusula-landing .nav-rose-tick {
+  fill: none;
+  stroke: var(--gold-lo);
+  stroke-width: 1;
+}
+
+.pusula-landing .nav-rose-tick-major {
+  stroke: var(--gold);
+  stroke-width: 1.5;
+}
+
+.pusula-landing .nav-rose-lit {
+  fill: var(--gold);
+}
+
+.pusula-landing .nav-rose-shade {
+  fill: var(--gold-deep);
+}
+
+.pusula-landing .nav-rose-point[data-wind="inter"] .nav-rose-lit {
+  fill: var(--gold-lo);
+}
+
+.pusula-landing .nav-rose-point[data-wind="inter"] .nav-rose-shade {
+  fill: #3a2a0c;
+}
+
+.pusula-landing .nav-rose-point[data-on] .nav-rose-lit {
+  fill: var(--gold-hi);
+}
+
+.pusula-landing .nav-rose-point[data-on] .nav-rose-shade {
+  fill: var(--gold);
+}
+
+.pusula-landing .nav-rose-letter {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  fill: var(--mist);
+}
+
+.pusula-landing .nav-rose-letter[data-on] {
+  fill: var(--gold-hi);
+}
+
+.pusula-landing .nav-rose-needle {
+  transform-box: view-box;
+  transform-origin: 150px 150px;
+  transition: transform 300ms var(--ease-out);
+}
+
+.pusula-landing .nav-rose-needle-n {
+  fill: var(--ember);
+}
+
+.pusula-landing .nav-rose-needle-s {
+  fill: var(--void);
+  stroke: var(--gold);
+  stroke-width: 1;
+}
+
+.pusula-landing .nav-rose-pivot {
+  fill: var(--gold);
+  stroke: var(--void);
+  stroke-width: 2;
+}
+
+.pusula-landing .nav-rose-pin {
+  fill: var(--gold-hi);
+}
+
+.pusula-landing .nav-rose-hit {
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pusula-landing .nav-rose-hit path {
+  fill: transparent;
+}
+
+/* SVG takes no box-shadow ring: the focused point's wedge draws it. */
+.pusula-landing .nav-rose-hit:focus-visible {
+  box-shadow: none;
+}
+
+.pusula-landing .nav-rose-hit:focus-visible path {
+  fill: rgba(255, 211, 110, 0.06);
+  stroke: var(--gold-hi);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.pusula-landing .nav-rose-caption {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: var(--s-2);
+  margin: var(--s-1) 0 var(--s-5);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--foam);
+}
+
+.pusula-landing .nav-rose-caption-deg {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  font-weight: 400;
+  color: var(--gold);
+}
+
+.pusula-landing .nav-menu-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-block-start: 1px solid var(--rule-soft);
+}
+
+.pusula-landing .nav-menu-row {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: 56px;
+  padding-inline: 4px;
+  border-block-end: 1px solid var(--rule-soft);
+  color: var(--foam);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pusula-landing .nav-menu[open] .nav-menu-row {
+  animation: nav-row-in var(--t-swap) var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 30ms + 120ms);
+}
+
+@keyframes nav-row-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pusula-landing .nav-menu-row:hover,
+.pusula-landing .nav-menu-row:focus-visible {
+  background: rgba(212, 168, 64, 0.06);
+}
+
+/* Aligned by the grid (the row's direction), not by its own `dir="ltr"`. */
+.pusula-landing .nav-menu-deg {
+  justify-self: start;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--mist-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.pusula-landing .nav-menu-label {
+  overflow: hidden;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pusula-landing .nav-menu-chev {
+  color: var(--gold-lo);
+}
+
+.pusula-landing .nav-menu-row[aria-current] .nav-menu-label {
+  color: var(--gold-hi);
+}
+
+.pusula-landing .nav-menu-row[aria-current] .nav-menu-deg {
+  color: var(--ember);
+}
+
+.pusula-landing .nav-menu-row[aria-current] .nav-menu-chev {
+  color: var(--ember);
+}
+
+.pusula-landing .nav-menu-tools {
+  display: grid;
+  gap: var(--s-3);
+  padding-block: var(--s-5) var(--s-3);
+}
+
+.pusula-landing .nav-menu-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-2);
+}
+
+.pusula-landing .nav-menu-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  min-height: 44px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-pill);
+  color: var(--foam);
+  font-size: var(--fs-small);
+  text-decoration: none;
+}
+
+.pusula-landing .nav-menu-link:hover {
+  border-color: var(--gold-lo);
+}
+
+.pusula-landing .nav-menu-pause {
+  justify-content: center;
+  width: 100%;
+}
+
+.pusula-landing .nav-menu-cta {
+  position: sticky;
+  inset-block-end: 0;
+  margin-block-start: auto;
+  padding-block: var(--s-4) calc(var(--s-4) + env(safe-area-inset-bottom));
+  background: linear-gradient(0deg, var(--void) 72%, rgba(4, 4, 5, 0));
+}
+
+.pusula-landing .nav-menu-cta .mb {
+  display: flex;
+  width: 100%;
+}
+
+/* ------------------------------------------------------------------------ */
+/* SimDock                                                                  */
+/* ------------------------------------------------------------------------ */
+
+/*
+ * The dock is a fixed wrapper (position, lift, arrival, hiding) holding the
+ * live region its messages are read from and the glass pill they are shown
+ * in. The pill can be stowed on its own (over the board of real figures on a
+ * phone); its messages are still read out. Its geometry comes from the
+ * `--dock-*` footprint tokens (landing.css), so content that keeps clear of
+ * it reads the same numbers.
+ */
+.pusula-landing .sim-dock {
+  --dock-lift: 0px;
+  position: fixed;
+  /* Clear a landscape notch on the dock's side (physical, so per direction). */
+  inset-inline-start: max(var(--dock-inset), env(safe-area-inset-left, 0px));
+  inset-block-end: calc(var(--dock-inset) + env(safe-area-inset-bottom, 0px));
+  z-index: var(--z-dock);
+  pointer-events: none;
+  transform: translate3d(0, calc(-1 * var(--dock-lift)), 0);
+  transition:
+    transform var(--t-swap) var(--ease-out),
+    opacity var(--t-mech) var(--ease-out),
+    visibility 0s linear 0s;
+}
+
+.pusula-landing .sim-dock[data-hidden="on"] {
+  visibility: hidden;
+  opacity: 0;
+  transform: translate3d(0, calc(12px - var(--dock-lift)), 0);
+  transition:
+    transform var(--t-swap) var(--ease-out),
+    opacity var(--t-mech) var(--ease-out),
+    visibility 0s linear var(--t-mech);
+}
+
+.pusula-landing .dock-pill {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: var(--dock-pill-h);
+  padding-inline: 12px 4px;
+  border: 1px solid rgba(212, 168, 64, 0.24);
+  border-radius: var(--r-pill);
+  background: rgba(10, 10, 12, 0.72);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  backdrop-filter: blur(14px) saturate(1.2);
+  box-shadow:
+    var(--shadow-lift),
+    inset 0 1px 0 rgba(255, 228, 160, 0.06);
+  pointer-events: auto;
+  transition:
+    transform var(--t-swap) var(--ease-out),
+    opacity var(--t-mech) var(--ease-out),
+    visibility 0s linear 0s;
+}
+
+.pusula-landing .sim-dock[data-stowed="on"] .dock-pill {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(0, 12px, 0);
+  transition:
+    transform var(--t-swap) var(--ease-out),
+    opacity var(--t-mech) var(--ease-out),
+    visibility 0s linear var(--t-mech);
+}
+
+.pusula-landing .sim-dock:dir(rtl) {
+  inset-inline-start: max(var(--dock-inset), env(safe-area-inset-right, 0px));
+}
+
+/* After the intro hands off (t = 2600ms) the dock arrives at t = 3200ms. */
+:root[data-intro="done"] .pusula-landing .sim-dock {
+  animation: dock-arrive var(--t-swap) var(--ease-out) 600ms backwards;
+}
+
+@keyframes dock-arrive {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+.pusula-landing .dock-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding-inline-end: 6px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  line-height: 1;
+  letter-spacing: var(--track-readout);
+  color: var(--foam);
+  white-space: nowrap;
+}
+
+.pusula-landing .dock-dot {
+  position: relative;
+  flex: none;
+  box-sizing: border-box;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ember);
+  box-shadow: 0 0 10px var(--ember-glow);
+}
+
+.pusula-landing .dock-ping {
+  position: absolute;
+  inset: -1px;
+  border: 1px solid var(--ember);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+/* While a message holds the pill the dot takes its tone: failure is ember plus a dashed stroke. */
+.pusula-landing .dock-pill[data-tone="fail"] .dock-dot {
+  border: 1.5px dashed var(--ember);
+  background: transparent;
+  box-shadow: none;
+}
+
+.pusula-landing .dock-pill[data-tone="warn"] .dock-dot {
+  background: var(--gold);
+  box-shadow: 0 0 10px rgba(212, 168, 64, 0.45);
+}
+
+.pusula-landing .dock-pill[data-tone="ok"] .dock-dot {
+  background: var(--gold-hi);
+  box-shadow: 0 0 10px rgba(255, 211, 110, 0.5);
+}
+
+/*
+ * The word slot: "Simulation", or for a few seconds a visitor-caused event
+ * told in its place (one line, crossfaded; the slot is as wide as the longer
+ * of the two, so the pill grows towards its inline end while a message shows).
+ */
+.pusula-landing .dock-say {
+  display: inline-grid;
+  align-items: center;
+  min-width: 0;
+  max-width: calc(100vw - 2 * var(--dock-inset) - 148px);
+}
+
+.pusula-landing .dock-say > * {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+
+.pusula-landing .dock-word {
+  transition: opacity var(--t-hover) linear;
+}
+
+.pusula-landing .dock-pill[data-msg="show"] .dock-word {
+  opacity: 0;
+}
+
+.pusula-landing .dock-msg {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  animation: dock-msg-in 280ms var(--ease-out) both;
+}
+
+.pusula-landing .dock-pill[data-msg="leave"] .dock-msg {
+  animation: dock-msg-out 240ms var(--ease-io) both;
+}
+
+@keyframes dock-msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes dock-msg-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* Below 1024px the deck's own short form ("claude × 503 → openai") stands in for the sentence. */
+.pusula-landing .dock-msg-long:has(+ .dock-msg-short) {
+  display: none;
+}
+
+.pusula-landing .dock-msg-x {
+  color: var(--ember);
+}
+
+.pusula-landing .dock-msg-to {
+  color: var(--gold-hi);
+}
+
+.pusula-landing .dock-rate {
+  display: none;
+  align-items: baseline;
+  gap: 4px;
+  padding-inline: 10px;
+  border-inline-start: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  line-height: 1;
+  color: var(--mist);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.pusula-landing .dock-rate-n {
+  color: var(--gold-hi);
+}
+
+/* Paused: nothing flows, and the rate says so. */
+.pusula-landing .dock-rate[data-paused] .dock-rate-n {
+  color: var(--mist-dim);
+}
+
+/*
+ * One Pause button: ⏸ while the deck runs, ▶ (lit ember) once engaged. Its
+ * hit area reaches 44px.
+ */
+.pusula-landing .dock-pause {
+  position: relative;
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--gold);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pusula-landing .dock-pause::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+}
+
+@media (hover: hover) {
+  .pusula-landing .dock-pause:hover:not(:disabled) {
+    border-color: var(--gold-lo);
+    color: var(--gold-hi);
+  }
+}
+
+.pusula-landing .dock-pause[aria-pressed="true"] {
+  border-color: rgba(255, 122, 69, 0.6);
+  background: var(--ember-soft);
+  color: var(--ember);
+}
+
+.pusula-landing .dock-pause:focus-visible,
+.pusula-landing .dock-pace:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+/* Under reduced motion the deck never steps: Pause rests engaged. */
+.pusula-landing .dock-pause:disabled {
+  cursor: default;
+  opacity: 0.8;
+}
+
+/* The time-lapse chip: » and the factor (×1 → ×5 → ×10); its full name is its label. */
+.pusula-landing .dock-pace {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 4px;
+  min-height: 32px;
+  margin-inline-start: 2px;
+  padding-inline: 10px 12px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--mist);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  line-height: 1;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pusula-landing .dock-pace::after {
+  content: "";
+  position: absolute;
+  inset: -6px -2px;
+}
+
+.pusula-landing .dock-pace-mark {
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (hover: hover) {
+  .pusula-landing .dock-pace:hover:not(:disabled) {
+    border-color: var(--gold-lo);
+    color: var(--foam);
+  }
+}
+
+/* Under reduced motion the deck never steps: the chip rests, like the engaged Pause. */
+.pusula-landing .dock-pace:disabled {
+  border-color: var(--rule-soft);
+  color: var(--mist-dim);
+  cursor: default;
+}
+
+.pusula-landing .dock-pace[data-fast] {
+  border-color: rgba(255, 122, 69, 0.6);
+  background: var(--ember-soft);
+  color: var(--foam);
+}
+
+/*
+ * Folded (below 1024px, while the page scrolls down): the dot and Pause only;
+ * a message still unfolds the word slot. What comes back on unfolding fades
+ * in (the pill's own width changes at once).
+ */
+@media (max-width: 1023.98px) {
+  .pusula-landing .dock-pill[data-folded] .dock-pace,
+  .pusula-landing .dock-pill[data-folded]:not([data-msg]) .dock-say {
+    display: none;
+  }
+
+  /* A message that unfolded the word slot gives it back without the word. */
+  .pusula-landing .dock-pill[data-folded] .dock-word {
+    opacity: 0;
+  }
+
+  .pusula-landing .dock-pill[data-folded] {
+    padding-inline-start: 14px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .pusula-landing .dock-pill:not([data-folded]) .dock-pace,
+  .pusula-landing .dock-pill:not([data-folded]) .dock-say {
+    animation: dock-unfold 220ms var(--ease-out) both;
+  }
+}
+
+@keyframes dock-unfold {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pusula-landing .sim-dock,
+  .pusula-landing .sim-dock:dir(rtl) {
+    inset-inline-start: var(--dock-inset);
+    inset-block-end: var(--dock-inset);
+  }
+
+  .pusula-landing .dock-say {
+    max-width: min(480px, calc(100vw - 2 * var(--dock-inset) - 260px));
+  }
+
+  /* Desktop has room for the sentence. */
+  .pusula-landing .dock-msg-long:has(+ .dock-msg-short) {
+    display: inline;
+  }
+
+  .pusula-landing .dock-msg-short {
+    display: none;
+  }
+
+  .pusula-landing .dock-rate {
+    display: inline-flex;
+  }
+
+  .pusula-landing .dock-pause {
+    width: 40px;
+    height: 40px;
+  }
+
+  .pusula-landing .dock-pause::after {
+    inset: -2px;
+  }
+
+  .pusula-landing .dock-pace {
+    min-height: 34px;
+  }
+}

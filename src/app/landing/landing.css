@@ -1,116 +1,716 @@
 /*
- * Public landing page — "chart room" palette and the few animations it uses.
+ * Public landing page, "SEYİR": design tokens, shared classes and the
+ * page-wide rules every station builds on (spec §2, §5.1).
  *
- * The page is always dark: a saturated sea-ink base (not neutral black), teal
- * for the brand and for lines, amber reserved for one thing — the needle that
- * marks the chosen route. Everything is scoped under `.pusula-landing` so the
+ * The page is always dark: black, gold and one ember signal colour. Ember
+ * means "decision", and a failure is ember plus a dashed stroke or a ✕ glyph,
+ * never colour alone. Everything is scoped under `.pusula-landing`, so the
  * dashboard theme tokens are untouched.
+ *
+ * Cascade. Tokens, the intro gate and the global rules are unlayered: they
+ * must win over Tailwind utilities. The shared classes live in
+ * `@layer components`, so a section can still adjust one with a utility
+ * (`class="panel p-6"`). Tailwind's own layer order (theme, base, components,
+ * utilities) is declared by `globals.css`, which the root layout loads first.
+ *
+ * Motion rules for everything built on this file:
+ * - only `transform` and `opacity` animate. Never `letter-spacing`, `filter`,
+ *   `mask-image`, `clip-path` on large elements, `background-position`,
+ *   `width` or `height`; glows never animate, only their opacity may;
+ * - no `mix-blend-mode` on full-screen or animated layers;
+ * - `backdrop-filter` only on the nav and the SimDock;
+ * - `.is-paused` on the root freezes every looping CSS animation (Pause
+ *   control; one-shots are settled at their end, see below), and the one
+ *   reduced-motion block at the end of the file stills the page.
  */
-.pusula-landing {
-  --ink: #061a20;
-  --ink-deep: #04141a;
-  --chart: #0b2a31;
-  --chart-raised: #0f343c;
-  --rule: #1a454d;
-  --rule-soft: #133840;
-  --foam: #e9f4f2;
-  --mist: #93b5b1;
-  --mist-dim: #5f8580;
-  --teal: #0f8f83;
-  --teal-bright: #2ed3c4;
-  --teal-ink: #0b6f66;
-  --amber: #f59e0b;
-  --amber-soft: rgba(245, 158, 11, 0.18);
 
-  background: var(--ink);
+/* ---- Tokens ------------------------------------------------------------- */
+
+.pusula-landing {
+  /* surfaces */
+  --void: #040405; /* page base */
+  --hull: #0a0a0c; /* panels, footer band */
+  --deck: #111013; /* raised panels, terminals, inputs */
+  --bezel: #1a1712; /* instrument rims, flap tiles, chips, jacks */
+  --rule: #2e281b; /* hairlines */
+  --rule-soft: #1d1a13; /* inner dividers */
+  --graticule: rgba(212, 168, 64, 0.07);
+
+  /* gold ramp: metal, never flat yellow (every gold gradient ends in --gold-deep) */
+  --gold-deep: #6b4a12;
+  --gold-lo: #8c6a1e; /* 4.1:1: decoration, back-hemisphere stars, >=18px text only */
+  --gold: #d4a840; /* 9.2:1: brand, lines, inactive needles */
+  --gold-hi: #ffd36e; /* active readouts, chosen labels, focus ring */
+  --phosphor: #fff1c9; /* comet heads, star flares, specular cores */
+
+  /* text */
+  --foam: #f7f0df; /* 18:1 body and titles */
+  --mist: #bfb293; /* 9.7:1 secondary */
+  --mist-dim: #8a7e64; /* 5.1:1 captions, never under 12px */
+
+  /* the one signal colour: decision AND failure (failure adds a dashed stroke or ✕) */
+  --ember: #ff7a45; /* 7.9:1 */
+  --ember-soft: rgba(255, 122, 69, 0.18);
+  --ember-glow: rgba(255, 122, 69, 0.45);
+  --gold-glow: rgba(255, 211, 110, 0.35);
+
+  /* type; var(--font-sans) and var(--font-mono) come from the app (globals.css) */
+  --font-serif:
+    ui-serif, "New York", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-display: var(--font-serif);
+  --fs-hero: clamp(2.375rem, 0.95rem + 5.8vw, 6rem); /* 38px @390 → 96px @1440 */
+  --fs-h2: clamp(2rem, 1.25rem + 2.9vw, 3.75rem);
+  --fs-italic: clamp(1.125rem, 0.9rem + 1vw, 1.75rem); /* serif italic gold-hi subtitle line */
+  --fs-h3: clamp(1.25rem, 1.05rem + 0.8vw, 1.625rem); /* sans 600 */
+  --fs-lead: clamp(1rem, 0.94rem + 0.3vw, 1.125rem);
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-readout: 0.8125rem; /* mono 13 */
+  --fs-micro: 0.75rem; /* the floor: nothing on the page is smaller than 12px */
+  --fs-numeral: clamp(1.75rem, 1.2rem + 2.2vw, 3.25rem); /* mono 600 tabular */
+  --fs-flap: clamp(1.375rem, 1rem + 1.5vw, 2.125rem); /* mono 700 */
+  --fs-command: clamp(1.5rem, 1rem + 2.4vw, 3rem);
+  --lh-tight: 0.98;
+  --lh-title: 1.04;
+  --lh-body: 1.6;
+  --track-display: -0.02em;
+  --track-readout: 0.06em;
+  --track-kicker: 0.14em;
+
+  /* radii */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-pill: 999px;
+
+  /* shadows and glows (glows never animate; only their opacity may) */
+  --shadow-panel: 0 24px 64px -28px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 228, 160, 0.06);
+  --shadow-lift: 0 10px 30px -12px rgba(0, 0, 0, 0.7);
+  --glow-text-gold: 0 0 18px var(--gold-glow);
+  --glow-text-ember: 0 0 16px var(--ember-glow);
+  --glow-cta: 0 0 0 1px rgba(255, 211, 110, 0.5), 0 8px 32px -8px rgba(212, 168, 64, 0.55);
+  --ring-focus: 0 0 0 2px var(--void), 0 0 0 4px var(--gold-hi);
+
+  /* z layers */
+  --z-backdrop: 0;
+  --z-stage: 1;
+  --z-content: 2;
+  --z-front-arc: 3;
+  --z-labels: 4;
+  --z-hud: 5;
+  --z-pin-hud: 10;
+  --z-dock: 40;
+  --z-nav: 50;
+  --z-menu: 60;
+  --z-toast: 70;
+  --z-intro-curtain: 90;
+  --z-intro-canvas: 91;
+  --z-intro-hud: 92;
+  --z-intro-skip: 93;
+
+  /* motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* entrances, reveals, FLIP */
+  --ease-io: cubic-bezier(0.37, 0, 0.63, 1); /* sweeps, scans, camera tweens */
+  --ease-swing: cubic-bezier(0.83, 0, 0.17, 1); /* menu open, curtain, wipes */
+  --ease-detent: cubic-bezier(0.3, 1.55, 0.45, 1); /* toggles, levers, knob detents */
+  --ease-lift: cubic-bezier(0.34, 1.56, 0.64, 1); /* dot landings, seals, pins */
+  --t-press: 120ms;
+  --t-hover: 180ms;
+  --t-toggle: 180ms;
+  --t-mech: 280ms;
+  --t-swap: 420ms;
+  --t-power: 700ms;
+  --t-reveal: 900ms;
+  --t-ripple: 900ms;
+  --t-roll: 1400ms;
+  --loop-breathe: 4s;
+  --loop-scan: 9s;
+  --loop-hub: 9s;
+  --loop-seam: 9s;
+
+  /* spacing (8px base) */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --s-10: 144px;
+  --gutter: 16px; /* 24px ≥640, 32px ≥1024 */
+  --content: 1360px;
+  /*
+   * Station shell rhythm (revised §4 budgets): the top pad holds the course
+   * seam at half its height, the end pad is shorter so two stations never
+   * meet across a band of black. Wider screens set both again below.
+   */
+  --station-pad: 48px;
+  --station-pad-end: 40px;
+  /* Fixed nav height (§6.1): anchors land below it. */
+  --nav-h: 52px;
+
+  /*
+   * The SimDock's footprint (nav.css), for content that must keep clear of
+   * it. The pill rests in the bottom inline-start corner; on desktop its
+   * toasts line up beside it, in the same band. `--dock-clear-block` is the
+   * height of that band from the viewport's bottom edge (inset, pill, air);
+   * `--dock-clear-inline` is the pill's reach from the inline-start edge
+   * (SimDock refines it from the pill's measured width). While the dock
+   * climbs the hero's board it rises by the board's height plus
+   * `--dock-lift-gap` (`DOCK_LIFT_GAP_PX` in navModel.ts).
+   */
+  --dock-inset: 16px;
+  --dock-pill-h: 40px;
+  --dock-air: 12px;
+  --dock-lift-gap: 12px;
+  --dock-clear-block: calc(
+    var(--dock-inset) + env(safe-area-inset-bottom, 0px) + var(--dock-pill-h) + var(--dock-air)
+  );
+  --dock-clear-inline: 300px;
+
+  background: var(--void);
   color: var(--foam);
   font-family: var(--font-sans);
+  /* NOT hidden: hidden makes this a scroll container and kills position: sticky. */
+  overflow-x: clip;
+  color-scheme: dark;
+  accent-color: var(--gold);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-.pusula-landing ::selection {
-  background: var(--teal);
-  color: var(--foam);
-}
-
-.pusula-landing :focus-visible {
-  outline: 2px solid var(--teal-bright);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-
-/* Type scale: 1.25 ratio from 16px. Display sizes carry the page's voice. */
-.pusula-landing .display {
-  font-size: clamp(2.5rem, 2rem + 2.6vw, 3.8rem);
-  line-height: 1.04;
-  letter-spacing: -0.025em;
-  font-weight: 750;
-  text-wrap: balance;
-}
-
-.pusula-landing .section-title {
-  font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
-  line-height: 1.12;
-  letter-spacing: -0.015em;
-  font-weight: 700;
-  text-wrap: balance;
-}
-
-.pusula-landing .lead {
-  font-size: 1.0625rem;
-  line-height: 1.6;
-  color: var(--mist);
-  max-width: 60ch;
-  text-wrap: pretty;
-}
-
-.pusula-landing .readout {
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.01em;
-}
-
-/* Section rule: a short teal stroke before the heading, never a caps eyebrow. */
-.pusula-landing .rule-mark::before {
-  content: "";
-  display: block;
-  width: 2rem;
-  height: 2px;
-  background: var(--teal-bright);
-  margin-bottom: 1.25rem;
-  border-radius: 1px;
-}
-
-/* The instrument needle swings to the chosen bearing. */
-.pusula-landing .needle {
-  transform-box: view-box;
-  transform-origin: 160px 160px;
-  transition: transform 900ms cubic-bezier(0.22, 0.9, 0.24, 1);
-}
-
-.pusula-landing .score-bar {
-  transition: width 700ms cubic-bezier(0.22, 0.9, 0.24, 1);
-}
-
-@keyframes pusula-ping {
-  0% {
-    transform: scale(0.6);
-    opacity: 0.9;
+@media (min-width: 640px) {
+  .pusula-landing {
+    --gutter: 24px;
+    --station-pad: clamp(56px, 8vw, 88px);
+    --station-pad-end: 48px;
   }
-  100% {
-    transform: scale(2.4);
+}
+
+@media (min-width: 1024px) {
+  .pusula-landing {
+    --gutter: 32px;
+    --station-pad: clamp(56px, 8svh, 96px);
+    --nav-h: 56px;
+    --dock-inset: 24px;
+    --dock-pill-h: 44px;
+    --dock-clear-inline: 430px;
+  }
+}
+
+/*
+ * Persian: display type is the sans (700, set on `.serif-display` below),
+ * display line-heights go up by .25 for the taller Arabic-script glyphs, and
+ * no tracking anywhere (letter-spacing breaks the script's joins).
+ */
+:lang(fa) .pusula-landing,
+.pusula-landing:lang(fa) {
+  --font-display: var(--font-sans);
+  --lh-tight: 1.23;
+  --lh-title: 1.29;
+  --track-display: 0;
+  --track-readout: 0;
+  --track-kicker: 0;
+}
+
+/*
+ * Persian never sets in the mono face: a monospace font has no Arabic-script
+ * joining, so the letters fall apart. The shared mono UI labels (station
+ * kicker, SimBadge pill, terminal title, SimDock word, rate, time-lapse chip
+ * and toasts) switch to the sans in Persian; the LTR islands inside them
+ * (bearings, units, code) keep the mono. Station-specific mono labels carry
+ * their own rule next to their styles.
+ */
+.pusula-landing
+  :is(.kicker, .sim-pill, .term-title, .dock-status, .dock-rate, .dock-pace, .dock-toast):lang(fa) {
+  font-family: var(--font-sans);
+  letter-spacing: normal;
+}
+
+.pusula-landing
+  :is(.kicker, .sim-pill, .term-title, .dock-status, .dock-rate, .dock-pace, .dock-toast):lang(fa)
+  [dir="ltr"] {
+  font-family: var(--font-mono);
+}
+
+/* ---- The document behind the page --------------------------------------- */
+
+/*
+ * The app's root is light. While the landing is mounted the document itself
+ * is the landing's black (`--void`, written out: the tokens live on the
+ * root div), so iOS rubber-band overscroll above the nav and below the
+ * footer never shows a light band, and the canvas, scrollbars and native
+ * controls are dark (the viewport's theme-color in `page.tsx` matches).
+ */
+:root:has(.pusula-landing),
+body:has(.pusula-landing) {
+  background: #040405;
+  color-scheme: dark;
+}
+
+/*
+ * The app's "Skip to content" link (root layout) sits before the landing in
+ * the DOM, so the fixed nav would paint over it when it is focused. On the
+ * landing it rides above the nav, in the page's own gold.
+ */
+body:has(.pusula-landing) > a[href="#main-content"]:focus {
+  position: fixed;
+  z-index: 100;
+  background: #ffd36e;
+  color: #040405;
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 2px #040405,
+    0 0 0 4px #ffd36e;
+}
+
+/* ---- Page-wide rules ---------------------------------------------------- */
+
+.pusula-landing ::selection {
+  background: var(--gold);
+  color: var(--void);
+}
+
+/* The transparent outline keeps a visible ring in forced-colors mode. */
+.pusula-landing :focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: var(--ring-focus);
+}
+
+.pusula-landing [data-station] {
+  scroll-margin-top: var(--nav-h);
+}
+
+/*
+ * Keyboard focus is never hidden under the fixed chrome (WCAG 2.4.11): a
+ * control scrolled into view by Tab keeps clear of the nav above and of the
+ * SimDock's band below. Only focusable controls in the page's flow get the
+ * margin, so the stations' own anchors (`scroll-margin-top` above, read by
+ * the nav's travel) and fragment jumps land exactly as before.
+ */
+.pusula-landing
+  :is(main, footer)
+  :is(a[href], button, input, select, textarea, summary, [tabindex], [contenteditable="true"]) {
+  scroll-margin-block: calc(var(--nav-h) + 12px) calc(var(--dock-clear-block) + 12px);
+}
+
+/*
+ * Pause control: freezes every CSS animation under the root at once, so a
+ * loop stops without a frame of motion (also one that starts while paused).
+ * One-shot animations (a finite iteration count: entrances, arrivals,
+ * toasts) are not left frozen at their first keyframe, where they would hold
+ * content invisible: the heartbeat settles each at its end state as soon as
+ * it starts (`settleOneShots` in runtime/heartbeat.ts). So stations need no
+ * Pause rule for their entrances; a Pause rule is only for how a frozen loop
+ * should rest.
+ */
+.pusula-landing.is-paused *,
+.pusula-landing.is-paused *::before,
+.pusula-landing.is-paused *::after {
+  animation-play-state: paused !important;
+}
+
+/* Except the intro failsafe, which must still hide the intro layers on time. */
+.pusula-landing.is-paused .intro-layer {
+  animation-play-state: running !important;
+}
+
+/*
+ * Everything pauses off screen (§7.6). `useOffscreenPause` (landingMotion.ts)
+ * marks each station and the footer `data-offscreen` while it is more than a
+ * quarter of a viewport away, and the endless loops inside it `data-loop`
+ * (SimBadge dots, carets, pulses, breathing LEDs, scans, button glows, the
+ * course seam). Those hold still instead of invalidating style every frame.
+ * Settled one-shots are not touched (pausing them would make each an active
+ * animation again, which costs the compositor on every frame), and both
+ * attributes only ever come from the client: server HTML keeps its loops.
+ */
+.pusula-landing [data-offscreen] [data-loop],
+.pusula-landing [data-offscreen] [data-loop]::before,
+.pusula-landing [data-offscreen] [data-loop]::after {
+  animation-play-state: paused !important;
+}
+
+/*
+ * Persian text never uses uppercase, letter-spacing, italic or small-caps:
+ * the script has no case, and slanting or tracking it breaks its joins.
+ * `:lang(fa)` matches each element by its own language, so Latin islands
+ * marked `lang="en"` keep their styling.
+ */
+.pusula-landing :lang(fa) {
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-style: normal !important;
+  font-variant-caps: normal !important;
+}
+
+/* ---- Canvas stages (runtime/useCanvasStage.ts) -------------------------- */
+
+/*
+ * A canvas drawn over a server-rendered poster. The canvas mounts empty and
+ * the stage gets `data-live="on"` after its first draw; only then does the
+ * poster fade, so there is never a blank frame. Under reduced motion the
+ * stage never goes live and the poster stays.
+ */
+@layer components {
+  .pusula-landing .stage {
+    position: relative;
+    overflow: clip;
+  }
+
+  .pusula-landing .stage > canvas {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    display: block;
+  }
+
+  .pusula-landing .stage-poster {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    pointer-events: none;
+    transition: opacity 300ms linear;
+  }
+
+  .pusula-landing .stage[data-live="on"] .stage-poster {
     opacity: 0;
   }
 }
 
-.pusula-landing .ping {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: pusula-ping 1.8s cubic-bezier(0.2, 0.7, 0.3, 1) infinite;
+/* ---- Intro gate (§5.1) -------------------------------------------------- */
+
+/*
+ * The inline gate script in `page.tsx` sets `html[data-intro="play"]` before
+ * first paint, on a first visit only. Without it (reduced motion, a URL hash,
+ * a restored scroll, a stored key, client-side navigation) every intro layer
+ * stays hidden and the hero shows its final state on first paint.
+ *
+ * The failsafe hides the layers at 4.5s even if the intro's JavaScript never
+ * runs. It is exempt from `.is-paused` (see the pause rule above): a visitor
+ * who paused motion on an earlier visit must never be left behind a curtain.
+ */
+:root:not([data-intro="play"]) .pusula-landing .intro-layer {
+  display: none;
 }
 
-@keyframes pusula-caret {
+:root[data-intro="play"] .pusula-landing .intro-layer {
+  animation: intro-failsafe 0s linear 4.5s forwards;
+}
+
+@keyframes intro-failsafe {
+  to {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+:root[data-intro="play"] .pusula-landing .nav-bar {
+  transform: translateY(-100%);
+}
+
+/* When the intro hands off, the nav drops in once (backwards fill: no lasting transform). */
+:root[data-intro="done"] .pusula-landing .nav-bar {
+  animation: pusula-nav-drop 400ms var(--ease-out) backwards;
+}
+
+@keyframes pusula-nav-drop {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+:root[data-intro="play"] .pusula-landing .sim-dock {
+  visibility: hidden;
+}
+
+/* Layer geometry (§5.2). Each layer also carries `.intro-layer`. */
+@layer components {
+  .pusula-landing .intro-curtain {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-intro-curtain);
+    background: var(--void);
+  }
+
+  .pusula-landing .intro-canvas {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    z-index: var(--z-intro-canvas);
+    pointer-events: none;
+  }
+
+  .pusula-landing .intro-hud {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-intro-hud);
+    pointer-events: none;
+  }
+
+  .pusula-landing .intro-skip {
+    position: fixed;
+    inset-inline-end: 16px;
+    inset-block-end: calc(16px + env(safe-area-inset-bottom));
+    z-index: var(--z-intro-skip);
+    min-inline-size: 44px;
+    min-block-size: 44px;
+  }
+}
+
+/* ---- Shared classes (§2) ------------------------------------------------ */
+
+@layer components {
+  /* Serif display: H1 and H2. In Persian it is the sans at 700 (see tokens). */
+  .pusula-landing .serif-display {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: var(--track-display);
+    line-height: var(--lh-tight);
+    text-wrap: balance;
+  }
+
+  .pusula-landing:lang(fa) .serif-display,
+  :lang(fa) .pusula-landing .serif-display {
+    font-weight: 700;
+  }
+
+  /* The serif italic gold-hi "subtitle line" under a display title. */
+  .pusula-landing .italic-line {
+    font-family: var(--font-serif);
+    font-size: var(--fs-italic);
+    font-style: italic;
+    line-height: var(--lh-title);
+    color: var(--gold-hi);
+  }
+
+  .pusula-landing:lang(fa) .italic-line,
+  :lang(fa) .pusula-landing .italic-line {
+    font-family: var(--font-sans);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  /* Station kicker: "045° · Network". */
+  .pusula-landing .kicker {
+    font-family: var(--font-mono);
+    font-size: var(--fs-micro);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--track-kicker);
+    line-height: 1.4;
+    color: var(--gold);
+  }
+
+  .pusula-landing .readout {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--track-readout);
+  }
+
+  /*
+   * A static 48px chart grid behind the host's content. Drawn on `::after`
+   * (z -1 inside an isolated host), so the host keeps its own background
+   * for hazes and gradients.
+   */
+  .pusula-landing .graticule {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .pusula-landing .graticule::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, var(--graticule) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--graticule) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .pusula-landing .panel {
+    background: var(--deck);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-panel);
+  }
+
+  /*
+   * 10px corner L-brackets, all four drawn by one `::before` (8 gradients),
+   * painted above the content on the square corners of the box (a rounded
+   * host keeps its radius; the brackets sit just outside it like registration
+   * marks). They close in from 6% out when the host powers on: when it (or a
+   * `.reveal` around it) is revealed, or when the host flips `data-power`
+   * from "off" to "on". `--bracket-color`, `--bracket-size` and
+   * `--bracket-inset` tune them. Uses `::before`, so it does not combine
+   * with `.scrim`.
+   */
+  .pusula-landing .bracketed {
+    --bracket-color: var(--gold);
+    --bracket-size: 10px;
+    --bracket-inset: -1px;
+    position: relative;
+  }
+
+  .pusula-landing .bracketed::before {
+    --b: var(--bracket-size);
+    --c: var(--bracket-color);
+    content: "";
+    position: absolute;
+    inset: var(--bracket-inset);
+    pointer-events: none;
+    background:
+      linear-gradient(var(--c), var(--c)) top left / var(--b) 1px no-repeat,
+      linear-gradient(var(--c), var(--c)) top left / 1px var(--b) no-repeat,
+      linear-gradient(var(--c), var(--c)) top right / var(--b) 1px no-repeat,
+      linear-gradient(var(--c), var(--c)) top right / 1px var(--b) no-repeat,
+      linear-gradient(var(--c), var(--c)) bottom left / var(--b) 1px no-repeat,
+      linear-gradient(var(--c), var(--c)) bottom left / 1px var(--b) no-repeat,
+      linear-gradient(var(--c), var(--c)) bottom right / var(--b) 1px no-repeat,
+      linear-gradient(var(--c), var(--c)) bottom right / 1px var(--b) no-repeat;
+    transition:
+      opacity var(--t-power) var(--ease-out),
+      transform var(--t-power) var(--ease-out);
+  }
+
+  .pusula-landing[data-motion="on"] .bracketed[data-power="off"]::before,
+  .pusula-landing[data-motion="on"][data-reveal="on"] .bracketed.reveal:not(.is-revealed)::before,
+  .pusula-landing[data-motion="on"][data-reveal="on"] .reveal:not(.is-revealed) .bracketed::before {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+
+  /*
+   * Legibility under any text placed over an instrument: a void radial plus
+   * a linear wash on `::before`, bleeding past the text box so it has no
+   * visible edge. Uses `::before`, so it does not combine with `.bracketed`.
+   */
+  .pusula-landing .scrim {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .pusula-landing .scrim::before {
+    content: "";
+    position: absolute;
+    inset: -24px -40px;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        ellipse 70% 75% at 50% 50%,
+        rgba(4, 4, 5, 0.88) 0%,
+        rgba(4, 4, 5, 0.62) 55%,
+        rgba(4, 4, 5, 0) 100%
+      ),
+      linear-gradient(to bottom, rgba(4, 4, 5, 0), rgba(4, 4, 5, 0.32) 50%, rgba(4, 4, 5, 0));
+  }
+
+  .pusula-landing .hairline {
+    display: block;
+    block-size: 1px;
+    border: 0;
+    margin: 0;
+    background: var(--rule);
+  }
+
+  /*
+   * Scroll reveal. The hidden start applies only once motion is on AND
+   * `useScrollReveal` (landingMotion.ts) has marked the root
+   * `data-reveal="on"` on the client, so server HTML, no-JS visitors and
+   * reduced motion always see the content. `useScrollReveal` adds
+   * `.is-revealed` as each `.reveal` enters the viewport. Stagger with an
+   * inline `--reveal-delay`.
+   */
+  .pusula-landing[data-motion="on"][data-reveal="on"] .reveal {
+    transition:
+      opacity var(--t-reveal) var(--ease-out) var(--reveal-delay, 0ms),
+      transform var(--t-reveal) var(--ease-out) var(--reveal-delay, 0ms);
+  }
+
+  .pusula-landing[data-motion="on"][data-reveal="on"] .reveal:not(.is-revealed) {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  /* Ember "live" dot: the ring pulses by transform and opacity, the glow never animates. */
+  .pusula-landing .live-dot {
+    position: relative;
+    display: inline-block;
+    flex: none;
+    inline-size: 8px;
+    block-size: 8px;
+    border-radius: var(--r-pill);
+    background: var(--ember);
+  }
+
+  .pusula-landing .live-dot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--ember);
+    animation: pusula-live-ring 1.6s var(--ease-out) infinite;
+  }
+
+  /* Slow opacity breathing for halos and LEDs: `--breathe-from` → `--breathe-to`. */
+  .pusula-landing .breathe {
+    animation: pusula-breathe var(--loop-breathe) var(--ease-io) infinite;
+  }
+
+  /* Hard on/off blink (opacity steps): carets, window-bar dots. */
+  .pusula-landing .blink {
+    animation: pusula-blink 1.1s steps(1) infinite;
+  }
+
+  /* A block caret after the host's text (typewriter lines, command capsules). */
+  .pusula-landing .caret::after {
+    content: "";
+    display: inline-block;
+    inline-size: 0.55em;
+    block-size: 1.1em;
+    margin-inline-start: 0.15em;
+    vertical-align: text-bottom;
+    background: var(--gold-hi);
+    animation: pusula-blink 1.1s steps(1) infinite;
+  }
+}
+
+@keyframes pusula-live-ring {
+  from {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+@keyframes pusula-breathe {
+  0%,
+  100% {
+    opacity: var(--breathe-from, 0.35);
+  }
+  50% {
+    opacity: var(--breathe-to, 0.7);
+  }
+}
+
+@keyframes pusula-blink {
   0%,
   49% {
     opacity: 1;
@@ -121,24 +721,44 @@
   }
 }
 
-.pusula-landing .caret::after {
-  content: "";
-  display: inline-block;
-  width: 0.55em;
-  height: 1.1em;
-  margin-inline-start: 0.15em;
-  vertical-align: text-bottom;
-  background: var(--teal-bright);
-  animation: pusula-caret 1.1s steps(1) infinite;
-}
+/* ---- Reduced motion ----------------------------------------------------- */
 
+/*
+ * The one reduced-motion block. Every keyframe and transition under the root
+ * finishes at once (1ms, a single iteration, so `animationend` and
+ * `transitionend` still fire and fill-mode end states still apply), revealed
+ * content is shown, and the intro never covers the page.
+ */
 @media (prefers-reduced-motion: reduce) {
-  .pusula-landing .needle,
-  .pusula-landing .score-bar {
-    transition: none;
+  .pusula-landing *,
+  .pusula-landing *::before,
+  .pusula-landing *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
   }
-  .pusula-landing .ping,
+
+  .pusula-landing[data-reveal="on"] .reveal:not(.is-revealed),
+  .pusula-landing .bracketed::before {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .pusula-landing .live-dot::after,
+  .pusula-landing .breathe,
+  .pusula-landing .blink,
   .pusula-landing .caret::after {
-    animation: none;
+    animation: none !important;
+  }
+
+  .pusula-landing .live-dot::after {
+    opacity: 0;
+  }
+
+  .pusula-landing .intro-layer {
+    display: none !important;
   }
 }

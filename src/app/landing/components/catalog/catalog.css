@@ -1,0 +1,1759 @@
+/*
+ * Catalog station (spec §6.4): the provider wall.
+ * Scoped under `.pusula-landing`; classes are prefixed `cw-`, keyframes
+ * `catalog-`. Only transform and opacity animate or transition; colour
+ * changes are instant. Hidden start states exist only under
+ * `[data-motion="on"][data-reveal="on"]`; `.is-paused` and reduced motion
+ * leave every name visible and at rest. The infinite CSS loops pause while
+ * `.cw` lacks `data-onscreen` (set by `CatalogWall` from an observer).
+ */
+
+.pusula-landing .cw,
+.pusula-landing .cw * {
+  box-sizing: border-box;
+}
+
+/* A tighter head on a phone: the wall is the content. */
+@media (max-width: 767px) {
+  .pusula-landing .cw-station .station-head {
+    margin-block-end: var(--s-5);
+  }
+}
+
+.pusula-landing .cw {
+  --cw-row: 24px;
+  --cw-free: var(--gold-hi);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/*
+ * Persian: a monospace face has no joined Arabic-script forms (the fallback
+ * draws isolated letters), so every translated run is set in the sans. The
+ * provider names stay mono: they are Latin.
+ */
+.pusula-landing:lang(fa)
+  :is(
+    .cw-input,
+    .cw-legend,
+    .cw-echo-sample,
+    .cw-kind-name,
+    .cw-seg-name,
+    .cw-count,
+    .cw-more,
+    .cw-nomatch
+  ),
+:lang(fa)
+  .pusula-landing
+  :is(
+    .cw-input,
+    .cw-legend,
+    .cw-echo-sample,
+    .cw-kind-name,
+    .cw-seg-name,
+    .cw-count,
+    .cw-more,
+    .cw-nomatch
+  ) {
+  font-family: var(--font-sans);
+}
+
+/* ------------------------------------------------------------------------ */
+/* Shared marks: ● free tier or no key, ◆ local CLI bridge                 */
+/* ------------------------------------------------------------------------ */
+
+.pusula-landing .cw-dot {
+  display: block;
+  flex: none;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--cw-free);
+}
+
+.pusula-landing [data-local] > .cw-mark .cw-dot,
+.pusula-landing [data-flag="local"] > .cw-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  background: var(--mist);
+  transform: rotate(45deg);
+}
+
+/* ------------------------------------------------------------------------ */
+/* Control bar                                                              */
+/* ------------------------------------------------------------------------ */
+
+.pusula-landing .cw-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-3);
+  margin-block-end: var(--s-5);
+}
+
+@media (min-width: 1024px) {
+  .pusula-landing .cw-bar {
+    position: sticky;
+    top: calc(var(--nav-h) + 8px);
+    z-index: var(--z-hud);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-2) var(--s-4);
+    padding: 7px;
+    /*
+     * --hull at .98, not the spec's .92: at .92 (and still at .96) the
+     * wall's gold names read through the bar as ghost text beside the counter.
+     */
+    background: rgba(10, 10, 12, 0.98);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-lift);
+  }
+
+  /*
+   * A solid void band fills the 8px between the nav and the stuck bar, so no
+   * half-cut row of names shows there. Not stuck, it sits over the empty gap
+   * above the bar, on the void it matches.
+   */
+  .pusula-landing .cw-bar::before {
+    content: "";
+    position: absolute;
+    inset-inline: -1px;
+    bottom: calc(100% + 1px);
+    height: 12px;
+    background: var(--void);
+    pointer-events: none;
+  }
+}
+
+/* Terminal search: "> █ Find a provider" */
+.pusula-landing .cw-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-sm);
+  background: var(--deck);
+  box-shadow: inset 0 1px 0 rgba(255, 228, 160, 0.04);
+}
+
+@media (min-width: 1024px) {
+  .pusula-landing .cw-search {
+    flex: 1 1 220px;
+    min-width: 200px;
+    max-width: 360px;
+  }
+}
+
+.pusula-landing .cw-search:focus-within {
+  border-color: var(--gold-lo);
+}
+
+.pusula-landing .cw-prompt {
+  position: absolute;
+  inset-inline-start: 14px;
+  top: 50%;
+  transform: translateY(-52%);
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--gold);
+  pointer-events: none;
+}
+
+/* Over the field's 1px border, as the clear button is: a full 44px tap target. */
+.pusula-landing .cw-input {
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  min-height: 44px;
+  min-width: 0;
+  margin: -1px;
+  padding-block: 0;
+  padding-inline: 47px 45px;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--foam);
+  caret-color: var(--gold-hi);
+  appearance: none;
+}
+
+.pusula-landing .cw-input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.pusula-landing .cw-search:has(.cw-input:focus-visible) {
+  box-shadow: var(--ring-focus);
+}
+
+.pusula-landing .cw-input::placeholder {
+  color: var(--mist-dim);
+  opacity: 1;
+}
+
+.pusula-landing .cw-input::-webkit-search-cancel-button,
+.pusula-landing .cw-input::-webkit-search-decoration {
+  appearance: none;
+  display: none;
+}
+
+/* The idle block caret after the prompt; gone once focused or typed into. */
+.pusula-landing .cw-caret {
+  position: absolute;
+  inset-inline-start: 30px;
+  top: 50%;
+  width: 8px;
+  height: 17px;
+  margin-top: -8.5px;
+  background: var(--gold-hi);
+  opacity: 0.85;
+  pointer-events: none;
+  animation: catalog-caret 1.06s steps(1, end) infinite;
+}
+
+.pusula-landing .cw-input:focus ~ .cw-caret,
+.pusula-landing .cw-input:not(:placeholder-shown) ~ .cw-caret {
+  display: none;
+}
+
+/* Off screen the infinite loops pause (the SimBadge dot is the foundation's). */
+.pusula-landing .cw:not([data-onscreen]) :is(.cw-caret, .sim-dot) {
+  animation-play-state: paused;
+}
+
+@keyframes catalog-caret {
+  0%,
+  100% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* 44×44 over the field's 1px border, so the whole tap target counts. */
+.pusula-landing .cw-clear {
+  position: absolute;
+  inset-inline-end: -1px;
+  top: -1px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--mist);
+  cursor: pointer;
+}
+
+.pusula-landing .cw-clear:hover {
+  color: var(--gold-hi);
+}
+
+/* Chips: one horizontal scroll-snap row on a phone. */
+.pusula-landing .cw-chips {
+  display: flex;
+  gap: var(--s-2);
+  margin-inline: calc(-1 * var(--gutter));
+  padding-inline: var(--gutter);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+}
+
+.pusula-landing .cw-chips::-webkit-scrollbar {
+  display: none;
+}
+
+/*
+ * A scroller's cut end fades out, so it reads as "more this way" rather
+ * than a clipped chip. `data-cut` ("start", "end" or "both") is set by
+ * CatalogWall from the scroll position; the mask is static and follows the
+ * inline direction. (The kinds row cannot take a mask: the spectrum's
+ * segments are its descendants, drawn on the bar above it, and would be
+ * masked away. It gets overlays instead, below.)
+ */
+.pusula-landing .cw-chips[data-cut] {
+  --cw-fade-to: to right;
+  --cw-fade-s: 0px;
+  --cw-fade-e: 0px;
+  -webkit-mask-image: linear-gradient(
+    var(--cw-fade-to),
+    transparent 0,
+    #000 var(--cw-fade-s),
+    #000 calc(100% - var(--cw-fade-e)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    var(--cw-fade-to),
+    transparent 0,
+    #000 var(--cw-fade-s),
+    #000 calc(100% - var(--cw-fade-e)),
+    transparent 100%
+  );
+}
+
+.pusula-landing .cw-chips[data-cut]:dir(rtl) {
+  --cw-fade-to: to left;
+}
+
+.pusula-landing .cw-chips:is([data-cut="start"], [data-cut="both"]) {
+  --cw-fade-s: 36px;
+}
+
+.pusula-landing .cw-chips:is([data-cut="end"], [data-cut="both"]) {
+  --cw-fade-e: 44px;
+}
+
+@media (min-width: 1024px) {
+  .pusula-landing .cw-chips {
+    margin-inline: 0;
+    padding-inline: 0;
+    overflow: visible;
+  }
+}
+
+.pusula-landing .cw-chip {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding-inline: 14px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-pill);
+  background: var(--bezel);
+  font-family: var(--font-sans);
+  font-size: var(--fs-small);
+  line-height: 1.2;
+  white-space: nowrap;
+  color: var(--mist);
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition: transform var(--t-press) var(--ease-out);
+}
+
+.pusula-landing .cw-chip:hover {
+  border-color: var(--gold-lo);
+  color: var(--foam);
+}
+
+.pusula-landing .cw-chip:active {
+  transform: scale(0.97);
+}
+
+.pusula-landing .cw-chip[aria-pressed="true"] {
+  border-color: var(--gold);
+  background: linear-gradient(180deg, rgba(212, 168, 64, 0.16), rgba(107, 74, 18, 0.12));
+  color: var(--gold-hi);
+}
+
+.pusula-landing .cw-chip-n {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  font-variant-numeric: tabular-nums;
+  color: var(--mist-dim);
+}
+
+.pusula-landing .cw-chip[aria-pressed="true"] .cw-chip-n {
+  color: var(--gold);
+}
+
+/* "358 of 358": the first number rolls as the filter changes. */
+.pusula-landing .cw-count {
+  margin: 0;
+  font-size: var(--fs-readout);
+  white-space: nowrap;
+  color: var(--mist);
+}
+
+.pusula-landing .cw-count-n {
+  color: var(--gold-hi);
+}
+
+@media (min-width: 1024px) {
+  .pusula-landing .cw-count {
+    margin-inline: auto 10px;
+  }
+}
+
+/*
+ * Below 1024px the bar is a column (search, then chips) and the counter sits
+ * inside the end of the search field, so it costs no row of its own. The
+ * input keeps room for it, and for the clear button while there is a query.
+ */
+@media (max-width: 1023px) {
+  .pusula-landing .cw-bar {
+    margin-block-end: var(--s-4);
+  }
+
+  .pusula-landing .cw-search {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .pusula-landing .cw-chips {
+    grid-row: 2;
+    grid-column: 1;
+  }
+
+  .pusula-landing .cw-count {
+    position: relative;
+    z-index: 1;
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: end;
+    align-self: center;
+    margin-inline-end: 14px;
+    pointer-events: none;
+  }
+
+  .pusula-landing .cw-bar[data-query] .cw-count {
+    margin-inline-end: 48px;
+  }
+
+  .pusula-landing .cw-input {
+    padding-inline-end: 140px;
+  }
+
+  .pusula-landing .cw-bar[data-query] .cw-input {
+    padding-inline-end: 172px;
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Spectrum: kinds, proportional; labels inside when they fit               */
+/* ------------------------------------------------------------------------ */
+
+.pusula-landing .cw-spectrum {
+  --cw-bar-h: 28px;
+  position: relative;
+  container: cw-spec / inline-size;
+  padding-block-start: calc(var(--cw-bar-h) + 14px);
+  margin-block-end: var(--s-3);
+}
+
+@media (min-width: 768px) {
+  .pusula-landing .cw-spectrum {
+    margin-block-end: var(--s-4);
+  }
+}
+
+.pusula-landing .cw-spec-track {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: var(--cw-bar-h);
+  border-radius: var(--r-xs);
+  background: var(--bezel);
+  box-shadow: inset 0 0 0 1px var(--rule-soft);
+}
+
+/* An instrument ruler under the bar: minor ticks every 5%, major every 25%. */
+.pusula-landing .cw-spec-track::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: calc(100% + 4px);
+  height: 6px;
+  background:
+    repeating-linear-gradient(to right, var(--gold-lo) 0 1px, transparent 1px calc(25% - 0.25px)),
+    repeating-linear-gradient(to right, var(--rule) 0 1px, transparent 1px calc(5% - 0.05px));
+  background-size:
+    100% 6px,
+    100% 3px;
+  background-repeat: no-repeat;
+  opacity: 0.9;
+}
+
+.pusula-landing .cw-spec-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+/* Phone: the legend chips of kinds too small for the bar share one snap row. */
+@media (max-width: 767px) {
+  .pusula-landing .cw-spec-row {
+    flex-wrap: nowrap;
+    margin-inline: calc(-1 * var(--gutter));
+    padding-inline: var(--gutter);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .pusula-landing .cw-spec-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* The cut ends of the row fade into the void (see `.cw-chips[data-cut]`). */
+  .pusula-landing .cw-spectrum::before,
+  .pusula-landing .cw-spectrum::after {
+    content: "";
+    position: absolute;
+    top: calc(var(--cw-bar-h) + 14px);
+    bottom: 0;
+    z-index: 1;
+    width: 44px;
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  .pusula-landing .cw-spectrum::before {
+    inset-inline-start: calc(-1 * var(--gutter));
+    width: 36px;
+    background: linear-gradient(to right, var(--void), rgba(4, 4, 5, 0));
+  }
+
+  .pusula-landing .cw-spectrum::after {
+    inset-inline-end: calc(-1 * var(--gutter));
+    background: linear-gradient(to left, var(--void), rgba(4, 4, 5, 0));
+  }
+
+  .pusula-landing .cw-spectrum:dir(rtl)::before {
+    background: linear-gradient(to left, var(--void), rgba(4, 4, 5, 0));
+  }
+
+  .pusula-landing .cw-spectrum:dir(rtl)::after {
+    background: linear-gradient(to right, var(--void), rgba(4, 4, 5, 0));
+  }
+
+  .pusula-landing
+    .cw-spectrum:has(> .cw-spec-row:is([data-cut="start"], [data-cut="both"]))::before,
+  .pusula-landing .cw-spectrum:has(> .cw-spec-row:is([data-cut="end"], [data-cut="both"]))::after {
+    opacity: 1;
+  }
+
+  .pusula-landing .cw-kind {
+    flex: none;
+    scroll-snap-align: start;
+  }
+
+  /*
+   * "Other" is the largest kind that does not fit on the bar, and its
+   * hatched segment has no label there: its chip leads the row, so it is not
+   * left off-screen at the end of the scroller.
+   */
+  .pusula-landing .cw-kind[data-kind="other"] {
+    order: -1;
+  }
+}
+
+/* Wider: the legend chips line up under the bar's end, where the small kinds' segments are. */
+@media (min-width: 768px) {
+  .pusula-landing .cw-spec-row {
+    justify-content: flex-end;
+  }
+}
+
+/* Kind colours: black, gold and ember only, so kinds differ by metal tone. */
+.pusula-landing .cw-kind {
+  --seg: linear-gradient(180deg, var(--gold-hi), var(--gold) 55%, var(--gold-deep));
+  --seg-swatch: var(--gold);
+}
+.pusula-landing .cw-kind[data-kind="webSearch"] {
+  --seg: linear-gradient(180deg, var(--phosphor), var(--gold-hi) 60%, var(--gold));
+  --seg-swatch: var(--gold-hi);
+}
+.pusula-landing .cw-kind[data-kind="imageToText"] {
+  --seg: linear-gradient(180deg, var(--gold), var(--gold-lo));
+  --seg-swatch: var(--gold-lo);
+}
+.pusula-landing .cw-kind[data-kind="webFetch"] {
+  --seg: linear-gradient(180deg, var(--gold-lo), var(--gold-deep));
+  --seg-swatch: var(--gold-lo);
+}
+.pusula-landing .cw-kind[data-kind="embedding"] {
+  --seg: linear-gradient(180deg, var(--gold-hi), var(--gold-lo));
+  --seg-swatch: var(--gold);
+}
+.pusula-landing .cw-kind[data-kind="video"] {
+  --seg: linear-gradient(180deg, var(--foam), var(--phosphor));
+  --seg-swatch: var(--phosphor);
+}
+.pusula-landing .cw-kind[data-kind="other"] {
+  --seg:
+    repeating-linear-gradient(135deg, rgba(255, 211, 110, 0.18) 0 2px, transparent 2px 6px),
+    linear-gradient(180deg, var(--gold-lo), var(--gold-deep));
+  --seg-swatch: var(--gold-deep);
+}
+
+/* The legend chip: the real (≥44px) button of a kind whose label does not fit. */
+.pusula-landing .cw-kind {
+  position: static;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-sm);
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  color: var(--mist);
+  cursor: pointer;
+  transition: opacity var(--t-hover) linear;
+}
+
+.pusula-landing .cw-kind:hover {
+  border-color: var(--gold-lo);
+  color: var(--foam);
+}
+
+.pusula-landing .cw-kind[aria-pressed="true"] {
+  border-color: var(--gold);
+  color: var(--gold-hi);
+}
+
+.pusula-landing .cw-kind-legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.pusula-landing .cw-swatch {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--seg);
+  box-shadow: inset 0 0 0 1px rgba(4, 4, 5, 0.4);
+}
+
+.pusula-landing .cw-kind-n {
+  font-variant-numeric: tabular-nums;
+  color: var(--mist-dim);
+}
+
+.pusula-landing .cw-kind[aria-pressed="true"] .cw-kind-n {
+  color: var(--gold);
+}
+
+/* The segment itself, on the bar (positioned against `.cw-spectrum`). */
+.pusula-landing .cw-seg {
+  position: absolute;
+  top: 0;
+  inset-inline-start: calc(var(--start) * 100%);
+  width: calc(var(--share) * 100%);
+  height: var(--cw-bar-h);
+  transform-origin: 0 50%;
+  pointer-events: auto;
+}
+
+.pusula-landing .cw-seg:dir(rtl) {
+  transform-origin: 100% 50%;
+}
+
+/* The unmatched part of a kind stays as a dim ghost of its metal. */
+.pusula-landing .cw-seg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--seg);
+  opacity: 0.2;
+}
+
+.pusula-landing .cw-seg-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--seg);
+  transform: scaleX(var(--fill, 1));
+  transform-origin: inherit;
+  transition: transform var(--t-swap) var(--ease-out);
+}
+
+/* A 1px void seam between neighbouring kinds. */
+.pusula-landing .cw-kind + .cw-kind .cw-seg {
+  border-inline-start: 1px solid var(--void);
+}
+
+.pusula-landing .cw-kind:first-child .cw-seg {
+  border-start-start-radius: var(--r-xs);
+  border-end-start-radius: var(--r-xs);
+  overflow: hidden;
+}
+
+.pusula-landing .cw-kind:last-child .cw-seg {
+  border-start-end-radius: var(--r-xs);
+  border-end-end-radius: var(--r-xs);
+  overflow: hidden;
+}
+
+.pusula-landing .cw-seg-label {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-inline: 4px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Dark instrument tags: legible on full metal and on an empty ghost alike. */
+.pusula-landing .cw-seg-name,
+.pusula-landing .cw-seg-n {
+  padding: 4px 6px;
+  border-radius: 3px;
+  background: rgba(4, 4, 5, 0.78);
+  color: var(--foam);
+}
+
+.pusula-landing .cw-seg-n {
+  font-variant-numeric: tabular-nums;
+  color: var(--gold-hi);
+}
+
+/* Kinds without a match dim; with a kind chosen, the others step back. */
+.pusula-landing .cw-kind[data-empty="1"] {
+  opacity: 0.3;
+}
+
+.pusula-landing .cw-spectrum[data-active="1"] .cw-kind[aria-pressed="false"] .cw-seg {
+  opacity: 0.32;
+}
+
+.pusula-landing .cw-kind[aria-pressed="true"] .cw-seg {
+  box-shadow: 0 0 0 1px var(--gold-hi);
+  z-index: 1;
+}
+
+.pusula-landing .cw-kind:focus-visible .cw-seg {
+  box-shadow: var(--ring-focus);
+  z-index: 2;
+}
+
+/*
+ * A kind whose label fits at this bar width becomes the segment itself: the
+ * button moves onto the bar (44px tall around the 28px segment), the label
+ * shows inside, and the legend text stays for screen readers only. Its focus
+ * ring is drawn on the segment alone (one ring, not two).
+ */
+@container cw-spec (min-width: 320px) {
+  .pusula-landing .cw-kind[data-fit="320"] {
+    position: absolute;
+    top: -8px;
+    inset-inline-start: calc(var(--start) * 100%);
+    width: calc(var(--share) * 100%);
+    min-height: 0;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+  .pusula-landing .cw-kind[data-fit="320"] .cw-seg {
+    top: 8px;
+    inset-inline-start: 0;
+    width: 100%;
+  }
+  .pusula-landing .cw-kind[data-fit="320"] .cw-seg-label {
+    display: flex;
+  }
+  .pusula-landing .cw-kind[data-fit="320"] .cw-kind-legend {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .pusula-landing .cw-kind[data-fit="320"]:focus-visible {
+    box-shadow: none;
+  }
+}
+@container cw-spec (min-width: 480px) {
+  .pusula-landing .cw-kind[data-fit="480"] {
+    position: absolute;
+    top: -8px;
+    inset-inline-start: calc(var(--start) * 100%);
+    width: calc(var(--share) * 100%);
+    min-height: 0;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+  .pusula-landing .cw-kind[data-fit="480"] .cw-seg {
+    top: 8px;
+    inset-inline-start: 0;
+    width: 100%;
+  }
+  .pusula-landing .cw-kind[data-fit="480"] .cw-seg-label {
+    display: flex;
+  }
+  .pusula-landing .cw-kind[data-fit="480"] .cw-kind-legend {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .pusula-landing .cw-kind[data-fit="480"]:focus-visible {
+    box-shadow: none;
+  }
+}
+@container cw-spec (min-width: 640px) {
+  .pusula-landing .cw-kind[data-fit="640"] {
+    position: absolute;
+    top: -8px;
+    inset-inline-start: calc(var(--start) * 100%);
+    width: calc(var(--share) * 100%);
+    min-height: 0;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+  .pusula-landing .cw-kind[data-fit="640"] .cw-seg {
+    top: 8px;
+    inset-inline-start: 0;
+    width: 100%;
+  }
+  .pusula-landing .cw-kind[data-fit="640"] .cw-seg-label {
+    display: flex;
+  }
+  .pusula-landing .cw-kind[data-fit="640"] .cw-kind-legend {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .pusula-landing .cw-kind[data-fit="640"]:focus-visible {
+    box-shadow: none;
+  }
+}
+@container cw-spec (min-width: 800px) {
+  .pusula-landing .cw-kind[data-fit="800"] {
+    position: absolute;
+    top: -8px;
+    inset-inline-start: calc(var(--start) * 100%);
+    width: calc(var(--share) * 100%);
+    min-height: 0;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+  .pusula-landing .cw-kind[data-fit="800"] .cw-seg {
+    top: 8px;
+    inset-inline-start: 0;
+    width: 100%;
+  }
+  .pusula-landing .cw-kind[data-fit="800"] .cw-seg-label {
+    display: flex;
+  }
+  .pusula-landing .cw-kind[data-fit="800"] .cw-kind-legend {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .pusula-landing .cw-kind[data-fit="800"]:focus-visible {
+    box-shadow: none;
+  }
+}
+@container cw-spec (min-width: 960px) {
+  .pusula-landing .cw-kind[data-fit="960"] {
+    position: absolute;
+    top: -8px;
+    inset-inline-start: calc(var(--start) * 100%);
+    width: calc(var(--share) * 100%);
+    min-height: 0;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+  .pusula-landing .cw-kind[data-fit="960"] .cw-seg {
+    top: 8px;
+    inset-inline-start: 0;
+    width: 100%;
+  }
+  .pusula-landing .cw-kind[data-fit="960"] .cw-seg-label {
+    display: flex;
+  }
+  .pusula-landing .cw-kind[data-fit="960"] .cw-kind-legend {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .pusula-landing .cw-kind[data-fit="960"]:focus-visible {
+    box-shadow: none;
+  }
+}
+@container cw-spec (min-width: 1120px) {
+  .pusula-landing .cw-kind[data-fit="1120"] {
+    position: absolute;
+    top: -8px;
+    inset-inline-start: calc(var(--start) * 100%);
+    width: calc(var(--share) * 100%);
+    min-height: 0;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+  .pusula-landing .cw-kind[data-fit="1120"] .cw-seg {
+    top: 8px;
+    inset-inline-start: 0;
+    width: 100%;
+  }
+  .pusula-landing .cw-kind[data-fit="1120"] .cw-seg-label {
+    display: flex;
+  }
+  .pusula-landing .cw-kind[data-fit="1120"] .cw-kind-legend {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .pusula-landing .cw-kind[data-fit="1120"]:focus-visible {
+    box-shadow: none;
+  }
+}
+@container cw-spec (min-width: 1280px) {
+  .pusula-landing .cw-kind[data-fit="1280"] {
+    position: absolute;
+    top: -8px;
+    inset-inline-start: calc(var(--start) * 100%);
+    width: calc(var(--share) * 100%);
+    min-height: 0;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+  .pusula-landing .cw-kind[data-fit="1280"] .cw-seg {
+    top: 8px;
+    inset-inline-start: 0;
+    width: 100%;
+  }
+  .pusula-landing .cw-kind[data-fit="1280"] .cw-seg-label {
+    display: flex;
+  }
+  .pusula-landing .cw-kind[data-fit="1280"] .cw-kind-legend {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .pusula-landing .cw-kind[data-fit="1280"]:focus-visible {
+    box-shadow: none;
+  }
+}
+
+/* Scroll response: segments grow from the inline start, one after another. */
+.pusula-landing[data-motion="on"][data-reveal="on"] .cw-spectrum.reveal:not(.is-revealed) .cw-seg {
+  transform: scaleX(0);
+}
+
+.pusula-landing[data-motion="on"][data-reveal="on"] .cw-spectrum.reveal.is-revealed .cw-seg {
+  animation: catalog-grow 700ms var(--ease-out) calc(160ms + var(--k) * 90ms) backwards;
+}
+
+@keyframes catalog-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Key line and the deck echo                                               */
+/* ------------------------------------------------------------------------ */
+
+.pusula-landing .cw-keyline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2) var(--s-5);
+  padding-block: var(--s-3);
+  margin-block-end: var(--s-3);
+  border-block-start: 1px solid var(--rule-soft);
+}
+
+.pusula-landing .cw-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  color: var(--mist);
+}
+
+.pusula-landing .cw-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pusula-landing .cw-legend-sep {
+  color: var(--mist-dim);
+}
+
+.pusula-landing .cw-echo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  min-height: 24px;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  color: var(--mist);
+}
+
+.pusula-landing .cw-echo-line {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  animation: catalog-swap-in var(--t-swap) var(--ease-out) both;
+}
+
+/*
+ * Phone: the chips above already say what ● and ◆ mean, so the legend goes,
+ * and the echo runs as one paragraph (the SimBadge inline, the take wrapping
+ * under it) instead of a badge row plus a text row. Two lines are reserved,
+ * so a take that changes length does not move the wall.
+ */
+@media (max-width: 767px) {
+  .pusula-landing .cw-keyline {
+    padding-block: var(--s-3) 0;
+    margin-block-end: var(--s-3);
+  }
+
+  .pusula-landing .cw-legend {
+    display: none;
+  }
+
+  .pusula-landing .cw-echo {
+    display: block;
+    width: 100%;
+    /* Two 24px lines; the inline badge makes the line box a pixel taller. */
+    min-height: 50px;
+    line-height: 24px;
+  }
+
+  .pusula-landing .cw-echo .sim-badge {
+    display: inline-flex;
+    vertical-align: middle;
+    margin-inline-end: 10px;
+  }
+
+  .pusula-landing .cw-echo-line {
+    display: inline;
+  }
+
+  .pusula-landing .cw-echo-sample {
+    margin-inline-end: 8px;
+  }
+
+  .pusula-landing .cw-echo-hop {
+    display: inline-flex;
+    vertical-align: middle;
+    margin-inline-end: 8px;
+  }
+}
+
+.pusula-landing .cw-echo-sample {
+  color: var(--mist);
+}
+
+.pusula-landing .cw-echo-hop {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--mist-dim);
+}
+
+.pusula-landing .cw-echo-hop s {
+  color: var(--mist-dim);
+  text-decoration-color: var(--ember);
+  text-decoration-style: dashed;
+}
+
+.pusula-landing .cw-echo-x {
+  color: var(--ember);
+}
+
+.pusula-landing .cw-echo-win {
+  color: var(--ember);
+  font-weight: 600;
+}
+
+@keyframes catalog-swap-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pusula-landing .cw-nomatch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 var(--s-3);
+  padding: 12px 14px;
+  border: 1px dashed var(--rule);
+  border-radius: var(--r-sm);
+  font-family: var(--font-mono);
+  font-size: var(--fs-readout);
+  color: var(--foam);
+}
+
+.pusula-landing .cw-nomatch .glyph {
+  color: var(--gold);
+}
+
+/* ------------------------------------------------------------------------ */
+/* The wall                                                                 */
+/* ------------------------------------------------------------------------ */
+
+.pusula-landing .cw-wall-wrap {
+  position: relative;
+  overflow: clip;
+  scroll-margin-top: calc(var(--nav-h) + 16px);
+}
+
+/*
+ * Phone: 2 columns of 40 names until "Show more"; at 10px padding and a
+ * 12px gap a column holds a 20-character name (`PHONE_FIT_CHARS`).
+ *
+ * From 768px all names are laid out, so the wall skips its rendering while
+ * off screen. Its placeholder is its exact height at that column count
+ * (`--cw-h4/5/6`, rows × 24px from `CatalogWall`), so nothing below it moves
+ * when it renders. The phone wall is short and renders for real.
+ */
+.pusula-landing .cw-wall {
+  contain: layout style;
+  margin: 0;
+  padding: 6px 10px;
+  list-style: none;
+  columns: 2;
+  column-gap: 12px;
+  column-rule: 1px solid var(--rule-soft);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+}
+
+@media (min-width: 768px) {
+  .pusula-landing .cw-wall {
+    padding-inline: 14px;
+    columns: 4;
+    column-gap: 22px;
+    font-size: var(--fs-readout);
+    contain: layout style paint;
+    content-visibility: auto;
+    contain-intrinsic-size: auto var(--cw-h4, 2160px);
+  }
+
+  /*
+   * Once revealed (so rendered), the wall stays rendered: left to `auto`,
+   * it is skipped again whenever it is far off screen, and coming back to
+   * it costs a full style and layout of the 358 names. With the same
+   * containment held by `contain`, the switch only drops the skipping.
+   */
+  .pusula-landing .cw-wall-wrap[data-shown] .cw-wall {
+    content-visibility: visible;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pusula-landing .cw-wall {
+    columns: 5;
+    contain-intrinsic-size: auto var(--cw-h5, 1728px);
+  }
+}
+
+@media (min-width: 1280px) {
+  .pusula-landing .cw-wall {
+    columns: 6;
+    column-gap: 26px;
+    contain-intrinsic-size: auto var(--cw-h6, 1440px);
+  }
+}
+
+.pusula-landing .cw-li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: var(--cw-row);
+  break-inside: avoid;
+  color: var(--mist);
+  transition: opacity var(--t-hover) linear;
+}
+
+.pusula-landing .cw-li[data-free] {
+  color: var(--gold-hi);
+}
+
+.pusula-landing .cw-li[data-local] {
+  color: var(--mist);
+}
+
+.pusula-landing .cw-mark {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 10px;
+  height: 100%;
+}
+
+.pusula-landing .cw-n {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  line-height: var(--cw-row);
+}
+
+/* Filtering: opacity only, never a width collapse. */
+.pusula-landing .cw-wall[data-filtering="on"] .cw-li[data-match="0"] {
+  opacity: 0.12;
+}
+
+.pusula-landing .cw-wall[data-filtering="on"] .cw-li[data-match="1"] {
+  color: var(--gold-hi);
+}
+
+/* Phone: matches only, 40 names until "Show {count} more". */
+@media (max-width: 767px) {
+  .pusula-landing .cw-wall[data-filtering="on"] .cw-li[data-match="0"] {
+    display: none;
+  }
+
+  .pusula-landing .cw-wall[data-collapsed="on"][data-filtering="off"] .cw-li:not([data-pick]) {
+    display: none;
+  }
+
+  .pusula-landing
+    .cw-wall[data-collapsed="on"][data-filtering="on"]
+    .cw-li[data-match="1"]:nth-child(n + 41 of [data-match="1"]) {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .pusula-landing .cw-more {
+    display: none !important;
+  }
+}
+
+/* Hover: a precise pointer lights the name it rests on. */
+@media (hover: hover) and (pointer: fine) {
+  .pusula-landing .cw-li:hover {
+    color: var(--phosphor);
+  }
+}
+
+/* ---- Idle ping: one name flares phosphor for 500ms ---------------------- */
+
+/*
+ * The flare (`::after`, phosphor) and the deck echo (`::before`, ember) are
+ * copies of the name laid over it. Their boxes always exist, at opacity 0
+ * (an invisible layer is not painted): a ping or an echo only starts an
+ * opacity animation on the compositor. Giving them `content` only while
+ * pinged added and removed a box each time, and every such change relaid
+ * out the whole 358-name multicol wall (a ~40ms frame about once a second).
+ * Only the deck's sample providers (`data-sample`) can echo, so only they
+ * carry the echo's boxes: every box costs when the wall first lays out.
+ * The empty alternative text keeps the copies out of the accessibility tree;
+ * the first declaration is the fallback where it is not supported.
+ */
+.pusula-landing .cw-n::after,
+.pusula-landing .cw-li[data-sample] .cw-n::before {
+  content: attr(data-n);
+  content: attr(data-n) / "";
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.pusula-landing .cw-n::after {
+  color: var(--phosphor);
+  text-shadow: 0 0 10px var(--gold-glow);
+}
+
+.pusula-landing .cw-li[data-ping] .cw-n::after {
+  animation: catalog-ping 520ms var(--ease-out);
+}
+
+.pusula-landing .cw-mark::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--phosphor) 0 1.5px,
+    rgba(255, 211, 110, 0.4) 2.5px,
+    transparent 7px
+  );
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pusula-landing .cw-li[data-ping] .cw-mark::after {
+  animation: catalog-flare 520ms var(--ease-out);
+}
+
+@keyframes catalog-ping {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes catalog-flare {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+}
+
+/* ---- Deck echo: the featured winner's entry flashes ember for 1.2s ------ */
+
+.pusula-landing .cw-n::before {
+  color: var(--ember);
+  text-shadow: var(--glow-text-ember);
+}
+
+.pusula-landing .cw-li[data-echo="a"] .cw-n::before {
+  animation: catalog-echo-a 1.2s var(--ease-out);
+}
+
+.pusula-landing .cw-li[data-echo="b"] .cw-n::before {
+  animation: catalog-echo-b 1.2s var(--ease-out);
+}
+
+.pusula-landing .cw-li[data-sample]::after {
+  content: "";
+  position: absolute;
+  inset-inline: 16px 0;
+  bottom: 3px;
+  height: 1px;
+  background: var(--ember);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pusula-landing .cw-li:dir(rtl)::after {
+  transform-origin: 100% 50%;
+}
+
+.pusula-landing .cw-li[data-echo="a"]::after {
+  animation: catalog-echo-line-a 1.2s var(--ease-out);
+}
+
+.pusula-landing .cw-li[data-echo="b"]::after {
+  animation: catalog-echo-line-b 1.2s var(--ease-out);
+}
+
+@keyframes catalog-echo-a {
+  0% {
+    opacity: 0;
+  }
+  12%,
+  62% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes catalog-echo-b {
+  0% {
+    opacity: 0;
+  }
+  12%,
+  62% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes catalog-echo-line-a {
+  0% {
+    opacity: 1;
+    transform: scaleX(0);
+  }
+  45% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes catalog-echo-line-b {
+  0% {
+    opacity: 1;
+    transform: scaleX(0);
+  }
+  45% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+}
+
+/* ---- Enter: a crosshair locks onto the first match ---------------------- */
+
+.pusula-landing .cw-li[data-target] {
+  color: var(--phosphor);
+}
+
+/* The row highlight and the crosshair exist on the targeted row only. */
+.pusula-landing .cw-li[data-target]::before {
+  content: "";
+  position: absolute;
+  inset: 2px -6px;
+  border-radius: var(--r-xs);
+  background: rgba(255, 211, 110, 0.09);
+  box-shadow: inset 0 0 0 1px rgba(255, 211, 110, 0.28);
+  pointer-events: none;
+  animation: catalog-target-row 600ms var(--ease-out);
+}
+
+.pusula-landing .cw-li[data-target] .cw-mark::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+  background:
+    radial-gradient(circle, transparent 7.5px, var(--gold-hi) 8px 9px, transparent 9.5px),
+    linear-gradient(var(--gold-hi), var(--gold-hi)) 50% 0 / 1px 7px no-repeat,
+    linear-gradient(var(--gold-hi), var(--gold-hi)) 50% 100% / 1px 7px no-repeat,
+    linear-gradient(var(--gold-hi), var(--gold-hi)) 0 50% / 7px 1px no-repeat;
+  pointer-events: none;
+  animation: catalog-lock 700ms var(--ease-lift);
+}
+
+/* RTL: the side tick points away from the name, as in LTR. */
+.pusula-landing .cw-li[data-target] .cw-mark:dir(rtl)::before {
+  background-position:
+    0 0,
+    50% 0,
+    50% 100%,
+    100% 50%;
+}
+
+@keyframes catalog-lock {
+  0% {
+    opacity: 0;
+    transform: scale(2.6) rotate(45deg);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes catalog-target-row {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---- Idle sweep: a faint gold band down the visible wall every 9s ------- */
+
+/*
+ * The band's position is written by the loop (`translate3d`, one pass across
+ * the part of the wall on screen, then rest); it shows only during a pass.
+ */
+.pusula-landing .cw-sweep {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.pusula-landing .cw-sweep-band {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 64px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 211, 110, 0) 0%,
+    rgba(255, 211, 110, 0.07) 82%,
+    rgba(255, 211, 110, 0.2) 98%,
+    rgba(255, 211, 110, 0) 100%
+  );
+  opacity: 0;
+  will-change: transform;
+}
+
+/* ---- Scroll reveal: the wall is uncovered column by column -------------- */
+
+/*
+ * One shutter per column covers the wall, names and column rules alike,
+ * until its first row scrolls into view (`data-shown` on `.cw-wall-wrap`,
+ * from CatalogWall's own observer). Then each shutter slides off along its
+ * column, 70ms after the one before it, led by a gold scan band like the idle
+ * sweep: the names appear behind the scan, column by column. That is a few
+ * transforms on the compositor and nothing on the 358 names, so the reveal
+ * costs no style or layout work on the wall. A wall entered from below
+ * (scrolling back up) is uncovered upwards (`data-shown="up"`).
+ *
+ * The shutters exist only once the client runs the reveal (motion on and
+ * `data-reveal="on"`), so server HTML, no-JS and reduced motion show every
+ * name. Their resting revealed state is off the wall (the wrap clips it) and
+ * the animation only fills backwards, so Pause, which settles one-shots at
+ * their end, shows the names at once.
+ */
+.pusula-landing .cw-shutters {
+  display: none;
+}
+
+.pusula-landing[data-motion="on"][data-reveal="on"] .cw-shutters {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  pointer-events: none;
+}
+
+/* The body runs 32px past both ends of the wall, so its soft edges start hidden. */
+.pusula-landing .cw-shutter {
+  position: relative;
+  flex: 1 1 0;
+  margin-block: -32px;
+  background: linear-gradient(
+    180deg,
+    rgba(4, 4, 5, 0) 0,
+    var(--void) 32px,
+    var(--void) calc(100% - 32px),
+    rgba(4, 4, 5, 0) 100%
+  );
+}
+
+/* As many shutters as the wall has columns (2, 4, 5, 6). */
+.pusula-landing .cw-shutter:nth-child(n + 3) {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .pusula-landing .cw-shutter:nth-child(-n + 4) {
+    display: block;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pusula-landing .cw-shutter:nth-child(5) {
+    display: block;
+  }
+}
+
+@media (min-width: 1280px) {
+  .pusula-landing .cw-shutter:nth-child(6) {
+    display: block;
+  }
+}
+
+/* The scan band: on the edge that travels, outside the body (clipped at rest). */
+.pusula-landing .cw-shutter::before,
+.pusula-landing .cw-shutter::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  height: 64px;
+}
+
+.pusula-landing .cw-shutter::before {
+  bottom: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 211, 110, 0) 0%,
+    rgba(255, 211, 110, 0.07) 70%,
+    rgba(255, 211, 110, 0.22) 100%
+  );
+}
+
+.pusula-landing .cw-shutter::after {
+  top: 100%;
+  background: linear-gradient(
+    0deg,
+    rgba(255, 211, 110, 0) 0%,
+    rgba(255, 211, 110, 0.07) 70%,
+    rgba(255, 211, 110, 0.22) 100%
+  );
+}
+
+.pusula-landing .cw-wall-wrap[data-shown] .cw-shutter {
+  --cw-off: calc(100% + 64px);
+  transform: translateY(var(--cw-off));
+  animation: catalog-uncover 900ms cubic-bezier(0.33, 0, 0.3, 1) calc(var(--k) * 70ms) backwards;
+}
+
+.pusula-landing .cw-wall-wrap[data-shown="up"] .cw-shutter {
+  --cw-off: calc(-100% - 64px);
+}
+
+@media (min-width: 768px) {
+  .pusula-landing .cw-wall-wrap[data-shown] .cw-shutter {
+    animation-duration: 1500ms;
+  }
+}
+
+/* To the shutter's resting (revealed) transform, from covering the wall. */
+@keyframes catalog-uncover {
+  from {
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Phone: Show {count} more / Show fewer                                    */
+/* ------------------------------------------------------------------------ */
+
+.pusula-landing .cw-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  margin-block-start: var(--s-3);
+  padding-inline: 16px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-sm);
+  background: var(--hull);
+  font-family: var(--font-mono);
+  font-size: var(--fs-readout);
+  color: var(--foam);
+  cursor: pointer;
+}
+
+.pusula-landing .cw-more:hover {
+  border-color: var(--gold-lo);
+}
+
+.pusula-landing .cw-more-glyph {
+  display: inline-grid;
+  color: var(--gold);
+  rotate: 90deg;
+  transition: rotate var(--t-mech) var(--ease-out);
+}
+
+.pusula-landing .cw-more-glyph:dir(rtl) {
+  rotate: -90deg;
+}
+
+.pusula-landing .cw-more.is-open .cw-more-glyph {
+  rotate: -90deg;
+}
+
+.pusula-landing .cw-more.is-open .cw-more-glyph:dir(rtl) {
+  rotate: 90deg;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Pause and reduced motion: everything visible and at rest                 */
+/* ------------------------------------------------------------------------ */
+
+.pusula-landing.is-paused .cw-sweep {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pusula-landing .cw-sweep,
+  .pusula-landing .cw-shutters,
+  .pusula-landing .cw-caret {
+    display: none;
+  }
+
+  .pusula-landing .cw-li::after,
+  .pusula-landing .cw-li::before,
+  .pusula-landing .cw-seg,
+  .pusula-landing .cw-echo-line,
+  .pusula-landing .cw-n::after,
+  .pusula-landing .cw-n::before,
+  .pusula-landing .cw-mark::after,
+  .pusula-landing .cw-mark::before {
+    animation: none !important;
+  }
+
+  .pusula-landing .cw-li,
+  .pusula-landing .cw-kind,
+  .pusula-landing .cw-chip,
+  .pusula-landing .cw-seg-fill,
+  .pusula-landing .cw-more-glyph {
+    transition: none;
+  }
+}

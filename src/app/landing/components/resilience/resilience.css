@@ -1,0 +1,1710 @@
+/*
+ * Station S, 180°: the storm rail (spec §6.6). Scoped under .pusula-landing.
+ *
+ * The rail's DOM frame is laid out with the custom properties below, which
+ * repeat `RAIL_WIDE` / `RAIL_COMPACT` from `stormModel.ts` (pinned by
+ * `tests/unit/landing-resilience.test.ts`). Every position is a logical inset
+ * from the stage's start or end edge, so RTL mirrors the flow for free; the
+ * two fixed-size fan SVGs mirror with a static scaleX(-1). Only transform and
+ * opacity animate.
+ */
+
+.pusula-landing .res-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-6);
+}
+
+/* The rail carries its own labels: a shorter gap under the head. */
+.pusula-landing .station.res-station > .station-head {
+  margin-block-end: var(--s-6);
+}
+
+/* ------------------------------------------------------------------------ */
+/* The rail                                                                 */
+/* ------------------------------------------------------------------------ */
+
+.pusula-landing .res-rail {
+  container: res-rail / inline-size;
+  position: relative;
+  margin: 0;
+}
+
+/* The badge row rides the stage's top end corner (outside its aria-hidden subtree). */
+.pusula-landing .res-rail-head {
+  position: absolute;
+  z-index: 4;
+  inset-block-start: 10px;
+  inset-inline-end: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px 8px;
+  max-inline-size: 60%;
+  pointer-events: none;
+}
+
+.pusula-landing .res-lapse {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding-inline: 8px;
+  border: 1px solid rgba(255, 211, 110, 0.4);
+  border-radius: var(--r-pill);
+  background: rgba(4, 4, 5, 0.72);
+  font-size: var(--fs-micro);
+  line-height: 1;
+  color: var(--gold-hi);
+  white-space: nowrap;
+}
+
+/* Persian reads in the sans face: a mono fallback and its tracking break the joins. */
+.pusula-landing .res-lapse:lang(fa) {
+  font-family: var(--font-sans);
+  letter-spacing: 0;
+}
+
+.pusula-landing .res-stage {
+  --rail-h: 380px;
+  --rail-mid: 178px;
+  --rail-src-x: 52px;
+  --rail-src-r: 12px;
+  --rail-drop-x: 88px;
+  --rail-band-x0: 120px;
+  --rail-band-end: 200px;
+  --rail-band-y0: 56px;
+  --rail-band-y1: 300px;
+  --rail-band-r: 20px;
+  --rail-lane-t0: 84px;
+  --rail-lane-step: 70px;
+  --rail-lane-h: 60px;
+  --rail-lane-x0: 184px;
+  --rail-gate-off: 64px;
+  --rail-gate-w: 24px;
+  --rail-slot-h: 18px;
+  --rail-slot-gap: 3px;
+  --rail-fan-w: 40px;
+  --rail-up-end: 96px;
+  --rail-up-r: 18px;
+  --rail-fb-y: 346px;
+  --rail-fb-end: 24px;
+  --rail-cell-w: 14px;
+  --rail-cell-h: 22px;
+  --rail-cell-gap: 6px;
+  --res-served-w: 64px;
+  height: var(--rail-h);
+  border-radius: var(--r-md);
+  background:
+    radial-gradient(ellipse 60% 70% at 50% 50%, rgba(212, 168, 64, 0.045), transparent 70%),
+    linear-gradient(to right, var(--graticule) 1px, transparent 1px) 0 0 / 48px 48px,
+    linear-gradient(to bottom, var(--graticule) 1px, transparent 1px) 0 0 / 48px 48px;
+}
+
+@container res-rail (max-width: 639.98px) {
+  .pusula-landing .res-stage {
+    --rail-h: 280px;
+    --rail-mid: 136px;
+    --rail-src-x: 16px;
+    --rail-src-r: 8px;
+    --rail-drop-x: 30px;
+    --rail-band-x0: 44px;
+    --rail-band-end: 50px;
+    --rail-band-y0: 48px;
+    --rail-band-y1: 224px;
+    --rail-band-r: 14px;
+    --rail-lane-t0: 70px;
+    --rail-lane-step: 48px;
+    --rail-lane-h: 44px;
+    --rail-lane-x0: 84px;
+    --rail-gate-off: 42px;
+    --rail-gate-w: 16px;
+    --rail-slot-h: 13px;
+    --rail-slot-gap: 2.5px;
+    --rail-fan-w: 22px;
+    --rail-up-end: 24px;
+    --rail-up-r: 10px;
+    --rail-fb-y: 252px;
+    --rail-fb-end: 10px;
+    --rail-cell-w: 10px;
+    --rail-cell-h: 18px;
+    --rail-cell-gap: 4px;
+    --res-served-w: 52px;
+    /* Keep the served label inside the 16px page gutter (the rail itself bleeds). */
+    --res-served-end: 16px;
+    border-radius: 0;
+  }
+}
+
+/* The compact rail's time-lapse chip leads the row under the fallback rail (see .res-foot). */
+.pusula-landing .res-lapse.res-lapse-low {
+  display: none;
+}
+
+@container res-rail (max-width: 639.98px) {
+  .pusula-landing .res-rail-head .res-lapse {
+    display: none;
+  }
+  .pusula-landing .res-lapse.res-lapse-low {
+    display: inline-flex;
+    flex: none;
+    /* The sans face: narrower than mono, so the chip and the caption share the row in every locale. */
+    font-family: var(--font-sans);
+    letter-spacing: 0;
+  }
+}
+
+.pusula-landing .res-frame,
+.pusula-landing .res-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.pusula-landing .res-frame {
+  z-index: 0;
+}
+
+.pusula-landing .res-stage > canvas {
+  z-index: 1;
+}
+
+.pusula-landing .res-overlay {
+  z-index: 2;
+}
+
+.pusula-landing .res-frame > *,
+.pusula-landing .res-overlay > * {
+  position: absolute;
+}
+
+/* ---- lines and nodes ---------------------------------------------------- */
+
+.pusula-landing .res-line {
+  block-size: 1px;
+  inset-block-start: var(--rail-mid);
+  background: var(--gold-lo);
+}
+
+.pusula-landing .res-arrive {
+  inset-inline-start: 0;
+  inline-size: calc(var(--rail-src-x) - var(--rail-src-r));
+  background: linear-gradient(to right, transparent, var(--gold-lo));
+}
+
+.pusula-landing .res-rail[data-rtl] .res-arrive {
+  background: linear-gradient(to left, transparent, var(--gold-lo));
+}
+
+.pusula-landing .res-entry {
+  inset-inline-start: calc(var(--rail-src-x) + var(--rail-src-r));
+  inline-size: calc(var(--rail-band-x0) - var(--rail-src-x) - var(--rail-src-r));
+}
+
+.pusula-landing .res-exit {
+  inset-inline-end: calc(var(--rail-up-end) + var(--rail-up-r));
+  inline-size: calc(var(--rail-band-end) - var(--rail-up-end) - var(--rail-up-r));
+}
+
+.pusula-landing .res-src {
+  inset-inline-start: calc(var(--rail-src-x) - var(--rail-src-r));
+  inset-block-start: calc(var(--rail-mid) - var(--rail-src-r));
+  inline-size: calc(var(--rail-src-r) * 2);
+  block-size: calc(var(--rail-src-r) * 2);
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%, var(--bezel), var(--void) 75%);
+}
+
+.pusula-landing .res-src-core {
+  position: static;
+  inline-size: 40%;
+  block-size: 40%;
+  border-radius: 50%;
+  background: var(--gold-hi);
+}
+
+.pusula-landing .res-up {
+  inset-inline-end: calc(var(--rail-up-end) - var(--rail-up-r));
+  inset-block-start: calc(var(--rail-mid) - var(--rail-up-r));
+  inline-size: calc(var(--rail-up-r) * 2);
+  block-size: calc(var(--rail-up-r) * 2);
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%, var(--bezel), var(--void) 75%);
+  color: var(--gold-hi);
+}
+
+.pusula-landing .res-up .glyph {
+  inline-size: 60%;
+  block-size: 60%;
+}
+
+/* The hub's fallback rail: the drop under the entry, then a dashed run to the next target. */
+.pusula-landing .res-drop {
+  inset-inline-start: var(--rail-drop-x);
+  inset-block-start: var(--rail-mid);
+  inline-size: 0;
+  block-size: calc(var(--rail-fb-y) - var(--rail-mid));
+  border-inline-start: 1px dashed var(--gold-deep);
+}
+
+.pusula-landing .res-fb {
+  inset-inline-start: var(--rail-drop-x);
+  inset-inline-end: var(--rail-fb-end);
+  inset-block-start: var(--rail-fb-y);
+  block-size: 0;
+  border-block-start: 1px dashed var(--gold-lo);
+  transition: opacity var(--t-mech) var(--ease-out);
+}
+
+.pusula-landing .res-fb-tip {
+  inset-inline-end: calc(var(--rail-fb-end) - 6px);
+  inset-block-start: calc(var(--rail-fb-y) - 8px);
+  color: var(--gold-lo);
+  line-height: 0;
+}
+
+.pusula-landing .res-rail[data-state="open"] .res-fb-tip {
+  color: var(--gold-hi);
+}
+
+/* OPEN: the hub's fallback rail carries the provider's share (static; the canvas adds the glow). */
+.pusula-landing .res-rail[data-state="open"] .res-fb,
+.pusula-landing .res-rail[data-state="open"] .res-drop {
+  border-color: var(--gold);
+}
+
+/* ---- the provider band -------------------------------------------------- */
+
+.pusula-landing .res-band {
+  inset-inline-start: var(--rail-band-x0);
+  inset-inline-end: var(--rail-band-end);
+  inset-block-start: var(--rail-band-y0);
+  block-size: calc(var(--rail-band-y1) - var(--rail-band-y0));
+  border: 1px solid var(--rule);
+  border-radius: var(--rail-band-r);
+  background: linear-gradient(180deg, rgba(26, 23, 18, 0.7), rgba(10, 10, 12, 0.55));
+  box-shadow: inset 0 1px 0 rgba(255, 228, 160, 0.05);
+}
+
+.pusula-landing .res-band > span {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* The edge breathes over 4s (opacity only). */
+.pusula-landing .res-band-breathe {
+  border: 1px solid var(--gold-lo);
+  animation: res-breathe var(--loop-breathe) var(--ease-io) infinite;
+}
+
+@keyframes res-breathe {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.pusula-landing .res-band-shade {
+  background: rgba(4, 4, 5, 0.66);
+  opacity: 0;
+  transition: opacity var(--t-swap) var(--ease-out);
+}
+
+.pusula-landing .res-band-alarm {
+  border: 1.5px dashed var(--ember);
+  opacity: 0;
+  transition: opacity var(--t-mech) var(--ease-out);
+}
+
+.pusula-landing .res-rail[data-state="degraded"] .res-band-alarm {
+  border-style: solid;
+  border-color: rgba(255, 122, 69, 0.55);
+  opacity: 1;
+}
+
+.pusula-landing .res-rail[data-state="open"] .res-band-alarm {
+  opacity: 1;
+}
+
+.pusula-landing .res-rail[data-state="open"] .res-band-shade {
+  opacity: 1;
+}
+
+.pusula-landing .res-rail[data-state="open"] .res-band-breathe {
+  animation: none;
+  opacity: 0;
+}
+
+.pusula-landing .res-rail[data-state="halfOpen"] .res-band-alarm {
+  border-color: var(--gold-hi);
+  opacity: 0.85;
+}
+
+.pusula-landing .res-rail[data-state="halfOpen"] .res-band-shade {
+  opacity: 0.55;
+}
+
+/* Power-on: hairlines draw the band in (scaleX), from the flow's start. */
+.pusula-landing .res-band > .res-band-trace {
+  inset-block: auto;
+  inset-inline: var(--rail-band-r);
+  block-size: 1px;
+  border-radius: 0;
+  background: linear-gradient(to right, var(--gold-hi), var(--gold) 70%, var(--gold-deep));
+  opacity: 0.55;
+  transform-origin: left center;
+  transition:
+    transform var(--t-reveal) var(--ease-out),
+    opacity 1600ms var(--ease-out) var(--t-reveal);
+}
+
+.pusula-landing .res-rail[data-rtl] .res-band > .res-band-trace {
+  background: linear-gradient(to left, var(--gold-hi), var(--gold) 70%, var(--gold-deep));
+  transform-origin: right center;
+}
+
+.pusula-landing .res-band > .res-band-trace[data-edge="top"] {
+  inset-block-start: -1px;
+}
+
+.pusula-landing .res-band > .res-band-trace[data-edge="bottom"] {
+  inset-block-end: -1px;
+  transition-delay: 160ms, calc(var(--t-reveal) + 160ms);
+}
+
+.pusula-landing[data-motion="on"] .res-rail[data-power="armed"] .res-band-trace {
+  opacity: 1;
+  transform: scaleX(0);
+}
+
+.pusula-landing[data-motion="on"] .res-rail[data-power="on"] .res-band-trace {
+  opacity: 0.55;
+  transform: none;
+}
+
+/* ---- lanes and gates ---------------------------------------------------- */
+
+.pusula-landing .res-lane {
+  inset-inline-start: calc(var(--rail-lane-x0) - 14px);
+  inset-inline-end: calc(var(--rail-band-end) + var(--rail-gate-off) + var(--rail-fan-w) - 2px);
+  inset-block-start: calc(var(--rail-lane-t0) + var(--k) * var(--rail-lane-step));
+  block-size: var(--rail-lane-h);
+  border: 1px solid var(--rule-soft);
+  border-radius: calc(var(--rail-lane-h) / 2);
+  background: linear-gradient(90deg, rgba(212, 168, 64, 0.05), rgba(212, 168, 64, 0.015));
+  transition: opacity var(--t-mech) var(--ease-out);
+}
+
+.pusula-landing .res-lane-line {
+  position: absolute;
+  inset-inline-start: 13px;
+  inset-inline-end: 0;
+  inset-block-start: 50%;
+  block-size: 1px;
+  background: var(--gold-deep);
+}
+
+.pusula-landing .res-lane[data-cool] {
+  opacity: 0.45;
+  border-style: dashed;
+  border-color: rgba(255, 122, 69, 0.6);
+}
+
+.pusula-landing .res-lane[data-cool] .res-lane-line {
+  background: none;
+  border-block-start: 1px dashed var(--ember);
+}
+
+.pusula-landing .res-fan {
+  inset-block-start: 0;
+  overflow: visible;
+  stroke: var(--gold-deep);
+  stroke-width: 1;
+  fill: none;
+}
+
+.pusula-landing .res-fan .res-fan-exit {
+  stroke: var(--gold-lo);
+  stroke-opacity: 0.55;
+}
+
+.pusula-landing .res-fan-in {
+  inset-inline-start: var(--rail-band-x0);
+}
+
+.pusula-landing .res-fan-out {
+  inset-inline-end: var(--rail-band-end);
+}
+
+.pusula-landing .res-rail[data-rtl] .res-fan {
+  transform: scaleX(-1);
+}
+
+.pusula-landing .res-compact {
+  display: none;
+}
+
+@container res-rail (max-width: 639.98px) {
+  .pusula-landing .res-wide {
+    display: none;
+  }
+  .pusula-landing .res-compact {
+    display: block;
+  }
+}
+
+.pusula-landing .res-gates {
+  inset-inline-end: calc(var(--rail-band-end) + var(--rail-gate-off) - var(--rail-gate-w));
+  inset-block-start: calc(var(--rail-lane-t0) + var(--k) * var(--rail-lane-step));
+  inline-size: var(--rail-gate-w);
+  block-size: var(--rail-lane-h);
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-slot-gap);
+}
+
+.pusula-landing .res-slot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  block-size: var(--rail-slot-h);
+  border: 1px solid var(--gold-lo);
+  border-radius: 3px;
+  background: linear-gradient(180deg, var(--bezel), var(--hull));
+  transition: opacity var(--t-mech) var(--ease-out);
+}
+
+.pusula-landing .res-slot .res-lock {
+  inline-size: calc(var(--rail-slot-h) - 4px);
+  block-size: calc(var(--rail-slot-h) - 4px);
+  color: var(--ember);
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity var(--t-mech) var(--ease-out),
+    transform var(--t-mech) var(--ease-lift);
+}
+
+/*
+ * A model lockout belongs to one model on one connection: the padlock and the
+ * dashed slot show on the lane where the 429 was seen, nowhere else.
+ */
+.pusula-landing .res-rail[data-padlock="0"] .res-gates[data-k="0"] .res-slot[data-locked],
+.pusula-landing .res-rail[data-padlock="1"] .res-gates[data-k="1"] .res-slot[data-locked],
+.pusula-landing .res-rail[data-padlock="2"] .res-gates[data-k="2"] .res-slot[data-locked] {
+  opacity: 1;
+  border: 1px dashed var(--ember);
+  background: var(--ember-soft);
+}
+
+.pusula-landing .res-rail[data-padlock="0"] .res-gates[data-k="0"] .res-slot[data-locked] .res-lock,
+.pusula-landing .res-rail[data-padlock="1"] .res-gates[data-k="1"] .res-slot[data-locked] .res-lock,
+.pusula-landing
+  .res-rail[data-padlock="2"]
+  .res-gates[data-k="2"]
+  .res-slot[data-locked]
+  .res-lock {
+  opacity: 1;
+  transform: none;
+}
+
+/* OPEN: the entry is barred, ✕ in ember (failure is always ember plus a dash or ✕). */
+.pusula-landing .res-barrier {
+  inset-inline-start: calc(var(--rail-band-x0) - 9px);
+  inset-block-start: calc(var(--rail-mid) - 9px);
+  inline-size: 18px;
+  block-size: 18px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--void);
+  color: var(--ember);
+  opacity: 0;
+  transform: scale(0.5);
+  transition:
+    opacity var(--t-mech) var(--ease-out),
+    transform var(--t-mech) var(--ease-lift);
+}
+
+.pusula-landing .res-barrier .glyph {
+  inline-size: 14px;
+  block-size: 14px;
+}
+
+.pusula-landing .res-rail[data-state="open"] .res-barrier {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- labels (over the canvas) ------------------------------------------ */
+
+.pusula-landing .res-tag {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  line-height: 16px;
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--mist);
+  white-space: nowrap;
+}
+
+.pusula-landing .res-tag:lang(fa) {
+  font-family: var(--font-sans);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.pusula-landing .res-tag-provider {
+  inset-inline-start: var(--rail-band-x0);
+  inset-block-start: calc(var(--rail-band-y0) - 36px);
+  color: var(--gold);
+}
+
+.pusula-landing .res-tag-connection {
+  inset-inline-start: calc(var(--rail-band-x0) + 12px);
+  inset-block-start: calc(var(--rail-band-y1) + 8px);
+}
+
+.pusula-landing .res-tag-model {
+  inset-inline-end: calc(var(--rail-band-end) + var(--rail-gate-off) - var(--rail-gate-w));
+  inset-block-start: calc(var(--rail-band-y1) + 8px);
+}
+
+/* The row under the fallback rail: the caption at the rail's end (and, compact, the time-lapse chip). */
+.pusula-landing .res-foot {
+  inset-inline-end: var(--rail-fb-end);
+  inset-block-start: calc(var(--rail-fb-y) + 8px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.pusula-landing .res-tag-next {
+  color: var(--mist-dim);
+}
+
+/*
+ * Compact: one row from gutter to gutter, chip at the start, caption at the
+ * end, never touching (a gap, and the caption gives way before the chip).
+ */
+@container res-rail (max-width: 639.98px) {
+  .pusula-landing .res-foot {
+    inset-inline: var(--gutter);
+    inset-block-start: calc(var(--rail-fb-y) + 4px);
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .pusula-landing .res-foot .res-tag-next {
+    flex: 0 1 auto;
+    min-inline-size: 0;
+    margin-inline-start: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: end;
+    letter-spacing: 0.08em;
+  }
+  .pusula-landing .res-foot .res-tag-next:lang(fa) {
+    letter-spacing: 0;
+  }
+}
+
+.pusula-landing .res-rail[data-state="open"] .res-tag-next {
+  color: var(--gold-hi);
+}
+
+/* Served by the focused provider: its id, then the count, centred under the ✓ node. */
+.pusula-landing .res-served {
+  inset-inline-end: var(--res-served-end, calc(var(--rail-up-end) - var(--res-served-w) / 2));
+  inline-size: var(--res-served-w);
+  inset-block-start: calc(var(--rail-mid) + var(--rail-up-r) + 6px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.pusula-landing .res-served-id {
+  font-size: var(--fs-micro);
+  line-height: 15px;
+  color: var(--mist-dim);
+}
+
+.pusula-landing .res-served-n {
+  font-size: var(--fs-readout);
+  line-height: 16px;
+  color: var(--gold-hi);
+}
+
+/* Breaker cells along the band's top edge: one per failure the profile tolerates. */
+.pusula-landing .res-cells {
+  inset-inline-start: var(--rail-band-x0);
+  inset-inline-end: var(--rail-band-end);
+  inset-block-start: calc(var(--rail-band-y0) - var(--rail-cell-h) / 2);
+  display: flex;
+  justify-content: center;
+  gap: var(--rail-cell-gap);
+}
+
+.pusula-landing .res-cell {
+  position: relative;
+  flex: none;
+  inline-size: var(--rail-cell-w);
+  block-size: var(--rail-cell-h);
+  border: 1px solid var(--gold-lo);
+  border-radius: 3px;
+  background: var(--hull);
+  transition:
+    opacity 320ms var(--ease-out) calc(var(--i) * 45ms),
+    transform 420ms var(--ease-lift) calc(var(--i) * 45ms);
+}
+
+.pusula-landing .res-cell[data-hot] {
+  border-color: rgba(255, 122, 69, 0.45);
+}
+
+.pusula-landing .res-cell[data-trip] {
+  border-color: var(--ember);
+}
+
+.pusula-landing .res-cell::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 1px;
+  background: linear-gradient(180deg, #ffb08a, var(--ember));
+  opacity: 0;
+  transform: scaleY(0.2);
+  transform-origin: 50% 100%;
+  transition:
+    opacity 160ms linear,
+    transform 260ms var(--ease-lift);
+}
+
+.pusula-landing .res-cell[data-on]::after {
+  opacity: 1;
+  transform: none;
+}
+
+.pusula-landing[data-motion="on"] .res-rail[data-power="armed"] .res-cell {
+  opacity: 0;
+  transform: scale(0.3);
+}
+
+/* Lanes: "#1" tags, the cooling note above the line, the ignored flash below it. */
+.pusula-landing .res-lane-tag {
+  inset-inline-start: calc(var(--rail-lane-x0) + 12px);
+  inset-block-start: calc(var(--rail-lane-t0) + var(--k) * var(--rail-lane-step) + 3px);
+  font-size: var(--fs-micro);
+  line-height: 14px;
+  color: var(--mist);
+}
+
+.pusula-landing .res-lane-tag[data-revoked],
+.pusula-landing .res-lane-tag[data-cool] {
+  color: var(--ember);
+}
+
+.pusula-landing .res-lane-note,
+.pusula-landing .res-lane-ignored {
+  inset-inline-start: calc(var(--rail-lane-x0) + 44px);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  line-height: 14px;
+  white-space: nowrap;
+  color: var(--ember);
+}
+
+.pusula-landing .res-lane-note {
+  inset-block-start: calc(var(--rail-lane-t0) + var(--k) * var(--rail-lane-step) + 3px);
+  opacity: 0;
+  transition: opacity var(--t-mech) var(--ease-out);
+}
+
+.pusula-landing .res-lane-note[data-on] {
+  opacity: 1;
+}
+
+.pusula-landing .res-lane-ignored {
+  inset-inline-start: calc(var(--rail-lane-x0) + 12px);
+  inset-block-start: calc(
+    var(--rail-lane-t0) + var(--k) * var(--rail-lane-step) + var(--rail-lane-h) / 2 + 3px
+  );
+  color: var(--gold-hi);
+  opacity: 0;
+}
+
+.pusula-landing .res-lane-ignored[data-static] {
+  opacity: 1;
+}
+
+.pusula-landing .res-lane-note:lang(fa),
+.pusula-landing .res-lane-ignored:lang(fa) {
+  font-family: var(--font-sans);
+}
+
+/* The ≤ 12% white flash when the breaker opens (opacity only, driven by the renderer). */
+.pusula-landing .res-flash {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Scope descriptions                                                       */
+/* ------------------------------------------------------------------------ */
+
+.pusula-landing .res-scopes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-6);
+  margin: 0;
+}
+
+.pusula-landing .res-scope {
+  padding-block-start: var(--s-4);
+  border-block-start: 1px solid var(--rule);
+}
+
+.pusula-landing .res-scope-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px var(--s-4);
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.pusula-landing .res-scope-name:lang(fa) {
+  font-family: var(--font-sans);
+  font-size: var(--fs-small);
+  font-weight: 600;
+}
+
+.pusula-landing .res-scope-desc {
+  margin: 0;
+  font-size: var(--fs-small);
+  line-height: var(--lh-body);
+  color: var(--mist);
+}
+
+/* The engraving beside the provider's name: the statuses that trip its breaker. */
+.pusula-landing .res-codes {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: none;
+  white-space: nowrap;
+  unicode-bidi: isolate;
+  color: var(--mist-dim);
+}
+
+/* ------------------------------------------------------------------------ */
+/* Console                                                                  */
+/* ------------------------------------------------------------------------ */
+
+.pusula-landing .res-console {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.pusula-landing .res-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  min-width: 0;
+  padding: var(--s-5);
+}
+
+.pusula-landing .res-col + .res-col {
+  border-block-start: 1px solid var(--rule-soft);
+}
+
+.pusula-landing .res-col-title {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.pusula-landing .res-col-title:lang(fa) {
+  font-family: var(--font-sans);
+}
+
+.pusula-landing .res-col-id {
+  text-transform: none;
+  letter-spacing: var(--track-readout);
+  color: var(--gold-hi);
+}
+
+/* ---- profile (below 1024px): the segmented control ----------------------- */
+
+.pusula-landing .res-profile.seg {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2px;
+  width: 100%;
+}
+
+.pusula-landing .res-profile .seg-opt {
+  min-height: 48px;
+  padding-inline: var(--s-2);
+  text-align: center;
+}
+
+.pusula-landing .res-opt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.pusula-landing .res-opt-id {
+  font-size: var(--fs-micro);
+  color: var(--mist-dim);
+}
+
+.pusula-landing .seg-opt[aria-checked="true"] .res-opt-id {
+  color: var(--gold);
+}
+
+/* ---- defaults: the table (from 1024px also the profile choice) ---------- */
+
+.pusula-landing .res-defaults-title {
+  margin: 0;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--foam);
+}
+
+.pusula-landing .res-disclose {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  inline-size: 100%;
+  min-height: 48px;
+  padding: 6px 0;
+  border: 0;
+  background: none;
+  font-size: var(--fs-small);
+  line-height: 1.35;
+  text-align: start;
+  color: var(--mist);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pusula-landing .res-disclose:hover {
+  color: var(--foam);
+}
+
+.pusula-landing .res-disclose:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+/* Higher than the glyph's RTL mirror: a chevron turned to point down reads the same either way. */
+.pusula-landing .res-disclose .res-disclose-chev {
+  flex: none;
+  color: var(--gold);
+  transform: rotate(90deg);
+  transition: transform var(--t-mech) var(--ease-out);
+}
+
+.pusula-landing .res-disclose[aria-expanded="true"] .res-disclose-chev {
+  transform: rotate(-90deg);
+}
+
+.pusula-landing .res-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-small);
+}
+
+.pusula-landing .res-table th,
+.pusula-landing .res-table td {
+  padding: 10px 12px;
+  border-block-end: 1px solid var(--rule-soft);
+  text-align: start;
+  vertical-align: middle;
+}
+
+.pusula-landing .res-table thead th {
+  vertical-align: bottom;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: var(--track-readout);
+  color: var(--mist-dim);
+  border-block-end-color: var(--rule);
+}
+
+.pusula-landing .res-table thead th:lang(fa) {
+  font-family: var(--font-sans);
+  letter-spacing: 0;
+}
+
+.pusula-landing .res-table tbody th {
+  font-weight: 500;
+  color: var(--foam);
+}
+
+.pusula-landing .res-table td {
+  font-variant-numeric: tabular-nums;
+  color: var(--mist);
+}
+
+.pusula-landing .res-table .res-n {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--foam);
+}
+
+.pusula-landing .res-table tr[data-active] .res-n {
+  color: var(--gold-hi);
+}
+
+.pusula-landing .res-table tr[data-active] {
+  background: linear-gradient(to right, rgba(212, 168, 64, 0.12), rgba(212, 168, 64, 0.02));
+}
+
+.pusula-landing .res-table tr[data-active]:dir(rtl) {
+  background: linear-gradient(to left, rgba(212, 168, 64, 0.12), rgba(212, 168, 64, 0.02));
+}
+
+.pusula-landing .res-table tr[data-active] th {
+  color: var(--gold-hi);
+  box-shadow: inset 2px 0 0 var(--gold);
+}
+
+.pusula-landing .res-table tr[data-active] th:dir(rtl) {
+  box-shadow: inset -2px 0 0 var(--gold);
+}
+
+.pusula-landing .res-table tr[data-active] td {
+  color: var(--foam);
+}
+
+/* The row header: the profile's name over its candidate, and (from 1024px) its radio lamp. */
+.pusula-landing .res-pick {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.pusula-landing .res-pick-id {
+  font-size: var(--fs-micro);
+  font-weight: 400;
+  color: var(--mist-dim);
+}
+
+.pusula-landing .res-table tr[data-active] .res-pick-id {
+  color: var(--gold);
+}
+
+.pusula-landing .res-radio {
+  display: none;
+}
+
+.pusula-landing .res-note {
+  margin: var(--s-3) 0 0;
+  font-size: var(--fs-micro);
+  line-height: 1.5;
+  color: var(--mist-dim);
+}
+
+/* ---- faults: three latches, each with the status of its scope ---------- */
+
+.pusula-landing .res-latches {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pusula-landing .res-latch {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 6px;
+  min-width: 0;
+}
+
+.pusula-landing .res-latch-scope {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  line-height: 1.3;
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--gold);
+}
+
+.pusula-landing .res-latch-scope:lang(fa) {
+  font-family: var(--font-sans);
+}
+
+.pusula-landing .res-latch .tg {
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 60px;
+  padding: 6px;
+  border-radius: var(--r-md);
+}
+
+.pusula-landing .res-latch .tg-label {
+  white-space: normal;
+  text-align: center;
+  font-size: var(--fs-micro);
+  line-height: 1.25;
+}
+
+.pusula-landing .res-status {
+  min-width: 0;
+  min-height: 18px;
+  padding-inline: 2px;
+  font-size: var(--fs-micro);
+  line-height: 1.45;
+  text-align: center;
+  color: var(--mist-dim);
+}
+
+.pusula-landing .res-status .readout {
+  color: var(--mist);
+}
+
+.pusula-landing .res-status[data-alert],
+.pusula-landing .res-status[data-alert] .readout {
+  color: var(--ember);
+}
+
+.pusula-landing .res-num {
+  display: inline-block;
+  min-width: 4ch;
+  color: var(--ember) !important;
+}
+
+/* Durations: the number in the readout face, the unit in the text face. */
+.pusula-landing .res-sec {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--track-readout);
+}
+
+.pusula-landing .res-unit {
+  font-family: var(--font-sans);
+  letter-spacing: 0;
+}
+
+.pusula-landing .res-probe .res-unit {
+  font-size: 0.5em;
+  font-weight: 500;
+}
+
+/* ---- breaker: annunciator lamps, failure meter, probe countdown --------- */
+
+.pusula-landing .res-col-breaker {
+  container: res-breaker / inline-size;
+}
+
+/*
+ * Narrow column: the lamp stack, then meter and countdown side by side, then
+ * the time-lapse chip. Wide enough (a phone, a 1440 desktop): lamps beside
+ * meter and countdown, the chip under them.
+ */
+.pusula-landing .res-breaker {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas:
+    "ann ann"
+    "meter probe"
+    "lapse lapse";
+  gap: var(--s-4) var(--s-3);
+  align-items: start;
+}
+
+.pusula-landing .res-breaker .res-ann {
+  grid-area: ann;
+}
+
+.pusula-landing .res-gauge-meter {
+  grid-area: meter;
+}
+
+.pusula-landing .res-gauge-probe {
+  grid-area: probe;
+}
+
+.pusula-landing .res-breaker-lapse {
+  grid-area: lapse;
+  justify-self: start;
+}
+
+@container res-breaker (min-width: 300px) {
+  .pusula-landing .res-breaker {
+    grid-template-columns: fit-content(136px) minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "ann meter probe"
+      "ann lapse lapse";
+    row-gap: var(--s-3);
+  }
+}
+
+.pusula-landing .res-ann {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* An annunciator stack: one plate per breaker state, a lamp on each; the lit one glows. */
+.pusula-landing .res-ann-tile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 25px;
+  padding: 3px 8px 3px 7px;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--hull);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  line-height: 1.2;
+  color: var(--mist-dim);
+}
+
+.pusula-landing .res-ann-tile:lang(fa) {
+  font-family: var(--font-sans);
+}
+
+.pusula-landing .res-ann-label {
+  min-width: 0;
+}
+
+.pusula-landing .res-ann-tile::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  box-shadow:
+    0 0 18px -4px var(--gold-glow),
+    inset 0 0 0 1px var(--gold);
+  opacity: 0;
+  transition: opacity var(--t-mech) var(--ease-out);
+}
+
+.pusula-landing .res-led {
+  position: relative;
+  flex: none;
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: 50%;
+  background: var(--gold-deep);
+}
+
+.pusula-landing .res-led::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--gold-glow), transparent 70%);
+  opacity: 0;
+  transition: opacity var(--t-mech) var(--ease-out);
+}
+
+.pusula-landing .res-ann-tile[data-on] .res-led {
+  background: var(--gold-hi);
+}
+
+.pusula-landing .res-ann-tile[data-on] .res-led::after {
+  opacity: 1;
+}
+
+.pusula-landing .res-ann-tile[data-on][data-state="degraded"] .res-led,
+.pusula-landing .res-ann-tile[data-on][data-state="open"] .res-led {
+  background: var(--ember);
+}
+
+.pusula-landing .res-ann-tile[data-on][data-state="degraded"] .res-led::after,
+.pusula-landing .res-ann-tile[data-on][data-state="open"] .res-led::after {
+  background: radial-gradient(circle, var(--ember-glow), transparent 70%);
+}
+
+.pusula-landing .res-ann-tile[data-on][data-state="halfOpen"] .res-led {
+  background: var(--phosphor);
+}
+
+.pusula-landing .res-ann-tile[data-on] {
+  color: var(--gold-hi);
+  background: var(--bezel);
+}
+
+.pusula-landing .res-ann-tile[data-on]::before {
+  opacity: 1;
+}
+
+.pusula-landing .res-ann-tile[data-on][data-state="degraded"],
+.pusula-landing .res-ann-tile[data-on][data-state="open"] {
+  color: var(--ember);
+  background: var(--ember-soft);
+}
+
+.pusula-landing .res-ann-tile[data-on][data-state="degraded"]::before {
+  box-shadow:
+    0 0 18px -4px var(--ember-glow),
+    inset 0 0 0 1px var(--ember);
+}
+
+.pusula-landing .res-ann-tile[data-on][data-state="open"]::before {
+  box-shadow: 0 0 22px -4px var(--ember-glow);
+  border: 1.5px dashed var(--ember);
+}
+
+.pusula-landing .res-ann-tile[data-on][data-state="halfOpen"] {
+  color: var(--phosphor);
+}
+
+.pusula-landing .res-ann-tile[data-none] {
+  background: transparent;
+  border-style: dashed;
+}
+
+.pusula-landing .res-gauge {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.pusula-landing .res-meter,
+.pusula-landing .res-probe {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--foam);
+  white-space: nowrap;
+}
+
+@container res-breaker (min-width: 300px) {
+  .pusula-landing .res-meter,
+  .pusula-landing .res-probe {
+    font-size: 30px;
+  }
+}
+
+/* The digits stay in reading order inside a line that follows the page direction. */
+.pusula-landing .res-meter-v {
+  display: inline-block;
+  unicode-bidi: isolate;
+}
+
+.pusula-landing .res-meter-of {
+  font-size: 0.55em;
+  font-weight: 500;
+  color: var(--mist-dim);
+}
+
+.pusula-landing .res-meter[data-level="idle"] .res-meter-n {
+  color: var(--mist);
+}
+
+.pusula-landing .res-meter[data-level="hot"] .res-meter-n {
+  color: var(--ember);
+}
+
+.pusula-landing .res-meter[data-level="open"] .res-meter-n {
+  color: var(--ember);
+  text-shadow: var(--glow-text-ember);
+}
+
+.pusula-landing .res-meter[data-level="open"] .res-meter-of {
+  color: var(--ember);
+}
+
+.pusula-landing .res-probe {
+  color: var(--gold-hi);
+}
+
+.pusula-landing .res-probe[data-idle] {
+  color: var(--mist-dim);
+}
+
+.pusula-landing .res-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: var(--fs-micro);
+  line-height: 1.4;
+  color: var(--mist-dim);
+}
+
+/* The breaker cells again, small, under the failure meter. */
+.pusula-landing .res-mini {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-block: 4px 2px;
+}
+
+.pusula-landing .res-mini > span {
+  inline-size: 7px;
+  block-size: 12px;
+  border: 1px solid var(--gold-lo);
+  border-radius: 2px;
+}
+
+.pusula-landing .res-mini > span[data-hot] {
+  border-color: rgba(255, 122, 69, 0.5);
+}
+
+.pusula-landing .res-mini > span[data-on] {
+  border-color: var(--ember);
+  background: var(--ember);
+}
+
+/* ---- phone folds: the defaults table and the scope descriptions --------- */
+
+.pusula-landing .res-folds,
+.pusula-landing .res-scope-dl {
+  display: none;
+}
+
+.pusula-landing .res-col.res-scope-dl {
+  gap: var(--s-4);
+  margin: 0;
+}
+
+.pusula-landing .res-scope-item .res-scope-name {
+  justify-content: flex-start;
+}
+
+/* Tablet (640–1023px): profile, then the table, then latches beside the breaker. */
+@media (min-width: 640px) and (max-width: 1023.98px) {
+  .pusula-landing .res-console {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "profile profile"
+      "defaults defaults"
+      "faults breaker";
+  }
+  .pusula-landing .res-col-profile {
+    grid-area: profile;
+  }
+  .pusula-landing .res-col-defaults {
+    grid-area: defaults;
+  }
+  .pusula-landing .res-col-faults {
+    grid-area: faults;
+  }
+  .pusula-landing .res-col.res-col-breaker {
+    grid-area: breaker;
+    border-inline-start: 1px solid var(--rule-soft);
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Desktop (≥ 1024px): one console row, the defaults table choosing the     */
+/* profile                                                                  */
+/* ------------------------------------------------------------------------ */
+
+@media (min-width: 1024px) {
+  /* 1024–1279: the table beside the latches, the breaker under them. */
+  .pusula-landing .res-console {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    grid-template-areas:
+      "defaults faults"
+      "defaults breaker";
+  }
+  .pusula-landing .res-col-defaults {
+    grid-area: defaults;
+  }
+  .pusula-landing .res-col-faults {
+    grid-area: faults;
+  }
+  .pusula-landing .res-col-breaker {
+    grid-area: breaker;
+  }
+  .pusula-landing .res-col + .res-col {
+    border-block-start: 0;
+    border-inline-start: 1px solid var(--rule-soft);
+  }
+  .pusula-landing .res-col.res-col-breaker {
+    border-block-start: 1px solid var(--rule-soft);
+  }
+  .pusula-landing .res-col-profile {
+    display: none;
+  }
+  .pusula-landing .res-col.res-col-defaults {
+    gap: var(--s-3);
+    border-inline-start: 0;
+  }
+  .pusula-landing .res-table {
+    font-size: 13px;
+  }
+  .pusula-landing .res-table th,
+  .pusula-landing .res-table td {
+    padding: 8px 10px;
+  }
+  .pusula-landing .res-table thead th {
+    padding-block: 0 8px;
+  }
+  .pusula-landing .res-table tbody th {
+    padding: 0;
+  }
+  .pusula-landing .res-pick {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: start;
+    align-items: center;
+    column-gap: 10px;
+    min-height: 46px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  .pusula-landing .res-pick > :not(.res-radio) {
+    grid-column: 2;
+  }
+  /* The radio is a lamp: hollow gold, lit when its profile is on the rail. */
+  .pusula-landing .res-radio {
+    display: block;
+    grid-row: 1 / span 3;
+    appearance: none;
+    inline-size: 14px;
+    block-size: 14px;
+    margin: 0;
+    border: 1px solid var(--gold-lo);
+    border-radius: 50%;
+    background: var(--hull);
+    cursor: pointer;
+  }
+  .pusula-landing .res-radio:checked {
+    border-color: var(--gold-hi);
+    background: radial-gradient(circle, var(--gold-hi) 0 3.5px, var(--hull) 4px);
+    box-shadow: 0 0 10px -1px var(--gold-glow);
+  }
+  .pusula-landing .res-radio:focus-visible {
+    outline: none;
+    box-shadow: var(--ring-focus);
+  }
+  .pusula-landing .res-pick:hover .res-pick-name {
+    color: var(--gold-hi);
+  }
+  .pusula-landing .res-pick-name {
+    white-space: nowrap;
+  }
+  .pusula-landing .res-latches {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+  }
+  .pusula-landing .res-latch {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px var(--s-3);
+  }
+  .pusula-landing .res-latch-scope {
+    flex: 1 0 100%;
+    text-align: start;
+  }
+  .pusula-landing .res-latch .tg {
+    flex: none;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: var(--s-3);
+    width: auto;
+    min-height: 44px;
+    padding: 0 var(--s-4) 0 var(--s-3);
+    border-radius: var(--r-pill);
+  }
+  .pusula-landing .res-latch .tg-label {
+    font-size: var(--fs-small);
+    text-align: start;
+  }
+  .pusula-landing .res-status {
+    min-height: 0;
+    padding-inline: 0;
+    text-align: start;
+  }
+}
+
+/* ≥ 1280px: one console row: table, latches, breaker. */
+@media (min-width: 1280px) {
+  .pusula-landing .res-console {
+    grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas: "defaults faults breaker";
+  }
+  .pusula-landing .res-col.res-col-breaker {
+    border-block-start: 0;
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Phone (< 640px): the rail edge to edge, a tight console                  */
+/* ------------------------------------------------------------------------ */
+
+@media (max-width: 639.98px) {
+  /* A tighter shell on phones: the station's height budget. */
+  .pusula-landing .station.res-station {
+    --station-pad: 48px;
+  }
+  .pusula-landing .station.res-station > .station-head {
+    gap: var(--s-3);
+    margin-block-end: var(--s-5);
+  }
+  .pusula-landing .res-body {
+    gap: var(--s-3);
+  }
+  .pusula-landing .res-rail {
+    margin-inline: calc(var(--gutter) * -1);
+  }
+  .pusula-landing .res-rail-head {
+    inset-block-start: 8px;
+    inset-inline-end: var(--gutter);
+  }
+  .pusula-landing .res-scopes {
+    display: none;
+  }
+  .pusula-landing .res-console {
+    border-radius: var(--r-md);
+  }
+  .pusula-landing .res-col {
+    gap: var(--s-3);
+    padding: 10px;
+  }
+  .pusula-landing .res-col-title,
+  .pusula-landing .res-latch-scope,
+  .pusula-landing .res-defaults-title {
+    display: none;
+  }
+  .pusula-landing .res-latch {
+    grid-template-rows: 1fr auto;
+    gap: 4px;
+  }
+  .pusula-landing .res-latch .tg {
+    min-height: 56px;
+  }
+  .pusula-landing .res-profile .seg-opt {
+    min-height: 44px;
+    font-size: var(--fs-micro);
+  }
+  .pusula-landing .res-ann-tile {
+    min-height: 22px;
+    padding-block: 2px;
+  }
+  .pusula-landing .res-ann {
+    gap: 3px;
+  }
+  /* Order: profile, latches, breaker, the two folds, then whichever fold is open. */
+  .pusula-landing .res-col-profile {
+    order: 1;
+  }
+  .pusula-landing .res-col-faults {
+    order: 2;
+  }
+  .pusula-landing .res-col-breaker {
+    order: 3;
+  }
+  .pusula-landing .res-folds {
+    order: 4;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    padding-block: 0;
+  }
+  .pusula-landing .res-folds .res-disclose {
+    min-height: 52px;
+    padding: 6px 4px;
+    font-size: var(--fs-micro);
+    line-height: 1.3;
+  }
+  .pusula-landing .res-folds .res-disclose + .res-disclose {
+    padding-inline-start: 10px;
+    border-inline-start: 1px solid var(--rule-soft);
+  }
+  .pusula-landing .res-folds .res-disclose:first-child {
+    padding-inline-end: 10px;
+  }
+  .pusula-landing .res-col-defaults {
+    order: 5;
+  }
+  .pusula-landing .res-col-defaults:not([data-open]) {
+    display: none;
+  }
+  .pusula-landing .res-scope-dl {
+    order: 6;
+  }
+  .pusula-landing .res-scope-dl[data-open] {
+    display: flex;
+  }
+  .pusula-landing .res-table {
+    font-size: var(--fs-micro);
+    line-height: 1.35;
+  }
+  .pusula-landing .res-table th,
+  .pusula-landing .res-table td {
+    padding: 7px 4px;
+  }
+  .pusula-landing .res-table thead th {
+    font-family: var(--font-sans);
+    letter-spacing: 0;
+  }
+  .pusula-landing .res-table th:first-child,
+  .pusula-landing .res-table td:first-child {
+    padding-inline-start: 8px;
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Reduced motion: the resolved diagram, nothing moving                     */
+/* ------------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .pusula-landing .res-band-breathe {
+    animation: none;
+    opacity: 0.7;
+  }
+  .pusula-landing .res-band-trace,
+  .pusula-landing .res-cell {
+    opacity: 0.55;
+    transform: none !important;
+  }
+  .pusula-landing .res-cell {
+    opacity: 1;
+  }
+}

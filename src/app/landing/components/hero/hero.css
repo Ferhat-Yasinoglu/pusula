@@ -1,0 +1,1180 @@
+/*
+ * The bridge (spec §6.2): hero gyro-compass, copy, HUD and the almanac board.
+ *
+ * Geometry is one set of custom properties shared by the canvas stage, the
+ * server poster, the rhumbs and the dial overlay, so they always agree:
+ *   --S        the dial square's side (sphere radius R = .36·S)
+ *   --dial-x   the dial centre, inline (57% desktop LTR, 43% RTL, 50% stacked)
+ *   --dial-top the dial square's top edge in the sky
+ *   --exit     0 → 1 as the hero scrolls away (from `--p`, written by
+ *              useScrollProgress in traverse mode); only transforms and
+ *              opacity follow it.
+ *
+ * Layers (z): rhumbs 0 · canvas 1 · copy 2 · front arc 3 · labels 4 · HUD 5.
+ * The dial overlay and the stage are separate stacking contexts so the
+ * headline sits between the rear rings (canvas) and the front arc: on
+ * desktop the second headline line crosses the sphere's lower inline-start
+ * quadrant, where the horizon ring comes out from behind the letters and
+ * passes in front of them (the sandwich). On a phone the headline overlaps
+ * the sphere's bottom and the front arc runs across its first line.
+ */
+
+.pusula-landing .bridge {
+  --S: min(100vw, 560px);
+  --dial-x: 50%;
+  --dial-top: var(--nav-h);
+  --exit: clamp(0, calc((var(--p, 0.5) - 0.5) * 2), 1);
+  --haze-r: 0.75;
+  position: relative;
+  overflow: clip;
+  background: var(--void);
+}
+
+/* The gold haze behind the sphere. */
+.pusula-landing .bridge-sky::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--dial-x) calc(var(--dial-top) + var(--S) / 2),
+    rgba(212, 168, 64, 0.1) 0,
+    rgba(212, 168, 64, 0.04) calc(var(--S) * 0.42),
+    rgba(212, 168, 64, 0) calc(var(--S) * var(--haze-r))
+  );
+}
+
+/* ---- Sky: stage, rhumbs, poster, dial -------------------------------- */
+
+.pusula-landing .bridge-sky {
+  position: relative;
+  padding-block-start: var(--nav-h);
+}
+
+.pusula-landing .bridge-stage {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  block-size: calc(var(--dial-top) + var(--S) + 40px);
+  z-index: 1;
+  pointer-events: none;
+  transform-origin: var(--dial-x) calc(var(--dial-top) + var(--S) / 2);
+  transform: scale(calc(1 + 0.1 * var(--exit)));
+  opacity: calc(1 - 0.7 * var(--exit));
+}
+
+.pusula-landing .bridge-rhumbs {
+  position: absolute;
+  left: var(--dial-x);
+  top: calc(var(--dial-top) + var(--S) / 2);
+  width: 0;
+  height: 0;
+}
+
+.pusula-landing .bridge-rhumb {
+  position: absolute;
+  left: 0;
+  top: -0.5px;
+  width: 150vmax;
+  height: 1px;
+  transform-origin: 0 50%;
+  transform: rotate(var(--r));
+  background: rgba(212, 168, 64, 0.1);
+}
+
+.pusula-landing .bridge-rhumb-major {
+  background: rgba(212, 168, 64, 0.18);
+}
+
+.pusula-landing .bridge-stage > .bridge-poster {
+  inset: auto;
+  left: calc(var(--dial-x) - var(--S) / 2);
+  top: var(--dial-top);
+  inline-size: var(--S);
+  block-size: var(--S);
+}
+
+.pusula-landing .bridge-poster-svg {
+  display: block;
+  overflow: visible;
+}
+
+/* Under the intro's curtain the intro canvas draws all of this. */
+:root[data-intro="play"] .pusula-landing .bridge-stage > canvas,
+:root[data-intro="play"] .pusula-landing .bridge-rhumbs,
+:root[data-intro="play"] .pusula-landing .bridge-stage > .bridge-poster {
+  opacity: 0;
+}
+
+/*
+ * The hand-off (intro t = 2350–2600ms, `data-handoff` and `--handoff` 0 → 1
+ * written by IntroSequence). The whole bridge rises above the curtain and
+ * the intro canvas: its own canvas and rhumbs take over the gyro at full
+ * strength (the same pixels the intro canvas drew a frame earlier), and
+ * everything else (copy, labels, front arc, HUD, board, haze, graticule)
+ * fades in with the curtain's lift. Nothing is left under the intro canvas,
+ * so nothing pops when it unmounts.
+ */
+:root[data-intro="play"] .pusula-landing .bridge[data-handoff] {
+  z-index: 92;
+  background: transparent;
+}
+
+:root[data-intro="play"] .pusula-landing .bridge[data-handoff] .bridge-stage > canvas,
+:root[data-intro="play"] .pusula-landing .bridge[data-handoff] .bridge-rhumbs {
+  opacity: 1;
+}
+
+:root[data-intro="play"]
+  .pusula-landing
+  .bridge[data-handoff]
+  :is(.bridge-copy, .bridge-dial, .bridge-hud, .almanac),
+:root[data-intro="play"] .pusula-landing .bridge[data-handoff] .bridge-sky::before,
+:root[data-intro="play"] .pusula-landing .bridge[data-handoff]::after {
+  opacity: var(--handoff, 0);
+}
+
+.pusula-landing .bridge-dial {
+  position: relative;
+  z-index: 3;
+  inline-size: var(--S);
+  block-size: var(--S);
+  margin: 0 auto;
+  border-radius: 50%;
+  container-type: size;
+  touch-action: pan-y;
+  cursor: grab;
+  outline: none;
+  transform: scale(calc(1 + 0.1 * var(--exit)));
+  opacity: calc(1 - 0.7 * var(--exit));
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pusula-landing .bridge-dial:active {
+  cursor: grabbing;
+}
+
+/* The focus ring hugs the sphere (arrow keys spin it). */
+.pusula-landing .bridge-dial:focus-visible {
+  box-shadow: none;
+}
+
+.pusula-landing .bridge-dial:focus-visible::before {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  box-shadow: var(--ring-focus);
+  pointer-events: none;
+}
+
+/* The sandwich: the horizon ring's front half passes in front of the headline. */
+.pusula-landing .bridge-front {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transform-origin: 50% 50%;
+}
+
+.pusula-landing .bridge-front svg {
+  display: block;
+  overflow: visible;
+}
+
+.pusula-landing .bridge-front path {
+  fill: none;
+  stroke: var(--gold);
+  stroke-opacity: 0.55;
+  stroke-width: 1.25px;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Cardinals: the outer span is the anchor on the horizon ring (N and S follow
+   the nutation from script), the inner one sets the letter beside it. */
+.pusula-landing .bridge-cardinal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--gold);
+}
+
+.pusula-landing .bridge-cardinal[data-c="N"] {
+  transform: translate3d(50cqw, 38.89cqh, 0);
+  color: var(--ember);
+}
+
+.pusula-landing .bridge-cardinal[data-c="E"] {
+  transform: translate3d(86cqw, 50cqh, 0);
+}
+
+.pusula-landing .bridge-cardinal[data-c="S"] {
+  transform: translate3d(50cqw, 70.04cqh, 0);
+}
+
+.pusula-landing .bridge-cardinal[data-c="W"] {
+  transform: translate3d(14cqw, 50cqh, 0);
+}
+
+.pusula-landing .bridge-cardinal-in {
+  display: block;
+}
+
+.pusula-landing .bridge-cardinal[data-c="N"] .bridge-cardinal-in {
+  transform: translate(-50%, calc(-100% - 8px));
+}
+
+.pusula-landing .bridge-cardinal[data-c="S"] .bridge-cardinal-in {
+  transform: translate(-50%, 8px);
+}
+
+.pusula-landing .bridge-cardinal[data-c="E"] .bridge-cardinal-in {
+  transform: translate(10px, -50%);
+}
+
+.pusula-landing .bridge-cardinal[data-c="W"] .bridge-cardinal-in {
+  transform: translate(calc(-100% - 10px), -50%);
+}
+
+/* ---- Candidate labels ------------------------------------------------- */
+
+.pusula-landing .bridge-cand {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  block-size: 26px;
+  padding-inline: 7px 9px;
+  border: 1px solid rgba(212, 168, 64, 0.3);
+  border-radius: var(--r-pill);
+  background: rgba(10, 10, 12, 0.8);
+  color: var(--foam);
+  font-family: var(--font-mono);
+  font-size: var(--fs-readout);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  will-change: transform;
+  transition: opacity var(--t-mech) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* A 44px hit area around the 26px plate. */
+.pusula-landing .bridge-cand::after {
+  content: "";
+  position: absolute;
+  inset: -10px -4px;
+}
+
+/*
+ * Touch: at least 44px even for a back-hemisphere plate (24px scaled to .85:
+ * (24 + 2·14)·.85 = 44). Where hit areas overlap, a tap goes to the nearest
+ * plate (HeroBridge `nearestLabel`).
+ */
+@media (pointer: coarse) {
+  .pusula-landing .bridge-cand::after {
+    inset: -14px -6px;
+  }
+}
+
+.pusula-landing .bridge-cand:hover {
+  border-color: var(--gold);
+}
+
+.pusula-landing .bridge-cand[data-front="0"] {
+  opacity: 0.35;
+  z-index: 0;
+}
+
+/* Touch: a back-hemisphere plate stays legible enough to aim at. */
+@media (pointer: coarse) {
+  .pusula-landing .bridge-cand[data-front="0"] {
+    opacity: 0.55;
+  }
+}
+
+/*
+ * Behind the headline, the lead or the HUD: out of the way (and out of the
+ * tab order) until it drifts clear. Before script places them the labels
+ * stay hidden: they are controls that need it anyway.
+ */
+.pusula-landing .bridge-cand[data-hidden],
+.pusula-landing .bridge-dial:not([data-placed]) .bridge-cand {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity var(--t-mech) var(--ease-out),
+    visibility 0s linear var(--t-mech);
+}
+
+.pusula-landing .bridge-cand[data-winner][data-front="0"] {
+  opacity: 0.85;
+}
+
+.pusula-landing .bridge-cand[data-winner] {
+  z-index: 2;
+  border-color: var(--ember);
+  color: var(--ember);
+  box-shadow: 0 0 0 3px var(--ember-soft);
+}
+
+.pusula-landing .bridge-cand-led {
+  inline-size: 6px;
+  block-size: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.pusula-landing .bridge-cand[data-state="degraded"] .bridge-cand-led {
+  background: var(--gold-hi);
+}
+
+.pusula-landing .bridge-cand[data-state="open"] .bridge-cand-led {
+  background: var(--ember);
+}
+
+.pusula-landing .bridge-cand[data-state="halfOpen"] .bridge-cand-led {
+  background: var(--gold-hi);
+  animation: pusula-blink 0.5s steps(1) infinite;
+}
+
+.pusula-landing .bridge-cand[data-winner] .bridge-cand-led {
+  background: var(--ember);
+}
+
+.pusula-landing .bridge-cand-score {
+  color: var(--mist);
+  font-variant-numeric: tabular-nums;
+}
+
+/* A new take's score clicks into place (keyed remount): always real digits. */
+.pusula-landing .bridge-cand-num {
+  display: inline-block;
+  animation: bridge-score-in 260ms var(--ease-detent) both;
+}
+
+@keyframes bridge-score-in {
+  from {
+    opacity: 0.25;
+    transform: translateY(-0.45em);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pusula-landing .bridge-cand[data-winner] .bridge-cand-score {
+  color: var(--gold-hi);
+}
+
+.pusula-landing .bridge-cand[data-state="open"] {
+  border-style: dashed;
+  border-color: var(--ember);
+}
+
+.pusula-landing .bridge-cand-fail {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--ember);
+  font-size: var(--fs-micro);
+}
+
+.pusula-landing .bridge-cand-x {
+  font-weight: 700;
+}
+
+.pusula-landing .bridge-cand-meter {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.pusula-landing .bridge-cand-bar {
+  position: relative;
+  display: inline-block;
+  inline-size: 22px;
+  block-size: 3px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--ember-soft);
+}
+
+.pusula-landing .bridge-cand-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ember);
+  transform-origin: 0 50%;
+  transform: scaleX(var(--fill, 0));
+  transition: transform var(--t-mech) var(--ease-out);
+}
+
+.pusula-landing .bridge-cand-state {
+  color: var(--ember);
+}
+
+.pusula-landing .bridge-cand[data-state="halfOpen"] .bridge-cand-state {
+  color: var(--gold-hi);
+  animation: pusula-blink 0.5s steps(1) infinite;
+}
+
+/* ---- Star tooltip ------------------------------------------------------- */
+
+.pusula-landing .bridge-tip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--t-hover) linear;
+}
+
+.pusula-landing .bridge-tip[data-on] {
+  opacity: 1;
+}
+
+.pusula-landing .bridge-tip-body {
+  display: grid;
+  gap: 2px;
+  inline-size: max-content;
+  max-inline-size: 240px;
+  padding: 7px 10px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-sm);
+  background: rgba(17, 16, 19, 0.94);
+  box-shadow: var(--shadow-lift);
+  transform: translate(-50%, calc(-100% - 12px));
+}
+
+.pusula-landing .bridge-tip-name {
+  font-size: var(--fs-readout);
+  font-weight: 600;
+  color: var(--foam);
+}
+
+.pusula-landing .bridge-tip-meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  color: var(--mist);
+}
+
+/* ---- Score caption ------------------------------------------------------ */
+
+/* The labels' scores are sample values: the caption sits in a free corner of the dial. */
+.pusula-landing .bridge-scores {
+  position: absolute;
+  top: 1%;
+  right: 2%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  margin: 0;
+  pointer-events: none;
+}
+
+/*
+ * While the visitor's own weights (the routing rose) drive the deck, the
+ * caption says so: these scores are theirs, and one tap restores the
+ * shipped weights.
+ */
+.pusula-landing .bridge-tuned {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-block-size: 28px;
+  padding: 4px 10px;
+  border: 1px solid rgba(255, 122, 69, 0.55);
+  border-radius: var(--r-pill);
+  background: rgba(10, 10, 12, 0.82);
+  color: var(--foam);
+  font-family: var(--font-sans);
+  font-size: var(--fs-micro);
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  pointer-events: auto;
+  animation: bridge-tuned-in var(--t-mech) var(--ease-out) both;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* A 44px hit area around the 28px chip. */
+.pusula-landing .bridge-tuned::after {
+  content: "";
+  position: absolute;
+  inset: -8px -4px;
+}
+
+.pusula-landing .bridge-tuned:hover {
+  border-color: var(--ember);
+}
+
+.pusula-landing .bridge-tuned-dot {
+  inline-size: 6px;
+  block-size: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--ember);
+}
+
+@keyframes bridge-tuned-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pusula-landing .bridge-scores .sim-pill {
+  display: none;
+}
+
+/* ---- Copy -------------------------------------------------------------- */
+
+.pusula-landing .bridge-copy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* The headline overlaps the sphere's bottom; the horizon's front arc runs across its first line. */
+  margin-block-start: calc(var(--S) * -0.335);
+  padding-inline: var(--gutter);
+  padding-block-end: 28px;
+  transform: translateY(calc(-40px * var(--exit)));
+  pointer-events: none;
+}
+
+.pusula-landing .bridge-copy > * {
+  pointer-events: auto;
+}
+
+/* A soft void wash under the headline where it crosses the sphere. */
+.pusula-landing .bridge-copy::before {
+  content: "";
+  position: absolute;
+  inset: -8% -12% 30% -12%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 60% 55% at 40% 30%,
+    rgba(4, 4, 5, 0.62),
+    rgba(4, 4, 5, 0) 75%
+  );
+}
+
+.pusula-landing .bridge-version {
+  order: 8;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0 0;
+  padding: 6px 12px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-pill);
+  background: rgba(10, 10, 12, 0.6);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  color: var(--mist);
+}
+
+.pusula-landing .bridge-title {
+  order: 1;
+  margin: 0;
+  font-size: var(--fs-hero);
+  color: var(--foam);
+  text-shadow: 0 2px 24px rgba(4, 4, 5, 0.75);
+}
+
+.pusula-landing .bridge-line3 {
+  order: 2;
+  margin: 8px 0 0;
+}
+
+.pusula-landing .bridge-hud-line {
+  order: 3;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
+  /* Two lines are reserved: a take that wraps (a fallback, a long sample) never moves the CTA. */
+  min-block-size: 44px;
+  gap: 4px 6px;
+  margin: 12px 0 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--mist);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  line-height: 1.5;
+  text-align: start;
+  cursor: pointer;
+}
+
+.pusula-landing .bridge-hud-line::after {
+  content: "";
+  position: absolute;
+  inset: -13px 0;
+}
+
+.pusula-landing .bridge-hud-route {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 6px;
+  font-family: var(--font-sans);
+}
+
+.pusula-landing .bridge-hud-arrow {
+  color: var(--mist-dim);
+}
+
+.pusula-landing .bridge-hud-route [dir="ltr"],
+.pusula-landing .bridge-hud-route[dir="ltr"] {
+  font-family: var(--font-mono);
+}
+
+.pusula-landing .bridge-hud-route b {
+  font-weight: 600;
+  color: var(--gold-hi);
+}
+
+.pusula-landing .bridge-hud-route .bridge-x {
+  color: var(--ember);
+}
+
+.pusula-landing .bridge-cta {
+  order: 4;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-block-start: 18px;
+}
+
+.pusula-landing .bridge-hint {
+  order: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 10px 0 0;
+  font-size: var(--fs-micro);
+  color: var(--mist-dim);
+}
+
+.pusula-landing .bridge-hint .glyph {
+  color: var(--gold-lo);
+}
+
+.pusula-landing .bridge-lead {
+  order: 6;
+  max-inline-size: 48ch;
+  margin: 26px 0 0;
+  font-size: 0.9375rem;
+  line-height: var(--lh-body);
+  color: var(--mist);
+  text-wrap: pretty;
+}
+
+.pusula-landing .bridge-hint-phone {
+  order: 7;
+  margin: 12px 0 0;
+  font-size: var(--fs-micro);
+  line-height: 1.5;
+  color: var(--mist-dim);
+}
+
+/* ---- HUD (desktop) ----------------------------------------------------- */
+
+.pusula-landing .bridge-hud {
+  display: none;
+}
+
+.pusula-landing .bridge-hud-req {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px 10px;
+  inline-size: 100%;
+  min-block-size: 44px;
+  margin: 0;
+  padding: 12px 14px;
+  border: 0;
+  border-block-end: 1px solid var(--rule-soft);
+  background: none;
+  color: var(--mist);
+  font: inherit;
+  font-size: var(--fs-readout);
+  line-height: 1.45;
+  text-align: start;
+  cursor: pointer;
+}
+
+.pusula-landing .bridge-hud-req:hover .bridge-hud-next {
+  transform: translateX(3px);
+}
+
+.pusula-landing .bridge-hud-req:focus-visible {
+  border-radius: var(--r-md) var(--r-md) 0 0;
+}
+
+.pusula-landing .bridge-hud-req > .sim-badge {
+  justify-self: start;
+}
+
+.pusula-landing .bridge-hud-text {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  min-inline-size: 0;
+}
+
+.pusula-landing .bridge-hud-next {
+  color: var(--gold);
+  transition: transform var(--t-hover) var(--ease-out);
+}
+
+.pusula-landing .bridge-hud-header {
+  /* Room for both header lines, so the card keeps its height when a line is omitted. */
+  min-block-size: 3.2em;
+  padding: 10px 14px 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  line-height: 1.6;
+  color: var(--mist);
+}
+
+.pusula-landing .bridge-hud-header .tl {
+  white-space: pre-line;
+}
+
+/* The alias gloss ("  # claude") after the header value: a dim comment. */
+.pusula-landing .bridge-hud-header .tl-t:not(.tl-kw, .tl-str, .tl-num, .tl-accent) {
+  color: var(--mist-dim);
+}
+
+.pusula-landing .bridge-hud-hint {
+  margin: 0;
+  padding: 6px 14px 12px;
+  font-size: var(--fs-micro);
+  line-height: 1.5;
+  color: var(--mist-dim);
+}
+
+/* ---- Almanac board ------------------------------------------------------- */
+
+.pusula-landing .almanac {
+  position: relative;
+  z-index: 2;
+  background: var(--hull);
+  border-block-start: 1px solid var(--rule);
+}
+
+.pusula-landing .almanac-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 16px;
+  max-inline-size: var(--content);
+  margin: 0 auto;
+  padding: 20px var(--gutter) 24px;
+  list-style: none;
+}
+
+.pusula-landing .almanac-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-inline-size: 0;
+}
+
+.pusula-landing .almanac-value {
+  --sf-w: 22px;
+  --sf-h: 32px;
+  --sf-gap: 3px;
+  font-size: 1.125rem;
+  color: var(--foam);
+}
+
+.pusula-landing .almanac-label {
+  font-size: var(--fs-micro);
+  line-height: 1.35;
+  color: var(--mist);
+}
+
+/* ---- Desktop: absolute composition (spec §6.2) ------------------------- */
+
+/*
+ * The sphere sits a little above the sky's middle and towards the inline
+ * end; the copy is anchored to the bottom of the sky, clear of the SimDock's
+ * corner (`--dock-reserve`), so the headline's second line lands on the
+ * sphere's lower inline-start quadrant at every desktop size: the horizon
+ * ring threads through the letters. The sphere is as large as the sky allows
+ * with its bezel clear of the nav.
+ */
+@media (min-width: 1024px) {
+  .pusula-landing .bridge {
+    --sky-h: clamp(632px, calc(100svh - 88px), 1012px);
+    --dial-cy: calc(var(--sky-h) * 0.46);
+    --S: min(56vw, 860px, calc((var(--sky-h) * 0.46 - var(--nav-h) - 4px) / 0.44));
+    --dial-x: 57%;
+    --dial-top: calc(var(--dial-cy) - var(--S) / 2);
+    /*
+     * The SimDock (and its toasts) rests above the board in the copy's
+     * corner: it climbs the board by its height plus the lift gap, and the
+     * board's 88px are already below the sky.
+     */
+    --dock-reserve: calc(var(--dock-clear-block) + var(--dock-lift-gap));
+    --haze-r: 0.8;
+  }
+
+  .pusula-landing .bridge:dir(rtl) {
+    --dial-x: 43%;
+  }
+
+  .pusula-landing .bridge-sky {
+    padding: 0;
+    block-size: var(--sky-h);
+  }
+
+  .pusula-landing .bridge-stage {
+    inset: 0;
+    block-size: auto;
+    transform-origin: var(--dial-x) var(--dial-cy);
+  }
+
+  .pusula-landing .bridge-rhumbs {
+    top: var(--dial-cy);
+  }
+
+  .pusula-landing .bridge-stage > .bridge-poster {
+    top: var(--dial-top);
+  }
+
+  .pusula-landing .bridge-dial {
+    position: absolute;
+    left: calc(var(--dial-x) - var(--S) / 2);
+    top: var(--dial-top);
+    margin: 0;
+  }
+
+  .pusula-landing .bridge-scores {
+    top: auto;
+    bottom: 0.5%;
+    right: 1%;
+  }
+
+  .pusula-landing .bridge:dir(rtl) .bridge-scores {
+    right: auto;
+    left: 1%;
+    align-items: flex-start;
+  }
+
+  .pusula-landing .bridge-scores .sim-pill {
+    display: inline-flex;
+  }
+
+  /* The headline is in front of the ring's inline-start point: no letter there. */
+  .pusula-landing .bridge:dir(ltr) .bridge-cardinal[data-c="W"],
+  .pusula-landing .bridge:dir(rtl) .bridge-cardinal[data-c="E"] {
+    display: none;
+  }
+
+  /*
+   * A grid so the install hint can sit beside the calls to action (it
+   * belongs to the `npx pusula` chip) and the headline gets that row's
+   * height back.
+   */
+  .pusula-landing .bridge-copy {
+    position: absolute;
+    inset-inline-start: max(32px, calc((100vw - 1360px) / 2));
+    inset-block: calc(var(--nav-h) + 12px) var(--dock-reserve);
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-content: end;
+    justify-items: start;
+    column-gap: 18px;
+    inline-size: min(50vw, 680px);
+    margin: 0;
+    padding: 0;
+  }
+
+  .pusula-landing .bridge-copy > * {
+    grid-column: 1 / -1;
+  }
+
+  .pusula-landing .bridge-copy > .bridge-cta {
+    grid-column: 1;
+  }
+
+  .pusula-landing .bridge-copy > .bridge-hint {
+    grid-column: 2;
+    align-self: center;
+    align-items: flex-start;
+    max-inline-size: 22em;
+    line-height: 1.4;
+  }
+
+  /* Only the lead and the calls to action need a wash; the headline reads on its own. */
+  .pusula-landing .bridge-copy::before {
+    inset: auto -8% -6% -24%;
+    block-size: 62%;
+    background: radial-gradient(
+      ellipse 62% 58% at 34% 62%,
+      rgba(4, 4, 5, 0.72),
+      rgba(4, 4, 5, 0) 78%
+    );
+  }
+
+  .pusula-landing .bridge-version {
+    order: 0;
+    margin: 0 0 clamp(10px, 2.2svh, 22px);
+  }
+
+  .pusula-landing .bridge-title {
+    font-size: min(calc(var(--fs-hero) * 1.1), 12.6svh);
+  }
+
+  .pusula-landing .bridge-line3 {
+    margin-block-start: clamp(4px, 1svh, 10px);
+  }
+
+  .pusula-landing .bridge-lead {
+    order: 3;
+    max-inline-size: 33em;
+    margin-block-start: clamp(8px, 1.6svh, 16px);
+    font-size: clamp(1rem, 1.9svh, 1.0625rem);
+    line-height: 1.55;
+  }
+
+  .pusula-landing .bridge-cta {
+    order: 4;
+    margin-block-start: clamp(12px, 2.2svh, 22px);
+    gap: 14px;
+  }
+
+  .pusula-landing .bridge-hint {
+    margin-block-start: clamp(12px, 2.2svh, 22px);
+    font-size: var(--fs-readout);
+  }
+
+  .pusula-landing .bridge-hint .glyph {
+    flex: none;
+    margin-block-start: 1px;
+  }
+
+  .pusula-landing .bridge-hud-line,
+  .pusula-landing .bridge-hint-phone {
+    display: none;
+  }
+
+  .pusula-landing .bridge-hud {
+    position: absolute;
+    inset-inline-end: 32px;
+    top: calc(var(--nav-h) + 24px);
+    z-index: 5;
+    display: grid;
+    /* Up to 340px, but clear of the sphere's upper quadrant where it can be. */
+    inline-size: clamp(264px, calc((100% - var(--dial-x)) * 1 - var(--S) * 0.44 - 56px), 340px);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-md);
+    background: rgba(10, 10, 12, 0.74);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .pusula-landing .bridge:dir(rtl) .bridge-hud {
+    inline-size: clamp(264px, calc(var(--dial-x) - var(--S) * 0.44 - 56px), 340px);
+  }
+
+  .pusula-landing .almanac {
+    block-size: 88px;
+  }
+
+  .pusula-landing .almanac-row {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    align-items: center;
+    gap: 0;
+    block-size: 100%;
+    padding-block: 0;
+  }
+
+  .pusula-landing .almanac-cell {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding-inline: 16px;
+    border-inline-start: 1px solid var(--rule-soft);
+  }
+
+  .pusula-landing .almanac-cell:first-child {
+    padding-inline-start: 0;
+    border-inline-start: 0;
+  }
+
+  .pusula-landing .almanac-value {
+    --sf-w: calc(1ch + 0.36em);
+    --sf-h: 1.42em;
+    font-size: var(--fs-flap);
+  }
+}
+
+/* Small desktops: the label goes under its number, and the band grows to fit. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  /* The board is 32px taller here (labels under the numbers), so the dock rests higher. */
+  .pusula-landing .bridge {
+    --dock-reserve: calc(var(--dock-clear-block) + var(--dock-lift-gap) + 32px);
+  }
+
+  /* Too narrow for the hint beside the calls to action. */
+  .pusula-landing .bridge-copy > .bridge-hint {
+    grid-column: 1 / -1;
+    max-inline-size: none;
+  }
+
+  .pusula-landing .almanac {
+    block-size: auto;
+    min-block-size: 88px;
+  }
+
+  .pusula-landing .almanac-row {
+    align-items: start;
+    padding-block: 12px 14px;
+  }
+
+  .pusula-landing .almanac-cell {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .pusula-landing .almanac-value {
+    font-size: 1.375rem;
+  }
+}
+
+@supports not selector(:dir(rtl)) {
+  @media (min-width: 1024px) {
+    [dir="rtl"] .pusula-landing .bridge {
+      --dial-x: 43%;
+    }
+  }
+}
+
+/* Tablets: the dial has room around it, so the caption steps clear of the nav. */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .pusula-landing .bridge-scores {
+    top: 8%;
+    right: -2%;
+  }
+}
+
+/* Stacked layouts: the S cardinal would sit on the headline. */
+@media (max-width: 1023px) {
+  .pusula-landing .bridge-cardinal[data-c="S"] {
+    display: none;
+  }
+}
+
+/* Phone: names only on the candidate labels; the winner keeps its score. */
+@media (max-width: 639px) {
+  /* The CTA and the install chip share one row at 358px. */
+  .pusula-landing .bridge-cta {
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+
+  .pusula-landing .bridge-cta .mb[data-size] .mb-body {
+    padding-inline: 16px;
+    font-size: var(--fs-small);
+  }
+
+  .pusula-landing .bridge-cta .cc {
+    flex: 0 1 auto;
+    min-inline-size: 0;
+    gap: 8px;
+    padding-inline: 12px 6px;
+    font-size: var(--fs-small);
+  }
+
+  /* The version pill lives in the intro HUD and the nav on phones. */
+  .pusula-landing .bridge-version {
+    display: none;
+  }
+
+  .pusula-landing .bridge-lead {
+    margin-block-start: 16px;
+  }
+
+  .pusula-landing .bridge-hint-phone {
+    margin-block-start: 10px;
+  }
+
+  .pusula-landing .bridge-copy {
+    padding-block-end: 16px;
+  }
+
+  /* The board: three columns, two rows of 22×32 tiles. */
+  .pusula-landing .almanac-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px 12px;
+    padding-block: 16px;
+  }
+
+  .pusula-landing .almanac-cell {
+    gap: 6px;
+  }
+
+  .pusula-landing .bridge-cand {
+    block-size: 24px;
+    gap: 5px;
+    padding-inline: 6px 8px;
+    font-size: var(--fs-micro);
+  }
+
+  .pusula-landing .bridge-cand-score {
+    display: none;
+  }
+
+  .pusula-landing .bridge-cand[data-winner] .bridge-cand-score {
+    display: inline;
+  }
+
+  .pusula-landing .bridge-cand-bar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pusula-landing .bridge-stage,
+  .pusula-landing .bridge-dial,
+  .pusula-landing .bridge-copy {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* Persian has no monospace face: words in mono readouts keep the sans. */
+.pusula-landing .bridge-cand-state:lang(fa),
+.pusula-landing .bridge-version:lang(fa),
+.pusula-landing .almanac-label:lang(fa) {
+  font-family: var(--font-sans);
+}

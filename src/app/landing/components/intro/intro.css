@@ -1,0 +1,476 @@
+/*
+ * "Landfall" (spec §5): the intro's HUD and skip control. Layer geometry
+ * (`.intro-curtain`, `.intro-canvas`, `.intro-hud`, `.intro-skip`) and the
+ * gate come from `landing.css`; everything here is scoped to those layers.
+ * Only opacity and transform change (plus the typed command's clip width):
+ * from CSS keyframes before the script runs (the ignition below), then from
+ * script (closed-form timeline) or one-shot transitions.
+ */
+
+/*
+ * Once the intro's script runs it owns the end state (a 4s JS failsafe). The
+ * CSS failsafe is restarted from that moment by switching to an identical
+ * keyframe, so a slow hydration can never cut the intro off mid-flight.
+ */
+:root[data-intro="play"] .pusula-landing .intro-layer[data-armed] {
+  animation: intro-guard 0s linear 4.5s forwards;
+}
+
+@keyframes intro-guard {
+  to {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+/*
+ * Ignition in CSS, from first paint (storyboard 0–480ms, `INTRO_T.cssHold`).
+ * The page's script takes a moment to arrive, so the curtain does not wait
+ * for it: the gold point, its glow and the sextant crosshair rise on the
+ * timeline's own curves (`introScalars`), the brand line fades in and the
+ * command types itself. Then the frame holds (the glow breathes) until the
+ * canvas takes over at the same `t` and sets `data-live` on the curtain and
+ * the HUD, which removes every keyframe below in that same frame.
+ *
+ * Pixel parity with `renderIntro`: the crosshair is the canvas's 1px gold-hi
+ * hairlines at .35 growing from the centre (easeOutCubic over 300ms), the
+ * glow is the `goldHi` sprite's gradient (`glowAlphaAt` at `GLOW_STOPS`),
+ * 240px across at full size, added with `plus-lighter` like the canvas's
+ * "lighter", and the point is the canvas's 1.5px square.
+ */
+.pusula-landing .intro-ignite {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.pusula-landing .intro-curtain[data-live] .intro-ignite {
+  display: none;
+}
+
+.pusula-landing .intro-ig-h,
+.pusula-landing .intro-ig-v,
+.pusula-landing .intro-ig-glow,
+.pusula-landing .intro-ig-point {
+  position: absolute;
+  display: block;
+  opacity: 0;
+}
+
+.pusula-landing .intro-ig-h {
+  left: 0;
+  right: 0;
+  top: 50%;
+  block-size: 1px;
+  background: var(--gold-hi);
+  transform: scaleX(0);
+}
+
+.pusula-landing .intro-ig-v {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  inline-size: 1px;
+  background: var(--gold-hi);
+  transform: scaleY(0);
+}
+
+.pusula-landing .intro-ig-glow {
+  left: calc(50% - 120px);
+  top: calc(50% - 120px);
+  inline-size: 240px;
+  block-size: 240px;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 211, 110, 1) 0%,
+    rgba(255, 211, 110, 0.974) 8%,
+    rgba(255, 211, 110, 0.876) 18%,
+    rgba(255, 211, 110, 0.692) 30%,
+    rgba(255, 211, 110, 0.484) 42%,
+    rgba(255, 211, 110, 0.272) 56%,
+    rgba(255, 211, 110, 0.125) 70%,
+    rgba(255, 211, 110, 0.038) 85%,
+    rgba(255, 211, 110, 0) 100%
+  );
+  transform: scale(0);
+  mix-blend-mode: screen;
+  mix-blend-mode: plus-lighter;
+}
+
+.pusula-landing .intro-ig-point {
+  left: calc(50% - 0.75px);
+  top: calc(50% - 0.75px);
+  inline-size: 1.5px;
+  block-size: 1.5px;
+  background: var(--gold-hi);
+}
+
+/* Crosshair: alpha .35 over 80ms, length easeOutCubic over 300ms. */
+:root[data-intro="play"] .pusula-landing .intro-curtain:not([data-live]) .intro-ig-h {
+  animation:
+    intro-ig-cross 80ms linear both,
+    intro-ig-span-x 300ms cubic-bezier(0.33, 1, 0.68, 1) both;
+}
+
+:root[data-intro="play"] .pusula-landing .intro-curtain:not([data-live]) .intro-ig-v {
+  animation:
+    intro-ig-cross 80ms linear both,
+    intro-ig-span-y 300ms cubic-bezier(0.33, 1, 0.68, 1) both;
+}
+
+/* Glow: radius 0 → 120 (easeOutCubic), alpha 0 → .9 → .35 over 300ms; then it breathes. */
+:root[data-intro="play"] .pusula-landing .intro-curtain:not([data-live]) .intro-ig-glow {
+  animation:
+    intro-ig-glow 300ms linear both,
+    intro-ig-grow 300ms cubic-bezier(0.33, 1, 0.68, 1) both,
+    intro-ig-breathe 1400ms ease-in-out 480ms infinite alternate;
+}
+
+/* Point: alpha 0 → 1 over 60ms. */
+:root[data-intro="play"] .pusula-landing .intro-curtain:not([data-live]) .intro-ig-point {
+  animation: intro-ig-in 60ms linear both;
+}
+
+/* Brand line: fades in over 200ms (`INTRO_T.hudIn`). */
+:root[data-intro="play"] .pusula-landing .intro-hud:not([data-live]) .intro-brand {
+  animation: intro-ig-in 200ms linear both;
+}
+
+/*
+ * `$ npx pusula` (12 characters) types at 40ms a character (`INTRO_T.typeCps`).
+ * The whole command is in the page; a void mask carrying its own caret slides
+ * off it one character per step (a stepped transform, so it keeps time on the
+ * compositor while hydration keeps the main thread busy). The timeline writes
+ * the same slices once it runs (`floor(t / 40)` characters) and the mask goes
+ * with `data-live`. The intro test pins these numbers to the timeline.
+ */
+.pusula-landing .intro-cmd-mask {
+  display: none;
+}
+
+:root[data-intro="play"] .pusula-landing .intro-hud:not([data-live]) .intro-cmd-mask {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  display: block;
+  inline-size: calc(12ch + 2em);
+  background: var(--void);
+  animation: intro-ig-type 480ms steps(12, end) both;
+}
+
+/* The mask stays inside the command's own box (the crosshair passes behind it). */
+:root[data-intro="play"] .pusula-landing .intro-hud:not([data-live]) .intro-cmd {
+  overflow: hidden;
+}
+
+/* The real caret waits under the mask; the mask's own caret leads the text. */
+:root[data-intro="play"] .pusula-landing .intro-hud:not([data-live]) .intro-cmd > .intro-caret {
+  visibility: hidden;
+}
+
+@keyframes intro-ig-cross {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.35;
+  }
+}
+
+@keyframes intro-ig-span-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes intro-ig-span-y {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes intro-ig-glow {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes intro-ig-grow {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* A held frame still breathes: the glow swells slightly (the canvas resumes at its rest size). */
+@keyframes intro-ig-breathe {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes intro-ig-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes intro-ig-type {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(12ch);
+  }
+}
+
+.pusula-landing .intro-hud p {
+  margin: 0;
+}
+
+/* Top-start: the brand line. */
+.pusula-landing .intro-brand {
+  position: absolute;
+  inset-inline-start: 16px;
+  inset-block-start: calc(16px + env(safe-area-inset-top));
+  opacity: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--track-kicker);
+  color: var(--gold);
+}
+
+/* Bottom-start: the boot log. */
+.pusula-landing .intro-log {
+  position: absolute;
+  inset-inline-start: 16px;
+  inset-block-end: calc(76px + env(safe-area-inset-bottom));
+  display: grid;
+  gap: 2px;
+  max-inline-size: calc(100vw - 32px);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  line-height: 1.55;
+  color: var(--mist);
+}
+
+.pusula-landing .intro-cmd {
+  position: relative;
+  /* The whole command's width from the start: typing never moves it (RTL anchors it at the end). */
+  min-inline-size: calc(12ch + 0.55em + 2px);
+  margin-block-end: 6px !important;
+  font-size: var(--fs-readout);
+  color: var(--gold);
+  white-space: pre;
+  justify-self: start;
+}
+
+.pusula-landing .intro-caret {
+  display: inline-block;
+  inline-size: 0.55em;
+  block-size: 1.05em;
+  margin-inline-start: 2px;
+  vertical-align: text-bottom;
+  background: var(--gold-hi);
+  animation: pusula-blink 1.1s steps(1) infinite;
+}
+
+.pusula-landing .intro-boot {
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 140ms linear,
+    transform 220ms var(--ease-out);
+}
+
+.pusula-landing .intro-boot[data-on] {
+  opacity: 1;
+  transform: none;
+}
+
+.pusula-landing .intro-boot-n {
+  color: var(--gold-hi);
+}
+
+.pusula-landing .intro-running {
+  margin-block-start: 6px !important;
+  opacity: 0;
+  color: var(--ember);
+}
+
+/* City labels: the outer span is the city's point (map px, never mirrored). */
+.pusula-landing .intro-cities,
+.pusula-landing .intro-cardinals {
+  position: absolute;
+  inset: 0;
+}
+
+.pusula-landing .intro-city {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--foam);
+  white-space: nowrap;
+  text-shadow: 0 1px 10px rgba(4, 4, 5, 0.9);
+}
+
+.pusula-landing .intro-city-in {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transform: translate(8px, -50%);
+}
+
+.pusula-landing .intro-city-rule {
+  display: block;
+  inline-size: 10px;
+  block-size: 1px;
+  background: var(--gold);
+  opacity: 0.8;
+}
+
+.pusula-landing .intro-city[data-side="w"] .intro-city-in {
+  flex-direction: row-reverse;
+  transform: translate(calc(-100% - 8px), -50%);
+}
+
+.pusula-landing .intro-city[data-side="s"] .intro-city-in {
+  transform: translate(-50%, 9px);
+}
+
+.pusula-landing .intro-city[data-side="n"] .intro-city-in {
+  transform: translate(-50%, calc(-100% - 9px));
+}
+
+.pusula-landing .intro-city[data-side="s"] .intro-city-rule,
+.pusula-landing .intro-city[data-side="n"] .intro-city-rule {
+  display: none;
+}
+
+.pusula-landing .intro-city[data-hub] {
+  color: var(--gold-hi);
+  font-size: 14px;
+}
+
+/* Cardinals: identical placement to the hero's, so they cross-fade in place. */
+.pusula-landing .intro-cardinal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--gold);
+}
+
+.pusula-landing .intro-cardinal-in {
+  position: relative;
+  display: block;
+}
+
+.pusula-landing .intro-cardinal[data-c="N"] .intro-cardinal-in {
+  transform: translate(-50%, calc(-100% - 8px));
+}
+
+.pusula-landing .intro-cardinal[data-c="S"] .intro-cardinal-in {
+  transform: translate(-50%, 8px);
+}
+
+.pusula-landing .intro-cardinal[data-c="E"] .intro-cardinal-in {
+  transform: translate(10px, -50%);
+}
+
+.pusula-landing .intro-cardinal[data-c="W"] .intro-cardinal-in {
+  transform: translate(calc(-100% - 10px), -50%);
+}
+
+.pusula-landing .intro-cardinal-ember {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  color: var(--ember);
+}
+
+/* Bottom-end: the one focusable element. Never focused automatically. */
+.pusula-landing .intro-skip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-inline: 14px 12px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-pill);
+  background: rgba(10, 10, 12, 0.66);
+  color: var(--mist);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--track-readout);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pusula-landing .intro-skip:hover {
+  color: var(--foam);
+  border-color: var(--gold-lo);
+}
+
+.pusula-landing .intro-skip .glyph {
+  color: var(--gold);
+}
+
+@media (min-width: 1024px) {
+  .pusula-landing .intro-brand {
+    inset-inline-start: 32px;
+    inset-block-start: 24px;
+  }
+
+  .pusula-landing .intro-log {
+    inset-inline-start: 32px;
+    inset-block-end: 32px;
+    font-size: var(--fs-readout);
+  }
+
+  .pusula-landing .intro-cmd {
+    font-size: 0.9375rem;
+  }
+
+  .pusula-landing .intro-skip {
+    inset-inline-end: 32px;
+    inset-block-end: 32px;
+  }
+}
+
+/* Persian has no monospace face: its words keep the sans (numbers stay mono). */
+.pusula-landing .intro-boot-label:lang(fa),
+.pusula-landing .intro-running:lang(fa),
+.pusula-landing .intro-skip:lang(fa) {
+  font-family: var(--font-sans);
+}

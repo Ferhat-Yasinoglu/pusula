@@ -60,7 +60,8 @@ export interface LoginShellPathOptions {
 export function getLoginShellPath(opts: LoginShellPathOptions = {}): string | null {
   const platform = opts.platform ?? process.platform;
   if (platform !== "darwin" && platform !== "linux") return null;
-  const shell = opts.shell || process.env.SHELL || (platform === "darwin" ? "/bin/zsh" : "/bin/bash");
+  const shell =
+    opts.shell || process.env.SHELL || (platform === "darwin" ? "/bin/zsh" : "/bin/bash");
   if (!/^[\w./-]+$/.test(shell)) return null;
   const run =
     opts.runShell ||
@@ -84,4 +85,13 @@ let cached: string | null | undefined;
 export function getCachedLoginShellPath(): string | null {
   if (cached === undefined) cached = getLoginShellPath();
   return cached;
+}
+
+/**
+ * Test-only: pin the cached login-shell PATH (`null` = no enrichment, `undefined` = re-query).
+ * The cache is captured on the first lookup, so a test that later empties `process.env.PATH`
+ * would otherwise still resolve binaries through the PATH the process started with.
+ */
+export function __setLoginShellPathCacheForTests(value: string | null | undefined): void {
+  cached = value;
 }
