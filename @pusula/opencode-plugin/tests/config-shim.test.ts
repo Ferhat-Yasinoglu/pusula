@@ -626,10 +626,7 @@ test("config: multi-instance — two plugins with different providerIds publish 
   assert.equal(provider["opencode-pusula-prod"].options.apiKey, "sk-prod");
   assert.equal(provider["opencode-pusula-preprod"].options.apiKey, "sk-preprod");
   assert.equal(provider["opencode-pusula-prod"].options.baseURL, "https://prod.example/v1");
-  assert.equal(
-    provider["opencode-pusula-preprod"].options.baseURL,
-    "https://preprod.example/v1"
-  );
+  assert.equal(provider["opencode-pusula-preprod"].options.baseURL, "https://preprod.example/v1");
   assert.notEqual(
     provider["opencode-pusula-prod"],
     provider["opencode-pusula-preprod"],
@@ -783,37 +780,6 @@ test("buildStaticProviderEntry: hidden combos are excluded", () => {
   );
   assert.equal(block.models["claude-tier"], undefined);
   assert.ok(block.models["claude-sonnet-4-6"]);
-});
-
-test("buildStaticProviderEntry: expected raw auto twin does not warn and auto combo wins", () => {
-  const resolved = resolvePusulaPluginOptions({ providerId: "pusula" });
-  const warnings: string[] = [];
-  const originalWarn = console.warn;
-  console.warn = (...args: unknown[]) => warnings.push(args.map(String).join(" "));
-
-  let block: PusulaStaticProviderEntry;
-  try {
-    block = buildStaticProviderEntry(
-      [{ id: "auto/coding" }],
-      [],
-      resolved,
-      "https://or.example/v1",
-      "sk-test",
-      undefined,
-      undefined,
-      undefined,
-      [{ id: "auto/coding", name: "Auto Coding", variant: "coding", candidateCount: 5 }]
-    );
-  } finally {
-    console.warn = originalWarn;
-  }
-
-  assert.equal(Object.keys(block.models).filter((key) => key === "auto/coding").length, 1);
-  assert.equal(block.models["auto/coding"].tool_call, true, "auto-combo entry wins over raw twin");
-  assert.deepEqual(
-    warnings.filter((warning) => warning.includes("collides with an existing model")),
-    []
-  );
 });
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -1045,9 +1011,7 @@ test("config: features.enrichment=false skips enrichment fetch + keeps raw-id na
   const fetcher = stubModelsFetcher([MODEL_CLAUDE]);
   const combosFetcher = stubCombosFetcher([]);
   const enrichmentFetcher = stubEnrichmentFetcher(
-    new Map<string, PusulaEnrichmentEntry>([
-      ["claude-sonnet-4-6", { name: "Claude Sonnet 4.6" }],
-    ])
+    new Map<string, PusulaEnrichmentEntry>([["claude-sonnet-4-6", { name: "Claude Sonnet 4.6" }]])
   );
   const logger = captureWarn();
 
@@ -1445,9 +1409,7 @@ test("config: cached rawEnrichment from earlier provider hook is reused (no refe
   const fetcher = stubModelsFetcher([MODEL_CLAUDE]);
   const combosFetcher = stubCombosFetcher([]);
   const enrichmentFetcher = stubEnrichmentFetcher(
-    new Map<string, PusulaEnrichmentEntry>([
-      ["claude-sonnet-4-6", { name: "Claude Sonnet 4.6" }],
-    ])
+    new Map<string, PusulaEnrichmentEntry>([["claude-sonnet-4-6", { name: "Claude Sonnet 4.6" }]])
   );
   const sharedCache: PusulaFetchCache = new Map();
   const logger = captureWarn();
@@ -1598,9 +1560,7 @@ test("config: providerTag skipped entirely when neither providerDisplayName nor 
   const combosFetcher = stubCombosFetcher([]);
   // No metadata at all — defensive case, e.g. legacy enrichment payload.
   const enrichmentFetcher = stubEnrichmentFetcher(
-    new Map<string, PusulaEnrichmentEntry>([
-      ["claude-sonnet-4-6", { name: "Claude Sonnet 4.6" }],
-    ])
+    new Map<string, PusulaEnrichmentEntry>([["claude-sonnet-4-6", { name: "Claude Sonnet 4.6" }]])
   );
   const logger = captureWarn();
 

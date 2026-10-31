@@ -18,18 +18,18 @@ Common problems and solutions for Pusula.
 
 **New to Pusula?** Start here — these solve 90% of problems:
 
-| I see this                    | What it means                               | What to do                                                                                        |
-| ----------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| "Can't connect"               | Pusula isn't running                     | Run `pusula` or `docker restart pusula`                                                     |
-| "Invalid API key"             | Your key is wrong or expired                | Re-copy the key from the provider's website                                                       |
-| "Rate limit exceeded"         | You're sending too many requests            | Wait 1 minute, or use `model: "auto"` for automatic fallback                                      |
-| "Quota exceeded"              | You've used up your free/paid quota         | Connect more providers, or use free providers (Kiro, Pollinations)                                |
-| "Slow responses"              | Provider is busy or far away                | Use `model: "auto/fast"` or connect a faster provider (Groq, Cerebras)                            |
-| "Wrong provider used"         | `auto` picked a different provider          | That's normal! `auto` picks the best one. Force a specific provider with `model: "openai/gpt-4o"` |
-| "502 Bad Gateway"             | Provider is down                            | Wait and retry, or use `model: "auto"` to switch providers                                        |
-| "401 Unauthorized"            | Your credentials are wrong                  | Check your API key or re-authenticate with OAuth                                                  |
+| I see this                 | What it means                               | What to do                                                                                        |
+| -------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| "Can't connect"            | Pusula isn't running                        | Run `pusula` or `docker restart pusula`                                                           |
+| "Invalid API key"          | Your key is wrong or expired                | Re-copy the key from the provider's website                                                       |
+| "Rate limit exceeded"      | You're sending too many requests            | Wait 1 minute, or use `model: "auto"` for automatic fallback                                      |
+| "Quota exceeded"           | You've used up your free/paid quota         | Connect more providers, or use free providers (Kiro, Pollinations)                                |
+| "Slow responses"           | Provider is busy or far away                | Use `model: "auto/fast"` or connect a faster provider (Groq, Cerebras)                            |
+| "Wrong provider used"      | `auto` picked a different provider          | That's normal! `auto` picks the best one. Force a specific provider with `model: "openai/gpt-4o"` |
+| "502 Bad Gateway"          | Provider is down                            | Wait and retry, or use `model: "auto"` to switch providers                                        |
+| "401 Unauthorized"         | Your credentials are wrong                  | Check your API key or re-authenticate with OAuth                                                  |
 | "pusula is not recognized" | Windows PATH is missing global node modules | Add your npm global prefix to Windows PATH. Find it with `npm config get prefix`.                 |
-| "429 Too Many Requests"       | Rate limited                                | Wait 1 minute, or connect more providers                                                          |
+| "429 Too Many Requests"    | Rate limited                                | Wait 1 minute, or connect more providers                                                          |
 
 **Still stuck?** See the [detailed troubleshooting](#detailed-troubleshooting) below, or open a [GitHub issue](https://github.com/Ferhat-Yasinoglu/pusula/issues).
 
@@ -41,12 +41,12 @@ Common problems and solutions for Pusula.
 
 ### Rate Limiting on Free Providers (429 / 400 / 401)
 
-**Symptom**: When using `model: "auto"` with free/no-auth providers (opencode, auggie, etc.), you intermittently get `HTTP 429`, `400`, or `401` instead of answers. The requests succeed when retrying the same prompt moments later, but automation (cron jobs, agents, scripts) breaks on the first failure.
+**Symptom**: When using `model: "auto"` with free/no-auth providers (auggie, etc.), you intermittently get `HTTP 429`, `400`, or `401` instead of answers. The requests succeed when retrying the same prompt moments later, but automation (cron jobs, agents, scripts) breaks on the first failure.
 
 **Root cause**: Three independent failure modes stack up:
 
 1. **Provider rate-limit (`429`)**: Free tiers can enforce a per-window quota. A burst of parallel calls exhausts it, so the next request is refused until the window resets.
-2. **Broken model in passthrough (`400`/`401`)**: `auto/*` pools can include passthrough models from `opencode` that are registered in the catalog but have no live credentials (e.g. `oc/north-mini-code-free` → `401`). The auto-router tries one, fails, and the error propagates before fallback kicks in.
+2. **Broken model in passthrough (`400`/`401`)**: `auto/*` pools can include passthrough models that are registered in the catalog but have no live credentials (→ `401`). The auto-router tries one, fails, and the error propagates before fallback kicks in.
 3. **Concurrency amplification (`429` under load)**: When multiple agent/cron sessions hit `auto` at once, the aggregate request rate exceeds what free providers tolerate, so legitimate calls get flagged as abusive.
 
 **Verified fix (community-reported, 2026-08-10)**: tune three environment variables so that rotation, concurrency, and fallback absorb the free-tier churn instead of dying on it:
@@ -54,7 +54,7 @@ Common problems and solutions for Pusula.
 ```bash
 export PUSULA_ROTATE_ON_400=true           # hop to another model/provider on 400/401 (skips broken passthrough models)
 export PUSULA_CHAT_MAX_HEAVY_IN_FLIGHT=4   # explicit heavyweight admission ceiling (unset by default: no request-count cap, see note below)
-export PUSULA_CHAT_ADMISSION_QUEUE_MS=5000 # longer bounded wait for heavyweight capacity instead of an immediate retryable 503
+export PUSULA_CHAT_ADMISSION_QUEUE_MS=20000 # raise the bounded wait past the RATE_LIMIT_MAX_WAIT_MS default for slow upstreams
 ```
 
 Set these in the Pusula process environment (the daemon, e.g. via the LaunchAgent plist or `systemctl edit`), then restart Pusula. The rotation flag is the single highest-leverage lever: it converts a hard failure into a transparent retry against a healthy provider in the pool.
@@ -92,6 +92,55 @@ The warnings come from stale peer-dependency ranges in third-party packages Pusu
 
 ---
 
+## npm install-scripts Blocked Warning (global install)
+
+<a name="npm-install-scripts-blocked-warning-global-install"></a>
+
+When running `npm install -g pusula`, newer npm versions (v11+ and v12+) block package lifecycle scripts by default and display an install-scripts warning:
+
+```
+npm warn install-scripts 7 packages had install scripts blocked because they are not covered by allowScripts:
+  pusula@<version> (postinstall: node scripts/build/postinstall.mjs)
+  keytar, @parcel/watcher, @swc/core, protobufjs, esbuild, onnxruntime-node
+```
+
+### Can this warning be ignored?
+
+**Partially, but running without scripts is not recommended.** Pusula includes graceful fallbacks: if native `better-sqlite3` bindings cannot be loaded from the standalone bundle, the application falls back through alternative drivers such as `node:sqlite` or `sql.js` (see [SQLite Runtime Resolution](../ops/SQLITE_RUNTIME.md)). The server will still start, but running on WASM fallbacks like `sql.js` disables SQLite WAL (Write-Ahead Logging) mode and increases memory and disk-sync overhead.
+
+### Which scripts are actually required?
+
+Not all blocked scripts are essential for running Pusula:
+
+- **Essential (`pusula`, `better-sqlite3`):** Pusula runs from a Next.js standalone application bundle (`dist/`). During installation, npm downloads or compiles the host-specific native SQLite driver in the top-level `node_modules/better-sqlite3/`. Pusula's `postinstall` script (`scripts/build/postinstall.mjs`) then verifies and copies these host-specific binaries into `dist/node_modules/` so the standalone server can access them. If `pusula`'s postinstall script is blocked, this copy step is skipped.
+- **Optional/transitive (`keytar`, `@parcel/watcher`, `@swc/core`, `protobufjs`, `esbuild`):** These are build helpers, watcher tools, or system keychain utilities. Allowing them prevents build warnings, but they are not required for core routing functionality.
+- **Excluded (`onnxruntime-node`):** An optional dependency for local AI embeddings and is **not** required for Pusula to run. Its postinstall script downloads ~300MB of CUDA assets from NuGet; do not include it in the allow-list unless you explicitly intend to use local ONNX acceleration on supported hardware.
+
+### Recommended fix
+
+To allow the required install scripts during a global install and silence warnings, pass `--allow-scripts` for Pusula and its native dependencies:
+
+```bash
+npm install -g pusula --allow-scripts=pusula,better-sqlite3,keytar,@parcel/watcher,@swc/core,protobufjs,esbuild
+```
+
+Alternatively, to configure this permanently for all global installations on your user account:
+
+```bash
+npm config set allow-scripts=pusula,better-sqlite3,keytar,@parcel/watcher,@swc/core,protobufjs,esbuild --location=user
+npm install -g pusula
+```
+
+### Verify your installation
+
+After installation, run the built-in diagnostic tool to ensure that native bindings and the runtime environment are healthy:
+
+```bash
+pusula doctor
+```
+
+---
+
 ## Gemini Web and Playwright Chromium
 
 If a Gemini Web request returns `503` with a message that Playwright Chromium
@@ -121,10 +170,10 @@ not.
 | First login not working                                    | Set `INITIAL_PASSWORD` in `.env` (no hardcoded default)                                                                                                   |
 | Dashboard opens on wrong port                              | Set `PORT=20128` and `NEXT_PUBLIC_BASE_URL=http://localhost:20128`                                                                                        |
 | No logs written to disk                                    | Set `APP_LOG_TO_FILE=true` and verify call log capture is enabled                                                                                         |
-| EACCES: permission denied                                  | Set `DATA_DIR=/path/to/writable/dir` to override `~/.pusula`                                                                                           |
+| EACCES: permission denied                                  | Set `DATA_DIR=/path/to/writable/dir` to override `~/.pusula`                                                                                              |
 | Routing strategy not saving                                | Update to the latest v3.x release (Zod schema fix for settings persistence shipped in earlier versions)                                                   |
 | Login crash / blank page                                   | Check Node.js version — see [Node.js Compatibility](#nodejs-compatibility) below                                                                          |
-| `dlopen` / `slice is not valid mach-o file` (macOS)        | Run `cd $(npm root -g)/pusula/app && npm rebuild better-sqlite3 && pusula` — see [macOS native module rebuild](#macos-native-module-rebuild) below  |
+| `dlopen` / `slice is not valid mach-o file` (macOS)        | Run `cd $(npm root -g)/pusula/app && npm rebuild better-sqlite3 && pusula` — see [macOS native module rebuild](#macos-native-module-rebuild) below        |
 | Proxy "fetch failed"                                       | Ensure proxy config is set at the correct level — see [Proxy Issues](#proxy-issues) below                                                                 |
 | Docker `curl: (56) Recv failure: Connection reset by peer` | Your Docker port bind may be landing on IPv6. Use `-p 127.0.0.1:20128:20128` to force IPv4, or test with `curl -4`. See [Docker IPv6](#docker-ipv6) below |
 | Antivirus quarantines `README.md`                          | False positive — see [Antivirus false positives](#antivirus-false-positives) below                                                                        |
@@ -615,7 +664,7 @@ heavy request arrived at once. The old count cap (`PUSULA_CHAT_MAX_HEAVY_IN_FLIG
 still honored, but only if you explicitly set it.
 
 When capacity is busy, a heavyweight request first waits up to
-`PUSULA_CHAT_ADMISSION_QUEUE_MS` (default `2000`, `0` disables the wait) for a slot to free up
+`PUSULA_CHAT_ADMISSION_QUEUE_MS` (defaults to `RATE_LIMIT_MAX_WAIT_MS`; `0` disables the wait) for a slot to free up
 before answering the retryable `503`. The bounded wait exists so agent-style clients
 (OpenCode, Claude Code, Cursor) that fan out heavy sub-requests concurrently serialize the burst
 instead of burning their whole retry budget on immediate rejections and dying mid-task.

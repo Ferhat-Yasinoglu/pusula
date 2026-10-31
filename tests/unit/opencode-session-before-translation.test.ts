@@ -21,7 +21,7 @@ test("OpenCode headers preserve native identity and strip lease-control headers"
   const result = buildExecutorClientHeaders(
     new Headers({ Session_Id: "native-conversation", "x-pusula-lease-owner": "private-owner" }),
     undefined,
-    { provider: "opencode" }
+    { provider: "opencode-go" }
   );
   assert.equal(result?.["x-opencode-session"], "native-conversation");
   assert.equal(result?.["x-pusula-lease-owner"], undefined);

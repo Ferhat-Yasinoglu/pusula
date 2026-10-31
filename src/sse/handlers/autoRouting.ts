@@ -15,6 +15,7 @@ import {
   type ModelFamily,
 } from "@pusula/open-sse/services/autoCombo/modelFamily.ts";
 import { getCachedSettings } from "@/lib/db/readCache";
+import { isAutoRequestResolvedCapabilitiesEnabled } from "@/shared/utils/featureFlags";
 import {
   createInvocationId,
   startAutoEvaluationTrace,
@@ -72,8 +73,7 @@ async function applyAutoPrefix(
   settings: Record<string, unknown>
 ): Promise<Pick<AutoRoutingState, "variant" | "spec">> {
   try {
-    const { parseAutoPrefix } =
-      await import("@pusula/open-sse/services/autoCombo/autoPrefix.ts");
+    const { parseAutoPrefix } = await import("@pusula/open-sse/services/autoCombo/autoPrefix.ts");
     const parsed = parseAutoPrefix(model);
     const recognizedBuiltIn = Object.prototype.hasOwnProperty.call(AUTO_TEMPLATE_VARIANTS, model);
     if (!parsed.valid && !recognizedBuiltIn) {
@@ -150,7 +150,9 @@ export async function createVirtualAutoCombo(
       state.spec,
       apiKeyId,
       state.model,
-      invocationId
+      invocationId,
+      // #16419 opt-in: resolved capabilities also feed the snapshot weights.
+      isAutoRequestResolvedCapabilitiesEnabled()
     );
     virtualCombo.name = state.model;
     virtualCombo.id = state.model;

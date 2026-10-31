@@ -62,9 +62,9 @@ The SQLite file is stored at:
 
 | OS      | Path                                                     |
 | ------- | -------------------------------------------------------- |
-| Linux   | `~/.pusula/storage.sqlite`                            |
-| macOS   | `~/.pusula/storage.sqlite`                            |
-| Windows | `%USERPROFILE%\.pusula\storage.sqlite`                |
+| Linux   | `~/.pusula/storage.sqlite`                               |
+| macOS   | `~/.pusula/storage.sqlite`                               |
+| Windows | `%USERPROFILE%\.pusula\storage.sqlite`                   |
 | Docker  | `/app/data/storage.sqlite` (configurable via `DATA_DIR`) |
 
 Companion files:
@@ -389,8 +389,8 @@ pusula backup auto enable --cron "0 2 * * *" --retention 7
 The schedule is executed server-side by a background job that ticks every 30 seconds
 (default) and evaluates the cron expression against local server time.
 
-| Variable                                    | Default | Description                                                                                                   |
-| ------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------- |
+| Variable                                 | Default | Description                                                                                                   |
+| ---------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------- |
 | `PUSULA_BACKUP_SCHEDULE_JOB_INTERVAL_MS` | `30000` | Tick interval in ms (min `5000`). Must be shorter than 60 s to reliably land inside the matching cron minute. |
 
 ### SQLite Hot Backup
@@ -535,8 +535,11 @@ mv recovered.db ~/.pusula/storage.sqlite
 Restore from backup:
 
 ```bash
-pusula sync pull --merge   # or: pusula backup restore <backup-id>
+pusula backup restore <backup-id>
 ```
+
+`pusula sync pull [outPath]` only downloads a full `.tar.gz` archive from a running server
+(`GET /api/db-backups/exportAll`, operator credential required); it does not restore anything.
 
 ### Scenario 3: Encryption Key Lost
 

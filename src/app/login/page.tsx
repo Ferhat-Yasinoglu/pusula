@@ -3,7 +3,11 @@
 import { useTranslations } from "next-intl";
 
 import { useState, useEffect } from "react";
-import { Button, Input } from "@/shared/components";
+// Direct module imports, not the "@/shared/components" barrel: the barrel
+// re-exports Sidebar/Header/composites (and transitively the whole dashboard
+// shell) which would otherwise ship in the /login page chunks.
+import Button from "@/shared/components/Button";
+import Input from "@/shared/components/Input";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
@@ -237,9 +241,7 @@ export default function LoginPage() {
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center">
                   <span className="material-symbols-outlined text-white text-[20px]">hub</span>
                 </div>
-                <span className="text-xl font-semibold text-text-main tracking-tight">
-                  Pusula
-                </span>
+                <span className="text-xl font-semibold text-text-main tracking-tight">Pusula</span>
               </div>
               <h1 className="text-2xl font-bold text-text-main tracking-tight">{t("signIn")}</h1>
               <p className="text-text-muted mt-1.5">

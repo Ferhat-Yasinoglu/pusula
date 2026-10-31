@@ -10,6 +10,12 @@ import { isValidationFailure, validateBody } from "@/shared/validation/helpers";
 import { cliAuthOnlyConfigSchema } from "@/shared/validation/schemas/cli";
 import { requireCliToolsAuth } from "@/lib/api/requireCliToolsAuth";
 import { sanitizeErrorMessage } from "@pusula/open-sse/utils/error";
+import { createMultiBackup } from "@/shared/services/backupService";
+import {
+  configClobberRefusalResponse,
+  parseJsonObject,
+  readExistingConfig,
+} from "../_lib/readExistingConfig";
 
 const execAsync = promisify(exec);
 
@@ -18,8 +24,7 @@ const getLettaDir = () => path.join(os.homedir(), ".letta");
 const getSettingsPath = () => path.join(getLettaDir(), "settings.json");
 const getLocalBackendDir = () => path.join(getLettaDir(), "lc-local-backend");
 const getProviderAuthPath = () => path.join(getLocalBackendDir(), "providers", "auth.json");
-const getBackupPath = () =>
-  path.join(getLocalBackendDir(), "providers", "auth.json.pusula-backup");
+const getBackupPath = () => path.join(getLocalBackendDir(), "providers", "auth.json.pusula-backup");
 
 // ── Provider name in auth.json ─────────────────────────────────────────
 // "lmstudio" provider type has localModelDiscovery: "openai-compatible"
@@ -132,6 +137,17 @@ export async function GET(request: Request) {
   }
 }
 
+// `providers` is written into below; an auth.json whose `providers` is not an
+// object cannot be merged safely, so refuse it like an unparsable file.
+function parseLettaAuthFile(raw: string): { version: number; providers: Record<string, any> } {
+  const parsed = parseJsonObject(raw);
+  if (parsed.providers == null) parsed.providers = {};
+  if (typeof parsed.providers !== "object" || Array.isArray(parsed.providers)) {
+    throw new TypeError("auth.json `providers` must be an object");
+  }
+  return parsed as { version: number; providers: Record<string, any> };
+}
+
 // ── POST - Apply Pusula as LM Studio provider + switch to local mode ──
 /**
  * Steps 1-2 of POST: read the existing Letta auth.json, refuse to clobber a real
@@ -149,13 +165,12 @@ async function prepareLettaAuthFile(
   const authPath = getProviderAuthPath();
   await fs.mkdir(path.join(localBackendDir, "providers"), { recursive: true });
 
-  let authFile = { version: 1, providers: {} as Record<string, any> };
-  try {
-    const existing = await fs.readFile(authPath, "utf-8");
-    authFile = JSON.parse(existing);
-  } catch {
-    /* No existing file */
-  }
+  // Only a missing auth.json starts fresh; an unreadable/unparsable one is
+  // refused (409) — it may hold the user's other provider credentials.
+  const authFile = (await readExistingConfig(authPath, parseLettaAuthFile)) ?? {
+    version: 1,
+    providers: {} as Record<string, any>,
+  };
 
   const existingProvider = authFile.providers?.[PROVIDER_NAME];
   if (existingProvider && !isPusulaUrl(existingProvider.base_url) && !overwrite) {
@@ -200,6 +215,13 @@ export async function POST(request: Request) {
 
     const normalizedBaseUrl = baseUrl.endsWith("/v1") ? baseUrl : `${baseUrl}/v1`;
 
+    // ── 0. Back up both files, then read settings.json before any write so an
+    //       unparsable file aborts the apply instead of being replaced ──
+    const settingsPath = getSettingsPath();
+    await createMultiBackup("letta", [settingsPath, getProviderAuthPath()]);
+    const settings: Record<string, any> =
+      (await readExistingConfig(settingsPath, parseJsonObject)) ?? {};
+
     // ── 1-2. Read auth.json, guard non-Pusula conflicts, back up before overwrite ──
     const prepared = await prepareLettaAuthFile(overwrite);
     if ("conflictResponse" in prepared) {
@@ -208,17 +230,8 @@ export async function POST(request: Request) {
     const { authFile, authPath } = prepared;
 
     // ── 3. Switch to local mode in settings.json ──
-    const settingsPath = getSettingsPath();
     const lettaDir = getLettaDir();
     await fs.mkdir(lettaDir, { recursive: true });
-
-    let settings = {};
-    try {
-      const existing = await fs.readFile(settingsPath, "utf-8");
-      settings = JSON.parse(existing);
-    } catch {
-      /* No existing settings */
-    }
 
     settings.preferredBackendMode = "local";
     await fs.writeFile(settingsPath, JSON.stringify(settings, null, 2));
@@ -249,6 +262,8 @@ export async function POST(request: Request) {
       needsRestart: true,
     });
   } catch (error) {
+    const refusal = configClobberRefusalResponse(error);
+    if (refusal) return refusal;
     return NextResponse.json({ error: { message: sanitizeErrorMessage(error) } }, { status: 500 });
   }
 }

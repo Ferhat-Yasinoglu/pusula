@@ -14,8 +14,8 @@ Pusula stellt drei verschiedene agentenbezogene Schnittstellen bereit. Auf den e
 | Schnittstelle                 | Optimal für                                                                                                                                                       | Transport                         | Standard                        |
 | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | ------------------------------- |
 | **A2A — Agent-to-Agent**      | Agentenübergreifende Zusammenarbeit mit Peer-Agenten, die das A2A-Protokoll unterstützen                                                                          | JSON-RPC 2.0 über HTTP            | A2A v0.3 (offene Spezifikation) |
-| **ACP — CLI-Agentenregister** | Erkennen, Registrieren und Starten von CLI-Coding-Agenten, die auf dem Rechner des Benutzers installiert sind (Cursor, Cline, Codex CLI, Claude Code, Aider usw.) | HTTP REST                         | Pusula-spezifisch            |
-| **Cloud-Agenten**             | Übermitteln lang laufender Coding-Aufgaben an externe Cloud-Dienste (Codex Cloud, Devin, Jules, Cursor Cloud)                                                     | HTTP REST + DB-gestützte Aufgaben | Pusula-spezifisch            |
+| **ACP — CLI-Agentenregister** | Erkennen, Registrieren und Starten von CLI-Coding-Agenten, die auf dem Rechner des Benutzers installiert sind (Cursor, Cline, Codex CLI, Claude Code, Aider usw.) | HTTP REST                         | Pusula-spezifisch               |
+| **Cloud-Agenten**             | Übermitteln lang laufender Coding-Aufgaben an externe Cloud-Dienste (Codex Cloud, Devin, Jules, Cursor Cloud)                                                     | HTTP REST + DB-gestützte Aufgaben | Pusula-spezifisch               |
 
 Die drei Schnittstellen sind unabhängig voneinander — wählen Sie eine beliebige Kombination aus.
 
@@ -67,33 +67,37 @@ Benötigen Sie einen Cloud-Dienst, der Arbeiten außerhalb dieses Rechners ausf�
 
 Weitere Informationen zu Transportdetails, zur Struktur der Agentenkarte, zur TTL-Konfiguration von Aufgaben und zur Vorlage für das Hinzufügen neuer Fähigkeiten finden Sie unter [A2A-SERVER.md](./A2A-SERVER.md).
 
-## 2. ACP — CLI-Agenten-Registry
+## 2. ACP — CLI-Agentenregister
 
 **Pusula-Endpunkt:** `GET /api/acp/agents`
 **Quelle:** `src/lib/acp/{index,manager,registry}.ts`
 
 ### Was es ist
 
-ACP ist Pusulas **lokales Inventar für CLI-Agenten**. Es erkennt, welche Coding-CLIs auf dem Host installiert sind (Cursor, Cline, Claude Code, Codex CLI, Continue usw.), ermittelt deren Versionen und zeigt sie im Dashboard an, damit Benutzer jede CLI so konfigurieren können, dass sie auf Pusula verweist.
+ACP ist Pusulas **lokales Verzeichnis für CLI-Agenten**. Es erkennt, welche Coding-CLIs auf dem Host installiert sind (Cursor, Cline, Claude Code, Codex CLI, Continue usw.), ermittelt deren Versionen und stellt sie dem Dashboard bereit, damit Benutzer jede CLI so konfigurieren können, dass sie auf Pusula verweist.
 
-Dies ist KEIN externes Protokoll — es handelt sich um eine interne Registry, die die Benutzeroberfläche „CLI Tools“ und die Verfolgung von CLI-Fingerprints unterstützt (siehe [CLI-TOOLS.md](../reference/CLI-TOOLS.md)).
+Die HTTP-Schnittstelle ist ein internes Verzeichnis, das die Benutzeroberfläche „CLI Tools“ und
+die Verfolgung von CLI-Fingerprints ermöglicht (siehe [CLI-TOOLS.md](../reference/CLI-TOOLS.md)). Unabhängig davon
+unterstützt der interne Prozessmanager das native Agent Client Protocol für den
+registrierten Gemini-Launcher sowie ältere stdio-Adapter für andere Schnittstellen.
+Weitere Informationen zu diesen unterschiedlichen Modi und Einschränkungen finden Sie unter [ACP-Register und -Launcher](./ACP.md).
 
 ### Funktionsweise
 
 - Prüft den Host auf installierte CLI-Binärdateien (verwendet je nach Betriebssystem `which` / `where`)
 - Liest die Version jeder CLI aus (ruft `<bin> --version` auf)
-- Akzeptiert optional benutzerdefinierte Agenten (Binärdateipfad + Versionsprüfung + Startargumente)
+- Akzeptiert optional benutzerdefinierte Agenten (Binärdateipfad + Versionsabfrage + Startargumente)
 - Speichert benutzerdefinierte Agenten in den Einstellungen
-- Gibt die zusammengeführte Liste an das Dashboard zurück
+- Gibt die vereinheitlichte Liste an das Dashboard zurück
 
 ### REST-API
 
-| Endpunkt          | Methode | Beschreibung                                                                    | Authentifizierung |
-| ----------------- | ------- | ------------------------------------------------------------------------------- | ----------------- |
-| `/api/acp/agents` | GET     | Erkannte + benutzerdefinierte Agenten auflisten (installiert/Gesamtanzahl)      | API-Schlüssel     |
-| `/api/acp/agents` | POST    | Benutzerdefinierten Agenten hinzufügen/aktualisieren/entfernen (Aktion im Body) | API-Schlüssel     |
+| Endpunkt          | Methode | Beschreibung                                                                            | Authentifizierung |
+| ----------------- | ------- | --------------------------------------------------------------------------------------- | ----------------- |
+| `/api/acp/agents` | GET     | Erkannte + benutzerdefinierte Agenten auflisten (installiert/gesamt)                    | API-Schlüssel     |
+| `/api/acp/agents` | POST    | Benutzerdefinierten Agenten hinzufügen/aktualisieren/entfernen (Aktionskennung im Body) | API-Schlüssel     |
 
-Body-Format für POST (`customAgentBodySchema` in `src/app/api/acp/agents/route.ts`):
+Body-Struktur für POST (`customAgentBodySchema` in `src/app/api/acp/agents/route.ts`):
 
 ```json
 {
@@ -110,13 +114,16 @@ Body-Format für POST (`customAgentBodySchema` in `src/app/api/acp/agents/route.
 
 ### Anwendungsfälle
 
-- Die Dashboard-Seite „CLI Tools“ listet auf, was installiert ist, und hilft dabei, die einzelnen Tools auf Pusula zu verweisen
+- Die Dashboard-Seite „CLI Tools“ zeigt an, was installiert ist, und hilft Ihnen dabei, jede CLI auf Pusula auszurichten
 - Mit benutzerdefinierten Agenten können erfahrene Benutzer interne/proprietäre CLIs registrieren, die Pusula standardmäßig nicht kennt
-- Das Erkennungsergebnis dient als Grundlage für die `cli-tools`-Fingerprint-Matrix
+- Das Erkennungsergebnis speist die `cli-tools`-Fingerprint-Matrix
 
 ### Wann ACP NICHT verwendet werden sollte
 
-- ACP führt keine Aufgaben _aus_. Es erkennt und konfiguriert lediglich CLIs. Um eine CLI tatsächlich aufzurufen, starten Sie sie selbst mit den von Pusula bereitgestellten Umgebungsvariablen (`OPENAI_BASE_URL`, `OPENAI_API_KEY` usw.).
+- Das HTTP-Register nimmt keine Aufgaben an und bietet keine Prozessstartfunktion. Der interne
+  Manager kann eine registrierte CLI starten, ist jedoch nicht als automatischer Provider-
+  Fallback eingebunden. Starten Sie für die gewöhnliche interaktive Nutzung die konfigurierte CLI selbst oder
+  verwenden Sie `pusula run`.
 
 ## 3. Cloud-Agenten
 
@@ -164,13 +171,13 @@ Siehe [CLOUD_AGENT.md](./CLOUD_AGENT.md) für den `CloudAgentBase`-Vertrag, agen
 
 Beide unterstützen „lang laufende Aufgaben“, jedoch auf unterschiedlichen Ebenen:
 
-| Aspekt                 | A2A                                                                                        | Cloud Agents                                          |
-| ---------------------- | ------------------------------------------------------------------------------------------ | ----------------------------------------------------- |
-| Standard               | Offenes A2A v0.3                                                                           | Pusula-spezifisch                                  |
+| Aspekt                 | A2A                                                                                     | Cloud Agents                                          |
+| ---------------------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| Standard               | Offenes A2A v0.3                                                                        | Pusula-spezifisch                                     |
 | Ausführungsort         | Innerhalb von Pusula (verwendet konfigurierte Kombinationen)                            | Extern (Codex-/Devin-/Jules-Server)                   |
-| Aufgabendauer          | Standard-TTL: 5 Min. (in `TaskManager` konfigurierbar)                                     | Minuten bis Stunden                                   |
-| Repository-Verständnis | Nein (übergibt nur Prompts)                                                                | Ja (Repository-URL + Branch)                          |
-| Anwendungsfall         | Agentenübergreifende Zusammenarbeit, intelligentes Routing als Dienst                      | „Feature X in Repository Y implementieren“ delegieren |
+| Aufgabendauer          | Standard-TTL: 5 Min. (in `TaskManager` konfigurierbar)                                  | Minuten bis Stunden                                   |
+| Repository-Verständnis | Nein (übergibt nur Prompts)                                                             | Ja (Repository-URL + Branch)                          |
+| Anwendungsfall         | Agentenübergreifende Zusammenarbeit, intelligentes Routing als Dienst                   | „Feature X in Repository Y implementieren“ delegieren |
 | Authentifizierung      | Optionaler `PUSULA_API_KEY` für `/a2a`; Verwaltungszugriff für `/api/a2a/*`-REST-Helfer | Immer Verwaltungszugriff                              |
 
 ## Integrationsbeispiele

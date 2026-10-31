@@ -53,6 +53,7 @@ pusula restart
 - `--log`
 - `--no-recovery`
 - `--max-restarts <n>`
+- `--headless`
 - `--tray`
 - `--no-tray`
 - `--ready-timeout <ms>`
@@ -66,6 +67,10 @@ pusula serve
 ```
 
 ### `stop`
+
+**Flags:**
+
+- `--port <port>`
 
 **Example:**
 
@@ -158,12 +163,12 @@ pusula doctor
 
 ### CLI capability skills
 
-| Capability                           | Skill                                                                                                 |
-| ------------------------------------ | ----------------------------------------------------------------------------------------------------- |
-| Server admin + backup                | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-cli-admin/SKILL.md     |
-| Provider & key management            | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-cli-providers/SKILL.md |
-| Cloud agents (Codex / Devin / Jules) | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-cli-cloud/SKILL.md     |
-| Evals & benchmarking                 | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-cli-eval/SKILL.md      |
+| Capability                         | Skill                                                                                         |
+| ---------------------------------- | --------------------------------------------------------------------------------------------- |
+| Backup & restore                   | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/cli-backup-sync/SKILL.md |
+| Provider & key management          | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/cli-providers/SKILL.md   |
+| Cloud agents (`pusula cloud …`) | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/cli-backup-sync/SKILL.md |
+| Evals & benchmarking               | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/cli-eval/SKILL.md        |
 
 ### Errors
 
@@ -174,7 +179,7 @@ pusula doctor
 
 ## Admin lifecycle
 
-Requires the `pusula` CLI. See [CLI entry-point skill](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-cli/SKILL.md) for install + global flags.
+Requires the `pusula` CLI. See the install and global-flags sections above.
 
 ### Server lifecycle
 

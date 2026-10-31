@@ -1,3 +1,4 @@
+import { inheritEmptyTurnPolicy } from "../../utils/emptyTurnPolicy.ts";
 import {
   attachPusulaMetaHeaders,
   buildPusulaResponseMetaHeaders,
@@ -214,9 +215,7 @@ export function stripNextMiddlewareControlHeaders(headers: Headers): void {
  * response. All three are optional so every existing call site (direct path,
  * no combo) keeps behaving exactly as before.
  */
-export type StreamingResponseHeadersMeta = Parameters<
-  typeof buildPusulaResponseMetaHeaders
->[0] & {
+export type StreamingResponseHeadersMeta = Parameters<typeof buildPusulaResponseMetaHeaders>[0] & {
   /** Whether this request was served through combo/pool routing. */
   isCombo?: boolean;
   /** The connection the caller pinned/requested, if any (e.g. `x-pusula-connection`, a combo step's forced connectionId, or a sticky session-affinity pin). */
@@ -370,11 +369,14 @@ export function materializeDeduplicatedExecutionResult<T extends Record<string, 
 
   return {
     ...result,
-    response: new Response(snapshot.payload, {
-      status: snapshot.status,
-      statusText: snapshot.statusText,
-      headers: snapshot.headers,
-    }),
+    response: inheritEmptyTurnPolicy(
+      result.response as Response,
+      new Response(snapshot.payload, {
+        status: snapshot.status,
+        statusText: snapshot.statusText,
+        headers: snapshot.headers,
+      })
+    ),
   } as T;
 }
 

@@ -10,7 +10,7 @@
  *     disk snapshot written.
  *   - (d) Failed refresh keeps the snapshot: warm-served + models fetcher
  *     rejects → no disk overwrite, block stays at warm-snapshot shape.
- *   - (e) Parallelism: all six fetchers start concurrently (not sequential).
+ *   - (e) Parallelism: all five fetchers start concurrently (not sequential).
  *   - (f) Soft-fail parity under Promise.allSettled: per-endpoint
  *     fallbacks + logger.warn breadcrumbs preserved.
  *   - (g) No double-refresh: concurrent hook invocations on the same cacheKey
@@ -29,7 +29,6 @@ import {
   createPusulaConfigHook,
   resolvePusulaPluginOptions,
   _resetInflightRefresh,
-  type PusulaAutoCombosFetcher,
   type PusulaCombosFetcher,
   type PusulaCompressionMetaFetcher,
   type PusulaEnrichmentEntry,
@@ -39,7 +38,6 @@ import {
   type PusulaModelsFetcher,
   type PusulaProviderConnection,
   type PusulaProvidersFetcher,
-  type PusulaRawAutoCombo,
   type PusulaRawCombo,
   type PusulaRawModelEntry,
   type PusulaReadAuthJson,
@@ -97,11 +95,6 @@ const COMBO_CLAUDE_TIER: PusulaRawCombo = {
   ],
 };
 
-const AUTO_COMBO: PusulaRawAutoCombo = {
-  id: "auto",
-  name: "Auto",
-};
-
 const COMPRESSION_COMBO: PusulaCompressionCombo = {
   id: "ctx-combo-1",
   name: "Context Combo",
@@ -119,9 +112,7 @@ const CONNECTION_CLAUDE: PusulaProviderConnection = {
 // DI stub helpers
 // ────────────────────────────────────────────────────────────────────────────
 
-function stubReadAuthJson(
-  value: Record<string, unknown> | undefined | null
-): PusulaReadAuthJson {
+function stubReadAuthJson(value: Record<string, unknown> | undefined | null): PusulaReadAuthJson {
   return async () => value as never;
 }
 
@@ -189,7 +180,6 @@ test("warm-startup: snapshot data used when snapshot is present", async () => {
   // With warm startup, the block should contain the snapshot data.
   const fetcher = immediateFetcher<PusulaModelsFetcher>([MODEL_CLAUDE]);
   const combosFetcher = immediateFetcher<PusulaCombosFetcher>([]);
-  const autoCombosFetcher = immediateFetcher<PusulaAutoCombosFetcher>([]);
   const enrichmentFetcher = immediateFetcher<PusulaEnrichmentFetcher>(new Map());
   const compressionMetaFetcher = immediateFetcher<PusulaCompressionMetaFetcher>([]);
   const providersFetcher = immediateFetcher<PusulaProvidersFetcher>([]);
@@ -198,7 +188,6 @@ test("warm-startup: snapshot data used when snapshot is present", async () => {
   const snapshot: Omit<import("../src/index.js").PusulaFetchCacheEntry, "expiresAt"> = {
     rawModels: [MODEL_GEMINI],
     rawCombos: [],
-    rawAutoCombos: [],
     rawEnrichment: new Map(),
     rawCompressionCombos: [],
     rawConnections: [],
@@ -213,7 +202,6 @@ test("warm-startup: snapshot data used when snapshot is present", async () => {
       readAuthJson: authStub(),
       fetcher,
       combosFetcher,
-      autoCombosFetcher,
       enrichmentFetcher,
       compressionMetaFetcher,
       providersFetcher,
@@ -234,18 +222,13 @@ test("warm-startup: snapshot data used when snapshot is present", async () => {
   // not the live fetch data (CLAUDE). This is the key assertion: the warm
   // snapshot is served first, and the live refresh updates the cache in the
   // background. On the next hook invocation, the cache will have the fresh data.
-  const hasGemini = entry.models["opencode-pusula/gemini-3-flash"] !== undefined;
-  const hasClaude = entry.models["opencode-pusula/claude-sonnet-4-6"] !== undefined;
-  assert.ok(
-    hasGemini || hasClaude,
-    "provider block has at least one model"
-  );
+  const hasGemini = entry.models["gemini-3-flash"] !== undefined;
+  const hasClaude = entry.models["claude-sonnet-4-6"] !== undefined;
+  assert.ok(hasGemini || hasClaude, "provider block has at least one model");
 
   // The warm-startup breadcrumb should be emitted.
   assert.ok(
-    logger.entries.some((e) =>
-      String(e[0]).includes("warm startup from disk snapshot")
-    ),
+    logger.entries.some((e) => String(e[0]).includes("warm startup from disk snapshot")),
     "warm-startup breadcrumb emitted"
   );
 });
@@ -284,16 +267,11 @@ test("warm-startup: fingerprint mismatch → no warm publish, awaited fetch", as
   ];
   assert.ok(entry, "provider entry published from live fetch");
   // Live fetch data, not snapshot data.
-  assert.ok(
-    entry.models["opencode-pusula/claude-sonnet-4-6"],
-    "live fetch model present"
-  );
+  assert.ok(entry.models["claude-sonnet-4-6"], "live fetch model present");
   assert.equal(fetcher.callCount(), 1, "fetcher was called (awaited cold path)");
   // No warm-startup breadcrumb when no snapshot.
   assert.ok(
-    !logger.entries.some((e) =>
-      String(e[0]).includes("warm startup from disk snapshot")
-    ),
+    !logger.entries.some((e) => String(e[0]).includes("warm startup from disk snapshot")),
     "no warm-startup breadcrumb when no snapshot"
   );
 });
@@ -306,11 +284,8 @@ test("warm-startup: fingerprint mismatch → no warm publish, awaited fetch", as
 test("warm-startup: parallel refresh updates cache + writes snapshot", async () => {
   const fetcher = immediateFetcher<PusulaModelsFetcher>([MODEL_CLAUDE]);
   const combosFetcher = immediateFetcher<PusulaCombosFetcher>([COMBO_CLAUDE_TIER]);
-  const autoCombosFetcher = immediateFetcher<PusulaAutoCombosFetcher>([AUTO_COMBO]);
   const enrichmentFetcher = immediateFetcher<PusulaEnrichmentFetcher>(
-    new Map<string, PusulaEnrichmentEntry>([
-      ["claude-sonnet-4-6", { name: "Claude Sonnet 4.6" }],
-    ])
+    new Map<string, PusulaEnrichmentEntry>([["claude-sonnet-4-6", { name: "Claude Sonnet 4.6" }]])
   );
   const compressionMetaFetcher = immediateFetcher<PusulaCompressionMetaFetcher>([
     COMPRESSION_COMBO,
@@ -321,7 +296,6 @@ test("warm-startup: parallel refresh updates cache + writes snapshot", async () 
   const snapshot: Omit<import("../src/index.js").PusulaFetchCacheEntry, "expiresAt"> = {
     rawModels: [MODEL_GEMINI],
     rawCombos: [],
-    rawAutoCombos: [],
     rawEnrichment: new Map(),
     rawCompressionCombos: [],
     rawConnections: [],
@@ -341,7 +315,6 @@ test("warm-startup: parallel refresh updates cache + writes snapshot", async () 
       readAuthJson: authStub(),
       fetcher,
       combosFetcher,
-      autoCombosFetcher,
       enrichmentFetcher,
       compressionMetaFetcher,
       providersFetcher,
@@ -390,7 +363,6 @@ test("warm-startup: failed refresh keeps the snapshot, no disk overwrite", async
   const snapshot: Omit<import("../src/index.js").PusulaFetchCacheEntry, "expiresAt"> = {
     rawModels: [MODEL_GEMINI],
     rawCombos: [COMBO_CLAUDE_TIER],
-    rawAutoCombos: [],
     rawEnrichment: new Map(),
     rawCompressionCombos: [],
     rawConnections: [],
@@ -425,7 +397,7 @@ test("warm-startup: failed refresh keeps the snapshot, no disk overwrite", async
   // The block should contain the warm snapshot data (gemini), not be
   // downgraded to a stub.
   assert.ok(
-    entry.models["opencode-pusula/gemini-3-flash"],
+    entry.models["gemini-3-flash"],
     "warm snapshot model preserved (not downgraded to stub)"
   );
 
@@ -437,7 +409,7 @@ test("warm-startup: failed refresh keeps the snapshot, no disk overwrite", async
 });
 
 // ────────────────────────────────────────────────────────────────────────────
-// (e) Parallelism: all six fetchers start concurrently (not sequential)
+// (e) Parallelism: all five fetchers start concurrently (not sequential)
 // ────────────────────────────────────────────────────────────────────────────
 
 test("warm-startup: all fetchers start concurrently (parallel fan-out)", async () => {
@@ -461,7 +433,10 @@ test("warm-startup: all fetchers start concurrently (parallel fan-out)", async (
 
   const fetcher = instrumentedFetcher<PusulaModelsFetcher>([MODEL_CLAUDE]);
   const combosFetcher = instrumentedFetcher<PusulaCombosFetcher>([]);
-  const autoCombosFetcher = instrumentedFetcher<PusulaAutoCombosFetcher>([]);
+  // Retired source: the stub must never run. It stays in the DI bag so the
+  // removal is proven: base code calls it (red), fixed code ignores the
+  // unknown key (green).
+  const retiredFetcher = instrumentedFetcher<never>([]);
   const enrichmentFetcher = instrumentedFetcher<PusulaEnrichmentFetcher>(new Map());
   const compressionMetaFetcher = instrumentedFetcher<PusulaCompressionMetaFetcher>([]);
   const providersFetcher = instrumentedFetcher<PusulaProvidersFetcher>([]);
@@ -473,19 +448,22 @@ test("warm-startup: all fetchers start concurrently (parallel fan-out)", async (
   const diskSnapshotWriter: PusulaDiskSnapshotWriter = async () => {};
 
   const hook = createPusulaConfigHook(
-    { providerId: "pusula", features: { enrichment: true, compressionMetadata: true, usableOnly: true } },
+    {
+      providerId: "pusula",
+      features: { enrichment: true, compressionMetadata: true, usableOnly: true },
+    },
     {
       readAuthJson: authStub(),
       fetcher,
       combosFetcher,
-      autoCombosFetcher,
+      autoCombosFetcher: retiredFetcher,
       enrichmentFetcher,
       compressionMetaFetcher,
       providersFetcher,
       diskSnapshotReader,
       diskSnapshotWriter,
       logger,
-    }
+    } as never
   );
 
   const input = makeInput();
@@ -494,14 +472,14 @@ test("warm-startup: all fetchers start concurrently (parallel fan-out)", async (
   // All fetchers should have been called.
   assert.equal(fetcher.callCount(), 1, "models fetcher called");
   assert.equal(combosFetcher.callCount(), 1, "combos fetcher called");
-  assert.equal(autoCombosFetcher.callCount(), 1, "autoCombos fetcher called");
   assert.equal(enrichmentFetcher.callCount(), 1, "enrichment fetcher called");
   assert.equal(compressionMetaFetcher.callCount(), 1, "compressionMeta fetcher called");
   assert.equal(providersFetcher.callCount(), 1, "providers fetcher called");
+  assert.equal(retiredFetcher.callCount(), 0, "retired fetcher never runs");
 
   // All start times should be within 20ms of each other (parallel fan-out),
   // NOT sequential (which would show ~30ms gaps between each).
-  assert.ok(startTimes.length >= 6, "all 6 fetchers started");
+  assert.equal(startTimes.length, 5, "exactly the 5 live fetchers fan out, no retired sixth");
   const minStart = Math.min(...startTimes);
   const maxStart = Math.max(...startTimes);
   assert.ok(
@@ -542,10 +520,7 @@ test("warm-startup: combos reject → models-only catalog with warn", async () =
     "opencode-pusula"
   ];
   assert.ok(entry, "provider entry published");
-  assert.ok(
-    entry.models["opencode-pusula/claude-sonnet-4-6"],
-    "models-only catalog (no combos)"
-  );
+  assert.ok(entry.models["claude-sonnet-4-6"], "models-only catalog (no combos)");
   assert.ok(
     logger.entries.some((e) => String(e[0]).includes("/api/combos fetch failed")),
     "combos-fetch breadcrumb emitted"
@@ -582,7 +557,7 @@ test("warm-startup: enrichment rejects → raw-id catalog with warn", async () =
   ];
   assert.ok(entry, "provider entry published");
   assert.equal(
-    entry.models["opencode-pusula/claude-sonnet-4-6"].name,
+    entry.models["claude-sonnet-4-6"].name,
     "claude-sonnet-4-6",
     "raw id retained (no enrichment)"
   );
@@ -622,10 +597,7 @@ test("warm-startup: providers reject → usableOnly filter disabled with warn", 
   ];
   assert.ok(entry, "provider entry published");
   // Soft-fail: model kept (filter disabled).
-  assert.ok(
-    entry.models["opencode-pusula/claude-sonnet-4-6"],
-    "model kept (usableOnly filter disabled)"
-  );
+  assert.ok(entry.models["claude-sonnet-4-6"], "model kept (usableOnly filter disabled)");
   assert.ok(
     logger.entries.some((e) => String(e[0]).includes("/api/providers fetch failed")),
     "providers-fetch breadcrumb emitted"
@@ -697,7 +669,6 @@ test("warm-startup: diskCache=false disables warm read, falls through to awaited
     return {
       rawModels: [MODEL_GEMINI],
       rawCombos: [],
-      rawAutoCombos: [],
       rawEnrichment: new Map(),
       rawCompressionCombos: [],
       rawConnections: [],
@@ -726,10 +697,7 @@ test("warm-startup: diskCache=false disables warm read, falls through to awaited
     "opencode-pusula"
   ];
   assert.ok(entry, "provider entry published from live fetch");
-  assert.ok(
-    entry.models["opencode-pusula/claude-sonnet-4-6"],
-    "live fetch model present (not snapshot)"
-  );
+  assert.ok(entry.models["claude-sonnet-4-6"], "live fetch model present (not snapshot)");
 });
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -746,7 +714,6 @@ test("warm-startup: snapshot age is logged when warm-starting from disk", async 
   } = {
     rawModels: [MODEL_GEMINI],
     rawCombos: [],
-    rawAutoCombos: [],
     rawEnrichment: new Map(),
     rawCompressionCombos: [],
     rawConnections: [],
@@ -773,9 +740,7 @@ test("warm-startup: snapshot age is logged when warm-starting from disk", async 
 
   // The log should mention "warm startup from disk snapshot".
   assert.ok(
-    logger.entries.some((e) =>
-      String(e[0]).includes("warm startup from disk snapshot")
-    ),
+    logger.entries.some((e) => String(e[0]).includes("warm startup from disk snapshot")),
     "warm-startup breadcrumb emitted"
   );
 });
@@ -792,7 +757,6 @@ test("warm-startup: empty snapshot (rawModels.length=0) is skipped, falls throug
   const diskSnapshotReader: PusulaDiskSnapshotReader = async () => ({
     rawModels: [],
     rawCombos: [],
-    rawAutoCombos: [],
     rawEnrichment: new Map(),
     rawCompressionCombos: [],
     rawConnections: [],
@@ -819,9 +783,6 @@ test("warm-startup: empty snapshot (rawModels.length=0) is skipped, falls throug
   ];
   assert.ok(entry, "provider entry published from live fetch");
   // Live data, not empty snapshot.
-  assert.ok(
-    entry.models["opencode-pusula/claude-sonnet-4-6"],
-    "live fetch model present (empty snapshot skipped)"
-  );
+  assert.ok(entry.models["claude-sonnet-4-6"], "live fetch model present (empty snapshot skipped)");
   assert.equal(fetcher.callCount(), 1, "fetcher was called (awaited cold path)");
 });

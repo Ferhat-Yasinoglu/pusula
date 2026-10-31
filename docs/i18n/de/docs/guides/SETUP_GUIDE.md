@@ -90,8 +90,8 @@ In Kombination mit Umgebungsvariablen (`INITIAL_PASSWORD`, `PUSULA_WS_BRIDGE_SEC
 
 ### CLI-Optionen
 
-| Befehl                  | Beschreibung                                                                                  |
-| ----------------------- | --------------------------------------------------------------------------------------------- |
+| Befehl               | Beschreibung                                                                                  |
+| -------------------- | --------------------------------------------------------------------------------------------- |
 | `pusula`             | Server starten (`PORT=20128`, API und Dashboard auf demselben Port)                           |
 | `pusula setup`       | Geführte CLI-Ersteinrichtung für Passwort und ersten Anbieter                                 |
 | `pusula doctor`      | Lokale Integritätsprüfungen ausführen, ohne den Server zu starten                             |
@@ -99,7 +99,7 @@ In Kombination mit Umgebungsvariablen (`INITIAL_PASSWORD`, `PUSULA_WS_BRIDGE_SEC
 | `pusula config`      | Konfiguration der CLI-Tools — Konfigurationen auflisten, abrufen, setzen, prüfen              |
 | `pusula status`      | Offline-Status-Dashboard — Version, DB, Tools, Konfiguration                                  |
 | `pusula logs`        | Nutzungsprotokolle von der API streamen (unterstützt `--follow`)                              |
-| `pusula update`      | Nach Pusula-Updates suchen oder diese installieren                                         |
+| `pusula update`      | Nach Pusula-Updates suchen oder diese installieren                                            |
 | `pusula provider`    | Anbieterverbindungen verwalten — hinzufügen, auflisten, entfernen, testen, Standard festlegen |
 | `pusula --port 3000` | Kanonischen/API-Port auf 3000 setzen                                                          |
 | `pusula --mcp`       | MCP-Server starten (stdio-Transport)                                                          |
@@ -136,7 +136,7 @@ pusula providers validate
 
 ---
 
-## Konfiguration des CLI-Tools
+## Konfiguration von CLI-Tools
 
 ### 1) Anbieter verbinden und API-Schlüssel erstellen
 
@@ -144,28 +144,29 @@ pusula providers validate
 2. Öffnen Sie Dashboard → `Endpoints` und erstellen Sie einen API-Schlüssel.
 3. (Optional) Öffnen Sie Dashboard → `Combos` und legen Sie Ihre Fallback-Kette fest.
 
-### 2) Coding-Tool konfigurieren
+### 2) Ihr Coding-Tool konfigurieren
 
 ```txt
-Basis-URL:     http://localhost:20128/v1
+Basis-URL:   http://localhost:20128/v1
 API-Schlüssel: [von der Endpoint-Seite kopieren]
-Modell:        if/qwen3.8-max-preview (oder ein beliebiges Anbieter-/Modellpräfix)
+Modell:      if/qwen3.8-max-preview (oder ein beliebiges Anbieter-/Modellpräfix)
 ```
 
-Wenn Ihr Editor `Authorization: Bearer ...` nicht senden kann, verwenden Sie stattdessen die tokenisierte Kompatibilitätsbasis:
+Falls Ihr Editor `Authorization: Bearer ...` nicht senden kann, verwenden Sie stattdessen die tokenisierte Kompatibilitätsbasis:
 
 ```txt
-Basis-URL:       http://localhost:20128/api/v1/vscode/YOUR_KEY/
-Modell-URL:      http://localhost:20128/api/v1/vscode/YOUR_KEY/models
-Chat-URL:        http://localhost:20128/api/v1/vscode/YOUR_KEY/chat/completions
-Ollama-Tags-URL: http://localhost:20128/api/v1/vscode/YOUR_KEY/api/tags
+Basis-URL:        http://localhost:20128/api/v1/vscode/YOUR_KEY/
+Modell-URL:       http://localhost:20128/api/v1/vscode/YOUR_KEY/models
+Chat-URL:         http://localhost:20128/api/v1/vscode/YOUR_KEY/chat/completions
+Ollama-Tags-URL:  http://localhost:20128/api/v1/vscode/YOUR_KEY/api/tags
 ```
 
 Funktioniert mit Claude Code, Codex CLI, Cursor, Cline, OpenClaw, OpenCode und OpenAI-kompatiblen SDKs.
 
-#### Automatisch mit `setup-*` konfigurieren
+#### Automatische Konfiguration mit `setup-*`
 
-Anstatt die Basis-URL und den Schlüssel manuell einzufügen, können Sie Pusula die eigene Konfiguration jedes Tools anhand des aktuellen Modellkatalogs erstellen lassen. Ein Befehl pro Tool:
+Anstatt die Basis-URL und den Schlüssel manuell einzufügen, lassen Sie Pusula die
+jeweilige Konfiguration jedes Tools anhand des aktuellen Modellkatalogs erstellen. Ein Befehl pro Tool:
 
 ```bash
 pusula setup-codex        # Profile unter ~/.codex/<name>.config.toml
@@ -174,19 +175,26 @@ pusula setup-opencode     # ~/.config/opencode/opencode.json (OpenAI-kompatibel)
 pusula setup-cline        # Einstellungen für Cline CLI und die VS-Code-Erweiterung
 pusula setup-kilo         # Kilo Code
 pusula setup-continue     # ~/.continue/config.yaml (Continue / cn)
-pusula setup-cursor       # gibt die innerhalb von Cursor auszuführenden Schritte aus
-pusula setup-roo          # Roo-Code-Import und autoImport-Verweis
+pusula setup-cursor       # gibt die auszuführenden Schritte in Cursor aus
+pusula setup-roo          # Roo-Code-Import und autoImport-Zeiger
 pusula setup-crush        # ~/.config/crush/crush.json
+pusula setup-zed          # ~/.config/zed/settings.json (openai_compatible)
 pusula setup-goose        # ~/.config/goose/config.yaml
 pusula setup-aider        # ~/.aider.conf.yml
 pusula setup-qwen         # ~/.qwen/settings.json und ~/.qwen/.env
 ```
 
-Jeder Befehl akzeptiert `--remote <url> --api-key <key>`, um ein lokales Tool für eine **entfernte** Pusula-Instanz zu konfigurieren, sowie `--dry-run` für eine Vorschau. Um eine CLI mit den passenden eingefügten Umgebungsvariablen zu starten, ohne eine Konfiguration zu schreiben, verwenden Sie den allgemeinen Starter `pusula run <target>` (claude, codex, aider, goose, opencode, qwen, gemini); die älteren toolspezifischen Starter `pusula launch` (Claude Code) und `pusula launch-codex` (Codex) bleiben verfügbar.
+Jeder Befehl akzeptiert `--remote <url> --api-key <key>`, um ein lokales Tool für eine
+**entfernte** Pusula-Instanz zu konfigurieren, sowie `--dry-run` für eine Vorschau. Um eine CLI mit den richtigen
+eingefügten Umgebungsvariablen zu starten, ohne überhaupt eine Konfiguration zu schreiben, verwenden Sie den generischen Starter
+`pusula run <target>` (claude, codex, aider, goose, opencode, qwen, gemini);
+die bisherigen toolspezifischen Starter `pusula launch` (Claude Code) und
+`pusula launch-codex` (Codex) bleiben verfügbar.
 
-Die vollständige Tabelle (welcher Befehl was schreibt, alle Flags, lokal gegenüber entfernt, `/v1`-Konventionen für Basis-URLs) finden Sie unter **[CLI-Integrationen](./CLI-INTEGRATIONS.md)**.
+Die vollständige Tabelle (welche Dateien die einzelnen Befehle schreiben, alle Flags, lokal im Vergleich zu entfernt, Basis-URL-
+`/v1`-Konventionen) finden Sie unter **[CLI-Integrationen](./CLI-INTEGRATIONS.md)**.
 
-Eine detaillierte Konfiguration der einzelnen Tools (Claude Code, Codex CLI, Cursor, Cline, OpenClaw, Kilo Code, Copilot und weitere) finden Sie im separaten **[Leitfaden für CLI-Tools](../reference/CLI-TOOLS.md)**.
+Eine ausführliche Konfiguration für die einzelnen Tools (Claude Code, Codex CLI, Cursor, Cline, OpenClaw, Kilo Code, Copilot und weitere) finden Sie im entsprechenden **[Leitfaden für CLI-Tools](../reference/CLI-TOOLS.md)**.
 
 ---
 
@@ -269,7 +277,7 @@ Für die meisten Bereitstellungen benötigen Sie nur diese beiden Variablen:
 | Variable                 | Standardwert                   | Zweck                                                                                                                                                                         |
 | ------------------------ | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `REQUEST_TIMEOUT_MS`     | `600000`                       | Gemeinsamer Ausgangswert für den Timeout bis zum Beginn der Upstream-Antwort, verborgene Undici-Timeouts, TLS-Fingerprint-Anfragen und Anfrage-/Proxy-Timeouts der API-Bridge |
-| `STREAM_IDLE_TIMEOUT_MS` | übernimmt `REQUEST_TIMEOUT_MS` | Maximaler Abstand zwischen Streaming-Chunks, bevor Pusula den SSE-Stream abbricht                                                                                          |
+| `STREAM_IDLE_TIMEOUT_MS` | übernimmt `REQUEST_TIMEOUT_MS` | Maximaler Abstand zwischen Streaming-Chunks, bevor Pusula den SSE-Stream abbricht                                                                                             |
 
 Die Abwärtskompatibilität bleibt erhalten: Vorhandene Variablen wie `FETCH_TIMEOUT_MS`, `API_BRIDGE_PROXY_TIMEOUT_MS` und andere schichtspezifische Timeout-Variablen funktionieren weiterhin und überschreiben den gemeinsamen Ausgangswert.
 
@@ -315,12 +323,12 @@ PORT=20128 DASHBOARD_PORT=20129 pusula
 
 ---
 
-## Vorlage für Void Linux (xbps-src)
+## Void-Linux-Vorlage (xbps-src)
 
-Benutzer von Void Linux können mit `xbps-src` ein natives Paket erstellen. Speichern Sie diesen Block als `srcpkgs/pusula/template`:
+Als Void-Linux-Benutzer können Sie mit `xbps-src` ein natives Paket erstellen. Speichern Sie diesen Block als `srcpkgs/pusula/template`:
 
 ```bash
-# Vorlagendatei für 'pusula'
+# Vorlagendatei für „pusula“
 pkgname=pusula
 version=3.8.0
 revision=1
@@ -331,7 +339,7 @@ maintainer="zenobit <zenobit@disroot.org>"
 license="MIT"
 homepage="https://github.com/Ferhat-Yasinoglu/pusula"
 distfiles="https://github.com/Ferhat-Yasinoglu/pusula/archive/refs/tags/v${version}.tar.gz"
-# Prüfsumme für jede Veröffentlichung neu generieren mit:
+# Prüfsumme für jede Veröffentlichung neu erzeugen mit:
 #   curl -L -o /tmp/pusula.tar.gz "https://github.com/Ferhat-Yasinoglu/pusula/archive/refs/tags/v${version}.tar.gz" && sha256sum /tmp/pusula.tar.gz
 checksum=PLACEHOLDER_REGENERATE_PER_RELEASE
 system_accounts="_pusula"
@@ -405,9 +413,9 @@ post_install() {
 
 ## Deinstallation
 
-| Befehl                   | Aktion                                                                                                |
-| ------------------------ | ----------------------------------------------------------------------------------------------------- |
+| Befehl                   | Aktion                                                                                             |
+| ------------------------ | -------------------------------------------------------------------------------------------------- |
 | `npm run uninstall`      | Entfernt die Systemanwendung, **behält jedoch Ihre Datenbank und Konfigurationen** in `~/.pusula`. |
-| `npm run uninstall:full` | Entfernt die Anwendung UND **löscht dauerhaft alle Konfigurationen, Schlüssel und Datenbanken**.      |
+| `npm run uninstall:full` | Entfernt die Anwendung UND **löscht dauerhaft alle Konfigurationen, Schlüssel und Datenbanken**.   |
 
 > Ausführliche Anweisungen zur Deinstallation für alle Methoden finden Sie unter [UNINSTALL.md](./UNINSTALL.md).

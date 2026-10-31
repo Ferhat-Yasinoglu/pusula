@@ -83,15 +83,15 @@ Cursor, Cline, and compatible MCP client setup.
 
 ## Essential Tools (14) — Phase 1
 
-| Tool                            | Scopes                | Description                                                                                                                    |
-| :------------------------------ | :-------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
+| Tool                         | Scopes                | Description                                                                                                                    |
+| :--------------------------- | :-------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
 | `pusula_get_health`          | `read:health`         | Uptime, memory, circuit breakers, rate limits, cache stats                                                                     |
 | `pusula_list_combos`         | `read:combos`         | All configured combos with strategies (optional metrics)                                                                       |
 | `pusula_get_combo_metrics`   | `read:combos`         | Performance metrics for a specific combo                                                                                       |
 | `pusula_switch_combo`        | `write:combos`        | Activate or deactivate a combo                                                                                                 |
 | `pusula_create_combo`        | `write:combos`        | Create a validated combo through the existing combo API                                                                        |
 | `pusula_check_quota`         | `read:quota`          | Quota used/total, percent remaining, reset time, token health                                                                  |
-| `pusula_route_request`       | `execute:completions` | Send a chat completion through Pusula routing                                                                               |
+| `pusula_route_request`       | `execute:completions` | Send a chat completion through Pusula routing                                                                                  |
 | `pusula_cost_report`         | `read:usage`          | Cost report by period (session/day/week/month)                                                                                 |
 | `pusula_list_models_catalog` | `read:models`         | Full model catalog with capabilities, status, pricing                                                                          |
 | `pusula_radar_catalog`       | `read:radar`          | Local signed Radar catalog; optional provider/family filters                                                                   |
@@ -102,8 +102,8 @@ Cursor, Cline, and compatible MCP client setup.
 
 ## Advanced Tools (11) — Phase 2
 
-| Tool                               | Scopes                               | Description                                                                               |
-| :--------------------------------- | :----------------------------------- | :---------------------------------------------------------------------------------------- |
+| Tool                            | Scopes                               | Description                                                                               |
+| :------------------------------ | :----------------------------------- | :---------------------------------------------------------------------------------------- |
 | `pusula_simulate_route`         | `read:health`, `read:combos`         | Dry-run routing simulation with fallback tree                                             |
 | `pusula_set_budget_guard`       | `write:budget`                       | Session budget with degrade/block/alert action                                            |
 | `pusula_set_routing_strategy`   | `write:combos`                       | Update combo strategy at runtime (priority/weighted/auto/etc.)                            |
@@ -118,15 +118,15 @@ Cursor, Cline, and compatible MCP client setup.
 
 ## Cache Tools (2)
 
-| Tool                    | Scopes        | Description                                         |
-| :---------------------- | :------------ | :-------------------------------------------------- |
+| Tool                 | Scopes        | Description                                         |
+| :------------------- | :------------ | :-------------------------------------------------- |
 | `pusula_cache_stats` | `read:cache`  | Semantic cache, prompt-cache, and idempotency stats |
 | `pusula_cache_flush` | `write:cache` | Flush cache globally or by signature/model          |
 
 ## Compression Tools (13)
 
-| Tool                                | Scopes              | Description                                                                                                              |
-| :---------------------------------- | :------------------ | :----------------------------------------------------------------------------------------------------------------------- |
+| Tool                             | Scopes              | Description                                                                                                              |
+| :------------------------------- | :------------------ | :----------------------------------------------------------------------------------------------------------------------- |
 | `pusula_compression_status`      | `read:compression`  | Compression settings, analytics summary, and cache-aware stats (includes `analytics.mcpDescriptionCompression` metadata) |
 | `pusula_compression_configure`   | `write:compression` | Configure compression mode, threshold, target ratio, system-prompt preservation, MCP description compression toggle      |
 | `pusula_set_compression_engine`  | `write:compression` | Pick the active engine (off/caveman/rtk/stacked) and Caveman/RTK intensity                                               |
@@ -175,8 +175,8 @@ the runtime compression model behind these tools.
 
 ## 1Proxy Tools (3)
 
-| Tool                        | Scopes         | Description                                                                             |
-| :-------------------------- | :------------- | :-------------------------------------------------------------------------------------- |
+| Tool                     | Scopes         | Description                                                                             |
+| :----------------------- | :------------- | :-------------------------------------------------------------------------------------- |
 | `pusula_oneproxy_fetch`  | `read:proxies` | Fetch free proxies from the 1proxy marketplace (protocol/country/quality/limit filters) |
 | `pusula_oneproxy_rotate` | `read:proxies` | Get the next available proxy by strategy (`random` / `quality` / `sequential`)          |
 | `pusula_oneproxy_stats`  | `read:proxies` | Pool stats, sync status, distribution by protocol and country                           |
@@ -185,8 +185,8 @@ the runtime compression model behind these tools.
 
 Defined in `open-sse/mcp-server/tools/memoryTools.ts`. Auth/scope is enforced through the standard MCP scope pipeline.
 
-| Tool                      | Scopes         | Description                                                                         |
-| :------------------------ | :------------- | :---------------------------------------------------------------------------------- |
+| Tool                   | Scopes         | Description                                                                         |
+| :--------------------- | :------------- | :---------------------------------------------------------------------------------- |
 | `pusula_memory_search` | `read:memory`  | Search memories by query / type / API key with token-budget enforcement             |
 | `pusula_memory_add`    | `write:memory` | Add a new memory entry (`factual` / `episodic` / `procedural` / `semantic`)         |
 | `pusula_memory_clear`  | `write:memory` | Clear memories for an API key, optionally filtered by type or `olderThan` timestamp |
@@ -195,8 +195,8 @@ Defined in `open-sse/mcp-server/tools/memoryTools.ts`. Auth/scope is enforced th
 
 Defined in `open-sse/mcp-server/tools/skillTools.ts`. Backed by `src/lib/skills/registry` + `src/lib/skills/executor`.
 
-| Tool                          | Scopes           | Description                                                                       |
-| :---------------------------- | :--------------- | :-------------------------------------------------------------------------------- |
+| Tool                       | Scopes           | Description                                                                       |
+| :------------------------- | :--------------- | :-------------------------------------------------------------------------------- |
 | `pusula_skills_list`       | `read:skills`    | List registered skills with optional filtering by API key, name, or enabled state |
 | `pusula_skills_enable`     | `write:skills`   | Enable or disable a specific skill by ID                                          |
 | `pusula_skills_execute`    | `execute:skills` | Execute a skill with provided input and return the execution record               |
@@ -234,8 +234,8 @@ curl -X DELETE http://localhost:20128/api/settings/notion
 
 Defined in `open-sse/mcp-server/tools/agentSkillTools.ts`. Backed by `src/lib/agentSkills/catalog`. These tools expose the 45-entry Agent Skills documentation catalog to MCP clients and external agents. Scope: `read:catalog`.
 
-| Tool                              | Scopes         | Description                                                                                                                |
-| :-------------------------------- | :------------- | :------------------------------------------------------------------------------------------------------------------------- |
+| Tool                           | Scopes         | Description                                                                                                                |
+| :----------------------------- | :------------- | :------------------------------------------------------------------------------------------------------------------------- |
 | `pusula_agent_skills_list`     | `read:catalog` | List all 45 agent skills with optional `category` (api\|cli) and `area` filters; returns metadata + coverage               |
 | `pusula_agent_skills_get`      | `read:catalog` | Get full metadata + SKILL.md content for a single skill by canonical `id`                                                  |
 | `pusula_agent_skills_coverage` | `read:catalog` | Coverage stats: how many of the 23 API, 21 CLI and 1 config skills have SKILL.md files on the filesystem vs catalog totals |
@@ -307,12 +307,12 @@ access token to a mutating management route get HTTP 403
 That rank is `scopeSatisfies`. It does not consult the MCP table, and the MCP
 matcher does not consult it.
 
-| Namespace          | Credential                                                | Checker                | A pass allows                                                |
-| :----------------- | :-------------------------------------------------------- | :--------------------- | :----------------------------------------------------------- |
-| API-key management | `api_keys.scopes`                                         | `hasManageScope`       | Management REST for that Bearer key                          |
-| API-key additive   | same array, one exact string                              | the helper named below | Only that one capability                                     |
+| Namespace          | Credential                                             | Checker                | A pass allows                                                |
+| :----------------- | :----------------------------------------------------- | :--------------------- | :----------------------------------------------------------- |
+| API-key management | `api_keys.scopes`                                      | `hasManageScope`       | Management REST for that Bearer key                          |
+| API-key additive   | same array, one exact string                           | the helper named below | Only that one capability                                     |
 | MCP tool scopes    | same array, else MCP `_meta`, else `PUSULA_MCP_SCOPES` | `scopeMatches`         | That tool, once enforcement is on                            |
-| Access token       | `oma_live_…`                                              | `scopeSatisfies`       | The management route whose method and path require that rank |
+| Access token       | `oma_live_…`                                           | `scopeSatisfies`       | The management route whose method and path require that rank |
 
 Minting each credential is covered in
 [Management Authentication](../guides/MANAGEMENT-AUTH.md).
@@ -379,6 +379,9 @@ rank with `inferRequiredScope` (`src/server/authz/accessScopes.ts`):
   is on that list, so a `write` access token still cannot call the MCP HTTP
   surface.
 - Paths in `ADMIN_MUTATION_PREFIXES` require `admin` only for mutations.
+- Paths in `ADMIN_MUTATION_EXACT_PATHS` (`/api/settings`,
+  `/api/settings/require-login`) require `admin` only for mutations, and only on
+  that exact path — other `/api/settings/*` sub-routes keep `write`.
 
 `PATCH /api/keys/{id}` is a mutation and is not on those admin lists, so a
 `read` token receives 403
@@ -422,8 +425,8 @@ Each tool requires specific scopes:
 | `write:skills`        | `skills_enable`                                                                                                                                                              |
 | `execute:skills`      | `skills_execute`                                                                                                                                                             |
 | `read:catalog`        | `agent_skills_list`, `agent_skills_get`, `agent_skills_coverage`                                                                                                             |
-| `read:tools`          | `pusula_tool_search`                                                                                                                                                      |
-| `read:radar`          | `pusula_radar_catalog`                                                                                                                                                    |
+| `read:tools`          | `pusula_tool_search`                                                                                                                                                         |
+| `read:radar`          | `pusula_radar_catalog`                                                                                                                                                       |
 | `read:gamification`   | `gamification_profile`, `gamification_rank`, `gamification_leaderboard`, `gamification_badges`, `gamification_servers`, `gamification_anomalies`                             |
 | `write:gamification`  | `gamification_invite`, `gamification_transfer`                                                                                                                               |
 | `read:plugins`        | `plugin_list`, `plugin_executions`                                                                                                                                           |
@@ -457,28 +460,40 @@ and passes it to the MCP SDK's `transport.handleRequest(req, { authInfo })`, so
 the `_meta` and `PUSULA_MCP_SCOPES` env fallback — this only populates that first,
 highest-priority source, which was previously unfed over HTTP. When no API key resolves
 (no header, invalid key), `authInfo` stays `undefined` and resolution falls through to the
-existing `meta`/env chain unchanged. This does NOT flip `PUSULA_MCP_ENFORCE_SCOPES`'s
-default — enforcement still has to be explicitly enabled; this change only makes the
-per-key path take precedence once it is. stdio has no per-caller identity (see
+existing `meta`/env chain unchanged. stdio has no per-caller identity (see
 `mcpCallerIdentity.ts`) and is unaffected — it stays on the `_meta`/env fallback chain.
+
+**Enforcement is forced on for narrow-scoped HTTP/SSE callers regardless of
+`PUSULA_MCP_ENFORCE_SCOPES`.** `PUSULA_MCP_ENFORCE_SCOPES` defaulting to `false` is only
+safe for the local/stdio single-operator flow, where there is no per-caller identity to scope
+against. `open-sse/mcp-server/server.ts::withScopeEnforcement()` turns per-tool scope
+enforcement on unconditionally (`shouldForceScopeEnforcement()` in `scopeEnforcement.ts`)
+whenever `resolveCallerScopeContext()` resolved
+`source === "authInfo"` (i.e. a real per-key HTTP Authorization header, HTTP/SSE-only) AND that
+key does not hold full `manage`/`admin` scope. This closes the gap where a key holding ONLY
+the narrow `mcp:connect` bypass scope — documented above as authorizing nothing but the
+`/api/mcp/` LOCAL_ONLY carve-out — could otherwise invoke every MCP tool once an operator
+enabled remote/non-loopback MCP access, simply because `PUSULA_MCP_ENFORCE_SCOPES` ships
+`false` by default. A full `manage`/`admin` key over HTTP, and every stdio/local caller, keep
+the existing `PUSULA_MCP_ENFORCE_SCOPES`-gated behavior unchanged.
 
 ---
 
 ## Environment Variables
 
-| Variable                                | Default                            | Purpose                                                                                                                  |
-| :-------------------------------------- | :--------------------------------- | :----------------------------------------------------------------------------------------------------------------------- |
-| `PUSULA_BASE_URL`                    | `http://localhost:20128`           | Base URL the MCP server uses when calling Pusula internal APIs                                                        |
-| `PUSULA_API_KEY`                     | (empty)                            | API key forwarded as `Authorization: Bearer` to internal API calls                                                       |
-| `PUSULA_MCP_ENFORCE_SCOPES`          | `false` (only `"true"` enables it) | When enabled, missing scopes deny tool calls and log `scope_denied:<reason>` in audit log                                |
-| `PUSULA_MCP_SCOPES`                  | (empty)                            | Comma-separated allowlist of scopes considered "available" by default (used when caller does not provide its own scopes) |
-| `PUSULA_MCP_COMPRESS_DESCRIPTIONS`   | (unset = on)                       | When set to `0/false/off/no`, disables MCP description compression at registration time                                  |
-| `PUSULA_MCP_DESCRIPTION_COMPRESSION` | (unset = on)                       | Alternate alias for the same toggle as above                                                                             |
-| `PUSULA_MCP_FETCH_TIMEOUT_MS`        | `10000`                            | Abort budget for internal management reads (health, resilience, combos, quota, usage)                                    |
-| `PUSULA_MCP_UPSTREAM_TIMEOUT_MS`     | `60000`                            | Abort budget for hops that wait on a provider (`route_request`, `web_search`, `web_fetch`)                               |
-| `MCP_TOOL_DENY`                         | (unset = no filter)                | Comma-separated tool names to drop from `tools/list` (tool-cardinality reduction — see below)                            |
-| `MCP_TOOL_ALLOW`                        | (unset = no filter)                | Comma-separated tool names to keep exclusively (allow-list mode — see below)                                             |
-| `DATA_DIR`                              | `~/.pusula`                     | Heartbeat file is written to `${DATA_DIR}/runtime/mcp-heartbeat.json`                                                    |
+| Variable                             | Default                            | Purpose                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| :----------------------------------- | :--------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `PUSULA_BASE_URL`                    | `http://localhost:20128`           | Base URL the MCP server uses when calling Pusula internal APIs                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `PUSULA_API_KEY`                     | (empty)                            | API key forwarded as `Authorization: Bearer` to internal API calls                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `PUSULA_MCP_ENFORCE_SCOPES`          | `false` (only `"true"` enables it) | When enabled, missing scopes deny tool calls and log `scope_denied:<reason>` in audit log. Enforcement is ALSO forced on regardless of this flag for any HTTP/SSE caller resolved from a per-key Authorization header (`source === "authInfo"`) that lacks full `manage`/`admin` scope — e.g. a key holding only the narrow `mcp:connect` bypass scope — so this default is safe only for the local/stdio single-operator flow, never for remote non-loopback access |
+| `PUSULA_MCP_SCOPES`                  | (empty)                            | Comma-separated allowlist of scopes considered "available" by default (used when caller does not provide its own scopes)                                                                                                                                                                                                                                                                                                                                             |
+| `PUSULA_MCP_COMPRESS_DESCRIPTIONS`   | (unset = on)                       | When set to `0/false/off/no`, disables MCP description compression at registration time                                                                                                                                                                                                                                                                                                                                                                              |
+| `PUSULA_MCP_DESCRIPTION_COMPRESSION` | (unset = on)                       | Alternate alias for the same toggle as above                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `PUSULA_MCP_FETCH_TIMEOUT_MS`        | `10000`                            | Abort budget for internal management reads (health, resilience, combos, quota, usage)                                                                                                                                                                                                                                                                                                                                                                                |
+| `PUSULA_MCP_UPSTREAM_TIMEOUT_MS`     | `60000`                            | Abort budget for hops that wait on a provider (`route_request`, `web_search`, `web_fetch`)                                                                                                                                                                                                                                                                                                                                                                           |
+| `MCP_TOOL_DENY`                      | (unset = no filter)                | Comma-separated tool names to drop from `tools/list` (tool-cardinality reduction — see below)                                                                                                                                                                                                                                                                                                                                                                        |
+| `MCP_TOOL_ALLOW`                     | (unset = no filter)                | Comma-separated tool names to keep exclusively (allow-list mode — see below)                                                                                                                                                                                                                                                                                                                                                                                         |
+| `DATA_DIR`                           | `~/.pusula`                        | Heartbeat file is written to `${DATA_DIR}/runtime/mcp-heartbeat.json`                                                                                                                                                                                                                                                                                                                                                                                                |
 
 ---
 

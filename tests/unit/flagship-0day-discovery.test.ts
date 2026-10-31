@@ -102,7 +102,9 @@ test("test 6: CATALOG_SIBLING_IDS stays agy/antigravity and never keys the xai f
 });
 
 test("test 7: xai family stays out of PROVIDER_SEARCH_PAIRS and credential lookup", async () => {
-  const src = readRepo("src/sse/services/auth.ts");
+  // #15927 moved PROVIDER_SEARCH_PAIRS (with getProviderSearchPool) out of
+  // src/sse/services/auth.ts into the shared pool module used by combo discovery.
+  const src = readRepo("open-sse/services/providerConnectionPool.ts");
   const literal = extractNamedConstLiteral(src, "PROVIDER_SEARCH_PAIRS");
   const uncommented = literal.replace(/\/\/.*$/gm, "");
   assert.doesNotMatch(uncommented, /["']xai["']|["']xai-oauth["']|["']xao["']/);
@@ -130,7 +132,9 @@ test("test 7: xai family stays out of PROVIDER_SEARCH_PAIRS and credential looku
 });
 
 test("test 9: xai, xai-oauth, claude, and grok-cli seeds omit unreleased flagship ids", () => {
-  const banned = ["grok-4.7", "gemini-4.0-pro", "claude-opus-5-1", "claude-opus-5.1"];
+  // grok-4.7 is intentionally seeded since the grok-cli registry started carrying
+  // its object-catalog reasoning tiers; the remaining ids stay discover-only.
+  const banned = ["gemini-4.0-pro", "claude-opus-5-1", "claude-opus-5.1"];
   for (const provider of ["xai", "xai-oauth", "claude", "grok-cli"]) {
     const entry = getRegistryEntry(provider);
     assert.ok(entry, `${provider} registry entry must exist`);

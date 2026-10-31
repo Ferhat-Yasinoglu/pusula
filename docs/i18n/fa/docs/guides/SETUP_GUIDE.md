@@ -90,8 +90,8 @@ pusula providers test-batch
 
 ### گزینههای CLI
 
-| فرمان                   | توضیحات                                                               |
-| ----------------------- | --------------------------------------------------------------------- |
+| فرمان                | توضیحات                                                               |
+| -------------------- | --------------------------------------------------------------------- |
 | `pusula`             | راهاندازی سرور (`PORT=20128`، API و داشبورد روی یک پورت)              |
 | `pusula setup`       | راهاندازی هدایتشده CLI برای گذرواژه و اولین ارائهدهنده                |
 | `pusula doctor`      | اجرای بررسیهای سلامت محلی بدون راهاندازی سرور                         |
@@ -99,7 +99,7 @@ pusula providers test-batch
 | `pusula config`      | پیکربندی ابزار CLI — فهرستکردن، دریافت، تنظیم و اعتبارسنجی پیکربندیها |
 | `pusula status`      | داشبورد وضعیت آفلاین — نسخه، DB، ابزارها و پیکربندی                   |
 | `pusula logs`        | پخش زنده گزارشهای استفاده از API (با پشتیبانی از `--follow`)          |
-| `pusula update`      | بررسی یا اعمال بهروزرسانیهای Pusula                                |
+| `pusula update`      | بررسی یا اعمال بهروزرسانیهای Pusula                                   |
 | `pusula provider`    | مدیریت اتصال ارائهدهندگان — افزودن، فهرستکردن، حذف، آزمایش و پیشفرض   |
 | `pusula --port 3000` | تنظیم پورت اصلی/API روی 3000                                          |
 | `pusula --mcp`       | راهاندازی سرور MCP (انتقال stdio)                                     |
@@ -144,28 +144,29 @@ pusula providers validate
 2. داشبورد → `Endpoints` را باز کنید و یک کلید API بسازید.
 3. (اختیاری) داشبورد → `Combos` را باز کنید و زنجیره جایگزین خود را تنظیم کنید.
 
-### 2) هدایت ابزار کدنویسی
+### 2) هدایت ابزار کدنویسی شما
 
 ```txt
-Base URL: http://localhost:20128/v1
-API Key:  [copy from Endpoint page]
-Model:    if/qwen3.8-max-preview (or any provider/model prefix)
+نشانی پایه: http://localhost:20128/v1
+کلید API:  [از صفحه Endpoint کپی کنید]
+مدل:    if/qwen3.8-max-preview (یا هر پیشوند ارائهدهنده/مدل دیگر)
 ```
 
-اگر ویرایشگر شما نمیتواند `Authorization: Bearer ...` را ارسال کند، بهجای آن از آدرس پایه سازگاری توکندار استفاده کنید:
+اگر ویرایشگر شما نمیتواند `Authorization: Bearer ...` را ارسال کند، بهجای آن از نشانی پایه سازگاریِ توکندار استفاده کنید:
 
 ```txt
-Base URL: http://localhost:20128/api/v1/vscode/YOUR_KEY/
-Models URL: http://localhost:20128/api/v1/vscode/YOUR_KEY/models
-Chat URL: http://localhost:20128/api/v1/vscode/YOUR_KEY/chat/completions
-Ollama Tags URL: http://localhost:20128/api/v1/vscode/YOUR_KEY/api/tags
+نشانی پایه: http://localhost:20128/api/v1/vscode/YOUR_KEY/
+نشانی مدلها: http://localhost:20128/api/v1/vscode/YOUR_KEY/models
+نشانی چت: http://localhost:20128/api/v1/vscode/YOUR_KEY/chat/completions
+نشانی برچسبهای Ollama: http://localhost:20128/api/v1/vscode/YOUR_KEY/api/tags
 ```
 
 با Claude Code، Codex CLI، Cursor، Cline، OpenClaw، OpenCode و SDKهای سازگار با OpenAI کار میکند.
 
 #### پیکربندی خودکار با `setup-*`
 
-بهجای وارد کردن دستی آدرس پایه و کلید، اجازه دهید Pusula پیکربندی اختصاصی هر ابزار را از کاتالوگ زنده مدلها بنویسد. برای هر ابزار یک فرمان:
+بهجای وارد کردن دستی نشانی پایه و کلید، اجازه دهید Pusula پیکربندی اختصاصی هر ابزار را
+از کاتالوگ زنده مدلها بنویسد. برای هر ابزار یک فرمان:
 
 ```bash
 pusula setup-codex        # پروفایلهای ~/.codex/<name>.config.toml
@@ -174,19 +175,26 @@ pusula setup-opencode     # ~/.config/opencode/opencode.json (سازگار با 
 pusula setup-cline        # تنظیمات Cline CLI و افزونه VS Code
 pusula setup-kilo         # Kilo Code
 pusula setup-continue     # ~/.continue/config.yaml (Continue / cn)
-pusula setup-cursor       # مراحل داخل برنامه Cursor را نمایش میدهد
-pusula setup-roo          # وارد کردن Roo Code و اشارهگر autoImport
+pusula setup-cursor       # مراحل درونبرنامهای Cursor را نمایش میدهد
+pusula setup-roo          # درونریزی Roo Code و اشارهگر autoImport
 pusula setup-crush        # ~/.config/crush/crush.json
+pusula setup-zed          # ~/.config/zed/settings.json (openai_compatible)
 pusula setup-goose        # ~/.config/goose/config.yaml
 pusula setup-aider        # ~/.aider.conf.yml
 pusula setup-qwen         # ~/.qwen/settings.json + ~/.qwen/.env
 ```
 
-هرکدام گزینههای `--remote <url> --api-key <key>` را برای پیکربندی یک ابزار محلی جهت استفاده از یک Pusula **راهدور** میپذیرند؛ همچنین میتوانید برای پیشنمایش از `--dry-run` استفاده کنید. برای اجرای یک CLI با تزریق env مناسب، بدون نوشتن هیچگونه پیکربندی، از اجراکننده عمومی `pusula run <target>` استفاده کنید (claude، codex، aider، goose، opencode، qwen، gemini)؛ اجراکنندههای قدیمی مختص هر ابزار، یعنی `pusula launch` (Claude Code) و `pusula launch-codex` (Codex)، همچنان در دسترس هستند.
+هرکدام برای پیکربندی یک ابزار محلی جهت استفاده از یک Pusula
+**راهدور**، گزینههای `--remote <url> --api-key <key>` و برای پیشنمایش گزینه `--dry-run` را میپذیرند. برای اجرای یک CLI با
+متغیرهای محیطی مناسب، بدون نوشتن هیچگونه پیکربندی، از اجراکننده عمومی
+`pusula run <target>` (claude، codex، aider، goose، opencode، qwen، gemini) استفاده کنید؛
+اجراکنندههای قدیمی مختص هر ابزار، یعنی `pusula launch` (Claude Code) و
+`pusula launch-codex` (Codex)، همچنان در دسترس هستند.
 
-برای مشاهده جدول کامل (مواردی که هر فرمان مینویسد، همه گزینهها، حالت محلی در برابر راهدور و قراردادهای `/v1` برای آدرس پایه)، به **[یکپارچهسازیهای CLI](./CLI-INTEGRATIONS.md)** مراجعه کنید.
+برای مشاهده جدول کامل (اینکه هر فرمان چه چیزی مینویسد، همه گزینهها، حالت محلی در برابر راهدور و قراردادهای نشانی پایه
+`/v1`)، به **[یکپارچهسازیهای CLI](./CLI-INTEGRATIONS.md)** مراجعه کنید.
 
-برای پیکربندی جزئی و اختصاصی هر ابزار (Claude Code، Codex CLI، Cursor، Cline، OpenClaw، Kilo Code، Copilot و موارد بیشتر)، به **[راهنمای ابزارهای CLI](../reference/CLI-TOOLS.md)** مراجعه کنید.
+برای پیکربندی تفصیلی هر ابزار (Claude Code، Codex CLI، Cursor، Cline، OpenClaw، Kilo Code، Copilot و موارد دیگر)، به **[راهنمای ابزارهای CLI](../reference/CLI-TOOLS.md)** اختصاصی مراجعه کنید.
 
 ---
 
@@ -269,7 +277,7 @@ curl -X POST http://localhost:20128/a2a \
 | متغیر                    | مقدار پیشفرض                         | هدف                                                                                                                 |
 | ------------------------ | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
 | `REQUEST_TIMEOUT_MS`     | `600000`                             | مبنای مشترک برای مهلت شروع پاسخ بالادست، مهلتهای پنهان Undici، درخواستهای اثرانگشت TLS و مهلت درخواست/پراکسی پل API |
-| `STREAM_IDLE_TIMEOUT_MS` | از `REQUEST_TIMEOUT_MS` به ارث میبرد | حداکثر فاصله بین قطعههای استریم پیش از آنکه Pusula استریم SSE را متوقف کند                                       |
+| `STREAM_IDLE_TIMEOUT_MS` | از `REQUEST_TIMEOUT_MS` به ارث میبرد | حداکثر فاصله بین قطعههای استریم پیش از آنکه Pusula استریم SSE را متوقف کند                                          |
 
 سازگاری با نسخههای پیشین حفظ شده است: متغیرهای مهلت زمانی موجود مانند `FETCH_TIMEOUT_MS`،‏ `API_BRIDGE_PROXY_TIMEOUT_MS` و سایر متغیرهای مهلت زمانی مختص هر لایه همچنان کار میکنند و مقدار مبنای مشترک را بازنویسی میکنند.
 
@@ -315,9 +323,9 @@ PORT=20128 DASHBOARD_PORT=20129 pusula
 
 ---
 
-## قالب Void Linux ‏(xbps-src)
+## قالب Void Linux ‏(`xbps-src`)
 
-کاربران Void Linux میتوانند با استفاده از `xbps-src` یک بستهٔ بومی بسازند. این بلوک را با نام `srcpkgs/pusula/template` ذخیره کنید:
+کاربران Void Linux میتوانند با استفاده از `xbps-src` یک بستهٔ بومی بسازند. این بلوک را با مسیر `srcpkgs/pusula/template` ذخیره کنید:
 
 ```bash
 # فایل قالب برای 'pusula'
@@ -405,9 +413,9 @@ post_install() {
 
 ## حذف نصب
 
-| فرمان                    | عملکرد                                                                                              |
-| ------------------------ | --------------------------------------------------------------------------------------------------- |
-| `npm run uninstall`      | برنامهٔ سیستمی را حذف میکند، اما **پایگاه داده و پیکربندیهای شما** را در `~/.pusula` نگه میدارد. |
-| `npm run uninstall:full` | برنامه را حذف میکند و همچنین **تمام پیکربندیها، کلیدها و پایگاههای داده را برای همیشه پاک میکند**.  |
+| فرمان                    | عملکرد                                                                                             |
+| ------------------------ | -------------------------------------------------------------------------------------------------- |
+| `npm run uninstall`      | برنامهٔ سیستمی را حذف میکند، اما **پایگاه داده و پیکربندیهای شما** را در `~/.pusula` نگه میدارد.   |
+| `npm run uninstall:full` | برنامه را حذف میکند و همچنین **تمام پیکربندیها، کلیدها و پایگاههای داده را برای همیشه پاک میکند**. |
 
 > برای مشاهدهٔ دستورالعملهای دقیق حذف نصب برای همهٔ روشها، به [UNINSTALL.md](./UNINSTALL.md) مراجعه کنید.

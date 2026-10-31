@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, type ReactNode } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, type ReactNode } from "react";
 import {
   ReactFlow,
   Controls,
@@ -72,48 +72,45 @@ export function FlowCanvas({
   // Bumped on every onInit so queued fitView calls can be invalidated when
   // a new ReactFlow instance mounts (e.g. via fitKey change).
   const generationRef = useRef(0);
-  // The deferred initial fitView, so an unmount can cancel it: without this the
-  // timer outlives the component and calls fitView on a torn-down instance
-  // (React Flow then dispatches state on an unmounted store).
-  const initFitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  // React Flow hands out onInit on its own 1ms timer (useOnInitHandler), so the callback
-  // can arrive AFTER this component unmounted — a fast remount, or a test tearing down right
-  // after render. A late init must not re-arm the fitView timer the unmount just cleared.
+  const initTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const mountedRef = useRef(true);
+  // A graph identity, not just its key value: a -> b -> a still disposes the
+  // original graph and must never accept its delayed initializer again.
+  const initIdentity = useMemo(() => ({ fitKey }), [fitKey]);
+  const activeInitRef = useRef(initIdentity);
 
-  const onInit = useCallback((instance: ReactFlowInstance) => {
-    if (!mountedRef.current) return;
-    const generation = ++generationRef.current;
-    rfInstance.current = instance;
-    // Defer fitView until ReactFlow has measured its viewport, but guard
-    // against the instance being replaced (generation mismatch) before the
-    // timer fires — see Bug #4 in the audit report.
-    if (initFitTimerRef.current) clearTimeout(initFitTimerRef.current);
-    initFitTimerRef.current = setTimeout(() => {
-      initFitTimerRef.current = null;
-      if (generationRef.current === generation) {
-        instance.fitView(FIT_VIEW_OPTIONS);
-      }
-    }, REFIT_DELAY_MS);
-  }, []);
+  useLayoutEffect(() => {
+    if (activeInitRef.current !== initIdentity) {
+      // A keyed graph is already disposed before its replacement's deferred
+      // onInit arrives. Invalidate both initialization and node-count timers
+      // immediately, and prevent resize callbacks from reaching the old ref.
+      generationRef.current++;
+      if (initTimerRef.current !== null) clearTimeout(initTimerRef.current);
+      initTimerRef.current = null;
+      rfInstance.current = null;
+    }
+    activeInitRef.current = initIdentity;
+  }, [initIdentity]);
 
-  useEffect(() => {
-    // Capture the ref objects (not their values) so the cleanup reads them at unmount time.
-    const mounted = mountedRef;
-    const generation = generationRef;
-    const initFitTimer = initFitTimerRef;
-    mounted.current = true;
-    return () => {
-      // Invalidate every queued fitView, drop the deferred onInit fit, and ignore any onInit
-      // React Flow still delivers after this point.
-      mounted.current = false;
-      generation.current++;
-      if (initFitTimer.current) {
-        clearTimeout(initFitTimer.current);
-        initFitTimer.current = null;
-      }
-    };
-  }, []);
+  const onInit = useCallback(
+    (instance: ReactFlowInstance) => {
+      // React Flow defers onInit itself; it may arrive after our cleanup ran.
+      if (!mountedRef.current || activeInitRef.current !== initIdentity) return;
+      if (initTimerRef.current !== null) clearTimeout(initTimerRef.current);
+      const generation = ++generationRef.current;
+      rfInstance.current = instance;
+      // Defer fitView until ReactFlow has measured its viewport, but guard
+      // against the instance being replaced (generation mismatch) before the
+      // timer fires — see Bug #4 in the audit report.
+      initTimerRef.current = setTimeout(() => {
+        initTimerRef.current = null;
+        if (generationRef.current === generation && rfInstance.current === instance) {
+          instance.fitView(FIT_VIEW_OPTIONS);
+        }
+      }, REFIT_DELAY_MS);
+    },
+    [initIdentity]
+  );
 
   useEffect(() => {
     const el = containerRef.current;
@@ -140,8 +137,12 @@ export function FlowCanvas({
   // Clear the ref on unmount so a late-arriving callback (e.g. a ResizeObserver
   // tick fired just before the React tree unmounted) cannot reach into a
   // disposed ReactFlow instance.
-  useEffect(() => {
+  useLayoutEffect(() => {
+    mountedRef.current = true;
     return () => {
+      mountedRef.current = false;
+      if (initTimerRef.current !== null) clearTimeout(initTimerRef.current);
+      initTimerRef.current = null;
       rfInstance.current = null;
     };
   }, []);

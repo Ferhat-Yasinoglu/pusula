@@ -150,6 +150,10 @@ pusula policy get <id>
 
 ### `policy create`
 
+**Flags:**
+
+- `--file <path>`
+
 **Example:**
 
 ```bash
@@ -157,6 +161,10 @@ pusula policy create
 ```
 
 ### `policy update <id>`
+
+**Flags:**
+
+- `--file <path>`
 
 **Example:**
 
@@ -180,6 +188,8 @@ pusula policy delete <id>
 
 **Flags:**
 
+- `--api-key <k>`
+- `--action <a>`
 - `--resource <r>`
 - `--context <json>`
 

@@ -32,9 +32,11 @@ describe("LocaleAutoDetect refresh gating", () => {
     (
       globalThis as typeof globalThis & { IS_REACT_ACT_ENVIRONMENT?: boolean }
     ).IS_REACT_ACT_ENVIRONMENT = true;
-    refresh.mockClear();
+    refresh.mockReset();
     // Fresh visit: no locale cookie.
     document.cookie = "NEXT_LOCALE=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    localStorage.removeItem("NEXT_LOCALE");
+    document.documentElement.dir = "ltr";
     Object.defineProperty(navigator, "languages", { value: ["en-US"], configurable: true });
   });
 
@@ -51,7 +53,7 @@ describe("LocaleAutoDetect refresh gating", () => {
       root.render(React.createElement(LocaleAutoDetect));
     });
     cleanups.push(() => {
-      root.unmount();
+      act(() => root.unmount());
       container.remove();
     });
   }
@@ -65,6 +67,22 @@ describe("LocaleAutoDetect refresh gating", () => {
   it("refreshes when the detected locale differs from the server-rendered <html lang>", async () => {
     document.documentElement.lang = "de";
     await mount();
+    expect(refresh).toHaveBeenCalledTimes(1);
+  });
+
+  it("persists the detected locale before refreshing server content on a first visit", async () => {
+    document.documentElement.lang = "en";
+    // Persian is Pusula's right-to-left locale (the four configured locales are en/tr/de/fa).
+    Object.defineProperty(navigator, "languages", { value: ["fa"], configurable: true });
+    refresh.mockImplementation(() => {
+      expect(document.cookie).toContain("NEXT_LOCALE=fa");
+      expect(localStorage.getItem("NEXT_LOCALE")).toBe("fa");
+      expect(document.documentElement.lang).toBe("fa");
+      expect(document.documentElement.dir).toBe("rtl");
+    });
+
+    await mount();
+
     expect(refresh).toHaveBeenCalledTimes(1);
   });
 

@@ -122,7 +122,7 @@ Pusula kullanırken hiçbir zaman ayrı bir dönüştürme proxy'sine ihtiyaç d
 
 ### Modele göre bağlam pencereleri
 
-| Model                                | Pusula kimliği                    | Bağlam penceresi          | `auto_compact` | `tool_output_limit` |
+| Model                                | Pusula kimliği                       | Bağlam penceresi          | `auto_compact` | `tool_output_limit` |
 | ------------------------------------ | ------------------------------------ | ------------------------- | -------------- | ------------------- |
 | GPT-5.5                              | `cx/gpt-5.5`                         | 400k güvenilir (maks. 1M) | 350,000        | 32,768              |
 | Kimi K2.7 (düşünme)                  | `kmc/kimi-k2.7`                      | 131,072                   | 112,000        | 32,768              |
@@ -152,7 +152,7 @@ Pusula kullanırken hiçbir zaman ayrı bir dönüştürme proxy'sine ihtiyaç d
 
 Pusula'taki tüm Codex modelleri `cx/` önekini kullanır:
 
-| Codex CLI adı           | Pusula modeli   |
+| Codex CLI adı           | Pusula modeli      |
 | ----------------------- | ------------------ |
 | `cx/gpt-5.5`            | GPT-5.5 standart   |
 | `cx/gpt-5.4`            | GPT-5.4 standart   |
@@ -275,12 +275,12 @@ codex -p chat     # cx/gpt-5.5, çaba ayarlanmamış (sunucu varsayılanı)
 
 ---
 
-## `pusula setup-codex` ile otomatik profil oluşturma
+## `pusula setup-codex` ile profilleri otomatik olarak oluşturma
 
 Pusula'u bir VPS üzerinde çalıştırıyorsanız canlı model kataloğundan otomatik olarak profil dosyaları oluşturabilirsiniz:
 
 ```bash
-# Bir VPS üzerinden (20128 numaralı bağlantı noktasındaki yerel Pusula'u kullanır)
+# Bir VPS'ten (20128 numaralı bağlantı noktasındaki yerel Pusula'u kullanır)
 pusula setup-codex
 
 # Herhangi bir makineden — VPS'nizi belirtin
@@ -296,9 +296,15 @@ pusula setup-codex --only glm,kimi
 pusula setup-codex --codex-home /path/to/.codex
 ```
 
-Komut `/v1/models` verilerini alır, bilinen modeller için optimize edilmiş profilleri kullanır, diğer uyumlu metin modelleri için katalog meta verilerine geri döner ve her biri için `~/.codex/<name>.config.toml` dosyasını yazar. İdempotenttir — yeniden çalıştırılması güvenlidir.
+Komut `/v1/models` verilerini alır, bilinen modeller için ayarlanmış profilleri kullanır, diğer uyumlu metin modelleri için katalog meta verilerine başvurur ve her biri için `~/.codex/<name>.config.toml` dosyasını yazar. İdempotenttir — yeniden çalıştırılması güvenlidir.
 
-Pusula, başarılı bir sağlayıcı model keşfi/içe aktarma işlemi canlı kataloğu değiştirdikten sonra aynı profil dosyalarını **otomatik olarak eşitleyebilir**. Bu özellik **isteğe bağlıdır ve varsayılan olarak kapalıdır**: **CLI Code dashboard** üzerinden etkinleştirin ("CLI profile auto-sync" → Codex) veya `PUSULA_AUTO_SYNC_CODEX_PROFILES=true` değerini ayarlayın (`CLI_ALLOW_CONFIG_WRITES` ayarını da dikkate alır; bu ayar varsayılan olarak açıktır). Etkinleştirildiğinde yalnızca ayrı `~/.codex/*.config.toml` profil dosyalarını yazar; etkin/varsayılan `~/.codex/config.toml` dosyasını, Codex-lb ayarlarını, kimlik doğrulamayı veya sağlayıcı seçimini hiçbir zaman değiştirmez.
+Temel `config.toml` dosyasında `model_providers.pusula` tanımı yoksa açıkça çalıştırılan `setup-codex`, seçilen yerel veya uzak uç noktayı kullanarak bu tanımı oluşturulan her katmana ekler. Temel dosya değiştirilmeden bırakılır. Mevcut bir sağlayıcı tanımı, uç noktası ve kimlik doğrulama ayarları da dâhil olmak üzere devralınır. Geçersiz temel TOML, profiller yazılmadan önce oluşturma işlemini durdurur.
+
+`--api-key` veya `PUSULA_API_KEY` sağladığınızda yeni tanımlanan sağlayıcı `env_key = "PUSULA_API_KEY"` ifadesine başvurur; anahtarın kendisi asla kaydedilmez veya önizlemede yazdırılmaz. Bu değişkeni Codex'i başlattığınız ortamda ayarlayın. Bir anahtar sağlanmadığında yeni tanım, kimlik doğrulaması yapılmamış istekleri kabul edecek şekilde yapılandırılmış bir Pusula örneği için anahtar gerektirmez.
+
+Aşağıda açıklanan isteğe bağlı katalog otomatik eşitlemesi, bir katmanda zaten bulunan sağlayıcı tanımlarını korur ancak yeni sağlayıcı ayarlarını ilk kez oluşturmaz; sağlayıcıyı önce açık kurulumla veya kontrol panelinden yapılandırın. Operatör tarafından yönetilen kimlik bilgileri içerebileceklerinden mevcut sağlayıcı ayarları deneme çalıştırması önizlemelerinde gösterilmez.
+
+Pusula, başarılı bir sağlayıcı model keşfi/içe aktarma işlemi canlı kataloğu değiştirdikten sonra bu aynı profil dosyalarını **otomatik olarak eşitleyebilir**. Bu özellik **isteğe bağlıdır ve varsayılan olarak kapalıdır**: **CLI Code kontrol panelinden** etkinleştirin ("CLI profile auto-sync" → Codex) veya `PUSULA_AUTO_SYNC_CODEX_PROFILES=true` olarak ayarlayın (`CLI_ALLOW_CONFIG_WRITES` ayarını da dikkate alır; bu ayar varsayılan olarak açıktır). Etkinleştirildiğinde yalnızca ayrı `~/.codex/*.config.toml` profil dosyalarını yazar; etkin/varsayılan `~/.codex/config.toml` dosyasını, Codex-lb ayarlarını, kimlik doğrulamasını veya sağlayıcı seçimini asla değiştirmez.
 
 ---
 

@@ -13,14 +13,14 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-const BASE = process.env.PUSULA_TEST_BASE || "http://localhost:20128/v1";
-const AUTH = process.env.PUSULA_TEST_BEARER
-    ? `Bearer ${process.env.PUSULA_TEST_BEARER}`
-    : "";
+const BASE =
+  process.env.PUSULA_TEST_BASE || `${process.env.PUSULA_URL || "http://localhost:20128"}/v1`;
+const TEST_BEARER = process.env.PUSULA_TEST_BEARER || process.env.PUSULA_API_KEY || "";
+const AUTH = TEST_BEARER ? `Bearer ${TEST_BEARER}` : "";
+const TEST_MODEL = process.env.OPENCLAW_TEST_MODEL || "cx/gpt-5.6-sol";
 
 // Cookie obtained via INITIAL_PASSWORD login
-const COOKIE =
-  process.env.PUSULA_TEST_COOKIE || "";
+const COOKIE = process.env.PUSULA_TEST_COOKIE || "";
 
 // Only the tests that call the live remote Pusula API need this gate — the
 // pure parsing/stopReason-simulation tests at the bottom of the file run locally.
@@ -120,135 +120,147 @@ async function sendResponsesApiJson(
   return (await response.json()) as Record<string, unknown>;
 }
 
-test("Pusula boundary: tool call arguments with newlines survive Responses API (non-streaming)", { skip }, async () => {
-  const body = {
-    model: "gemini/gemma-4-26b-a4b-it",
-    input: [
-      {
-        role: "user",
-        content: [
-          {
-            type: "input_text",
-            text: "Write a file /tmp/test_boundary.txt with content:\nhello\nworld\ntest",
-          },
-        ],
-      },
-    ],
-    tools: [
-      {
-        type: "function",
-        name: "write",
-        description: "Write content to a file at the specified path",
-        parameters: {
-          type: "object",
-          properties: {
-            path: { type: "string", description: "File path" },
-            content: { type: "string", description: "File content" },
-          },
-          required: ["path", "content"],
+test(
+  "Pusula boundary: tool call arguments with newlines survive Responses API (non-streaming)",
+  { skip },
+  async () => {
+    const body = {
+      model: TEST_MODEL,
+      input: [
+        {
+          role: "user",
+          content: [
+            {
+              type: "input_text",
+              text: "Write a file /tmp/test_boundary.txt with content:\nhello\nworld\ntest",
+            },
+          ],
         },
-        strict: true,
-      },
-    ],
-    temperature: 0.1,
-    max_output_tokens: 4096,
-  };
+      ],
+      tools: [
+        {
+          type: "function",
+          name: "write",
+          description: "Write content to a file at the specified path",
+          parameters: {
+            type: "object",
+            properties: {
+              path: { type: "string", description: "File path" },
+              content: { type: "string", description: "File content" },
+            },
+            required: ["path", "content"],
+            additionalProperties: false,
+          },
+          strict: true,
+        },
+      ],
+      max_output_tokens: 4096,
+    };
 
-  const response = (await sendResponsesApiJson(body)) as ResponsesJsonBody;
+    const response = (await sendResponsesApiJson(body)) as ResponsesJsonBody;
 
-  assert.equal(response.status, "completed");
-  assert.ok(Array.isArray(response.output), "should have output array");
+    assert.equal(response.status, "completed");
+    assert.ok(Array.isArray(response.output), "should have output array");
 
-  const toolCalls = (response.output || []).filter((item) => item.type === "function_call");
+    const toolCalls = (response.output || []).filter((item) => item.type === "function_call");
 
-  assert.ok(toolCalls.length > 0, "should have at least one function_call");
-  assert.equal(toolCalls[0].name, "write");
+    assert.ok(toolCalls.length > 0, "should have at least one function_call");
+    assert.equal(toolCalls[0].name, "write");
 
-  const args = JSON.parse(toolCalls[0].arguments || "{}");
-  assert.equal(typeof args.content, "string", "content should be a string");
-  assert.ok(args.content.includes("\n"), "content should have actual newlines (0x0A)");
+    const args = JSON.parse(toolCalls[0].arguments || "{}");
+    assert.equal(typeof args.content, "string", "content should be a string");
+    assert.ok(args.content.includes("\n"), "content should have actual newlines (0x0A)");
 
-  // Verify no literal backslash-n contamination
-  const literalBSN = (args.content as string).match(/\\n/g);
-  assert.equal(literalBSN, null, "no literal backslash-n in content");
+    // Verify no literal backslash-n contamination
+    const literalBSN = (args.content as string).match(/\\n/g);
+    assert.equal(literalBSN, null, "no literal backslash-n in content");
 
-  // Verify newlines are actual 0x0A bytes
-  for (let i = 0; i < args.content.length; i++) {
-    if (args.content[i] === "\n") {
-      assert.equal(
-        args.content.charCodeAt(i),
-        0x0a,
-        `byte at position ${i} should be 0x0A not 0x5C 0x6E`
-      );
+    // Verify newlines are actual 0x0A bytes
+    for (let i = 0; i < args.content.length; i++) {
+      if (args.content[i] === "\n") {
+        assert.equal(
+          args.content.charCodeAt(i),
+          0x0a,
+          `byte at position ${i} should be 0x0A not 0x5C 0x6E`
+        );
+      }
     }
   }
-});
+);
 
-test("Pusula boundary: tool call arguments with newlines survive Responses API (streaming)", { skip }, async () => {
-  const body = {
-    model: "gemini/gemma-4-26b-a4b-it",
-    input: [
-      {
-        role: "user",
-        content: [
-          {
-            type: "input_text",
-            text: "Write a file /tmp/test_stream.txt with content:\nline A\nline B\nline C\nusing the write tool",
-          },
-        ],
-      },
-    ],
-    tools: [
-      {
-        type: "function",
-        name: "write",
-        description: "Write content to a file",
-        parameters: {
-          type: "object",
-          properties: {
-            path: { type: "string" },
-            content: { type: "string" },
-          },
-          required: ["path", "content"],
+test(
+  "Pusula boundary: tool call arguments with newlines survive Responses API (streaming)",
+  { skip },
+  async () => {
+    const body = {
+      model: TEST_MODEL,
+      input: [
+        {
+          role: "user",
+          content: [
+            {
+              type: "input_text",
+              text: "Write a file /tmp/test_stream.txt with content:\nline A\nline B\nline C\nusing the write tool",
+            },
+          ],
         },
-        strict: true,
-      },
-    ],
-    temperature: 0.1,
-    max_output_tokens: 4096,
-    stream: true,
-  };
+      ],
+      tools: [
+        {
+          type: "function",
+          name: "write",
+          description: "Write content to a file",
+          parameters: {
+            type: "object",
+            properties: {
+              path: { type: "string" },
+              content: { type: "string" },
+            },
+            required: ["path", "content"],
+            additionalProperties: false,
+          },
+          strict: true,
+        },
+      ],
+      max_output_tokens: 4096,
+      stream: true,
+    };
 
-  const events = await sendResponsesApiStream(body);
+    const events = await sendResponsesApiStream(body);
 
-  // Find the function call output_item.done event
-  const doneEvent = events.find(
-    (e) => e.event === "response.output_item.done" && eventItem(e)?.type === "function_call"
-  );
-  assert.ok(doneEvent, "should have output_item.done for function_call");
+    // Find the function call output_item.done event
+    const doneEvent = events.find(
+      (e) => e.event === "response.output_item.done" && eventItem(e)?.type === "function_call"
+    );
+    assert.ok(doneEvent, "should have output_item.done for function_call");
 
-  const item = eventItem(doneEvent as SseEvent) as ResponseFunctionCallItem;
-  assert.equal(item.name, "write");
+    const item = eventItem(doneEvent as SseEvent) as ResponseFunctionCallItem;
+    assert.equal(item.name, "write");
 
-  const args = JSON.parse(item.arguments || "{}");
-  assert.equal(typeof args.content, "string", "content should be a string");
-  assert.ok(args.content.includes("\n"), "content should have actual newlines");
+    const args = JSON.parse(item.arguments || "{}");
+    assert.equal(typeof args.content, "string", "content should be a string");
+    assert.ok(args.content.includes("\n"), "content should have actual newlines");
 
-  // Check completed event
-  const completed = events.find((e) => e.event === "response.completed");
-  assert.ok(completed, "should have response.completed event");
-  const completedResponse = completed?.data?.response as ResponsesJsonBody | undefined;
-  const outputItems = completedResponse?.output || [];
-  const completedFc = outputItems.find((item) => item.type === "function_call");
-  assert.ok(completedFc, "completed output should have function_call");
+    // Check completed event
+    const completed = events.find((e) => e.event === "response.completed");
+    assert.ok(completed, "should have response.completed event");
+    const completedResponse = completed?.data?.response as ResponsesJsonBody | undefined;
+    const outputItems = completedResponse?.output || [];
+    const completedFc = outputItems.find((item) => item.type === "function_call");
+    assert.ok(completedFc, "completed output should have function_call");
 
-  const completedArgs = JSON.parse(completedFc?.arguments || "{}");
-  assert.equal(completedArgs.content, args.content, "completed arguments should match done event");
-});
+    const completedArgs = JSON.parse(completedFc?.arguments || "{}");
+    assert.equal(
+      completedArgs.content,
+      args.content,
+      "completed arguments should match done event"
+    );
+  }
+);
 
 test("Pusula boundary: exec tool call arguments survive Responses API", { skip }, async () => {
   const body = {
-    model: "gemini/gemma-4-26b-a4b-it",
+    model: TEST_MODEL,
     input: [
       {
         role: "user",
@@ -271,11 +283,11 @@ test("Pusula boundary: exec tool call arguments survive Responses API", { skip }
             command: { type: "string", description: "The command to execute" },
           },
           required: ["command"],
+          additionalProperties: false,
         },
         strict: true,
       },
     ],
-    temperature: 0.1,
     max_output_tokens: 4096,
     stream: true,
   };
@@ -302,7 +314,7 @@ test("Pusula boundary: exec tool call arguments survive Responses API", { skip }
 
 test("Pusula boundary: parallel tool calls survive Responses API", { skip }, async () => {
   const body = {
-    model: "gemini/gemma-4-26b-a4b-it",
+    model: TEST_MODEL,
     input: [
       {
         role: "user",
@@ -326,11 +338,11 @@ test("Pusula boundary: parallel tool calls survive Responses API", { skip }, asy
             content: { type: "string" },
           },
           required: ["path", "content"],
+          additionalProperties: false,
         },
         strict: true,
       },
     ],
-    temperature: 0.1,
     max_output_tokens: 4096,
     stream: true,
   };
@@ -361,7 +373,7 @@ test("Pusula boundary: parallel tool calls survive Responses API", { skip }, asy
 
 test("Pusula boundary: tool call through default combo (fill-first)", { skip }, async () => {
   const body = {
-    model: "default",
+    model: TEST_MODEL,
     input: [
       {
         role: "user",
@@ -384,11 +396,11 @@ test("Pusula boundary: tool call through default combo (fill-first)", { skip }, 
             command: { type: "string" },
           },
           required: ["command"],
+          additionalProperties: false,
         },
         strict: true,
       },
     ],
-    temperature: 0.1,
     max_output_tokens: 4096,
     stream: true,
   };
@@ -422,7 +434,7 @@ test("Pusula boundary: multi-line Python code survives tool call arguments", { s
   ].join("\n");
 
   const body = {
-    model: "gemini/gemma-4-26b-a4b-it",
+    model: TEST_MODEL,
     input: [
       {
         role: "user",
@@ -449,6 +461,7 @@ ${pythonCode}`,
             content: { type: "string" },
           },
           required: ["path", "content"],
+          additionalProperties: false,
         },
         strict: true,
       },
@@ -462,11 +475,11 @@ ${pythonCode}`,
             command: { type: "string" },
           },
           required: ["command"],
+          additionalProperties: false,
         },
         strict: true,
       },
     ],
-    temperature: 0.1,
     max_output_tokens: 4096,
     stream: true,
   };
@@ -512,62 +525,66 @@ ${pythonCode}`,
   assert.ok(anyDone, "should have at least one function_call");
 });
 
-test("Pusula boundary: model responds with proper JSON args when given clear tool defs", { skip }, async () => {
-  // Test that the model can correctly produce tool calls with simple args
-  const body = {
-    model: "gemini/gemma-4-26b-a4b-it",
-    input: [
-      {
-        role: "user",
-        content: [
-          {
-            type: "input_text",
-            text: "What is 2+2? Use the calculator tool.",
-          },
-        ],
-      },
-    ],
-    tools: [
-      {
-        type: "function",
-        name: "calculate",
-        description: "Calculate a math expression",
-        parameters: {
-          type: "object",
-          properties: {
-            expression: {
-              type: "string",
-              description: "The math expression to evaluate",
+test(
+  "Pusula boundary: model responds with proper JSON args when given clear tool defs",
+  { skip },
+  async () => {
+    // Test that the model can correctly produce tool calls with simple args
+    const body = {
+      model: TEST_MODEL,
+      input: [
+        {
+          role: "user",
+          content: [
+            {
+              type: "input_text",
+              text: "What is 2+2? Use the calculator tool.",
             },
-          },
-          required: ["expression"],
+          ],
         },
-        strict: true,
-      },
-    ],
-    temperature: 0.1,
-    max_output_tokens: 4096,
-    stream: true,
-  };
+      ],
+      tools: [
+        {
+          type: "function",
+          name: "calculate",
+          description: "Calculate a math expression",
+          parameters: {
+            type: "object",
+            properties: {
+              expression: {
+                type: "string",
+                description: "The math expression to evaluate",
+              },
+            },
+            required: ["expression"],
+            additionalProperties: false,
+          },
+          strict: true,
+        },
+      ],
+      max_output_tokens: 4096,
+      stream: true,
+    };
 
-  const events = await sendResponsesApiStream(body);
+    const events = await sendResponsesApiStream(body);
 
-  const doneEvent = events.find(
-    (e) => e.event === "response.output_item.done" && eventItem(e)?.type === "function_call"
-  );
+    const doneEvent = events.find(
+      (e) => e.event === "response.output_item.done" && eventItem(e)?.type === "function_call"
+    );
 
-  if (doneEvent) {
-    const rawArguments = eventItem(doneEvent)?.arguments || "{}";
-    const args = JSON.parse(rawArguments);
-    assert.equal(typeof args.expression, "string");
-    assert.ok(args.expression.includes("2+2") || args.expression.includes("2 + 2"));
+    if (doneEvent) {
+      const rawArguments = eventItem(doneEvent)?.arguments || "{}";
+      const args = JSON.parse(rawArguments);
+      assert.equal(typeof args.expression, "string");
+      assert.ok(args.expression.includes("2+2") || args.expression.includes("2 + 2"));
 
-    // Verify the arguments JSON is valid
-    assert.doesNotThrow(() => {
-      JSON.parse(rawArguments);
-    });
+      // Verify the arguments JSON is valid
+      assert.doesNotThrow(() => {
+        JSON.parse(rawArguments);
+      });
+    }
   }
-});
+);
 
 test("OpenClaw boundary: processResponsesStream correctly parses tool call args with newlines", () => {
   // Simulate what OpenClaw's processResponsesStream does with tool call args

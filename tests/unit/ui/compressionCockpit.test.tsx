@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import React, { act } from "react";
-import { createRoot } from "react-dom/client";
+import { createRoot, type Root } from "react-dom/client";
 import { describe, it, expect, beforeAll, beforeEach, afterEach, vi } from "vitest";
 import { NextIntlClientProvider } from "next-intl";
 import messages from "../../../src/i18n/messages/en.json";
@@ -35,15 +35,13 @@ const { CompressionCockpit } =
 
 // ── Helpers ───────────────────────────────────────────────────────────────
 
-const containers: HTMLElement[] = [];
-const roots: Array<ReturnType<typeof createRoot>> = [];
+const mounted: { root: Root; container: HTMLElement }[] = [];
 
 function mount(ui: React.ReactElement): HTMLElement {
   const container = document.createElement("div");
   document.body.appendChild(container);
-  containers.push(container);
   const root = createRoot(container);
-  roots.push(root);
+  mounted.push({ root, container });
   act(() => {
     root.render(
       <NextIntlClientProvider
@@ -69,17 +67,10 @@ beforeEach(() => {
   ).IS_REACT_ACT_ENVIRONMENT = true;
 });
 
-afterEach(() => {
-  // Unmount before the jsdom environment is torn down: a root left mounted keeps React
-  // scheduler work queued and it fires after teardown as "window is not defined".
-  while (roots.length > 0) {
-    const root = roots.pop();
-    act(() => {
-      root?.unmount();
-    });
-  }
-  while (containers.length > 0) {
-    containers.pop()?.remove();
+afterEach(async () => {
+  for (const instance of mounted.splice(0)) {
+    await act(async () => instance.root.unmount());
+    instance.container.remove();
   }
   document.body.innerHTML = "";
 });

@@ -1,7 +1,7 @@
 ---
 title: "🐳 Docker Guide — Pusula"
 version: 3.8.51
-lastUpdated: 2026-09-18
+lastUpdated: 2026-10-16
 ---
 
 # 🐳 Docker Guide — Pusula
@@ -22,7 +22,9 @@ lastUpdated: 2026-09-18
 - [Docker Compose with Caddy (HTTPS)](#docker-compose-with-caddy-https-auto-tls)
 - [Cloudflare Quick Tunnel](#cloudflare-quick-tunnel)
 - [Image Tags](#image-tags)
+- [Dashboard updates in Docker](#dashboard-updates-in-docker)
 - [Availability: default SQLite is single-replica](#availability-default-sqlite-is-single-replica)
+- [Gemini regional errors inside Docker](#gemini-regional-errors-inside-docker)
 - [Important Notes](#important-notes)
 
 ---
@@ -84,12 +86,12 @@ docker compose --profile cli --profile cliproxyapi up -d
 
 Pusula ships Compose profiles for the main deployment shapes. Pick the one that matches your environment.
 
-| Profile          | Service          | When to use                                                                                                                        | Command                                      |
-| ---------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| Profile          | Service       | When to use                                                                                                                        | Command                                      |
+| ---------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
 | `base` (default) | `pusula-base` | Headless server / minimal runtime, no provider CLIs bundled                                                                        | `docker compose --profile base up -d`        |
-| `cli`            | `pusula-cli`  | Agentic workflows that call `pusula providers/setup/doctor` and bundled CLIs (Codex, Claude Code, Droid, OpenClaw)              | `docker compose --profile cli up -d`         |
+| `cli`            | `pusula-cli`  | Agentic workflows that call `pusula providers/setup/doctor` and bundled CLIs (Codex, Claude Code, Droid, OpenClaw)                 | `docker compose --profile cli up -d`         |
 | `host`           | `pusula-host` | Linux hosts that want `network_mode`-like access to host CLIs by mounting `~/.local/bin`, `~/.codex`, `~/.claude`, etc. read-only  | `docker compose --profile host up -d`        |
-| `cliproxyapi`    | `cliproxyapi`    | Run the [CLIProxyAPI](https://github.com/router-for-me/CLIProxyAPI) sidecar on port `8317` for upstream CLI proxying               | `docker compose --profile cliproxyapi up -d` |
+| `cliproxyapi`    | `cliproxyapi` | Run the [CLIProxyAPI](https://github.com/router-for-me/CLIProxyAPI) sidecar on port `8317` for upstream CLI proxying               | `docker compose --profile cliproxyapi up -d` |
 | `web`            | `pusula-web`  | Web-session providers that need a browser: `gemini-web`, `claude-web`, `claude-turnstile` (builds `runner-web`, Chromium included) | `docker compose --profile web up -d`         |
 
 > Multiple profiles can be combined: `docker compose --profile cli --profile cliproxyapi up -d`.
@@ -183,11 +185,11 @@ Pusula relies on Redis to back the distributed rate limiter and shared cache. Th
 | Detail               | Value                                       |
 | -------------------- | ------------------------------------------- |
 | Image                | `redis:7-alpine`                            |
-| Container name       | `pusula-redis`                           |
+| Container name       | `pusula-redis`                              |
 | Internal port        | `6379`                                      |
 | Host port (override) | `REDIS_PORT` (defaults to `6379`)           |
 | Host bind (override) | `REDIS_BIND_HOST` (defaults to `127.0.0.1`) |
-| Volume               | `pusula-redis-data` → `/data`            |
+| Volume               | `pusula-redis-data` → `/data`               |
 | Healthcheck          | `redis-cli ping` (10s interval)             |
 
 Related environment variables:
@@ -217,9 +219,9 @@ For an isolated production snapshot running alongside dev, use `docker-compose.p
 | File                   | `docker-compose.prod.yml`                                                          |
 | Default dashboard port | `PROD_DASHBOARD_PORT=20130` (mapped to internal `${DASHBOARD_PORT:-20128}`)        |
 | Default API port       | `PROD_API_PORT=20131`                                                              |
-| Image                  | `pusula:prod` (built from `runner-cli` target)                                  |
-| Redis container        | `pusula-redis-prod` (`redis:8.6.2`, dedicated `redis-prod-data` volume)         |
-| Data volume            | `pusula-prod-data` (named, persisted across rebuilds)                           |
+| Image                  | `pusula:prod` (built from `runner-cli` target)                                     |
+| Redis container        | `pusula-redis-prod` (`redis:8.6.2`, dedicated `redis-prod-data` volume)            |
+| Data volume            | `pusula-prod-data` (named, persisted across rebuilds)                              |
 | Healthchecks           | `node healthcheck.mjs` + `redis-cli ping`, with `depends_on` gated on Redis health |
 
 How to use:
@@ -261,8 +263,8 @@ docker build --target runner-web  -t pusula:web  .
 Three build args control what the `builder` stage costs. They are build-time only —
 `PUSULA_MEMORY_MB` (below) is a separate, runtime knob.
 
-| Build arg                   | Default | Effect                                                                              |
-| --------------------------- | ------- | ----------------------------------------------------------------------------------- |
+| Build arg                | Default | Effect                                                                              |
+| ------------------------ | ------- | ----------------------------------------------------------------------------------- |
 | `PUSULA_USE_TURBOPACK`   | `0`     | `0` builds with webpack: lower peak memory, slower. `1` opts into Turbopack.        |
 | `PUSULA_BUILD_MEMORY_MB` | `6144`  | V8 heap ceiling (`--max-old-space-size`) for the spawned `next build`.              |
 | `PUSULA_BUILD_WORKERS`   | `2`     | Feeds `CIRCLE_NODE_TOTAL`; Next derives `workers = N - 1` for page-data collection. |
@@ -328,7 +330,7 @@ The 1 GiB Docker default is a dashboard/light-chat floor, not a production siz
 
 Size **cgroup `--memory` above the heap** — native buffers, SQLite, and compression intermediates sit outside V8.
 
-| Workload                             | `PUSULA_MEMORY_MB`  | Container / cgroup   | Notes                                                                                       |
+| Workload                             | `PUSULA_MEMORY_MB`     | Container / cgroup   | Notes                                                                                       |
 | ------------------------------------ | ---------------------- | -------------------- | ------------------------------------------------------------------------------------------- |
 | Dashboard, one light chat            | `1024` (image default) | ≥2 GiB               |                                                                                             |
 | One coding agent (Claude/Codex/Grok) | `8192`                 | ≥10 GiB              | Typical single-session `/v1/responses`                                                      |
@@ -349,18 +351,18 @@ Beyond the defaults documented in [ENVIRONMENT.md](../reference/ENVIRONMENT.md),
 
 | Variable                      | Purpose                                                                                                                                                                                                                                              | Default                  |
 | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
-| `PUSULA_WS_BRIDGE_SECRET`  | Shared secret for the WebSocket bridge. **Required in production** — set to a strong random string.                                                                                                                                                  | unset (must be provided) |
+| `PUSULA_WS_BRIDGE_SECRET`     | Shared secret for the WebSocket bridge. **Required in production** — set to a strong random string.                                                                                                                                                  | unset (must be provided) |
 | `REDIS_URL`                   | Connection string for the rate limiter / cache backend                                                                                                                                                                                               | `redis://redis:6379`     |
 | `REDIS_PORT`                  | Host-side port for the bundled Redis container                                                                                                                                                                                                       | `6379`                   |
 | `REDIS_BIND_HOST`             | Host interface the bundled Redis port is published on (loopback unless you add AUTH)                                                                                                                                                                 | `127.0.0.1`              |
-| `AUTO_UPDATE_HOST_REPO_DIR`   | Host path mounted into `cli` profile at `/workspace/pusula` for self-update workflows                                                                                                                                                             | `.` (current directory)  |
-| `PUSULA_MEMORY_MB`         | Runtime Node heap ceiling for the Docker standalone server; overrides the image default above. Coding agents: `8192`+ (see [runtime RAM](#runtime-ram-for-coding-agents)).                                                                           | `1024`                   |
+| `AUTO_UPDATE_HOST_REPO_DIR`   | Host path mounted into `cli` profile at `/workspace/pusula` for self-update workflows                                                                                                                                                                | `.` (current directory)  |
+| `PUSULA_MEMORY_MB`            | Runtime Node heap ceiling for the Docker standalone server; overrides the image default above. Coding agents: `8192`+ (see [runtime RAM](#runtime-ram-for-coding-agents)).                                                                           | `1024`                   |
 | `DASHBOARD_PORT` / `API_PORT` | Override exposed ports for dashboard (20128) and API (20129)                                                                                                                                                                                         | `20128` / `20129`        |
 | `APP_BIND_HOST`               | Host interface docker-compose publishes the dashboard/API/live-WS ports on. With `REQUIRE_API_KEY=false` (the default), `0.0.0.0` exposes the anonymous `/v1` proxy to the LAN — only widen with `REQUIRE_API_KEY=true` or a reverse proxy in front. | `127.0.0.1`              |
 | `CLIPROXY_BIND_HOST`          | Host interface docker-compose publishes the `cliproxyapi` sidecar on — its data volume holds provider credentials.                                                                                                                                   | `127.0.0.1`              |
-| `PUSULA_PLUGINS_DIR`       | Directory the runtime plugin scanner reads and installs into. Set it when plugins are bind-mounted: the default follows `HOME`, which an image need not export.                                                                                      | `~/.pusula/plugins`   |
-| `PUSULA_BASE_PATH`         | URL subpath when the app is published behind a reverse proxy (e.g. `/pusula`)                                                                                                                                                                     | _(empty = root)_         |
-| `NEXT_PUBLIC_BASE_URL`        | Public browser origin including the subpath (e.g. `https://host/pusula`)                                                                                                                                                                          | unset                    |
+| `PUSULA_PLUGINS_DIR`          | Directory the runtime plugin scanner reads and installs into. Set it when plugins are bind-mounted: the default follows `HOME`, which an image need not export.                                                                                      | `~/.pusula/plugins`      |
+| `PUSULA_BASE_PATH`            | URL subpath when the app is published behind a reverse proxy (e.g. `/pusula`)                                                                                                                                                                        | _(empty = root)_         |
+| `NEXT_PUBLIC_BASE_URL`        | Public browser origin including the subpath (e.g. `https://host/pusula`)                                                                                                                                                                             | unset                    |
 | `PROD_DASHBOARD_PORT`         | Host-side dashboard port for `docker-compose.prod.yml`                                                                                                                                                                                               | `20130`                  |
 | `CLIPROXYAPI_PORT`            | Host-side port for the `cliproxyapi` sidecar                                                                                                                                                                                                         | `8317`                   |
 
@@ -494,8 +496,8 @@ Endpoint tunnel panels (Cloudflare, Tailscale, ngrok) can be shown or hidden fro
 
 ## Image Tags
 
-| Image                    | Tag      | Size   | Description                                          |
-| ------------------------ | -------- | ------ | ---------------------------------------------------- |
+| Image                     | Tag      | Size   | Description                                          |
+| ------------------------- | -------- | ------ | ---------------------------------------------------- |
 | `ferhat-yasinoglu/pusula` | `latest` | ~250MB | Highest **published** stable SemVer (not git `main`) |
 | `ferhat-yasinoglu/pusula` | `3.8.0`  | ~250MB | Pin this class of tag for GitOps                     |
 
@@ -574,15 +576,86 @@ A release-branch build can never move `latest`; only an eligible stable semantic
 | Test unreleased `release/v*` commits                           | `:next` (not production)           |
 | Test `main`                                                    | `:main` (not production)           |
 
+## Dashboard updates in Docker
+
+A published-image container cannot replace itself. When Pusula detects it runs inside a
+container (no `.git` checkout, not an npm install), the home dashboard's update banner shows the
+host command to run instead of the npm/git instructions, with a copy button:
+
+```bash
+docker compose pull pusula && docker compose up -d --force-recreate pusula
+```
+
+The service name comes from `AUTO_UPDATE_SERVICE` (default `pusula`, the service in
+`docker-compose.selfhost.yml`). `pull` only moves a floating tag (`latest`, `next`); with a pinned
+`:X.Y.Z` tag, edit the tag first.
+
+### One-click updates with a host trigger file
+
+To keep **Update Now** working without mounting `/var/run/docker.sock` (which gives the container
+root on the host — see the `cli` profile warning above), set `DOCKER_UPDATE_TRIGGER_FILE` on the
+Pusula service and run a watcher on the host:
+
+```yaml
+services:
+  pusula:
+    environment:
+      DOCKER_UPDATE_TRIGGER_FILE: /app/data/update/docker-update.request
+    volumes:
+      - ./data:/app/data
+```
+
+The path must be inside `DATA_DIR` (relative values resolve against it); anything else is
+rejected. **Update Now** then writes `{ "requestedAt": "...", "targetVersion": "X.Y.Z" }` to that
+file, answers `202`, and the dashboard polls `/api/system/version` until the new version is live
+and reloads. Pusula never runs a shell or Docker command in this mode. Like every update
+action, the request is accepted only from loopback/LAN clients.
+
+A bind-mounted data directory gives the host a stable path to watch. Sample `systemd` units
+(adjust `/srv/pusula` to the directory holding your compose file and `data/`):
+
+```ini
+# /etc/systemd/system/pusula-update.path
+[Unit]
+Description=Watch for Pusula dashboard update requests
+
+[Path]
+PathExists=/srv/pusula/data/update/docker-update.request
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```ini
+# /etc/systemd/system/pusula-update.service
+[Unit]
+Description=Pull and recreate the Pusula container
+
+[Service]
+Type=oneshot
+WorkingDirectory=/srv/pusula
+ExecStartPre=/usr/bin/rm -f /srv/pusula/data/update/docker-update.request
+ExecStart=/bin/sh -c 'docker compose pull pusula || (sleep 15 && docker compose pull pusula)'
+ExecStart=/usr/bin/docker compose up -d --force-recreate pusula
+```
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now pusula-update.path
+```
+
+The service removes the request before pulling so a failed run does not loop. Without
+`DOCKER_UPDATE_TRIGGER_FILE` the dashboard keeps the manual command flow.
+
 ## Availability: default SQLite is single-replica
 
 Stock Docker / Kubernetes Pusula is **one Node process + one SQLite writer**. High availability is **not supported** on that topology.
 
-| Constraint                            | Consequence                                                                                                                                                                                                                                                                                             |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Single writer                         | Do **not** run multiple replicas against the same SQLite file. That corrupts the DB.                                                                                                                                                                                                                    |
+| Constraint                            | Consequence                                                                                                                                                                                                                                                                                          |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Single writer                         | Do **not** run multiple replicas against the same SQLite file. That corrupts the DB.                                                                                                                                                                                                                 |
 | Recreate / restart / HEALTHCHECK kill | **Full outage** of in-flight SSE, dashboard sessions, and in-memory state. Every connected client drops. New requests during the empty-endpoint window get a reverse-proxy **`502 Bad Gateway: Unknown error`**, not Pusula JSON — clients cannot distinguish this from a provider failure (#11015). |
-| Same event loop as `/healthz`         | A busy catalog or compression tick can delay probes; a short timeout then restarts the **only** replica.                                                                                                                                                                                                |
+| Same event loop as `/healthz`         | A busy catalog or compression tick can delay probes; a short timeout then restarts the **only** replica.                                                                                                                                                                                             |
 
 **Probe matrix** (see also [Kubernetes probe recommendations](../ops/MONITORING_GUIDE.md#kubernetes-probe-recommendations)):
 
@@ -673,6 +746,85 @@ volumes:
 ```
 
 In-process density (compression off the HTTP isolate) is [#11023](https://github.com/Ferhat-Yasinoglu/pusula/issues/11023). One logical cluster on shared durable state is [#8075](https://github.com/Ferhat-Yasinoglu/pusula/issues/8075).
+
+## Gemini regional errors inside Docker
+
+Google AI Studio / Gemini API can return HTTP 400 with FAILED_PRECONDITION and
+`User location is not supported for the API use.` A successful request on the host
+does not prove that the container uses the same outbound route. DNS ordering,
+IPv4/IPv6 connectivity, VPN routing and configured proxies can differ. Check
+[Google's supported regions](https://ai.google.dev/gemini-api/docs/available-regions)
+as well as the actual connection route; this error alone does not identify a bad API key.
+
+### Prefer a connection-specific proxy
+
+Use Pusula's [per-connection proxy configuration](../ops/PROXY_GUIDE.md#4-level-proxy-system)
+for the affected Gemini connection, then repeat **Test Connection** and a small request
+with the same model. This keeps the routing change scoped to that connection. Verify
+that the proxy is reachable from the container, and that the connection really selects
+it. Changing the route does not guarantee upstream regional eligibility.
+
+### Compare host and container networking
+
+Keep the key, model and request identical when comparing authenticated results; never
+paste credentials, proxy passwords or complete authorization headers into an issue.
+First inspect which address families the OS resolver offers, using the same command
+on the host and inside the container:
+
+```bash
+node -e 'require("node:dns").lookup("generativelanguage.googleapis.com", {all: true}, (error, addresses) => { if (error) { console.error(error.code); process.exitCode = 1; return; } console.log(addresses.map(({family}) => family)); })'
+docker compose exec pusula node -e 'require("node:dns").lookup("generativelanguage.googleapis.com", {all: true}, (error, addresses) => { if (error) { console.error(error.code); process.exitCode = 1; return; } console.log(addresses.map(({family}) => family)); })'
+```
+
+Replace `pusula` with the service you run (for example, `pusula-web`). These
+commands print address families without credentials or IP addresses. A returned `6`
+only shows an IPv6 DNS result: it does **not** prove a usable IPv6 route or API access.
+Where `curl` is installed, compare `curl -4 -I https://generativelanguage.googleapis.com`
+with `curl -6 -I https://generativelanguage.googleapis.com` in both environments.
+An HTTP response proves connectivity for that probe, even if it is an unauthenticated
+error; only the authenticated model request tests Gemini eligibility.
+
+### Host-level alternative: working IPv6 and resolver policy
+
+The reporter of [#12762](https://github.com/Ferhat-Yasinoglu/pusula/issues/12762) restored
+access in their environment by enabling container IPv6 and changing glibc address
+selection. Treat this as an environment-specific alternative. Confirm working host
+IPv6, container egress/routing and firewall rules before adjusting resolver preferences.
+A private ULA address by itself does not establish public IPv6 connectivity.
+
+For services already attached to Compose's default network, this fragment enables
+IPv6 on that network; retain the rest of your service, ports, volumes and configuration:
+
+```yaml
+networks:
+  default:
+    enable_ipv6: true
+```
+
+For a named network, enable it on the network the service actually joins. Docker can
+allocate a ULA subnet; select an explicit, non-overlapping subnet only when your network
+requires it. See [Docker IPv6 networking](https://docs.docker.com/engine/daemon/ipv6/)
+and [Compose network options](https://docs.docker.com/reference/compose-file/networks/#enable_ipv6).
+
+On a **glibc-based image**, `/etc/gai.conf` can change address selection. The current
+repository Dockerfile uses Debian; custom musl-based images do not share this mechanism.
+The reported adjustment changes the ULA label from `label fc00::/7 6` to
+`label fc00::/7 1`. Start from the image's complete policy table and preserve its other
+entries: adding a `label` or `precedence` entry replaces that default table, so a file
+containing only the changed line is insufficient. The
+[glibc configuration reference](https://github.com/bminor/glibc/blob/master/posix/gai.conf)
+documents those semantics. Bind-mount the reviewed file read-only at `/etc/gai.conf`
+and recreate the service to apply it.
+
+This changes OS address selection for **all outbound traffic in that container**.
+It does not force every application to choose IPv6: Node's DNS order and connection
+selection also matter. In particular, `--dns-result-order=ipv4first` prefers IPv4 and
+is not a remedy for an IPv4-only failure. See [Node DNS ordering](https://nodejs.org/api/dns.html#dnssetdefaultresultorderorder).
+
+Re-test Gemini and your other providers after any host-level change. To roll back,
+remove the custom `gai.conf` mount, restore the previous network configuration and
+recreate the affected service/network during a maintenance window. Recreating a network
+can interrupt other containers attached to it; do not delete the persistent data volume.
 
 ## Important Notes
 

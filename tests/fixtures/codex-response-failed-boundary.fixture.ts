@@ -10,9 +10,7 @@ import type { CodexWreqWebSocket } from "../../open-sse/executors/codex/appServe
 import type { AdapterEvent } from "../../open-sse/vendor/codex-chatgpt-web/types.ts";
 
 const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-codex-boundary-data-"));
-const TEST_PLUGINS_DIR = fs.mkdtempSync(
-  path.join(os.tmpdir(), "pusula-codex-boundary-plugins-")
-);
+const TEST_PLUGINS_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-codex-boundary-plugins-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.PUSULA_PLUGINS_DIR = TEST_PLUGINS_DIR;
 process.env.APP_LOG_TO_FILE = "false";
@@ -31,6 +29,7 @@ const HOSTILE_MESSAGE =
 type FailedPayload = {
   type: "response.failed";
   response: {
+    id: string;
     error: {
       code: string | null;
       message: string;
@@ -235,6 +234,34 @@ test("Codex same-format failures reject contradictory allowlisted status, code a
     type: "authentication_error",
     statusCode: 401,
   });
+});
+
+test("#15202: Codex same-format failure frame carries a string response.id", () => {
+  const result = encodeResponseSseEvent(
+    JSON.stringify({
+      type: "response.failed",
+      response: { status: "failed", error: { message: HOSTILE_MESSAGE } },
+    })
+  );
+
+  const payload = responseFailedPayload(result.sse);
+  assert.equal(typeof payload.response.id, "string");
+  assert.ok(payload.response.id.length > 0, "synthesized response.id must not be empty");
+});
+
+test("#15202: Codex WebSocket failure frame carries a string response.id", async () => {
+  const socket = {
+    send() {
+      queueMicrotask(() => socket.onerror?.({ message: HOSTILE_MESSAGE }));
+    },
+    close() {},
+    onmessage: null as ((event: { data: unknown }) => void) | null,
+    onerror: null as ((event: { message?: string }) => void) | null,
+    onclose: null as (() => void) | null,
+  };
+  const sse = await executeCodexWebSocketFailure(async () => socket);
+
+  assert.equal(typeof responseFailedPayload(sse).response.id, "string");
 });
 
 test("Codex WebSocket in-flight error event cannot expose transport details", async () => {

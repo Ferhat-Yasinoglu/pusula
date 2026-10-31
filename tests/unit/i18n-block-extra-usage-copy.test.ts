@@ -4,6 +4,8 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
+import { LOCALES } from "../../src/i18n/config.ts";
+
 // Regression guard for #7918: the "Block extra Claude usage" toggle copy must describe
 // what the code actually does (quarantine the connection until quota resets so fallback
 // can route elsewhere), not a display-dedup feature that does not exist in
@@ -62,4 +64,28 @@ test("en.json blockClaudeExtraUsage copy describes the quarantine/fallback behav
     /fallback/,
     "description must mention fallback switching to another connection"
   );
+});
+
+// The connection-row pill reads "<claudeExtraUsageShort> ON/OFF" where ON means extra usage is
+// ALLOWED (blocking is off). English says "Extra usage ON", so a locale that translates the short
+// label as an action ("Block extra") flips the meaning of ON/OFF for its users.
+test("claudeExtraUsageShort names the state, not the blocking action (every locale)", () => {
+  // "block" (en/de "blockieren"), "bloque" (upstream pt-BR "Bloquear"), plus the blocking verbs of
+  // Pusula's own catalogs: tr "engelle", de "sperren", fa "مسدود".
+  const blockWords = /bloque|block|engel|sperr|مسدود/i;
+  const en = JSON.parse(readFileSync(path.join(messagesDir, "en.json"), "utf8"));
+  assert.doesNotMatch(findNested(en, "claudeExtraUsageShort") ?? "", blockWords);
+
+  const translatedLocales = LOCALES.filter((locale) => locale !== "en");
+  assert.ok(translatedLocales.length > 0, "expected at least one non-English locale");
+  for (const locale of translatedLocales) {
+    const catalog = JSON.parse(readFileSync(path.join(messagesDir, `${locale}.json`), "utf8"));
+    const label = findNested(catalog, "claudeExtraUsageShort");
+    assert.ok(label, `claudeExtraUsageShort must exist in ${locale}.json`);
+    assert.doesNotMatch(
+      label!,
+      blockWords,
+      `${locale} pill label must name the state, not read as a 'Block extra' action`
+    );
+  }
 });

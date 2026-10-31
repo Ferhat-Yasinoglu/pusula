@@ -230,17 +230,18 @@ describe("SpecificityDetector", () => {
         content:
           "Write a function that implements merge sort with O(n log n) complexity. Step 1: divide array. Therefore, use recursion.",
       });
-      // Warm up first: the initial call pays one-off JIT and regex compilation costs that say
-      // nothing about steady-state speed. Then take the best of several runs, because a single
-      // timed call is at the mercy of scheduler noise on a busy CI runner.
-      analyzeSpecificity({ messages: msgs });
-      let best = Number.POSITIVE_INFINITY;
-      for (let i = 0; i < 5; i++) {
+      // A single cold call pays JIT warm-up and any scheduler or GC pause of a busy CI runner:
+      // run alone it took 5.3-7.9 ms in 6 of 10 runs, and it failed 4 of 32 PR Vitest jobs
+      // (18.23 ms, 5.26 ms). Warm up, then keep the fastest of ten runs: a pause only adds
+      // time, so the fastest run still crosses 5 ms if the analysis itself gets slower.
+      for (let i = 0; i < 3; i++) analyzeSpecificity({ messages: msgs });
+      let fastest = Infinity;
+      for (let i = 0; i < 10; i++) {
         const t0 = performance.now();
         analyzeSpecificity({ messages: msgs });
-        best = Math.min(best, performance.now() - t0);
+        fastest = Math.min(fastest, performance.now() - t0);
       }
-      expect(best, `Expected < 5ms, got ${best.toFixed(2)}ms`).toBeLessThan(5);
+      expect(fastest, `Expected < 5ms, got ${fastest.toFixed(2)}ms`).toBeLessThan(5);
     });
   });
 });

@@ -157,3 +157,31 @@ test("t() usa tr quando disponível", async () => {
   assert.notEqual(result, en.health.noServer, "a mensagem tr deve diferir da inglesa");
   resetForTests();
 });
+
+// Upstream guards its Maltese catalog here; Pusula ships tr/de/fa instead, so the same
+// interpolation contract is checked on every non-English CLI catalog it actually has.
+for (const [locale, expected] of [
+  ["tr", { saved: "Sonuçlar", logs: "Günlükler", pack: "paketi" }],
+  ["de", { saved: "Ergebnisse", logs: "Protokolle", pack: "Paket" }],
+  ["fa", { saved: "نتایج", logs: "گزارشها", pack: "بسته" }],
+] as const) {
+  test(`${locale} catalog interpolates the saved path`, async () => {
+    const { resetForTests, t, setLocale } = await import("../../bin/cli/i18n.mjs");
+    resetForTests();
+    setLocale(locale);
+    const outPath = ["", "tmp", "out.json"].join("/");
+    const logsPath = ["", "tmp", "logs.json"].join("/");
+    const packsDir = ["", "tmp", "packs"].join("/");
+    const saved = t("test.saved", { path: outPath });
+    const logs = t("logs.exported", { path: logsPath });
+    const pack = t("packs.installed", { name: "demo", dir: packsDir });
+    assert.ok(saved.includes(expected.saved) && saved.includes(outPath), saved);
+    assert.ok(logs.includes(expected.logs) && logs.includes(logsPath), logs);
+    assert.ok(
+      pack.includes(expected.pack) && pack.includes("demo") && pack.includes(packsDir),
+      pack
+    );
+    for (const text of [saved, logs, pack]) assert.doesNotMatch(text, /\{\w+\}/);
+    resetForTests();
+  });
+}

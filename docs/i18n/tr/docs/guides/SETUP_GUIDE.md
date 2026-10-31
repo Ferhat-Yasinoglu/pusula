@@ -90,8 +90,8 @@ Ortam değişkenleriyle (`INITIAL_PASSWORD`, `PUSULA_WS_BRIDGE_SECRET` vb.) birl
 
 ### CLI Seçenekleri
 
-| Komut                   | Açıklama                                                                              |
-| ----------------------- | ------------------------------------------------------------------------------------- |
+| Komut                | Açıklama                                                                              |
+| -------------------- | ------------------------------------------------------------------------------------- |
 | `pusula`             | Sunucuyu başlat (`PORT=20128`, API ve kontrol paneli aynı portta)                     |
 | `pusula setup`       | Parola ve ilk sağlayıcı için rehberli CLI başlangıç kurulumu                          |
 | `pusula doctor`      | Sunucuyu başlatmadan yerel sistem durumu denetimlerini çalıştır                       |
@@ -99,7 +99,7 @@ Ortam değişkenleriyle (`INITIAL_PASSWORD`, `PUSULA_WS_BRIDGE_SECRET` vb.) birl
 | `pusula config`      | CLI aracı yapılandırması — yapılandırmaları listele, al, ayarla ve doğrula            |
 | `pusula status`      | Çevrimdışı durum paneli — sürüm, DB, araçlar ve yapılandırma                          |
 | `pusula logs`        | API'den kullanım günlüklerini akışla (`--follow` desteklenir)                         |
-| `pusula update`      | Pusula güncellemelerini denetle veya uygula                                        |
+| `pusula update`      | Pusula güncellemelerini denetle veya uygula                                           |
 | `pusula provider`    | Sağlayıcı bağlantılarını yönet — ekle, listele, kaldır, test et ve varsayılanı ayarla |
 | `pusula --port 3000` | Standart/API portunu 3000 olarak ayarla                                               |
 | `pusula --mcp`       | MCP sunucusunu başlat (stdio aktarımı)                                                |
@@ -149,10 +149,10 @@ pusula providers validate
 ```txt
 Temel URL: http://localhost:20128/v1
 API Anahtarı:  [Endpoint sayfasından kopyalayın]
-Model:    if/qwen3.8-max-preview (veya herhangi bir sağlayıcı/model ön eki)
+Model:    if/qwen3.8-max-preview (veya herhangi bir sağlayıcı/model öneki)
 ```
 
-Editörünüz `Authorization: Bearer ...` gönderemiyorsa bunun yerine belirteç içeren uyumluluk temel adresini kullanın:
+Editörünüz `Authorization: Bearer ...` gönderemiyorsa bunun yerine token içeren uyumluluk temel adresini kullanın:
 
 ```txt
 Temel URL: http://localhost:20128/api/v1/vscode/YOUR_KEY/
@@ -165,34 +165,29 @@ Claude Code, Codex CLI, Cursor, Cline, OpenClaw, OpenCode ve OpenAI uyumlu SDK'l
 
 #### `setup-*` ile otomatik yapılandırma
 
-Temel URL'yi ve anahtarı elle yapıştırmak yerine Pusula'un canlı model kataloğundan her aracın
-kendi yapılandırmasını yazmasına izin verin. Her araç için bir komut:
+Temel URL'yi ve anahtarı elle yapıştırmak yerine Pusula'un canlı model kataloğundan yararlanarak her aracın kendi yapılandırmasını yazmasına izin verin. Her araç için tek komut:
 
 ```bash
 pusula setup-codex        # ~/.codex/<name>.config.toml profilleri
 pusula setup-claude       # ~/.claude/profiles/<name>/settings.json
-pusula setup-opencode     # ~/.config/opencode/opencode.json (OpenAI uyumlu)
-pusula setup-cline        # Cline CLI + VS Code uzantısı ayarları
+pusula setup-opencode     # ~/.config/opencode/opencode.json (openai uyumlu)
+pusula setup-cline        # Cline CLI + VS Code eklentisi ayarları
 pusula setup-kilo         # Kilo Code
 pusula setup-continue     # ~/.continue/config.yaml (Continue / cn)
 pusula setup-cursor       # Cursor'ın uygulama içi adımlarını yazdırır
 pusula setup-roo          # Roo Code içe aktarma + autoImport işaretçisi
 pusula setup-crush        # ~/.config/crush/crush.json
+pusula setup-zed          # ~/.config/zed/settings.json (openai_compatible)
 pusula setup-goose        # ~/.config/goose/config.yaml
 pusula setup-aider        # ~/.aider.conf.yml
 pusula setup-qwen         # ~/.qwen/settings.json + ~/.qwen/.env
 ```
 
-Her biri, yerel bir aracı **uzak** bir Pusula'a göre yapılandırmak için `--remote <url> --api-key <key>` parametrelerini ve önizleme için `--dry-run` parametresini kabul eder. Doğru
-ortam değişkenleri eklenmiş ve hiçbir yapılandırma yazılmamış şekilde bir CLI başlatmak için genel başlatıcı
-`pusula run <target>` (claude, codex, aider, goose, opencode, qwen, gemini) komutunu kullanın;
-eski araç başına başlatıcılar olan `pusula launch` (Claude Code) ve
-`pusula launch-codex` (Codex) kullanılabilir olmaya devam eder.
+Her biri, yerel bir aracı **uzak** bir Pusula'a göre yapılandırmak için `--remote <url> --api-key <key>` seçeneklerini ve önizleme için `--dry-run` seçeneğini kabul eder. Bir CLI'yi doğru ortam değişkenleri eklenmiş ve hiçbir yapılandırma yazılmamış şekilde başlatmak için genel başlatıcı `pusula run <target>` (claude, codex, aider, goose, opencode, qwen, gemini) komutunu kullanın; araç başına eski başlatıcılar olan `pusula launch` (Claude Code) ve `pusula launch-codex` (Codex) kullanılmaya devam edilebilir.
 
-Tam tablo (her komutun ne yazdığı, tüm parametreler, yerel ve uzak kullanım, temel URL
-`/v1` kuralları) için **[CLI Entegrasyonları](./CLI-INTEGRATIONS.md)** bölümüne bakın.
+Tam tablo için (her komutun ne yazdığı, tüm seçenekler, yerel ve uzak kullanım, temel URL `/v1` kuralları) **[CLI Entegrasyonları](./CLI-INTEGRATIONS.md)** belgesine bakın.
 
-Araç bazında ayrıntılı yapılandırma (Claude Code, Codex CLI, Cursor, Cline, OpenClaw, Kilo Code, Copilot ve daha fazlası) için özel **[CLI Araçları Kılavuzu](../reference/CLI-TOOLS.md)** bölümüne bakın.
+Araç bazında ayrıntılı yapılandırma (Claude Code, Codex CLI, Cursor, Cline, OpenClaw, Kilo Code, Copilot ve daha fazlası) için özel **[CLI Araçları Kılavuzu](../reference/CLI-TOOLS.md)** belgesine bakın.
 
 ---
 
@@ -275,7 +270,7 @@ curl -X POST http://localhost:20128/a2a \
 | Değişken                 | Varsayılan                             | Amaç                                                                                                                                                            |
 | ------------------------ | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `REQUEST_TIMEOUT_MS`     | `600000`                               | Üst kaynak yanıt başlangıcı zaman aşımı, gizli Undici zaman aşımları, TLS parmak izi istekleri ve API köprüsü istek/proxy zaman aşımları için ortak temel değer |
-| `STREAM_IDLE_TIMEOUT_MS` | `REQUEST_TIMEOUT_MS` değerini devralır | Pusula'un SSE akışını sonlandırmasından önce akış parçaları arasında izin verilen maksimum süre                                                              |
+| `STREAM_IDLE_TIMEOUT_MS` | `REQUEST_TIMEOUT_MS` değerini devralır | Pusula'un SSE akışını sonlandırmasından önce akış parçaları arasında izin verilen maksimum süre                                                                 |
 
 Geriye dönük uyumluluk korunur: mevcut `FETCH_TIMEOUT_MS`, `API_BRIDGE_PROXY_TIMEOUT_MS` ve katmana özgü diğer zaman aşımı değişkenleri çalışmaya devam eder ve ortak temel değeri geçersiz kılar.
 
@@ -411,9 +406,9 @@ post_install() {
 
 ## Kaldırma
 
-| Komut                    | İşlem                                                                                                        |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| Komut                    | İşlem                                                                                                     |
+| ------------------------ | --------------------------------------------------------------------------------------------------------- |
 | `npm run uninstall`      | Sistem uygulamasını kaldırır ancak `~/.pusula` içindeki **veritabanınızı ve yapılandırmalarınızı korur**. |
-| `npm run uninstall:full` | Uygulamayı kaldırır VE **tüm yapılandırmaları, anahtarları ve veritabanlarını kalıcı olarak siler**.         |
+| `npm run uninstall:full` | Uygulamayı kaldırır VE **tüm yapılandırmaları, anahtarları ve veritabanlarını kalıcı olarak siler**.      |
 
 > Tüm yöntemlere ilişkin ayrıntılı kaldırma talimatları için [UNINSTALL.md](./UNINSTALL.md) dosyasına bakın.

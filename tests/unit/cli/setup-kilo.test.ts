@@ -1,9 +1,13 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { mkdtempSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import {
   buildKiloAuth,
   buildKiloVscodeSettings,
   resolveKiloTarget,
+  runSetupKiloCommand,
 } from "../../../bin/cli/commands/setup-kilo.mjs";
 
 test("buildKiloAuth sets the openai-compatible provider (baseUrl WITH /v1, model)", () => {
@@ -54,4 +58,30 @@ test("resolveKiloTarget: explicit --api-key wins", () => {
     resolveKiloTarget({ remote: "http://x:20128", apiKey: "sk-explicit" }).apiKey,
     "sk-explicit"
   );
+});
+
+test("setup-kilo writes CLI and VS Code credential files with private permissions", async () => {
+  const directory = mkdtempSync(join(tmpdir(), "pusula-kilo-private-"));
+  const authPath = join(directory, "kilo", "auth.json");
+  const vscodePath = join(directory, "settings.json");
+  writeFileSync(vscodePath, JSON.stringify({ "editor.fontSize": 14 }));
+
+  try {
+    assert.equal(
+      await runSetupKiloCommand({
+        authPath,
+        vscodeSettings: vscodePath,
+        remote: "http://127.0.0.1:20128",
+        apiKey: "provider-secret",
+        model: "glm/glm-5.2",
+        yes: true,
+        allowContainerWrite: true,
+      }),
+      0
+    );
+    assert.equal(statSync(authPath).mode & 0o777, 0o600);
+    assert.equal(statSync(vscodePath).mode & 0o777, 0o600);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
 });

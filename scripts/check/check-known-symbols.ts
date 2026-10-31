@@ -476,6 +476,10 @@ export const AGENT_FILE_TO_REGISTRY_KEY: Record<string, string> = {
 // ───────────────────────────────────────────────────────────────────────────
 
 async function main(): Promise<void> {
+  if (!process.env.DATA_DIR?.trim()) delete process.env.DATA_DIR;
+  if (process.env.PUSULA_ALLOW_DEFAULT_DATA_DIR !== "1") {
+    await import("../../tests/_setup/isolateDataDir.ts");
+  }
   const failures: string[] = [];
 
   // ── (1) Executor conformance ──────────────────────────────────────────────
@@ -514,8 +518,7 @@ async function main(): Promise<void> {
   // when the dispatch was decomposed (Block J / #3501) and will break again when R0.3
   // converts it to a registry; enumerating at runtime keeps the gate correct either way.
   // Each entry in HANDLED_COMBO_STRATEGIES must stay in sync with a real dispatch branch.
-  const strategyDispatchMod =
-    await import("@pusula/open-sse/services/combo/strategyDispatch.ts");
+  const strategyDispatchMod = await import("@pusula/open-sse/services/combo/strategyDispatch.ts");
   const handled = new Set(strategyDispatchMod.HANDLED_COMBO_STRATEGIES as readonly string[]);
 
   // Stale-enforcement (6A.3): IMPLICIT_DEFAULT_STRATEGIES is a suppression allowlist —

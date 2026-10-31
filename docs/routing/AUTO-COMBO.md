@@ -25,7 +25,7 @@ lastUpdated: 2026-06-28
 | `auto/offline` | offline | Favors providers with highest quota availability                         |
 | `auto/smart`   | smart   | Quality-first + higher exploration rate (10%) for better model discovery |
 | `auto/lkgp`    | lkgp    | Explicit LKGP (same as default `auto`)                                   |
-| `auto/chaos`   | chaos   | Fault-injection weights for resilience testing (chaos engineering)       |
+| `auto/chaos`   | chaos   | Parallel fan-out, one model per provider (not fault injection)           |
 
 ### Category × Tier Composition (`auto/<category>:<tier>`)
 
@@ -209,6 +209,21 @@ The Auto-Combo Engine dynamically selects the best provider/model for each reque
 | `quality`             | 0.03           | Feedback-driven output-quality signal from the routing-event quality tracker; candidates without observations receive a neutral 0.5                                                            |
 | `reliability`         | 0.00           | Observed success share, `1 - failureRate`, from 24h of usage history behind a ten-sample floor (real-time metrics otherwise); candidates with no observations read as 1.0. Disabled by default |
 
+The in-memory `quality` tracker (`open-sse/services/routing/quality.ts`) is empty
+after a cold restart, so every candidate scores a neutral `0.5` until the
+first observations land.
+
+> **Unreadable quota (#15347).** When a provider has a quota fetcher but it returns nothing
+> readable (failed fetch, missing credentials, message-only usage, or a malformed snapshot with no
+> parseable `windows` and no finite `percentUsed`, including `percentUsed: null`), the candidate
+> scores `0` on the `quota` axis and its final score is multiplied by
+> `UNREADABLE_QUOTA_SOFT_DEPRIORITIZE_FACTOR` (0.5, `autoStrategy.ts`), the same soft-penalty
+> pattern as the connection-status penalty. A failed usage read is evidence about the telemetry,
+> not the provider, so it ranks strictly below any real reading, including a confirmed 100%-used
+> one, but is never hard-blocked or evicted. A provider with no cap reports `unlimited: true` and
+> scores as full quota; a provider with no registered quota fetcher has no telemetry source at all
+> and keeps the default of `100`.
+
 **Sum:** `0.1429 + 0.1605 + 0.1429 + 0.1143 + 0.0762 + (7 × 0.0476) + 0.00 + 0.00 + 0.03 + 0.00 = 1.0` as declared in `DEFAULT_WEIGHTS`; user-configured weights are renormalized into a distribution by `normalizeScoringWeights()` before scoring.
 
 ## Mode Packs
@@ -243,7 +258,7 @@ Notes:
   - **quality-first** → taskFit 0.3524 + stability 0.1429 + quality 0.03, the highest of any pack (best model for the task, consistent)
   - **offline-friendly** → quota 0.3324 + health 0.2667 (max headroom regardless of speed/cost)
   - **reliability-first** → health 0.3524 + stability 0.1905 + reliability 0.04, the highest of any pack (fewest surprises)
-  - **chaos-mode** → health 0.4000 + taskFit 0.1905 (fault-injection profile)
+  - **chaos-mode** → health 0.4000 + taskFit 0.1905 (the weight pack `auto/chaos` assigns to its panel members; the parallel fan-out does not read these weights, and this is not a fault-injection profile, see [CHAOS-MODE.md](../guides/CHAOS-MODE.md#autochaos-parallel-fan-out))
 
 ### Per-Request Controls (headers) — #6023 / #6024 / #6025 / #3470
 
@@ -252,10 +267,10 @@ combo's stored config. These apply only to the `auto` strategy and only for the 
 that carries them; the combo's saved `modePack`/`budgetCap`/`budgetFallback` are used
 when the header is absent.
 
-| Header                        | Accepts                                                                                                                                                                                 | Effect                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| :---------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Header                     | Accepts                                                                                                                                                                                 | Effect                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| :------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `X-Pusula-Mode`            | a preset alias (`fast`, `balanced`, `quality`, `cheap`, `reliable`, `offline`) or a raw pack name (`ship-fast`, `cost-saver`, `quality-first`, `offline-friendly`, `reliability-first`) | Overrides the scoring weights for this request. `balanced`/`default` force the default weights (no pack). Unknown values are ignored (config preserved).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| `X-Pusula-Budget`          | a positive number (max USD per request)                                                                                                                                                 | Hard cost ceiling: candidates whose estimated cost exceeds it are filtered before selection. What happens when **every** candidate exceeds it is controlled by `X-Pusula-Budget-Fallback` below.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `X-Pusula-Budget`          | a positive number (max USD per request)                                                                                                                                                 | Hard cost ceiling: candidates whose estimated cost exceeds it are filtered before selection. What happens when **every** candidate exceeds it is controlled by `X-Pusula-Budget-Fallback` below.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `X-Pusula-Budget-Fallback` | `cheapest` (default, aliases: `cheapest-viable`, `soft`) or `strict` (aliases: `block`, `hard`)                                                                                         | `cheapest`: falls back to the globally cheapest candidate even though it still exceeds the cap (legacy behavior). `strict`: refuses to select — the request fails fast with `HTTP 402` instead of silently overspending. Unknown values are ignored.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | `X-Pusula-Effort`          | `auto` (other values reserved)                                                                                                                                                          | Adaptive thinking budget: when the request carries **no** reasoning field of any shape (`reasoning_effort`, `reasoning`, `thinking`), the gateway resolves `auto` to `low`/`medium`/`high` from deterministic request-shape signals (last-user-message length, context size up to the last user message, prior tool results, tool-loop depth). Signals are scoped to the current turn — everything after the last user message is ignored — so every request in a tool loop resolves to the same level (stateless per-turn pin, no session state, no mid-loop escalation that would break upstream prompt-cache prefixes). An explicit client reasoning field always wins. Scoped to requests whose upstream dispatch resolves to the OpenAI Chat Completions shape (`targetFormat === FORMATS.OPENAI`) — `reasoning_effort` is an OpenAI-shaped field, so the header is a no-op on a Claude- or Gemini-targeted request (see `open-sse/handlers/chatCore/adaptiveEffortWiring.ts`). |
 
@@ -276,7 +291,7 @@ resolved values feed the engine's existing `config.modePack` / `config.budgetCap
 
 ## All Routing Strategies
 
-Pusula's combo engine supports **19 routing strategies** (declared in `src/shared/constants/routingStrategies.ts` → `ROUTING_STRATEGY_VALUES`). The Auto Combo engine itself is exposed under the `auto` strategy; the others are available for persisted combos.
+Pusula's combo engine supports **20 routing strategies** (declared in `src/shared/constants/routingStrategies.ts` → `ROUTING_STRATEGY_VALUES`). The Auto Combo engine itself is exposed under the `auto` strategy; the others are available for persisted combos.
 
 | Strategy            | Description                                                                                                                                                                               |
 | :------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -292,6 +307,7 @@ Pusula's combo engine supports **19 routing strategies** (declared in `src/share
 | `reset-aware` ⭐    | Prioritize by quota reset time — short reset windows ranked higher                                                                                                                        |
 | `reset-window`      | Prefer targets whose quota window resets soonest                                                                                                                                          |
 | `headroom`          | Pick the target with the most remaining quota headroom                                                                                                                                    |
+| `quota-weighted`    | Skip exhausted accounts, then pick among the rest in proportion to leftover quota divided by in-flight load; existing conversations stay pinned                                           |
 | `strict-random`     | Random without deduplication of repeats                                                                                                                                                   |
 | `auto`              | Use Auto Combo scoring (16-factor) — **recommended**                                                                                                                                      |
 | `lkgp`              | Last-Known-Good Path (pins to the last successful provider, then falls back to rules)                                                                                                     |
@@ -324,12 +340,19 @@ strict — balance.
 
 ### Agentic pipeline mode
 
-A two-step `pipeline` combo can opt into planner/executor routing with
+A `pipeline` combo with at least two models can opt into planner/executor routing with
 `config.agenticOrchestration.enabled`. The first target owns planning and final answers;
 the second target emits client-native tool calls. Pusula detects tool-result
 continuations from the request protocol, asks the planner whether another tool round is
 needed, and dynamically makes either the executor or planner the client-facing final
 step.
+
+Additional models after the second target are ordered executor backups. A failed
+HTTP response or transport exception advances to the next executor, carrying the
+same planner decision and native tools but that executor's own step prompt and
+resolved connection. The first successful response is returned unchanged, including
+SSE streaming; failures after a successful stream starts cannot be retried here.
+If all executors fail, the last failure is returned. Client aborts stop dispatch.
 
 ```json
 {
@@ -503,10 +526,12 @@ Persisted `strategy: "auto"` combos can set `config.routerStrategy` (or legacy
 - `sla-aware` / `sla` — prefer candidates that satisfy p95 latency, error-rate, and optional
   cost SLOs
 - `lkgp` — last known good provider first
+- `nadir` — ask [Nadir](https://getnadir.com)'s decision API which model in the pool the
+  prompt needs; opt-in, fail-open to `rules`
 
 ### Router strategies in detail
 
-The auto-combo engine exposes 6 pluggable **RouterStrategy** implementations that
+The auto-combo engine exposes 7 pluggable **RouterStrategy** implementations that
 you can swap via `config.routerStrategy` (or the legacy `config.auto.routerStrategy`).
 Each strategy picks one provider from the candidate pool, given a `RoutingContext`
 (task type, tool/vision hints, token estimate, optional SLA policy, optional
@@ -680,6 +705,51 @@ follow-up requests (e.g., for caching, context continuity, or pricing consistenc
 
 ---
 
+#### 6. `nadir` — prompt-aware model choice via Nadir
+
+Every strategy above ranks the candidates by their own telemetry; none of them reads
+the request. `nadir` sends the last user turn plus the pool's model ids to
+[Nadir](https://getnadir.com)'s decision API (`POST /v1/bucket`) and routes to the model
+Nadir selects from that menu (`simple` → the cheapest capable model, `complex` → the
+frontier one). The connection serving that model is still picked by `rules`, so quota,
+health and cost keep deciding which account.
+
+```json
+{
+  "strategy": "auto",
+  "config": {
+    "routerStrategy": "nadir",
+    "nadir": {
+      "apiKey": "ndr_...",
+      "baseUrl": "https://api.getnadir.com",
+      "timeoutMs": 2000
+    }
+  }
+}
+```
+
+`PUSULA_NADIR_API_KEY` and `PUSULA_NADIR_BASE_URL` are env fallbacks for the two
+strings. `baseUrl` is only needed for a self-hosted Nadir (a trailing `/v1` is tolerated).
+Keyless calls land on Nadir's anonymous tier, which is rate-limited per IP.
+
+What leaves the box: the last user message's text (first 16k characters), the candidate
+model ids and a `source: "pusula"` channel tag. No system prompt, history, tools or
+headers.
+
+Failure behavior is fail-open: a timeout (default 2000 ms), a non-2xx, an unreachable
+host, a malformed response or a selection outside the pool resolves to the `rules`
+decision and the reason is prefixed `NadirStrategy: fallback (…)`. After a failed call the
+strategy skips the network for 30 s, so an outage costs one timeout per 30 s rather than
+one per request. Routing events report `strategy: "nadir"` only when Nadir actually made
+the choice.
+
+**When to use**: mixed-difficulty traffic on a pool that spans model tiers (a small, a mid
+and a frontier model), where always-frontier is the cost you want to cut.
+
+**Alias**: `nadir` (no alias)
+
+---
+
 ### Custom router strategies
 
 You can register your own `RouterStrategy` implementation via the public API:
@@ -732,6 +802,7 @@ Then use it:
 | Minimize latency  | `latency`   | Picks fastest reliable provider      |
 | Strict SLOs       | `sla-aware` | Filters by p95/error/cost thresholds |
 | Multi-turn chat   | `lkgp`      | Session stickiness                   |
+| Mixed difficulty  | `nadir`     | Picks the model tier per prompt      |
 
 SLA-aware fields:
 
@@ -781,7 +852,7 @@ To strongly favor Tier 1 (subscription), increase `tierPriority` weight:
 }
 ```
 
-See `docs/marketing/TIERS.md` for tier definitions and provider classification.
+See [`docs/guides/TIERS.md`](../guides/TIERS.md) for tier definitions and provider classification.
 
 ## Testing & Coverage
 
@@ -802,11 +873,11 @@ This suite runs in CI (`test:integration` job) with `--test-concurrency=1` and
 
 ### Gated live smoke (NOT in CI — real providers)
 
-| Command                                | What it does                                                                   |
-| :------------------------------------- | :----------------------------------------------------------------------------- |
+| Command                                | What it does                                                                |
+| :------------------------------------- | :-------------------------------------------------------------------------- |
 | `npm run test:combo:live`              | In-process real routing with `RUN_COMBO_LIVE=1`; snapshots a live Pusula DB |
 | `npm run test:combo:live:vps`          | HTTP calls against a live Pusula server (set `COMBO_LIVE_BASE_URL`)         |
-| `npm run test:combo:live:vps:failover` | Same, with deliberate failover scenarios                                       |
+| `npm run test:combo:live:vps:failover` | Same, with deliberate failover scenarios                                    |
 
 These smoke tests exercise the real wire path (combo → provider → completion). They are
 intentionally excluded from CI because they require live credentials and VPS access.
@@ -825,5 +896,5 @@ intentionally excluded from CI because they require live credentials and VPS acc
 | `open-sse/services/autoCombo/autoPrefix.ts`               | `auto/` prefix parser + 6 variants                                                                        |
 | `open-sse/services/autoCombo/virtualFactory.ts`           | Builds in-memory `AutoComboConfig` from live connections                                                  |
 | `open-sse/services/autoCombo/providerRegistryAccessor.ts` | Test hook for mocking provider registry                                                                   |
-| `src/shared/constants/routingStrategies.ts`               | `ROUTING_STRATEGY_VALUES` (19 strategies)                                                                 |
+| `src/shared/constants/routingStrategies.ts`               | `ROUTING_STRATEGY_VALUES` (20 strategies)                                                                 |
 | `src/sse/handlers/chat.ts`                                | Integration: auto-prefix short-circuit                                                                    |

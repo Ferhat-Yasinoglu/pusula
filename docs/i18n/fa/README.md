@@ -715,10 +715,10 @@ docker run -d --name pusula --restart unless-stopped --stop-timeout 40 \
 `:latest` بالاترین نسخهٔ پایدار SemVer **منتشرشده** را دنبال میکند. این برچسب git `main` را دنبال نمیکند. برای GitOps، نسخه را روی `:X.Y.Z` ثابت کنید. به [کانالهای انتشار Docker](docs/guides/DOCKER_GUIDE.md#release-channels) مراجعه کنید. ایمیج مقدار **`PUSULA_MEMORY_MB=1024`** را ثابت تنظیم میکند. این مقدار برای داشبورد و یک گفتوگوی سبک کافی است. **عاملهای کدنویسی** (`POST /v1/responses` از Claude Code، Codex، Grok و …) به heap بسیار بزرگتری برای V8 نیاز دارند؛ در غیر این صورت، با دو context طولانی همپوشان، پردازش در حدود ۱۲ گیگابایت با `FATAL ERROR` مواجه میشود. اندازهٔ کانتینر را بیشتر از heap در نظر بگیرید (بافرهای native خارج از V8 قرار دارند):
 
 | بار کاری                         | Heap (`-e PUSULA_MEMORY_MB`) | کانتینر (`--memory`) |
-| -------------------------------- | ------------------------------- | -------------------- |
-| داشبورد / گفتوگوی سبک            | `1024` (پیشفرض ایمیج)           | ≥2 g                 |
-| یک عامل کدنویسی                  | `8192`                          | ≥10 g                |
-| دو `/v1/responses` طولانی همزمان | `10240`–`12288`                 | ≥12–16 g             |
+| -------------------------------- | ---------------------------- | -------------------- |
+| داشبورد / گفتوگوی سبک            | `1024` (پیشفرض ایمیج)        | ≥2 g                 |
+| یک عامل کدنویسی                  | `8192`                       | ≥10 g                |
+| دو `/v1/responses` طولانی همزمان | `10240`–`12288`              | ≥12–16 g             |
 
 ```bash
 docker run -d --name pusula --restart unless-stopped --stop-timeout 40 \
@@ -826,13 +826,13 @@ PUSULA_SKIP_POSTINSTALL=1 npm install -g pusula   # CI=1 نیز از آن صرف
 
 > پرسش دارید، باگی پیدا کرده‌اید یا ایده‌ای در سر دارید؟ همه‌چیز در GitHub است.
 
-| کانال | کجا / چگونه |
-| --- | --- |
-| 🐛 **گزارش باگ یا درخواست قابلیت** | [GitHub Issues](https://github.com/Ferhat-Yasinoglu/pusula/issues) — خروجی `npm run system-info` را پیوست کنید |
-| 💬 **پرسش و پاسخ، ایده‌ها و گفت‌وگو** | [GitHub Discussions](https://github.com/Ferhat-Yasinoglu/pusula/discussions) |
-| 📦 **کد منبع** | [github.com/Ferhat-Yasinoglu/pusula](https://github.com/Ferhat-Yasinoglu/pusula) |
-| 🤝 **مشارکت** | [CONTRIBUTING.md](CONTRIBUTING.md) · [مدل شاخه‌بندی و انتشار](docs/ops/BRANCHING_MODEL.md) · یک `good first issue` انتخاب کنید |
-| 🔒 **گزارش آسیب‌پذیری امنیتی** | [SECURITY.md](SECURITY.md) · [گزارش محرمانه](https://github.com/Ferhat-Yasinoglu/pusula/security/advisories/new) |
+| کانال                                 | کجا / چگونه                                                                                                                    |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| 🐛 **گزارش باگ یا درخواست قابلیت**    | [GitHub Issues](https://github.com/Ferhat-Yasinoglu/pusula/issues) — خروجی `npm run system-info` را پیوست کنید                 |
+| 💬 **پرسش و پاسخ، ایده‌ها و گفت‌وگو** | [GitHub Discussions](https://github.com/Ferhat-Yasinoglu/pusula/discussions)                                                   |
+| 📦 **کد منبع**                        | [github.com/Ferhat-Yasinoglu/pusula](https://github.com/Ferhat-Yasinoglu/pusula)                                               |
+| 🤝 **مشارکت**                         | [CONTRIBUTING.md](CONTRIBUTING.md) · [مدل شاخه‌بندی و انتشار](docs/ops/BRANCHING_MODEL.md) · یک `good first issue` انتخاب کنید |
+| 🔒 **گزارش آسیب‌پذیری امنیتی**        | [SECURITY.md](SECURITY.md) · [گزارش محرمانه](https://github.com/Ferhat-Yasinoglu/pusula/security/advisories/new)               |
 
 </div>
 
@@ -850,7 +850,7 @@ PUSULA_SKIP_POSTINSTALL=1 npm install -g pusula   # CI=1 نیز از آن صرف
   <tr><td nowrap><b>محیط اجرا</b></td><td>Node.js 22.x / 24.x LTS — <code>&gt;=22.22.2 &lt;23 || &gt;=24.0.0 &lt;27</code></td></tr>
   <tr><td nowrap><b>زبان</b></td><td>TypeScript 6.0 — <b>۱۰۰٪ تایپاسکریپت</b> در سراسر <code>src/</code> و <code>open-sse/</code> (صفر <code>any</code> در هسته از نسخه ۲.۰)</td></tr>
   <tr><td nowrap><b>فریمورک</b></td><td>Next.js 16 + React 19 + Tailwind CSS 4</td></tr>
-  <tr><td nowrap><b>پایگاه داده</b></td><td>better-sqlite3 (SQLite, WAL journaling) + LowDB (JSON legacy) — ۱۲۲ ماژول دامنه، ۱۸۳ مهاجرت</td></tr>
+  <tr><td nowrap><b>پایگاه داده</b></td><td>better-sqlite3 (SQLite, WAL journaling) + LowDB (JSON legacy) — ۱۲۲ ماژول دامنه، ۲۰۹ مهاجرت</td></tr>
   <tr><td nowrap><b>حافظه</b></td><td>SQLite FTS5 تماممتن + جاسازیهای برداری کوانتیزه شده int8، واپاشی تایپشده</td></tr>
   <tr><td nowrap><b>شماتیکها</b></td><td>Zod 4 — اعتبارسنجی ورودی/خروجی ابزار MCP + قراردادهای API</td></tr>
   <tr><td nowrap><b>پروتکلها</b></td><td>MCP (stdio / HTTP / SSE) + A2A v0.3 (JSON-RPC 2.0 + SSE)</td></tr>

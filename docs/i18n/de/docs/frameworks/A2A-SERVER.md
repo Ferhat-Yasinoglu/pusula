@@ -148,25 +148,25 @@ curl -X POST http://localhost:20128/a2a \
 
 ## Verfügbare Skills
 
-Pusula stellt 6 A2A-Skills bereit, die in `src/lib/a2a/taskExecution.ts::A2A_SKILL_HANDLERS` eingebunden sind. Jedes Skill-Modul befindet sich in `src/lib/a2a/skills/`.
+Pusula stellt 6 A2A-Skills bereit, die in `src/lib/a2a/taskExecution.ts::A2A_SKILL_HANDLERS` verdrahtet sind. Jedes Skill-Modul befindet sich in `src/lib/a2a/skills/`.
 
-| Skill                 | ID                   | Beschreibung                                                                                                                                                             | Tags                       | Beispiele                                    |
-| :-------------------- | :------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------- | :------------------------------------------- |
-| Intelligentes Routing | `smart-routing`      | Leitet einen Prompt mithilfe der Combo-Engine und Bewertung von Pusula über den optimalen Anbieter bzw. die optimale Kombination weiter                               | Routing, Anbieter          | „Diesen Prompt über das beste Modell leiten“ |
-| Kontingentverwaltung  | `quota-management`   | Meldet den Kontingentstatus je Anbieter und hilft Aufrufern bei der Entscheidung, wann sie drosseln bzw. wechseln sollten                                                | Kontingent, Anbieter       | „Kontingent für anthropic prüfen“            |
-| Anbietererkennung     | `provider-discovery` | Listet installierte Anbieter mit Funktionen, Angaben zu kostenlosen Tarifen und OAuth-Status auf                                                                         | Anbieter, Erkennung        | „Welche Anbieter sind verfügbar?“            |
-| Kostenanalyse         | `cost-analysis`      | Schätzt die Kosten einer Anfrage bzw. Unterhaltung anhand des Katalogs und der jüngsten Nutzung                                                                          | Kosten, Nutzung            | „Kosten für diese Unterhaltung schätzen“     |
-| Zustandsbericht       | `health-report`      | Aggregiert den Status von Leistungsschutzschaltern, Abklingzeiten und Sperren je Anbieter                                                                                | Zustand, Resilienz         | „Zustand aller Anbieter anzeigen“            |
-| Funktionen auflisten  | `list-capabilities`  | Gibt den vollständigen Katalog mit 45 Agent Skills (23 API + 21 CLI + 1 Konfiguration) als Markdown-Tabelle mit direkten SKILL.md-URLs für die Kontexteinspeisung zurück | Katalog, Erkennung, Skills | „Alle Funktionen von Pusula auflisten“    |
+| Skill                 | ID                   | Beschreibung                                                                                                                                                               | Tags                       | Beispiele                                          |
+| :-------------------- | :------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------- | :------------------------------------------------- |
+| Intelligentes Routing | `smart-routing`      | Leitet einen Prompt mithilfe der Combo-Engine und der Bewertung von Pusula über den optimalen Anbieter bzw. die optimale Kombination weiter                                | Routing, Anbieter          | „Diesen Prompt über das beste Modell weiterleiten“ |
+| Kontingentverwaltung  | `quota-management`   | Meldet den Kontingentstatus pro Anbieter und hilft Aufrufern bei der Entscheidung, wann gedrosselt oder gewechselt werden sollte                                           | Kontingent, Anbieter       | „Kontingent für anthropic prüfen“                  |
+| Anbietererkennung     | `provider-discovery` | Listet installierte Anbieter mit Funktionen, Angaben zu kostenlosen Tarifen und OAuth-Status auf                                                                           | Anbieter, Erkennung        | „Welche Anbieter sind verfügbar?“                  |
+| Kostenanalyse         | `cost-analysis`      | Schätzt anhand des Katalogs und der jüngsten Nutzung die Kosten einer Anfrage bzw. Unterhaltung                                                                            | Kosten, Nutzung            | „Kosten für diese Unterhaltung schätzen“           |
+| Zustandsbericht       | `health-report`      | Aggregiert den Status von Leistungsschaltern, Abkühlphasen und Sperren pro Anbieter                                                                                        | Zustand, Resilienz         | „Zustand aller Anbieter anzeigen“                  |
+| Funktionen auflisten  | `list-capabilities`  | Gibt den vollständigen Katalog mit 45 Agent Skills (23 API + 21 CLI + 1 Konfiguration) als Markdown-Tabelle mit unverarbeiteten SKILL.md-URLs zur Kontexteinbindung zurück | Katalog, Erkennung, Skills | „Alle Pusula-Funktionen auflisten“                 |
 
-> Die Agent Card sollte mit dem aktuellen Katalog von 352 Anbietern synchron gehalten werden; Anbieterzahlen und Metadaten zu kostenlosen bzw. authentifizierungsfreien Angeboten stammen aus der Laufzeitregistrierung.
+> Die Agent Card sollte mit dem aktuellen Katalog von 374 Anbietern synchron gehalten werden; Anbieterzahlen und Metadaten zu kostenlosen bzw. ohne Authentifizierung nutzbaren Angeboten stammen aus der Laufzeitregistrierung.
 
 ### Details zum Skill `list-capabilities`
 
-Der Skill `list-capabilities` ist besonders nützlich für externe Agenten, die vor dem Senden von API-Aufrufen ermitteln müssen, welche Funktionen Pusula bereitstellt. Er gibt ein strukturiertes Markdown-Tabellenartefakt zurück:
+Der Skill `list-capabilities` ist besonders nützlich für externe Agenten, die ermitteln müssen, was Pusula bereitstellt, bevor sie API-Aufrufe senden. Er gibt ein strukturiertes Markdown-Tabellenartefakt zurück:
 
 ```
-| ID | Name | Kategorie | Bereich | Endpunkte/Befehle | Direkte URL |
+| ID | Name | Kategorie | Bereich | Endpunkte/Befehle | Unverarbeitete URL |
 | --- | --- | --- | --- | --- | --- |
 | pusula-auth | Authentifizierung und Sitzungen | api | auth | POST /api/auth/login, ... | https://raw.githubusercontent.com/... |
 ...
@@ -180,13 +180,13 @@ Jede Zeile enthält die Spalte `rawUrl`, sodass Agenten sofort die vollständige
 
 Der JSON-RPC-Endpunkt `/a2a` ist der kanonische A2A-Einstiegspunkt. Die folgenden REST-Endpunkte bieten ergänzenden Zugriff für Dashboards und externe Tools:
 
-| Endpunkt                     | Methode | Beschreibung                                                           | Authentifizierung                               |
-| :--------------------------- | :------ | :--------------------------------------------------------------------- | :---------------------------------------------- |
-| `/api/a2a/status`            | GET     | Serverstatus, registrierte Skills                                      | (öffentlich)                                    |
-| `/api/a2a/tasks`             | GET     | Aufgaben mit Filtern auflisten                                         | Verwaltung                                      |
-| `/api/a2a/tasks/[id]`        | GET     | Aufgabe nach ID abrufen                                                | Verwaltung                                      |
-| `/api/a2a/tasks/[id]/cancel` | POST    | Laufende Aufgabe abbrechen                                             | Verwaltung                                      |
-| `/.well-known/agent.json`    | GET     | Agent Card (A2A-Erkennung)                                             | (öffentlich, 3600s zwischengespeichert)         |
+| Endpunkt                     | Methode | Beschreibung                                                             | Authentifizierung                            |
+| :--------------------------- | :------ | :----------------------------------------------------------------------- | :------------------------------------------- |
+| `/api/a2a/status`            | GET     | Serverstatus, registrierte Skills                                        | (öffentlich)                                 |
+| `/api/a2a/tasks`             | GET     | Aufgaben mit Filtern auflisten                                           | Verwaltung                                   |
+| `/api/a2a/tasks/[id]`        | GET     | Aufgabe nach ID abrufen                                                  | Verwaltung                                   |
+| `/api/a2a/tasks/[id]/cancel` | POST    | Laufende Aufgabe abbrechen                                               | Verwaltung                                   |
+| `/.well-known/agent.json`    | GET     | Agent Card (A2A-Erkennung)                                               | (öffentlich, 3600s zwischengespeichert)      |
 | `/api/a2a/tasks`             | POST    | Eingehende Delegierung an die PusulaConductor-Flotte (Conductor PRD RF5) | Bearer gegen `PUSULA_API_KEY` + `a2aEnabled` |
 
 **Eingehende Conductor-Delegierung (`POST /api/a2a/tasks`):** Externe A2A-Agenten delegieren Programmierarbeiten über Pusula an die PusulaConductor-Flotte. Body: `{ skill: "conductor" | "conductor-cli-<profile>", messages: [{role, content}], metadata: { conductor: { repo: { url, base_ref? }, mode?, cli?, model? } } }` — nur Skills der Conductor-Flotte (die auf der Agent Card angekündigten) können delegiert werden; `metadata.conductor.repo.url` ist erforderlich (die Flotte arbeitet mit git-Repositories). Die Route übersetzt die Anfrage in `POST /v1/tasks` des Hubs, wobei das serverseitige `CONDUCTOR_ORCHESTRATOR_TOKEN` (ersatzweise `CONDUCTOR_HUB_TOKEN`) verwendet wird, und gibt `201 { conductor_task_id, state: "submitted" }` zurück; Aufgabenstatus werden über die SSE→A2A-Spiegelung (RF1) zurückübertragen und sind über `GET /api/a2a/tasks?skill=conductor` sichtbar.

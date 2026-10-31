@@ -96,6 +96,58 @@ async function runClaudeFromCodex(rawSSE: string, chunkSize = 1_000_000): Promis
   return { raw, content, thinking };
 }
 
+test("#15507 string sequence_number replay is dropped the same way as a numeric replay", async () => {
+  const rawEvents = [
+    sse("response.created", {
+      sequence_number: "0",
+      response: { id: "resp_s", status: "in_progress" },
+    }),
+    sse("response.output_item.added", {
+      sequence_number: "1",
+      output_index: 0,
+      item: { id: "msg_s", type: "message", content: [], role: "assistant" },
+    }),
+    sse("response.output_text.delta", {
+      sequence_number: "2",
+      item_id: "msg_s",
+      output_index: 0,
+      content_index: 0,
+      delta: "once",
+    }),
+    sse("response.output_text.delta", {
+      sequence_number: "2",
+      item_id: "msg_s",
+      output_index: 0,
+      content_index: 0,
+      delta: "twice",
+    }),
+  ];
+  const { content } = await runClaudeFromCodex(rawEvents.join(""));
+  assert.equal(content, "once");
+});
+
+test("#15507 a sequence past the safe integer range is not treated as a replay", async () => {
+  const huge = "9007199254740993";
+  const rawEvents = [
+    sse("response.output_text.delta", {
+      sequence_number: huge,
+      item_id: "msg_h",
+      output_index: 0,
+      content_index: 0,
+      delta: "a",
+    }),
+    sse("response.output_text.delta", {
+      sequence_number: huge,
+      item_id: "msg_h",
+      output_index: 0,
+      content_index: 0,
+      delta: "b",
+    }),
+  ];
+  const { content } = await runClaudeFromCodex(rawEvents.join(""));
+  assert.equal(content, "ab");
+});
+
 test("#5786 (A) replayed Responses-API deltas (sequence_number <= last-seen) are dropped — no glued duplicate text", async () => {
   // Upstream reconnect/retry replays the same output_text.delta event with the SAME
   // sequence_number, producing the reported "...briefly.and I'll summarize briefly." glue.

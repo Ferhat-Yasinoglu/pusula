@@ -7,6 +7,7 @@ export const PUSULA_RESPONSE_HEADERS = {
   compression: "X-Pusula-Compression",
   costSaved: "X-Pusula-Cost-Saved",
   decision: "X-Pusula-Decision",
+  emergencyFallback: "X-Pusula-Emergency-Fallback",
   fallbackAttempts: "X-Pusula-Fallback-Attempts",
   latencyMs: "X-Pusula-Latency-Ms",
   model: "X-Pusula-Model",

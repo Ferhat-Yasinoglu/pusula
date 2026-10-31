@@ -1,3 +1,4 @@
+import { fetchWithConnectionProxy } from "./connectionProxyFetch.ts";
 import { normalizeConolCookie } from "./conolAuth.ts";
 
 interface UsageQuota {
@@ -35,8 +36,7 @@ function remainingQuota(remaining: number, total = remaining): UsageQuota {
     used,
     total: boundedTotal,
     remaining,
-    remainingPercentage:
-      boundedTotal > 0 ? Math.round((remaining / boundedTotal) * 1000) / 10 : 0,
+    remainingPercentage: boundedTotal > 0 ? Math.round((remaining / boundedTotal) * 1000) / 10 : 0,
     resetAt: null,
     unlimited: false,
   };
@@ -77,7 +77,8 @@ function readProviderValue(data: unknown, keys: readonly string[]): string {
 
 export async function getConolUsage(
   apiKey: unknown,
-  providerSpecificData?: unknown
+  providerSpecificData?: unknown,
+  connectionId?: string
 ): Promise<ConolUsageResult | { message: string }> {
   const raw =
     readProviderValue(providerSpecificData, [
@@ -89,15 +90,26 @@ export async function getConolUsage(
   if (!cookie) return { message: "Missing Conol session cookie" };
 
   try {
-    const response = await fetch("https://conol.ai/api/billing/balance", {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        cookie,
-        referer: "https://conol.ai/home",
-      },
-      signal: AbortSignal.timeout(15_000),
-    });
+    const response = connectionId
+      ? await fetchWithConnectionProxy(connectionId, "https://conol.ai/api/billing/balance", {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+            cookie,
+            referer: "https://conol.ai/home",
+          },
+          signal: AbortSignal.timeout(15_000),
+        })
+      : await globalThis.fetch("https://conol.ai/api/billing/balance", {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+            cookie,
+            referer: "https://conol.ai/home",
+          },
+          signal: AbortSignal.timeout(15_000),
+        });
+    if (!response) return { message: "Conol balance request failed" };
     if (response.status === 401 || response.status === 403) {
       return { message: "Conol session expired or is invalid" };
     }

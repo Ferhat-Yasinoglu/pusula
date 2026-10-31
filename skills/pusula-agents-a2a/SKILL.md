@@ -24,7 +24,7 @@ See the full OpenAPI specification at `GET /api/openapi/spec` or `docs/openapi.y
 
 # Pusula — A2A Protocol
 
-Requires `PUSULA_URL` and `PUSULA_KEY`. See [entry-point SKILL](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula/SKILL.md) for setup.
+Requires `PUSULA_URL` and `PUSULA_KEY`. See [entry-point SKILL](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-auth/SKILL.md) for setup.
 
 Pusula publishes an Agent Card at `/.well-known/agent.json` and accepts
 JSON-RPC 2.0 calls at `/a2a`.

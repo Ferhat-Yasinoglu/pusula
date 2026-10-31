@@ -61,17 +61,14 @@ export default function CloudflareRelayModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="cloudflare-relay-title"
     >
-      <div className="bg-surface rounded-lg shadow-xl p-6 w-full max-w-md space-y-4">
+      <div className="bg-surface rounded-lg shadow-xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto space-y-4">
         <div className="flex items-center justify-between">
-          <h2
-            id="cloudflare-relay-title"
-            className="text-lg font-bold flex items-center gap-2"
-          >
+          <h2 id="cloudflare-relay-title" className="text-lg font-bold flex items-center gap-2">
             <span className="material-symbols-outlined text-primary" aria-hidden="true">
               cloud
             </span>
@@ -107,9 +104,7 @@ export default function CloudflareRelayModal({
               placeholder="your-cloudflare-account-id"
               autoComplete="off"
             />
-            <p className="text-xs text-text-muted mt-1">
-              {t("cloudflareRelayAccountIdHint")}
-            </p>
+            <p className="text-xs text-text-muted mt-1">{t("cloudflareRelayAccountIdHint")}</p>
           </div>
           <div>
             <label className="text-sm font-medium mb-1 block" htmlFor="cloudflare-api-token">
@@ -124,9 +119,7 @@ export default function CloudflareRelayModal({
               placeholder="cloudflare-api-token"
               autoComplete="off"
             />
-            <p className="text-xs text-text-muted mt-1">
-              {t("cloudflareRelayApiTokenHint")}
-            </p>
+            <p className="text-xs text-text-muted mt-1">{t("cloudflareRelayApiTokenHint")}</p>
           </div>
           <div>
             <label className="text-sm font-medium mb-1 block" htmlFor="cloudflare-project-name">

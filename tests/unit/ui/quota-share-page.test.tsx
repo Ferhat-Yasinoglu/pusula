@@ -7,6 +7,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 // ── i18n stub ──────────────────────────────────────────────────────────────
 vi.mock("next-intl", () => ({
   useTranslations: () => (key: string) => key,
+  // #14466 / #14807: PoolSchedulesCard and ProxyHealthCell now call useLocale().
   useLocale: () => "en",
 }));
 

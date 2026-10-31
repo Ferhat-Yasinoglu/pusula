@@ -27,6 +27,7 @@ concurrency:
 
 jobs:
   resolve-branch:
+    if: ${{ github.event_name != 'schedule' || github.repository == 'Ferhat-Yasinoglu/pusula' }}
     name: Resolve active release branch
     runs-on: ubuntu-latest
     outputs:
@@ -60,6 +61,7 @@ jobs:
           echo "target=$TARGET" >> "$GITHUB_OUTPUT"
 
   compat-build-26:
+    if: ${{ github.event_name != 'schedule' || github.repository == 'Ferhat-Yasinoglu/pusula' }}
     name: Node 26 Compatibility Build
     runs-on: ubuntu-latest
     timeout-minutes: 25
@@ -90,6 +92,7 @@ jobs:
           PUSULA_USE_TURBOPACK: "0"
 
   compat-tests:
+    if: ${{ github.event_name != 'schedule' || github.repository == 'Ferhat-Yasinoglu/pusula' }}
     name: Node ${{ matrix.node }} Compat Tests (${{ matrix.shard }}/4)
     runs-on: ubuntu-latest
     timeout-minutes: 25
@@ -120,7 +123,7 @@ jobs:
   report:
     name: Open / update tracking issue on failure
     runs-on: ubuntu-latest
-    if: ${{ !cancelled() && (needs.compat-tests.result == 'failure' || needs.compat-build-26.result == 'failure') }}
+    if: ${{ (!cancelled() && (needs.compat-tests.result == 'failure' || needs.compat-build-26.result == 'failure')) && (github.event_name != 'schedule' || github.repository == 'Ferhat-Yasinoglu/pusula') }}
     needs: [resolve-branch, compat-build-26, compat-tests]
     permissions:
       issues: write

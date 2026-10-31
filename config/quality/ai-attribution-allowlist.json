@@ -1,0 +1,4 @@
+{
+  "_comment": "Full SHAs of historical commits that the --range scan may skip because they were merged before check:ai-attribution existed and cannot be rewritten. Pusula's history starts at its own root (fc6b22fb), so upstream OmniRoute's historical entries cannot occur here and the list is empty. Add ONLY commits already on main; never a commit of an open PR. The commit-msg hook and the --message-file/--pr-title/--pr-body checks ignore this list.",
+  "commits": {}
+}

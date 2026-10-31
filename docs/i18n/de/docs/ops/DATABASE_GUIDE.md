@@ -60,9 +60,9 @@ Die SQLite-Datei wird hier gespeichert:
 
 | Betriebssystem | Pfad                                                        |
 | -------------- | ----------------------------------------------------------- |
-| Linux          | `~/.pusula/storage.sqlite`                               |
-| macOS          | `~/.pusula/storage.sqlite`                               |
-| Windows        | `%USERPROFILE%\.pusula\storage.sqlite`                   |
+| Linux          | `~/.pusula/storage.sqlite`                                  |
+| macOS          | `~/.pusula/storage.sqlite`                                  |
+| Windows        | `%USERPROFILE%\.pusula\storage.sqlite`                      |
 | Docker         | `/app/data/storage.sqlite` (konfigurierbar über `DATA_DIR`) |
 
 Zugehörige Dateien:
@@ -387,8 +387,8 @@ pusula backup auto enable --cron "0 2 * * *" --retention 7
 Der Zeitplan wird serverseitig durch einen Hintergrundjob ausgeführt, der standardmäßig alle 30 Sekunden
 aktiv wird und den Cron-Ausdruck anhand der lokalen Serverzeit auswertet.
 
-| Variable                                    | Standardwert | Beschreibung                                                                                                         |
-| ------------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------- |
+| Variable                                 | Standardwert | Beschreibung                                                                                                         |
+| ---------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------- |
 | `PUSULA_BACKUP_SCHEDULE_JOB_INTERVAL_MS` | `30000`      | Intervall in ms (min. `5000`). Muss kürzer als 60 s sein, damit die passende Cron-Minute zuverlässig getroffen wird. |
 
 ### SQLite-Hot-Backup
@@ -532,21 +532,24 @@ mv recovered.db ~/.pusula/storage.sqlite
 Aus einer Sicherung wiederherstellen:
 
 ```bash
-pusula sync pull --merge   # oder: pusula backup restore <backup-id>
+pusula backup restore <backup-id>
 ```
+
+`pusula sync pull [outPath]` lädt lediglich ein vollständiges `.tar.gz`-Archiv von einem laufenden Server herunter
+(`GET /api/db-backups/exportAll`, Anmeldedaten eines Operators erforderlich); es stellt nichts wieder her.
 
 ### Szenario 3: Verschlüsselungsschlüssel verloren
 
-Ohne den Schlüssel ist **keine Wiederherstellung möglich**. Die verschlüsselten Felder sind nicht lesbar. Fügen Sie alle Anbieter manuell mit neuen Zugangsdaten erneut hinzu.
+Ohne den Schlüssel ist **keine Wiederherstellung möglich**. Die verschlüsselten Felder sind nicht lesbar. Fügen Sie alle Anbieter manuell mit neuen Anmeldedaten erneut hinzu.
 
-> **Gegenmaßnahme**: Sichern Sie den Verschlüsselungsschlüssel stets separat, idealerweise in einem Passwortmanager oder KMS.
+> **Vorbeugung**: Sichern Sie den Verschlüsselungsschlüssel immer separat, idealerweise in einem Passwortmanager oder KMS.
 
 ### Szenario 4: Datenträger voll
 
 SQLite gibt `SQLITE_FULL`-Fehler zurück. Geben Sie Speicherplatz frei und führen Sie anschließend Folgendes aus:
 
 ```bash
-# WAL-Checkpoint durchführen, um Speicherplatz freizugeben
+# WAL-Prüfpunkt erstellen, um Speicherplatz freizugeben
 sqlite3 ~/.pusula/storage.sqlite "PRAGMA wal_checkpoint(TRUNCATE);"
 ```
 

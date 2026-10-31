@@ -223,51 +223,25 @@ pusula sync
 
 ### `sync push`
 
-**Flags:**
-
-- `--target <t>`
-- `--bundle <list>`
-- `--dry-run`
-
 **Example:**
 
 ```bash
 pusula sync push
 ```
 
-### `sync pull`
-
-**Flags:**
-
-- `--source <s>`
-- `--merge`
-- `--replace`
-- `--dry-run`
+### `sync pull [outPath]`
 
 **Example:**
 
 ```bash
-pusula sync pull
-```
-
-### `sync diff`
-
-**Flags:**
-
-- `--source <s>`
-- `--target <t>`
-
-**Example:**
-
-```bash
-pusula sync diff
+pusula sync pull pusula-export.tar.gz
 ```
 
 ### `sync bundle <outPath>`
 
 **Flags:**
 
-- `--include <list>`
+- `--token <syncToken>`
 
 **Example:**
 
@@ -288,10 +262,6 @@ pusula sync import <bundlePath>
 ```
 
 ### `sync initialize`
-
-**Flags:**
-
-- `--from-cloud`
 
 **Example:**
 
@@ -347,12 +317,4 @@ pusula sync revoke <id>
 
 ```bash
 pusula sync status
-```
-
-### `sync resolve`
-
-**Example:**
-
-```bash
-pusula sync resolve
 ```
