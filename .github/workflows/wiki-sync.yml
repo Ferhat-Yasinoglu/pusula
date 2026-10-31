@@ -36,15 +36,35 @@ jobs:
     name: Sync wiki with docs
     runs-on: ubuntu-latest
     steps:
+      # A repository's wiki git remote only exists once its first page has been created in
+      # the GitHub UI. Until then every clone fails with "Repository not found", so probe
+      # first and skip the sync with a notice instead of failing on every push to main.
+      - name: Check that the wiki exists
+        id: wiki
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          GIT_TERMINAL_PROMPT: "0"
+        run: |
+          if git ls-remote "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.wiki.git" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Wiki sync skipped::${REPO} has no wiki yet. Create its first page in the GitHub UI to enable the sync."
+          fi
+
       - name: Checkout repo
+        if: steps.wiki.outputs.exists == 'true'
         uses: actions/checkout@v7
 
       - name: Setup Node
+        if: steps.wiki.outputs.exists == 'true'
         uses: actions/setup-node@v7
         with:
           node-version: "24"
 
       - name: Clone wiki
+        if: steps.wiki.outputs.exists == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
@@ -52,9 +72,11 @@ jobs:
           git clone "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.wiki.git" wiki
 
       - name: Sync wiki (add missing pages + cover counts)
+        if: steps.wiki.outputs.exists == 'true'
         run: node scripts/docs/sync-wiki.mjs --wiki-dir wiki
 
       - name: Commit & push if changed
+        if: steps.wiki.outputs.exists == 'true'
         run: |
           cd wiki
           if [ -n "$(git status --porcelain)" ]; then
