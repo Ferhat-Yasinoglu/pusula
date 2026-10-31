@@ -118,15 +118,21 @@ test("handleChat does not probe Claude Web repeatedly after an upstream 429", as
 });
 
 test("handleChat waits for a short cooldown and retries once within the configured budget", async () => {
-  await seedConnection("openai", {
-    apiKey: "sk-openai-cooldown-short",
-    rateLimitedUntil: new Date(Date.now() + 950).toISOString(),
-    lastError: "short cooldown window",
-    errorCode: 429,
-  });
   await settingsDb.updateSettings({
     requestRetry: 1,
     maxRetryIntervalSec: 1,
+  });
+  // Fix the cooldown deadline after the settings write, and check the wait against that
+  // deadline rather than against elapsed time. The deadline used to be fixed before both
+  // setup writes. When those writes outlasted the 950 ms cooldown on a busy runner, the
+  // cooldown had already expired, the request went straight through, and the elapsed-time
+  // check failed ("got 211ms").
+  const cooldownUntil = Date.now() + 950;
+  await seedConnection("openai", {
+    apiKey: "sk-openai-cooldown-short",
+    rateLimitedUntil: new Date(cooldownUntil).toISOString(),
+    lastError: "short cooldown window",
+    errorCode: 429,
   });
 
   let fetchCalls = 0;
@@ -136,6 +142,7 @@ test("handleChat waits for a short cooldown and retries once within the configur
   };
 
   const startedAt = Date.now();
+  assert.ok(startedAt < cooldownUntil, "the cooldown must still be active when the request starts");
   const response = await handleChat(
     buildRequest({
       body: {
@@ -145,7 +152,7 @@ test("handleChat waits for a short cooldown and retries once within the configur
       },
     })
   );
-  const elapsedMs = Date.now() - startedAt;
+  const finishedAt = Date.now();
   const body = (await response.json()) as unknown as {
     choices: Array<{ message: { content: string } }>;
     error: { message: string };
@@ -153,7 +160,11 @@ test("handleChat waits for a short cooldown and retries once within the configur
 
   assert.equal(response.status, 200);
   assert.equal(fetchCalls, 1);
-  assert.ok(elapsedMs >= 250, `expected cooldown-aware retry wait, got ${elapsedMs}ms`);
+  // 5 ms of slack for timer vs. wall-clock rounding; the wait itself is ~950 ms minus setup.
+  assert.ok(
+    finishedAt >= cooldownUntil - 5,
+    `expected the retry to wait out the cooldown, finished ${cooldownUntil - finishedAt}ms early`
+  );
   assert.equal(body.choices[0].message.content, "recovered after cooldown");
 });
 
