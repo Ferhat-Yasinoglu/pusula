@@ -2,12 +2,29 @@
 
 const http = require("node:http");
 
+// First match wins. Each method set mirrors the handlers exported by the matching
+// src/app/api/**/route.ts (HEAD/OPTIONS are never listed; OPTIONS always passes
+// through). tests/unit/dast-method-not-allowed.test.ts checks every rule against
+// those exports.
 const HIGH_RISK_METHOD_RULES = [
   [/^\/api\/auth\/login\/?$/, ["POST"]],
   [/^\/api\/auth\/logout\/?$/, ["POST"]],
+  [/^\/api\/auth\/csrf\/?$/, ["GET"]],
+  [/^\/api\/auth\/status\/?$/, ["GET"]],
   [/^\/api\/keys\/?$/, ["GET", "POST"]],
+  // `groups` is a static segment, which Next.js resolves before the dynamic
+  // /api/keys/[id] routes, so these rules must come before the generic {id}
+  // ones: /api/keys/groups is not a key id, and /api/keys/groups/devices is
+  // the group with id "devices", not a key's devices list.
+  [/^\/api\/keys\/groups\/?$/, ["GET", "POST"]],
+  [/^\/api\/keys\/groups\/[^/]+\/?$/, ["GET", "PUT", "DELETE"]],
+  [/^\/api\/keys\/groups\/[^/]+\/keys\/?$/, ["GET", "POST", "DELETE"]],
+  [/^\/api\/keys\/groups\/[^/]+\/permissions\/?$/, ["GET", "POST", "DELETE"]],
   [/^\/api\/keys\/[^/]+\/?$/, ["GET", "PATCH", "DELETE"]],
   [/^\/api\/keys\/[^/]+\/devices\/?$/, ["GET"]],
+  [/^\/api\/keys\/[^/]+\/regenerate\/?$/, ["POST"]],
+  [/^\/api\/keys\/[^/]+\/reveal\/?$/, ["GET"]],
+  [/^\/api\/keys\/[^/]+\/usage-limits\/?$/, ["GET"]],
 ];
 
 let installed = false;
