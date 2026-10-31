@@ -85,7 +85,7 @@
       }
     },
     "README.md": {
-      "source_hash": "f4665cb7287a129cc2bfdf0e1d20809d1b0efe81d0a288802f3c655621fb900e",
+      "source_hash": "e2d61482a127976ebc6b2d448a5f9c28dd3e8bfa29173a2e01280598f3c9c5b8",
       "locales": {
         "de": {
           "source_hash": "f4665cb7287a129cc2bfdf0e1d20809d1b0efe81d0a288802f3c655621fb900e",
@@ -98,9 +98,9 @@
           "updated_at": "2026-10-31T10:30:04.843Z"
         },
         "tr": {
-          "source_hash": "f4665cb7287a129cc2bfdf0e1d20809d1b0efe81d0a288802f3c655621fb900e",
-          "target_hash": "b20617cbbdb38db00d40c9c5f7a9ca0305bc7b3a9e1c529c11bc259540a542f6",
-          "updated_at": "2026-10-31T10:30:04.843Z"
+          "source_hash": "e2d61482a127976ebc6b2d448a5f9c28dd3e8bfa29173a2e01280598f3c9c5b8",
+          "target_hash": "34c12b2c311b6916b435256fdd46ad65b166ab6476e20706d2761dbf7b1a9c0d",
+          "updated_at": "2026-10-31T23:43:55.000Z"
         }
       }
     },

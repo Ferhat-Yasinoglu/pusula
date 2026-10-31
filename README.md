@@ -1,13 +1,20 @@
 <div align="center">
 
-<img src="./docs/screenshots/MainPusula.png" alt="Pusula Dashboard" width="820"/>
+<a href="https://pusula.fyajan.com/landing"><img src="./docs/screenshots/landing-hero-desktop.jpg" width="640" alt="Pusula landing page on a desktop screen: the headline “One endpoint. 375 providers. One needle picks the route.” beside a glowing compass whose needle points at gemini 0.77 among other scored providers (glm, openai, cerebras, claude, ollama-local), an Open dashboard button, an npx pusula copy box, and a counter row along the bottom: 375 providers, 157 with a free tier or no key, 20 routing strategies, 16 auto scoring factors, 37 supported coding tools, 110 MCP server tools."/></a>
+<a href="https://pusula.fyajan.com/landing"><img src="./docs/screenshots/landing-hero-mobile.jpg" width="185" alt="The same Pusula landing page on a phone: the compass sits above the headline “One endpoint. 375 providers. One needle picks the route.”, followed by a simulation line that routes a whole-repository request to gemini, the Open dashboard and npx pusula buttons, and the short intro text."/></a>
+
+<br/>
+
+[![Live demo](https://img.shields.io/badge/Live%20demo-pusula.fyajan.com-0F766E?style=for-the-badge&logo=googlechrome&logoColor=white)](https://pusula.fyajan.com/landing)
+
+<sub>The redesigned landing page, live at <a href="https://pusula.fyajan.com/landing">pusula.fyajan.com/landing</a>. Its counters are computed from the source when the page loads; the routing you see is a simulation.</sub>
 
 <br/>
 <br/>
 
 # 🧭 Pusula — The Free AI Gateway
 
-<img src="./docs/diagrams/readme-hero.svg" width="100%" alt="Pusula — Never stop coding. Every AI tool → 375 providers — 150+ free — through one endpoint. Claude Code, Codex, Cursor, Cline, Copilot & Antigravity into FREE Claude / GPT / Gemini with auto-fallback. RTK + Caveman stacked compression saves 15–95% tokens (~89% avg) — never hit limits. 375 AI providers · 150+ free tiers · ~1.62B free tokens/mo · 19 routing strategies · $0 to start."/>
+<img src="./docs/diagrams/readme-hero.svg" width="100%" alt="Pusula — Never stop coding. Every AI tool → 375 providers — 150+ free — through one endpoint. Claude Code, Codex, Cursor, Cline, Copilot & Antigravity into FREE Claude / GPT / Gemini with auto-fallback. RTK + Caveman stacked compression saves 15–95% tokens (~89% avg) — never hit limits. 375 AI providers · 150+ free tiers · ~1.62B free tokens/mo · 20 routing strategies · $0 to start."/>
 
 </div>
 
@@ -19,11 +26,11 @@
 
 > Stacking free tiers by hand is painful — dozens of SDKs, dozens of rate limits, and no idea how much you actually have. Pusula catalogs **467 free-tier entries across 34 recurring pool keys** and computes the token headline from the **17 pools with a published positive monthly budget plus five per-model Groq caps**, deduplicated by shared pool. Quotas that only open after a regional identity check (today: ModelScope) are shown apart, +~6M behind regional identity verification, and never summed into the headline. The result stays visible on the dashboard (`/dashboard/free-tiers`).
 
-<img src="./docs/diagrams/free-tier-budget.svg" width="100%" alt="Pusula free-tier budget card: ~1.62B free tokens per month steady, up to ~2.22B in the first month with signup credits, from 34 documented recurring pool keys covering 467 cataloged free-tier entries behind one endpoint. Honest pool-deduped math — each shared pool counted once, including 17 recurring pools with a published positive monthly token budget plus five per-model Groq caps; 13 providers are marked avoid in the terms-risk catalog so you decide. Budget bar includes Mistral 1B, Nara 210M, LLM7 150M, xKiro 150M, Groq 30M (five per-model caps) and smaller pools, plus first-month signup credits and permanently-free no-token-cap providers surfaced separately so they never inflate the headline. Live used/remaining on /dashboard/free-tiers."/>
+<img src="./docs/diagrams/free-tier-budget.svg" width="100%" alt="Pusula free-tier budget card: ~1.62B free tokens per month steady, up to ~2.22B in the first month with signup credits, from 34 documented recurring pool keys covering 467 cataloged free-tier entries behind one endpoint. Honest pool-deduped math — each shared pool counted once, including 17 recurring pools with a published positive monthly token budget plus five per-model Groq caps; 12 providers are marked avoid in the free-tier catalog so you decide. Budget bar includes Mistral 1B, Nara 210M, LLM7 150M, xKiro 150M, Groq 30M (five per-model caps) and smaller pools, plus first-month signup credits and permanently-free no-token-cap providers surfaced separately so they never inflate the headline. Live used/remaining on /dashboard/free-tiers."/>
 
 > Animated summary of the live `/dashboard/free-tiers` page. Full methodology (pool dedupe, credit tiers, provider terms): **[docs/reference/FREE_TIERS.md](docs/reference/FREE_TIERS.md)**.
 >
-> <sub>These figures are re-audited every two weeks against the live catalog and **move both ways** — a provider ends a free tier and the number drops; a new one lands and it climbs. We publish what the catalog actually computes, never a rounded-up best case.</sub>
+> <sub>These figures come straight from the free-tier catalog (last curated 2026-10-19) and **move both ways** — a provider ends a free tier and the number drops; a new one lands and it climbs. We publish what the catalog actually computes, never a rounded-up best case.</sub>
 
 <br/>
 
@@ -40,9 +47,8 @@
 ### 💬 Questions & support
 
 [![GitHub Issues](https://img.shields.io/badge/GitHub-Issues-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Ferhat-Yasinoglu/pusula/issues)
-[![GitHub Discussions](https://img.shields.io/badge/GitHub-Discussions-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Ferhat-Yasinoglu/pusula/discussions)
 
-**Bugs & feature requests → [open an issue](https://github.com/Ferhat-Yasinoglu/pusula/issues) · Questions, provider tips & help → [start a discussion](https://github.com/Ferhat-Yasinoglu/pusula/discussions) · What's planned → [ROADMAP.md](ROADMAP.md)**
+**Bugs, feature requests & questions → [open an issue](https://github.com/Ferhat-Yasinoglu/pusula/issues) · What's planned → [ROADMAP.md](ROADMAP.md)**
 
 <br/>
 
@@ -51,16 +57,21 @@
 [![npm version](https://img.shields.io/npm/v/pusula?color=cb3837&logo=npm)](https://www.npmjs.com/package/pusula)
 ![NPM Monthly](https://img.shields.io/npm/dm/pusula?label=npm/month&color=cb3837&logo=npm)
 [![GHCR](https://img.shields.io/badge/GHCR-ghcr.io%2Fferhat--yasinoglu%2Fpusula-2496ED?logo=docker&logoColor=white)](https://github.com/Ferhat-Yasinoglu/pusula/pkgs/container/pusula)
+[![Live demo](https://img.shields.io/badge/live-pusula.fyajan.com-0F766E?logo=googlechrome&logoColor=white)](https://pusula.fyajan.com/landing)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
-![Docker Pulls](https://img.shields.io/docker/pulls/ferhat-yasinoglu/pusula?label=docker%20pulls&logo=docker&color=2496ED)
-![Electron Downloads](https://img.shields.io/github/downloads/ferhat-yasinoglu/pusula/total?style=flat&label=electron%20downloads&logo=electron&color=47848F)
 
 <table>
   <tr>
+    <td align="right"><b>🆕 New</b></td>
+    <td align="center"><a href="#-whats-new">🆕 What's new</a></td>
+    <td align="center"><a href="https://pusula.fyajan.com/landing">🌍 Live demo</a></td>
+    <td align="center"><a href="#-screenshots">📸 Screenshots</a></td>
+  </tr>
+  <tr>
     <td align="right"><b>🚀 Start</b></td>
     <td align="center"><a href="#-quick-start">🚀 Quick Start</a></td>
-    <td align="center"><a href="#-more-install-methods--docker-source-pnpm-arch">📦 Install</a></td>
-    <td align="center"><a href="#-works-the-second-you-install-it--no-keys-no-config">🆓 Zero-config</a></td>
+    <td align="center"><a href="#-more-install-methods--docker-bun-source-pnpm-nix-podman">📦 Install</a></td>
+    <td align="center"><a href="#-install-connect-a-provider-route">🆓 First request</a></td>
   </tr>
   <tr>
     <td align="right"><b>💡 Learn</b></td>
@@ -71,7 +82,7 @@
   <tr>
     <td align="right"><b>⚙️ Features</b></td>
     <td align="center"><a href="#-combos--the-flagship">🎯 Combos</a></td>
-    <td align="center"><a href="#-357-ai-providers--152-catalog-marked-free">🌐 Providers</a></td>
+    <td align="center"><a href="#-375-ai-providers--153-catalog-marked-free">🌐 Providers</a></td>
     <td align="center"><a href="#-full-cli--a2a--mcp">🔌 CLI &amp; MCP</a></td>
   </tr>
   <tr>
@@ -109,20 +120,38 @@
 
 <div align="center">
 
-## 🆓 Works the second you install it — no keys, no config
+## 🆕 What's new
 
 </div>
 
-<img src="./docs/diagrams/works-zero-config.svg" width="100%" alt="Works the second you install it — zero config. Three steps: 1. Install — npm i -g pusula, server boots on localhost:20128. 2. Point your tool at http://localhost:20128/v1 — any OpenAI-compatible tool (Claude Code, Cursor, Cline). 3. It answers — call model auto for an instant reply, with no API key, no signup, no configuration. Keyless provider OpenCode Free is pre-wired into the auto combo, so a fresh install responds out of the box."/>
+<sub>Landed on <code>main</code> after the 1.0.0 release (2026-10-20), newest first. Full notes → <a href="CHANGELOG.md">CHANGELOG.md</a></sub>
+
+- **🛰️ Self-hosting that updates itself** ([#45](https://github.com/Ferhat-Yasinoglu/pusula/pull/45)) — [`scripts/ops/vps-auto-update/`](scripts/ops/vps-auto-update/README.md) installs a systemd timer that pulls `ghcr.io/ferhat-yasinoglu/pusula:main` about every 15 minutes. Each update backs up the data directory first, has to pass a health gate, and is rolled back automatically if the new container fails. Nothing ever connects to your server.
+- **🌍 Live public instance** — [pusula.fyajan.com](https://pusula.fyajan.com/landing) runs the `:main` image and keeps itself current with that updater.
+- **⬆️ Synced with upstream OmniRoute v3.8.52** ([#39](https://github.com/Ferhat-Yasinoglu/pusula/pull/39)) — the provider catalog grows from **358 to 375** providers and **23 new database migrations** land (186 → 209 SQL files), with Pusula's design, brand and four locales unchanged.
+- **🪶 Headless mode** (from the sync) — `pusula serve --headless` or `PUSULA_HEADLESS=1` keeps the OpenAI-compatible API under `/v1/*` and switches the dashboard off. → [Headless Mode](docs/guides/HEADLESS.md)
+- **🚫 Keyless "OpenCode Free" removed** (from the sync) — the `opencode` provider (`oc/…`) is gone, honoring the OpenCode operator's removal request; `opencode-zen`, `opencode-go` and the OpenCode client integrations stay. `auto` now routes across the providers you connect. → [Removed providers](docs/reference/REMOVED_PROVIDERS.md)
+- **🐛 Fixes** — `POST /api/keys/groups` no longer fails with 405, so key groups can be created over the API ([#37](https://github.com/Ferhat-Yasinoglu/pusula/pull/37)); CLI detection no longer reports Continue as installed because of the project's own `node_modules/.bin` ([#35](https://github.com/Ferhat-Yasinoglu/pusula/pull/35)); the unused `mermaid` dependency is gone ([#38](https://github.com/Ferhat-Yasinoglu/pusula/pull/38)); plus CI fixes for the main-only repo ([#36](https://github.com/Ferhat-Yasinoglu/pusula/pull/36), [#43](https://github.com/Ferhat-Yasinoglu/pusula/pull/43)) and three flaky tests made deterministic ([#44](https://github.com/Ferhat-Yasinoglu/pusula/pull/44)).
+- **🧭 Redesigned landing page** ([#33](https://github.com/Ferhat-Yasinoglu/pusula/pull/33)) — a compass-and-needle hero and seven more stations (network map, provider catalog, routing, resilience, tools, engine room, launch), all driven by one simulated gateway. → [Live demo](https://pusula.fyajan.com/landing) · [Screenshots](#-screenshots)
+
+<br/>
+
+<div align="center">
+
+## 🆓 Install, connect a provider, route
+
+</div>
+
+<img src="./docs/diagrams/works-zero-config.svg" width="100%" alt="Connect, then route. Three steps: 1. Install and start — npm i -g pusula, then run pusula and open localhost:20128. 2. Connect a provider — Dashboard → Providers, with your own account or API key; review provider terms and limits. 3. Use your tool — point it at http://localhost:20128/v1 and set the model to auto, which routes across your eligible connections with fallback; availability and provider limits still apply."/>
 
 ```bash
-# Fresh install, zero credentials — `auto` already works:
+# After connecting at least one provider (Dashboard → Providers), `auto` routes across it:
 curl http://localhost:20128/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{"model":"auto","messages":[{"role":"user","content":"Hello!"}]}'
 ```
 
-<sub>Prefer a specific free backend? Call `oc/…` (OpenCode Free) directly. Then graduate to `auto` and let Pusula pick.</sub>
+<sub>Prefer a specific backend? Call it directly as `<alias>/<model>` (aliases are listed in [docs/reference/PROVIDER_REFERENCE.md](docs/reference/PROVIDER_REFERENCE.md)). Then graduate to `auto` and let Pusula pick.</sub>
 
 <sub>📦 Copy-paste quickstart scripts for **Python, Node.js, PHP, and cURL** → [`examples/quickstart/`](examples/quickstart/)</sub>
 
@@ -134,7 +163,7 @@ curl http://localhost:20128/v1/chat/completions \
 
 </div>
 
-<img src="./docs/diagrams/promise-pillars.svg" width="100%" alt="The Promise — One endpoint and 375 providers. Automatic fallback keeps routing while another healthy target is available. Six pillars: resilient fallback across 375 providers · up to 95% token savings on eligible workloads · $0 to start with 150+ free tiers and 51 recurring/keyless free-forever providers · 36 CLI/agent integrations through one config · OpenAI, Claude, Gemini and Responses API compatibility at /v1 · production controls including circuit breakers, TLS stealth, MCP 110 tools, A2A, memory, guardrails, evals and 39,000+ static test declarations across 5,100+ tracked test files."/>
+<img src="./docs/diagrams/promise-pillars.svg" width="100%" alt="The Promise — One endpoint and 375 providers. Automatic fallback keeps routing while another healthy target is available. Six pillars: resilient fallback across 375 providers · up to 95% token savings on eligible workloads · $0 to start with 150+ free tiers and 51 recurring/keyless free-forever providers · 37 CLI/agent integrations through one config · OpenAI, Claude, Gemini and Responses API compatibility at /v1 · production controls including circuit breakers, TLS stealth, MCP 110 tools, A2A, memory, guardrails, evals and 56,000+ static test declarations across 7,900+ tracked test files."/>
 
 <br/>
 <br/>
@@ -149,7 +178,7 @@ curl http://localhost:20128/v1/chat/completions \
 
 <div align="center">
 
-<img src="./docs/diagrams/tier-cascade.svg" width="100%" alt="Pusula request flow: your IDE or CLI (Claude Code, Cursor, Cline…) calls one local endpoint (http://localhost:20128/v1); the Pusula Smart Router (RTK + Caveman compression, 19 routing strategies, circuit breakers, TLS stealth, MCP, A2A, guardrails) can fall back across 4 provider tiers while an eligible healthy target remains — Tier 1 Subscription, Tier 2 API Key, Tier 3 Cheap and Tier 4 Free."/>
+<img src="./docs/diagrams/tier-cascade.svg" width="100%" alt="Pusula request flow: your IDE or CLI (Claude Code, Cursor, Cline…) calls one local endpoint (http://localhost:20128/v1); the Pusula Smart Router (RTK + Caveman compression, 20 routing strategies, circuit breakers, TLS stealth, MCP, A2A, guardrails) can fall back across 4 provider tiers while an eligible healthy target remains — Tier 1 Subscription, Tier 2 API Key, Tier 3 Cheap and Tier 4 Free."/>
 
 </div>
 
@@ -161,7 +190,7 @@ curl http://localhost:20128/v1/chat/completions \
 
 </div>
 
-<img src="./docs/diagrams/strategies-grid.svg" width="100%" alt="All 19 combo routing strategies animated — one tile per strategy: priority, fill-first, weighted, round-robin, p2c, least-used, random, strict-random, cost-optimized, headroom, reset-window, reset-aware, context-relay, context-optimized, cache-optimized, lkgp, auto, fusion, pipeline. See the table above for what each one does."/>
+<img src="./docs/diagrams/strategies-grid.svg" width="100%" alt="Animated examples for 18 of Pusula's 20 combo routing strategies — one tile each for priority, fill-first, weighted, round-robin, p2c, least-used, random, strict-random, cost-optimized, headroom, reset-window, reset-aware, context-relay, context-optimized, lkgp, auto, fusion, pipeline. cache-optimized and quota-weighted are described in the table below."/>
 
 > A **combo** is a chain of models Pusula routes across **automatically**. If quota runs out, a provider fails, or costs spike, the combo can move to the next eligible healthy model. 🛡️
 
@@ -178,14 +207,14 @@ No combo to create. Set your model to `auto` (or a variant) and Pusula builds a 
   <tr><td align="left" nowrap><code>auto/offline</code></td><td align="left">🔋 Most quota / rate-limit headroom first</td></tr>
   <tr><td align="left" nowrap><code>auto/smart</code></td><td align="left">🔭 Quality-first + 10% exploration to discover better models</td></tr>
   <tr><td align="left" nowrap><code>auto/lkgp</code></td><td align="left">📌 Explicit last-known-good-provider stickiness</td></tr>
-  <tr><td align="left" nowrap><code>auto/chaos</code></td><td align="left">🧪 Fault-injection weights for resilience testing (chaos engineering)</td></tr>
+  <tr><td align="left" nowrap><code>auto/chaos</code></td><td align="left">🧪 Fans the same prompt out in parallel to the most stable connected models and streams every answer back (no judge)</td></tr>
 </table>
 
 ##
 
-### 🔀 Or build your own — 19 routing strategies
+### 🔀 Or build your own — 20 routing strategies
 
-All **19** strategies — mix & match per combo step:
+All **20** strategies — mix & match per combo step:
 
 <table>
   <tr>
@@ -231,7 +260,7 @@ All **19** strategies — mix & match per combo step:
   <tr>
     <td align="center">8</td>
     <td nowrap><code>strict-random</code></td>
-    <td>Random without de-duplicating repeats 🎲</td>
+    <td>Shuffle deck — uses each target once before reshuffling 🎲</td>
   </tr>
   <tr>
     <td align="center">9</td>
@@ -245,46 +274,51 @@ All **19** strategies — mix & match per combo step:
   </tr>
   <tr>
     <td align="center">11</td>
+    <td nowrap><code>quota-weighted</code></td>
+    <td>Skip exhausted accounts, then pick among the rest in proportion to leftover quota ÷ in-flight load; existing conversations stay pinned</td>
+  </tr>
+  <tr>
+    <td align="center">12</td>
     <td nowrap><code>reset-window</code></td>
     <td>Prefer the target whose quota window resets soonest</td>
   </tr>
   <tr>
-    <td align="center">12</td>
+    <td align="center">13</td>
     <td nowrap><code>reset-aware</code></td>
     <td>Rank by quota reset time — short windows first 📊</td>
   </tr>
   <tr>
-    <td align="center">13</td>
+    <td align="center">14</td>
     <td nowrap><code>context-relay</code></td>
     <td>Hand off context across targets for long conversations 🧠</td>
   </tr>
   <tr>
-    <td align="center">14</td>
+    <td align="center">15</td>
     <td nowrap><code>context-optimized</code></td>
     <td>Pick the best fit for the current context size</td>
   </tr>
   <tr>
-    <td align="center">15</td>
+    <td align="center">16</td>
     <td nowrap><code>cache-optimized</code></td>
     <td>Pin each reusable prompt prefix to the same account — maximize prompt-cache hits 🎯</td>
   </tr>
   <tr>
-    <td align="center">16</td>
+    <td align="center">17</td>
     <td nowrap><code>lkgp</code></td>
     <td>Last-Known-Good Path — pins to the last successful provider, then falls back to rules</td>
   </tr>
   <tr>
-    <td align="center">17</td>
+    <td align="center">18</td>
     <td nowrap><code>auto</code></td>
     <td>16-factor live scoring across every connection 🤖</td>
   </tr>
   <tr>
-    <td align="center">18</td>
+    <td align="center">19</td>
     <td nowrap><code>fusion</code></td>
     <td>Fan out to a panel of models + a judge synthesizes one answer 🧬</td>
   </tr>
   <tr>
-    <td align="center">19</td>
+    <td align="center">20</td>
     <td nowrap><code>pipeline</code></td>
     <td>Chain steps — each target's output feeds the next one 🔗</td>
   </tr>
@@ -296,7 +330,7 @@ All **19** strategies — mix & match per combo step:
 
 ### 🧱 Resilience is built in (3 independent layers)
 
-<img src="./docs/diagrams/resilience-layers.svg" width="100%" alt="Pusula resilience — 3 independent self-healing layers, the right layer for the right failure. Layer 1 provider circuit breaker (whole provider): trips only on 408/5xx, thresholds OAuth 8× / API-key 12× / local 2×, resets 60s/30s/15s into a HALF-OPEN probe, lazy recovery; while OPEN the combo reroutes to the next provider. Layer 2 connection cooldown (one key/account): base 5s OAuth / 3s API-key, exponential ×2 backoff with anti-thundering-herd guard, 429 honors Retry-After, success clears all error state; one cooling key is skipped while sibling keys keep serving. Layer 3 model lockout (one model): per-model 429, local 404 or mode denials lock just that model — never the whole connection. Terminal states (banned, expired, credits exhausted) are for the operator, not cooldowns."/>
+<img src="./docs/diagrams/resilience-layers.svg" width="100%" alt="Pusula resilience — 3 independent self-healing layers, the right layer for the right failure. Layer 1 provider circuit breaker (whole provider): trips only on 408/500/502/503/504, thresholds OAuth 8× / API-key 12×, resets 60s/30s into a HALF-OPEN probe (a local 2×/15s profile is defined but not yet wired), lazy recovery; while OPEN the combo reroutes to the next provider. Layer 2 connection cooldown (one key/account): base 5s OAuth / 3s API-key, exponential ×2 backoff with anti-thundering-herd guard, 429 honors Retry-After, success clears all error state; one cooling key is skipped while sibling keys keep serving. Layer 3 model lockout (one model): per-model 429, local 404 or mode denials lock just that model — never the whole connection. Terminal states (banned, expired, credits exhausted) are for the operator, not cooldowns."/>
 
 <sub>📖 [Auto-Combo Engine](docs/routing/AUTO-COMBO.md) · [Resilience Guide](docs/architecture/RESILIENCE_GUIDE.md)</sub>
 
@@ -308,9 +342,27 @@ All **19** strategies — mix & match per combo step:
 
 </div>
 
-<img src="./docs/diagrams/comparison-table.svg" width="100%" alt="What sets Pusula apart — a dated feature snapshot vs 9router, OpenRouter, CLIProxyAPI and LiteLLM across 13 capabilities. Pusula: 375 providers, 150+ free tiers built in, 19 routing strategies, 12-engine token compression, built-in MCP server with 110 tools, A2A agent protocol, persistent memory, guardrails, cloud agents, TLS fingerprint stealth, Desktop/Termux/PWA and 42 i18n UI locales. Pusula is MIT-licensed and self-hostable. Competitor capabilities and counts may change; see the linked methodology."/>
+<img src="./docs/diagrams/comparison-table.svg" width="100%" alt="What sets Pusula apart — a dated feature snapshot vs 9router, OpenRouter, CLIProxyAPI and LiteLLM across 13 capabilities. Pusula: 375 providers, 150+ free tiers built in, 20 routing strategies, 12-engine token compression, built-in MCP server with 110 tools, A2A agent protocol, persistent memory, guardrails, cloud agents, TLS fingerprint stealth, Desktop/Termux/PWA and 4 UI locales (English, Turkish, German, Persian). Pusula is MIT-licensed and self-hostable. Competitor capabilities and counts may change; see the linked methodology."/>
 
 <sub>📊 Full methodology &amp; per-feature detail vs 9router, OpenRouter, CLIProxyAPI &amp; LiteLLM → [`docs/comparison/PUSULA_VS_ALTERNATIVES.md`](docs/comparison/PUSULA_VS_ALTERNATIVES.md)</sub>
+
+<br/>
+
+<div align="center">
+
+## 📸 Screenshots
+
+<img src="./docs/screenshots/MainPusula.png" width="820" alt="Pusula dashboard home on a fresh install: a sidebar with grouped sections, a zero-config notice explaining that encryption keys were generated in ~/.pusula/server.env, a four-step Quick Start (create an API key, connect providers, point your client at http://127.0.0.1:20128/v1, monitor and optimize), and empty Provider Topology and Recent Requests panels."/>
+
+<sub>The dashboard on <code>http://localhost:20128</code> — fresh install, before any provider is connected.</sub>
+
+</div>
+
+<details>
+<summary><b>Landing page stations</b> — Network, Catalog and Routing (desktop)</summary>
+<br/>
+<p align="center"><img src="./docs/screenshots/landing-stations-desktop.jpg" width="820" alt="Three stations of the Pusula landing page, stacked. Network: “Every request, a route of its own”, a dotted map where each city stands for one provider, with a simulation panel counting routed and rerouted requests. Catalog: “375 providers, one catalog”, a search box, filters for free tier or no key (157) and local CLI bridge (4), a bar by kind of service and a scrolling provider list. Routing: “Routing you can read”, a sixteen-point star chart showing how much each of the 16 auto scoring factors votes, next to a ranked list of candidate scores for one request."/></p>
+</details>
 
 <br/>
 
@@ -327,7 +379,7 @@ All **19** strategies — mix & match per combo step:
     <td align="center" width="76"><a href="https://github.com/openai/codex"><img src="./public/providers/codex.svg" width="40" alt="Codex CLI"/><br/><sub><b>Codex CLI</b></sub><br/><sub>                           </sub></a></td>
     <td align="center" width="76"><picture><source media="(prefers-color-scheme:dark)" srcset="https://cdn.jsdelivr.net/npm/@lobehub/icons-static-png@1.91.0/dark/cline.png"/><img src="https://cdn.jsdelivr.net/npm/@lobehub/icons-static-svg@1.91.0/icons/cline.svg" width="40" alt="Cline"/></picture><br/><sub><b>Cline</b></sub><br/><sub>                           </sub></td>
     <td align="center" width="76"><a href="https://github.com/Kilo-Org/kilocode"><img src="./public/providers/cli-generic.svg" width="40" alt="Kilo Code"/><br/><sub><b>Kilo Code</b></sub><br/><sub>                           </sub></a></td>
-    <td align="center" width="76"><a href="https://github.com/Zoo-Code-Org/Zoo-Code"><img src="./public/providers/cli-generic.svg" width="40" alt="Zoo Code"/><br/><sub><b>Zoo Code</b></sub><br/><sub>                           </sub></a></td>
+    <td align="center" width="76"><a href="https://docs.roocode.com/"><img src="./public/providers/roocode.svg" width="40" alt="Roo Code"/><br/><sub><b>Roo Code</b></sub><br/><sub>                           </sub></a></td>
     <td align="center" width="76"><img src="./public/providers/continue.svg" width="40" alt="Continue"/><br/><sub><b>Continue</b></sub><br/><sub>                           </sub></td>
   </tr>
   <tr>
@@ -357,10 +409,10 @@ All **19** strategies — mix & match per combo step:
 </div>
 
 <div align="center">
-<b>＋ also works with</b> · Agent Deck · Kiro · Command Code · Antigravity · Windsurf · AMP · <b>any OpenAI-compatible tool</b>
+<b>＋ also works with</b> · Agent Deck · Crush · Zed · Qwen Code · Oh My Pi · Letta CLI · Prime Agent · 5dive · Kiro / Antigravity (via MITM) · <b>any OpenAI-compatible tool</b>
 </div>
 
-<sub>📖 Per-tool setup for all 37 tools (26 CLI Code's + 10 CLI Agents) → [`docs/reference/CLI-TOOLS.md`](docs/reference/CLI-TOOLS.md) · 🧩 OpenCode plugin → [`@pusula/opencode-provider`](https://www.npmjs.com/package/@pusula/opencode-provider)</sub>
+<sub>📖 Per-tool setup for all 37 tools (27 CLI Code's + 10 CLI Agents) → [`docs/reference/CLI-TOOLS.md`](docs/reference/CLI-TOOLS.md) · 🧩 OpenCode plugin → [`@pusula/opencode-plugin`](@pusula/opencode-plugin/README.md) (bundled; `pusula setup opencode`)</sub>
 
 </div>
 
@@ -390,11 +442,11 @@ of your shell history. → [CLI Integrations](docs/guides/CLI-INTEGRATIONS.md)
 
 <div align="center">
 
-## 🌐 375 AI Providers — 152 Catalog-Marked Free
+## 🌐 375 AI Providers — 153 Catalog-Marked Free
 
 </div>
 
-> **375 registered providers** across the canonical chat, media, search, local, cloud-agent and system collections, including **152 carrying `hasFree: true` discovery metadata**. The chat model registry covers **229 providers / 2,554 distinct provider-model pairs / 1,283 raw model IDs**; the separate free-budget catalog has **491 per-model rows**, **34 recurring pools** and **51 recurring/keyless free-forever providers**. These are different denominators by design; definitions and pool-deduped calculations live in the [Provider Reference](docs/reference/PROVIDER_REFERENCE.md) and [Free Tiers](docs/reference/FREE_TIERS.md).
+> **375 registered providers** across the canonical chat, media, search, local, cloud-agent and system collections, including **153 carrying `hasFree: true` discovery metadata**. The chat model registry covers **239 providers with static models / 3,059 distinct provider-model pairs / 1,476 distinct model IDs**; the separate free-budget catalog has **467 per-model rows**, **34 recurring pools** and **51 recurring/keyless free-forever providers**. These are different denominators by design; definitions and pool-deduped calculations live in the [Provider Reference](docs/reference/PROVIDER_REFERENCE.md) and [Free Tiers](docs/reference/FREE_TIERS.md).
 
 <div align="center">
 
@@ -427,7 +479,7 @@ of your shell history. → [CLI Integrations](docs/guides/CLI-INTEGRATIONS.md)
   </tr>
 </table>
 
-<sub>…and 330+ more — every icon resolves live from the dashboard's provider catalog. 📖 [Provider Reference](docs/reference/PROVIDER_REFERENCE.md)</sub>
+<sub>…and 350+ more — every icon resolves live from the dashboard's provider catalog. 📖 [Provider Reference](docs/reference/PROVIDER_REFERENCE.md)</sub>
 
 <br/>
 
@@ -438,16 +490,13 @@ of your shell history. → [CLI Integrations](docs/guides/CLI-INTEGRATIONS.md)
     <td align="center" width="150"><img src="./public/providers/cli-generic.svg" width="42" alt="OpenCode Zen"/><br/><b>OpenCode Zen</b><br/><sub>DeepSeek V4, Nemotron 3<br/>No token cap</sub></td>
     <td align="center" width="150"><img src="./public/providers/cli-generic.svg" width="42" alt="Kilo Code"/><br/><b>Kilo Code</b><br/><sub>Auto-router, Tencent Hy3<br/>Free forever</sub></td>
     <td align="center" width="150"><img src="./public/providers/requesty.svg" width="42" alt="Requesty"/><br/><b>Requesty</b><br/><sub>GPT-OSS 120B, Nemotron<br/>Free forever</sub></td>
-    <td align="center" width="150"><img src="https://cdn.jsdelivr.net/npm/@lobehub/icons-static-svg@1.91.0/icons/siliconcloud-color.svg" width="42" alt="SiliconFlow"/><br/><b>SiliconFlow</b><br/><sub>DeepSeek V3.2 / R1<br/>Free tier</sub></td>
     <td align="center" width="150"><img src="./public/providers/zhipu.svg" width="42" alt="Z.AI GLM"/><br/><b>Z.AI GLM</b><br/><sub>GLM-4.7 / 4.5-Flash<br/>Free forever</sub></td>
     <td align="center" width="150"><img src="./public/providers/baidu.svg" width="42" alt="Baidu ERNIE"/><br/><b>Baidu ERNIE</b><br/><sub>ERNIE 4.0<br/>Free forever</sub></td>
   </tr>
   <tr>
-    <td align="center" width="150"><img src="https://cdn.jsdelivr.net/npm/@lobehub/icons-static-svg@1.91.0/icons/qoder-color.svg" width="42" alt="Qoder AI"/><br/><b>Qoder AI</b><br/><sub>Qwen3-Max, Kimi-K2<br/>Unlimited FREE</sub></td>
-    <td align="center" width="150"><img src="./public/providers/pollinations.svg" width="42" alt="Pollinations"/><br/><b>Pollinations</b><br/><sub>GPT, Llama, Claude<br/>No key needed</sub></td>
-    <td align="center" width="150"><img src="./public/providers/cloudflare.svg" width="42" alt="Cloudflare AI"/><br/><b>Cloudflare AI</b><br/><sub>50+ models<br/>10K neurons/day</sub></td>
-    <td align="center" width="150"><img src="./public/providers/nvidia.svg" width="42" alt="NVIDIA NIM"/><br/><b>NVIDIA NIM</b><br/><sub>GLM, MiniMax<br/>~40 RPM free</sub></td>
-    <td align="center" width="150"><img src="./public/providers/cerebras.svg" width="42" alt="Cerebras"/><br/><b>Cerebras</b><br/><sub>GLM 4.7, GPT-OSS<br/>1M tokens/day</sub></td>
+    <td align="center" width="150"><img src="./public/providers/pollinations.svg" width="42" alt="Pollinations"/><br/><b>Pollinations</b><br/><sub>GPT, DeepSeek, Grok, Mistral<br/>No key needed</sub></td>
+    <td align="center" width="150"><img src="./public/providers/cloudflare.svg" width="42" alt="Cloudflare AI"/><br/><b>Cloudflare AI</b><br/><sub>Llama 3.3, Qwen, GLM, Kimi<br/>10K neurons/day</sub></td>
+    <td align="center" width="150"><img src="./public/providers/nvidia.svg" width="42" alt="NVIDIA NIM"/><br/><b>NVIDIA NIM</b><br/><sub>Kimi, GLM, DeepSeek<br/>~40 RPM free</sub></td>
     <td align="center" width="150"><img src="./public/providers/openrouter.svg" width="42" alt="OpenRouter"/><br/><b>OpenRouter</b><br/><sub>:free models<br/>+$10 → higher RPM</sub></td>
   </tr>
 </table>
@@ -468,12 +517,12 @@ of your shell history. → [CLI Integrations](docs/guides/CLI-INTEGRATIONS.md)
 <table>
   <tr><th align="left">Platform</th><th align="left">Install</th><th align="left">Highlights</th></tr>
   <tr><td align="left" nowrap>📦 <b>npm (global)</b></td><td align="left" nowrap><code>npm install -g pusula</code></td><td align="left">One command, any OS</td></tr>
-  <tr><td align="left" nowrap>🐳 <b>Docker</b></td><td align="left" nowrap><code>docker run … ferhat-yasinoglu/pusula</code></td><td align="left">Multi-arch <b>AMD64 + ARM64</b></td></tr>
+  <tr><td align="left" nowrap>🐳 <b>Docker</b></td><td align="left" nowrap><code>docker run … ghcr.io/ferhat-yasinoglu/pusula</code></td><td align="left">Multi-arch <b>AMD64 + ARM64</b></td></tr>
   <tr><td align="left" nowrap>🖥️ <b>Desktop (Electron)</b></td><td align="left" nowrap><code>npm run electron:build</code></td><td align="left">Native window + system tray — <b>Windows / macOS / Linux</b></td></tr>
   <tr><td align="left" nowrap>💪 <b>ARM</b></td><td align="left" nowrap>native <code>arm64</code></td><td align="left">Raspberry Pi, ARM servers, Apple Silicon</td></tr>
   <tr><td align="left" nowrap>📱 <b>Android (Termux)</b></td><td align="left" nowrap><code>pkg install nodejs && npx -y pusula</code></td><td align="left">Runs <b>on your phone</b>, 24/7, no root</td></tr>
-  <tr><td align="left" nowrap>📲 <b>PWA</b></td><td align="left" nowrap>"Add to Home Screen"</td><td align="left">Fullscreen, offline, installable from browser</td></tr>
-  <tr><td align="left" nowrap>🧩 <b>OpenCode plugin</b></td><td align="left" nowrap><code>@pusula/opencode-provider</code></td><td align="left">Native OpenCode integration</td></tr>
+  <tr><td align="left" nowrap>📲 <b>PWA</b></td><td align="left" nowrap>"Add to Home Screen"</td><td align="left">Standalone app window, offline page, installable from the browser</td></tr>
+  <tr><td align="left" nowrap>🧩 <b>OpenCode plugin</b></td><td align="left" nowrap><code>pusula setup opencode</code></td><td align="left">Installs the bundled <code>@pusula/opencode-plugin</code> into OpenCode</td></tr>
   <tr><td align="left" nowrap>🛠️ <b>From source</b></td><td align="left" nowrap><code>npm install && npm run dev</code></td><td align="left">Hack on it, contribute</td></tr>
 </table>
 
@@ -505,9 +554,9 @@ of your shell history. → [CLI Integrations](docs/guides/CLI-INTEGRATIONS.md)
 
 ```bash
 pusula               # serve gateway + dashboard (port 20128)
-pusula chat          # interactive TUI chat client (slash: /model /combo /skill /memory)
+pusula repl          # interactive TUI chat (slash: /model /combo /skill /memory)
 pusula setup         # guided first-run wizard
-pusula doctor        # diagnose providers, ports, native deps
+pusula doctor        # diagnose config, DB, ports, Node runtime, native deps
 ```
 
 ### 🛰️ Remote mode — run the CLI here, Pusula on a VPS
@@ -528,7 +577,7 @@ Tokens are scoped `read` / `write` / `admin`; process-spawning routes stay loopb
 
 <div align="left">
 
-<img src="./docs/diagrams/cli-terminal.svg" width="50%" alt="Animated terminal demoing the Pusula CLI — pusula providers list, pusula combo list and pusula health — cycling over the 86-command top-level surface: providers · oauth · keys · combo · nodes · models · cache · compression · cost · usage · quota · health · resilience · telemetry · logs · audit · mcp · a2a · cloud · memory · skills · eval · tunnel · backup · sync · webhooks · policy · pricing · translator · simulate …"/>
+<img src="./docs/diagrams/cli-terminal.svg" width="50%" alt="Animated terminal demoing the Pusula CLI — pusula providers list, pusula combo list and pusula health — cycling over the 89-command top-level surface: providers · oauth · keys · combo · nodes · models · cache · compression · cost · usage · quota · health · resilience · telemetry · logs · audit · mcp · a2a · cloud · memory · skills · eval · tunnel · backup · sync · webhooks · policy · pricing · translator · simulate …"/>
 
 </div>
 
@@ -549,7 +598,8 @@ Expose Pusula over **MCP**, **A2A**, a **REST API**, **webhooks** or a **remote 
 
 ```bash
 # Give Claude Code the full Pusula toolset over MCP:
-claude mcp add-server pusula --type http --url http://localhost:20128/api/mcp/stream
+pusula mcp enable --transport streamable-http
+claude mcp add --transport http pusula http://localhost:20128/api/mcp/stream --header "Authorization: Bearer <api-key-with-management-access>"
 ```
 
 <sub>📖 [MCP Server](docs/frameworks/MCP-SERVER.md) · [A2A Server](docs/frameworks/A2A-SERVER.md) · [Agent Protocols](docs/frameworks/AGENT_PROTOCOLS_GUIDE.md)</sub>
@@ -576,7 +626,7 @@ range    = 78.4 – 94.6%
 
 Code blocks, URLs, JSON and structured data are **always protected** by the preservation engine.
 
-> **Why use many tokens when few tokens do the trick?** Every request passes through Pusula's compression pipeline **transparently** — no client changes. It's now a **stack of 12 composable engines** that run in order and mix & match per routing combo — building on ideas from [RTK](https://github.com/rtk-ai/rtk), [Caveman](https://github.com/JuliusBrussee/caveman) (⭐ 90K+), [LLMLingua-2](https://github.com/microsoft/LLMLingua), and [Troglodita](https://github.com/leninejunior/troglodita) (PT-BR).
+> **Why use many tokens when few tokens do the trick?** Every request passes through Pusula's compression pipeline **transparently** — no client changes. It's now a **stack of 12 composable engines** that run in order and mix & match per routing combo — building on ideas from [RTK](https://github.com/rtk-ai/rtk), [Caveman](https://github.com/JuliusBrussee/caveman), [LLMLingua-2](https://github.com/microsoft/LLMLingua), and [Troglodita](https://github.com/leninejunior/troglodita) (PT-BR).
 
 ### 🧱 The 12-engine stack
 
@@ -593,7 +643,7 @@ Engines run in pipeline order; each is independently toggleable and configurable
   <tr><td align="center" nowrap>7</td><td align="left" nowrap><b>Relevance</b></td><td align="left">Extractive sentence scoring against the last user query</td></tr>
   <tr><td align="center" nowrap>8</td><td align="left" nowrap><b>Caveman</b></td><td align="left">Rule-based prose compression (~65–75% on output)</td></tr>
   <tr><td align="center" nowrap>9</td><td align="left" nowrap><b>Aggressive</b></td><td align="left">Summarization + progressive aging of old turns</td></tr>
-  <tr><td align="center" nowrap>10</td><td align="left" nowrap><b>LLMLingua-2</b></td><td align="left">ML semantic pruning via MobileBERT ONNX — code-safe, async</td></tr>
+  <tr><td align="center" nowrap>10</td><td align="left" nowrap><b>LLMLingua-2</b></td><td align="left">ML semantic pruning via a TinyBERT ONNX model (BERT-base optional) — code-safe, async</td></tr>
   <tr><td align="center" nowrap>11</td><td align="left" nowrap><b>Ultra</b></td><td align="left">Heuristic token pruning with an optional small-model (SLM) tier</td></tr>
   <tr><td align="center" nowrap>12</td><td align="left" nowrap><b>OmniGlyph</b></td><td align="left">Experimental context-as-image encoding for measured Claude Fable 5 on the direct Anthropic wire; GPT 5.6 transformers remain fail-closed pending provider receipts. Four compression profiles (aggressive default, balanced, coding-safe, passthrough) (most aggressive; opt-in)</td></tr>
 </table>
@@ -670,7 +720,7 @@ Dashboard at `http://localhost:20128` · API at `http://localhost:20128/v1`.
 
 **2) Connect a FREE provider (no signup)**
 
-Dashboard → **Providers** → connect **Kiro AI** (free Claude, ~50 credits/month per account) or **OpenCode Free** (no auth) → done.
+Dashboard → **Providers** → connect a keyless provider such as **UncloseAI** or **AI Horde** (no API key, no signup) → done.
 
 **3) Point your coding tool**
 
@@ -691,28 +741,28 @@ You should see your connected models listed. 🎉 That's it — start coding, an
 If your client cannot send custom headers, Pusula also exposes tokenized compatibility aliases:
 
 ```txt
-OpenAI catalog:   http://localhost:20128/vscode/YOUR_KEY/
-OpenAI models:    http://localhost:20128/vscode/YOUR_KEY/models
-OpenAI chat:      http://localhost:20128/vscode/YOUR_KEY/chat/completions
-OpenAI responses: http://localhost:20128/vscode/YOUR_KEY/responses
-Ollama chat:      http://localhost:20128/vscode/YOUR_KEY/api/chat
-Ollama tags:      http://localhost:20128/vscode/YOUR_KEY/api/tags
+OpenAI catalog:   http://localhost:20128/api/v1/vscode/YOUR_KEY/
+OpenAI models:    http://localhost:20128/api/v1/vscode/YOUR_KEY/models
+OpenAI chat:      http://localhost:20128/api/v1/vscode/YOUR_KEY/chat/completions
+OpenAI responses: http://localhost:20128/api/v1/vscode/YOUR_KEY/responses
+Ollama chat:      http://localhost:20128/api/v1/vscode/YOUR_KEY/api/chat
+Ollama tags:      http://localhost:20128/api/v1/vscode/YOUR_KEY/api/tags
 ```
 
 Use these only for clients that cannot attach `Authorization: Bearer ...`. Header auth remains the preferred mode.
 
 <br/>
 
-## 📦 More install methods — Docker, source, pnpm, Arch
+## 📦 More install methods — Docker, Bun, source, pnpm, Nix, Podman
 
 **🐳 Docker**
 
 ```bash
 docker run -d --name pusula --restart unless-stopped --stop-timeout 40 \
-  -p 127.0.0.1:20128:20128 -v pusula-data:/app/data ferhat-yasinoglu/pusula:latest
+  -p 127.0.0.1:20128:20128 -v pusula-data:/app/data ghcr.io/ferhat-yasinoglu/pusula:main
 ```
 
-`:latest` follows the highest **published** stable SemVer. It does not track git `main`. Pin `:X.Y.Z` for GitOps. See [Docker Release Channels](docs/guides/DOCKER_GUIDE.md#release-channels).The image pins **`PUSULA_MEMORY_MB=1024`**. That is enough for the dashboard and a light chat. **Coding agents** (`POST /v1/responses` from Claude Code, Codex, Grok, …) need a much larger V8 heap or the process `FATAL ERROR`s at ~12 GiB under two overlapping long contexts. Size the container above the heap (native buffers sit outside V8):
+`:main` is rebuilt on every push to `main`. There is no tagged release yet, so `:latest` and `:X.Y.Z` do not exist; once releases are published, `:latest` follows the highest stable SemVer and `:X.Y.Z` pins one for GitOps. See [Docker Release Channels](docs/guides/DOCKER_GUIDE.md#release-channels). The image pins **`PUSULA_MEMORY_MB=1024`**. That is enough for the dashboard and a light chat. **Coding agents** (`POST /v1/responses` from Claude Code, Codex, Grok, …) need a much larger V8 heap or the process `FATAL ERROR`s at ~12 GiB under two overlapping long contexts. Size the container above the heap (native buffers sit outside V8):
 
 | Workload                            | Heap (`-e PUSULA_MEMORY_MB`) | Container (`--memory`) |
 | ----------------------------------- | ---------------------------- | ---------------------- |
@@ -723,29 +773,29 @@ docker run -d --name pusula --restart unless-stopped --stop-timeout 40 \
 ```bash
 docker run -d --name pusula --restart unless-stopped --stop-timeout 40 \
   -e PUSULA_MEMORY_MB=8192 --memory=10g \
-  -p 127.0.0.1:20128:20128 -v pusula-data:/app/data ferhat-yasinoglu/pusula:latest
+  -p 127.0.0.1:20128:20128 -v pusula-data:/app/data ghcr.io/ferhat-yasinoglu/pusula:main
 ```
 
 Full table: [Docker Guide — runtime RAM](docs/guides/DOCKER_GUIDE.md#runtime-ram-for-coding-agents).
 
-> **Pre-release Docker channel:** `ferhat-yasinoglu/pusula:next` and
-> `ferhat-yasinoglu/pusula:next-web` follow the current default `release/v*`
-> branch. These mutable tags are intended only for testing unreleased fixes and
-> are **not supported for production**. See
-> [Docker Release Channels](docs/guides/DOCKER_GUIDE.md#release-channels).
+> **Development channel:** `ghcr.io/ferhat-yasinoglu/pusula:main` (plus `:main-web` with
+> Chromium and `:main-bun`) is rebuilt on every push to `main`. It is what
+> https://pusula.fyajan.com runs, kept current by the pull-based updater in
+> [`scripts/ops/vps-auto-update/`](scripts/ops/vps-auto-update/README.md). These tags are
+> mutable and are not a pinned production channel.
 
 **🥟 Bun**
 
-Standard `bun install` and global installation (`bun install -g pusula`) are supported via Bun runtime detection:
+Bun is a best-effort compatibility path, not a supported runtime: `bun install` and `bun install -g pusula` start via Bun runtime detection:
 
 - **Built-in `bun:sqlite`**: Pusula uses Bun's built-in `bun:sqlite` driver when running under Bun, falling back to `better-sqlite3` on Node.js or `sql.js`.
-- **Automatic Webpack bundler selection in dev**: Development (`bun run dev`) automatically detects Bun and disables Turbopack in favor of Webpack to prevent native V8 binding incompatibilities. Production builds (`bun run build`) follow `PUSULA_USE_TURBOPACK` exactly as on Node: Turbopack by default, `PUSULA_USE_TURBOPACK=0` to build with Webpack (`Dockerfile.bun` exposes it as a `--build-arg`).
+- **Automatic Webpack bundler selection in dev**: Development under the Bun runtime (`bun --bun run dev`) automatically detects Bun and disables Turbopack in favor of Webpack to prevent native V8 binding incompatibilities. Production builds (`bun run build`) follow `PUSULA_USE_TURBOPACK` exactly as on Node: Turbopack by default, `PUSULA_USE_TURBOPACK=0` to build with Webpack (`Dockerfile.bun` exposes it as a `--build-arg`).
 - **Dedicated Bun Dockerfile**: Multi-stage `Dockerfile.bun` for native Bun production deployments (`docker build -f Dockerfile.bun -t pusula:bun .`).
 
 ```bash
 # Install and run with Bun
 bun install
-bun run dev
+bun --bun run dev
 ```
 
 **🛠️ From source**
@@ -761,21 +811,12 @@ PORT=20128 npm run dev
 pnpm add -g pusula@latest --allow-build=better-sqlite3 --allow-build=@swc/core && pusula
 ```
 
-**🐧 Arch Linux (AUR)**
-
-```bash
-yay -S pusula-bin && systemctl --user enable --now pusula.service
-```
-
 **🔧 Nix (Flake)**
 
 ```bash
 # Using Nix flakes
 nix develop
 npm run dev
-
-# Or using devbox
-devbox run npm run dev
 ```
 
 📖 [Docker Guide](docs/guides/DOCKER_GUIDE.md) — Compose profiles, Caddy HTTPS, Cloudflare tunnels.
@@ -816,8 +857,8 @@ PUSULA_SKIP_POSTINSTALL=1 npm install -g pusula   # CI=1 also skips it
 ```
 
 For the fastest installs prefer **pnpm** (content-addressed store + hard links — see above).
-For a dashboard-free, headless runtime use the Docker `base` profile (above) or the
-[Termux guide](docs/guides/TERMUX_GUIDE.md). The CLI and the web dashboard are served by the
+For a dashboard-free, headless runtime run `pusula serve --headless` (or set
+`PUSULA_HEADLESS=1`, also inside Docker) — see [Headless Mode](docs/guides/HEADLESS.md). The CLI and the web dashboard are served by the
 same process on one port, so there is no separate CLI-only package today.
 
 <br/>
@@ -826,16 +867,16 @@ same process on one port, so there is no separate CLI-only package today.
 
 # 📧 Community & Help
 
-> Everything happens on GitHub — open an issue, start a discussion, or send a pull request.
+> Everything happens on GitHub — open an issue or send a pull request.
 
-| Channel                  | Where / how                                                                                                                      |
-| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
-| 🐛 **Report a bug**      | [open an issue](https://github.com/Ferhat-Yasinoglu/pusula/issues) — attach `npm run system-info` output                         |
-| 💡 **Request a feature** | [open an issue](https://github.com/Ferhat-Yasinoglu/pusula/issues/new/choose) using the feature-request template                 |
-| 💬 **Questions & help**  | [GitHub Discussions](https://github.com/Ferhat-Yasinoglu/pusula/discussions) — setup help, provider tips, roadmap ideas          |
-| 🔒 **Security report**   | [private security advisory](https://github.com/Ferhat-Yasinoglu/pusula/security/advisories/new) — see [SECURITY.md](SECURITY.md) |
-| 📦 **Source code**       | [github.com/Ferhat-Yasinoglu/pusula](https://github.com/Ferhat-Yasinoglu/pusula)                                                 |
-| 🤝 **Contribute**        | [CONTRIBUTING.md](CONTRIBUTING.md) · [Branching & Release Model](docs/ops/BRANCHING_MODEL.md) · pick a `good first issue`        |
+| Channel                  | Where / how                                                                                                                                          |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 🐛 **Report a bug**      | [open an issue](https://github.com/Ferhat-Yasinoglu/pusula/issues) — attach `pusula doctor` output (or `npm run system-info` from a source checkout) |
+| 💡 **Request a feature** | [open an issue](https://github.com/Ferhat-Yasinoglu/pusula/issues/new/choose) using the feature-request template                                     |
+| 💬 **Questions & help**  | [open an issue](https://github.com/Ferhat-Yasinoglu/pusula/issues/new/choose) — setup help, provider tips, roadmap ideas                             |
+| 🔒 **Security report**   | [private security advisory](https://github.com/Ferhat-Yasinoglu/pusula/security/advisories/new) — see [SECURITY.md](SECURITY.md)                     |
+| 📦 **Source code**       | [github.com/Ferhat-Yasinoglu/pusula](https://github.com/Ferhat-Yasinoglu/pusula)                                                                     |
+| 🤝 **Contribute**        | [CONTRIBUTING.md](CONTRIBUTING.md) · [open issues](https://github.com/Ferhat-Yasinoglu/pusula/issues)                                                |
 
 </div>
 
@@ -850,23 +891,23 @@ same process on one port, so there is no separate CLI-only package today.
 
 <table>
   <tr><th align="left">Layer</th><th align="left">Technology</th></tr>
-  <tr><td nowrap><b>Runtime</b></td><td>Node.js 22.x / 24.x LTS — <code>&gt;=22.22.2 &lt;23 || &gt;=24.0.0 &lt;27</code></td></tr>
-  <tr><td nowrap><b>Language</b></td><td>TypeScript 6.0 — <b>100% TypeScript</b> across <code>src/</code> and <code>open-sse/</code> (zero <code>any</code> in core since v2.0)</td></tr>
+  <tr><td nowrap><b>Runtime</b></td><td>Node.js 22.x (≥22.22.2) or 24.x–26.x — <code>&gt;=22.22.2 &lt;23 || &gt;=24.0.0 &lt;27</code></td></tr>
+  <tr><td nowrap><b>Language</b></td><td>TypeScript 6.0 — <code>src/</code> and <code>open-sse/</code> are TypeScript except 16 JS/CJS worker and MITM shims; <code>no-explicit-any</code> is an error in <code>open-sse/</code> and <code>tests/</code>, with older cases frozen in a ratchet</td></tr>
   <tr><td nowrap><b>Framework</b></td><td>Next.js 16 + React 19 + Tailwind CSS 4</td></tr>
-  <tr><td nowrap><b>Database</b></td><td>better-sqlite3 (SQLite, WAL journaling) + LowDB (JSON legacy) — 122 domain modules, 209 migrations</td></tr>
+  <tr><td nowrap><b>Database</b></td><td>better-sqlite3 (SQLite, WAL journaling) — 147 modules in <code>src/lib/db/</code>, 209 migrations</td></tr>
   <tr><td nowrap><b>Memory</b></td><td>SQLite FTS5 full-text + int8-quantized vector embeddings, typed decay</td></tr>
   <tr><td nowrap><b>Schemas</b></td><td>Zod 4 — MCP tool I/O validation + API contracts</td></tr>
   <tr><td nowrap><b>Protocols</b></td><td>MCP (stdio / HTTP / SSE) + A2A v0.3 (JSON-RPC 2.0 + SSE)</td></tr>
   <tr><td nowrap><b>Streaming</b></td><td>Server-Sent Events (SSE) + WebSocket bridge (<code>/v1/ws</code>)</td></tr>
-  <tr><td nowrap><b>Compression</b></td><td>12-engine pipeline — RTK, Caveman, LLMLingua-2 (MobileBERT ONNX), GCF, OmniGlyph</td></tr>
+  <tr><td nowrap><b>Compression</b></td><td>12-engine pipeline — RTK, Caveman, Headroom (TOON/GCF codecs), LLMLingua-2 (TinyBERT ONNX), OmniGlyph</td></tr>
   <tr><td nowrap><b>Auth &amp; security</b></td><td>OAuth 2.0 (PKCE) + JWT + API Keys + MCP scoped auth · AES-256-GCM at rest · DOMPurify</td></tr>
-  <tr><td nowrap><b>Stealth</b></td><td>wreq-js — JA3 / JA4 TLS fingerprint impersonation, 3-level proxy</td></tr>
+  <tr><td nowrap><b>Stealth</b></td><td>wreq-js — JA3 / JA4 TLS fingerprint impersonation, 4-level proxy (account / provider / combo / global)</td></tr>
   <tr><td nowrap><b>Resilience</b></td><td>Circuit breaker, exponential backoff, anti-thundering-herd, auto-combo self-healing</td></tr>
   <tr><td nowrap><b>Logging</b></td><td>pino — structured JSON logs with request context</td></tr>
-  <tr><td nowrap><b>Testing</b></td><td>Node.js test runner + Vitest — <b>39,000+ static test declarations</b> across 5,100+ tracked test files (unit, integration, E2E, security, ecosystem)</td></tr>
+  <tr><td nowrap><b>Testing</b></td><td>Node.js test runner + Vitest — <b>56,000+ static test declarations</b> across 7,900+ tracked test files (unit, integration, E2E, security, ecosystem)</td></tr>
   <tr><td nowrap><b>Platforms</b></td><td>Desktop (Electron) · Android (Termux) · PWA (any browser)</td></tr>
-  <tr><td nowrap><b>CI/CD</b></td><td>GitHub Actions — auto npm publish + GHCR on release</td></tr>
-  <tr><td nowrap><b>Links</b></td><td><a href="https://github.com/Ferhat-Yasinoglu/pusula">GitHub</a> · <a href="https://www.npmjs.com/package/pusula">npm</a> · <a href="https://github.com/Ferhat-Yasinoglu/pusula/pkgs/container/pusula">GHCR</a></td></tr>
+  <tr><td nowrap><b>CI/CD</b></td><td>GitHub Actions — GHCR images on every push to <code>main</code> (<code>:main</code>, <code>:main-web</code>, <code>:main-bun</code>); npm publish + versioned GHCR tags on each GitHub release</td></tr>
+  <tr><td nowrap><b>Links</b></td><td><a href="https://github.com/Ferhat-Yasinoglu/pusula">GitHub</a> · <a href="https://www.npmjs.com/package/pusula">npm</a> · <a href="https://github.com/Ferhat-Yasinoglu/pusula/pkgs/container/pusula">GHCR</a> · <a href="https://pusula.fyajan.com/landing">Live instance</a></td></tr>
 </table>
 
 <div align="center">
@@ -886,7 +927,7 @@ same process on one port, so there is no separate CLI-only package today.
   <tr><td nowrap><b><a href="docs/reference/CLI-TOOLS.md">CLI Tools Guide</a></b></td><td>Per-tool setup for Claude Code, Codex, Cursor, Cline, OpenClaw, Kilo, Copilot</td></tr>
   <tr><td nowrap><b><a href="docs/guides/REMOTE-MODE.md">Remote Mode</a></b></td><td>Drive a remote Pusula (VPS) from your laptop CLI via scoped access tokens</td></tr>
   <tr><td nowrap><b><a href="docs/guides/CLAUDE-CODE-CONFIGURATION.md">Claude Code Config</a></b></td><td>Point Claude Code at Pusula (local/remote) with <code>launch</code> + per-model profiles</td></tr>
-  <tr><td nowrap><b><a href="README.md#-quick-start">Quick Start</a></b></td><td>3-step install → connect → configure</td></tr>
+  <tr><td nowrap><b><a href="README.md#-quick-start">Quick Start</a></b></td><td>4-step install → connect → configure → verify</td></tr>
 </table>
 
 ### 🔧 Operations & Deployment
@@ -894,13 +935,15 @@ same process on one port, so there is no separate CLI-only package today.
 <table>
   <tr><th align="left">Document</th><th align="left">Description</th></tr>
   <tr><td nowrap><b><a href="docs/guides/DOCKER_GUIDE.md">Docker Guide</a></b></td><td>Docker run, Compose profiles, Caddy HTTPS, tunnels, image tags</td></tr>
-  <tr><td nowrap><b><a href="contrib/podman/README.md">Podman Guide</a></b></td><td>Quadlet systemd integration, podman-compose, SELinux</td></tr>
+  <tr><td nowrap><b><a href="contrib/podman/README.md">Podman Guide</a></b></td><td>Quadlet systemd units (Linux), <code>podman compose</code> on Linux/macOS/Windows, data-directory permissions</td></tr>
   <tr><td nowrap><b><a href="docs/ops/VM_DEPLOYMENT_GUIDE.md">VM Deployment</a></b></td><td>Complete guide: VM + nginx + Cloudflare setup</td></tr>
   <tr><td nowrap><b><a href="docs/ops/FLY_IO_DEPLOYMENT_GUIDE.md">Fly.io Deployment</a></b></td><td>Deploy to Fly.io with persistent storage</td></tr>
   <tr><td nowrap><b><a href="docs/guides/TERMUX_GUIDE.md">Termux Guide</a></b></td><td>Run Pusula on Android via Termux</td></tr>
   <tr><td nowrap><b><a href="docs/guides/PWA_GUIDE.md">PWA Guide</a></b></td><td>Progressive Web App install, caching, architecture</td></tr>
   <tr><td nowrap><b><a href="docs/guides/UNINSTALL.md">Uninstall Guide</a></b></td><td>Clean removal for all install methods</td></tr>
   <tr><td nowrap><b><a href="docs/reference/ENVIRONMENT.md">Environment Config</a></b></td><td>Complete <code>.env</code> variables and references</td></tr>
+  <tr><td nowrap><b><a href="docs/guides/HEADLESS.md">Headless Mode</a></b></td><td>Run only the proxy engine — <code>/v1/*</code> on, dashboard off</td></tr>
+  <tr><td nowrap><b><a href="scripts/ops/vps-auto-update/README.md">VPS Auto-Update</a></b></td><td>Pull-based systemd timer that updates a Docker deploy from <code>ghcr.io/ferhat-yasinoglu/pusula:main</code>, with data backup, health gate and rollback</td></tr>
 </table>
 
 ### 🧠 Features & Architecture
@@ -908,14 +951,14 @@ same process on one port, so there is no separate CLI-only package today.
 <table>
   <tr><th align="left">Document</th><th align="left">Description</th></tr>
   <tr><td nowrap><b><a href="docs/architecture/ARCHITECTURE.md">Architecture</a></b></td><td>System architecture, data flow, and internals</td></tr>
-  <tr><td nowrap><b><a href="docs/compression/COMPRESSION_GUIDE.md">Compression Guide</a></b></td><td>7-option pipeline: off / lite / standard / aggressive / ultra / RTK / stacked</td></tr>
+  <tr><td nowrap><b><a href="docs/compression/COMPRESSION_GUIDE.md">Compression Guide</a></b></td><td>Compression modes off / lite / standard / aggressive / ultra / RTK / stacked, plus per-combo and per-request overrides</td></tr>
   <tr><td nowrap><b><a href="docs/compression/RTK_COMPRESSION.md">RTK Compression</a></b></td><td>Command-output compression, filters, trust, verify, raw-output recovery</td></tr>
   <tr><td nowrap><b><a href="docs/compression/COMPRESSION_ENGINES.md">Compression Engines</a></b></td><td>Caveman, RTK, stacked pipelines, dashboard/API/MCP surfaces</td></tr>
   <tr><td nowrap><b><a href="docs/compression/COMPRESSION_RULES_FORMAT.md">Compression Rules Format</a></b></td><td>JSON rule-pack schemas for Caveman and RTK filters</td></tr>
   <tr><td nowrap><b><a href="docs/compression/COMPRESSION_LANGUAGE_PACKS.md">Compression Language Packs</a></b></td><td>Language detection and Caveman rule-pack authoring</td></tr>
   <tr><td nowrap><b><a href="docs/architecture/RESILIENCE_GUIDE.md">Resilience Guide</a></b></td><td>Circuit breakers, cooldowns, queue, anti-thundering herd, TLS spoofing</td></tr>
   <tr><td nowrap><b><a href="docs/routing/AUTO-COMBO.md">Auto-Combo Engine</a></b></td><td>16-factor scoring, mode packs, self-healing</td></tr>
-  <tr><td nowrap><b><a href="docs/ops/PROXY_GUIDE.md">Proxy Guide</a></b></td><td>3-level proxy system, 1proxy marketplace, registry CRUD</td></tr>
+  <tr><td nowrap><b><a href="docs/ops/PROXY_GUIDE.md">Proxy Guide</a></b></td><td>4-level proxy system (account / provider / combo / global), 1proxy marketplace, registry CRUD</td></tr>
   <tr><td nowrap><b><a href="docs/reference/FREE_TIERS.md">Free Tiers</a></b></td><td>Consolidated directory: 34 documented recurring pools / 467 cataloged free-tier entries</td></tr>
   <tr><td nowrap><b><a href="docs/guides/FEATURES.md">Features Gallery</a></b></td><td>Visual dashboard tour with screenshots</td></tr>
   <tr><td nowrap><b><a href="docs/architecture/CODEBASE_DOCUMENTATION.md">Codebase Documentation</a></b></td><td>Beginner-friendly codebase walkthrough</td></tr>
@@ -926,7 +969,7 @@ same process on one port, so there is no separate CLI-only package today.
 <table>
   <tr><th align="left">Document</th><th align="left">Description</th></tr>
   <tr><td nowrap><b><a href="docs/reference/API_REFERENCE.md">API Reference</a></b></td><td>All endpoints with examples</td></tr>
-  <tr><td nowrap><b><a href="docs/openapi.yaml">OpenAPI Spec</a></b></td><td>OpenAPI 3.0 specification</td></tr>
+  <tr><td nowrap><b><a href="docs/openapi.yaml">OpenAPI Spec</a></b></td><td>OpenAPI 3.1 specification</td></tr>
   <tr><td nowrap><b><a href="open-sse/mcp-server/README.md">MCP Server</a></b></td><td>110 MCP tools, IDE configs, Python/TS/Go clients</td></tr>
   <tr><td nowrap><b><a href="docs/frameworks/MCP-SERVER.md">MCP Server Guide</a></b></td><td>MCP installation, transports, and tool reference</td></tr>
   <tr><td nowrap><b><a href="src/lib/a2a/README.md">A2A Server</a></b></td><td>JSON-RPC 2.0 protocol, skills, streaming, task mgmt</td></tr>
@@ -938,12 +981,11 @@ same process on one port, so there is no separate CLI-only package today.
 <table>
   <tr><th align="left">Document</th><th align="left">Description</th></tr>
   <tr><td nowrap><b><a href="CONTRIBUTING.md">Contributing</a></b></td><td>Development setup and guidelines</td></tr>
-  <tr><td nowrap><b><a href="docs/ops/BRANCHING_MODEL.md">Branching & Release Model</a></b></td><td>Where PRs target (<code>release/*</code>), what <code>main</code> and tags mean</td></tr>
   <tr><td nowrap><b><a href="CHANGELOG.md">Changelog</a></b></td><td>Full per-version release history</td></tr>
   <tr><td nowrap><b><a href="SECURITY.md">Security Policy</a></b></td><td>Vulnerability reporting and security practices</td></tr>
   <tr><td nowrap><b><a href="docs/guides/I18N.md">i18n Guide</a></b></td><td>UI translations (English, Turkish, German, Persian), translation workflow, RTL</td></tr>
   <tr><td nowrap><b><a href="docs/ops/RELEASE_CHECKLIST.md">Release Checklist</a></b></td><td>Pre-release validation steps</td></tr>
-  <tr><td nowrap><b><a href="docs/ops/COVERAGE_PLAN.md">Coverage Plan</a></b></td><td>Test coverage strategy for 39,000+ static test declarations across 5,100+ tracked test files</td></tr>
+  <tr><td nowrap><b><a href="docs/ops/COVERAGE_PLAN.md">Coverage Plan</a></b></td><td>Test coverage strategy and gate history (60% floor, ratcheted baselines)</td></tr>
 </table>
 
 <br/>
@@ -962,11 +1004,10 @@ Everyone who has helped is listed on the
 ### How to Contribute
 
 1. Fork the repository
-2. Branch from the **active** `release/vX.Y.Z` tip (not `main`) — see [Branching & Release Model](docs/ops/BRANCHING_MODEL.md)
-3. Create your feature branch (`git checkout -b feat/amazing-feature`)
-4. Commit your changes (`git commit -m 'feat: add amazing feature'`)
-5. Push to the branch (`git push origin feat/amazing-feature`)
-6. Open a Pull Request with **base = that `release/vX.Y.Z` branch**
+2. Create your feature branch from the latest `main` (`git fetch origin && git checkout -b feat/amazing-feature origin/main`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feat/amazing-feature`)
+5. Open a Pull Request with **base = `main`**
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
@@ -992,15 +1033,16 @@ gh release create "v${VERSION}" --title "v${VERSION}" --generate-notes
 
 </div>
 
-Pusula stands on the shoulders of giants. It started as a fork of **[9router](https://github.com/decolua/9router)** and a TypeScript port of the Go project **[CLIProxyAPI](https://github.com/router-for-me/CLIProxyAPI)** — and from there, every subsystem below was inspired by an open-source project that got there first. Each one shaped a concrete piece of Pusula. This is our thank-you to all of them. 🙏
+Pusula stands on the shoulders of giants. It is a rebrand and continuation of **[OmniRoute](https://github.com/diegosouzapw/OmniRoute)** (MIT, © diegosouzapw), which itself started as a fork of **[9router](https://github.com/decolua/9router)** and a TypeScript port of the Go project **[CLIProxyAPI](https://github.com/router-for-me/CLIProxyAPI)** — and from there, every subsystem below was inspired by an open-source project that got there first. Each one shaped a concrete piece of Pusula. This is our thank-you to all of them. 🙏
 
-> ⭐ star counts verified from GitHub's REST API on August 24, 2026 — go give these projects a star. Counts are an exact dated snapshot and will naturally change.
+> ⭐ star counts are a dated snapshot from GitHub's REST API on August 24, 2026, carried over from OmniRoute's README — go give these projects a star. Counts will naturally change.
 
 ### 🧬 Lineage & gateway
 
 <table>
   <tr><th align="left">Project</th><th align="center">⭐</th><th align="left">How it inspired Pusula</th></tr>
-  <tr><td nowrap><b><a href="https://github.com/decolua/9router">9router</a></b></td><td align="center">26,161</td><td>The original project this fork is built on — extended here with multi-modal APIs and a full TypeScript rewrite.</td></tr>
+  <tr><td nowrap><b><a href="https://github.com/diegosouzapw/OmniRoute">OmniRoute</a></b></td><td align="center">—</td><td>The MIT project Pusula is derived from and keeps syncing with (latest sync: v3.8.52).</td></tr>
+  <tr><td nowrap><b><a href="https://github.com/decolua/9router">9router</a></b></td><td align="center">26,161</td><td>The project OmniRoute was originally forked from — OmniRoute extended it with multi-modal APIs and a full TypeScript rewrite, which Pusula inherits.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/router-for-me/CLIProxyAPI">CLIProxyAPI</a></b></td><td align="center">48,497</td><td>The Go implementation that inspired this JavaScript / TypeScript port.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/BerriAI/litellm">LiteLLM</a></b></td><td align="center">57,100</td><td>The AI gateway whose public pricing dataset feeds our cost-tracking sync and whose provider-normalization model informed our routing.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/miuuyy/codex-chatgpt-web">codex-chatgpt-web</a></b></td><td align="center">1,410</td><td>MIT source adapted into the vendored ChatGPT Web → Codex Responses bridge, including browser-session, response-framing, usage and web-search adapters.</td></tr>
@@ -1027,7 +1069,7 @@ Pusula stands on the shoulders of giants. It started as a fork of **[9router](ht
   <tr><td nowrap><b><a href="https://github.com/microsoft/LLMLingua">LLMLingua</a></b></td><td align="center">6,598</td><td>Prompt-compression research (LLMLingua / LLMLingua-2) — inspired our async, code-safe, fail-open <code>llmlingua</code> engine.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/atjsh/llmlingua-2-js">llmlingua-2-js</a></b></td><td align="center">31</td><td>The JS/ONNX port (MobileBERT / XLM-RoBERTa) used as the worker-thread backend for our LLMLingua engine.</td></tr>
   <tr><td nowrap><b><a href="https://github.com/leninejunior/troglodita">Troglodita</a></b></td><td align="center">40</td><td>PT-BR token compression — powers our pt-BR language pack: pleonasm reduction and filler removal tuned for Brazilian-Portuguese grammar.</td></tr>
-  <tr><td nowrap><b><a href="https://github.com/DietrichGebert/ponytail">ponytail</a></b></td><td align="center">108,957</td><td>The viral "lazy senior dev" YAGNI-coder skill — inspired our <b>less-code</b> Output Style: smallest-working-change steering that cuts _generated_ code (the output-axis sibling to Caveman's terse prose).</td></tr>
+  <tr><td nowrap><b><a href="https://github.com/DietrichGebert/ponytail">ponytail</a></b></td><td align="center">108,957</td><td>The viral "lazy senior dev" YAGNI-coder skill — inspired our <b>less-code</b> Output Style: smallest-working-change steering that cuts <i>generated</i> code (the output-axis sibling to Caveman's terse prose).</td></tr>
   <tr><td nowrap><b><a href="https://github.com/ayghri/i-have-adhd">i-have-adhd</a></b></td><td align="center">23,526</td><td>Its action-first, ADHD-friendly response style was adapted into Pusula's concise output style across five languages.</td></tr>
 </table>
 
@@ -1111,4 +1153,3 @@ MIT License - see [LICENSE](LICENSE) for details.
 <sub>Pusula · Node ≥22.22.2 · MIT License · <a href="https://github.com/Ferhat-Yasinoglu/pusula">github.com/Ferhat-Yasinoglu/pusula</a></sub>
 
 </div>
-<!-- GitHub Discussions enabled for community Q&A -->
