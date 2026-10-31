@@ -5,6 +5,8 @@ import os from "node:os";
 import path, { join } from "node:path";
 import { IntlMessageFormat } from "intl-messageformat";
 
+import { LOCALES } from "../../src/i18n/config.ts";
+
 // Early selector skips (no control URL / unmapped set-aside key) bump an
 // in-memory counter while leaving the trigger result unchanged. The selector
 // flag-off path touches nothing. The management list only reports counts > 0
@@ -293,7 +295,11 @@ function labelsOf(file: string) {
 }
 
 test("early-skip labels exist in every locale, compile as ICU and are translated", () => {
-  assert.ok(localeFiles.length >= 40, `expected the full locale set, got ${localeFiles.length}`);
+  assert.deepEqual(
+    localeFiles.map((f) => f.replace(/\.json$/, "")).sort(),
+    [...LOCALES].sort(),
+    `expected the full locale set (${LOCALES.join(", ")}), got ${localeFiles.join(", ")}`
+  );
   const en = labelsOf("en.json");
   const failures: string[] = [];
   for (const file of localeFiles) {

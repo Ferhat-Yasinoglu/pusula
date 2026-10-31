@@ -3,12 +3,15 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { IntlMessageFormat } from "intl-messageformat";
 
+// Upstream pinned these keys in its "bs" and "yo" catalogs; Pusula ships only en/tr/de/fa, so
+// the same keys (which carry the same <strong>/<code> markup) are pinned in tr and in the RTL
+// fa catalog.
 const cases = [
-  ["bs", "combos.playgroundEmptyHint", "strong"],
-  ["bs", "oauthModal.gheDescription", "code"],
-  ["bs", "pricingModal.ratesDescription", "strong"],
-  ["bs", "traeAuthModal.authorizeImportant", "strong"],
-  ["yo", "oauthModal.googleLoopbackWhatHappens", "code"],
+  ["tr", "combos.playgroundEmptyHint", "strong"],
+  ["tr", "oauthModal.gheDescription", "code"],
+  ["tr", "pricingModal.ratesDescription", "strong"],
+  ["tr", "traeAuthModal.authorizeImportant", "strong"],
+  ["fa", "oauthModal.googleLoopbackWhatHappens", "code"],
 ];
 
 for (const [locale, key, expectedTag] of cases) {

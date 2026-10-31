@@ -29,9 +29,10 @@ merge condition and additionally requires affirmative `Gate / CI` and
 `Gate / Quality` results. Its timeout remains 240 minutes. No new failure allowance,
 paid batch setting, bypass identity, rebase or fast-forward push is configured.
 
-The contract is tested in `tests/unit/mergify-queue-config.test.ts`. That local test
-checks configuration semantics; it is not evidence that the service has activated
-the rule or that an integration candidate passed CI.
+Pusula ships no `.mergify.yml`, so this queue is not configured here. The upstream queue
+definition is kept as a test fixture (`tests/fixtures/release/mergify-lts-queue.yml`) for the
+LTS cut dry-run; that fixture is not evidence that any service has activated the rule or that an
+integration candidate passed CI.
 
 ## Activation is a separate prerequisite
 

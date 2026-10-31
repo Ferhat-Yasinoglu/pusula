@@ -13,6 +13,8 @@ describe("ProviderCard — #6936 audio-transcriptions provider badge", () => {
   let container: HTMLDivElement | null = null;
   let root: Root | null = null;
 
+  // Unmount every root a test mounted: a root left mounted on a detached container keeps
+  // scheduling React work after the jsdom environment is torn down ("window is not defined").
   afterEach(async () => {
     await act(async () => {
       root?.unmount();
@@ -85,9 +87,9 @@ describe("ProviderCard — #6936 audio-transcriptions provider badge", () => {
     );
     container = document.createElement("div");
     document.body.appendChild(container);
-    const root = createRoot(container);
+    root = createRoot(container);
     await act(async () => {
-      root.render(
+      root!.render(
         <ProviderCard
           providerId="devin-cli-agentic"
           provider={{ id: "devin-cli-agentic", name: "Devin CLI Agentic", serviceKinds: ["llm"] }}

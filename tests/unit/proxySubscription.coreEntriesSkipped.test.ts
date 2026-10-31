@@ -14,11 +14,13 @@ import path from "node:path";
 
 const syncMod = await import("../../src/lib/proxySubscription/coreConfig/sync.ts");
 import type { RunCheck } from "../../src/lib/proxySubscription/coreConfig/apply.ts";
+import { LOCALES } from "../../src/i18n/config.ts";
 
 const { generateCoreConfigIntention } = syncMod;
 
 const ENDPOINTS = "socks5://127.0.0.1:1080 selector=a\nsocks5://127.0.0.1:1081 selector=b";
 
+// Group split (node-a,node-b -> a; node-c -> b) depends on OWNED_TAG_PREFIX via rendezvous hashing.
 function feed(names: string[]): { nodes: never[]; needsCore: never[]; format: string } {
   return {
     nodes: [],
@@ -26,7 +28,7 @@ function feed(names: string[]): { nodes: never[]; needsCore: never[]; format: st
       name,
       source: {
         kind: "object" as const,
-        value: { type: "vless", server: `203.0.113.${i + 1}`, server_port: 443, uuid: `u-${i}` },
+        value: { type: "vless", server: `203.0.113.${i + 1}`, server_port: 443, uuid: `uuid-${i}` },
       },
     })) as never[],
     format: "v2ray-json",
@@ -220,7 +222,11 @@ test("clean generation stays silent", async (t) => {
 test("rendered message shows the fixed phrase with the raw counts beside it", () => {
   const dir = new URL("../../src/i18n/messages/", import.meta.url);
   const files = fs.readdirSync(dir).filter((f) => f.endsWith(".json"));
-  assert.ok(files.length >= 60, `expected the full locale set, got ${files.length}`);
+  assert.deepEqual(
+    files.map((f) => f.replace(/\.json$/, "")).sort(),
+    [...LOCALES].sort(),
+    "expected the full locale set (every catalog in LOCALES, src/i18n/config.ts)"
+  );
   const failures: string[] = [];
   for (const file of files) {
     const parsed = JSON.parse(

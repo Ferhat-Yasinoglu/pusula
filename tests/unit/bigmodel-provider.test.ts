@@ -6,6 +6,7 @@ import { getRegistryEntry } from "../../open-sse/config/providerRegistry.ts";
 import { PROVIDER_MODELS } from "../../open-sse/config/providerModels.ts";
 import { DefaultExecutor } from "../../open-sse/executors/default.ts";
 import { parseModel } from "../../open-sse/services/model.ts";
+import { LOCALES } from "../../src/i18n/config.ts";
 import { APIKEY_PROVIDERS } from "../../src/shared/constants/providers.ts";
 import { isReservedProviderPrefix } from "../../src/shared/constants/reservedProviderPrefixes.ts";
 
@@ -52,20 +53,24 @@ test("BigModel.cn and Z.AI expose distinct platform links and localized descript
   assert.equal(zai.apiHint, "Create an API key at https://z.ai/manage-apikey/apikey-list.");
 
   const en = JSON.parse(readFileSync("src/i18n/messages/en.json", "utf8"));
-  const zhCN = JSON.parse(readFileSync("src/i18n/messages/zh-CN.json", "utf8"));
-  const zhTW = JSON.parse(readFileSync("src/i18n/messages/zh-TW.json", "utf8"));
   assert.match(en.providers.onboardingProviderDescriptions.bigmodel, /BigModel\.cn/);
-  assert.match(zhCN.providers.onboardingProviderDescriptions.bigmodel, /智谱开放平台/);
-  assert.match(zhTW.providers.onboardingProviderDescriptions.bigmodel, /智譜開放平台/);
   assert.match(en.providers.onboardingProviderDescriptions.zai, /z\.ai\/manage-apikey/);
-  assert.match(zhCN.providers.onboardingProviderDescriptions.zai, /z\.ai\/manage-apikey/);
-  assert.match(zhTW.providers.onboardingProviderDescriptions.zai, /z\.ai\/manage-apikey/);
 
-  const ptBR = JSON.parse(readFileSync("src/i18n/messages/pt-BR.json", "utf8"));
-  const vi = JSON.parse(readFileSync("src/i18n/messages/vi.json", "utf8"));
+  // Pusula ships only the locales in src/i18n/config.ts: every translated catalog must carry a
+  // localized description that still points at the provider-specific key pages (BigModel.cn vs
+  // Z.AI), not a shared/wrong link or the untranslated English copy.
   const bigmodelKeyPath = /bigmodel\.cn\/usercenter\/proj-mgmt\/apikeys/;
-  assert.match(ptBR.providers.onboardingProviderDescriptions.bigmodel, bigmodelKeyPath);
-  assert.match(vi.providers.onboardingProviderDescriptions.bigmodel, bigmodelKeyPath);
-  assert.match(ptBR.providers.onboardingProviderDescriptions.zai, /z\.ai\/manage-apikey/);
-  assert.match(vi.providers.onboardingProviderDescriptions.zai, /z\.ai\/manage-apikey/);
+  const translatedLocales = LOCALES.filter((locale) => locale !== "en");
+  assert.ok(translatedLocales.length > 0, "expected at least one non-English locale");
+  for (const locale of translatedLocales) {
+    const catalog = JSON.parse(readFileSync(`src/i18n/messages/${locale}.json`, "utf8"));
+    const descriptions = catalog.providers.onboardingProviderDescriptions;
+    assert.match(descriptions.bigmodel, bigmodelKeyPath, `${locale}: bigmodel key page`);
+    assert.match(descriptions.zai, /z\.ai\/manage-apikey/, `${locale}: zai key page`);
+    assert.notEqual(
+      descriptions.bigmodel,
+      en.providers.onboardingProviderDescriptions.bigmodel,
+      `${locale}: bigmodel description must be localized`
+    );
+  }
 });

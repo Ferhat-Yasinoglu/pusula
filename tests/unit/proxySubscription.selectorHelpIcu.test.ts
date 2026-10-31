@@ -4,6 +4,8 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { IntlMessageFormat } from "intl-messageformat";
 
+import { LOCALES } from "../../src/i18n/config.ts";
+
 const messagesDir = join(import.meta.dirname, "../../src/i18n/messages");
 
 /**
@@ -16,7 +18,11 @@ const messagesDir = join(import.meta.dirname, "../../src/i18n/messages");
 const localeFiles = readdirSync(messagesDir).filter((f) => f.endsWith(".json"));
 
 test("selectorHelp compiles as ICU and renders a literal <name> in every locale", () => {
-  assert.ok(localeFiles.length >= 40, `expected the full locale set, got ${localeFiles.length}`);
+  assert.deepEqual(
+    localeFiles.map((f) => f.replace(/\.json$/, "")).sort(),
+    [...LOCALES].sort(),
+    `expected the full locale set (${LOCALES.join(", ")}), got ${localeFiles.join(", ")}`
+  );
 
   const failures: string[] = [];
   for (const file of localeFiles) {

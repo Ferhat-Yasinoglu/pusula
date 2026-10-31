@@ -98,7 +98,7 @@ test("missing, duplicated or ambiguous database claims fail closed", () => {
 });
 
 test("one stale translated claim makes the normal tally fail strictly", () => {
-  const target = "docs/i18n/phi/README.md";
+  const target = "docs/i18n/tr/README.md";
   const selected = checks.filter((check) => check.label === "DB migrations count (README mirrors)");
   const result = tallyDrift(selected, (file: string) =>
     file === target

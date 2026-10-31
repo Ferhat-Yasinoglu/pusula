@@ -7,15 +7,17 @@ import path from "node:path";
 // production code that reads them: the operator-egress flag description (keyed
 // by the flag definition) and the operator-provided member line (rendered by
 // the component). The runtime falls back to English for an absent key, so this
-// test pins the translated presence — 67 catalogs, no silent English-only
-// feature. Both halves are asserted: the locale files AND the code that names
-// them, so the test fails without either side of the PR.
+// test pins the translated presence — every catalog in LOCALES
+// (src/i18n/config.ts), no silent English-only feature. Both halves are
+// asserted: the locale files AND the code that names them, so the test fails
+// without either side of the PR.
 
+import { LOCALES } from "../../src/i18n/config.ts";
 import { FEATURE_FLAG_DEFINITIONS } from "../../src/shared/constants/featureFlagDefinitions.ts";
 
 const MESSAGES_DIR = path.join(process.cwd(), "src", "i18n", "messages");
 
-test("operator-egress keys are present in all 67 locale catalogs and wired to code", () => {
+test("operator-egress keys are present in every LOCALES catalog and wired to code", () => {
   // Code side: the flag definition names the description key the locales carry.
   const definition = FEATURE_FLAG_DEFINITIONS.find(
     (d) => d.key === "PROXY_OPERATOR_EGRESS_ENABLED"
@@ -45,7 +47,11 @@ test("operator-egress keys are present in all 67 locale catalogs and wired to co
 
   // Locale side: every catalog carries both keys.
   const files = fs.readdirSync(MESSAGES_DIR).filter((f) => f.endsWith(".json"));
-  assert.equal(files.length, 67);
+  assert.deepEqual(
+    files.map((f) => f.replace(/\.json$/, "")).sort(),
+    [...LOCALES].sort(),
+    "the catalog set must match LOCALES in src/i18n/config.ts"
+  );
   const missing: string[] = [];
   for (const file of files) {
     const data = JSON.parse(fs.readFileSync(path.join(MESSAGES_DIR, file), "utf8")) as Record<
