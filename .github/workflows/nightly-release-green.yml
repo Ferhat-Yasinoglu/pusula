@@ -12,7 +12,9 @@ name: Release-Green (continuous)
 #     captain's direct pushes (sync-back — the one ungated write path) AND the merged
 #     COMBINATION right after every PR merge, attributing the offending push range in
 #     the issue. Base-red MTTD drops from ≤24h to ≤~15min after the offending push.
-#   schedule (3×/day) → full --with-build --full-ci (the deep sweep incl. build+suites).
+#   schedule (3×/day) → release-green: full --with-build --full-ci (the deep sweep incl.
+#     build+suites); main-green: --quick --full-ci (build + suites already run in ci.yml
+#     on every push to main — see the main-green job).
 #
 # It is NOT a required status check and never touches a contributor PR — it only
 # reports. Ratchet drift (eslint warnings / cognitive-complexity / file-size) is
