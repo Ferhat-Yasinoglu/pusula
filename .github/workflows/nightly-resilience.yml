@@ -109,6 +109,21 @@ jobs:
       # already building concurrent jobs; 30 min covers the observed worst case.
       PUSULA_PLAYWRIGHT_WEB_SERVER_TIMEOUT: "1800000"
     steps:
+      # The webServer above runs a FULL `next build`; on the hosted runner (no swap) the VM
+      # was shut down at the build's memory peak on 6 of 7 nights. Same swap provisioning as
+      # quality.yml / build.yml (Turbopack's native peak is not bounded by
+      # --max-old-space-size). Hosted only: never re-provision swap on the shared
+      # self-hosted pusula-light box.
+      - name: Expand virtual memory (10 GB swap)
+        if: runner.environment == 'github-hosted'
+        run: |
+          sudo swapoff -a || true
+          sudo rm -f /mnt/swapfile /swapfile
+          sudo fallocate -l 10G /mnt/swapfile || sudo dd if=/dev/zero of=/mnt/swapfile bs=1M count=10240
+          sudo chmod 600 /mnt/swapfile
+          sudo mkswap /mnt/swapfile
+          sudo swapon /mnt/swapfile
+          free -h
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
