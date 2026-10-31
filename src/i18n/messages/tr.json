@@ -1322,8 +1322,8 @@
     },
     "noResults": "Sonuç yok",
     "themeTeal": "Turkuaz",
-    "modelCatalog": "Model Kataloğu",
-    "modelCatalogSubtitle": "Yönlendirilebilir tüm modellere göz atın",
+    "modelCatalog": "Modeller ve Kombolar",
+    "modelCatalogSubtitle": "Sağlayıcılar genelinde modellere ve kombolara göz atın",
     "resilienceCooldowns": "Bekleme Süresi Yöneticisi",
     "resilienceCooldownsSubtitle": "Bekleme sürelerini toplu temizle"
   },

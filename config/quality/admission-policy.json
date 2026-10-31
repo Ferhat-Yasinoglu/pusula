@@ -16,7 +16,7 @@
           "reason": "Existing prose lint is advisory; strict documentation checks remain required."
         },
         "i18n-ui-coverage": { "when": "code-or-i18n", "disposition": "required" },
-        "i18n-glossary-zhcn": { "when": "code-or-i18n", "disposition": "required" },
+        "i18n-glossary": { "when": "code-or-i18n", "disposition": "required" },
         "i18n": {
           "when": "i18n",
           "disposition": "advisory",
@@ -38,11 +38,6 @@
           "when": "code",
           "disposition": "advisory",
           "reason": "Existing protocol E2E advisory policy, issue #10049; not counted as required PASS."
-        },
-        "sonarqube": {
-          "when": "code",
-          "disposition": "advisory",
-          "reason": "Optional external service, governed by SONARQUBE_ENABLED and service credentials."
         },
         "coverage-pr-comment": {
           "when": "pr",

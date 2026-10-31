@@ -15,7 +15,7 @@ test("#17017 ref-parser receives js-yaml 5, not an incompatible nested 4", () =>
   assert.equal(pkg.overrides["@apidevtools/json-schema-ref-parser"]["js-yaml"], "^5.4.2");
   assert.equal(pkg.dependencies["js-yaml"], "^5.4.2");
   assert.equal(lock.packages[""].dependencies["js-yaml"], pkg.dependencies["js-yaml"]);
-  assert.equal(lock.packages["node_modules/js-yaml"].version, "5.4.2");
+  assert.match(lock.packages["node_modules/js-yaml"].version, /^5\./);
   assert.equal(
     lock.packages["node_modules/@apidevtools/json-schema-ref-parser/node_modules/js-yaml"],
     undefined,

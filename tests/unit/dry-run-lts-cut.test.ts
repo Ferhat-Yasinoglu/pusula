@@ -35,8 +35,12 @@ import { resolveDistTag } from "../../scripts/release/dist-tag.mjs";
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const SCRIPT = path.join(repoRoot, "scripts/release/dry-run-lts-cut.mjs");
 const SHA = "1".repeat(40);
-// The real .mergify.yml of this checkout (G11: queue `release` with checks_timeout, #16066).
-const MERGIFY = fs.readFileSync(path.join(repoRoot, ".mergify.yml"), "utf8");
+// G11 fixture: upstream's Mergify queue config (`release` with checks_timeout, #16066). Pusula ships
+// no .mergify.yml, so the queue evaluation is exercised against this copy.
+const MERGIFY = fs.readFileSync(
+  path.join(repoRoot, "tests/fixtures/release/mergify-lts-queue.yml"),
+  "utf8"
+);
 
 type Facts = Parameters<typeof evaluatePreconditions>[0];
 
@@ -338,7 +342,7 @@ test("analyzeDormantWorkflow reports what turns on, what stays gated, and fork c
   assert.ok(fp.triggers.includes("push → stable/v3"));
   assert.ok(fp.activates.some((l) => /forward-port.*stable\/v3/.test(l)));
   assert.ok(fp.activates.some((l) => /develop exists/.test(l)));
-  assert.ok(fp.forkCaveats.some((l) => /Ferhat-Yasinoglu\/Pusula/.test(l)));
+  assert.ok(fp.forkCaveats.some((l) => /Ferhat-Yasinoglu\/pusula/.test(l)));
 
   const nightly = analyzeDormantWorkflow("nightly-v4-build.yml", NIGHTLY);
   assert.ok(nightly.stillGated.some((l) => /vars\.NIGHTLY_PUBLISH/.test(l)));

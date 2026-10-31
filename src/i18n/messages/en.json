@@ -1322,8 +1322,8 @@
     },
     "noResults": "No results",
     "themeTeal": "Teal",
-    "modelCatalog": "Model Catalog",
-    "modelCatalogSubtitle": "Browse every routable model",
+    "modelCatalog": "Models & Combos",
+    "modelCatalogSubtitle": "Browse models and combos across providers",
     "resilienceCooldowns": "Cooldown Manager",
     "resilienceCooldownsSubtitle": "Clear cooldowns in bulk"
   },

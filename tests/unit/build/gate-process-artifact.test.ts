@@ -14,7 +14,9 @@ test("both observers retain incremental command logs even on failure", () => {
     const upload = workflow.jobs[id].steps.find(
       (step: { name?: string }) => step.name === "Upload report artifact"
     );
-    assert.equal(upload.if, "always()");
+    // Pusula is main-only: with no release/v* branch the resolver sets skip=true and there is
+    // nothing to upload, so `if-no-files-found: error` must not run on that skip.
+    assert.match(upload.if, /^always\(\)( && steps\.branch\.outputs\.skip != 'true')?$/);
     assert.match(upload.with.path, /_artifacts\/release-green\//);
     assert.equal(upload.with["if-no-files-found"], "error");
     assert.equal(upload.with["retention-days"], 14);

@@ -54,7 +54,7 @@ const isIsolatedRuntime = (step: Step) =>
 test("a11y-build builds the production dashboard once on the build pool and uploads it", () => {
   assert.ok(build, "nightly-resilience.yml must define the a11y-build job");
   assert.match(build["runs-on"] ?? "", /pusula-build/, "the build runs where builds fit");
-  assert.match(build.if ?? "", /github\.repository == 'Ferhat-Yasinoglu\/Pusula'/);
+  assert.match(build.if ?? "", /github\.repository == 'Ferhat-Yasinoglu\/pusula'/);
 
   const isolated = indexOfStep(build, isIsolatedRuntime, "isolated DATA_DIR");
   const install = indexOfStep(build, (s) => s.run?.trim() === "npm ci", "npm ci");

@@ -1322,8 +1322,8 @@
     },
     "noResults": "هیچ نتیجه‌ای یافت نشد",
     "themeTeal": "فیروزه‌ای",
-    "modelCatalog": "کاتالوگ مدل‌ها",
-    "modelCatalogSubtitle": "مرور همهٔ مدل‌های قابل مسیریابی",
+    "modelCatalog": "مدل‌ها و ترکیب‌ها",
+    "modelCatalogSubtitle": "مرور مدل‌ها و ترکیب‌ها در میان ارائه‌دهندگان",
     "resilienceCooldowns": "مدیریت زمان انتظار",
     "resilienceCooldownsSubtitle": "پاک‌سازی دسته‌جمعی زمان‌های انتظار"
   },

@@ -1322,8 +1322,8 @@
     },
     "noResults": "Keine Ergebnisse",
     "themeTeal": "Türkis",
-    "modelCatalog": "Modellkatalog",
-    "modelCatalogSubtitle": "Alle routbaren Modelle durchsuchen",
+    "modelCatalog": "Modelle & Combos",
+    "modelCatalogSubtitle": "Modelle und Combos über Provider hinweg durchsuchen",
     "resilienceCooldowns": "Cooldown-Manager",
     "resilienceCooldownsSubtitle": "Cooldowns gesammelt aufheben"
   },
