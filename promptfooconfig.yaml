@@ -12,7 +12,10 @@ providers:
         messages:
           - role: user
             content: "{{prompt}}"
-      transformResponse: "json"
+      # "text", not "json": the guard's block reply is HTTP 400 {"error":{...}}, and promptfoo
+      # 0.125+ treats a parsed object with an `error` key as a provider error and crashes
+      # (`responseError?.includes is not a function`). The assertions JSON.parse the string.
+      transformResponse: "text"
 defaultTest:
   options:
     provider: https
