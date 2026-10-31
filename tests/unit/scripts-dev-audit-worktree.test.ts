@@ -61,7 +61,7 @@ esac
 const TEST_FILE = `import assert from "node:assert/strict";
 import { test } from "node:test";
 test("keeps a", () => {
-  assert.equal(1, 1);
+  assert.equal("a".length, 1);
 });
 test("keeps b", () => {
   assert.ok(true);
