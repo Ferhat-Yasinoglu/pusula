@@ -1,0 +1,9 @@
+# Schemathesis settings shared by dast-smoke.yml and nightly-schemathesis.yml
+# (`schemathesis --config-file config/quality/schemathesis.toml run ...`).
+#
+# negative_data_rejection: schemathesis' default rejection list plus 413. A negative case can
+# grow past the 10 MB management body limit (e.g. >1000 unbounded model ids for
+# POST /api/keys/{id}/access); the body-size guard then rejects it with 413 Payload Too Large
+# before schema validation runs. That is a rejection, not an accepted invalid request.
+[checks.negative_data_rejection]
+expected-statuses = ["400", "401", "403", "404", "405", "406", "409", "413", "415", "422", "428", "429", "5xx"]

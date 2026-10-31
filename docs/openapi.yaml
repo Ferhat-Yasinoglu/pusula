@@ -2941,6 +2941,8 @@ paths:
                           - key_allows_all_combos
                       message:
                         type: string
+        "413":
+          description: Request body exceeds the management body-size limit (10 MB)
 
   /api/combos:
     get:
