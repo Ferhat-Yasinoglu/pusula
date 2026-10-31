@@ -154,7 +154,7 @@ pusula simulate [prompt]
 
 # Pusula — CLI Evals
 
-Requires the `pusula` CLI. See [CLI entry-point skill](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-cli/SKILL.md) for install + global flags.
+Requires the `pusula` CLI. See [CLI entry-point skill](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/cli-serve/SKILL.md) for install + global flags.
 
 ## What are evals?
 

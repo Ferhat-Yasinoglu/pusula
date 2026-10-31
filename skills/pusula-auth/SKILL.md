@@ -125,30 +125,30 @@ Use `data[].id` as `model` field in requests. Combos appear with `owned_by:"comb
 
 ## Capability skills
 
-| Capability            | Raw URL                                                                                             |
-| --------------------- | --------------------------------------------------------------------------------------------------- |
-| Chat / code-gen       | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-chat/SKILL.md        |
-| Image generation      | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-image/SKILL.md       |
-| Text-to-speech        | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-tts/SKILL.md         |
-| Speech-to-text        | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-stt/SKILL.md         |
-| Embeddings            | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-embeddings/SKILL.md  |
-| Web search            | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-web-search/SKILL.md  |
-| Web fetch             | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-web-fetch/SKILL.md   |
-| MCP server (110 tools) | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-mcp/SKILL.md         |
-| A2A protocol          | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-a2a/SKILL.md         |
-| Routing & combos      | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-routing/SKILL.md     |
-| Token compression     | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-compression/SKILL.md |
-| Monitoring & health   | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-monitoring/SKILL.md  |
+| Capability             | Raw URL                                                                                           |
+| ---------------------- | ------------------------------------------------------------------------------------------------- |
+| Chat / code-gen        | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-inference/SKILL.md      |
+| Image generation       | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-inference/SKILL.md      |
+| Text-to-speech         | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-inference/SKILL.md      |
+| Speech-to-text         | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-inference/SKILL.md      |
+| Embeddings             | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-inference/SKILL.md      |
+| Web search             | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-inference/SKILL.md      |
+| Web fetch              | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-inference/SKILL.md      |
+| MCP server (110 tools) | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-mcp/SKILL.md            |
+| A2A protocol           | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-agents-a2a/SKILL.md     |
+| Routing & combos       | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-combos-routing/SKILL.md |
+| Token compression      | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-compression/SKILL.md    |
+| Monitoring & health    | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-resilience/SKILL.md     |
 
 ## CLI skills (pusula binary)
 
-| Capability             | Raw URL                                                                                               |
-| ---------------------- | ----------------------------------------------------------------------------------------------------- |
-| CLI entry point        | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-cli/SKILL.md           |
-| CLI admin & lifecycle  | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-cli-admin/SKILL.md     |
-| CLI providers & keys   | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-cli-providers/SKILL.md |
-| CLI cloud agents       | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-cli-cloud/SKILL.md     |
-| CLI evals & benchmarks | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-cli-eval/SKILL.md      |
+| Capability                             | Raw URL                                                                                       |
+| -------------------------------------- | --------------------------------------------------------------------------------------------- |
+| CLI entry point                        | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/cli-serve/SKILL.md       |
+| CLI admin & lifecycle                  | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/cli-serve/SKILL.md       |
+| CLI providers & keys                   | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/cli-providers/SKILL.md   |
+| CLI cloud agents (`pusula cloud …`) | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/cli-backup-sync/SKILL.md |
+| CLI evals & benchmarks                 | https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/cli-eval/SKILL.md        |
 
 ## Errors
 

@@ -191,7 +191,7 @@ pusula test-provider test [provider] [model]
 
 # Pusula — CLI Providers & Keys
 
-Requires the `pusula` CLI. See [CLI entry-point skill](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-cli/SKILL.md) for install + global flags.
+Requires the `pusula` CLI. See [CLI entry-point skill](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/cli-serve/SKILL.md) for install + global flags.
 
 ## Provider catalog (available providers)
 
@@ -298,7 +298,7 @@ pusula combo delete <name>                        # Delete a combo
 pusula combo suggest --task "code review"         # Ask Pusula to recommend a combo
 ```
 
-For the full REST API for combos see [pusula-routing skill](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-routing/SKILL.md).
+For the full REST API for combos see [pusula-combos-routing skill](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-combos-routing/SKILL.md).
 
 ## Quota & usage
 

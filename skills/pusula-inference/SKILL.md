@@ -151,7 +151,7 @@ See the full OpenAPI specification at `GET /api/openapi/spec` or `docs/openapi.y
 
 ## Chat completions
 
-Requires `PUSULA_URL` and `PUSULA_KEY`. See [entry-point SKILL](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula/SKILL.md) for setup.
+Requires `PUSULA_URL` and `PUSULA_KEY`. See [entry-point SKILL](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-auth/SKILL.md) for setup.
 
 ### Endpoints
 
@@ -215,7 +215,7 @@ verbatim. Cached automatically via reasoning cache.
 
 ## Image generation
 
-Requires `PUSULA_URL` and `PUSULA_KEY`. See [entry-point SKILL](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula/SKILL.md) for setup.
+Requires `PUSULA_URL` and `PUSULA_KEY`. See [entry-point SKILL](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-auth/SKILL.md) for setup.
 
 ### Endpoints
 
@@ -256,7 +256,7 @@ Response: `{ created, data: [{ url? or b64_json, revised_prompt }] }`
 
 ## Text-to-speech
 
-Requires `PUSULA_URL` and `PUSULA_KEY`. See [entry-point SKILL](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula/SKILL.md) for setup.
+Requires `PUSULA_URL` and `PUSULA_KEY`. See [entry-point SKILL](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-auth/SKILL.md) for setup.
 
 ### Endpoint
 
@@ -297,7 +297,7 @@ Common OpenAI voices: `alloy`, `echo`, `fable`, `onyx`, `nova`, `shimmer`.
 
 ## Speech-to-text
 
-Requires `PUSULA_URL` and `PUSULA_KEY`. See [entry-point SKILL](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula/SKILL.md) for setup.
+Requires `PUSULA_URL` and `PUSULA_KEY`. See [entry-point SKILL](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-auth/SKILL.md) for setup.
 
 ### Endpoints
 
@@ -335,7 +335,7 @@ Response formats: `json`, `text`, `srt`, `verbose_json`, `vtt`.
 
 ## Embeddings
 
-Requires `PUSULA_URL` and `PUSULA_KEY`. See [entry-point SKILL](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula/SKILL.md) for setup.
+Requires `PUSULA_URL` and `PUSULA_KEY`. See [entry-point SKILL](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-auth/SKILL.md) for setup.
 
 ### Endpoint
 
@@ -376,7 +376,7 @@ Response: `{ data:[{ embedding:[...], index }], usage:{ prompt_tokens, total_tok
 
 ## Web search
 
-Requires `PUSULA_URL` and `PUSULA_KEY`. See [entry-point SKILL](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula/SKILL.md) for setup.
+Requires `PUSULA_URL` and `PUSULA_KEY`. See [entry-point SKILL](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-auth/SKILL.md) for setup.
 
 ### Endpoint
 
@@ -421,7 +421,7 @@ Response: `{ answer?, results:[{ url, title, content, score }] }`
 
 ## Web fetch
 
-Requires `PUSULA_URL` and `PUSULA_KEY`. See [entry-point SKILL](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula/SKILL.md) for setup.
+Requires `PUSULA_URL` and `PUSULA_KEY`. See [entry-point SKILL](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-auth/SKILL.md) for setup.
 
 ### Endpoint
 

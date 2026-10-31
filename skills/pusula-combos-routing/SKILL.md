@@ -180,7 +180,7 @@ See the full OpenAPI specification at `GET /api/openapi/spec` or `docs/openapi.y
 
 # Pusula — Routing & Combos
 
-Requires `PUSULA_URL` and `PUSULA_KEY`. See [entry-point SKILL](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula/SKILL.md) for setup.
+Requires `PUSULA_URL` and `PUSULA_KEY`. See [entry-point SKILL](https://raw.githubusercontent.com/Ferhat-Yasinoglu/pusula/main/skills/pusula-auth/SKILL.md) for setup.
 
 ## What is a combo?
 
