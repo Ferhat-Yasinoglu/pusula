@@ -325,19 +325,41 @@ const GB = 1024 ** 3;
 // free space on the wrong volume (which is what happened during the v3.8.50 publish).
 let workDirForMessages = os.tmpdir();
 
-function resolvePreviousVersion(current, explicit) {
+function npmViewPusula(fields) {
+  return execFileSync("npm", ["view", "pusula", ...fields], {
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+}
+
+function isNpmNotFound(err) {
+  const text = `${err?.stderr ?? ""}\n${err?.stdout ?? ""}\n${err?.message ?? ""}`;
+  return /\bE404\b|404 Not Found/.test(text);
+}
+
+/**
+ * The version Phase B upgrades FROM, or null when there is none: the first publish of the
+ * package (npm answers E404), or a re-run when the version under test is the only one
+ * published. `npmView` is injectable for the unit test.
+ */
+export function resolvePreviousVersion(current, explicit, npmView = npmViewPusula) {
   if (explicit) return explicit;
-  const out = execFileSync("npm", ["view", "pusula", "dist-tags.latest"], { encoding: "utf8" });
-  const latest = out.trim();
+  let latest;
+  try {
+    latest = npmView(["dist-tags.latest"]).trim();
+  } catch (err) {
+    if (isNpmNotFound(err)) return null;
+    throw err;
+  }
   if (!latest) throw new Error("could not resolve pusula@latest from npm");
   if (latest === current) {
     // The version under test is already published (re-run of a shipped release): step back
-    // to the highest published version strictly below it.
-    const all = JSON.parse(
-      execFileSync("npm", ["view", "pusula", "versions", "--json"], { encoding: "utf8" })
-    );
+    // to the highest published version strictly below it. npm prints a bare string instead
+    // of an array when the package has a single version.
+    const parsed = JSON.parse(npmView(["versions", "--json"]));
+    const all = Array.isArray(parsed) ? parsed : [parsed];
     const stable = all.filter((v) => !/-(rc|alpha|beta|pre|next)/.test(v) && v !== current);
-    return stable[stable.length - 1];
+    return stable.length ? stable[stable.length - 1] : null;
   }
   return latest;
 }
@@ -442,10 +464,13 @@ async function main() {
     // `--skip-upgrade` never reaches the convergence block (upgradedTables stays null), so
     // defaulting this to true keeps that path unchanged.
     let upgradeBooted = true;
+    const previous = skipUpgrade ? null : resolvePreviousVersion(version, explicitFrom);
     if (skipUpgrade) {
       warn("PHASE B skipped (--skip-upgrade)");
+    } else if (!previous) {
+      // First publish: there is nothing on npm to upgrade from, so only Phase A applies.
+      warn("PHASE B skipped: no earlier pusula version is published on npm (first publish)");
     } else {
-      const previous = resolvePreviousVersion(version, explicitFrom);
       log(`PHASE B — upgrade path: pusula@${previous} → v${version}`);
       const bPrefix = path.join(tmp, "b-prefix");
       const bData = path.join(tmp, "b-data");
