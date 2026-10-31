@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 // running process), so the heap ceiling has to live on the `node` invocation in
 // the `dev` npm script. Without it, the dev bundler runs on V8's ~4GB default and
 // OOMs while compiling heavy dashboard routes (e.g. /dashboard/providers, which
-// pulls monaco / recharts / @lobehub/icons / xyflow / mermaid). The unit test
+// pulls monaco / recharts / @lobehub/icons / xyflow). The unit test
 // suite already runs with 8192; the dev server must match.
 const here = path.dirname(fileURLToPath(import.meta.url));
 const pkg = JSON.parse(fs.readFileSync(path.resolve(here, "../../package.json"), "utf8"));
