@@ -80,9 +80,6 @@ test("the keys from the bug report resolve to real copy", () => {
     ["home", "quickStart"],
     ["home", "step1Title"],
     ["home", "fullDocs"],
-    ["kimiSponsorBanner", "cta"],
-    ["cheaperInferenceSponsorBanner", "cta"],
-    ["vscodeCopilotBanner", "cta"],
   ];
   for (const [namespace, key] of reported) {
     const value = messages[namespace]?.[key];
@@ -95,4 +92,17 @@ test("the home set includes the dashboard chrome namespaces", () => {
   // Nested providers REPLACE, so a set missing chrome would break the shell.
   const missing = routeNamespaces.chrome.filter((ns) => !routeNamespaces.home.includes(ns));
   assert.deepEqual(missing, [], "home set must cover the shared dashboard shell");
+});
+
+test("/home does not ship the sponsor-banner namespaces Pusula removed", () => {
+  // Pusula dropped the sponsor program (Kimi, Cheaper Inference, VS Code Copilot banners);
+  // an upstream sync must not bring their namespaces back into /home or en.json.
+  for (const namespace of [
+    "kimiSponsorBanner",
+    "cheaperInferenceSponsorBanner",
+    "vscodeCopilotBanner",
+  ]) {
+    assert.equal(routeNamespaces.home.includes(namespace), false, `${namespace} in /home set`);
+    assert.equal(namespace in EN, false, `${namespace} in en.json`);
+  }
 });

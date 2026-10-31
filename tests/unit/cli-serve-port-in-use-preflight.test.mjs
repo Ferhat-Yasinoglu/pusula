@@ -397,3 +397,20 @@ test("resolvePortOccupants: discovered pids win without probing", async () => {
   assert.deepEqual(occupants, [4242]);
   assert.equal(probed, false, "a known owner needs no bind probe");
 });
+
+test("resolveServeBusyPids: the default discovery + bind probe answer for a free port (no injected deps)", async () => {
+  // Regression guard for the v3.8.52 sync: the defaults `findListeningPids` / `probePortFree`
+  // must be imported by serve.mjs, or every `pusula serve` start dies with a ReferenceError.
+  const { resolveServeBusyPids } = await import("../../bin/cli/commands/serve.mjs");
+  const port = await new Promise((resolve, reject) => {
+    const server = net.createServer();
+    server.once("error", reject);
+    server.listen(0, "127.0.0.1", () => {
+      const { port: free } = server.address();
+      server.close(() => resolve(free));
+    });
+  });
+  const busyPids = await resolveServeBusyPids(port, { host: "127.0.0.1" });
+  assert.ok(Array.isArray(busyPids), "always an array, never null");
+  assert.deepEqual(busyPids, [], "a free port has no occupants");
+});

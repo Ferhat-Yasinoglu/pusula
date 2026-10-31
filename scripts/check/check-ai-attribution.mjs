@@ -9,10 +9,12 @@
 //       `Claude-Session:` trailers, …).
 // Human collaborators MAY be credited with standard `Co-authored-by: Name <email>` trailers — the
 // upstream-port workflows depend on it — so only the AI/bot signatures below are rejected.
-// One exemption: the `Signed-off-by: dependabot[bot] <support@github.com>` line that Dependabot appends
-// to every commit it creates names the bot's own identity, so it is no AI credit. It is accepted only on
-// a commit authored by dependabot[bot] with its noreply e-mail. The range scan knows the author; the
-// commit-msg hook and the PR title/body do not, so they still reject that line.
+// Two narrow Dependabot exemptions — the bot's own identity is no AI credit:
+//   1. a trailer naming exactly `dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>`
+//      (GitHub's co-author line on its dependency bumps) is accepted everywhere;
+//   2. the `Signed-off-by: dependabot[bot] <support@github.com>` line Dependabot appends to the commits it
+//      creates is accepted only on a commit authored by dependabot[bot] with its noreply e-mail. The range
+//      scan knows the author; the commit-msg hook and the PR title/body do not, so they reject that line.
 //
 // Incident record: 8 contributor commits reached release/v3.8.51 with such trailers through squash
 // merges that copied the PR commit bodies (#14436). This gate runs:
@@ -100,7 +102,8 @@ function isDependabotSignOff(key, value, author) {
 
 /**
  * Return the offending lines of one message (empty array = clean).
- * `author` ({ name, email }) is the commit author when known; without it nothing is exempt.
+ * `author` ({ name, email }) is the commit author when known; without it only the author-independent
+ * Dependabot co-author trailer (DEPENDABOT_TRAILER_RE) is exempt.
  * Exported for the unit test; pure function of its arguments.
  */
 export function findAiAttribution(text, author) {

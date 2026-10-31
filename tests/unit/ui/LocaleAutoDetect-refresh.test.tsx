@@ -72,11 +72,12 @@ describe("LocaleAutoDetect refresh gating", () => {
 
   it("persists the detected locale before refreshing server content on a first visit", async () => {
     document.documentElement.lang = "en";
-    Object.defineProperty(navigator, "languages", { value: ["ar"], configurable: true });
+    // Persian is Pusula's right-to-left locale (the four configured locales are en/tr/de/fa).
+    Object.defineProperty(navigator, "languages", { value: ["fa"], configurable: true });
     refresh.mockImplementation(() => {
-      expect(document.cookie).toContain("NEXT_LOCALE=ar");
-      expect(localStorage.getItem("NEXT_LOCALE")).toBe("ar");
-      expect(document.documentElement.lang).toBe("ar");
+      expect(document.cookie).toContain("NEXT_LOCALE=fa");
+      expect(localStorage.getItem("NEXT_LOCALE")).toBe("fa");
+      expect(document.documentElement.lang).toBe("fa");
       expect(document.documentElement.dir).toBe("rtl");
     });
 

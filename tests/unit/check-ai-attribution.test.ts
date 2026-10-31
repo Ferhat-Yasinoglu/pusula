@@ -161,7 +161,7 @@ test("findAiAttribution: exempts Dependabot's own sign-off only for a commit Dep
   assert.deepEqual(findAiAttribution(body, { name: "Jane Doe", email: "jane@example.com" }), [
     DEPENDABOT_SIGNOFF,
   ]);
-  // no author context (commit-msg hook, PR title/body): nothing is exempt
+  // no author context (commit-msg hook, PR title/body): the sign-off is not exempt
   assert.deepEqual(findAiAttribution(body), [DEPENDABOT_SIGNOFF]);
 });
 
@@ -286,9 +286,10 @@ test("allowlist: skips only the listed historical full SHAs in --range; new tain
   }
 });
 
-test("allowlist file in the repo: every entry is a full SHA with a reason", () => {
-  const allow = loadAllowlist();
-  assert.ok(allow.size > 0);
+test("allowlist file in the repo loads (every entry, if any, is a full SHA with a reason)", () => {
+  // Pusula's history starts at its own root, so none of upstream's historical SHAs can occur here:
+  // the shipped list is empty, but it must stay well-formed for loadAllowlist() to accept it.
+  assert.ok(loadAllowlist() instanceof Set);
 });
 
 test("findAiAttribution: exempts only GitHub's own dependabot[bot] co-author trailer", () => {

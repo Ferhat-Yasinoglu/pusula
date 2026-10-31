@@ -67,11 +67,11 @@ import { SectionI18nProvider } from "@/i18n/SectionI18nProvider";
 import sectionNamespaces from "@/i18n/routeNamespaces.generated.json";
 
 /**
- * Home route (\`/home\`) i18n provider — the "home" set covers the home page,
- * the sponsor banners and the companion components under
+ * Home route (\`/home\`) i18n provider — the "home" set covers the home page
+ * and the companion components under
  * \`src/app/(dashboard)/dashboard/\` that it renders. Without this layout the
  * route inherits the dashboard chrome provider, whose namespace set is missing
- * "home" and every banner namespace, so next-intl renders MISSING_MESSAGE
+ * "home" and the namespaces of those components, so next-intl renders MISSING_MESSAGE
  * errors in production (#16321).
  */
 export default function HomeRouteLayout({ children }: { children: React.ReactNode }) {
@@ -111,7 +111,7 @@ for (const sectionDirName of Object.keys(analysis.sections)) {
 }
 
 // Home route layout. `/dashboard` redirects to `/home`, and `/home` renders the
-// home page + sponsor banners, so it needs its own provider — without it the
+// home page and its dashboard components, so it needs its own provider — without it the
 // route falls back to chrome-only messages and renders MISSING_MESSAGE (#16321).
 created += ensureProviderLayout(
   join(HOME_ROUTE_ROOT, "layout.tsx"),

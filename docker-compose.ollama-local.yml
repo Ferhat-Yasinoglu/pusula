@@ -8,7 +8,7 @@
 #  Usage:
 #    docker compose -f docker-compose.ollama-local.yml up -d
 #
-#  Then in VS Code (PusulaCopilot) or any OpenAI-compatible client:
+#  Then in any OpenAI-compatible client (a VS Code extension, a CLI, ...):
 #    base URL: http://<host-ip>:20128
 #    model:    ollama/<your-model>
 #

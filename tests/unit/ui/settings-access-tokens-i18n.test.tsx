@@ -3,7 +3,7 @@ import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-li
 import { NextIntlClientProvider } from "next-intl";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import AccessTokensTab from "@/app/(dashboard)/dashboard/settings/components/AccessTokensTab";
-import zh from "@/i18n/messages/zh-CN.json";
+import tr from "@/i18n/messages/tr.json";
 
 const token = {
   id: "demo/read",
@@ -23,9 +23,9 @@ const fetchMock = vi.fn<typeof fetch>();
 function mount() {
   return render(
     <NextIntlClientProvider
-      locale="zh-CN"
+      locale="tr"
       timeZone="UTC"
-      messages={{ settings: zh.settings, common: zh.common }}
+      messages={{ settings: tr.settings, common: tr.common }}
       onError={(error) => {
         throw error;
       }}
@@ -45,7 +45,7 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-describe("access-token settings with real Chinese catalogs", () => {
+describe("access-token settings with real Turkish catalogs", () => {
   it("translates the table, scope badges and status, and formats dates in the UI locale", async () => {
     fetchMock.mockResolvedValueOnce(
       reply({
@@ -66,10 +66,18 @@ describe("access-token settings with real Chinese catalogs", () => {
     );
     mount();
     const table = await screen.findByRole("table");
-    expect(screen.getByRole("heading", { name: "访问令牌" })).toBeTruthy();
-    for (const label of ["权限范围", "上次使用", "到期时间", "读取", "写入", "管理员", "已撤销"])
+    expect(screen.getByRole("heading", { name: tr.settings.accessTokensTitle })).toBeTruthy();
+    for (const label of [
+      tr.settings.accessTokensColScope,
+      tr.settings.accessTokensColLastUsed,
+      tr.settings.accessTokensColExpires,
+      tr.settings.accessTokensScopeReadLabel,
+      tr.settings.accessTokensScopeWriteLabel,
+      tr.settings.accessTokensScopeAdminLabel,
+      tr.settings.accessTokensStatusRevoked,
+    ])
       expect(within(table).getByText(label)).toBeTruthy();
-    const expected = new Intl.DateTimeFormat("zh-CN", {
+    const expected = new Intl.DateTimeFormat("tr", {
       timeZone: "UTC",
       dateStyle: "medium",
       timeStyle: "short",
@@ -97,11 +105,13 @@ describe("access-token settings with real Chinese catalogs", () => {
       configurable: true,
       value: { writeText: copy },
     });
-    fireEvent.change(screen.getByPlaceholderText("名称（例如：笔记本电脑）"), {
+    fireEvent.change(screen.getByPlaceholderText(tr.settings.accessTokensNamePlaceholder), {
       target: { value: "  Remote laptop  " },
     });
     fireEvent.change(screen.getByRole("combobox"), { target: { value: "admin" } });
-    fireEvent.change(screen.getByPlaceholderText("有效期（天，可选）"), { target: { value: "7" } });
+    fireEvent.change(screen.getByPlaceholderText(tr.settings.accessTokensExpiresPlaceholder), {
+      target: { value: "7" },
+    });
     let resolve!: (value: Response) => void;
     fetchMock.mockImplementationOnce(
       () =>
@@ -109,8 +119,11 @@ describe("access-token settings with real Chinese catalogs", () => {
           resolve = done;
         })
     );
-    fireEvent.click(screen.getByRole("button", { name: "创建" }));
-    expect(screen.getByRole("button", { name: "正在创建…" })).toHaveProperty("disabled", true);
+    fireEvent.click(screen.getByRole("button", { name: tr.settings.accessTokensCreate }));
+    expect(screen.getByRole("button", { name: tr.settings.accessTokensCreating })).toHaveProperty(
+      "disabled",
+      true
+    );
     const call = fetchMock.mock.calls.at(-1);
     expect(call?.[1]?.method).toBe("POST");
     expect(JSON.parse(String(call?.[1]?.body))).toEqual({
@@ -119,24 +132,24 @@ describe("access-token settings with real Chinese catalogs", () => {
       expiresInDays: 7,
     });
     resolve(reply({ token: "pusula_disposable_test_secret" }));
-    await screen.findByText("请立即复制此令牌，之后将不再显示：");
+    await screen.findByText(tr.settings.accessTokensCopyNow);
     expect(screen.getByText("pusula_disposable_test_secret")).toBeTruthy();
-    fireEvent.click(screen.getByRole("button", { name: "复制" }));
-    await screen.findByRole("button", { name: "已复制" });
+    fireEvent.click(screen.getByRole("button", { name: tr.settings.accessTokensCopy }));
+    await screen.findByRole("button", { name: tr.settings.accessTokensCopied });
     expect(copy).toHaveBeenCalledWith("pusula_disposable_test_secret");
-    fireEvent.click(screen.getByRole("button", { name: "关闭" }));
+    fireEvent.click(screen.getByRole("button", { name: tr.settings.accessTokensDismiss }));
     expect(screen.queryByText("pusula_disposable_test_secret")).toBeNull();
   });
 
   it("uses a localized create failure instead of surfacing English transport errors", async () => {
     mount();
     await screen.findByRole("table");
-    fireEvent.change(screen.getByPlaceholderText("名称（例如：笔记本电脑）"), {
+    fireEvent.change(screen.getByPlaceholderText(tr.settings.accessTokensNamePlaceholder), {
       target: { value: "demo" },
     });
     fetchMock.mockRejectedValueOnce(new TypeError("Failed to fetch"));
-    fireEvent.click(screen.getByRole("button", { name: "创建" }));
-    await screen.findByText("无法创建令牌。");
+    fireEvent.click(screen.getByRole("button", { name: tr.settings.accessTokensCreate }));
+    await screen.findByText(tr.settings.accessTokensCreateError);
     expect(screen.queryByText("Failed to fetch")).toBeNull();
   });
 
@@ -152,53 +165,59 @@ describe("access-token settings with real Chinese catalogs", () => {
     async (body, detail) => {
       mount();
       await screen.findByRole("table");
-      fireEvent.change(screen.getByPlaceholderText("名称（例如：笔记本电脑）"), {
+      fireEvent.change(screen.getByPlaceholderText(tr.settings.accessTokensNamePlaceholder), {
         target: { value: "demo" },
       });
       fetchMock.mockResolvedValueOnce(reply(body, 400));
-      fireEvent.click(screen.getByRole("button", { name: "创建" }));
-      await screen.findByText(`无法创建令牌。 ${detail}`);
+      fireEvent.click(screen.getByRole("button", { name: tr.settings.accessTokensCreate }));
+      await screen.findByText(`${tr.settings.accessTokensCreateError} ${detail}`);
     }
   );
 
   it("localizes revoke confirmation, cancel and errors, retaining the encoded token id", async () => {
     mount();
     await screen.findByRole("table");
-    fireEvent.click(screen.getByRole("button", { name: "撤销" }));
+    fireEvent.click(screen.getByRole("button", { name: tr.settings.accessTokensRevoke }));
     let dialog = screen.getByRole("dialog");
-    expect(within(dialog).getByText("撤销访问令牌")).toBeTruthy();
-    expect(within(dialog).getByText(zh.settings.accessTokensRevokeConfirm)).toBeTruthy();
-    fireEvent.click(within(dialog).getByRole("button", { name: zh.common.cancel }));
+    expect(within(dialog).getByText(tr.settings.accessTokensRevokeTitle)).toBeTruthy();
+    expect(within(dialog).getByText(tr.settings.accessTokensRevokeConfirm)).toBeTruthy();
+    fireEvent.click(within(dialog).getByRole("button", { name: tr.common.cancel }));
     expect(screen.queryByRole("dialog")).toBeNull();
     expect(fetchMock.mock.calls.some(([, init]) => init?.method === "DELETE")).toBe(false);
-    fireEvent.click(screen.getByRole("button", { name: "撤销" }));
+    fireEvent.click(screen.getByRole("button", { name: tr.settings.accessTokensRevoke }));
     dialog = screen.getByRole("dialog");
     fetchMock.mockResolvedValueOnce(reply({}, 500));
-    fireEvent.click(within(dialog).getByRole("button", { name: "撤销" }));
-    await screen.findByText("无法撤销令牌。");
+    fireEvent.click(within(dialog).getByRole("button", { name: tr.settings.accessTokensRevoke }));
+    await screen.findByText(tr.settings.accessTokensRevokeError);
     expect(fetchMock).toHaveBeenLastCalledWith("/api/cli/tokens/demo%2Fread", { method: "DELETE" });
   });
 
   it("reloads the localized status after successful revocation", async () => {
     mount();
     await screen.findByRole("table");
-    fireEvent.click(screen.getByRole("button", { name: "撤销" }));
+    fireEvent.click(screen.getByRole("button", { name: tr.settings.accessTokensRevoke }));
     fetchMock.mockResolvedValueOnce(reply({ ok: true }));
     fetchMock.mockResolvedValueOnce(
       reply({ tokens: [{ ...token, revokedAt: "2026-01-04T00:00:00Z" }] })
     );
-    fireEvent.click(within(screen.getByRole("dialog")).getByRole("button", { name: "撤销" }));
-    await screen.findByText("已撤销");
-    await waitFor(() => expect(screen.queryByRole("button", { name: "撤销" })).toBeNull());
+    fireEvent.click(
+      within(screen.getByRole("dialog")).getByRole("button", {
+        name: tr.settings.accessTokensRevoke,
+      })
+    );
+    await screen.findByText(tr.settings.accessTokensStatusRevoked);
+    await waitFor(() =>
+      expect(screen.queryByRole("button", { name: tr.settings.accessTokensRevoke })).toBeNull()
+    );
   });
 
   it("translates empty and failed-load states", async () => {
     fetchMock.mockResolvedValueOnce(reply({ tokens: [] }));
     const view = mount();
-    await screen.findByText("暂无访问令牌。");
+    await screen.findByText(tr.settings.accessTokensEmpty);
     view.unmount();
     fetchMock.mockResolvedValueOnce(reply({}, 503));
     mount();
-    await screen.findByText("无法加载访问令牌。");
+    await screen.findByText(tr.settings.accessTokensLoadError);
   });
 });
