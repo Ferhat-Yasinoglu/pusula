@@ -1,0 +1,1 @@
+- **feat:** Sync with upstream OmniRoute v3.8.52 (MIT): 17 more providers (375 in total), database migrations 190–212 and about 1,600 upstream fixes across routing, providers, auth, usage and resilience, ported with Pusula's design, brand, four locales and CI unchanged ([#39](https://github.com/Ferhat-Yasinoglu/pusula/pull/39)) — thanks to the OmniRoute contributors
