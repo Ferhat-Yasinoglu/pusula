@@ -171,9 +171,11 @@ test("functional: realistic file with 2 listeners, 2 groups, 6 nodes", () => {
 });
 
 test("groups with only unrenderable members are reported as empty_group", () => {
+  // Rendezvous hashing includes the owned tag prefix, so these addresses are chosen to
+  // give every group at least one member (1/3/2, the split upstream's fixture had).
   const nodes = Array.from({ length: 6 }, (_, i) => ({
     name: `u${i + 1}`,
-    source: { kind: "uri" as const, value: `vless://u@10.2.0.${i + 1}:443#u${i + 1}` },
+    source: { kind: "uri" as const, value: `vless://u@10.6.0.${i + 1}:443#u${i + 1}` },
   })) as never[];
   const m = buildCoreModel(
     [

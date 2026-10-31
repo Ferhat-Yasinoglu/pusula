@@ -126,7 +126,10 @@ test("G-06: prose with no version claim at all is accepted", () => {
 
 test("G-06: README.md and llm.txt carry no stale version claim", () => {
   const root = path.resolve(import.meta.dirname, "..", "..");
-  const validator = validateVersion(VERSION);
+  // The synthetic cases above pin VERSION to a 3.8.x tree; the real docs are checked
+  // against this tree's own package.json, which is what check:docs-counts compares.
+  const pkg = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
+  const validator = validateVersion(pkg.version);
 
   for (const rel of ["README.md", "llm.txt"]) {
     const result = validator(fs.readFileSync(path.join(root, rel), "utf8"));

@@ -54,7 +54,7 @@ const REQUEST_CONTEXT_FRAME = asAgentServerMessage(
 // mcp_state_exec_args (field 36) = { server_identifiers: ["pusula"] }.
 const MCP_STATE_FRAME = asAgentServerMessage(
   "08019a01360a20386633366634346566353936616433373331373430343937386531613338393512" +
-    "10396237306231383332613662383164321800a2020b0a096f6d6e69726f757465b80300"
+    "10396237306231383332613662383164321800a202080a06707573756c61b80300"
 );
 
 test("span_context (field 19) is not mistaken for the event variant", () => {

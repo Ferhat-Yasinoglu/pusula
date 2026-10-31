@@ -34,7 +34,9 @@ function singBoxFeed(): { nodes: never[]; needsCore: never[]; format: "v2ray-jso
     name: `sb-node-${i}`,
     source: {
       kind: "object" as const,
-      value: { type: "vless", server: `203.0.113.${i}`, server_port: 443, uuid: `u-${i}` },
+      // Chosen so rendezvous hashing over the `pusula-` group tags splits 1/3 across
+      // selectors a and b, as upstream's fixture did; an empty group is reported.
+      value: { type: "vless", server: `203.0.113.${i}`, server_port: 443, uuid: `n-${i}` },
     },
   });
   return {
