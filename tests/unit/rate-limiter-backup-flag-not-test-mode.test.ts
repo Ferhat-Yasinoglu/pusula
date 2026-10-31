@@ -52,7 +52,12 @@ async function twoRequestsAgainstLimitOne(env: Partial<Record<(typeof ENV_KEYS)[
   }
 }
 
-test("DISABLE_SQLITE_AUTO_BACKUP=true does not move a Redis deployment to the in-memory store", async () => {
+test("DISABLE_SQLITE_AUTO_BACKUP=true does not move a Redis deployment to the in-memory store", async (t) => {
+  // The in-memory fallback counts in fixed 60 s windows keyed on Date.now(), and each
+  // request here spends ~750 ms retrying the closed Redis port. On the real clock the two
+  // requests could straddle a minute boundary, land in different windows and both be
+  // allowed. Freeze the clock mid-window so they always share one.
+  t.mock.timers.enable({ apis: ["Date"], now: Math.floor(Date.now() / 60_000) * 60_000 + 30_000 });
   const { results, tookRedisPath } = await twoRequestsAgainstLimitOne({
     REDIS_URL: "redis://127.0.0.1:1",
     NODE_ENV: "production",
