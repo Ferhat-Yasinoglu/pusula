@@ -1,0 +1,1413 @@
+#!/bin/bash
+#
+# pusula-auto-update - pull-based auto-update for the Pusula Docker container.
+#
+# The server pulls; nothing connects to it. pusula-auto-update.timer runs it
+# every 15 minutes and 3 minutes after boot. Log: journalctl -t pusula-auto-update
+#
+# A run:
+#  1. If an earlier run was interrupted (power loss, reboot, kill), finishes or
+#     undoes it first, from the record kept in /var/lib/pusula-auto-update.
+#  2. Does nothing while Docker is stopped (it never starts Docker) or while
+#     paused after 2 failed attempts in a row (resume with --reset).
+#  3. Checks before pulling: the "pusula" container and its compose labels
+#     (service pusula-base, image pusula:base), that compose sees it, that it
+#     is healthy, free disk space. Removes unused old pusula images, then
+#     pulls ghcr.io/ferhat-yasinoglu/pusula:main. Same as running: done.
+#     Recorded as bad: skipped until a newer build is published.
+#  4. Stops only the pusula container (redis keeps running), backs up its data
+#     dir to /root/pusula-backups, tags the new image pusula:base and recreates
+#     the service with docker-compose (same project, files and profile).
+#  5. Health gate: Docker health "healthy" within 15 minutes ("starting" is
+#     not a failure: the first start may run long DB migrations), healthy for
+#     60 s more, and /api/health/ping ok if the old version answered it.
+#     If Docker itself stops answering or restarts meanwhile, the gate waits
+#     or starts again; such a failure never marks the build as bad.
+#  6. Success: the old image becomes pusula:previous, paired with the backup
+#     (for --rollback); the newest 5 backups are kept. Failure: restores the
+#     backup (migrations are forward-only; extracted before anything is
+#     removed), starts the old image again and records the build as bad.
+#
+# Usage:
+#   pusula-auto-update             update now. Runs under systemd, so an SSH
+#                                  drop cannot interrupt it; Ctrl-C only stops
+#                                  watching the log.
+#   pusula-auto-update --status    images, rollback target, backups, timer
+#   pusula-auto-update --dry-run   what a run would do; changes nothing
+#   pusula-auto-update --rollback  back to pusula:previous with the backup
+#                                  taken when it was replaced (newer data is
+#                                  moved aside, not deleted); the rolled-back
+#                                  build is recorded as bad, the timer stays
+#                                  on. Refused while an update is running.
+#   pusula-auto-update --reset     resume after a pause
+#
+# Exit codes (also of a run typed in a shell): 0 done / up to date / skipped /
+# paused / Docker stopped; 1 refused, or failed and the old version runs
+# again; 2 the old version could not be brought back, or Docker stopped
+# answering mid-update (the site may be down; the next run tries again).
+#
+# Optional settings in /etc/default/pusula-auto-update, for example:
+#   PUSULA_AU_HEALTH_TIMEOUT=1800   seconds to wait for "healthy" (default 900)
+#   PUSULA_AU_STABLE_SECS=120       seconds it must then stay healthy (60)
+#
+# It never prints .env contents and never edits docker-compose.yml, .env or the
+# git checkout.
+
+set -u -o pipefail
+umask 077
+
+CONFIG_FILE="${PUSULA_AU_CONFIG:-/etc/default/pusula-auto-update}"
+# shellcheck source=/dev/null
+[ ! -r "$CONFIG_FILE" ] || . "$CONFIG_FILE"
+
+# Same tools for timer runs, manual runs and --status. The PUSULA_AU_*
+# overrides other than the two settings above exist for the test harness.
+export PATH="${PUSULA_AU_PATH_PREFIX:+$PUSULA_AU_PATH_PREFIX:}/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
+
+# ---------------------------------------------------------------- settings
+IMAGE_REF="${PUSULA_AU_IMAGE:-ghcr.io/ferhat-yasinoglu/pusula:main}"
+CONTAINER_NAME="pusula"
+EXPECTED_SERVICE="pusula-base"
+COMPOSE_PROFILE="base"
+LOCAL_TAG="pusula:base"
+PREVIOUS_TAG="pusula:previous"
+ROLLBACK_TAG="pusula:rollback"   # holds the old image while an attempt runs
+IMAGE_TITLE_LABEL="org.opencontainers.image.title=pusula"
+DATA_MOUNT_DEST="/app/data"
+UNIT="pusula-auto-update.service"
+BACKUP_ROOT="${PUSULA_AU_BACKUP_ROOT:-/root/pusula-backups}"
+STATE_DIR="${PUSULA_AU_STATE_DIR:-/var/lib/pusula-auto-update}"
+KEEP_BACKUPS=5
+KEEP_FAILED_DATA=2
+MAX_FAILURES=2
+HEALTH_TIMEOUT="${PUSULA_AU_HEALTH_TIMEOUT:-900}"
+STABLE_SECS="${PUSULA_AU_STABLE_SECS:-60}"
+HTTP_TIMEOUT="${PUSULA_AU_HTTP_TIMEOUT:-60}"
+POLL_INTERVAL="${PUSULA_AU_POLL_INTERVAL:-5}"
+DOCKER_WAIT="${PUSULA_AU_DOCKER_WAIT:-120}"   # how long to wait for a Docker that does not answer
+MIN_FREE_MB="${PUSULA_AU_MIN_FREE_MB:-1024}"
+HTTP_CHECK_URL="http://127.0.0.1:20128/api/health/ping"
+STOP_TIMEOUT=45
+PULL_TIMEOUT=1200
+GATE_RESTARTS=3   # Docker restarts the health gate starts over for
+
+LOCK_FILE="$STATE_DIR/lock"
+PROGRESS_FILE="$STATE_DIR/progress"   # the attempt in flight (crash recovery)
+PREVIOUS_FILE="$STATE_DIR/previous"   # rollback target: image + paired backup
+BACKUPS_FILE="$STATE_DIR/backups"     # backups and moved-aside data we made
+BAD_FILE="$STATE_DIR/bad-images"
+FAILURES_FILE="$STATE_DIR/failures"
+PAUSED_FILE="$STATE_DIR/paused"
+RESULT_FILE="$STATE_DIR/last-result"
+STAGING="$BACKUP_ROOT/.restore-in-progress"
+
+MODE="run"
+TS="$(date -u +%Y%m%dT%H%M%SZ)"
+# The attempt; written to $PROGRESS_FILE before every step that changes things.
+PHASE=""         # stopped -> switching -> done, or -> rolling-back
+OLD_ID=""        # image to fall back to
+NEW_ID=""        # image being tried (with --rollback: the one rolled back from)
+NEW_DIGEST=""
+BACKUP_FILE=""
+RESTORED=0
+HTTP_GATE=0
+COUNTED=0        # 1: this attempt is already in the failure count
+BAD_RECORDED=0   # 1: NEW_ID is already recorded as bad
+OLD_CID=""
+PROJECT=""
+WORKDIR=""
+SERVICE=""
+CONFIG_FILES=""
+ENV_FILES=""
+DATA_DIR=""
+STARTED=""
+BOOT_ID=""       # boot and uptime of the last save: tells whether a
+SAVED_UP=""      # "docker stop" of the interrupted run can still be running
+PROGRESS_VARS=(PHASE OLD_ID NEW_ID NEW_DIGEST BACKUP_FILE RESTORED HTTP_GATE COUNTED
+  BAD_RECORDED OLD_CID PROJECT WORKDIR SERVICE CONFIG_FILES ENV_FILES DATA_DIR STARTED
+  BOOT_ID SAVED_UP)
+STOP_SENT=""     # this process: 0 = not stopped yet, 1 = docker stop sent
+WAIT_FAIL_REASON=""
+WAIT_FAIL_DOCKER=0
+STAGE_ERR=""
+ARGS_ERR=""
+JPID=""
+COMPOSE=()
+COMPOSE_VERSION=""
+COMPOSE_FILE_ARGS=()
+ENV_FILE_ARGS=()
+HEALTH_FMT='{{.State.Status}} {{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}} {{.RestartCount}} {{.State.StartedAt}}'
+
+# ----------------------------------------------------------------- helpers
+log()  { printf '[%s] %s\n' "$(date +%H:%M:%S)" "$*"; }
+warn() { log "WARNING: $*" >&2; }
+err()  { log "ERROR: $*" >&2; }
+utc()  { date -u +%Y-%m-%dT%H:%M:%SZ; }
+short() { local s="${1#sha256:}"; printf '%s' "${s:0:12}"; }
+# Seconds since boot: deadlines must not move when the wall clock is stepped.
+now() { local up; read -r up _ < /proc/uptime; printf '%s\n' "${up%.*}"; }
+boot_id() { cat /proc/sys/kernel/random/boot_id 2>/dev/null; }
+
+# end <exit code> <message>: records the result (shown by --status), exits.
+end() {
+  case "$MODE" in
+    run|rollback) printf '%s exit=%s %s\n' "$(utc)" "$1" "$2" > "$RESULT_FILE" 2>/dev/null ;;
+  esac
+  exit "$1"
+}
+
+die() {
+  err "$*"
+  end 1 "refused: $*"
+}
+
+# save_vars <file> <variable>...: a sourceable file, flushed to disk before it
+# replaces the old one (a power loss leaves the old or the new file, never an
+# empty one).
+save_vars() {
+  local f="$1" v
+  shift
+  for v in "$@"; do printf '%s=%q\n' "$v" "${!v}"; done > "$f.tmp" \
+    && { sync "$f.tmp" 2>/dev/null || sync; } && mv -f "$f.tmp" "$f"
+}
+
+# Written before each step; sync also makes the backup durable before the
+# old container is removed.
+save_progress() {
+  BOOT_ID="$(boot_id)"
+  SAVED_UP="$(now)"
+  save_vars "$PROGRESS_FILE" "${PROGRESS_VARS[@]}" && sync
+}
+
+# ------------------------------------------------------------ docker helpers
+# cinspect <format> <container>: 0 = printed the value, 1 = no such
+# container, 2 = docker failed (daemon down or restarting).
+cinspect() {
+  local out
+  if out="$(docker container inspect --format "$1" "$2" 2>&1)"; then
+    printf '%s\n' "$out"
+    return 0
+  fi
+  case "$out" in *"No such container"*|*"No such object"*) return 1 ;; esac
+  return 2
+}
+iinspect() { docker image inspect --format "$1" "$2" 2>/dev/null; }
+label() { cinspect "{{index .Config.Labels \"$1\"}}" "$OLD_CID"; }
+
+docker_answers() { timeout 30 docker info >/dev/null 2>&1; }
+docker_error() { timeout 10 docker info 2>&1 >/dev/null | tail -n 1; }
+
+# True when Docker answers. Never starts it: a stopped docker.service (even
+# with docker.socket still listening) counts as not running.
+docker_running() {
+  if [ "$(systemctl show -p LoadState --value docker.service 2>/dev/null)" = loaded ]; then
+    systemctl is-active --quiet docker.service || return 1
+  fi
+  docker_answers
+}
+
+# Changes whenever docker.service (re)starts; empty or constant elsewhere.
+docker_epoch() { systemctl show -p ActiveEnterTimestampMonotonic --value docker.service 2>/dev/null; }
+
+# Waits up to DOCKER_WAIT seconds for Docker to answer (dockerd restarting,
+# for example during a package upgrade). Logs to stderr only: it runs inside
+# command substitutions.
+wait_docker() {
+  local until_t=$(($(now) + DOCKER_WAIT))
+  docker_answers && return 0
+  warn "docker does not answer ($(docker_error)); waiting up to ${DOCKER_WAIT}s for it"
+  until docker_answers; do
+    [ "$(now)" -lt "$until_t" ] || { err "docker still does not answer"; return 1; }
+    sleep "$POLL_INTERVAL"
+  done
+  log "docker answers again" >&2
+}
+
+# cinspect, but waits for a Docker that does not answer instead of giving up.
+cinspect_retry() {
+  local out rc
+  out="$(cinspect "$1" "$2")"
+  rc=$?
+  if [ "$rc" -eq 2 ] && wait_docker; then
+    out="$(cinspect "$1" "$2")"
+    rc=$?
+  fi
+  [ "$rc" -ne 0 ] || printf '%s\n' "$out"
+  return "$rc"
+}
+
+# dretry <command...>: a docker command that fails while Docker does not
+# answer is run once more when it answers again.
+dretry() {
+  "$@" && return 0
+  ! docker_answers || return 1
+  wait_docker && "$@"
+}
+
+# ghcr repo digest (sha256:...) of a local image, empty if none.
+repo_digest() {
+  local line
+  while IFS= read -r line; do
+    case "$line" in "${IMAGE_REF%:*}"@sha256:*) printf '%s\n' "${line#*@}"; return 0 ;; esac
+  done < <(iinspect '{{range .RepoDigests}}{{println .}}{{end}}' "$1")
+}
+
+# Digest of the tag on ghcr.io, read anonymously without pulling
+# (--status and --dry-run only).
+remote_digest() {
+  local rest repo token
+  case "$IMAGE_REF" in ghcr.io/*) ;; *) return 1 ;; esac
+  rest="${IMAGE_REF#ghcr.io/}"
+  repo="${rest%:*}"
+  token="$(curl -fsS --max-time 15 "https://ghcr.io/token?scope=repository:${repo}:pull" 2>/dev/null \
+    | sed -n 's/.*"token":"\([^"]*\)".*/\1/p')"
+  [ -n "$token" ] || return 1
+  curl -fsSI --max-time 15 -H "Authorization: Bearer $token" \
+    -H 'Accept: application/vnd.oci.image.index.v1+json, application/vnd.docker.distribution.manifest.list.v2+json, application/vnd.oci.image.manifest.v1+json, application/vnd.docker.distribution.manifest.v2+json' \
+    "https://ghcr.io/v2/${repo}/manifests/${rest##*:}" 2>/dev/null \
+    | tr -d '\r' | sed -n 's/^[Dd]ocker-[Cc]ontent-[Dd]igest: *//p'
+}
+
+# Bad-image lines: <image id> <repo digest or -> <UTC time> <reason...>
+is_bad() {
+  [ -f "$BAD_FILE" ] || return 1
+  awk -v id="${1:--}" -v dg="${2:--}" \
+    '(id != "-" && $1 == id) || (dg != "-" && $2 == dg) { found = 1 } END { exit !found }' "$BAD_FILE"
+}
+
+record_bad() {
+  if is_bad "$NEW_ID" "$NEW_DIGEST"; then
+    log "Build $(short "$NEW_ID") is already recorded as bad"
+    return 0
+  fi
+  printf '%s %s %s %s\n' "$NEW_ID" "${NEW_DIGEST:--}" "$(utc)" "$1" >> "$BAD_FILE"
+  log "Recorded build $(short "$NEW_ID") (${NEW_DIGEST:-no digest}) as bad; it is skipped until a newer build is published"
+}
+
+# Removes dangling pusula images: builds superseded on ghcr and old previous
+# images. Tagged images (pusula:base, :previous, :rollback) are never dangling.
+prune_images() {
+  docker image prune -f --filter "label=$IMAGE_TITLE_LABEL" >/dev/null 2>&1 || warn "docker image prune failed"
+}
+
+# --------------------------------------------------------- compose helpers
+read_compose_version() {
+  COMPOSE_VERSION="$("${COMPOSE[@]}" version --short 2>/dev/null)"
+  COMPOSE_VERSION="${COMPOSE_VERSION%%$'\n'*}"
+  COMPOSE_VERSION="${COMPOSE_VERSION//[v$'\r' ]/}"
+}
+
+# True when "${COMPOSE[@]}" is new enough (profiles need >= 1.28).
+compose_version_ok() {
+  local major minor
+  read_compose_version
+  major="${COMPOSE_VERSION%%.*}"
+  minor="${COMPOSE_VERSION#*.}"
+  minor="${minor%%.*}"
+  case "$major.$minor" in
+    *[!0-9.]*|.*|*.) err "cannot read the version of '${COMPOSE[*]}' (got '$COMPOSE_VERSION')"; return 1 ;;
+  esac
+  if [ "$major" -lt 1 ] || { [ "$major" -eq 1 ] && [ "$minor" -lt 28 ]; }; then
+    err "${COMPOSE[*]} $COMPOSE_VERSION is too old (profiles need >= 1.28)"
+    return 1
+  fi
+}
+
+# The standalone docker-compose first (what this server has), else the
+# plugin. Only flags that docker-compose 1.28+ and v2 both understand are
+# used. docker-compose 1.29 negotiates the API version with the engine, so it
+# also works with Docker Engine 29; if it cannot list the containers anyway,
+# compose_checks switches to the plugin. 0 = ready, 1 = none usable (logged).
+setup_compose() {
+  [ "${#COMPOSE[@]}" -eq 0 ] || return 0
+  if command -v docker-compose >/dev/null 2>&1; then
+    COMPOSE=(docker-compose)
+    compose_version_ok && return 0
+  fi
+  if docker compose version >/dev/null 2>&1; then
+    COMPOSE=(docker compose)
+    compose_version_ok && return 0
+  fi
+  COMPOSE=()
+  err "no usable docker-compose: need docker-compose >= 1.28 or the docker compose plugin"
+  return 1
+}
+
+# Switches to the other compose (standalone <-> plugin) if it is installed
+# and new enough.
+switch_compose() {
+  local cur=("${COMPOSE[@]}") ver="$COMPOSE_VERSION"
+  if [ "${cur[*]}" = docker-compose ]; then
+    docker compose version >/dev/null 2>&1 || return 1
+    COMPOSE=(docker compose)
+  else
+    command -v docker-compose >/dev/null 2>&1 || return 1
+    COMPOSE=(docker-compose)
+  fi
+  compose_version_ok && return 0
+  COMPOSE=("${cur[@]}")
+  COMPOSE_VERSION="$ver"
+  return 1
+}
+
+# Compose -f / --env-file arguments from the (comma-separated) label values.
+# compose v2 records absolute paths. docker-compose 1.x records them as typed,
+# relative to the directory it was started in, and its working dir is that
+# directory plus the first file's directory. So the start dir is the working
+# dir minus that directory part ("cd /root && docker-compose -f pusula/x.yml":
+# /root), and a file in the first file's directory is <working dir>/<name>
+# (also "../docker-compose.yml", found in a parent dir). Labels that do not
+# fit this (--project-directory was used) are only tried under the working dir.
+# 0 = ok, 1 = not usable (ARGS_ERR says why).
+set_compose_args() {
+  local f d="" c found list=() cands=() start="" samedir=0 kind
+  COMPOSE_FILE_ARGS=()
+  ENV_FILE_ARGS=()
+  ARGS_ERR=""
+  IFS=',' read -r -a list <<< "$CONFIG_FILES"
+  for f in "${list[@]}"; do
+    case "$f" in ''|/*) ;; *) d="$(dirname -- "$f")"; break ;; esac
+  done
+  start="$WORKDIR"
+  if [ "${d:-.}" = . ] || [[ "$d" =~ ^\.\.(/\.\.)*$ ]]; then
+    samedir=1
+  else
+    case "$d" in
+      ..*|*/..|*/../*) ;;
+      *) case "$WORKDIR" in */"$d") start="${WORKDIR%/"$d"}"; samedir=1 ;; esac ;;
+    esac
+  fi
+  for kind in config env; do
+    if [ "$kind" = config ]; then IFS=',' read -r -a list <<< "$CONFIG_FILES"
+    else IFS=',' read -r -a list <<< "$ENV_FILES"; fi
+    for f in "${list[@]}"; do
+      [ -n "$f" ] || continue
+      found=""
+      case "$f" in
+        /*) [ ! -f "$f" ] || found="$f" ;;
+        *)
+          cands=()
+          [ "$samedir" -eq 0 ] || [ "$(dirname -- "$f")" != "$d" ] || cands+=("$WORKDIR/${f##*/}")
+          for c in "$start/$f" "$WORKDIR/$f"; do
+            [[ " ${cands[*]} " == *" $c "* ]] || cands+=("$c")
+          done
+          for c in "${cands[@]}"; do [ -n "$found" ] || [ ! -f "$c" ] || found="$c"; done
+          ;;
+      esac
+      if [ "$kind" = env ]; then
+        if [ -n "$found" ]; then ENV_FILE_ARGS+=(--env-file "$found"); else warn "env file '$f' from the label does not exist"; fi
+        continue
+      fi
+      if [ -z "$found" ]; then
+        case "$f" in
+          /*) ARGS_ERR="compose file '$f' (from the container label) does not exist" ;;
+          *) ARGS_ERR="compose file '$f' (from the container label) not found as ${cands[*]} (docker-compose 1.x records -f paths relative to the directory it was started in)" ;;
+        esac
+        return 1
+      fi
+      COMPOSE_FILE_ARGS+=(-f "$found")
+    done
+  done
+  [ "${#COMPOSE_FILE_ARGS[@]}" -gt 0 ] || { ARGS_ERR="no compose files in the container label"; return 1; }
+}
+
+# Runs compose for exactly the project that created the container.
+compose() {
+  (
+    cd "$WORKDIR" || exit 1
+    "${COMPOSE[@]}" --project-name "$PROJECT" --project-directory "$WORKDIR" \
+      "${COMPOSE_FILE_ARGS[@]}" "${ENV_FILE_ARGS[@]}" --profile "$COMPOSE_PROFILE" "$@"
+  )
+}
+
+compose_cmd_string() {
+  printf 'cd %q && ' "$WORKDIR"
+  printf '%q ' "${COMPOSE[@]}" --project-name "$PROJECT" --project-directory "$WORKDIR" \
+    "${COMPOSE_FILE_ARGS[@]}" "${ENV_FILE_ARGS[@]}" --profile "$COMPOSE_PROFILE"
+}
+
+# The old container is always gone when this runs, so compose creates a fresh
+# one (this also avoids docker-compose 1.29's "KeyError: 'ContainerConfig'").
+# If it fails, the other compose (standalone <-> plugin) is tried once.
+compose_up() {
+  local first
+  if [ "${#COMPOSE_FILE_ARGS[@]}" -eq 0 ] && ! set_compose_args; then
+    err "$ARGS_ERR"
+    return 1
+  fi
+  setup_compose || return 1
+  log "Running: $(compose_cmd_string)up -d --no-deps --no-build --force-recreate $SERVICE"
+  compose up -d --no-deps --no-build --force-recreate "$SERVICE" && return 0
+  first="${COMPOSE[*]} $COMPOSE_VERSION"
+  switch_compose || return 1
+  warn "$first up failed; trying ${COMPOSE[*]} $COMPOSE_VERSION"
+  compose up -d --no-deps --no-build --force-recreate "$SERVICE"
+}
+
+# ------------------------------------------------------- discovery, checks
+discover() {
+  local rc image_ref
+  OLD_CID="$(cinspect '{{.Id}}' "$CONTAINER_NAME")"
+  rc=$?
+  [ "$rc" -ne 2 ] || die "docker does not answer: $(docker_error)"
+  [ "$rc" -eq 0 ] || die "container '$CONTAINER_NAME' not found. Is the Pusula stack running? (docker ps -a)"
+  PROJECT="$(label com.docker.compose.project)"
+  WORKDIR="$(label com.docker.compose.project.working_dir)"
+  SERVICE="$(label com.docker.compose.service)"
+  CONFIG_FILES="$(label com.docker.compose.project.config_files)"
+  ENV_FILES="$(label com.docker.compose.project.environment_file)"
+  if [ -z "$PROJECT" ] || [ -z "$WORKDIR" ] || [ -z "$SERVICE" ] || [ -z "$CONFIG_FILES" ]; then
+    die "container '$CONTAINER_NAME' lacks com.docker.compose.* labels (project, working_dir, service, config_files); it was not started by docker-compose. Refusing to touch it."
+  fi
+  [ "$SERVICE" = "$EXPECTED_SERVICE" ] || die "container '$CONTAINER_NAME' is compose service '$SERVICE'; this tool only handles '$EXPECTED_SERVICE'. Refusing to touch it."
+  [ -d "$WORKDIR" ] || die "compose working dir '$WORKDIR' (from the container label) does not exist"
+  set_compose_args || die "$ARGS_ERR"
+
+  OLD_ID="$(cinspect '{{.Image}}' "$OLD_CID")" || die "cannot read the image of container '$CONTAINER_NAME'"
+  image_ref="$(cinspect '{{.Config.Image}}' "$OLD_CID")"
+  case "$image_ref" in
+    "$LOCAL_TAG"|"docker.io/library/$LOCAL_TAG") ;;
+    *) die "container '$CONTAINER_NAME' was created from image '$image_ref', expected '$LOCAL_TAG'. Refusing to retag." ;;
+  esac
+
+  DATA_DIR="$(cinspect "{{range .Mounts}}{{if eq .Destination \"$DATA_MOUNT_DEST\"}}{{.Source}}{{end}}{{end}}" "$OLD_CID")"
+  [ -n "$DATA_DIR" ] || die "container '$CONTAINER_NAME' has no mount at $DATA_MOUNT_DEST"
+  # Back up and restore the real directory, also when data is a symlink.
+  DATA_DIR="$(readlink -f -- "$DATA_DIR")"
+  [ -d "$DATA_DIR" ] || die "the data dir of '$CONTAINER_NAME' does not exist on the host"
+  case "$DATA_DIR" in /|/root|/root/) die "refusing to work with data dir '$DATA_DIR'" ;; esac
+  ! mountpoint -q "$DATA_DIR" || die "data dir '$DATA_DIR' is a mount point; restore-by-rename is not supported for it"
+  log "Container $CONTAINER_NAME $(short "$OLD_CID"): project=$PROJECT service=$SERVICE dir=$WORKDIR image=$(short "$OLD_ID") data=$DATA_DIR"
+}
+
+# Output discarded on purpose: config errors can quote .env lines.
+compose_loads_project() {
+  compose config -q >/dev/null 2>&1 || die "docker-compose cannot load the project. Check by hand: $(compose_cmd_string)config -q"
+  grep -qx -- "$SERVICE" <<< "$(compose config --services 2>/dev/null)" || die "service '$SERVICE' is not defined in ${COMPOSE_FILE_ARGS[*]}"
+}
+
+# Compose must load the project and see the container as this project's
+# service, otherwise "up" would create a conflicting container. "ps -a" lists
+# stopped containers too, in docker-compose 1.29 and v2 alike.
+compose_checks() {
+  local ids id first
+  setup_compose || die "no usable docker-compose (see the error above)"
+  compose_loads_project
+  if ! ids="$(compose ps -a -q "$SERVICE")"; then
+    first="${COMPOSE[*]} $COMPOSE_VERSION"
+    switch_compose || die "$first cannot list the project's containers (error above). Check by hand: $(compose_cmd_string)ps -a"
+    warn "$first cannot list the project's containers (error above); using ${COMPOSE[*]} $COMPOSE_VERSION instead"
+    compose_loads_project
+    ids="$(compose ps -a -q "$SERVICE")" || die "${COMPOSE[*]} cannot list the project's containers either (error above). Check by hand: $(compose_cmd_string)ps -a"
+  fi
+  log "Compose: ${COMPOSE[*]} $COMPOSE_VERSION, files: ${COMPOSE_FILE_ARGS[*]}"
+  for id in $ids; do
+    case "$OLD_CID" in "$id"*) return 0 ;; esac
+  done
+  die "docker-compose does not see container '$CONTAINER_NAME' as service '$SERVICE' of project '$PROJECT'. Refusing to recreate it."
+}
+
+# Everything that can refuse an update, checked before anything is pulled.
+preflight() {
+  local base_path state health
+  compose_checks
+  # Restore and move-aside are renames. Across filesystems mv copies and then
+  # deletes, which a crash can cut short, so refuse that layout up front.
+  [ "$(stat -c %d -- "$(nearest_dir "$BACKUP_ROOT")")" = "$(stat -c %d -- "$DATA_DIR")" ] \
+    || die "backups ($BACKUP_ROOT) must be on the same filesystem as the data dir ($DATA_DIR). Set PUSULA_AU_BACKUP_ROOT in /etc/default/pusula-auto-update to a directory on that filesystem."
+  # Next.js basePath is baked in at build time; the ghcr image has none.
+  base_path="$(cinspect '{{range .Config.Env}}{{if eq (index (split . "=") 0) "PUSULA_BASE_PATH"}}{{.}}{{end}}{{end}}' "$OLD_CID")"
+  base_path="${base_path#PUSULA_BASE_PATH=}"
+  [ -z "$base_path" ] || die "PUSULA_BASE_PATH is set to '$base_path', but $IMAGE_REF is built without a base path. Refusing to update."
+  state="$(cinspect '{{.State.Status}} {{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}' "$OLD_CID")" \
+    || die "cannot read the state of container '$CONTAINER_NAME' (docker does not answer, or it disappeared)"
+  read -r state health <<< "$state"
+  if [ "$state/$health" = running/healthy ]; then
+    log "Current container is running and healthy"
+    return 0
+  fi
+  if [ "$state/$health" = running/starting ]; then
+    [ "$MODE" != dry-run ] || { log "Current container is still starting; a real run would wait for it"; return 0; }
+    log "Current container is still starting; waiting for it"
+    wait_healthy "$OLD_CID" 0 0 && return 0
+  fi
+  die "current container is $state (health: $health). Refusing to update: the version to fall back to must be healthy."
+}
+
+nearest_dir() {
+  local d="$1"
+  while [ ! -d "$d" ]; do d="$(dirname "$d")"; done
+  printf '%s\n' "$d"
+}
+
+free_mb() { df -Pk "$(nearest_dir "$1")" | awk 'NR == 2 {print int($4 / 1024)}'; }
+
+# disk_ok <dir> <KB needed on top of MIN_FREE_MB>
+disk_ok() {
+  local free_kb need=$(($2 + MIN_FREE_MB * 1024))
+  free_kb="$(df -Pk "$1" | awk 'NR == 2 {print $4}')"
+  log "Disk: $((${free_kb:-0} / 1024)) MB free at $1, need $((need / 1024)) MB"
+  [ "${free_kb:-0}" -ge "$need" ] && return 0
+  err "not enough free disk space at $1 (need $((need / 1024)) MB, have $((${free_kb:-0} / 1024)) MB)"
+  return 1
+}
+
+# check_disk pull|backup: room for the backup plus the extracted restore copy
+# (the uncompressed data size; plus the moved-aside data when backups live on
+# another filesystem), and with "pull" also for a new image (twice the
+# running image).
+check_disk() {
+  local data_kb img_kb=0 need factor=2 bdir ddir
+  data_kb="$(du -sk "$DATA_DIR" 2>/dev/null | awk '{print $1}')"
+  [ -n "$data_kb" ] || { err "cannot measure $DATA_DIR"; return 1; }
+  bdir="$(nearest_dir "$BACKUP_ROOT")"
+  [ "$(stat -c %d "$bdir")" = "$(stat -c %d "$DATA_DIR")" ] || factor=3
+  need=$((factor * data_kb))
+  if [ "$1" = pull ]; then
+    img_kb="$(iinspect '{{.Size}}' "$OLD_ID")"
+    case "$img_kb" in ''|*[!0-9]*) img_kb=0 ;; *) img_kb=$((img_kb * 2 / 1024)) ;; esac
+    ddir="$(docker info --format '{{.DockerRootDir}}' 2>/dev/null)"
+    if [ -d "$ddir" ] && [ "$(stat -c %d "$ddir")" != "$(stat -c %d "$bdir")" ]; then
+      disk_ok "$ddir" "$img_kb" || return 1
+    else
+      need=$((need + img_kb))
+    fi
+  fi
+  disk_ok "$bdir" "$need"
+}
+
+# ------------------------------------------------------------- health gate
+# wait_healthy <container id> <seconds it must then stay healthy> <HTTP gate 0|1>
+# Waits up to HEALTH_TIMEOUT for Docker health "healthy". "starting", and even
+# "unhealthy", are not failures while the container keeps running without
+# restarts: a first start may run DB migrations for many minutes and /healthz
+# answers 503 until they are done. An exit, a crash or a restart fails at once.
+# Docker itself is another matter: while it does not answer, the gate waits
+# (up to DOCKER_WAIT, not counted against the deadline) and the stability
+# window starts over; when Docker restarted (docker.service start time, or the
+# container restarted without a crash), the whole gate starts over. A failure
+# then sets WAIT_FAIL_DOCKER=1: it says nothing about the build.
+wait_healthy() {
+  local cid="$1" stable="$2" http="$3"
+  local t info rc state health restarts started deadline epoch e
+  local base="" base_started="" last="" since="" gap_start="" event_t="" restarted left="$GATE_RESTARTS"
+  WAIT_FAIL_REASON=""
+  WAIT_FAIL_DOCKER=0
+  deadline=$(($(now) + HEALTH_TIMEOUT))
+  epoch="$(docker_epoch)"
+  while :; do
+    info="$(cinspect "$HEALTH_FMT" "$cid")"
+    rc=$?
+    t="$(now)"
+    if [ "$rc" -eq 2 ]; then
+      if [ -z "$gap_start" ]; then
+        gap_start="$t"
+        last=""
+        log "  docker does not answer; waiting up to ${DOCKER_WAIT}s for it"
+      fi
+      if [ $((t - gap_start)) -ge "$DOCKER_WAIT" ]; then
+        WAIT_FAIL_REASON="docker did not answer for ${DOCKER_WAIT}s"
+        WAIT_FAIL_DOCKER=1
+        return 1
+      fi
+      sleep "$POLL_INTERVAL"
+      continue
+    fi
+    if [ -n "$gap_start" ]; then
+      log "  docker answers again after $((t - gap_start))s; the stability window starts over"
+      deadline=$((deadline + t - gap_start))
+      gap_start=""
+      event_t="$t"
+      since=""
+    fi
+    if [ "$rc" -eq 1 ]; then
+      gate_failed "container $(short "$cid") disappeared" "$event_t"
+      return 1
+    fi
+    read -r state health restarts started <<< "$info"
+    if [ -z "$base" ]; then base="$restarts"; base_started="$started"; fi
+    # Did Docker restart, or the container without a crash (live-restore off:
+    # dockerd restarts it, health starts over, the restart count does not grow)?
+    restarted=0
+    if [ "$started" != "$base_started" ] || [ "$restarts" != "$base" ] \
+      || { [ -n "$since" ] && [ "$state/$health" != running/healthy ]; }; then
+      e="$(docker_epoch)"
+      if [ "$e" != "$epoch" ]; then
+        restarted=1
+        epoch="$e"
+      elif [ "$started" != "$base_started" ] && [ "${restarts:-0}" -le "${base:-0}" ] 2>/dev/null; then
+        restarted=1
+      fi
+    fi
+    if [ "$restarted" -eq 1 ]; then
+      event_t="$t"
+      if [ "$left" -le 0 ]; then
+        WAIT_FAIL_REASON="Docker restarted $GATE_RESTARTS times during the health gate"
+        WAIT_FAIL_DOCKER=1
+        return 1
+      fi
+      left=$((left - 1))
+      log "  Docker (or the container, without a crash) restarted; the health gate starts over"
+      base="$restarts"
+      base_started="$started"
+      since=""
+      last=""
+      deadline=$((t + HEALTH_TIMEOUT))
+    fi
+    if [ "$state/$health" != "$last" ]; then
+      log "  container $(short "$cid"): state=$state health=$health"
+      last="$state/$health"
+    fi
+    if [ "$state" != running ]; then
+      gate_failed "container is $state (exit code $(cinspect '{{.State.ExitCode}}' "$cid"))" "$event_t"
+      return 1
+    fi
+    if [ "${restarts:-0}" -gt "${base:-0}" ] 2>/dev/null; then
+      gate_failed "container crashed and was restarted by Docker (restart count $restarts)" "$event_t"
+      return 1
+    fi
+    if [ "$health" = none ]; then
+      gate_failed "container has no healthcheck, cannot verify it" ""
+      return 1
+    fi
+    if [ "$state/$health" = running/healthy ]; then
+      if [ -z "$since" ]; then
+        since="$t"
+        [ "$stable" -eq 0 ] || log "  healthy; it must stay healthy for ${stable}s"
+      fi
+      if [ $((t - since)) -ge "$stable" ]; then
+        [ "$http" -eq 0 ] && return 0
+        http_ok && { log "  $HTTP_CHECK_URL answers ok"; return 0; }
+        if [ $((t - since - stable)) -ge "$HTTP_TIMEOUT" ]; then
+          gate_failed "healthy, but $HTTP_CHECK_URL did not answer {\"status\":\"ok\"} within ${HTTP_TIMEOUT}s" "$event_t"
+          return 1
+        fi
+      fi
+    elif [ -n "$since" ]; then
+      gate_failed "container became $state/$health after it was healthy" "$event_t"
+      return 1
+    elif [ "$t" -ge "$deadline" ]; then
+      gate_failed "not healthy after ${HEALTH_TIMEOUT}s (state=$state health=$health)" "$event_t"
+      return 1
+    fi
+    sleep "$POLL_INTERVAL"
+  done
+}
+
+# gate_failed <reason> <time Docker last misbehaved or "">: a failure shortly
+# after Docker did not answer or restarted is not blamed on the build.
+gate_failed() {
+  WAIT_FAIL_REASON="$1"
+  if [ -n "$2" ] && [ $(($(now) - $2)) -le "$DOCKER_WAIT" ]; then
+    WAIT_FAIL_DOCKER=1
+    WAIT_FAIL_REASON="$1, shortly after Docker did not answer or restarted"
+  fi
+}
+
+# Last healthcheck outputs (healthcheck.mjs prints only host and HTTP status).
+health_output() {
+  cinspect '{{with .State.Health}}{{range .Log}}{{.Output}}{{end}}{{end}}' "$1" | tail -n 3 | sed 's/^/  healthcheck: /'
+}
+
+# 0 = answers {"status":"ok"}, 1 = does not, 2 = curl not installed
+http_ok() {
+  local body
+  command -v curl >/dev/null 2>&1 || return 2
+  body="$(curl -fsS --noproxy '*' --max-time 10 "$HTTP_CHECK_URL" 2>/dev/null)" || return 1
+  case "$body" in *'"status":"ok"'*) return 0 ;; esac
+  return 1
+}
+
+# ---------------------------------------------------------------- data
+# $BACKUPS_FILE lines: <UTC time> <backup|failed-data> <image id the data belongs to> <path>
+note_file() { printf '%s %s %s %s\n' "$(utc)" "$1" "$2" "$3" >> "$BACKUPS_FILE"; }
+
+# rotate <kind> <keep>: keeps the newest <keep> recorded entries of <kind> and
+# deletes the older ones. Only paths this tool recorded are ever deleted.
+rotate() {
+  local kind="$1" keep="$2" lines=() out=() i n=0 t k img path
+  [ -f "$BACKUPS_FILE" ] || return 0
+  mapfile -t lines < "$BACKUPS_FILE"
+  for ((i = ${#lines[@]} - 1; i >= 0; i--)); do
+    read -r t k img path <<< "${lines[i]}"
+    [ -e "$path" ] || continue
+    if [ "$k" = "$kind" ]; then
+      n=$((n + 1))
+      if [ "$n" -gt "$keep" ]; then
+        case "$path" in
+          "$BACKUP_ROOT"/data-*.tar.gz|"$BACKUP_ROOT"/failed-data-*)
+            log "Removing old $kind $path ($t, image $(short "$img"))"
+            rm -rf -- "$path"
+            continue
+            ;;
+        esac
+      fi
+    fi
+    out=("${lines[i]}" "${out[@]}")
+  done
+  if [ "${#out[@]}" -gt 0 ]; then printf '%s\n' "${out[@]}"; fi > "$BACKUPS_FILE.tmp" && mv -f "$BACKUPS_FILE.tmp" "$BACKUPS_FILE"
+}
+
+# Taken while the container is stopped, so the SQLite files are consistent.
+backup_data() {
+  local base list partial="$BACKUP_FILE.partial"
+  base="$(basename "$DATA_DIR")"
+  mkdir -p "$BACKUP_ROOT" && chmod 700 "$BACKUP_ROOT" || return 1
+  log "Backing up $DATA_DIR to $BACKUP_FILE"
+  if tar --numeric-owner -C "$(dirname "$DATA_DIR")" -czf "$partial" "$base" \
+    && list="$(tar -tzf "$partial")" && [[ $'\n'"$list" == *$'\n'"$base/"* ]] \
+    && mv -f "$partial" "$BACKUP_FILE"; then
+    note_file backup "$OLD_ID" "$BACKUP_FILE"
+    log "Backup written ($(du -h "$BACKUP_FILE" | cut -f1))"
+    return 0
+  fi
+  rm -f "$partial"
+  return 1
+}
+
+# Extracts the backup into $STAGING (next to the backups), ready to be put in
+# place by rename. Runs before anything is removed, so a full disk or a broken
+# tarball leaves the container and the data as they are. A complete earlier
+# extraction of the same backup is reused. On failure STAGE_ERR says why.
+stage_backup() {
+  local base out
+  base="$(basename "$DATA_DIR")"
+  STAGE_ERR=""
+  if [ "$(cat "$STAGING/.from" 2>/dev/null)" = "$BACKUP_FILE" ] && [ -d "$STAGING/$base" ]; then
+    return 0
+  fi
+  log "Extracting $BACKUP_FILE to $STAGING (the restore copy for a rollback)"
+  if rm -rf "$STAGING" && mkdir -p "$STAGING" \
+    && out="$(tar --numeric-owner -xzf "$BACKUP_FILE" -C "$STAGING" 2>&1)" && [ -d "$STAGING/$base" ] \
+    && { sync -f "$STAGING" 2>/dev/null || sync; } \
+    && printf '%s\n' "$BACKUP_FILE" > "$STAGING/.from"; then
+    return 0
+  fi
+  out="${out:-}"
+  out="${out##*$'\n'}"
+  rm -rf "$STAGING"
+  case "$out" in
+    *"No space left"*) STAGE_ERR="DISK FULL: no room at $BACKUP_ROOT to extract $BACKUP_FILE ($(free_mb "$BACKUP_ROOT") MB free). Free disk space there" ;;
+    *) STAGE_ERR="cannot extract $base/ from $BACKUP_FILE: ${out:-it is not in the archive} ($(free_mb "$BACKUP_ROOT") MB free at $BACKUP_ROOT)" ;;
+  esac
+  err "$STAGE_ERR"
+  return 1
+}
+
+# Puts the extracted backup in place of the data dir. The current data is
+# moved aside (failed-data-<time>), never deleted. Safe to repeat after a crash.
+swap_in_backup() {
+  local base aside="$BACKUP_ROOT/failed-data-$TS"
+  base="$(basename "$DATA_DIR")"
+  [ -d "$STAGING/$base" ] || { err "the restore copy $STAGING/$base is missing"; return 1; }
+  log "Restoring $DATA_DIR from $BACKUP_FILE"
+  if [ -e "$DATA_DIR" ]; then
+    mv -T "$DATA_DIR" "$aside" || return 1
+    note_file failed-data "$NEW_ID" "$aside"
+    log "The data written by $(short "$NEW_ID") was moved to $aside"
+  fi
+  # Docker may have recreated an empty bind source meanwhile. rmdir only
+  # removes an empty dir, and mv -T never moves the data into it (data/data).
+  rmdir "$DATA_DIR" 2>/dev/null
+  mv -T "$STAGING/$base" "$DATA_DIR" || return 1
+  rm -rf "$STAGING"
+}
+
+# ----------------------------------------------- bringing the old one back
+# Removes the pusula container, whatever it runs, keeping its last log lines.
+# Waits (up to DOCKER_WAIT) for a Docker that does not answer.
+remove_container() {
+  local cid rc try
+  cid="$(cinspect_retry '{{.Id}}' "$CONTAINER_NAME")"
+  rc=$?
+  [ "$rc" -ne 1 ] || return 0
+  [ "$rc" -eq 0 ] || { err "docker does not answer: $(docker_error)"; return 1; }
+  if docker logs --tail 300 "$cid" > "$STATE_DIR/failed-$TS.log" 2>&1; then
+    log "Saved its last log lines to $STATE_DIR/failed-$TS.log"
+    find "$STATE_DIR" -maxdepth 1 -name 'failed-*.log' -printf '%f\n' | sort -r | tail -n +4 \
+      | while IFS= read -r f; do rm -f "$STATE_DIR/$f"; done
+  fi
+  for try in 1 2; do
+    docker stop -t "$STOP_TIMEOUT" "$cid" >/dev/null 2>&1
+    docker rm -f "$cid" >/dev/null 2>&1
+    cinspect_retry '{{.Id}}' "$CONTAINER_NAME" >/dev/null
+    [ $? -ne 1 ] || return 0
+    [ "$try" -eq 2 ] || warn "container $(short "$cid") is still there; trying again"
+  done
+  err "could not remove container $(short "$cid")"
+  return 1
+}
+
+# True when no "docker stop" of the interrupted run can still be running in
+# the daemon: this process never sent one, or the machine rebooted since, or
+# the record is older than a stop can take.
+stop_settled() {
+  [ "$STOP_SENT" != 0 ] || return 0
+  [ -z "$STOP_SENT" ] || return 1
+  [ -n "$BOOT_ID" ] && [ -n "$SAVED_UP" ] || return 1
+  [ "$BOOT_ID" = "$(boot_id)" ] || return 0
+  [ $(($(now) - SAVED_UP)) -gt $((STOP_TIMEOUT + 30)) ]
+}
+
+# Phase "stopped": the data is untouched and pusula:base is still the old
+# image, so starting the old container (or recreating it) is enough.
+restart_old() {
+  local cid rc st
+  cid="$(cinspect_retry '{{.Id}}' "$CONTAINER_NAME")"
+  rc=$?
+  if [ "$rc" -eq 0 ]; then
+    st="$(cinspect '{{.Image}} {{.State.Status}}' "$cid")"
+    if [ "$st" = "$OLD_ID running" ] && stop_settled; then
+      log "The old container is running; it was not stopped"
+    else
+      # Let a stop that may still run in the daemon finish, then start.
+      docker stop -t "$STOP_TIMEOUT" "$cid" >/dev/null 2>&1
+      dretry docker start "$cid" >/dev/null || return 1
+    fi
+  elif [ "$rc" -eq 1 ]; then
+    dretry docker tag "$OLD_ID" "$LOCAL_TAG" && compose_up || return 1
+    cid="$(cinspect_retry '{{.Id}}' "$CONTAINER_NAME")" || return 1
+  else
+    err "docker does not answer: $(docker_error)"
+    return 1
+  fi
+  wait_healthy "$cid" "$STABLE_SECS" 0
+}
+
+# The new version may have migrated the data: restore the backup, then start
+# the old image. The backup is extracted before the container is removed.
+roll_back() {
+  local cid
+  STAGE_ERR=""
+  PHASE="rolling-back"
+  # A full disk must not block the rollback: the record written before the
+  # switch is enough for a later run to redo these steps safely.
+  save_progress || warn "cannot write $PROGRESS_FILE (disk full?); rolling back anyway"
+  if [ "$RESTORED" != 1 ]; then
+    stage_backup || return 1
+  fi
+  remove_container || return 1
+  if [ "$RESTORED" != 1 ]; then
+    swap_in_backup || return 1
+    RESTORED=1
+    save_progress || warn "cannot write $PROGRESS_FILE (disk full?); continuing"
+  fi
+  dretry docker tag "$OLD_ID" "$LOCAL_TAG" || return 1
+  dretry compose_up || return 1
+  cid="$(cinspect_retry '{{.Id}}' "$CONTAINER_NAME")" || return 1
+  wait_healthy "$cid" "$STABLE_SECS" 0
+}
+
+count_failure() {
+  local n
+  n="$(cat "$FAILURES_FILE" 2>/dev/null)"
+  case "$n" in ''|*[!0-9]*) n=0 ;; esac
+  n=$((n + 1))
+  echo "$n" > "$FAILURES_FILE"
+  if [ "$n" -ge "$MAX_FAILURES" ]; then
+    printf '%s paused after %s failed update attempts in a row; last: %s\n' "$(utc)" "$n" "$1" > "$PAUSED_FILE"
+    err "Auto-update is now PAUSED after $n failed attempts in a row. Find the cause (journalctl -t pusula-auto-update), then resume with: pusula-auto-update --reset"
+  fi
+}
+
+# The attempt is over and the old version runs again.
+finished_attempt() {
+  docker image rm "$ROLLBACK_TAG" >/dev/null 2>&1   # only untags: pusula:base has it
+  rm -rf "$PROGRESS_FILE" "$BACKUP_FILE.partial" "$STAGING"
+  prune_images
+}
+
+# bring_back <reason> <record the new build as bad: yes|no>: ends a failed
+# attempt by bringing the old version back. An attempt is counted (and its
+# build recorded) once, also when a later run has to finish it.
+bring_back() {
+  trap '' INT TERM HUP
+  err "UPDATE FAILED: $1"
+  if [ "$2" = yes ] && [ "$BAD_RECORDED" != 1 ]; then
+    record_bad "$1"
+    BAD_RECORDED=1
+  fi
+  if [ "$COUNTED" != 1 ]; then
+    count_failure "$1"
+    COUNTED=1
+  fi
+  save_progress || warn "cannot write $PROGRESS_FILE"
+  if [ "$PHASE" = stopped ]; then
+    log "The data was not touched; starting the old container again"
+    if restart_old; then
+      finished_attempt
+      log "The old version $(short "$OLD_ID") is running and healthy again."
+      end 1 "failed ($1); the old version runs again"
+    fi
+  else
+    log "Rolling back to $(short "$OLD_ID") with the data backup $BACKUP_FILE"
+    if roll_back; then
+      finished_attempt
+      log "ROLLBACK OK: the previous image $(short "$OLD_ID") runs with the data from before the update."
+      end 1 "failed ($1); rolled back to $(short "$OLD_ID")"
+    fi
+  fi
+  rollback_failed "$1"
+}
+
+rollback_failed() {
+  if [ -n "$STAGE_ERR" ]; then
+    err "ROLLBACK NOT POSSIBLE YET: $STAGE_ERR."
+    err "Nothing was removed: the pusula container and its data are as they were. The next run (within 15 minutes) tries again; to try now: systemctl start $UNIT"
+    end 2 "FAILED ($1); rollback blocked: $STAGE_ERR"
+  fi
+  err "ROLLBACK FAILED${WAIT_FAIL_REASON:+: $WAIT_FAIL_REASON}. The site may be down."
+  err "The next run (within 15 minutes) tries again; to try now: systemctl start $UNIT"
+  err "Target: image $(short "$OLD_ID") ($ROLLBACK_TAG), backup $BACKUP_FILE, data dir $DATA_DIR."
+  err "To repair by hand instead: systemctl disable --now pusula-auto-update.timer, fix it, then delete $PROGRESS_FILE"
+  end 2 "FAILED ($1) and the old version did not come back"
+}
+
+# Reads $PROGRESS_FILE; false when it is empty or incomplete.
+load_progress() {
+  local v
+  [ -s "$PROGRESS_FILE" ] || return 1
+  # shellcheck source=/dev/null
+  . "$PROGRESS_FILE" 2>/dev/null || return 1
+  case "$PHASE" in stopped|switching|rolling-back) ;; *) return 1 ;; esac
+  for v in OLD_ID NEW_ID PROJECT WORKDIR SERVICE CONFIG_FILES DATA_DIR BACKUP_FILE; do
+    [ -n "${!v}" ] || return 1
+  done
+  [[ "$OLD_ID" =~ ^sha256:[0-9a-f]{64}$ && "$NEW_ID" =~ ^sha256:[0-9a-f]{64}$ ]]
+}
+
+# An unreadable record can only come from the first save of an attempt
+# (before the container was stopped): set it aside if pusula runs healthy.
+unreadable_progress() {
+  local cid ref aside="$STATE_DIR/progress.unreadable-$TS"
+  warn "The record of an interrupted run ($PROGRESS_FILE) is empty or incomplete (power loss?)"
+  if cid="$(cinspect_retry '{{.Id}}' "$CONTAINER_NAME")" && ref="$(cinspect '{{.Config.Image}}' "$cid")" \
+    && { [ "$ref" = "$LOCAL_TAG" ] || [ "$ref" = "docker.io/library/$LOCAL_TAG" ]; } \
+    && [ "$(cinspect '{{.State.Status}}' "$cid")" = running ] && wait_healthy "$cid" 0 0; then
+    mv -f "$PROGRESS_FILE" "$aside"
+    warn "Container $CONTAINER_NAME runs healthy from $LOCAL_TAG, so the record was set aside as $aside; this run goes on"
+    return 0
+  fi
+  err "Container $CONTAINER_NAME is not running healthy, so it is not known what the interrupted run changed."
+  err "Repair by hand: docker ps -a, journalctl -t pusula-auto-update; data backups are in $BACKUP_ROOT. When the site works again, delete $PROGRESS_FILE"
+  end 2 "an interrupted run left an unreadable record and $CONTAINER_NAME is not healthy; repair by hand"
+}
+
+# Phase "stopped": the interrupted run did not stop the old container (or a
+# reboot started it again) and it is healthy: there is nothing to undo.
+old_untouched() {
+  local cid st
+  cid="$(cinspect_retry '{{.Id}}' "$CONTAINER_NAME")" || return 1
+  st="$(cinspect '{{.Image}} {{.State.Status}}' "$cid")" || return 1
+  [ "$st" = "$OLD_ID running" ] && stop_settled && wait_healthy "$cid" 0 0
+}
+
+# A previous run left $PROGRESS_FILE: it was interrupted. Bring the site to a
+# consistent state. With "verify", a new container that still runs gets the
+# health gate (a good update survives a reboot); otherwise it is rolled back.
+# Never refuses: problems end the run with exit 2 and the next run retries.
+recover() {
+  local cid image="" state=""
+  trap '' INT TERM HUP
+  if ! load_progress; then
+    unreadable_progress
+    trap on_signal INT TERM HUP
+    return 0
+  fi
+  warn "An earlier run was interrupted (phase $PHASE, started $STARTED); finishing it first"
+  set_compose_args || err "$ARGS_ERR"
+  setup_compose || true
+  if [ "$PHASE" = stopped ] && old_untouched; then
+    log "It had not stopped the old container, which runs healthy: nothing to undo"
+    finished_attempt
+    trap on_signal INT TERM HUP
+    return 0
+  fi
+  if [ "$PHASE" = switching ]; then
+    cid="$(cinspect_retry '{{.Id}}' "$CONTAINER_NAME")"
+    case $? in
+      0) image="$(cinspect '{{.Image}}' "$cid")"
+         state="$(cinspect '{{.State.Status}}' "$cid")" ;;
+      2) # Without Docker nothing is known about the new container: decide later.
+         err "docker does not answer; the next run finishes the interrupted update"
+         end 2 "interrupted update not finished: docker does not answer" ;;
+    esac
+    if [ "$image" = "$OLD_ID" ]; then
+      PHASE="stopped"   # the old container was never removed; data untouched
+    elif [ "$image" = "$NEW_ID" ] && [ "${1:-}" = verify ]; then
+      if [ "$BAD_RECORDED" = 1 ] || is_bad "$NEW_ID" "$NEW_DIGEST"; then
+        log "Build $(short "$NEW_ID") is already recorded as bad; rolling back without checking it again"
+      else
+        case "$state" in running|restarting) verify_new "$cid" ;; esac
+      fi
+    fi
+  fi
+  bring_back "the run was interrupted (phase $PHASE)" no
+}
+
+# Invoked through "trap on_signal" in main.
+# shellcheck disable=SC2329
+on_signal() {
+  if [ -f "$PROGRESS_FILE" ]; then
+    err "Interrupted by a signal; bringing the old version back first"
+    recover
+  fi
+  err "Interrupted"
+  end 130 "interrupted"
+}
+
+# ---------------------------------------------------------------- update
+# Health gate for the new container; ends the run. When Docker itself got in
+# the way, the gate is tried once more; if Docker does not answer at all the
+# new container is left alone and the next run checks it (not marked bad).
+verify_new() {
+  local try docker_hit=0
+  log "Waiting up to ${HEALTH_TIMEOUT}s for the new container to become healthy, then ${STABLE_SECS}s of stable health"
+  for try in 1 2; do
+    wait_healthy "$1" "$STABLE_SECS" "$HTTP_GATE" && finish_success
+    [ "$WAIT_FAIL_DOCKER" = 1 ] || break
+    docker_hit=1
+    if ! docker_answers; then
+      err "Docker does not answer, so the new version can be neither verified nor rolled back now ($WAIT_FAIL_REASON)."
+      err "It is left as it is (not recorded as bad); the next run (within 15 minutes) checks it again."
+      end 2 "undecided: $WAIT_FAIL_REASON; the next run checks the new version again"
+    fi
+    [ "$try" -eq 2 ] || warn "$WAIT_FAIL_REASON; Docker answers now, checking the new container once more"
+  done
+  health_output "$1"
+  [ "$docker_hit" -eq 0 ] || bring_back "health gate disturbed by Docker: $WAIT_FAIL_REASON (not recorded as bad)" no
+  bring_back "new container failed the health gate: $WAIT_FAIL_REASON" yes
+}
+
+finish_success() {
+  local PREV_ID="$OLD_ID" PREV_BACKUP="$BACKUP_FILE" PREV_FOR="$NEW_ID" PREV_TIME
+  trap '' INT TERM HUP
+  PREV_TIME="$(utc)"
+  if docker tag "$OLD_ID" "$PREVIOUS_TAG"; then
+    save_vars "$PREVIOUS_FILE" PREV_ID PREV_BACKUP PREV_FOR PREV_TIME
+    docker image rm "$ROLLBACK_TAG" >/dev/null 2>&1
+  else
+    warn "could not tag $(short "$OLD_ID") as $PREVIOUS_TAG; --rollback is not available for this update"
+  fi
+  rm -rf "$FAILURES_FILE" "$PROGRESS_FILE" "$STAGING"
+  rotate backup "$KEEP_BACKUPS"
+  rotate failed-data "$KEEP_FAILED_DATA"
+  prune_images
+  log "SUCCESS: $CONTAINER_NAME runs $(short "$NEW_ID") (${NEW_DIGEST:-no digest}); $PREVIOUS_TAG = $(short "$OLD_ID") with backup $BACKUP_FILE"
+  end 0 "updated $(short "$OLD_ID") -> $(short "$NEW_ID")"
+}
+
+do_update() {
+  local cid
+  if [ -f "$PAUSED_FILE" ]; then
+    warn "Auto-update is PAUSED: $(cat "$PAUSED_FILE")"
+    log "Find the cause (journalctl -t pusula-auto-update), then resume with: pusula-auto-update --reset"
+    end 0 "paused"
+  fi
+  discover
+  preflight
+  prune_images
+  check_disk pull || die "not enough free disk space to pull and back up safely"
+
+  log "Pulling $IMAGE_REF"
+  timeout "$PULL_TIMEOUT" docker pull "$IMAGE_REF" \
+    || die "docker pull $IMAGE_REF failed. If it says 'denied' or 'unauthorized', a stale login may be stored: docker logout ghcr.io"
+  NEW_ID="$(iinspect '{{.Id}}' "$IMAGE_REF")"
+  [ -n "$NEW_ID" ] || die "cannot read the image ID of $IMAGE_REF after pulling"
+  NEW_DIGEST="$(repo_digest "$IMAGE_REF")"
+  if [ "$NEW_ID" = "$OLD_ID" ]; then
+    log "Up to date: the running image $(short "$OLD_ID") is $IMAGE_REF (${NEW_DIGEST:-no digest})"
+    end 0 "up to date ($(short "$OLD_ID"))"
+  fi
+  if is_bad "$NEW_ID" "$NEW_DIGEST"; then
+    log "Skipping $(short "$NEW_ID") (${NEW_DIGEST:-no digest}): it failed before (see $BAD_FILE). Waiting for a newer build."
+    end 0 "skipped bad build $(short "$NEW_ID")"
+  fi
+  log "New build: $(short "$NEW_ID") (${NEW_DIGEST:-no digest}); running: $(short "$OLD_ID")"
+  check_disk backup || die "not enough free disk space for the backup"
+  case "$(http_ok; echo $?)" in
+    0) HTTP_GATE=1; log "$HTTP_CHECK_URL answers ok on the current version; it will gate the update" ;;
+    2) HTTP_GATE=0; warn "curl is not installed; only Docker health gates the update" ;;
+    *) HTTP_GATE=0; warn "$HTTP_CHECK_URL does not answer ok on the current version; only Docker health gates the update" ;;
+  esac
+
+  # From here every step is recorded first, so an interruption at any point
+  # is finished or undone by the next run (or by the signal handler).
+  BACKUP_FILE="$BACKUP_ROOT/data-$TS.tar.gz"
+  RESTORED=0
+  COUNTED=0
+  BAD_RECORDED=0
+  STOP_SENT=0
+  STARTED="$(utc)"
+  PHASE="stopped"
+  docker tag "$OLD_ID" "$ROLLBACK_TAG" || die "could not tag the running image as $ROLLBACK_TAG"
+  save_progress || die "cannot write $PROGRESS_FILE"
+  log "Stopping container $CONTAINER_NAME (redis keeps running)"
+  STOP_SENT=1
+  docker stop -t "$STOP_TIMEOUT" "$OLD_CID" >/dev/null || bring_back "docker stop failed" no
+  backup_data || bring_back "data backup failed" no
+
+  PHASE="switching"
+  save_progress || { PHASE="stopped"; bring_back "cannot write $PROGRESS_FILE" no; }
+  docker rm "$OLD_CID" >/dev/null || { PHASE="stopped"; bring_back "could not remove the old container" no; }
+  docker tag "$NEW_ID" "$LOCAL_TAG" || bring_back "could not tag the new image as $LOCAL_TAG" no
+  log "Tagged $(short "$NEW_ID") as $LOCAL_TAG"
+  compose_up || bring_back "docker-compose up failed" no
+  cid="$(cinspect_retry '{{.Id}}' "$CONTAINER_NAME")" || bring_back "no '$CONTAINER_NAME' container after docker-compose up" no
+  # Extracted now, while the disk still has the room checked before the pull:
+  # the new version may fill it, and a rollback then needs no more space.
+  stage_backup || warn "the restore copy could not be prepared now; a rollback would try again"
+  verify_new "$cid"
+}
+
+# ------------------------------------------------------ operator commands
+do_rollback() {
+  local PREV_ID="" PREV_BACKUP="" PREV_FOR="" PREV_TIME=""
+  # shellcheck source=/dev/null
+  [ ! -f "$PREVIOUS_FILE" ] || . "$PREVIOUS_FILE"
+  [ -n "$PREV_ID" ] || die "Nothing older to roll back to: no successful update is recorded since the last rollback."
+  discover
+  compose_checks
+  [ "$OLD_ID" = "$PREV_FOR" ] || die "Nothing older to roll back to: the running image $(short "$OLD_ID") is not the one the last update installed ($(short "$PREV_FOR"))."
+  [ "$PREV_ID" != "$OLD_ID" ] || die "Nothing older to roll back to: $PREVIOUS_TAG is the running image."
+  [ -n "$(iinspect '{{.Id}}' "$PREV_ID")" ] || die "the previous image $(short "$PREV_ID") no longer exists"
+  [ -f "$PREV_BACKUP" ] || die "the backup that belongs to it ($PREV_BACKUP) no longer exists"
+  # Roll back FROM the running image (NEW_*) TO the previous one (OLD_ID).
+  NEW_ID="$OLD_ID"
+  NEW_DIGEST="$(repo_digest "$NEW_ID")"
+  OLD_ID="$PREV_ID"
+  BACKUP_FILE="$PREV_BACKUP"
+  RESTORED=0
+  COUNTED=1   # an operator rollback is not a failed update attempt
+  BAD_RECORDED=0
+  STARTED="$(utc)"
+  # Extracted first: when the disk is too full, nothing has been changed yet.
+  stage_backup || die "$STAGE_ERR. Nothing was changed."
+  log "Rolling back from $(short "$NEW_ID") to $(short "$OLD_ID") (installed before $PREV_TIME) with its backup $BACKUP_FILE."
+  log "The current data is moved to $BACKUP_ROOT/failed-data-$TS, not deleted."
+  record_bad "rolled back by the operator (--rollback)"
+  BAD_RECORDED=1
+  PHASE="rolling-back"
+  save_progress || die "cannot write $PROGRESS_FILE"
+  if roll_back; then
+    rm -f "$PREVIOUS_FILE"
+    finished_attempt
+    log "ROLLBACK OK: $(short "$OLD_ID") runs with the data from $BACKUP_FILE. The timer stays on; $(short "$NEW_ID") is skipped from now on."
+    end 0 "rolled back by the operator to $(short "$OLD_ID")"
+  fi
+  rollback_failed "operator rollback to $(short "$OLD_ID")"
+}
+
+do_reset() {
+  rm -f "$PAUSED_FILE" "$FAILURES_FILE"
+  log "Auto-update resumed: the failure counter and the pause are cleared."
+  log "Builds recorded as bad stay skipped until a newer one is published (to retry one now, delete its line from $BAD_FILE)."
+}
+
+# "<ActiveState> <InvocationID>" of a unit.
+unit_state() {
+  local line state="" id=""
+  while IFS= read -r line; do
+    case "$line" in
+      ActiveState=*) state="${line#*=}" ;;
+      InvocationID=*) id="${line#*=}" ;;
+    esac
+  done < <(systemctl show -p ActiveState -p InvocationID "$1" 2>/dev/null)
+  printf '%s %s\n' "${state:-unknown}" "$id"
+}
+unit_queued() { [[ "$(systemctl list-jobs --no-legend 2>/dev/null)" == *" $1 "* ]]; }
+
+# Manual runs go through systemd so an SSH drop cannot kill them halfway;
+# this process only follows the log. Ctrl-C stops watching, not the run.
+# The whole run is shown (by its invocation ID), also when the timer started
+# it a moment earlier; the exit code is the run's.
+run_under_systemd() {
+  local unit="$UNIT" before after state="" id="" n
+  if [ "$MODE" = rollback ]; then
+    unit="pusula-auto-update-rollback-$TS.service"
+    if run_in_progress; then
+      echo "An update is running right now. Wait until it has finished, check pusula-auto-update --status, then run --rollback again if you still want to." >&2
+      exit 1
+    fi
+  fi
+  before="$(cat "$RESULT_FILE" 2>/dev/null)"
+  trap '[ -z "$JPID" ] || kill "$JPID" 2>/dev/null' EXIT
+  trap 'echo; echo "Stopped watching. The run goes on under systemd: journalctl -t pusula-auto-update -f"; exit 130' INT
+  if [ "$MODE" = rollback ]; then
+    systemd-run --quiet --no-block --collect --unit="$unit" -p Type=oneshot -p TimeoutStartSec=2h \
+      -p TimeoutStopSec=10min -p SyslogIdentifier=pusula-auto-update --setenv=PATH="$PATH" \
+      "$(readlink -f "$0")" --rollback || exit 1
+  else
+    systemctl start --no-block "$unit" || exit 1
+  fi
+  # A queued start job waits (After=docker.service); a oneshot is
+  # "activating" while it runs and keeps its start job until it has finished.
+  while :; do
+    read -r state id <<< "$(unit_state "$unit")"
+    [ "$state" != activating ] || break
+    unit_queued "$unit" || break
+    sleep 0.5
+  done
+  if [ "$state" = activating ] && [ -n "$id" ]; then
+    journalctl _SYSTEMD_INVOCATION_ID="$id" -f --no-tail -o cat &
+    JPID=$!
+    while [ "$(unit_state "$unit")" = "activating $id" ]; do sleep 2; done
+    sleep 1
+  elif [ -n "$id" ]; then
+    journalctl _SYSTEMD_INVOCATION_ID="$id" -o cat --no-pager
+  fi
+  after="$(cat "$RESULT_FILE" 2>/dev/null)"
+  if [ -z "$after" ] || [ "$after" = "$before" ]; then
+    echo "Finished; no result recorded (see: journalctl -t pusula-auto-update -n 100)."
+    exit 1
+  fi
+  echo "Result: $after"
+  n="${after#* exit=}"
+  n="${n%% *}"
+  case "$n" in ''|*[!0-9]*) exit 1 ;; esac
+  exit "$n"
+}
+
+# --------------------------------------------------- read-only commands
+run_in_progress() { [ -e "$LOCK_FILE" ] && ! flock -n "$LOCK_FILE" true 2>/dev/null; }
+
+dry_run() {
+  local remote running_digest
+  log "DRY RUN: nothing will be changed"
+  if run_in_progress; then log "A run is in progress right now; try again when it has finished."; return 0; fi
+  if ! docker_running; then log "Docker is not running; a real run would do nothing."; return 0; fi
+  if [ -f "$PROGRESS_FILE" ]; then
+    log "An interrupted run left $PROGRESS_FILE; a real run would first finish or undo it."
+    return 0
+  fi
+  if [ -f "$PAUSED_FILE" ]; then
+    log "PAUSED: $(cat "$PAUSED_FILE"). A real run does nothing until: pusula-auto-update --reset"
+    return 0
+  fi
+  discover
+  preflight
+  check_disk pull || log "A real run would stop here: not enough free disk space."
+  running_digest="$(repo_digest "$OLD_ID")"
+  remote="$(remote_digest)" || remote=""
+  if [ -z "$remote" ]; then
+    log "Could not read the $IMAGE_REF digest from ghcr.io; a real run would pull and compare."
+  elif [ "$remote" = "$running_digest" ]; then
+    log "Up to date: the running image is $IMAGE_REF@$remote."
+    return 0
+  elif is_bad "-" "$remote"; then
+    log "ghcr.io has $remote, which is recorded as bad; a real run would skip it."
+    return 0
+  else
+    log "ghcr.io has $remote; the running image is ${running_digest:-not from ghcr}. A real run would update:"
+  fi
+  log "  pull, stop $CONTAINER_NAME (redis keeps running), back up $DATA_DIR to $BACKUP_ROOT,"
+  log "  tag the new image $LOCAL_TAG, $(compose_cmd_string)up -d --no-deps --no-build --force-recreate $SERVICE"
+  log "  then wait up to ${HEALTH_TIMEOUT}s for healthy + ${STABLE_SECS}s stable; on failure restore data + old image"
+}
+
+show_status() {
+  local remote="" running_digest="" t k img path phase PREV_ID="" PREV_BACKUP="" PREV_FOR="" PREV_TIME=""
+  echo "== pusula-auto-update status =="
+  if run_in_progress; then
+    echo "A run is in progress right now (journalctl -t pusula-auto-update -f)."
+  elif [ -f "$PROGRESS_FILE" ]; then
+    phase="$(sed -n 's/^PHASE=//p' "$PROGRESS_FILE")"
+    echo "Interrupted run not finished yet (phase ${phase:-unknown: the record is unreadable}); the next run finishes it."
+  fi
+  [ ! -f "$PAUSED_FILE" ] || echo "PAUSED: $(cat "$PAUSED_FILE")"$'\n'"  resume with: pusula-auto-update --reset"
+  echo "Last result: $(cat "$RESULT_FILE" 2>/dev/null || echo none)"
+  echo "Failed attempts in a row: $(cat "$FAILURES_FILE" 2>/dev/null || echo 0) (pauses at $MAX_FAILURES)"
+  echo
+  if docker_running; then
+    if OLD_CID="$(cinspect '{{.Id}}' "$CONTAINER_NAME")"; then
+      OLD_ID="$(cinspect '{{.Image}}' "$OLD_CID")"
+      running_digest="$(repo_digest "$OLD_ID")"
+      echo "Container: $CONTAINER_NAME $(cinspect '{{.State.Status}} health={{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}} started={{.State.StartedAt}}' "$OLD_CID")"
+      echo "Running image:    $(short "$OLD_ID") ${running_digest:-(not from ghcr)}"
+    else
+      echo "Container: $CONTAINER_NAME NOT FOUND"
+    fi
+    echo "$LOCAL_TAG:      $(short "$(iinspect '{{.Id}}' "$LOCAL_TAG")")"
+    echo "$PREVIOUS_TAG:  $(short "$(iinspect '{{.Id}}' "$PREVIOUS_TAG")")"
+    remote="$(remote_digest)" || remote=""
+    if [ -n "$remote" ] && [ "$remote" = "$running_digest" ]; then remote="$remote (= running)"; fi
+    echo "ghcr.io :main:    ${remote:-unknown (registry not reachable)}"
+  else
+    echo "Docker: not running"
+  fi
+  # shellcheck source=/dev/null
+  [ ! -f "$PREVIOUS_FILE" ] || . "$PREVIOUS_FILE"
+  if [ -n "$PREV_ID" ] && [ "$PREV_FOR" = "$OLD_ID" ] && [ "$PREV_ID" != "$OLD_ID" ]; then
+    echo "Rollback target:  $(short "$PREV_ID") with backup $PREV_BACKUP  (pusula-auto-update --rollback)"
+  else
+    echo "Rollback target:  none (nothing older is recorded)"
+  fi
+  echo
+  echo "Bad builds (skipped):"
+  if [ -s "$BAD_FILE" ]; then
+    awk '{ r = ""; for (i = 4; i <= NF; i++) r = r " " $i; print "  " substr($1, 8, 12) " " substr($2, 8, 12) " " $3 r }' "$BAD_FILE"
+  else
+    echo "  none"
+  fi
+  echo "Backups and moved-aside data (newest last):"
+  if [ -s "$BACKUPS_FILE" ]; then
+    while read -r t k img path; do
+      [ -e "$path" ] && echo "  $t $k of $(short "$img"): $path ($(du -sh "$path" 2>/dev/null | cut -f1))"
+    done < "$BACKUPS_FILE"
+  else
+    echo "  none"
+  fi
+  df -h "$(nearest_dir "$BACKUP_ROOT")" | awk 'NR == 2 {print "Disk free: " $4 " of " $2 " on " $6}'
+  echo
+  echo "Timer: enabled=$(systemctl is-enabled pusula-auto-update.timer 2>/dev/null) active=$(systemctl is-active pusula-auto-update.timer 2>/dev/null)"
+  systemctl list-timers --all --no-pager pusula-auto-update.timer 2>/dev/null | sed 's/^/  /'
+}
+
+usage() {
+  sed -n '3,/^set -u/p' "$0" | sed '$d' | sed 's/^# \{0,1\}//'
+}
+
+# ------------------------------------------------------------------- main
+main() {
+  case "${1:-}" in
+    "") MODE="run" ;;
+    --dry-run) MODE="dry-run" ;;
+    --status) MODE="status" ;;
+    --rollback) MODE="rollback" ;;
+    --reset) MODE="reset" ;;
+    -h|--help) usage; exit 0 ;;
+    *) echo "unknown argument: $1 (try --help)" >&2; exit 64 ;;
+  esac
+  [ "$(id -u)" -eq 0 ] || { echo "pusula-auto-update must run as root" >&2; exit 1; }
+  case "$MODE" in
+    status) show_status; exit 0 ;;
+    dry-run) dry_run; exit 0 ;;
+    run|rollback) [ -n "${INVOCATION_ID:-}" ] || run_under_systemd ;;
+  esac
+
+  { mkdir -p "$STATE_DIR" && chmod 700 "$STATE_DIR"; } || die "cannot create $STATE_DIR"
+  exec 9>>"$LOCK_FILE" || die "cannot open the lock file $LOCK_FILE"
+  if ! flock -n 9; then
+    case "$MODE" in
+      reset) echo "An update is running; try again when it has finished." >&2; exit 1 ;;
+      # Acting later on what the operator saw now could undo a newer update.
+      rollback) die "an update is running right now. Wait until it has finished, check pusula-auto-update --status, then run --rollback again if you still want to." ;;
+    esac
+    log "Another pusula-auto-update run is in progress; skipping."
+    exit 0
+  fi
+  if [ "$MODE" = reset ]; then do_reset; exit 0; fi
+
+  trap on_signal INT TERM HUP
+  if ! docker_running; then
+    log "Docker is not running; nothing to do (this tool never starts Docker)."
+    [ "$MODE" = run ] && end 0 "Docker not running"
+    end 1 "Docker not running"
+  fi
+  log "pusula-auto-update ($MODE); Docker engine $(docker version --format '{{.Server.Version}}' 2>/dev/null || echo unknown)"
+  [ ! -f "$PROGRESS_FILE" ] || recover verify
+  if [ "$MODE" = rollback ]; then do_rollback; fi
+  do_update
+}
+
+main "$@"
