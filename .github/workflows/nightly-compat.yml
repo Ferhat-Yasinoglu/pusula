@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: "Branch to validate (default: highest release/vX.Y.Z)"
+        description: "Branch to validate (default: highest release/vX.Y.Z, else main)"
         required: false
         type: string
 
@@ -50,8 +50,11 @@ jobs:
               | sort -t/ -k2 -V \
               | tail -1)
           fi
+          # Main-only repo (no release/vX.Y.Z cycle): validate main instead of failing
+          # the resolver and silently skipping every build/test job.
+          if [ -z "$TARGET" ]; then TARGET="main"; fi
           case "$TARGET" in
-            release/v[0-9]*.[0-9]*.[0-9]*) ;;
+            release/v[0-9]*.[0-9]*.[0-9]* | main) ;;
             *) echo "Refusing non-canonical branch name: $TARGET"; exit 1 ;;
           esac
           echo "target=$TARGET" >> "$GITHUB_OUTPUT"

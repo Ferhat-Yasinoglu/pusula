@@ -65,7 +65,7 @@
     },
     "dompurify": {
       "license": "(MPL-2.0 OR Apache-2.0)",
-      "justification": "dompurify is dual-licensed: MPL-2.0 OR Apache-2.0. The Apache-2.0 option is permissive and compatible with MIT. Pusula uses it indirectly via monaco-editor and mermaid (UI rendering). The gate expression matcher already accepts (MPL-2.0 OR Apache-2.0) as an allowed expression, but this exception is kept for explicitness and audit trail.",
+      "justification": "dompurify is dual-licensed: MPL-2.0 OR Apache-2.0. The Apache-2.0 option is permissive and compatible with MIT. Pusula uses it directly (src/lib/docsSanitizer.ts sanitizes rendered docs HTML) and indirectly via monaco-editor. The gate expression matcher already accepts (MPL-2.0 OR Apache-2.0) as an allowed expression, but this exception is kept for explicitness and audit trail.",
       "risk": "none",
       "reviewAt": "v4.0.0"
     },

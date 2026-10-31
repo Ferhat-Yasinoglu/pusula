@@ -12,7 +12,9 @@ name: Release-Green (continuous)
 #     captain's direct pushes (sync-back — the one ungated write path) AND the merged
 #     COMBINATION right after every PR merge, attributing the offending push range in
 #     the issue. Base-red MTTD drops from ≤24h to ≤~15min after the offending push.
-#   schedule (3×/day) → full --with-build --full-ci (the deep sweep incl. build+suites).
+#   schedule (3×/day) → release-green: full --with-build --full-ci (the deep sweep incl.
+#     build+suites); main-green: --quick --full-ci (build + suites already run in ci.yml
+#     on every push to main — see the main-green job).
 #
 # It is NOT a required status check and never touches a contributor PR — it only
 # reports. Ratchet drift (eslint warnings / cognitive-complexity / file-size) is
@@ -63,6 +65,8 @@ jobs:
     name: Validate active release branch
     # On a push, only run for release/* pushes — a push to main is handled by the
     # main-green job below. Schedule/dispatch always run (they validate the highest release).
+    # With no release/v* branch at all (main-only repo) the resolver sets skip=true and
+    # every later step is skipped, so the job ends green without validating anything.
     if: ${{ github.event_name != 'push' || startsWith(github.ref_name, 'release/') }}
     # Dynamic runner: with USE_VPS_RUNNER=true (release window / on-demand pre-flight)
     # this runs on the dedicated VPS runner — clean env (no operator PUSULA_API_KEY,
@@ -99,7 +103,13 @@ jobs:
               | sort -t/ -k2 -V \
               | tail -1)
           fi
-          if [ -z "$TARGET" ]; then echo "No release/v* branch found"; exit 1; fi
+          if [ -z "$TARGET" ]; then
+            # Main-only repo: nothing to validate (main-green covers main). Every later
+            # step checks this flag; an EMPTY validate exit would otherwise match != '0'.
+            echo "No release/v* branch found — skipping (main-green validates main)"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           # Strict format guard — reject anything that isn't release/vX.Y.Z (blocks
           # ref/command injection via the workflow_dispatch input).
           if ! printf '%s' "$TARGET" | grep -qE '^release/v[0-9]+\.[0-9]+\.[0-9]+$'; then
@@ -109,6 +119,7 @@ jobs:
           echo "Active release branch: $TARGET"
 
       - name: Checkout the release branch
+        if: steps.branch.outputs.skip != 'true'
         env:
           TARGET: ${{ steps.branch.outputs.target }}
         run: |
@@ -117,14 +128,17 @@ jobs:
           git log -1 --oneline
 
       - uses: actions/setup-node@v7
+        if: steps.branch.outputs.skip != 'true'
         with:
           node-version: "24"
           cache: npm
 
       - uses: ./.github/actions/npm-ci-retry
+        if: steps.branch.outputs.skip != 'true'
 
       - name: Release-green validation (full)
         id: validate
+        if: steps.branch.outputs.skip != 'true'
         env:
           EVENT_NAME: ${{ github.event_name }}
         run: |
@@ -152,7 +166,7 @@ jobs:
           cat release-green.log
 
       - name: Open / update tracking issue on HARD failure
-        if: steps.validate.outputs.exit != '0'
+        if: steps.branch.outputs.skip != 'true' && steps.validate.outputs.exit != '0'
         env:
           GH_TOKEN: ${{ github.token }}
           TARGET: ${{ steps.branch.outputs.target }}
@@ -193,11 +207,15 @@ jobs:
             gh issue comment "$EXISTING" --repo "$GITHUB_REPOSITORY" --body-file issue-body.md
             echo "Updated existing issue #$EXISTING"
           else
+            # Idempotent: the label may not exist yet, and `gh issue create --label`
+            # fails the step on an unknown label.
+            gh label create base-red --repo "$GITHUB_REPOSITORY" --color B60205 \
+              --description "Base branch is not green (Release-Green workflow)" 2>/dev/null || true
             gh issue create --repo "$GITHUB_REPOSITORY" --title "$TITLE" --label base-red --body-file issue-body.md
           fi
 
       - name: Close tracking issue when the branch is green again
-        if: steps.validate.outputs.exit == '0'
+        if: steps.branch.outputs.skip != 'true' && steps.validate.outputs.exit == '0'
         env:
           GH_TOKEN: ${{ github.token }}
           TARGET: ${{ steps.branch.outputs.target }}
@@ -222,7 +240,7 @@ jobs:
       # done), turning a finished verdict into a red run — a false base-red
       # that every PR gate reads. Never let the upload outvote the verdict.
       - name: Upload report artifact
-        if: always()
+        if: always() && steps.branch.outputs.skip != 'true'
         continue-on-error: true
         uses: actions/upload-artifact@v7
         with:
@@ -268,11 +286,18 @@ jobs:
           EVENT_NAME: ${{ github.event_name }}
         run: |
           set +e
-          # push (a merge into main) → --quick fast HARD gates; schedule/dispatch → full sweep.
+          # push (a merge into main) → --quick fast HARD gates.
+          # schedule/dispatch → --quick --full-ci: the fast HARD gates PLUS every static gate
+          # from ci.yml's gate jobs. Deliberately NOT --with-build and NOT the slow suites: on
+          # the 4-vCPU / 16 GB hosted runner the full Next build (pack-artifact) ran in
+          # parallel with unit + integration + vitest and the runner was killed ("The runner
+          # has received a shutdown signal", exit 143). ci.yml already runs build,
+          # package-artifact, unit, integration and vitest on every push to main, so
+          # repeating them here only added a resource-starved duplicate.
           if [ "$EVENT_NAME" = "push" ]; then
             MODE="--quick"
           else
-            MODE="--with-build --full-ci"
+            MODE="--quick --full-ci"
           fi
           echo "[main-green] mode: $MODE (event: $EVENT_NAME)"
           # MODE is an intentional flag list, so word-splitting is wanted here
@@ -317,6 +342,10 @@ jobs:
             gh issue comment "$EXISTING" --repo "$GITHUB_REPOSITORY" --body-file issue-body.md
             echo "Updated existing issue #$EXISTING"
           else
+            # Idempotent: the label may not exist yet, and `gh issue create --label`
+            # fails the step on an unknown label.
+            gh label create base-red --repo "$GITHUB_REPOSITORY" --color B60205 \
+              --description "Base branch is not green (Release-Green workflow)" 2>/dev/null || true
             gh issue create --repo "$GITHUB_REPOSITORY" --title "$TITLE" --label base-red --body-file issue-body.md
           fi
 
@@ -375,6 +404,9 @@ jobs:
   # requirement (a shrink banked within 8h is fine) and a per-merge run would rebuild
   # the PR branch repeatedly during merge campaigns while paying for a full ESLint
   # walk each time. Detection stays on push (release-green above); banking is batched.
+  #
+  # With no release/v* branch (main-only repo) the resolver sets skip=true and every
+  # later step is skipped: nothing is measured, no PR is opened, the job ends green.
   bank-ratchet-shrinks:
     name: Bank ratchet shrinks
     if: ${{ github.event_name != 'push' }}
@@ -401,7 +433,11 @@ jobs:
               | sort -t/ -k2 -V \
               | tail -1)
           fi
-          if [ -z "$TARGET" ]; then echo "No release/v* branch found"; exit 1; fi
+          if [ -z "$TARGET" ]; then
+            echo "No release/v* branch found — nothing to bank, skipping"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           # Same strict guard as the validation job — blocks ref/command injection
           # through the workflow_dispatch input.
           if ! printf '%s' "$TARGET" | grep -qE '^release/v[0-9]+\.[0-9]+\.[0-9]+$'; then
@@ -411,6 +447,7 @@ jobs:
           echo "bank_branch=chore/bank-ratchet-${TARGET#release/}" >> "$GITHUB_OUTPUT"
 
       - name: Checkout the release branch
+        if: steps.branch.outputs.skip != 'true'
         env:
           TARGET: ${{ steps.branch.outputs.target }}
         run: |
@@ -419,13 +456,16 @@ jobs:
           git log -1 --oneline
 
       - uses: actions/setup-node@v7
+        if: steps.branch.outputs.skip != 'true'
         with:
           node-version: "24"
           cache: npm
 
       - uses: ./.github/actions/npm-ci-retry
+        if: steps.branch.outputs.skip != 'true'
 
       - name: Ratchet the baselines down
+        if: steps.branch.outputs.skip != 'true'
         run: |
           # Both --update paths are shrink-only by construction (file-size writes only
           # on `improvements`, complexity-ratchets only when `.improved`), and both exit
@@ -445,6 +485,7 @@ jobs:
 
       - name: Verify the write only went downward
         id: verify
+        if: steps.branch.outputs.skip != 'true'
         run: |
           set -euo pipefail
           # Exits 1 if ANYTHING was raised/added or a rebaseline note was touched.
@@ -458,7 +499,7 @@ jobs:
           fi
 
       - name: Open / update the banking PR
-        if: steps.verify.outputs.changed == 'true'
+        if: steps.branch.outputs.skip != 'true' && steps.verify.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           TARGET: ${{ steps.branch.outputs.target }}
@@ -558,6 +599,10 @@ jobs:
           EXISTING=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
             --search "in:title $TITLE" --json number --jq '.[0].number' 2>/dev/null || echo "")
           if [ -z "$EXISTING" ]; then
+            # Idempotent: the label may not exist yet, and `gh issue create --label`
+            # fails the step on an unknown label.
+            gh label create quality-gate-finding --repo "$GITHUB_REPOSITORY" --color FBCA04 \
+              --description "Finding reported by a quality-gate workflow" 2>/dev/null || true
             EXISTING=$(gh issue create --repo "$GITHUB_REPOSITORY" --title "$TITLE" --label quality-gate-finding \
               --body "Living tracker for the velocity-phase baseline budget (docs/architecture/QUALITY_GATES.md → Velocity phase). One comment per nightly run; the newest comment is the current state." \
               | grep -oE '[0-9]+$')

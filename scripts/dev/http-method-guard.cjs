@@ -22,6 +22,7 @@ const HIGH_RISK_METHOD_RULES = [
   [/^\/api\/keys\/groups\/[^/]+\/permissions\/?$/, ["GET", "POST", "DELETE"]],
   [/^\/api\/keys\/[^/]+\/?$/, ["GET", "PATCH", "DELETE"]],
   [/^\/api\/keys\/[^/]+\/devices\/?$/, ["GET"]],
+  [/^\/api\/keys\/[^/]+\/access\/?$/, ["POST"]],
   [/^\/api\/keys\/[^/]+\/regenerate\/?$/, ["POST"]],
   [/^\/api\/keys\/[^/]+\/reveal\/?$/, ["GET"]],
   [/^\/api\/keys\/[^/]+\/usage-limits\/?$/, ["GET"]],

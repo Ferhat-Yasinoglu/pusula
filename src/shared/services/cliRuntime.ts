@@ -10,6 +10,7 @@ import { GROK_BUILD_RUNTIME_ENTRY, AMP_RUNTIME_ENTRY } from "./cliRuntimeGrokBui
 import { isLocationTrusted, findKnownPathMatch } from "./cliRuntimeKnownPath";
 import { buildHealthcheckPath } from "./cliRuntimeHealthcheckPath";
 import { appendWindowsKnownBinPaths, mergeWindowsLookupPath } from "./cliRuntimeWindowsNode";
+import { dropProjectBinDirs } from "./cliRuntimeProjectBin";
 import { getNpmGlobalPrefix } from "./cliRuntimeNpmPrefix";
 import {
   describeContainerTarget,
@@ -758,13 +759,15 @@ const getNvmNodePath = (): string | null => {
 export const getLookupEnv = () => {
   const env = { ...process.env };
   const extraPaths = getExtraPaths();
-  const basePath = env.PATH || env.Path || "";
+  const basePath = dropProjectBinDirs(env.PATH || env.Path || "");
 
   // #3321: on macOS GUI/Electron the inherited PATH is truncated (no Homebrew/nvm/volta),
   // so CLI detection and CLI spawns can't find tools the user actually has installed.
   // Enrich with the login-shell PATH (cached, darwin-only, fail-safe → null elsewhere).
   const loginShellPath = getCachedLoginShellPath();
-  const enrichedPath = loginShellPath ? mergeShellPath(basePath, loginShellPath) : basePath;
+  const enrichedPath = loginShellPath
+    ? mergeShellPath(basePath, dropProjectBinDirs(loginShellPath))
+    : basePath;
 
   // Only add user-specified extra paths, NOT generic user directories
   // This is more secure - user explicitly opts in via CLI_EXTRA_PATHS
@@ -791,6 +794,9 @@ export const getLookupEnv = () => {
         env.Path = mergedPath;
       }
     }
+  } else if (env.PATH) {
+    // Nothing to merge on POSIX, but the raw PATH may still carry project bin dirs.
+    env.PATH = basePath;
   }
   return env;
 };
