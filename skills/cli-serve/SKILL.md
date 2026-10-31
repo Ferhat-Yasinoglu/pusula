@@ -53,6 +53,7 @@ pusula restart
 - `--log`
 - `--no-recovery`
 - `--max-restarts <n>`
+- `--headless`
 - `--tray`
 - `--no-tray`
 - `--ready-timeout <ms>`
@@ -66,6 +67,10 @@ pusula serve
 ```
 
 ### `stop`
+
+**Flags:**
+
+- `--port <port>`
 
 **Example:**
 

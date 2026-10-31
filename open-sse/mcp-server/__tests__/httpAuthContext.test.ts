@@ -146,12 +146,13 @@ describe("MCP HTTP auth context", () => {
     }
   });
 
-  it("forwards request auth through advanced tool apiFetch", async () => {
+  it("authenticates internal hops through every MCP fetch helper", async () => {
     const fetchMock = vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({ entries: 2, hitRate: 0.5 }),
     });
     vi.stubGlobal("fetch", fetchMock);
+    vi.stubEnv("PUSULA_INTERNAL_SERVICE_TOKEN", "internal-hop-token");
 
     const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
     const server = createMcpServer();
@@ -166,15 +167,31 @@ describe("MCP HTTP auth context", () => {
       await withMcpHttpAuthContext(request, () =>
         client.callTool({ name: "pusula_cache_stats", arguments: {} })
       );
+      await withMcpHttpAuthContext(request, () =>
+        client.callTool({ name: "pusula_pick_fastest_model", arguments: {} })
+      );
 
       expect(fetchMock).toHaveBeenCalledWith(
         expect.stringContaining("/api/cache"),
-        expect.objectContaining({
-          headers: expect.objectContaining({ Authorization: "Bearer manage-key" }),
-        })
+        expect.anything()
       );
+      expect(fetchMock).toHaveBeenCalledWith(
+        expect.stringContaining("/api/monitoring/health"),
+        expect.anything()
+      );
+      for (const [, init] of fetchMock.mock.calls) {
+        expect(init).toEqual(
+          expect.objectContaining({
+            headers: expect.objectContaining({
+              Authorization: "Bearer manage-key",
+              "x-pusula-internal-service-token": "internal-hop-token",
+            }),
+          })
+        );
+      }
     } finally {
       await client.close();
+      vi.unstubAllEnvs();
       vi.unstubAllGlobals();
     }
   });

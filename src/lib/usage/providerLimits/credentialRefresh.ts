@@ -1,9 +1,10 @@
 import { updateProviderConnection } from "@/lib/db/providers";
 import type { BaseExecutor } from "@pusula/open-sse/executors/base";
 import {
-  rotationGroupFor,
-  serializeRefresh,
-} from "@pusula/open-sse/services/refreshSerializer.ts";
+  isUnrecoverableRefreshError,
+  NO_REFRESH_NEEDED,
+} from "@pusula/open-sse/services/tokenRefresh/shared.ts";
+import { rotationGroupFor, serializeRefresh } from "@pusula/open-sse/services/refreshSerializer.ts";
 
 type JsonRecord = Record<string, unknown>;
 
@@ -123,7 +124,11 @@ export async function refreshAndUpdateCredentialsWithResolver(
     executor.refreshCredentials(credentials, console)
   )) as CredentialRefreshResult | null;
 
-  if (!refreshResult) {
+  // A dead refresh token surfaces as an unrecoverable sentinel, not a falsy
+  // result: without this guard the truthy sentinel would read as a success
+  // and the helper would persist it as refreshed credentials.
+  const effectiveRefreshResult = refreshResult === NO_REFRESH_NEEDED ? null : refreshResult;
+  if (!effectiveRefreshResult || isUnrecoverableRefreshError(effectiveRefreshResult)) {
     if (connection.accessToken) {
       return { connection, refreshed: false };
     }

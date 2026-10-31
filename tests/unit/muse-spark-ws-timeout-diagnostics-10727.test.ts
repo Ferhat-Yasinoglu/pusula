@@ -4,6 +4,7 @@ import {
   MuseSparkWebExecutor,
   __resetMuseSparkConversationCacheForTesting,
   __setMuseSparkWebSocketForTesting,
+  __setMuseSparkFreshTokenFetcherForTesting,
 } from "../../open-sse/executors/muse-spark-web.ts";
 import { WebSocket } from "ws";
 
@@ -31,33 +32,29 @@ import { WebSocket } from "ws";
  * bugs between fake timers and the executor's real async/await chain.
  */
 function interceptWsTimeout(): {
+  registered: Promise<void>;
   fire: () => void;
   restore: () => void;
-  registered: () => Promise<void>;
 } {
   const original = globalThis.setTimeout;
   let captured: (() => void) | null = null;
+  let markRegistered: () => void = () => {};
+  const registered = new Promise<void>((resolve) => {
+    markRegistered = resolve;
+  });
   globalThis.setTimeout = ((cb: (...a: unknown[]) => void, ms?: number, ...args: unknown[]) => {
     if (ms === 30000 && captured === null) {
       captured = cb as () => void;
+      markRegistered();
       return 0 as unknown as ReturnType<typeof setTimeout>;
     }
     return original(cb as () => void, ms, ...args);
   }) as typeof setTimeout;
   return {
+    registered,
     fire: () => {
       assert.ok(captured, "the 30000ms wsChat timeout was never registered");
       captured?.();
-    },
-    // Resolves once wsChat has registered its timeout — the executor reaches that point
-    // only after the GraphQL awaits and the WS open, so waiting here (instead of a fixed
-    // sleep) keeps the test deterministic on a loaded runner.
-    registered: async () => {
-      const deadline = Date.now() + 5000;
-      while (captured === null && Date.now() < deadline) {
-        await new Promise((r) => original(r, 5));
-      }
-      assert.ok(captured, "the 30000ms wsChat timeout was never registered within 5s");
     },
     restore: () => {
       globalThis.setTimeout = original;
@@ -81,9 +78,12 @@ class NeverOpensWebSocket {
   close() {}
 }
 
-let lastOpened: Promise<void> = Promise.resolve();
-
 class OpensThenSilentWebSocket {
+  // Resolved once onopen has run (the intro + prompt frames are sent inside it),
+  // so the test can fire the timeout at a deterministic point instead of
+  // sleeping a wall-clock 20ms that flakes under load.
+  static opened: Promise<void> = Promise.resolve();
+  static sent: Array<Uint8Array | string> = [];
   onopen: (() => void) | null = null;
   onmessage: ((evt: { data: string }) => void) | null = null;
   onclose: (() => void) | null = null;
@@ -92,7 +92,8 @@ class OpensThenSilentWebSocket {
   url: string;
   constructor(url: string) {
     this.url = url;
-    lastOpened = new Promise((resolve) => {
+    OpensThenSilentWebSocket.sent = [];
+    OpensThenSilentWebSocket.opened = new Promise<void>((resolve) => {
       setTimeout(() => {
         this.readyState = WebSocket.OPEN;
         this.onopen?.();
@@ -100,7 +101,9 @@ class OpensThenSilentWebSocket {
       }, 0);
     });
   }
-  send(_data: Uint8Array | string) {}
+  send(data: Uint8Array | string) {
+    OpensThenSilentWebSocket.sent.push(data);
+  }
   close() {}
 }
 
@@ -122,6 +125,9 @@ function baseInput(connectionId: string): Parameters<MuseSparkWebExecutor["execu
 
 test("#10727: WS timeout while still CONNECTING reports readyState=0 (never opened)", async () => {
   __resetMuseSparkConversationCacheForTesting();
+  // Prevent real browser launch — return a failure so the test falls back to
+  // the static authorization token provided in baseInput().
+  __setMuseSparkFreshTokenFetcherForTesting(async () => ({ ok: false as const, error: "test" }));
   const executor = new MuseSparkWebExecutor();
   const originalFetch = globalThis.fetch;
   globalThis.fetch = async () => new Response("{}", { status: 200 });
@@ -131,9 +137,10 @@ test("#10727: WS timeout while still CONNECTING reports readyState=0 (never open
   const timeoutHook = interceptWsTimeout();
   try {
     const resultPromise = executor.execute(baseInput("conn-10727-never-opens"));
-    // Let the GraphQL warmup/mode-switch awaits and the WS constructor run
-    // before the 30s timeout is registered.
-    await new Promise((r) => setTimeout(r, 20));
+    // wsChat registers the 30s timer synchronously right after constructing the
+    // socket, so waiting for that registration (not a fixed sleep) guarantees the
+    // socket exists and never left CONNECTING.
+    await timeoutHook.registered;
     timeoutHook.fire();
 
     const result = await resultPromise;
@@ -148,11 +155,15 @@ test("#10727: WS timeout while still CONNECTING reports readyState=0 (never open
     globalThis.fetch = originalFetch;
     restore();
     timeoutHook.restore();
+    __setMuseSparkFreshTokenFetcherForTesting(undefined); // Restore real impl
   }
 });
 
 test("#10727: WS timeout after a successful open reports readyState=1 (opened, then silent)", async () => {
   __resetMuseSparkConversationCacheForTesting();
+  // Prevent real browser launch — return a failure so the test falls back to
+  // the static authorization token provided in baseInput().
+  __setMuseSparkFreshTokenFetcherForTesting(async () => ({ ok: false as const, error: "test" }));
   const executor = new MuseSparkWebExecutor();
   const originalFetch = globalThis.fetch;
   globalThis.fetch = async () => new Response("{}", { status: 200 });
@@ -162,12 +173,12 @@ test("#10727: WS timeout after a successful open reports readyState=1 (opened, t
   const timeoutHook = interceptWsTimeout();
   try {
     const resultPromise = executor.execute(baseInput("conn-10727-opens-silent"));
-    // Wait for the real sequence instead of sleeping a fixed 20ms: the GraphQL awaits,
-    // the WS open (its own real setTimeout(...,0)) and the intro/prompt frames, up to the
-    // point where wsChat registers its 30s timeout. A fixed sleep raced the open on a
-    // loaded CI runner and reported readyState=0 for a socket that had not opened yet.
-    await timeoutHook.registered();
-    await lastOpened;
+    // The timer is registered before the socket opens, so wait for BOTH the
+    // registration and the socket's onopen (which sends the intro + prompt
+    // frames) before firing — no wall-clock sleep involved.
+    await timeoutHook.registered;
+    await OpensThenSilentWebSocket.opened;
+    assert.equal(OpensThenSilentWebSocket.sent.length, 2, "intro + prompt frames were sent");
     timeoutHook.fire();
 
     const result = await resultPromise;
@@ -182,5 +193,6 @@ test("#10727: WS timeout after a successful open reports readyState=1 (opened, t
     globalThis.fetch = originalFetch;
     restore();
     timeoutHook.restore();
+    __setMuseSparkFreshTokenFetcherForTesting(undefined); // Restore real impl
   }
 });

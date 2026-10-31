@@ -190,6 +190,14 @@ const EMBEDDED_DEFAULTS = {
   // Firefly credits balance endpoint public x-api-key (`SunbreakWebUI1`) from
   // GET firefly.adobe.io/v1/credits/balance browser traffic.
   adobe_firefly_balance_api_key: [35, 0, 29, 23, 30, 4, 76, 27, 34, 7, 14, 60, 42, 28],
+  // Twinmind web (app.twinmind.com) — public Firebase Web API key used only to
+  // exchange a user refresh token for a short-lived ID token. Firebase Web API
+  // keys are public client identifiers, not secrets.
+  // https://firebase.google.com/docs/projects/api-keys
+  twinmind_fb: [
+    49, 60, 9, 20, 63, 24, 105, 66, 38, 6, 51, 39, 51, 30, 0, 112, 68, 7, 4, 3, 3, 19, 66, 59, 4,
+    38, 9, 15, 19, 117, 44, 84, 51, 56, 55, 45, 15, 40, 124,
+  ],
   // Muse Code CLI — Meta public OAuth client id (device grant, no secret).
   muse_id: [65, 69, 64, 68, 90, 83, 24, 73, 64, 80, 91, 93, 91, 20, 66, 7],
 } as const;

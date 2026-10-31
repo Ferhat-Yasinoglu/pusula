@@ -60,9 +60,9 @@ SQLite dosyası şurada saklanır:
 
 | İşletim Sistemi | Yol                                                            |
 | --------------- | -------------------------------------------------------------- |
-| Linux           | `~/.pusula/storage.sqlite`                                  |
-| macOS           | `~/.pusula/storage.sqlite`                                  |
-| Windows         | `%USERPROFILE%\.pusula\storage.sqlite`                      |
+| Linux           | `~/.pusula/storage.sqlite`                                     |
+| macOS           | `~/.pusula/storage.sqlite`                                     |
+| Windows         | `%USERPROFILE%\.pusula\storage.sqlite`                         |
 | Docker          | `/app/data/storage.sqlite` (`DATA_DIR` ile yapılandırılabilir) |
 
 İlişkili dosyalar:
@@ -386,8 +386,8 @@ pusula backup auto enable --cron "0 2 * * *" --retention 7
 
 Zamanlama, varsayılan olarak her 30 saniyede bir tetiklenen ve cron ifadesini sunucunun yerel saatine göre değerlendiren bir arka plan görevi tarafından sunucu tarafında yürütülür.
 
-| Değişken                                    | Varsayılan | Açıklama                                                                                                                                       |
-| ------------------------------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Değişken                                 | Varsayılan | Açıklama                                                                                                                                       |
+| ---------------------------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | `PUSULA_BACKUP_SCHEDULE_JOB_INTERVAL_MS` | `30000`    | Milisaniye cinsinden tetikleme aralığı (en az `5000`). Eşleşen cron dakikasına güvenilir biçimde denk gelmek için 60 saniyeden kısa olmalıdır. |
 
 ### SQLite Çalışırken Yedekleme
@@ -511,14 +511,14 @@ sqlite3 ~/.pusula/storage.sqlite "PRAGMA integrity_check;"
 
 ### Senaryo 1: WAL Dosyası Kayboldu
 
-`-wal` dosyası eksik, ancak `-shm` ve ana veritabanı sağlam:
+`-wal` dosyası eksik ancak `-shm` ve ana veritabanı sağlam:
 
 ```bash
 # Bir sonraki açılışta otomatik olarak kurtarılır
 pusula
 ```
 
-SQLite otomatik olarak kurtaramazsa:
+SQLite otomatik kurtarma yapamazsa:
 
 ```bash
 sqlite3 ~/.pusula/storage.sqlite ".recover" > recovered.sql
@@ -531,21 +531,24 @@ mv recovered.db ~/.pusula/storage.sqlite
 Yedekten geri yükleyin:
 
 ```bash
-pusula sync pull --merge   # veya: pusula backup restore <backup-id>
+pusula backup restore <backup-id>
 ```
+
+`pusula sync pull [outPath]`, çalışan bir sunucudan yalnızca tam bir `.tar.gz` arşivi indirir
+(`GET /api/db-backups/exportAll`, operatör kimlik bilgileri gereklidir); herhangi bir geri yükleme işlemi gerçekleştirmez.
 
 ### Senaryo 3: Şifreleme Anahtarı Kayboldu
 
 Anahtar olmadan **kurtarma mümkün değildir**. Şifrelenmiş alanlar okunamaz. Tüm sağlayıcıları yeni kimlik bilgileriyle manuel olarak yeniden ekleyin.
 
-> **Risk azaltma**: Şifreleme anahtarını her zaman ayrı bir yerde, tercihen bir parola yöneticisinde veya KMS'de yedekleyin.
+> **Risk azaltma**: Şifreleme anahtarını her zaman ayrı olarak, tercihen bir parola yöneticisinde veya KMS'de yedekleyin.
 
 ### Senaryo 4: Disk Dolu
 
-SQLite, `SQLITE_FULL` hataları döndürür. Diskte yer açın, ardından:
+SQLite, `SQLITE_FULL` hataları döndürür. Diskte yer açtıktan sonra şunu çalıştırın:
 
 ```bash
-# Yer açmak için WAL denetim noktası oluşturun
+# Alan açmak için WAL denetim noktası oluşturun
 sqlite3 ~/.pusula/storage.sqlite "PRAGMA wal_checkpoint(TRUNCATE);"
 ```
 

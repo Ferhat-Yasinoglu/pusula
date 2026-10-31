@@ -93,6 +93,42 @@ test("CLI data-dir resolver preserves an existing legacy ~/.pusula before XDG/ap
   }
 });
 
+test("CLI startup can isolate an explicit DATA_DIR from the user's default secret env", () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-cli-env-isolated-"));
+  const home = path.join(tmp, "home");
+  const dataDir = path.join(tmp, "data");
+  const cwd = path.join(tmp, "cwd");
+  const defaultDataDir = path.join(home, ".pusula");
+  for (const directory of [dataDir, cwd, defaultDataDir]) {
+    fs.mkdirSync(directory, { recursive: true });
+  }
+  fs.writeFileSync(path.join(dataDir, ".env"), "PORT=29999\n", "utf8");
+  fs.writeFileSync(path.join(defaultDataDir, ".env"), "PUSULA_HTTP_TIMEOUT_MS=987654\n", "utf8");
+
+  try {
+    const cleanEnv = { ...process.env };
+    delete cleanEnv.PUSULA_HTTP_TIMEOUT_MS;
+    delete cleanEnv.STORAGE_ENCRYPTION_KEY;
+    const current = readCliEnvShow(
+      {
+        ...cleanEnv,
+        DATA_DIR: dataDir,
+        HOME: home,
+        USERPROFILE: home,
+        CI: "1",
+        PUSULA_CLI_SKIP_DEFAULT_DATA_ENV: "1",
+        PUSULA_CLI_SKIP_REPO_ENV: "1",
+        PUSULA_NO_UPDATE_NOTIFIER: "1",
+      },
+      cwd
+    );
+    assert.equal(current.PORT, "29999");
+    assert.equal(current.PUSULA_HTTP_TIMEOUT_MS, undefined);
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+  }
+});
+
 test("CLI startup loads later non-conflicting .env files without overriding earlier values", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "pusula-cli-env-layers-"));
   const home = path.join(tmp, "home");

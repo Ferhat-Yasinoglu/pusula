@@ -24,8 +24,11 @@ function catalogOnlyNoAuthProviders(): string[] {
   for (const id of Object.keys(NOAUTH_PROVIDERS)) {
     // Only providers that actually ship a catalog can be asserted on.
     if (!(getModelsByProviderId(id) || []).length) continue;
-    // A provider with a `modelsUrl` is not catalog-only: it would make a live
-    // upstream fetch here, so the result depends on that service being up.
+    // A provider that declares `modelsUrl` is NOT catalog-only: its catalog is a
+    // fallback, and an untagged local_catalog answer after a failed live fetch is
+    // the genuine degradation the sync guard must keep rejecting. Including it
+    // made this test hit the network and fail wherever that endpoint is
+    // unreachable (uncloseai on CI, 2026-09-29).
     const modelsUrl = getRegistryEntry(id)?.modelsUrl;
     if (typeof modelsUrl === "string" && modelsUrl.length > 0) continue;
     ids.push(id);

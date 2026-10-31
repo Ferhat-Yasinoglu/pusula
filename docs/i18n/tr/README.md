@@ -713,10 +713,10 @@ docker run -d --name pusula --restart unless-stopped --stop-timeout 40 \
 `:latest` etiketi **yayımlanmış** en yüksek kararlı SemVer sürümünü takip eder. Git `main` dalını takip etmez. GitOps için `:X.Y.Z` sürümünü sabitleyin. Bkz. [Docker Sürüm Kanalları](docs/guides/DOCKER_GUIDE.md#release-channels). İmaj **`PUSULA_MEMORY_MB=1024`** değerini sabitler. Bu, pano ve hafif bir sohbet için yeterlidir. **Kodlama ajanları** (Claude Code, Codex, Grok, vb.'den gelen `POST /v1/responses`), çok daha büyük bir V8 heap alanına ihtiyaç duyar; aksi takdirde iki örtüşen uzun bağlam altında süreç ~12 GiB seviyesinde `FATAL ERROR` verir. Konteyneri heap boyutunun üzerinde boyutlandırın (yerel arabellekler V8'in dışında yer alır):
 
 | İş Yükü                            | Heap (`-e PUSULA_MEMORY_MB`) | Konteyner (`--memory`) |
-| ---------------------------------- | ------------------------------- | ---------------------- |
-| Pano / hafif sohbet                | `1024` (imaj varsayılanı)       | ≥2 g                   |
-| Tek bir kodlama ajanı              | `8192`                          | ≥10 g                  |
-| İki eşzamanlı uzun `/v1/responses` | `10240`–`12288`                 | ≥12–16 g               |
+| ---------------------------------- | ---------------------------- | ---------------------- |
+| Pano / hafif sohbet                | `1024` (imaj varsayılanı)    | ≥2 g                   |
+| Tek bir kodlama ajanı              | `8192`                       | ≥10 g                  |
+| İki eşzamanlı uzun `/v1/responses` | `10240`–`12288`              | ≥12–16 g               |
 
 ```bash
 docker run -d --name pusula --restart unless-stopped --stop-timeout 40 \
@@ -825,7 +825,7 @@ aynı süreç tarafından sunulur, bu nedenle bugün için ayrı bir yalnızca C
 
 | Kanal                                      | Nerede / Nasıl                                                                                                              |
 | ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
-| 🐛 **Hata bildirimi ve özellik istekleri** | [GitHub Issues](https://github.com/Ferhat-Yasinoglu/pusula/issues) — `npm run system-info` çıktısını ekleyin                 |
+| 🐛 **Hata bildirimi ve özellik istekleri** | [GitHub Issues](https://github.com/Ferhat-Yasinoglu/pusula/issues) — `npm run system-info` çıktısını ekleyin                |
 | 💬 **Sorular, ipuçları ve tartışmalar**    | [GitHub Discussions](https://github.com/Ferhat-Yasinoglu/pusula/discussions)                                                |
 | 📦 **Kaynak Kod**                          | [github.com/Ferhat-Yasinoglu/pusula](https://github.com/Ferhat-Yasinoglu/pusula)                                            |
 | 🤝 **Katkıda Bulunun**                     | [CONTRIBUTING.md](CONTRIBUTING.md) · [Dallanma ve Sürüm Modeli](docs/ops/BRANCHING_MODEL.md) · bir `good first issue` seçin |
@@ -846,7 +846,7 @@ aynı süreç tarafından sunulur, bu nedenle bugün için ayrı bir yalnızca C
   <tr><td nowrap><b>Çalışma Zamanı</b></td><td>Node.js 22.x / 24.x LTS — <code>&gt;=22.22.2 &lt;23 || &gt;=24.0.0 &lt;27</code></td></tr>
   <tr><td nowrap><b>Dil</b></td><td>TypeScript 6.0 — <code>src/</code> ve <code>open-sse/</code> genelinde <b>%100 TypeScript</b> (v2.0'dan beri çekirdekte sıfır <code>any</code>)</td></tr>
   <tr><td nowrap><b>Çerçeve</b></td><td>Next.js 16 + React 19 + Tailwind CSS 4</td></tr>
-  <tr><td nowrap><b>Veritabanı</b></td><td>better-sqlite3 (SQLite, WAL journaling) + LowDB (JSON legacy) — 122 alan modülü, 183 migrasyon</td></tr>
+  <tr><td nowrap><b>Veritabanı</b></td><td>better-sqlite3 (SQLite, WAL journaling) + LowDB (JSON legacy) — 122 alan modülü, 209 migrasyon</td></tr>
   <tr><td nowrap><b>Bellek</b></td><td>SQLite FTS5 tam metin + int8-nicelenmiş vektör gömüleri, tipik bozunma</td></tr>
   <tr><td nowrap><b>Şemalar</b></td><td>Zod 4 — MCP araç G/Ç doğrulama + API sözleşmeleri</td></tr>
   <tr><td nowrap><b>Protokoller</b></td><td>MCP (stdio / HTTP / SSE) + A2A v0.3 (JSON-RPC 2.0 + SSE)</td></tr>

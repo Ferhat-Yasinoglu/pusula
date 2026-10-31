@@ -159,7 +159,7 @@ export async function handleStabilityImageUpscale({
     });
 
     if (!response.ok) {
-      const errorText = await response.text().catch(() => "");
+      const errorText = sanitizeErrorMessage(await response.text().catch(() => ""));
       log?.error?.(
         "IMAGE",
         `${provider} stability upscale error ${response.status}: ${errorText.slice(0, 200)}`
@@ -276,7 +276,7 @@ async function pollStabilityResult(opts: {
     }
 
     if (!response.ok) {
-      const text = await response.text().catch(() => "");
+      const text = sanitizeErrorMessage(await response.text().catch(() => ""));
       if (response.status === 429 || response.status >= 500) {
         await sleep(RESULT_POLL_INTERVAL_MS);
         continue;
@@ -293,7 +293,9 @@ async function pollStabilityResult(opts: {
 }
 
 function normalizeOutputFormat(value: unknown): string {
-  const raw = String(value ?? "").trim().toLowerCase();
+  const raw = String(value ?? "")
+    .trim()
+    .toLowerCase();
   if (raw === "jpg") return "jpeg";
   return ALLOWED_OUTPUT_FORMATS.includes(raw) ? raw : "png";
 }

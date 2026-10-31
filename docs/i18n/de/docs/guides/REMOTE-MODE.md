@@ -241,24 +241,26 @@ Ersetzen Sie beim Verbinden mit xAI oder Grok CLI `1455` durch `56121`/`56122` u
 
 ```bash
 pusula tokens create --name "laptop" --scope write [--expires 30]
-#   ↳ gibt das Geheimnis EINMAL aus — kopieren Sie es jetzt
-pusula tokens list                 # maskiert: ID, Name, Geltungsbereich, Präfix, Status, Ablaufdatum
+#   ↳ gibt das Geheimnis genau EINMAL aus, jetzt kopieren
+pusula tokens list                 # maskiert: ID, Name, Scope, Präfix, Status, Ablauf
 pusula tokens revoke <id|prefix>   # sofort widerrufen
-pusula tokens scopes               # die drei Geltungsbereiche erläutern
+pusula tokens scopes               # erklärt die drei Scopes
 ```
 
-`tokens`-Befehle erfordern Admin-Anmeldedaten. Sie können Tokens auch im Dashboard unter **Settings → Access Tokens** verwalten (erstellen, widerrufen, einmalig kopieren).
+Die Befehle von `tokens` erfordern eine Berechtigung vom Typ **admin**. Tokens können außerdem im Dashboard unter **Einstellungen → Access-Tokens** verwaltet werden (erstellen, widerrufen, einmal kopieren).
+
+Ein Token kann niemals mit mehr Berechtigung ausgestellt werden, als sein Ersteller besitzt. Ein `admin`-Token kann nur vom Operator erstellt werden: über die Dashboard-Sitzung, die lokale CLI auf dem Server selbst oder `pusula connect` mit dem Passwort. Maschinen-Credentials (ein `admin`-Access-Token oder ein API-Schlüssel mit Scope `manage`/`admin`) können nur `write`- und `read`-Tokens erstellen. Wer sie um `--scope admin` bittet, erhält `403`. Das Deaktivieren der Anmeldung öffnet die Ausstellung nicht: Ein Access-Token mit beliebigem Scope ist ein Credential, das die immer authentifizierten Routen akzeptieren. Ein anonymer Aufruf erhält daher bei jedem Scope `401`.
 
 ---
 
-## Eine Coding-CLI aus dem Remote-Katalog konfigurieren
+## Konfiguration eines Coding-CLI aus dem Remote-Katalog
 
-`pusula configure` liest den aktuellen Modellkatalog des **aktiven Servers** und schreibt eine Konfiguration auf **Ihrem** Rechner.
+`pusula configure` liest den Live-Modellkatalog des **aktiven Servers** und schreibt eine Konfiguration auf **Ihrem** Rechner.
 
 ```bash
 pusula configure codex
-#   Anbieter: glm, kmc, ollamacloud, opencode-go, …
-#   Anbieter: glm
+#   Provider: glm, kmc, ollamacloud, opencode-go, …
+#   Provider: glm
 #   Modell-ID: glm/glm-5.2
 #   ✔ ~/.codex/glm52.config.toml geschrieben
 #   Verwendung:  codex --profile glm52
@@ -266,65 +268,67 @@ pusula configure codex
 # nicht interaktiv
 pusula configure codex --provider glm --model glm/glm-5.2 --name glm52
 
-# ein häufig verwendetes Modell am Anfang der interaktiven Auswahl beibehalten
+# ein häufig genutztes Modell oben in der interaktiven Auswahl halten
 pusula configure codex --provider glm --model glm/glm-5.2 --favorite --yes
 ```
 
-Die Auswahl speichert ausschließlich Modell-IDs (niemals URLs oder Anmeldedaten) in der lokalen Datei `model-preferences.json`, getrennt nach Kontext und CLI-Ziel. Favoriten werden vor den zuletzt ausgewählten Einträgen angezeigt; verwenden Sie `--unfavorite`, um ein ausgewähltes Modell aus der Liste für diesen Kontext und dieses Ziel zu entfernen.
+Die Auswahl speichert nur Modell-IDs (niemals URLs oder Credentials) in der lokalen Datei `model-preferences.json`, gegliedert nach Kontext und CLI-Ziel. Favoriten werden vor den zuletzt verwendeten Auswahlen angezeigt. Mit `--unfavorite` entfernen Sie ein ausgewähltes Modell wieder aus der Liste dieses Kontexts bzw. Ziels.
 
-Das erstellte Profil verweist über eine Umgebungsvariable (`PUSULA_API_KEY`) auf den Inferenzschlüssel — das Geheimnis wird niemals auf den Datenträger geschrieben. Informationen zur einmaligen Codex-Basiskonfiguration (dem Block `[model_providers.pusula]`) finden Sie unter [CODEX-CLI-CONFIGURATION.md](./CODEX-CLI-CONFIGURATION.md).
+Das geschriebene Profil verweist auf den Inferenz-Schlüssel über die Umgebungsvariable (`PUSULA_API_KEY`). Das Geheimnis wird niemals auf die Festplatte geschrieben. Für das einmalige Basis-Setup von Codex (den Block `[model_providers.pusula]`) siehe [CODEX-CLI-CONFIGURATION.md](./CODEX-CLI-CONFIGURATION.md).
 
-### Eine CLI für die Remote-Instanz starten (ohne Konfiguration zu schreiben)
+### CLI gegen den Remote-Server starten (ohne Konfiguration zu schreiben)
 
-`pusula run <target>` berücksichtigt ebenfalls den aktiven Kontext: Die Remote-Basis-URL und die Anmeldedaten des Kontexts werden ausschließlich in den gestarteten Prozess injiziert.
+`pusula run <target>` berücksichtigt ebenfalls den aktiven Kontext: Die Remote-Basis-URL und das Kontext-Credential werden nur in den gestarteten Prozess eingespeist.
 
 ```bash
 pusula connect 192.168.0.15
-pusula run claude   --model openai/gpt-5.4          # Claude Code → Remote-Instanz
+pusula run claude   --model openai/gpt-5.4          # Claude Code → Remote
 pusula run gemini   --model glm/glm-5.2 -- --skip-trust -p "hello"
 pusula run opencode --model glm/glm-5.2 -- run "reply OK"
 
-# Exakte Vorschau dessen, was gestartet würde (nur NAMEN der Umgebungsvariablen, niemals Werte):
+# Genau anzeigen, was gestartet würde (nur Namen der Umgebungsvariablen, niemals Werte):
 pusula run codex --dry-run --json
 ```
 
-Ziele: `claude`, `codex`, `aider`, `goose`, `opencode`, `qwen`, `gemini` (zentrale Quelle: `bin/cli/cli-manifest.mjs`). Qwen und Gemini werden mit einem temporären, isolierten Home-Verzeichnis ausgeführt, das beim Beenden entfernt wird. Dadurch greift der Start niemals auf Ihre persönliche Tool-Konfiguration zu und hinterlässt dort auch keine Daten.
+Ziele: `claude`, `codex`, `aider`, `goose`, `opencode`, `qwen`, `gemini`
+(einzige Quelle: `bin/cli/cli-manifest.mjs`). Qwen und Gemini laufen in einem temporären, isolierten Home-Verzeichnis, das beim Beenden entfernt wird. Der Start berührt Ihre persönliche Tool-Konfiguration daher nie und lässt keine Daten in sie einsickern.
 
-### CLI-spezifische Einrichtungsbefehle
+### Setup-Befehle pro CLI
 
-Jede unterstützte CLI verfügt über einen Remote-fähigen Einrichtungsbefehl (alle berücksichtigen den aktiven Kontext oder `--remote <url> --api-key <key>`):
+Jedes unterstützte CLI hat einen remote-fähigen Setup-Befehl (alle berücksichtigen den aktiven Kontext oder `--remote <url> --api-key <key>`):
 
-| CLI         | Befehl                     | Was geschrieben wird                                                                                                                                                                                                 |
-| ----------- | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Codex       | `pusula setup-codex`    | `~/.codex/<name>.config.toml`-Profile (pro Modell)                                                                                                                                                                   |
-| Claude Code | `pusula setup-claude`   | `~/.claude/profiles/<name>/settings.json` (pro Modell)                                                                                                                                                               |
-| OpenCode    | `pusula setup-opencode` | `~/.config/opencode/opencode.json` — der OpenAI-kompatible `pusula`-Provider mit allen Katalogmodellen (Ausführung mit `opencode -m pusula/<model>`)                                                           |
-| Cline       | `pusula setup-cline`    | `~/.cline/data/{globalState,secrets}.json` (CLI-Modus) + gibt die einzufügenden VS-Code-Erweiterungseinstellungen aus (OpenAI-kompatibel, Basis-URL **ohne** `/v1`)                                                  |
-| Kilo Code   | `pusula setup-kilo`     | `~/.local/share/kilo/auth.json` (CLI) + VS-Code-Einstellungen `kilocode.*` — OpenAI-kompatibel, Basis-URL **mit** `/v1`                                                                                              |
-| Continue    | `pusula setup-continue` | `~/.continue/config.yaml` (VS Code/JetBrains + `cn`-CLI) — `provider: openai`, `apiBase` **mit** `/v1`, Schlüssel über `${{ secrets.PUSULA_API_KEY }}`                                                            |
-| Cursor      | `pusula setup-cursor`   | gibt die Schritte in der App aus (Einstellungen → Modelle → OpenAI-Basis-URL überschreiben **mit** `/v1` + Schlüssel + Modell). Die Cursor-Konfiguration ist eine undurchsichtige SQLite-Datenbank — nur Chatbereich |
-| Roo Code    | `pusula setup-roo`      | schreibt eine Roo-Import-JSON-Datei (`~/.pusula/roo-settings.json`) + setzt `roo-cline.autoImportSettingsPath` + gibt UI-Schritte aus (OpenAI-kompatibel, Basis-URL **mit** `/v1`)                                |
-| Crush       | `pusula setup-crush`    | `~/.config/crush/crush.json` — `openai-compat`-Provider, `base_url` **mit** `/v1`, Schlüssel über `$PUSULA_API_KEY`                                                                                               |
-| Goose       | `pusula setup-goose`    | `~/.config/goose/config.yaml` (`GOOSE_PROVIDER=openai` + `OPENAI_HOST` **ohne** `/v1` + `GOOSE_MODEL`) + Umgebungsvariablen-Anleitung                                                                                |
-| Aider       | `pusula setup-aider`    | `~/.aider.conf.yml` (`openai-api-base` **ohne** `/v1` + `model: openai/<id>`) + Umgebungsvariablen-Anleitung (`aider --message --yes`)                                                                               |
-| Qwen Code   | `pusula setup-qwen`     | V4-Eintrag `modelProviders.openai` in `~/.qwen/settings.json` + `PUSULA_API_KEY` in `~/.qwen/.env`                                                                                                                |
+| CLI         | Befehl                  | Was geschrieben wird                                                                                                                                                                                                   |
+| ----------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Codex       | `pusula setup-codex`    | `~/.codex/<name>.config.toml`-Profile (pro Modell)                                                                                                                                                                     |
+| Claude Code | `pusula setup-claude`   | `~/.claude/profiles/<name>/settings.json` (pro Modell)                                                                                                                                                                 |
+| OpenCode    | `pusula setup-opencode` | `~/.config/opencode/opencode.json`: der Provider `pusula` (OpenAI-kompatibel) mit jedem Katalogmodell (aufrufen mit `opencode -m pusula/<model>`)                                                                      |
+| Cline       | `pusula setup-cline`    | `~/.cline/data/{globalState,secrets}.json` (CLI-Modus) + gibt die einzufügenden Einstellungen der VS-Code-Erweiterung aus (OpenAI-kompatibel, Basis-URL **ohne** `/v1`)                                                |
+| Kilo Code   | `pusula setup-kilo`     | `~/.local/share/kilo/auth.json` (CLI) + VS-Code-Einstellungen `kilocode.*`: OpenAI-kompatibel, Basis-URL **mit** `/v1`                                                                                                 |
+| Continue    | `pusula setup-continue` | `~/.continue/config.yaml` (VS Code/JetBrains + `cn`-CLI): `provider: openai`, `apiBase` **mit** `/v1`, Schlüssel über `${{ secrets.PUSULA_API_KEY }}`                                                                  |
+| Cursor      | `pusula setup-cursor`   | gibt die Schritte in der App aus (Einstellungen → Modelle → Override OpenAI Base URL **mit** `/v1` + Schlüssel + Modell). Die Cursor-Konfiguration ist eine undurchsichtige SQLite-Datenbank, daher nur das Chat-Panel |
+| Roo Code    | `pusula setup-roo`      | schreibt eine Roo-Import-JSON (`~/.pusula/roo-settings.json`), setzt `roo-cline.autoImportSettingsPath` und gibt die UI-Schritte aus (OpenAI-kompatibel, Basis-URL **mit** `/v1`)                                      |
+| Crush       | `pusula setup-crush`    | `~/.config/crush/crush.json`: Provider `openai-compat`, `base_url` **mit** `/v1`, Schlüssel über `$PUSULA_API_KEY`                                                                                                     |
+| Zed         | `pusula setup-zed`      | `~/.config/zed/settings.json`: `language_models.openai_compatible.pusula`, `api_url` **mit** `/v1`, Schlüssel wird von Zed aus `$PUSULA_API_KEY` gelesen (wird nie geschrieben)                                        |
+| Goose       | `pusula setup-goose`    | `~/.config/goose/config.yaml` (`GOOSE_PROVIDER=openai` + `OPENAI_HOST` **ohne** `/v1` + `GOOSE_MODEL`) + Env-Rezept                                                                                                    |
+| Aider       | `pusula setup-aider`    | `~/.aider.conf.yml` (`openai-api-base` **ohne** `/v1` + `model: openai/<id>`) + Env-Rezept (`aider --message --yes`)                                                                                                   |
+| Qwen Code   | `pusula setup-qwen`     | Eintrag `modelProviders.openai` (V4) in `~/.qwen/settings.json` + `PUSULA_API_KEY` in `~/.qwen/.env`                                                                                                                   |
 
 ```bash
-# OpenCode (OpenAI-kompatibler Provider, alle Katalogmodelle, entfernter VPS)
+# OpenCode (OpenAI-kompatibler Provider, alle Katalogmodelle, Remote-VPS)
 pusula setup-opencode --remote http://192.168.0.15:20128 --api-key oma_live_xxx
-pusula setup-opencode --only glm,kimi        # nur übereinstimmende Modelle behalten
-opencode -m pusula/glm/glm-5.2 "..."          # zuerst PUSULA_API_KEY exportieren
+pusula setup-opencode --only glm,kimi        # nur passende Modelle behalten
+opencode -m pusula/glm/glm-5.2 "..."          # zuvor PUSULA_API_KEY exportieren
 ```
 
 > OpenCode bietet außerdem eine umfangreichere **Plugin**-Integration: `pusula setup opencode`
-> (jetzt über `--remote` für entfernte Systeme geeignet) installiert `@pusula/opencode-plugin`.
-> `setup-opencode` ist die schlanke OpenAI-kompatible Alternative. Auf den API-Schlüssel
-> wird über `{env:PUSULA_API_KEY}` verwiesen — er wird niemals auf die Festplatte geschrieben.
+> (jetzt remote-fähig über `--remote`) installiert `@pusula/opencode-plugin`.
+> `setup-opencode` ist die schlanke, OpenAI-kompatible Alternative. Der API-Schlüssel wird über
+> `{env:PUSULA_API_KEY}` referenziert und niemals auf die Festplatte geschrieben.
 >
-> Verwende unter OpenCode v2 stattdessen `@pusula/opencode-plugin-v2`: gleicher Katalog,
-> aber ein anderer Loader-Vertrag. Es liest den Schlüssel aus OpenCodes eigenem Anmeldedaten-
-> speicher, wenn die Integration verbunden ist, sodass ein entferntes Gateway überhaupt keinen
-> Schlüssel in `opencode.json` benötigt.
+> Bei OpenCode v2 verwenden Sie stattdessen `@pusula/opencode-plugin-v2`: derselbe Katalog,
+> aber ein anderer Loader-Vertrag. Das Plugin liest den Schlüssel aus dem eigenen
+> Credential-Speicher von OpenCode, wenn die Integration verbunden ist. Ein Remote-Gateway
+> braucht daher überhaupt keinen Schlüssel in `opencode.json`.
 
 ---
 

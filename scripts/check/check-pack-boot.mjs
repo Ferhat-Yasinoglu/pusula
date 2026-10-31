@@ -216,9 +216,10 @@ function hasExited(child) {
  * reap, throw, so boot #2 cannot start against a port a zombie still holds.
  *
  * The child is spawned with detached:true, so it leads its own process group and
- * -child.pid signals the whole tree, not just the launcher.
+ * -child.pid signals the whole tree, not just the launcher. Exported for reuse by the
+ * local candidate loop (scripts/dev/candidate.mjs), which boots packaged artifacts the same way.
  */
-async function stopChild(child, graceMs = 30_000) {
+export async function stopChild(child, graceMs = 30_000) {
   if (!child?.pid) return;
   // Fast path: already reaped (crashed mid-smoke, or exited before this call) — nothing
   // left to signal or wait for.
@@ -312,13 +313,12 @@ function spawnServer(binPath, port, dataDir) {
 }
 
 /**
- * Derive the machine token exactly as the packaged CLI would, against the SAME DATA_DIR the
- * smoke boots the server with. Both sides persist a random salt in
- * `<DATA_DIR>/cli-token-salt.json` (#10148); deriving here without that DATA_DIR used the
- * default `~/.pusula` salt, so the token never matched the isolated server's and
- * /api/monitoring/health answered with the anonymous liveness view (no `version`).
+ * Derive the loopback machine token exactly as the installed CLI would for this install.
+ * Since #13679/#13909 the token salt is per-install, persisted under <DATA_DIR>, so the
+ * derivation MUST see the same DATA_DIR the server boots on — otherwise the CLI resolves
+ * a different salt, the server rejects the token and health serves the anonymous view.
  */
-function derivePackagedCliToken(packageRoot, dataDir) {
+export function derivePackagedCliToken(packageRoot, dataDir) {
   const cliModuleUrl = pathToFileURL(
     path.join(packageRoot, "bin", "cli", "utils", "cliToken.mjs")
   ).href;

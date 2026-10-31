@@ -35,7 +35,7 @@ endpoint with environment variables (it has no `--base-url` flag):
 | Variable                                     | Purpose                                                                                |
 | -------------------------------------------- | -------------------------------------------------------------------------------------- |
 | `ANTHROPIC_BASE_URL`                         | Gateway root URL (Claude Code appends `/v1/messages`). **No `/v1` suffix.**            |
-| `ANTHROPIC_AUTH_TOKEN`                       | Sent as `Authorization: Bearer …` — use your Pusula access token / API key          |
+| `ANTHROPIC_AUTH_TOKEN`                       | Sent as `Authorization: Bearer …` — use your Pusula access token / API key             |
 | `ANTHROPIC_API_KEY`                          | Alternative: sent as `x-api-key`. If both set, `ANTHROPIC_AUTH_TOKEN` wins             |
 | `ANTHROPIC_MODEL`                            | Force a specific model (overrides the `/model` picker default)                         |
 | `CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY` | `1` → the native `/model` picker lists `claude*`/`anthropic*` models from `/v1/models` |
@@ -69,6 +69,14 @@ glm/glm-5.2              →  claude/glm/glm-5.2         "GLM 5.2 (Pusula)"
 When you pick one of these in Claude Code, Pusula strips the `claude/` wrapper
 back to the real id before routing — a genuine `claude/<real-claude-model>` id
 (the actual Claude OAuth provider) is always left untouched.
+
+By default only base ids are mirrored. With the opt-in
+`CATALOG_MIRROR_REFINEMENTS_ENABLED` feature flag on, reasoning-effort variants that
+the catalog already lists (e.g. `codex/gpt-6-sol-high`) are mirrored like any other
+id, so Claude Code can pick an explicit effort level, and built-in `auto/*` ids the
+request path cannot materialize are not mirrored. Whether effort variants are
+listed at all is still governed by `PUSULA_DISABLE_THINKING_LEVEL_VARIANTS` — the
+mirror never adds a variant the base catalog doesn't have.
 
 **This is off by default** and controlled by a three-level gate (most specific
 wins), so a plain Pusula never doubles its catalog for clients that don't use
@@ -123,6 +131,20 @@ can emit it directly.
 Source: `src/shared/services/claudeCliConfig.ts::buildClaudeDiscoverySettingsSnippet` (pure
 builder, unit-tested) rendered by `ClaudeGatewayOnboardingBlock`.
 
+### Pin one account (optional)
+
+To send every Claude Code request through one specific provider account, add the
+`x-pusula-connection` header through `ANTHROPIC_CUSTOM_HEADERS` in the same `env` block:
+
+```jsonc
+"ANTHROPIC_CUSTOM_HEADERS": "x-pusula-connection: <connection id>"
+```
+
+Copy the id from the `xxxxxxxx…` chip on the connection row of the provider page. The pin only
+applies to single-model ids (`provider/model`), not to combos. See
+[Account pinning per request](../reference/API_REFERENCE.md#account-pinning-per-request) for the
+exact fallback behavior.
+
 ---
 
 ## Profiles (`CLAUDE_CONFIG_DIR`)
@@ -174,6 +196,10 @@ pusula setup-claude --remote http://192.168.0.15:20128 --api-key oma_live_xxx
 
 # Only some providers
 pusula setup-claude --only glm,kimi
+
+# Also write profiles for local-CLI providers (zcode, auggie, devin-cli-agentic,
+# codex-app-server) not detected on this host (skipped by default for a local target)
+pusula setup-claude --include-local
 
 # Preview without writing
 pusula setup-claude --dry-run

@@ -332,7 +332,6 @@ Alternatif olarak, tanınan bir konuma yerleştirin:
 
 ```
 ~/.pusula/compression/rules/hi/filler.json  # Kullanıcı düzeyi
-<project>/.compression/rules/hi/filler.json   # Proje düzeyi
 ```
 
 ### Dil Paketleri İçin En İyi Uygulamalar

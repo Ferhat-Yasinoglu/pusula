@@ -1,3 +1,4 @@
+import { resolveSelfLoopBearer } from "@/shared/middleware/chatAdmissionIdentity";
 import type { RecordedTriageRun } from "@/lib/issueAgent/recordedTriage";
 
 export interface RecordedTriageExecutionInput {
@@ -78,10 +79,7 @@ export async function executeRecordedTriageChatCompletion(
   const controller = new AbortController();
   const timeoutMs = resolveTimeoutMs(input);
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
-  const routingPolicy = configuredString(
-    input.routingPolicy,
-    "PUSULA_ISSUE_AGENT_ROUTING_POLICY"
-  );
+  const routingPolicy = configuredString(input.routingPolicy, "PUSULA_ISSUE_AGENT_ROUTING_POLICY");
 
   try {
     const response = await post(
@@ -90,6 +88,8 @@ export async function executeRecordedTriageChatCompletion(
         signal: controller.signal,
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${resolveSelfLoopBearer()}`,
+          "x-pusula-no-memory": "true",
           ...(routingPolicy ? { "X-Pusula-Mode": routingPolicy } : {}),
         },
         body: JSON.stringify({

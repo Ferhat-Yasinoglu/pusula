@@ -16,8 +16,8 @@ Pusula exposes three different agent-related surfaces. They look similar at firs
 | Surface                       | Best for                                                                                                                                   | Transport                   | Standard             |
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------- | -------------------- |
 | **A2A — Agent-to-Agent**      | Cross-agent collaboration with peer agents that speak the A2A protocol                                                                     | JSON-RPC 2.0 over HTTP      | A2A v0.3 (open spec) |
-| **ACP — CLI Agents Registry** | Detecting / registering / launching CLI coding agents installed on the user's machine (Cursor, Cline, Codex CLI, Claude Code, Aider, etc.) | HTTP REST                   | Pusula-specific   |
-| **Cloud Agents**              | Submitting long-running coding tasks to external cloud services (Codex Cloud, Devin, Jules, Cursor Cloud)                                  | HTTP REST + DB-backed tasks | Pusula-specific   |
+| **ACP — CLI Agents Registry** | Detecting / registering / launching CLI coding agents installed on the user's machine (Cursor, Cline, Codex CLI, Claude Code, Aider, etc.) | HTTP REST                   | Pusula-specific      |
+| **Cloud Agents**              | Submitting long-running coding tasks to external cloud services (Codex Cloud, Devin, Jules, Cursor Cloud)                                  | HTTP REST + DB-backed tasks | Pusula-specific      |
 
 The three are independent — pick any subset.
 
@@ -78,7 +78,11 @@ See [A2A-SERVER.md](./A2A-SERVER.md) for transport details, agent card structure
 
 ACP is Pusula's **local CLI agent inventory**. It detects which coding CLIs are installed on the host (Cursor, Cline, Claude Code, Codex CLI, Continue, etc.), resolves their versions, and surfaces them to the dashboard so the user can wire each CLI to point at Pusula.
 
-This is NOT an external protocol — it's an internal registry that powers the "CLI Tools" UI and the CLI fingerprint tracking (see [CLI-TOOLS.md](../reference/CLI-TOOLS.md)).
+The HTTP surface is an internal inventory that powers the "CLI Tools" UI and
+CLI fingerprint tracking (see [CLI-TOOLS.md](../reference/CLI-TOOLS.md)). Separately,
+the internal process manager supports native Agent Client Protocol for the
+registered Gemini launcher and legacy stdio adapters for other contracts.
+See [ACP registry and launchers](./ACP.md) for those distinct modes and limits.
 
 ### What it does
 
@@ -118,7 +122,10 @@ Body shape for POST (`customAgentBodySchema` in `src/app/api/acp/agents/route.ts
 
 ### When NOT to use ACP
 
-- ACP doesn't _run_ tasks. It only detects + configures CLIs. To actually invoke a CLI, you launch it yourself with the env vars Pusula provides (`OPENAI_BASE_URL`, `OPENAI_API_KEY`, etc.).
+- The HTTP registry does not accept tasks or expose process spawning. The internal
+  manager can launch a registered CLI, but is not wired as an automatic provider
+  fallback. For ordinary interactive use, launch the configured CLI yourself or
+  use `pusula run`.
 
 ## 3. Cloud Agents
 
@@ -166,13 +173,13 @@ See [CLOUD_AGENT.md](./CLOUD_AGENT.md) for the `CloudAgentBase` contract, per-ag
 
 Both have "long-running tasks" but at different layers:
 
-| Aspect             | A2A                                                                               | Cloud Agents                             |
-| ------------------ | --------------------------------------------------------------------------------- | ---------------------------------------- |
-| Standard           | Open A2A v0.3                                                                     | Pusula-specific                       |
+| Aspect             | A2A                                                                            | Cloud Agents                             |
+| ------------------ | ------------------------------------------------------------------------------ | ---------------------------------------- |
+| Standard           | Open A2A v0.3                                                                  | Pusula-specific                          |
 | Where compute runs | Inside Pusula (uses configured combos)                                         | External (Codex / Devin / Jules servers) |
-| Task duration      | Default TTL 5 min (configurable in `TaskManager`)                                 | Minutes to hours                         |
-| Repo-aware         | No (passes prompts only)                                                          | Yes (repo URL + branch)                  |
-| Use case           | Cross-agent collab, smart routing as a service                                    | Delegate "implement feature X in repo Y" |
+| Task duration      | Default TTL 5 min (configurable in `TaskManager`)                              | Minutes to hours                         |
+| Repo-aware         | No (passes prompts only)                                                       | Yes (repo URL + branch)                  |
+| Use case           | Cross-agent collab, smart routing as a service                                 | Delegate "implement feature X in repo Y" |
 | Auth               | Optional `PUSULA_API_KEY` for `/a2a`; management for `/api/a2a/*` REST helpers | Always management                        |
 
 ## Integration Examples

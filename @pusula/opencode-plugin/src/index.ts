@@ -67,12 +67,7 @@ import {
   PROVIDER_TAG_SEPARATOR as _PROVIDER_TAG_SEPARATOR,
   shortProviderLabel as _shortProviderLabel,
   normaliseFreeLabel as _normaliseFreeLabel,
-  formatAutoComboName,
-  autoComboModelId,
   formatFreeBudget,
-  type AutoVariant,
-  AUTO_VARIANTS,
-  AUTO_VARIANT_DESCRIPTIONS,
   type FreeModelFreeType,
 } from "./naming.js";
 import { applyPusulaInferenceTelemetry } from "./telemetry.js";
@@ -254,10 +249,14 @@ export type PusulaPluginOptions = z.infer<typeof optionsSchema>;
  * use the `features.X !== false` convention, default-OFF flags use
  * `features.X === true`). That implicit convention is scattered across the file,
  * so an operator who omits the `features` block cannot tell whether
- * combos / autoCombos / enrichment are enabled — they think features are
+ * combos / enrichment are enabled — they think features are
  * disabled when they are actually on. Centralising the declared defaults here
  * (mirroring the read-site conventions exactly, so runtime behaviour is
  * unchanged) makes the effective flags introspectable and self-documenting.
+ *
+ * `features.autoCombos` is accepted but ignored: it stays in the schema (and
+ * in the defaults below) so existing configurations still validate, but no
+ * read site consults it anymore and it is hidden from startup diagnostics.
  */
 export const PUSULA_FEATURE_DEFAULTS = {
   // default-ON (read sites use `features.X !== false`)
@@ -365,10 +364,7 @@ function trimLeadingDashes(value: string): string {
  * sees a consistent identifier.
  */
 export function resolvePusulaPluginOptions(opts?: PusulaPluginOptions): Required<
-  Pick<
-    PusulaPluginOptions,
-    "providerId" | "displayName" | "modelCacheTtl" | "autoSyncIntervalMs"
-  >
+  Pick<PusulaPluginOptions, "providerId" | "displayName" | "modelCacheTtl" | "autoSyncIntervalMs">
 > & {
   /**
    * #6859: the UNPREFIXED provider id ("pusula", "pusula-preprod", …).
@@ -395,9 +391,7 @@ export function resolvePusulaPluginOptions(opts?: PusulaPluginOptions): Required
     : `opencode-${rawProviderId}`;
   const displayName =
     opts?.displayName ??
-    (providerId === `opencode-${PUSULA_PROVIDER_KEY}`
-      ? "Pusula"
-      : `Pusula (${providerId})`);
+    (providerId === `opencode-${PUSULA_PROVIDER_KEY}` ? "Pusula" : `Pusula (${providerId})`);
   const modelCacheTtl =
     typeof opts?.modelCacheTtl === "number" && opts.modelCacheTtl > 0
       ? opts.modelCacheTtl
@@ -699,10 +693,7 @@ export function createPusulaAuthHook(opts?: PusulaPluginOptions): AuthHook {
  * Invalidate in-memory fetch cache entries for a baseURL (all credential keys).
  * Returns number of entries removed.
  */
-export function invalidatePusulaFetchCache(
-  cache: PusulaFetchCache,
-  baseURL?: string
-): number {
+export function invalidatePusulaFetchCache(cache: PusulaFetchCache, baseURL?: string): number {
   if (!baseURL) {
     const n = cache.size;
     cache.clear();
@@ -772,8 +763,9 @@ export async function resolvePusulaRuntimeAuth(
 }
 
 /**
- * Force-refresh Pusula catalog: clear memory + disk cache, re-fetch /v1/models
- * (and optional management endpoints), and repopulate the shared cache.
+ * Force-refresh Pusula catalog: re-fetch /v1/models (and optional management
+ * endpoints) and, only once the models fetch succeeds, replace the memory and
+ * disk caches. A failed models fetch leaves both caches untouched (#14926).
  * OpenCode equivalent of Pi `/omni sync`.
  */
 export async function forceSyncPusulaModels(args: {
@@ -782,7 +774,6 @@ export async function forceSyncPusulaModels(args: {
   readAuthJson?: PusulaReadAuthJson;
   fetcher?: PusulaModelsFetcher;
   combosFetcher?: PusulaCombosFetcher;
-  autoCombosFetcher?: PusulaAutoCombosFetcher;
   enrichmentFetcher?: PusulaEnrichmentFetcher;
   compressionMetaFetcher?: PusulaCompressionMetaFetcher;
   providersFetcher?: PusulaProvidersFetcher;
@@ -803,10 +794,8 @@ export async function forceSyncPusulaModels(args: {
   const now = args.now ?? Date.now;
   const fetcher = args.fetcher ?? defaultPusulaModelsFetcher;
   const combosFetcher = args.combosFetcher ?? defaultPusulaCombosFetcher;
-  const autoCombosFetcher = args.autoCombosFetcher ?? defaultPusulaAutoCombosFetcher;
   const enrichmentFetcher = args.enrichmentFetcher ?? defaultPusulaEnrichmentFetcher;
-  const compressionMetaFetcher =
-    args.compressionMetaFetcher ?? defaultPusulaCompressionMetaFetcher;
+  const compressionMetaFetcher = args.compressionMetaFetcher ?? defaultPusulaCompressionMetaFetcher;
   const providersFetcher = args.providersFetcher ?? defaultPusulaProvidersFetcher;
   const logger =
     args.logger ??
@@ -815,16 +804,12 @@ export async function forceSyncPusulaModels(args: {
     );
   const features = resolved.features ?? {};
   const wantCombos = features.combos !== false;
-  const wantAutoCombos = features.autoCombos !== false;
   const wantEnrichment = features.enrichment !== false;
   const wantCompressionMeta = features.compressionMetadata === true;
   const wantUsableOnly = features.usableOnly === true;
   const wantDiskCache = features.diskCache !== false;
 
-  const auth = await resolvePusulaRuntimeAuth(
-    resolved,
-    args.readAuthJson ?? defaultReadAuthJson
-  );
+  const auth = await resolvePusulaRuntimeAuth(resolved, args.readAuthJson ?? defaultReadAuthJson);
   if (!auth) {
     return {
       ok: false,
@@ -838,38 +823,42 @@ export async function forceSyncPusulaModels(args: {
     };
   }
 
-  const clearedMemory = invalidatePusulaFetchCache(cache, auth.baseURL);
-  // Clear residual entries from prior baseURL history as well.
-  const clearedAll = invalidatePusulaFetchCache(cache);
-  let clearedDisk = false;
-  if (wantDiskCache) {
-    clearedDisk = await clearDiskSnapshot(resolved.providerId);
-    if (resolved.pusulaProviderId !== resolved.providerId) {
-      clearedDisk = (await clearDiskSnapshot(resolved.pusulaProviderId)) || clearedDisk;
-    }
+  // The models fetch is the only required call. Run it BEFORE touching any
+  // cache: invalidating memory or unlinking the disk snapshot first meant a
+  // single transient failure (e.g. the 10s abort) destroyed the last good
+  // catalog and left every later read hitting a server that was already
+  // slow (#14926). On failure both caches stay exactly as they were.
+  let rawModels: PusulaRawModelEntry[];
+  try {
+    rawModels = await fetcher(auth.baseURL, auth.apiKey, 10_000);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    logger.warn(
+      `force sync: /v1/models fetch failed providerId=${resolved.providerId}; ` +
+        `keeping existing memory and disk cache: ${message}`
+    );
+    return {
+      ok: false,
+      count: 0,
+      combos: 0,
+      provider: resolved.pusulaProviderId,
+      baseURL: auth.baseURL,
+      clearedMemory: 0,
+      clearedDisk: false,
+      error: message,
+    };
   }
 
+  let clearedMemory = 0;
+  let clearedAll = 0;
+  let clearedDisk = false;
   try {
-    const rawModels = await fetcher(auth.baseURL, auth.apiKey, 10_000);
     let rawCombos: PusulaRawCombo[] = [];
     if (wantCombos) {
       try {
         rawCombos = await combosFetcher(auth.baseURL, auth.managementReadToken, 10_000);
       } catch (err) {
         logger.warn("force sync: combos fetch failed", err);
-      }
-    }
-    let rawAutoCombos: PusulaRawAutoCombo[] = [];
-    if (wantAutoCombos) {
-      try {
-        rawAutoCombos = await autoCombosFetcher(
-          auth.baseURL,
-          auth.managementReadToken,
-          5_000,
-          logger
-        );
-      } catch {
-        /* soft-fail */
       }
     }
     let rawEnrichment: PusulaEnrichmentMap = new Map();
@@ -905,16 +894,21 @@ export async function forceSyncPusulaModels(args: {
     const entry = {
       rawModels,
       rawCombos,
-      rawAutoCombos,
       rawEnrichment,
       rawCompressionCombos,
       rawConnections,
       expiresAt: t + resolved.modelCacheTtl,
     };
     const cacheKey = modelsCacheKey(auth.baseURL, `${auth.apiKey}\0${auth.managementReadToken}`);
+    // Only now, with a fresh catalog in hand, drop the old entries.
+    clearedMemory = invalidatePusulaFetchCache(cache, auth.baseURL);
+    // Clear residual entries from prior baseURL history as well.
+    clearedAll = invalidatePusulaFetchCache(cache);
     cache.set(cacheKey, entry);
 
     if (wantDiskCache) {
+      // Overwrite the snapshot instead of unlinking it first, so the old file
+      // is only replaced once a fresh catalog exists. The writer soft-fails.
       try {
         const fingerprint = diskSnapshotIdentityFingerprint(
           auth.baseURL,
@@ -923,8 +917,12 @@ export async function forceSyncPusulaModels(args: {
         );
         const { expiresAt: _expiresAt, ...diskEntry } = entry;
         await defaultDiskSnapshotWriter(resolved.providerId, diskEntry, fingerprint);
+        clearedDisk = true;
       } catch {
         /* soft-fail disk write */
+      }
+      if (resolved.pusulaProviderId !== resolved.providerId) {
+        clearedDisk = (await clearDiskSnapshot(resolved.pusulaProviderId)) || clearedDisk;
       }
     }
 
@@ -967,7 +965,8 @@ export function createPusulaSyncModelsTool(args: {
   return tool({
     description:
       "Force-refresh the Pusula model catalog (OpenCode equivalent of Pi `/omni sync`). " +
-      "Invalidates in-memory and disk caches, then re-fetches GET /v1/models (and combos when enabled).",
+      "Re-fetches GET /v1/models (and combos when enabled), then replaces the in-memory and disk " +
+      "caches; a failed fetch keeps the existing caches.",
     args: {
       reason: tool.schema
         .string()
@@ -1534,8 +1533,7 @@ export const defaultPusulaCombosFetcher: PusulaCombosFetcher = async (
   timeoutMs = 10_000
 ) => {
   if (!apiKey) throw new Error("@pusula/opencode-plugin: apiKey required to fetch /api/combos");
-  if (!baseURL)
-    throw new Error("@pusula/opencode-plugin: baseURL required to fetch /api/combos");
+  if (!baseURL) throw new Error("@pusula/opencode-plugin: baseURL required to fetch /api/combos");
 
   // Strip trailing slashes, then strip a trailing `/v1` so we land on the
   // management plane. Models live under `/v1/models`; combos live under
@@ -1714,165 +1712,6 @@ export function mapComboToModelV2(
     options: {},
     headers: {},
     release_date: combo.release_date ?? "",
-  };
-}
-
-// ─────────────────────────────────────────────────────────────────────────
-// AUTO COMBOS — virtual server-side combos exposed via /api/combos/auto
-// ─────────────────────────────────────────────────────────────────────────
-
-/**
- * Raw shape of an auto combo entry as returned by Pusula's
- * `/api/combos/auto` endpoint. Auto combos are virtual — they self-manage
- * provider selection via scoring/bandit exploration at runtime.
- */
-export interface PusulaRawAutoCombo {
-  /** Stable id (e.g. "auto", "auto/coding"). */
-  id: string;
-  /** Human-readable name (e.g. "Auto", "Auto Coding"). */
-  name: string;
-  /** Variant key or undefined for the default auto. */
-  variant?: AutoVariant;
-  /** Provider names eligible for this auto combo. */
-  candidatePool?: string[];
-  /** Number of candidates resolved at fetch time. */
-  candidateCount?: number;
-  /** MAX of candidates' context windows, served by newer Pusula builds.
-   * Absent on older servers — mapper falls back to a safe positive default. */
-  context_length?: number;
-  /** MAX of candidates' max output tokens (same provenance as context_length). */
-  max_output_tokens?: number;
-  /** Whether this auto combo should be hidden from the picker. */
-  isHidden?: boolean;
-  /** Auto-combo configuration. */
-  config?: {
-    auto?: {
-      candidatePool?: string[];
-      explorationRate?: number;
-      routerStrategy?: string;
-    };
-  };
-}
-
-/**
- * Fetcher contract for `/api/combos/auto`. Returns the list of virtual
- * auto combos the server can create. Same DI pattern as other fetchers.
- */
-export type PusulaAutoCombosFetcher = (
-  baseURL: string,
-  apiKey: string,
-  timeoutMs?: number,
-  logger?: PusulaLoggerSink
-) => Promise<PusulaRawAutoCombo[]>;
-
-/**
- * Default auto combos fetcher: `GET <baseURL>/api/combos/auto`.
- *
- * Fault-tolerant: returns empty array on 404 (endpoint doesn't exist yet)
- * or any non-2xx / network error. Logs a warning in those cases.
- */
-export const defaultPusulaAutoCombosFetcher: PusulaAutoCombosFetcher = async (
-  baseURL,
-  apiKey,
-  timeoutMs = 5_000,
-  logger?: PusulaLoggerSink
-) => {
-  if (!apiKey || !baseURL) return [];
-  const log = logger ?? _logger;
-
-  const trimmed = trimTrailingSlashes(baseURL);
-  const root = trimmed.replace(/\/v\d+$/, "");
-  const url = `${root}/api/combos/auto`;
-
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    const res = await fetch(url, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        Accept: "application/json",
-      },
-      signal: controller.signal,
-    });
-    // 404 = endpoint not deployed yet — expected during rollout
-    if (res.status === 404) {
-      log.warn(`/api/combos/auto not available (404) — auto combos disabled`);
-      return [];
-    }
-    if (!res.ok) {
-      log.warn(`/api/combos/auto failed: ${res.status} ${res.statusText} — auto combos disabled`);
-      return [];
-    }
-    const body = (await res.json()) as unknown;
-    const rawList: unknown[] = Array.isArray(body)
-      ? body
-      : body && typeof body === "object" && Array.isArray((body as { combos?: unknown }).combos)
-        ? ((body as { combos: unknown[] }).combos as unknown[])
-        : [];
-    const out: PusulaRawAutoCombo[] = [];
-    for (const r of rawList) {
-      if (r && typeof r === "object" && typeof (r as { id?: unknown }).id === "string") {
-        out.push(r as PusulaRawAutoCombo);
-      }
-    }
-    return out;
-  } catch (err) {
-    // Network error, timeout, abort — all non-fatal
-    log.warn(
-      `/api/combos/auto fetch failed: ${err instanceof Error ? err.message : String(err)} — auto combos disabled`
-    );
-    return [];
-  } finally {
-    clearTimeout(timer);
-  }
-};
-
-/** Fallbacks when the server does not advertise auto-combo limits (older
- * Pusula builds). MUST be positive: OpenCode's overflow guard treats
- * `limit.context === 0` as "never overflow" and silently DISABLES smart
- * auto-compaction, letting the session grow until the gateway's destructive
- * history purge kicks in (the "agent keeps forgetting things" bug). */
-const AUTO_COMBO_FALLBACK_CONTEXT = 128_000;
-const AUTO_COMBO_FALLBACK_OUTPUT = 8_192;
-
-/**
- * Convert a raw auto combo into a static model entry for the OpenCode picker.
- * Auto combos have tool_call=true, reasoning=true by default (they route
- * to capable models). Context/output limits come from the server (MAX of
- * the candidate pool's windows — the gateway's context pre-filter routes
- * oversized requests to large-window candidates); a safe positive fallback
- * applies when the server omits them. Never 0.
- */
-export function mapAutoComboToStaticEntry(
-  autoCombo: PusulaRawAutoCombo
-): PusulaStaticModelEntry {
-  const variant = autoCombo.variant;
-  const name = formatAutoComboName(variant, autoCombo.candidateCount);
-  const context =
-    typeof autoCombo.context_length === "number" && autoCombo.context_length > 0
-      ? autoCombo.context_length
-      : AUTO_COMBO_FALLBACK_CONTEXT;
-  const output =
-    typeof autoCombo.max_output_tokens === "number" && autoCombo.max_output_tokens > 0
-      ? autoCombo.max_output_tokens
-      : AUTO_COMBO_FALLBACK_OUTPUT;
-  // No `providerID` field on static-catalog entries — OC ignores it on the static
-  // path, and stamping it on auto-combos but not on raw/combo entries was an
-  // internal inconsistency. The dynamic-hook path builds its ModelV2 from the
-  // individual fields below and never read this field either.
-  return {
-    name,
-    attachment: false,
-    reasoning: true,
-    temperature: true,
-    tool_call: true,
-    limit: { context, output },
-    modalities: {
-      input: ["text"],
-      output: ["text"],
-    },
-    cost: { input: 0, output: 0, cache_read: 0, cache_write: 0 },
   };
 }
 
@@ -2171,22 +2010,11 @@ async function writeStartupDiagnostics(params: {
   modelCount: number;
   comboCount: number;
   enrichmentSize: number;
-  autoComboCount: number;
   enrichment: PusulaEnrichmentMap;
-  autoCombos: PusulaRawAutoCombo[];
   features?: PusulaPluginOptions["features"];
 }): Promise<void> {
-  const {
-    providerId,
-    baseURL,
-    modelCount,
-    comboCount,
-    enrichmentSize,
-    autoComboCount,
-    enrichment,
-    autoCombos,
-    features,
-  } = params;
+  const { providerId, baseURL, modelCount, comboCount, enrichmentSize, enrichment, features } =
+    params;
   const enriched = [...enrichment.entries()];
   const withName = enriched.filter(([, e]) => e.name);
   const withPricing = enriched.filter(([, e]) => e.pricing);
@@ -2195,16 +2023,16 @@ async function writeStartupDiagnostics(params: {
   const lines: string[] = [];
   lines.push(`=== startupDebug ${new Date().toISOString()} ===`);
   lines.push(`providerId=${providerId} baseURL=${baseURL}`);
-  lines.push(
-    `models=${modelCount} combos=${comboCount} enrichment=${enrichmentSize} autoCombos=${autoComboCount}`
-  );
+  lines.push(`models=${modelCount} combos=${comboCount} enrichment=${enrichmentSize}`);
   // #7624: surface the EFFECTIVE feature flags so an operator who omitted the
-  // `features` block can see combos/autoCombos/enrichment are on (the counts
+  // `features` block can see combos/enrichment are on (the counts
   // above can read 0 for reasons unrelated to the flags — e.g. missing auth).
+  // `features.autoCombos` is accepted but ignored, so it is hidden here.
   const effectiveFlags = resolveEffectiveFeatureFlags(features);
   lines.push(
     `features(effective): ` +
       (Object.keys(effectiveFlags) as PusulaFeatureFlag[])
+        .filter((k) => k !== "autoCombos")
         .map((k) => `${k}=${effectiveFlags[k] ? "on" : "off"}`)
         .join(" ")
   );
@@ -2233,11 +2061,6 @@ async function writeStartupDiagnostics(params: {
   if (sampleNames.length > 0) {
     lines.push(`sample enriched names:`);
     lines.push(sampleNames.join("\n"));
-  }
-  if (autoCombos.length > 0) {
-    lines.push(
-      `auto combos: ${autoCombos.length} — ${autoCombos.map((ac) => `${ac.id}(${ac.candidateCount ?? "?"}p)`).join(", ")}`
-    );
   }
   lines.push(`=== end startupDebug ===\n`);
 
@@ -2366,15 +2189,19 @@ export function buildCanonicalToAliasMap(
  *      a mapping for `canonical`, try `<alias>/<modelId>`. This rescues
  *      duplicate rows like `claude/claude-opus-4-7` (canonical) when
  *      enrichment only indexed under `cc/claude-opus-4-7` (alias).
- *   3. Bare `<modelId>` as a last resort. Already covered by step 1 in
- *      practice (fetcher writes bare keys), but kept defensive.
+ *   3. Bare `<modelId>` as a last resort. A bare key matches by model name only,
+ *      but its entry describes one provider (label, free budget, pricing). It is
+ *      returned whole only when that provider owns the row (`ownedBy` or the id
+ *      prefix); otherwise only its model name is kept, so a generic-adapter row
+ *      such as `ih/kimi-k3` is not labelled with an unrelated provider (#14966).
  *
  * Returns `undefined` when no lookup hits.
  */
 export function lookupEnrichment(
   rawId: string,
   enrichment: PusulaEnrichmentMap | undefined,
-  canonicalToAlias: Map<string, string>
+  canonicalToAlias: Map<string, string>,
+  ownedBy?: string
 ): PusulaEnrichmentEntry | undefined {
   if (!enrichment) return undefined;
   const direct = enrichment.get(rawId);
@@ -2389,9 +2216,25 @@ export function lookupEnrichment(
       if (viaAlias) return viaAlias;
     }
     const bare = enrichment.get(modelId);
-    if (bare) return bare;
+    if (bare) return bareFallbackEntry(bare, prefix, ownedBy);
   }
   return undefined;
+}
+
+/** A bare-key hit keeps its provider metadata only when that provider owns the row. */
+function bareFallbackEntry(
+  entry: PusulaEnrichmentEntry,
+  prefix: string,
+  ownedBy: string | undefined
+): PusulaEnrichmentEntry {
+  const owners = new Set([prefix, ownedBy].filter((v): v is string => Boolean(v)));
+  const entryProviders = [entry.providerAlias, entry.providerCanonical].filter(
+    (v): v is string => typeof v === "string" && v.trim().length > 0
+  );
+  if (entryProviders.length === 0 || entryProviders.some((p) => owners.has(p.trim()))) {
+    return entry;
+  }
+  return entry.name ? { name: entry.name } : {};
 }
 
 /**
@@ -3144,7 +2987,6 @@ function modelsCacheKey(baseURL: string, credentialId: string): string {
 export interface PusulaFetchCacheEntry {
   rawModels: PusulaRawModelEntry[];
   rawCombos: PusulaRawCombo[];
-  rawAutoCombos: PusulaRawAutoCombo[];
   /** Display-name + pricing overlay from /api/pricing/models. Empty Map when feature is disabled or fetch failed. */
   rawEnrichment: PusulaEnrichmentMap;
   /** Compression combos from /api/context/combos. Empty array when feature is disabled or fetch failed. */
@@ -3205,7 +3047,6 @@ export function createPusulaProviderHook(
   deps: {
     fetcher?: PusulaModelsFetcher;
     combosFetcher?: PusulaCombosFetcher;
-    autoCombosFetcher?: PusulaAutoCombosFetcher;
     enrichmentFetcher?: PusulaEnrichmentFetcher;
     compressionMetaFetcher?: PusulaCompressionMetaFetcher;
     providersFetcher?: PusulaProvidersFetcher;
@@ -3226,15 +3067,12 @@ export function createPusulaProviderHook(
   // reference resolves at hook-invocation time, not at hook-construction
   // time, so source-order beyond hoisting rules has no semantic effect.
   const combosFetcher = deps.combosFetcher ?? defaultPusulaCombosFetcher;
-  const autoCombosFetcher = deps.autoCombosFetcher ?? defaultPusulaAutoCombosFetcher;
   const enrichmentFetcher = deps.enrichmentFetcher ?? defaultPusulaEnrichmentFetcher;
-  const compressionMetaFetcher =
-    deps.compressionMetaFetcher ?? defaultPusulaCompressionMetaFetcher;
+  const compressionMetaFetcher = deps.compressionMetaFetcher ?? defaultPusulaCompressionMetaFetcher;
   const providersFetcher = deps.providersFetcher ?? defaultPusulaProvidersFetcher;
   // Features defaults (mirror v0.1.0 behavior when unset).
   const features = resolved.features ?? {};
   const wantCombos = features.combos !== false;
-  const wantAutoCombos = features.autoCombos !== false;
   const wantEnrichment = features.enrichment !== false;
   const wantCompressionMeta = features.compressionMetadata === true;
   const wantUsableOnly = features.usableOnly === true;
@@ -3307,14 +3145,12 @@ export function createPusulaProviderHook(
 
       let rawModels: PusulaRawModelEntry[];
       let rawCombos: PusulaRawCombo[];
-      let rawAutoCombos: PusulaRawAutoCombo[];
       let rawEnrichment: PusulaEnrichmentMap;
       let rawCompressionCombos: PusulaCompressionCombo[];
       let rawConnections: PusulaProviderConnection[];
       if (cached && cached.expiresAt > t) {
         rawModels = cached.rawModels;
         rawCombos = cached.rawCombos;
-        rawAutoCombos = cached.rawAutoCombos;
         rawEnrichment = cached.rawEnrichment;
         rawCompressionCombos = cached.rawCompressionCombos;
         rawConnections = cached.rawConnections;
@@ -3336,19 +3172,6 @@ export function createPusulaProviderHook(
             rawCombos = await combosFetcher(baseURL, managementReadToken, 10_000);
           } catch (err) {
             logger.warn("combos fetch failed, falling back to models-only catalog", err);
-          }
-        }
-
-        // Auto combos fetch — virtual server-side combos. Best-effort,
-        // gated by features.autoCombos. Soft-fails silently (the endpoint
-        // may not exist yet on older Pusula versions).
-        rawAutoCombos = [];
-        if (wantAutoCombos) {
-          try {
-            rawAutoCombos = await autoCombosFetcher(baseURL, managementReadToken, 5_000, logger);
-          } catch {
-            // Already handled inside the default fetcher — this catch
-            // is belt-and-suspenders for injected stubs.
           }
         }
 
@@ -3398,7 +3221,6 @@ export function createPusulaProviderHook(
         cache.set(cacheKey, {
           rawModels,
           rawCombos,
-          rawAutoCombos,
           rawEnrichment,
           rawCompressionCombos,
           rawConnections,
@@ -3418,7 +3240,7 @@ export function createPusulaProviderHook(
             `(TTL=${resolved.modelCacheTtl}ms)`
         );
 
-        // ── Startup debug: deep-dive into enrichment + auto combos ──────
+        // ── Startup debug: deep-dive into enrichment ────────────────────
         if (resolved.features?.startupDebug === true) {
           await writeStartupDiagnostics({
             providerId: resolved.providerId,
@@ -3426,9 +3248,7 @@ export function createPusulaProviderHook(
             modelCount: rawModels.length,
             comboCount: rawCombos.length,
             enrichmentSize: rawEnrichment.size,
-            autoComboCount: rawAutoCombos.length,
             enrichment: rawEnrichment,
-            autoCombos: rawAutoCombos,
             features: resolved.features,
           });
         }
@@ -3479,7 +3299,12 @@ export function createPusulaProviderHook(
           baseURL,
           apiFormat: resolved.features?.apiFormat,
         });
-        const enrichEntry = lookupEnrichment(entry.id, rawEnrichment, canonicalToAlias);
+        const enrichEntry = lookupEnrichment(
+          entry.id,
+          rawEnrichment,
+          canonicalToAlias,
+          entry.owned_by
+        );
         applyEnrichment(model, enrichEntry);
         // Prepend upstream provider label (e.g. `Claude - Claude Opus 4.7`)
         // so the picker groups same-model rows by upstream connection.
@@ -3711,65 +3536,6 @@ export function createPusulaProviderHook(
         logger.warn(
           `${pending.length} combo(s) could not resolve all nested combo-refs after ${MAX_COMBO_PASSES} passes; they will advertise context=0 to avoid over-claiming.`
         );
-      }
-
-      // ── Auto combos in dynamic catalog ────────────────────────────────
-      // Convert virtual auto combos from /api/combos/auto into ModelV2
-      // entries so they appear in the dynamic provider.models() path
-      // (used by OpenCode ≥1.14.49).
-      if (rawAutoCombos.length > 0) {
-        for (const autoCombo of rawAutoCombos) {
-          if (!autoCombo || !autoCombo.id) continue;
-          if (autoCombo.isHidden === true) continue;
-          const entry = mapAutoComboToStaticEntry(autoCombo);
-          const key = autoComboModelId(autoCombo.variant);
-          const mapped: ModelV2 = {
-            id: key,
-            name: entry.name,
-            capabilities: {
-              temperature: entry.temperature ?? true,
-              reasoning: entry.reasoning ?? false,
-              attachment: entry.attachment ?? false,
-              toolcall: entry.tool_call ?? false,
-              input: {
-                text: true,
-                audio: false,
-                image: false,
-                video: false,
-                pdf: false,
-              },
-              output: {
-                text: true,
-                audio: false,
-                image: false,
-                video: false,
-                pdf: false,
-              },
-              interleaved: false,
-            },
-            cost: {
-              input: 0,
-              output: 0,
-              cache: { read: 0, write: 0 },
-            },
-            limit: {
-              context: entry.limit?.context ?? 0,
-              output: entry.limit?.output ?? 0,
-            },
-            api: {
-              id: "openai-compatible",
-              url: ensureV1Suffix(baseURL),
-              npm: "@ai-sdk/openai-compatible",
-            },
-            status: "active",
-            release_date: "",
-            // #6859: server-facing id — NOT the OC-gate-prefixed `resolved.providerId`.
-            providerID: resolved.pusulaProviderId,
-            options: {},
-            headers: {},
-          };
-          models[key] = mapped;
-        }
       }
 
       return models;
@@ -4355,12 +4121,10 @@ export function buildStaticProviderEntry(
   enrichment?: PusulaEnrichmentMap,
   compressionCombos?: PusulaCompressionCombo[],
   connections?: PusulaProviderConnection[],
-  rawAutoCombos?: PusulaRawAutoCombo[],
   logger?: PusulaLoggerSink
 ): PusulaStaticProviderEntry {
   const log = logger ?? _logger;
   const models: Record<string, PusulaStaticModelEntry> = {};
-  const rawModelKeys = new Set<string>();
 
   // usableOnly filter — compute once when feature enabled AND we have
   // connection data to filter against. Soft-fail (empty connections list)
@@ -4420,7 +4184,7 @@ export function buildStaticProviderEntry(
     // to the raw id when no enrichment entry is found. The alias-fallback
     // lookup rescues `<canonical>/<id>` rows whose enrichment indexed only
     // under `<alias>/<id>`.
-    const enrichmentEntry = lookupEnrichment(raw.id, enrichment, canonicalToAlias);
+    const enrichmentEntry = lookupEnrichment(raw.id, enrichment, canonicalToAlias, raw.owned_by);
     const enrichmentName = enrichmentEntry?.name;
     let displayName = enrichmentName && enrichmentName.length > 0 ? enrichmentName : raw.id;
     // Provider-tag PREFIX — `<label> - <name>` so the picker groups by
@@ -4519,7 +4283,6 @@ export function buildStaticProviderEntry(
     // keep it because the slash is part of the upstream model id itself.
     const key = raw.id;
     models[key] = entry;
-    rawModelKeys.add(key);
   }
 
   // Combo entries → stripped LCD shape. Each combo is keyed as
@@ -4549,7 +4312,6 @@ export function buildStaticProviderEntry(
 
   // Track combo keys to detect slug collisions across the catalog.
   const usedComboKeys = new Set<string>();
-  const reportedCollisions = new Set<string>();
 
   // ── Combo LCD across nested combo-refs (T-NN mirror) ─────────────────
   // Mirror of the dynamic-catalog fixpoint iteration: combos can nest
@@ -4730,7 +4492,6 @@ export function buildStaticProviderEntry(
       // instead of `pusula`. See #7976.
       const key = buildComboKey(combo, usedComboKeys, opts.pusulaProviderId).split("/").pop()!;
       models[key] = entry;
-      rawModelKeys.delete(key);
 
       // Make this combo's resolved entry available to parent combos
       // that reference it via combo-ref. Use the friendly name since
@@ -4751,31 +4512,6 @@ export function buildStaticProviderEntry(
     log.warn(
       `${pendingStatic.length} combo(s) in the static catalog could not resolve all nested combo-refs after ${MAX_STATIC_COMBO_PASSES} passes; they will be omitted.`
     );
-  }
-
-  // ── Auto combos ────────────────────────────────────────────────────────
-  // Virtual server-side combos (auto/coding, auto/fast, etc.) are fetched
-  // from /api/combos/auto and added as model entries. They self-manage
-  // provider selection at runtime via scoring/bandit exploration.
-  if (rawAutoCombos && rawAutoCombos.length > 0) {
-    for (const autoCombo of rawAutoCombos) {
-      if (!autoCombo || !autoCombo.id) continue;
-      if (autoCombo.isHidden === true) continue;
-      const entry = mapAutoComboToStaticEntry(autoCombo);
-      // Use the variant as the key: "auto", "auto/coding", etc.
-      const key = autoComboModelId(autoCombo.variant);
-      if (models[key]) {
-        // `/v1/models` mirrors auto combos under the same stable id. Replacing
-        // that expected raw twin is silent; every other collision still warns.
-        const isExpectedRawTwin = autoCombo.id === key && rawModelKeys.has(key);
-        if (!isExpectedRawTwin && !reportedCollisions.has(key)) {
-          reportedCollisions.add(key);
-          log.warn(`auto combo key "${key}" collides with an existing model; auto combo wins.`);
-        }
-      }
-      models[key] = entry;
-      rawModelKeys.delete(key);
-    }
   }
 
   return {
@@ -4829,7 +4565,6 @@ interface PusulaDiskSnapshot {
   identityFingerprint: string;
   rawModels: PusulaRawModelEntry[];
   rawCombos: PusulaRawCombo[];
-  rawAutoCombos?: PusulaRawAutoCombo[];
   /** Serialised as array-of-pairs (Map is not JSON-friendly). */
   rawEnrichment: Array<[string, PusulaEnrichmentEntry]>;
   rawCompressionCombos: PusulaCompressionCombo[];
@@ -4908,7 +4643,6 @@ export const defaultDiskSnapshotWriter: PusulaDiskSnapshotWriter = async (
       identityFingerprint,
       rawModels: entry.rawModels,
       rawCombos: entry.rawCombos,
-      rawAutoCombos: entry.rawAutoCombos,
       rawEnrichment: Array.from(entry.rawEnrichment.entries()),
       rawCompressionCombos: entry.rawCompressionCombos,
       rawConnections: entry.rawConnections,
@@ -4943,7 +4677,6 @@ export const defaultDiskSnapshotReader: PusulaDiskSnapshotReader = async (
     return {
       rawModels: Array.isArray(parsed.rawModels) ? parsed.rawModels : [],
       rawCombos: Array.isArray(parsed.rawCombos) ? parsed.rawCombos : [],
-      rawAutoCombos: Array.isArray(parsed.rawAutoCombos) ? parsed.rawAutoCombos : [],
       rawEnrichment: new Map(Array.isArray(parsed.rawEnrichment) ? parsed.rawEnrichment : []),
       rawCompressionCombos: Array.isArray(parsed.rawCompressionCombos)
         ? parsed.rawCompressionCombos
@@ -5039,11 +4772,80 @@ export function debugLogSetEnabled(providerId: string, enabled: boolean): void {
   }
 }
 
+/**
+ * Header names whose values must never be written to the debug JSONL on disk.
+ *
+ * Audit #15159 O-05: `createDebugLoggingFetch` copies every request and response
+ * header into the captured entry, and the entry was serialized to disk verbatim —
+ * so enabling `features.debugLog` persisted live bearer tokens (and session
+ * cookies) in plaintext, contradicting the AES-256-GCM-at-rest guarantee. The
+ * feature defaults to off, which limits exposure but does not remove it.
+ *
+ * Matched list: the explicit credential headers plus anything whose name looks
+ * like a credential (`token` / `secret` / `key`). The broad tail is deliberate —
+ * a debug log is the wrong place to be clever about which credential slipped
+ * through, and a false positive only costs one redacted header in a log whose
+ * purpose is troubleshooting. Non-credential headers (`content-type`, `accept`,
+ * …) are preserved so the log stays useful.
+ *
+ * Case-insensitive: `fetch` lowercases header names, but `debugLogAppend` is
+ * exported and entries can also be appended directly with original casing.
+ */
+const DEBUG_LOG_REDACTED = "[REDACTED]";
+const DEBUG_LOG_SENSITIVE_HEADER =
+  /^(?:authorization|proxy-authorization|cookie|set-cookie|x-api-key)$|token|secret|key/i;
+
+/**
+ * Credential shapes scrubbed out of free-form text before it is persisted —
+ * the `error` field, which carries an untrusted upstream message that routinely
+ * echoes the rejected credential back ("invalid Authorization: Bearer sk-…").
+ *
+ * Covers the three shapes that actually occur: an auth-scheme value, a labeled
+ * assignment, and credentials embedded in a URL's userinfo. Deliberately NOT a
+ * blanket "any long random string" rule: the debug log's purpose is reading
+ * error text, and an over-broad matcher would redact the message away while
+ * still missing secret shapes it did not anticipate.
+ */
+const DEBUG_LOG_AUTH_SCHEME = /\b(bearer|basic)\s+[^\s"',;}]+/gi;
+const DEBUG_LOG_LABELED_SECRET =
+  /\b((?:x-)?(?:api[_-]?key|access[_-]?token|refresh[_-]?token|id[_-]?token|auth[_-]?token|secret|password|passwd|token|key))(\s*[:=]\s*)("?)[^\s"',;}]+\3/gi;
+const DEBUG_LOG_URL_USERINFO = /(\b[a-z][a-z0-9+.-]*:\/\/)[^/\s:@]+:[^/\s@]+@/gi;
+
+/** Scrub credential-shaped substrings out of a free-form string (e.g. an error). */
+function redactDebugText(value: string): string {
+  return value
+    .replace(DEBUG_LOG_URL_USERINFO, `$1${DEBUG_LOG_REDACTED}@`)
+    .replace(DEBUG_LOG_AUTH_SCHEME, `$1 ${DEBUG_LOG_REDACTED}`)
+    .replace(DEBUG_LOG_LABELED_SECRET, `$1$2${DEBUG_LOG_REDACTED}`);
+}
+
+/**
+ * Copy a header map with every sensitive value replaced by `[REDACTED]`.
+ * Defensive about a missing map: this runs on the logging path, where throwing
+ * would silently drop the entry instead of writing it.
+ */
+function redactDebugHeaders(headers: Record<string, string> | undefined): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const [name, value] of Object.entries(headers ?? {})) {
+    out[name] = DEBUG_LOG_SENSITIVE_HEADER.test(name) ? DEBUG_LOG_REDACTED : value;
+  }
+  return out;
+}
+
 export function debugLogAppend(entry: DebugLogEntry): void {
   try {
     const dir = debugLogDir();
     if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
-    appendFileSync(debugLogPath(entry.providerId), JSON.stringify(entry) + "\n", "utf8");
+    // Redact here rather than at the call sites: this is the only choke point
+    // every captured entry passes through, so no future caller can reintroduce
+    // the leak by forgetting to sanitize its own headers.
+    const safe: DebugLogEntry = {
+      ...entry,
+      reqHeaders: redactDebugHeaders(entry.reqHeaders),
+      resHeaders: redactDebugHeaders(entry.resHeaders),
+      ...(typeof entry.error === "string" ? { error: redactDebugText(entry.error) } : {}),
+    };
+    appendFileSync(debugLogPath(entry.providerId), JSON.stringify(safe) + "\n", "utf8");
   } catch (err) {
     console.warn(`[pusula-plugin] debugLogAppend failed: ${(err as Error).message}`);
   }
@@ -5295,7 +5097,6 @@ export function createPusulaConfigHook(
     readAuthJson?: PusulaReadAuthJson;
     fetcher?: PusulaModelsFetcher;
     combosFetcher?: PusulaCombosFetcher;
-    autoCombosFetcher?: PusulaAutoCombosFetcher;
     enrichmentFetcher?: PusulaEnrichmentFetcher;
     compressionMetaFetcher?: PusulaCompressionMetaFetcher;
     providersFetcher?: PusulaProvidersFetcher;
@@ -5314,10 +5115,8 @@ export function createPusulaConfigHook(
   const readAuthJson = deps.readAuthJson ?? defaultReadAuthJson;
   const fetcher = deps.fetcher ?? defaultPusulaModelsFetcher;
   const combosFetcher = deps.combosFetcher ?? defaultPusulaCombosFetcher;
-  const autoCombosFetcher = deps.autoCombosFetcher ?? defaultPusulaAutoCombosFetcher;
   const enrichmentFetcher = deps.enrichmentFetcher ?? defaultPusulaEnrichmentFetcher;
-  const compressionMetaFetcher =
-    deps.compressionMetaFetcher ?? defaultPusulaCompressionMetaFetcher;
+  const compressionMetaFetcher = deps.compressionMetaFetcher ?? defaultPusulaCompressionMetaFetcher;
   const providersFetcher = deps.providersFetcher ?? defaultPusulaProvidersFetcher;
   const diskSnapshotReader = deps.diskSnapshotReader ?? noopDiskSnapshotReader;
   const diskSnapshotWriter = deps.diskSnapshotWriter ?? noopDiskSnapshotWriter;
@@ -5330,7 +5129,6 @@ export function createPusulaConfigHook(
   };
   const features = resolved.features ?? {};
   const wantCombos = features.combos !== false;
-  const wantAutoCombos = features.autoCombos !== false;
   const wantEnrichment = features.enrichment !== false;
   const wantCompressionMeta = features.compressionMetadata === true;
   const wantUsableOnly = features.usableOnly === true;
@@ -5416,7 +5214,6 @@ export function createPusulaConfigHook(
 
     let rawModels: PusulaRawModelEntry[] = [];
     let rawCombos: PusulaRawCombo[] = [];
-    let rawAutoCombos: PusulaRawAutoCombo[] = [];
     let rawEnrichment: PusulaEnrichmentMap = new Map();
     let rawCompressionCombos: PusulaCompressionCombo[] = [];
     let rawConnections: PusulaProviderConnection[] = [];
@@ -5424,7 +5221,6 @@ export function createPusulaConfigHook(
     if (cached && cached.expiresAt > t) {
       rawModels = cached.rawModels;
       rawCombos = cached.rawCombos;
-      rawAutoCombos = cached.rawAutoCombos;
       rawEnrichment = cached.rawEnrichment;
       rawCompressionCombos = cached.rawCompressionCombos;
       rawConnections = cached.rawConnections;
@@ -5452,16 +5248,15 @@ export function createPusulaConfigHook(
       }
 
       // ─────────────────────────────────────────────────────────────────────
-      // Parallel refresh: all six fetchers run concurrently via
+      // Parallel refresh: all five fetchers run concurrently via
       // Promise.allSettled. Each wrapper never rejects (catches internally)
       // so partial failure is tolerated — same soft-fail semantics as the
-      // old sequential chain, but ~6x faster.
+      // old sequential chain, but ~5x faster.
       // ─────────────────────────────────────────────────────────────────────
       const doRefresh = async (): Promise<void> => {
         let modelsFetchThrew = false;
         let localRawModels: PusulaRawModelEntry[] = [];
         let localRawCombos: PusulaRawCombo[] = [];
-        let localRawAutoCombos: PusulaRawAutoCombo[] = [];
         let localRawEnrichment: PusulaEnrichmentMap = new Map();
         let localRawCompressionCombos: PusulaCompressionCombo[] = [];
         let localRawConnections: PusulaProviderConnection[] = [];
@@ -5490,20 +5285,6 @@ export function createPusulaConfigHook(
               "error",
               `config shim: /api/combos fetch failed; publishing models-only static catalog: ${err instanceof Error ? err.message : String(err)}`
             );
-          }
-        };
-
-        const doAutoCombos = async (): Promise<void> => {
-          if (!wantAutoCombos) return;
-          try {
-            localRawAutoCombos = await autoCombosFetcher(
-              baseURL,
-              managementReadToken,
-              5_000,
-              logger
-            );
-          } catch {
-            // Already handled inside the default fetcher
           }
         };
 
@@ -5550,7 +5331,6 @@ export function createPusulaConfigHook(
         await Promise.allSettled([
           doModels(),
           doCombos(),
-          doAutoCombos(),
           doEnrichment(),
           doCompression(),
           doConnections(),
@@ -5612,7 +5392,6 @@ export function createPusulaConfigHook(
             );
             localRawModels = snapshot.rawModels;
             localRawCombos = snapshot.rawCombos;
-            localRawAutoCombos = snapshot.rawAutoCombos ?? [];
             localRawEnrichment = snapshot.rawEnrichment;
             localRawCompressionCombos = snapshot.rawCompressionCombos;
             localRawConnections = snapshot.rawConnections;
@@ -5624,7 +5403,6 @@ export function createPusulaConfigHook(
         cache.set(cacheKey, {
           rawModels: localRawModels,
           rawCombos: localRawCombos,
-          rawAutoCombos: localRawAutoCombos,
           rawEnrichment: localRawEnrichment,
           rawCompressionCombos: localRawCompressionCombos,
           rawConnections: localRawConnections,
@@ -5639,9 +5417,7 @@ export function createPusulaConfigHook(
             modelCount: localRawModels.length,
             comboCount: localRawCombos.length,
             enrichmentSize: localRawEnrichment.size,
-            autoComboCount: localRawAutoCombos.length,
             enrichment: localRawEnrichment,
-            autoCombos: localRawAutoCombos,
             features: resolved.features,
           });
         }
@@ -5657,7 +5433,6 @@ export function createPusulaConfigHook(
             {
               rawModels: localRawModels,
               rawCombos: localRawCombos,
-              rawAutoCombos: localRawAutoCombos,
               rawEnrichment: localRawEnrichment,
               rawCompressionCombos: localRawCompressionCombos,
               rawConnections: localRawConnections,
@@ -5680,7 +5455,6 @@ export function createPusulaConfigHook(
             localRawEnrichment,
             localRawCompressionCombos,
             localRawConnections,
-            localRawAutoCombos,
             logger
           );
           const inputWithProvider2 = input as { provider?: Record<string, unknown> };
@@ -5695,7 +5469,6 @@ export function createPusulaConfigHook(
         // the refresh detached (never a floating unhandled rejection).
         rawModels = warmSnapshot.rawModels;
         rawCombos = warmSnapshot.rawCombos;
-        rawAutoCombos = warmSnapshot.rawAutoCombos ?? [];
         rawEnrichment = warmSnapshot.rawEnrichment;
         rawCompressionCombos = warmSnapshot.rawCompressionCombos;
         rawConnections = warmSnapshot.rawConnections;
@@ -5730,7 +5503,6 @@ export function createPusulaConfigHook(
           if (fresh) {
             rawModels = fresh.rawModels;
             rawCombos = fresh.rawCombos;
-            rawAutoCombos = fresh.rawAutoCombos;
             rawEnrichment = fresh.rawEnrichment;
             rawCompressionCombos = fresh.rawCompressionCombos;
             rawConnections = fresh.rawConnections;
@@ -5753,7 +5525,6 @@ export function createPusulaConfigHook(
           if (fresh) {
             rawModels = fresh.rawModels;
             rawCombos = fresh.rawCombos;
-            rawAutoCombos = fresh.rawAutoCombos;
             rawEnrichment = fresh.rawEnrichment;
             rawCompressionCombos = fresh.rawCompressionCombos;
             rawConnections = fresh.rawConnections;
@@ -5771,7 +5542,6 @@ export function createPusulaConfigHook(
       rawEnrichment,
       rawCompressionCombos,
       rawConnections,
-      rawAutoCombos,
       logger
     );
 

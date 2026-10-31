@@ -28,6 +28,7 @@ async function installProviderFetchMock(page: Page) {
       retestCalls: 0,
       deleteCalls: 0,
       validationCalls: 0,
+      syncCalls: 0,
       forceInvalidValidation: false,
     };
 
@@ -106,8 +107,9 @@ async function installProviderFetchMock(page: Page) {
         return jsonResponse({ valid }, valid ? 200 : 400);
       }
 
-      // Stub sync-models so the import modal reaches "done" immediately after adding a connection
+      // Count (and stub) sync-models: with auto-fetch off (#11798) saving must not call it.
       if (path.match(/^\/api\/providers\/[^/]+\/sync-models$/) && method === "POST") {
+        state.syncCalls += 1;
         return jsonResponse({ syncedModels: 0, models: [], availableModelsCount: 0 });
       }
 
@@ -229,6 +231,7 @@ async function readProviderMockState(page: Page) {
             retestCalls: number;
             deleteCalls: number;
             validationCalls: number;
+            syncCalls: number;
             forceInvalidValidation: boolean;
           };
         }
@@ -267,10 +270,11 @@ test.describe("Providers management", () => {
     await expect(page.getByText("Primary OpenAI")).toBeVisible();
     await expect.poll(async () => (await readProviderMockState(page)).connections.length).toBe(1);
 
-    // Since #11324 saving an API key no longer forces a full /sync-models catalog import
-    // (autoFetchModels is opt-in), so no import-progress modal opens here. Wait for the add
-    // dialog to close before interacting with the connection list.
-    await expect(page.getByRole("dialog")).toHaveCount(0, { timeout: 15_000 });
+    // PR #11798: model auto-fetch is opt-in (`providerSpecificData.autoFetchModels`,
+    // default off). The add form does not opt in, so saving must NOT open the
+    // model-import modal nor call /sync-models — the add dialog just closes.
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    expect((await readProviderMockState(page)).syncCalls).toBe(0);
 
     await page.getByTitle(/^edit$/i).click();
     const editDialog = page.getByRole("dialog");

@@ -279,17 +279,11 @@ export const PROVIDER_PROFILES = {
     circuitBreakerReset: envInt("PUSULA_CIRCUIT_BREAKER_API_KEY_RESET_MS", 30000),
     // Provider-level circuit breaker (entire provider cooldown after repeated failures)
     providerFailureThreshold: envInt("PUSULA_PROVIDER_BREAKER_API_KEY_FAILURE_THRESHOLD", 15), // Scaled for 500+ connections (was 5)
-    providerFailureWindowMs: envInt(
-      "PUSULA_PROVIDER_BREAKER_API_KEY_FAILURE_WINDOW_MS",
-      1800000
-    ), // 30min window (was 20min)
+    providerFailureWindowMs: envInt("PUSULA_PROVIDER_BREAKER_API_KEY_FAILURE_WINDOW_MS", 1800000), // 30min window (was 20min)
     providerCooldownMs: envInt("PUSULA_PROVIDER_BREAKER_API_KEY_COOLDOWN_MS", 600000), // 10min cooldown when threshold reached
     degradationThreshold: envInt("PUSULA_PROVIDER_BREAKER_API_KEY_DEGRADATION_THRESHOLD", 7),
     maxBackoffMultiplier: envInt("PUSULA_PROVIDER_BREAKER_API_KEY_MAX_BACKOFF_MULTIPLIER", 4),
-    backoffEscalationCount: envInt(
-      "PUSULA_PROVIDER_BREAKER_API_KEY_BACKOFF_ESCALATION_COUNT",
-      3
-    ),
+    backoffEscalationCount: envInt("PUSULA_PROVIDER_BREAKER_API_KEY_BACKOFF_ESCALATION_COUNT", 3),
   },
   // Local providers (localhost inference backends like Ollama, LM Studio, oMLX).
   // Not yet wired into getProviderProfile() — will be used when local provider_nodes
@@ -319,14 +313,20 @@ export const DEFAULT_API_LIMITS = {
 // Skip patterns - requests containing these texts will bypass provider
 export const SKIP_PATTERNS = ["Please write a 5-10 word title for the following conversation:"];
 
-// Default maximum number of tools allowed in a request (OpenAI default)
-export const MAX_TOOLS_LIMIT = 128;
+// Default maximum number of tools allowed in a request (OpenAI default).
+// Override with PUSULA_MAX_TOOLS_LIMIT (positive integers only); any other
+// value (zero, negative, fractional, non-numeric) falls back to 128.
+const maxToolsLimitOverride = envInt("PUSULA_MAX_TOOLS_LIMIT", 128);
+export const MAX_TOOLS_LIMIT =
+  Number.isInteger(maxToolsLimitOverride) && maxToolsLimitOverride > 0
+    ? maxToolsLimitOverride
+    : 128;
 
 // ── Credential Health Check ────────────────────────────────────────
 
 /**
  * Interval (ms) for the background credential health check scheduler.
- * Default: 300000 (5 minutes). Minimum: 10000 (10 seconds).
+ * Default: 3600000 (60 minutes). Minimum: 10000 (10 seconds).
  */
 export const CREDENTIAL_HEALTH_CHECK_INTERVAL = (() => {
   const raw = process.env.CREDENTIAL_HEALTH_CHECK_INTERVAL;
@@ -334,7 +334,7 @@ export const CREDENTIAL_HEALTH_CHECK_INTERVAL = (() => {
     const parsed = Number(raw);
     if (Number.isFinite(parsed) && parsed >= 10_000) return parsed;
   }
-  return 300_000;
+  return 3_600_000;
 })();
 
 /**

@@ -148,22 +148,22 @@ curl -X POST http://localhost:20128/a2a \
 
 ## Kullanılabilir Beceriler
 
-Pusula, `src/lib/a2a/taskExecution.ts::A2A_SKILL_HANDLERS` içinde bağlanmış 6 A2A becerisi sunar. Her beceri modülü `src/lib/a2a/skills/` içinde bulunur.
+Pusula, `src/lib/a2a/taskExecution.ts::A2A_SKILL_HANDLERS` içinde bağlanmış 6 A2A becerisi sunar. Her beceri modülü `src/lib/a2a/skills/` içinde yer alır.
 
-| Beceri              | ID                   | Açıklama                                                                                                                                                                   | Etiketler                 | Örnekler                                     |
-| :------------------ | :------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------ | :------------------------------------------- |
-| Akıllı Yönlendirme  | `smart-routing`      | Bir istemi, Pusula'un kombinasyon motoru ve puanlama sistemini kullanarak en uygun sağlayıcı/kombinasyon üzerinden yönlendirir                                          | yönlendirme, sağlayıcılar | "Bu istemi en iyi model üzerinden yönlendir" |
-| Kota Yönetimi       | `quota-management`   | Sağlayıcı başına kota durumunu bildirir ve çağrı yapanların ne zaman hız sınırlaması uygulayacağına veya sağlayıcı değiştireceğine karar vermesine yardımcı olur           | kota, sağlayıcılar        | "anthropic kotasını kontrol et"              |
-| Sağlayıcı Keşfi     | `provider-discovery` | Yüklü sağlayıcıları yetenekleri, ücretsiz katman işaretleri ve OAuth durumlarıyla birlikte listeler                                                                        | sağlayıcılar, keşif       | "Hangi sağlayıcılar kullanılabilir?"         |
-| Maliyet Analizi     | `cost-analysis`      | Kataloğa ve son kullanıma göre bir isteğin/konuşmanın maliyetini tahmin eder                                                                                               | maliyet, kullanım         | "Bu konuşmanın maliyetini tahmin et"         |
-| Sağlık Raporu       | `health-report`      | Sağlayıcı başına devre kesici, bekleme süresi ve kilitlenme durumlarını bir araya getirir                                                                                  | sağlık, dayanıklılık      | "Tüm sağlayıcıların sağlık durumunu göster"  |
-| Yetenekleri Listele | `list-capabilities`  | Bağlam ekleme amacıyla ham SKILL.md URL'lerini içeren bir markdown tablosu olarak 45 girdilik eksiksiz Agent Skills kataloğunu (23 API + 21 CLI + 1 yapılandırma) döndürür | katalog, keşif, beceriler | "Tüm Pusula yeteneklerini listele"        |
+| Beceri               | ID                   | Açıklama                                                                                                                                                                  | Etiketler                   | Örnekler                                     |
+| :------------------- | :------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :-------------------------- | :------------------------------------------- |
+| Akıllı Yönlendirme   | `smart-routing`      | Pusula'un kombinasyon motoru ve puanlama sistemini kullanarak bir istemi en uygun sağlayıcı/kombinasyon üzerinden yönlendirir                                             | yönlendirme, sağlayıcılar   | "Bu istemi en iyi model üzerinden yönlendir" |
+| Kota Yönetimi        | `quota-management`   | Sağlayıcı başına kota durumunu bildirir, çağrı yapanların ne zaman hız sınırlaması uygulayacağına/sağlayıcı değiştireceğine karar vermesine yardımcı olur                 | kota, sağlayıcılar          | "anthropic için kotayı kontrol et"           |
+| Sağlayıcı Keşfi      | `provider-discovery` | Yüklü sağlayıcıları yetenekleri, ücretsiz katman bayrakları ve OAuth durumlarıyla listeler                                                                                | sağlayıcılar, keşif         | "Hangi sağlayıcılar kullanılabilir?"         |
+| Maliyet Analizi      | `cost-analysis`      | Katalog ve son kullanıma göre bir isteğin/konuşmanın maliyetini tahmin eder                                                                                               | maliyet, kullanım           | "Bu konuşmanın maliyetini tahmin et"         |
+| Sistem Durumu Raporu | `health-report`      | Sağlayıcı başına devre kesici, bekleme süresi ve kilitlenme durumlarını toplar                                                                                            | sistem durumu, dayanıklılık | "Tüm sağlayıcıların durumunu göster"         |
+| Yetenekleri Listele  | `list-capabilities`  | Bağlam ekleme amacıyla ham SKILL.md URL'leri içeren bir markdown tablosu olarak 45 girdilik Agent Skills kataloğunun tamamını (23 API + 21 CLI + 1 yapılandırma) döndürür | katalog, keşif, beceriler   | "Tüm Pusula yeteneklerini listele"           |
 
-> Agent Card, canlı 352 sağlayıcılı katalogla uyumlu tutulmalıdır; sağlayıcı sayıları ve ücretsiz/kimlik doğrulamasız kullanım meta verileri çalışma zamanı kayıt defterinden alınır.
+> Agent Card, güncel 374 sağlayıcılı katalogla uyumlu tutulmalıdır; sağlayıcı sayıları ve ücretsiz/kimlik doğrulamasız kullanım meta verileri çalışma zamanı kayıt defterinden alınır.
 
-### `list-capabilities` Becerisinin Ayrıntıları
+### `list-capabilities` Beceri Ayrıntıları
 
-`list-capabilities` becerisi, API çağrıları göndermeden önce Pusula'un neler sunduğunu keşfetmesi gereken harici aracılar için özellikle kullanışlıdır. Yapılandırılmış bir markdown tablo çıktısı döndürür:
+`list-capabilities` becerisi, API çağrıları göndermeden önce Pusula'un neler sunduğunu keşfetmesi gereken harici aracılar için özellikle kullanışlıdır. Yapılandırılmış bir markdown tablo yapıtı döndürür:
 
 ```
 | ID | Ad | Kategori | Alan | Uç Noktalar/Komutlar | Ham URL |
@@ -172,7 +172,7 @@ Pusula, `src/lib/a2a/taskExecution.ts::A2A_SKILL_HANDLERS` içinde bağlanmış 
 ...
 ```
 
-Her satır, aracıların SKILL.md dosyasının tamamını hemen alabilmesi için `rawUrl` sütununu içerir. `metadata.totalSkills` alanı katalog boyutunu yansıtır (bugün 45). Uygulama: `src/lib/a2a/skills/listCapabilities.ts`. Ayrıca bkz. [AGENT-SKILLS.md](./AGENT-SKILLS.md).
+Her satır, aracıların SKILL.md dosyasının tamamını hemen getirebilmesi için `rawUrl` sütununu içerir. `metadata.totalSkills` alanı, katalog boyutunu yansıtır (bugün 45). Uygulama: `src/lib/a2a/skills/listCapabilities.ts`. Ayrıca bkz. [AGENT-SKILLS.md](./AGENT-SKILLS.md).
 
 ---
 
@@ -180,13 +180,13 @@ Her satır, aracıların SKILL.md dosyasının tamamını hemen alabilmesi için
 
 JSON-RPC uç noktası `/a2a`, standart A2A giriş noktasıdır. Aşağıdaki REST uç noktaları, panolar ve harici araçlar için yardımcı erişim sağlar:
 
-| Uç Nokta                     | Yöntem | Açıklama                                                    | Kimlik Doğrulama                              |
-| :--------------------------- | :----- | :---------------------------------------------------------- | :-------------------------------------------- |
-| `/api/a2a/status`            | GET    | Sunucu durumu, kayıtlı yetenekler                           | (herkese açık)                                |
-| `/api/a2a/tasks`             | GET    | Görevleri filtrelerle listeleme                             | yönetim                                       |
-| `/api/a2a/tasks/[id]`        | GET    | Görevi kimliğe göre alma                                    | yönetim                                       |
-| `/api/a2a/tasks/[id]/cancel` | POST   | Çalışan görevi iptal etme                                   | yönetim                                       |
-| `/.well-known/agent.json`    | GET    | Agent Card (A2A keşfi)                                      | (herkese açık, 3600 sn önbelleğe alınır)      |
+| Uç Nokta                     | Yöntem | Açıklama                                                      | Kimlik Doğrulama                           |
+| :--------------------------- | :----- | :------------------------------------------------------------ | :----------------------------------------- |
+| `/api/a2a/status`            | GET    | Sunucu durumu, kayıtlı yetenekler                             | (herkese açık)                             |
+| `/api/a2a/tasks`             | GET    | Görevleri filtrelerle listeleme                               | yönetim                                    |
+| `/api/a2a/tasks/[id]`        | GET    | Görevi kimliğe göre alma                                      | yönetim                                    |
+| `/api/a2a/tasks/[id]/cancel` | POST   | Çalışan görevi iptal etme                                     | yönetim                                    |
+| `/.well-known/agent.json`    | GET    | Agent Card (A2A keşfi)                                        | (herkese açık, 3600 sn önbelleğe alınır)   |
 | `/api/a2a/tasks`             | POST   | PusulaConductor filosuna gelen delegasyon (Conductor PRD RF5) | Bearer ile `PUSULA_API_KEY` + `a2aEnabled` |
 
 **Gelen Conductor delegasyonu (`POST /api/a2a/tasks`):** Harici A2A ajanları, kodlama işlerini Pusula üzerinden PusulaConductor filosuna devreder. Gövde: `{ skill: "conductor" | "conductor-cli-<profile>", messages: [{role, content}], metadata: { conductor: { repo: { url, base_ref? }, mode?, cli?, model? } } }` — yalnızca Conductor filosu yetenekleri (Agent Card üzerinde duyurulanlar) devredilebilir; `metadata.conductor.repo.url` zorunludur (filo, git depoları üzerinde çalışır). Rota, sunucu tarafındaki `CONDUCTOR_ORCHESTRATOR_TOKEN` (yedek olarak `CONDUCTOR_HUB_TOKEN`) kullanılarak hub'ın `POST /v1/tasks` çağrısına dönüştürülür ve `201 { conductor_task_id, state: "submitted" }` döndürür; görev durumları SSE→A2A yansıtıcısı (RF1) üzerinden geri aktarılır ve `GET /api/a2a/tasks?skill=conductor` aracılığıyla görüntülenebilir.

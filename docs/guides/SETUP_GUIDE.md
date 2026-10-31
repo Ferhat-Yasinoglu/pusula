@@ -31,6 +31,8 @@ pusula
 
 Dashboard opens at `http://localhost:20128` and API base URL is `http://localhost:20128/v1`.
 
+> **npm users:** If npm warns that install scripts were blocked (e.g., `pusula`, `better-sqlite3`), see [Troubleshooting — npm install-scripts blocked](./TROUBLESHOOTING.md#npm-install-scripts-blocked-warning-global-install).
+
 ### pnpm
 
 ```bash
@@ -92,8 +94,8 @@ Combined with env vars (`INITIAL_PASSWORD`, `PUSULA_WS_BRIDGE_SECRET`, etc.), th
 
 ### CLI Options
 
-| Command                 | Description                                                    |
-| ----------------------- | -------------------------------------------------------------- |
+| Command              | Description                                                    |
+| -------------------- | -------------------------------------------------------------- |
 | `pusula`             | Start server (`PORT=20128`, API and dashboard on same port)    |
 | `pusula setup`       | Guided CLI onboarding for password and first provider          |
 | `pusula doctor`      | Run local health checks without starting the server            |
@@ -101,7 +103,7 @@ Combined with env vars (`INITIAL_PASSWORD`, `PUSULA_WS_BRIDGE_SECRET`, etc.), th
 | `pusula config`      | CLI tool configuration — list, get, set, validate configs      |
 | `pusula status`      | Offline status dashboard — version, DB, tools, config          |
 | `pusula logs`        | Stream usage logs from the API (supports `--follow`)           |
-| `pusula update`      | Check for or apply Pusula updates                           |
+| `pusula update`      | Check for or apply Pusula updates                              |
 | `pusula provider`    | Manage provider connections — add, list, remove, test, default |
 | `pusula --port 3000` | Set canonical/API port to 3000                                 |
 | `pusula --mcp`       | Start MCP server (stdio transport)                             |
@@ -180,6 +182,7 @@ pusula setup-continue     # ~/.continue/config.yaml (Continue / cn)
 pusula setup-cursor       # prints Cursor's in-app steps
 pusula setup-roo          # Roo Code import + autoImport pointer
 pusula setup-crush        # ~/.config/crush/crush.json
+pusula setup-zed          # ~/.config/zed/settings.json (openai_compatible)
 pusula setup-goose        # ~/.config/goose/config.yaml
 pusula setup-aider        # ~/.aider.conf.yml
 pusula setup-qwen         # ~/.qwen/settings.json + ~/.qwen/.env
@@ -278,7 +281,7 @@ For most deployments, you only need these two variables:
 | Variable                 | Default                       | Purpose                                                                                                                                      |
 | ------------------------ | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | `REQUEST_TIMEOUT_MS`     | `600000`                      | Shared baseline for upstream response-start timeout, hidden Undici timeouts, TLS fingerprint requests, and API bridge request/proxy timeouts |
-| `STREAM_IDLE_TIMEOUT_MS` | inherits `REQUEST_TIMEOUT_MS` | Maximum gap between streaming chunks before Pusula aborts the SSE stream                                                                  |
+| `STREAM_IDLE_TIMEOUT_MS` | inherits `REQUEST_TIMEOUT_MS` | Maximum gap between streaming chunks before Pusula aborts the SSE stream                                                                     |
 
 Backward compatibility is preserved: existing `FETCH_TIMEOUT_MS`, `API_BRIDGE_PROXY_TIMEOUT_MS`, and other per-layer timeout vars still work and override the shared baseline.
 
@@ -416,7 +419,7 @@ post_install() {
 
 | Command                  | Action                                                                              |
 | ------------------------ | ----------------------------------------------------------------------------------- |
-| `npm run uninstall`      | Removes the system app but **keeps your DB and configurations** in `~/.pusula`.  |
+| `npm run uninstall`      | Removes the system app but **keeps your DB and configurations** in `~/.pusula`.     |
 | `npm run uninstall:full` | Removes the app AND permanently **erases all configurations, keys, and databases**. |
 
 > For detailed uninstall instructions across all methods, see [UNINSTALL.md](./UNINSTALL.md).

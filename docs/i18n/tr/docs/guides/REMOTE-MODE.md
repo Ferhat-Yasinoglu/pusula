@@ -244,106 +244,93 @@ tutun.
 
 ---
 
-## Belirteçleri yönetme
+## Token yönetimi
 
 ```bash
 pusula tokens create --name "laptop" --scope write [--expires 30]
-#   ↳ gizli değeri YALNIZCA BİR KEZ yazdırır — şimdi kopyalayın
-pusula tokens list                 # maskelenmiş: kimlik, ad, kapsam, ön ek, durum, süre sonu
-pusula tokens revoke <id|prefix>   # hemen iptal et
-pusula tokens scopes               # üç kapsamı açıkla
+#   ↳ gizli anahtarı YALNIZCA BİR KEZ yazdırır — şimdi kopyalayın
+pusula tokens list                 # maskeli: kimlik, ad, kapsam, önek, durum, süre
+pusula tokens revoke <id|prefix>   # hemen iptal eder
+pusula tokens scopes               # üç kapsamı açıklar
 ```
 
-`tokens` komutları bir **admin** kimlik bilgisi gerektirir. Belirteçleri
-panoda **Ayarlar → Erişim Belirteçleri** altında da yönetebilirsiniz (oluşturma, iptal etme, tek seferlik kopyalama).
+`tokens` komutları bir **admin** kimlik bilgisi gerektirir. Token'ları ayrıca kontrol panelinde **Ayarlar → Erişim Token'ları** altından da yönetebilirsiniz (oluşturma, iptal etme, bir kerelik kopyalama).
+
+Bir token, oluşturanın sahip olduğundan daha fazla yetkiyle asla üretilemez. Bir `admin` token yalnızca operatör tarafından oluşturulabilir: kontrol paneli oturumu, sunucunun kendisindeki yerel CLI veya parolayla `pusula connect`. Makine kimlik bilgileri (bir `admin` erişim token'ı veya `manage`/`admin` kapsamlı bir API anahtarı) yalnızca `write` ve `read` token'ları üretebilir; bunlardan `--scope admin` istemek `403` döndürür. Girişi devre dışı bırakmak üretimi açmaz: her kapsamdaki bir erişim token'ı, her zaman kimlik doğrulamalı rotaların kabul ettiği bir kimlik bilgisidir, bu yüzden anonim bir çağrı her kapsamda `401` alır.
 
 ---
 
-## Uzak katalogdan bir kodlama CLI'ını yapılandırma
+## Uzak katalogdan bir kodlama CLI'sini yapılandırma
 
-`pusula configure`, **etkin sunucunun** canlı model kataloğunu okur ve
-**sizin** makinenize bir yapılandırma yazar.
+`pusula configure`, **etkin sunucunun** canlı model kataloğunu okur ve **kendi** makinenizde bir yapılandırma yazar.
 
 ```bash
 pusula configure codex
 #   Sağlayıcılar: glm, kmc, ollamacloud, opencode-go, …
 #   Sağlayıcı: glm
 #   Model kimliği: glm/glm-5.2
-#   ✔ ~/.codex/glm52.config.toml yazıldı
-#   Kullanım:  codex --profile glm52
+#   ✔ Yazıldı: ~/.codex/glm52.config.toml
+#   Kullanın:  codex --profile glm52
 
 # etkileşimsiz
 pusula configure codex --provider glm --model glm/glm-5.2 --name glm52
 
-# sık kullanılan bir modeli etkileşimli seçicinin en üstünde tut
+# sık kullanılan bir modeli etkileşimli seçicinin en üstünde tutun
 pusula configure codex --provider glm --model glm/glm-5.2 --favorite --yes
 ```
 
-Seçici, yerel `model-preferences.json` dosyasında yalnızca model kimliklerini
-(URL'leri veya kimlik bilgilerini asla değil), bağlama ve CLI hedefine göre kapsamlandırılmış şekilde tutar. Favoriler,
-son seçimlerden önce gösterilir; seçilen bir modeli ilgili bağlam/hedef listesinden
-kaldırmak için `--unfavorite` kullanın.
+Seçici, yerel `model-preferences.json` dosyasında yalnızca model kimliklerini tutar (asla URL'leri veya kimlik bilgilerini), bağlam ve CLI hedefine göre kapsamlandırılmış olarak. Favoriler, son seçimlerin önünde gösterilir; seçili bir modeli o bağlam/hedef listesinden kaldırmak için `--unfavorite` kullanın.
 
-Yazılan profil, çıkarım anahtarına env var
-(`PUSULA_API_KEY`) aracılığıyla başvurur — gizli değer hiçbir zaman diske yazılmaz. Tek seferlik
-temel Codex kurulumu (`[model_providers.pusula]` bloğu) için
-[CODEX-CLI-CONFIGURATION.md](./CODEX-CLI-CONFIGURATION.md) belgesine bakın.
+Yazılan profil, çıkarım anahtarına ortam değişkeni (`PUSULA_API_KEY`) ile başvurur — gizli anahtar asla diske yazılmaz. Tek seferlik temel Codex kurulumu (`[model_providers.pusula]` bloğu) için bkz. [CODEX-CLI-CONFIGURATION.md](./CODEX-CLI-CONFIGURATION.md).
 
 ### Uzak sunucuya karşı bir CLI başlatma (yapılandırma yazılmaz)
 
-`pusula run <target>` da etkin bağlamı dikkate alır: uzak temel URL
-ve bağlam kimlik bilgisi yalnızca başlatılan sürece eklenir.
+`pusula run <target>` da etkin bağlama saygı gösterir: uzak temel URL ve bağlam kimlik bilgisi yalnızca başlatılan sürece enjekte edilir.
 
 ```bash
 pusula connect 192.168.0.15
-pusula run claude   --model openai/gpt-5.4          # Claude Code → uzak sunucu
+pusula run claude   --model openai/gpt-5.4          # Claude Code → uzak
 pusula run gemini   --model glm/glm-5.2 -- --skip-trust -p "hello"
 pusula run opencode --model glm/glm-5.2 -- run "reply OK"
 
-# Tam olarak neyin başlatılacağını önizleyin (yalnızca env ANAHTAR ADLARI, değerler asla gösterilmez):
+# Tam olarak neyin başlatılacağını önizleyin (yalnızca ortam değişkeni ADLARI, asla değerleri):
 pusula run codex --dry-run --json
 ```
 
-Hedefler: `claude`, `codex`, `aider`, `goose`, `opencode`, `qwen`, `gemini`
-(tek kaynak: `bin/cli/cli-manifest.mjs`). Qwen ve Gemini, çıkışta kaldırılan
-geçici ve yalıtılmış bir ana dizinle çalışır; böylece başlatma işlemi kişisel araç
-yapılandırmanıza hiçbir zaman dokunmaz veya ona veri sızdırmaz.
+Hedefler: `claude`, `codex`, `aider`, `goose`, `opencode`, `qwen`, `gemini` (tek kaynak: `bin/cli/cli-manifest.mjs`). Qwen ve Gemini, çıkışta silinen geçici yalıtılmış bir ana dizinle çalışır; böylece başlatma kişisel araç yapılandırmanıza asla dokunmaz veya oraya sızmaz.
 
-### CLI'a özgü kurulum komutları
+### CLI başına kurulum komutları
 
-Desteklenen her CLI'ın uzak sunucuyu destekleyen bir kurulum komutu vardır (tümü etkin
-bağlamı veya `--remote <url> --api-key <key>` seçeneklerini dikkate alır):
+Desteklenen her CLI'nin uzak sunucuyu tanıyan bir kurulum komutu vardır (hepsi etkin bağlama veya `--remote <url> --api-key <key>` seçeneğine saygı gösterir):
 
-| CLI         | Komut                      | Yazdığı yer/içerik                                                                                                                                                                                            |
-| ----------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Codex       | `pusula setup-codex`    | `~/.codex/<name>.config.toml` profilleri (model başına)                                                                                                                                                       |
-| Claude Code | `pusula setup-claude`   | `~/.claude/profiles/<name>/settings.json` (model başına)                                                                                                                                                      |
-| OpenCode    | `pusula setup-opencode` | Her katalog modelini içeren, openai uyumlu `pusula` sağlayıcısı için `~/.config/opencode/opencode.json` (`opencode -m pusula/<model>` komutunu çalıştırın)                                              |
-| Cline       | `pusula setup-cline`    | `~/.cline/data/{globalState,secrets}.json` (CLI modu) + yapıştırılacak VS Code uzantısı ayarlarını yazdırır (OpenAI uyumlu, `/v1` **olmadan** Temel URL)                                                      |
-| Kilo Code   | `pusula setup-kilo`     | `~/.local/share/kilo/auth.json` (CLI) + VS Code `kilocode.*` ayarları — OpenAI uyumlu, `/v1` **içeren** Temel URL                                                                                             |
-| Continue    | `pusula setup-continue` | `~/.continue/config.yaml` (VS Code/JetBrains + `cn` CLI) — `provider: openai`, `/v1` **içeren** `apiBase`, `${{ secrets.PUSULA_API_KEY }}` üzerinden anahtar                                               |
-| Cursor      | `pusula setup-cursor`   | Uygulama içi adımları yazdırır (Ayarlar → Modeller → `/v1` **içeren** OpenAI Temel URL'sini Geçersiz Kıl + anahtar + model). Cursor yapılandırması opak SQLite'tır — yalnızca sohbet paneli                   |
-| Roo Code    | `pusula setup-roo`      | Bir Roo içe aktarma JSON'u (`~/.pusula/roo-settings.json`) yazar + `roo-cline.autoImportSettingsPath` ayarını belirler + kullanıcı arayüzü adımlarını yazdırır (OpenAI uyumlu, `/v1` **içeren** Temel URL) |
-| Crush       | `pusula setup-crush`    | `~/.config/crush/crush.json` — `openai-compat` sağlayıcısı, `/v1` **içeren** `base_url`, `$PUSULA_API_KEY` üzerinden anahtar                                                                               |
-| Goose       | `pusula setup-goose`    | `~/.config/goose/config.yaml` (`GOOSE_PROVIDER=openai` + `/v1` **olmadan** `OPENAI_HOST` + `GOOSE_MODEL`) + ortam değişkeni tarifi                                                                            |
-| Aider       | `pusula setup-aider`    | `~/.aider.conf.yml` (`/v1` **olmadan** `openai-api-base` + `model: openai/<id>`) + ortam değişkeni tarifi (`aider --message --yes`)                                                                           |
-| Qwen Code   | `pusula setup-qwen`     | `~/.qwen/settings.json` V4 `modelProviders.openai` girdisi + `~/.qwen/.env` içinde `PUSULA_API_KEY`                                                                                                        |
+| CLI         | Komut                   | Ne yazar                                                                                                                                                                                        |
+| ----------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Codex       | `pusula setup-codex`    | `~/.codex/<name>.config.toml` profilleri (model başına)                                                                                                                                         |
+| Claude Code | `pusula setup-claude`   | `~/.claude/profiles/<name>/settings.json` (model başına)                                                                                                                                        |
+| OpenCode    | `pusula setup-opencode` | `~/.config/opencode/opencode.json` — tüm katalog modelleriyle `pusula` openai-uyumlu sağlayıcı (`opencode -m pusula/<model>` ile çalıştırın)                                                    |
+| Cline       | `pusula setup-cline`    | `~/.cline/data/{globalState,secrets}.json` (CLI modu) + yapıştırılacak VS Code eklenti ayarlarını yazdırır (OpenAI uyumlu, Temel URL **`/v1` olmadan**)                                         |
+| Kilo Code   | `pusula setup-kilo`     | `~/.local/share/kilo/auth.json` (CLI) + VS Code `kilocode.*` ayarları — OpenAI uyumlu, Temel URL **`/v1` ile**                                                                                  |
+| Continue    | `pusula setup-continue` | `~/.continue/config.yaml` (VS Code/JetBrains + `cn` CLI) — `provider: openai`, `apiBase` **`/v1` ile**, anahtar `${{ secrets.PUSULA_API_KEY }}` üzerinden                                       |
+| Cursor      | `pusula setup-cursor`   | uygulama içi adımları yazdırır (Ayarlar → Modeller → OpenAI Base URL'yi geçersiz kıl **`/v1` ile** + anahtar + model). Cursor yapılandırması okunamayan bir SQLite'tır — yalnızca sohbet paneli |
+| Roo Code    | `pusula setup-roo`      | bir Roo içe aktarma JSON'u yazar (`~/.pusula/roo-settings.json`), `roo-cline.autoImportSettingsPath` ayarlar ve arayüz adımlarını yazdırır (OpenAI uyumlu, Temel URL **`/v1` ile**)             |
+| Crush       | `pusula setup-crush`    | `~/.config/crush/crush.json` — `openai-compat` sağlayıcısı, `base_url` **`/v1` ile**, anahtar `$PUSULA_API_KEY` üzerinden                                                                       |
+| Zed         | `pusula setup-zed`      | `~/.config/zed/settings.json` — `language_models.openai_compatible.pusula`, `api_url` **`/v1` ile**, anahtarı Zed `$PUSULA_API_KEY` üzerinden okur (asla yazılmaz)                              |
+| Goose       | `pusula setup-goose`    | `~/.config/goose/config.yaml` (`GOOSE_PROVIDER=openai` + `OPENAI_HOST` **`/v1` olmadan** + `GOOSE_MODEL`) + ortam tarifi                                                                        |
+| Aider       | `pusula setup-aider`    | `~/.aider.conf.yml` (`openai-api-base` **`/v1` olmadan** + `model: openai/<id>`) + ortam tarifi (`aider --message --yes`)                                                                       |
+| Qwen Code   | `pusula setup-qwen`     | `~/.qwen/settings.json` V4 `modelProviders.openai` girdisi + `~/.qwen/.env` içinde `PUSULA_API_KEY`                                                                                             |
 
 ```bash
 # OpenCode (openai uyumlu sağlayıcı, tüm katalog modelleri, uzak VPS)
 pusula setup-opencode --remote http://192.168.0.15:20128 --api-key oma_live_xxx
-pusula setup-opencode --only glm,kimi        # yalnızca eşleşen modelleri tut
-opencode -m pusula/glm/glm-5.2 "..."          # önce PUSULA_API_KEY değişkenini dışa aktarın
+pusula setup-opencode --only glm,kimi        # yalnızca eşleşen modelleri tutar
+opencode -m pusula/glm/glm-5.2 "..."          # önce PUSULA_API_KEY değerini dışa aktarın
 ```
 
-> OpenCode ayrıca daha zengin bir **eklenti** entegrasyonuna sahiptir: `pusula setup opencode`
-> (artık `--remote` aracılığıyla uzak bağlantıları destekler) `@pusula/opencode-plugin` paketini yükler.
-> `setup-opencode`, hafif openai uyumlu alternatiftir. API anahtarına
-> `{env:PUSULA_API_KEY}` aracılığıyla başvurulur — hiçbir zaman diske yazılmaz.
+> OpenCode'un da daha zengin bir **eklenti** entegrasyonu vardır: `pusula setup opencode` (artık `--remote` ile uzak sunucuyu tanır) `@pusula/opencode-plugin` paketini kurar.
 >
-> OpenCode v2'de bunun yerine `@pusula/opencode-plugin-v2` kullanın: aynı katalog,
-> farklı yükleyici sözleşmesi. Entegrasyon bağlandığında anahtarı OpenCode'un kendi kimlik bilgisi
-> deposundan okur; dolayısıyla uzak ağ geçidi için `opencode.json` dosyasında hiçbir anahtar gerekmez.
+> `setup-opencode`, hafif openai uyumlu alternatiftir. API anahtarı `{env:PUSULA_API_KEY}` ile referans verilir — asla diske yazılmaz.
+>
+> OpenCode v2'de bunun yerine `@pusula/opencode-plugin-v2` kullanın: aynı katalog, farklı yükleyici sözleşmesi. Entegrasyon bağlı olduğunda anahtarı OpenCode'un kendi kimlik bilgisi deposundan okur; bu sayede uzak bir ağ geçidinin `opencode.json` içinde hiç anahtara ihtiyacı olmaz.
 
 ---
 

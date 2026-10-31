@@ -14,8 +14,8 @@ Pusula, ajanlarla ilgili üç farklı arayüz sunar. İlk bakışta benzer gör�
 | Arayüz                       | En uygun kullanım                                                                                                                       | Aktarım                                  | Standart                 |
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- | ------------------------ |
 | **A2A — Ajandan Ajana**      | A2A protokolünü kullanan eş ajanlarla ajanlar arası iş birliği                                                                          | HTTP üzerinden JSON-RPC 2.0              | A2A v0.3 (açık standart) |
-| **ACP — CLI Ajanları Kaydı** | Kullanıcının makinesinde yüklü CLI kodlama ajanlarını (Cursor, Cline, Codex CLI, Claude Code, Aider vb.) algılama / kaydetme / başlatma | HTTP REST                                | Pusula'a özgü         |
-| **Bulut Ajanları**           | Uzun süren kodlama görevlerini harici bulut hizmetlerine (Codex Cloud, Devin, Jules, Cursor Cloud) gönderme                             | HTTP REST + veritabanı destekli görevler | Pusula'a özgü         |
+| **ACP — CLI Ajanları Kaydı** | Kullanıcının makinesinde yüklü CLI kodlama ajanlarını (Cursor, Cline, Codex CLI, Claude Code, Aider vb.) algılama / kaydetme / başlatma | HTTP REST                                | Pusula'a özgü            |
+| **Bulut Ajanları**           | Uzun süren kodlama görevlerini harici bulut hizmetlerine (Codex Cloud, Devin, Jules, Cursor Cloud) gönderme                             | HTTP REST + veritabanı destekli görevler | Pusula'a özgü            |
 
 Bu üçü birbirinden bağımsızdır — istediğiniz herhangi bir alt kümeyi seçebilirsiniz.
 
@@ -67,31 +67,32 @@ Bu makinenin dışında iş yapmak için bir bulut hizmetine (Codex Cloud / Curs
 
 Aktarım ayrıntıları, ajan kartı yapısı, görev TTL yapılandırması ve yeni beceriler ekleme şablonu için [A2A-SERVER.md](./A2A-SERVER.md) belgesine bakın.
 
-## 2. ACP — CLI Aracıları Kayıt Defteri
+## 2. ACP — CLI Ajanları Kayıt Defteri
 
 **Pusula uç noktası:** `GET /api/acp/agents`
 **Kaynak:** `src/lib/acp/{index,manager,registry}.ts`
 
 ### Nedir?
 
-ACP, Pusula'un **yerel CLI aracısı envanteridir**. Ana makinede hangi kodlama CLI'larının yüklü olduğunu (Cursor, Cline, Claude Code, Codex CLI, Continue vb.) algılar, sürümlerini belirler ve kullanıcının her CLI'ı Pusula'u işaret edecek şekilde yapılandırabilmesi için bunları panoda gösterir.
+ACP, Pusula'un **yerel CLI ajanı envanteridir**. Ana makinede hangi kodlama CLI'larının yüklü olduğunu (Cursor, Cline, Claude Code, Codex CLI, Continue vb.) algılar, sürümlerini belirler ve kullanıcıların her CLI'ı Pusula'u kullanacak şekilde yapılandırabilmesi için bunları kontrol panelinde gösterir.
 
-Bu harici bir protokol DEĞİLDİR; "CLI Tools" kullanıcı arayüzünü ve CLI parmak izi takibini destekleyen dahili bir kayıt defteridir (bkz. [CLI-TOOLS.md](../reference/CLI-TOOLS.md)).
+HTTP yüzeyi, "CLI Tools" kullanıcı arayüzünü ve CLI parmak izi takibini destekleyen dahili bir envanterdir (bkz. [CLI-TOOLS.md](../reference/CLI-TOOLS.md)). Bunun yanında dahili süreç yöneticisi, kayıtlı Gemini başlatıcısı için yerel Agent Client Protocol desteği ve diğer sözleşmeler için eski stdio bağdaştırıcıları sağlar.
+Bu farklı modlar ve sınırlamalar için [ACP kayıt defteri ve başlatıcıları](./ACP.md) bölümüne bakın.
 
 ### Ne yapar?
 
-- Ana makinede yüklü CLI ikili dosyalarını tarar (işletim sistemine göre `which` / `where` kullanır)
-- Her CLI'ın sürümünü okur (`<bin> --version` çağrısını yapar)
-- İsteğe bağlı olarak kullanıcı tanımlı özel aracıları kabul eder (ikili dosya yolu + sürüm sorgusu + başlatma argümanları)
-- Özel aracıları ayarlarda kalıcı olarak saklar
-- Birleştirilmiş listeyi panoya döndürür
+- Yüklü CLI ikili dosyalarını bulmak için ana makineyi yoklar (işletim sistemine göre `which` / `where` kullanır)
+- Her CLI'ın sürümünü okur (`<bin> --version` komutunu çağırır)
+- İsteğe bağlı olarak kullanıcı tanımlı özel ajanları kabul eder (ikili dosya yolu + sürüm sorgusu + süreç başlatma argümanları)
+- Özel ajanları ayarlarda kalıcı olarak saklar
+- Birleştirilmiş listeyi kontrol paneline döndürür
 
 ### REST API
 
-| Uç nokta          | Yöntem | Açıklama                                                          | Kimlik doğrulama |
-| ----------------- | ------ | ----------------------------------------------------------------- | ---------------- |
-| `/api/acp/agents` | GET    | Algılanan + özel aracıları listeler (yüklü/toplam sayıları)       | API anahtarı     |
-| `/api/acp/agents` | POST   | Özel aracı ekler/günceller/kaldırır (gövdede eylem ayırt edicisi) | API anahtarı     |
+| Uç nokta          | Yöntem | Açıklama                                                         | Kimlik doğrulama |
+| ----------------- | ------ | ---------------------------------------------------------------- | ---------------- |
+| `/api/acp/agents` | GET    | Algılanan + özel ajanları listeler (yüklü/toplam sayıları)       | API anahtarı     |
+| `/api/acp/agents` | POST   | Özel ajan ekler/günceller/kaldırır (gövdede eylem ayırt edicisi) | API anahtarı     |
 
 POST için gövde yapısı (`src/app/api/acp/agents/route.ts` içindeki `customAgentBodySchema`):
 
@@ -110,13 +111,13 @@ POST için gövde yapısı (`src/app/api/acp/agents/route.ts` içindeki `customA
 
 ### Kullanım alanları
 
-- Panodaki "CLI Tools" sayfası, yüklü olanları listeler ve her birini Pusula'u işaret edecek şekilde yapılandırmanıza yardımcı olur
-- Özel aracılar, ileri düzey kullanıcıların Pusula'un varsayılan olarak tanımadığı dahili/tescilli CLI'ları kaydetmesine olanak tanır
+- Kontrol panelindeki "CLI Tools" sayfası, nelerin yüklü olduğunu listeler ve her birini Pusula'a yönlendirmenize yardımcı olur
+- Özel ajanlar, ileri düzey kullanıcıların Pusula'un varsayılan olarak tanımadığı dahili/tescilli CLI'ları kaydetmesine olanak tanır
 - Algılama sonucu, `cli-tools` parmak izi matrisini besler
 
 ### ACP ne zaman KULLANILMAMALIDIR?
 
-- ACP görevleri _çalıştırmaz_. Yalnızca CLI'ları algılar ve yapılandırır. Bir CLI'ı gerçekten çağırmak için Pusula'un sağladığı ortam değişkenleriyle (`OPENAI_BASE_URL`, `OPENAI_API_KEY` vb.) kendiniz başlatmanız gerekir.
+- HTTP kayıt defteri görev kabul etmez veya süreç başlatma işlevini kullanıma sunmaz. Dahili yönetici kayıtlı bir CLI'ı başlatabilir ancak otomatik sağlayıcı yedeği olarak bağlanmamıştır. Sıradan etkileşimli kullanım için yapılandırılmış CLI'ı kendiniz başlatın veya `pusula run` kullanın.
 
 ## 3. Bulut Aracıları
 
@@ -164,13 +165,13 @@ DELETE /api/v1/agents/tasks/[id]
 
 Her ikisi de "uzun süren görevler" sunar, ancak farklı katmanlarda:
 
-| Unsur                   | A2A                                                                                               | Cloud Agents                                        |
-| ----------------------- | ------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
-| Standart                | Açık A2A v0.3                                                                                     | Pusula'a özgü                                    |
+| Unsur                   | A2A                                                                                            | Cloud Agents                                        |
+| ----------------------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Standart                | Açık A2A v0.3                                                                                  | Pusula'a özgü                                       |
 | İşlemin çalıştığı yer   | Pusula içinde (yapılandırılmış kombinasyonları kullanır)                                       | Harici (Codex / Devin / Jules sunucuları)           |
-| Görev süresi            | Varsayılan TTL 5 dk. (`TaskManager` içinde yapılandırılabilir)                                    | Dakikalardan saatlere                               |
-| Depo bilgisine sahip mi | Hayır (yalnızca istemleri iletir)                                                                 | Evet (depo URL'si + dal)                            |
-| Kullanım alanı          | Ajanlar arası iş birliği, hizmet olarak akıllı yönlendirme                                        | "Y deposunda X özelliğini uygula" görevini devretme |
+| Görev süresi            | Varsayılan TTL 5 dk. (`TaskManager` içinde yapılandırılabilir)                                 | Dakikalardan saatlere                               |
+| Depo bilgisine sahip mi | Hayır (yalnızca istemleri iletir)                                                              | Evet (depo URL'si + dal)                            |
+| Kullanım alanı          | Ajanlar arası iş birliği, hizmet olarak akıllı yönlendirme                                     | "Y deposunda X özelliğini uygula" görevini devretme |
 | Kimlik doğrulama        | `/a2a` için isteğe bağlı `PUSULA_API_KEY`; `/api/a2a/*` REST yardımcıları için yönetim erişimi | Her zaman yönetim erişimi                           |
 
 ## Entegrasyon Örnekleri

@@ -63,7 +63,7 @@ function apiPackageOf(m: Record<string, any> | undefined): string {
   return m.api.package;
 }
 
-describe("catalog api package (models + combos + auto-combos)", () => {
+describe("catalog api package (models + combos)", () => {
   it("every published entry carries a non-empty supported api.package", async () => {
     const { models, draft } = fakeDraft();
     const res = await publishCatalog(draft, baseOpts, {
@@ -71,35 +71,30 @@ describe("catalog api package (models + combos + auto-combos)", () => {
       combosFetcher: async () => [
         { id: "combo-a", name: "Combo A", models: [{ kind: "model", model: "gpt-x" }] },
       ],
-      autoCombosFetcher: async () => [{ id: "auto", candidateCount: 6 }],
     });
-    assert.deepEqual(res, { models: 1, combos: 1, autoCombos: 1 });
-    for (const key of ["pusula/gpt-x", "pusula/combo-a", "pusula/auto"]) {
+    assert.deepEqual(res, { models: 1, combos: 1 });
+    for (const key of ["pusula/gpt-x", "pusula/Combo A"]) {
       const pkg = apiPackageOf(models.get(key));
       assert.ok(pkg.length > 0, `${key} api.package must be non-empty`);
       assert.ok(SUPPORTED_PACKAGES.has(pkg), `${key} api.package must be supported, got ${pkg}`);
     }
   });
 
-  it("auto-combos follow the same anthropic apiFormat rule as models", async () => {
+  it("models keep their gateway ids and api blocks after the virtual-entries removal", async () => {
     const { models, draft } = fakeDraft();
-    await publishCatalog(
+    const res = await publishCatalog(
       draft,
       {
         ...baseOpts,
-        apiFormat: { allowAnthropic: true, anthropicModels: ["anthropic/claude-x", "auto/coding"] },
+        apiFormat: { allowAnthropic: true, anthropicModels: ["anthropic/claude-x"] },
       },
       {
-        fetcher: async () => [{ id: "anthropic/claude-x" }],
+        fetcher: async () => [{ id: "anthropic/claude-x" }, { id: "auto/coding" }],
         combosFetcher: async () => [],
-        autoCombosFetcher: async () => [
-          { id: "auto/coding", variant: "coding", candidateCount: 4 },
-          { id: "auto/fast", variant: "fast", candidateCount: 2 },
-        ],
       }
     );
+    assert.deepEqual(res, { models: 2, combos: 0 });
     assert.equal(apiPackageOf(models.get("pusula/anthropic/claude-x")), "@ai-sdk/anthropic");
-    assert.equal(apiPackageOf(models.get("pusula/auto/coding")), "@ai-sdk/anthropic");
-    assert.equal(apiPackageOf(models.get("pusula/auto/fast")), "@ai-sdk/openai-compatible");
+    assert.ok(models.has("pusula/auto/coding"), "gateway entries publish under their own id");
   });
 });

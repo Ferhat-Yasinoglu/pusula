@@ -229,94 +229,95 @@ ssh -L 20128:127.0.0.1:20128 -L 1455:127.0.0.1:1455 <user>@192.168.0.15
 
 ---
 
-## مدیریت tokenها
+## مدیریت توکن‌ها
 
 ```bash
 pusula tokens create --name "laptop" --scope write [--expires 30]
-#   ↳ مقدار محرمانه را فقط یکبار نمایش میدهد — همین حالا آن را کپی کنید
-pusula tokens list                 # پنهانشده: شناسه، نام، scope، پیشوند، وضعیت، انقضا
-pusula tokens revoke <id|prefix>   # لغو فوری
-pusula tokens scopes               # توضیح سه scope
+#   ↳ مقدار سری را یک بار چاپ می‌کند — همین حالا کپی‌اش کنید
+pusula tokens list                 # ماسک‌شده: شناسه، نام، محدوده، پیشوند، وضعیت، انقضا
+pusula tokens revoke <id|prefix>   # فوراً ابطال می‌کند
+pusula tokens scopes               # توضیح سه محدوده
 ```
 
-فرمانهای `tokens` به یک اعتبارنامهٔ **admin** نیاز دارند. همچنین میتوانید tokenها را در داشبورد و از مسیر **Settings → Access Tokens** مدیریت کنید (ایجاد، لغو، کپی فقط برای یکبار).
+دستورات `tokens` به یک اعتبارنامه‌ی **admin** نیاز دارند. همچنین می‌توانید توکن‌ها را در داشبورد زیر **تنظیمات → توکن‌های دسترسی** مدیریت کنید (ساختن، ابطال، کپی یک‌باره).
+
+یک توکن هرگز نمی‌تواند با امتیازی بیشتر از امتیاز سازنده‌اش ساخته شود. یک توکن `admin` تنها توسط اپراتور قابل ساختن است — نشست داشبورد، CLI محلی روی خود سرور، یا `pusula connect` با رمز عبور. اعتبارنامه‌های ماشینی (یک توکن دسترسی `admin`، یا یک کلید API با محدوده‌ی `manage`/`admin`) فقط می‌توانند توکن‌های `write` و `read` بسازند؛ درخواست `--scope admin` از آن‌ها `403` برمی‌گرداند. غیرفعال کردن ورود، ساختن توکن را باز نمی‌کند: یک توکن دسترسی با هر محدوده‌ای اعتباری است که مسیرهای همیشه‌احراز‌شده می‌پذیرند، بنابراین یک فراخوانی ناشناس در هر محدوده `401` دریافت می‌کند.
 
 ---
 
-## پیکربندی یک CLI برنامهنویسی از catalog راهدور
+## پیکربندی یک CLI برنامه‌نویسی از کاتالوگ راه‌دور
 
-`pusula configure`،‏ catalog زندهٔ مدلها را از **سرور فعال** میخواند و یک پیکربندی روی دستگاه **شما** مینویسد.
+`pusula configure` کاتالوگ زندهٔ مدل‌های **سرور فعال** را می‌خواند و یک پیکربندی روی **دستگاه شما** می‌نویسد.
 
 ```bash
 pusula configure codex
-#   ارائهدهندگان: glm، kmc، ollamacloud، opencode-go، …
-#   ارائهدهنده: glm
-#   شناسهٔ مدل: glm/glm-5.2
-#   ✔ در ~/.codex/glm52.config.toml نوشته شد
-#   استفاده:  codex --profile glm52
+#   ارائه‌دهندگان: glm, kmc, ollamacloud, opencode-go, …
+#   ارائه‌دهنده: glm
+#   شناسه‌ی مدل: glm/glm-5.2
+#   ✔ نوشته شد ~/.codex/glm52.config.toml
+#   استفاده: codex --profile glm52
 
 # غیرتعاملی
 pusula configure codex --provider glm --model glm/glm-5.2 --name glm52
 
-# نگهداشتن یک مدل پراستفاده در بالای انتخابگر تعاملی
+# یک مدل پرکاربرد را در بالای انتخابگر تعاملی نگه می‌دارد
 pusula configure codex --provider glm --model glm/glm-5.2 --favorite --yes
 ```
 
-انتخابگر فقط شناسههای مدل را (و هرگز URLها یا اعتبارنامهها را) در فایل محلی `model-preferences.json` نگه میدارد که براساس context و مقصد CLI تفکیک شدهاند. موارد دلخواه پیش از انتخابهای اخیر نمایش داده میشوند؛ برای حذف مدل انتخابشده از فهرست آن context/مقصد، از `--unfavorite` استفاده کنید.
+انتخابگر فقط شناسه‌های مدل را (هرگز URL یا اعتبارنامه) در فایل محلی `model-preferences.json` نگه می‌دارد که به زمینه و هدف CLI محدود است. موارد مورد علاقه پیش از انتخاب‌های اخیر نمایش داده می‌شوند؛ از `--unfavorite` برای حذف یک مدل انتخاب‌شده از فهرست آن زمینه/هدف استفاده کنید.
 
-پروفایل نوشتهشده از طریق env var به کلید inference ارجاع میدهد (`PUSULA_API_KEY`) — مقدار محرمانه هرگز روی دیسک نوشته نمیشود. برای راهاندازی پایهٔ یکبارهٔ Codex (بلوک `[model_providers.pusula]`)، به [CODEX-CLI-CONFIGURATION.md](./CODEX-CLI-CONFIGURATION.md) مراجعه کنید.
+پروفایل نوشته‌شده، کلید استنتاج را با متغیر محیطی (`PUSULA_API_KEY`) ارجاع می‌دهد — رمز هرگز روی دیسک نوشته نمی‌شود. برای راه‌اندازی یک‌باره‌ی پایه‌ی Codex (بلوک `[model_providers.pusula]`)، به [CODEX-CLI-CONFIGURATION.md](./CODEX-CLI-CONFIGURATION.md) مراجعه کنید.
 
-### اجرای یک CLI روی مقصد راهدور (بدون نوشتن پیکربندی)
+### اجرای یک CLI روی راه‌دور (بدون نوشتن پیکربندی)
 
-`pusula run <target>` نیز context فعال را در نظر میگیرد: URL پایهٔ راهدور و اعتبارنامهٔ context فقط به فرایند ایجادشده تزریق میشوند.
+`pusula run <target>` نیز زمینه‌ی فعال را رعایت می‌کند: URL پایه‌ی راه‌دور و اعتبارنامه‌ی زمینه فقط به فرایند ایجادشده تزریق می‌شوند.
 
 ```bash
 pusula connect 192.168.0.15
-pusula run claude   --model openai/gpt-5.4          # Claude Code ← راهدور
+pusula run claude   --model openai/gpt-5.4          # Claude Code → راه‌دور
 pusula run gemini   --model glm/glm-5.2 -- --skip-trust -p "hello"
 pusula run opencode --model glm/glm-5.2 -- run "reply OK"
 
-# پیشنمایش دقیق چیزی که اجرا خواهد شد (فقط نامهای KEYهای env، نه مقادیر آنها):
+# پیش‌نمایش دقیق آنچه اجرا می‌شود (فقط نام کلیدهای env، هرگز مقادیر):
 pusula run codex --dry-run --json
 ```
 
-مقصدها: `claude`،‏ `codex`،‏ `aider`،‏ `goose`،‏ `opencode`،‏ `qwen`،‏ `gemini` (منبع واحد: `bin/cli/cli-manifest.mjs`). Qwen و Gemini با یک home موقت و ایزوله اجرا میشوند که هنگام خروج حذف میشود؛ بنابراین اجرا هرگز پیکربندی شخصی ابزار شما را تغییر نمیدهد — یا چیزی را به داخل آن نشت نمیدهد.
+اهداف: `claude`، `codex`، `aider`، `goose`، `opencode`، `qwen`، `gemini` (منبع واحد: `bin/cli/cli-manifest.mjs`). Qwen و Gemini با یک خانه‌ی موقت و ایزوله اجرا می‌شوند که هنگام خروج حذف می‌شود، بنابراین اجرا هرگز به پیکربندی ابزار شخصی شما دست نمی‌زند یا به آن نشت نمی‌کند.
 
-### فرمانهای راهاندازی مختص هر CLI
+### دستورهای راه‌اندازی هر CLI
 
-هر CLI پشتیبانیشده یک فرمان راهاندازی سازگار با مقصد راهدور دارد (همهٔ آنها context فعال یا `--remote <url> --api-key <key>` را در نظر میگیرند):
+هر CLI پشتیبانی‌شده یک دستور راه‌اندازی آگاه از راه‌دور دارد (همه‌ی آن‌ها زمینه‌ی فعال را رعایت می‌کنند، یا `--remote <url> --api-key <key>`):
 
-| CLI         | فرمان                      | آنچه مینویسد                                                                                                                                                                                                    |
-| ----------- | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Codex       | `pusula setup-codex`    | پروفایلهای `~/.codex/<name>.config.toml` (برای هر مدل)                                                                                                                                                          |
-| Claude Code | `pusula setup-claude`   | `~/.claude/profiles/<name>/settings.json` (برای هر مدل)                                                                                                                                                         |
-| OpenCode    | `pusula setup-opencode` | `~/.config/opencode/opencode.json` — ارائهدهندهٔ سازگار با openai با نام `pusula` و همهٔ مدلهای کاتالوگ (`opencode -m pusula/<model>` را اجرا کنید)                                                       |
-| Cline       | `pusula setup-cline`    | `~/.cline/data/{globalState,secrets}.json` (حالت CLI) + تنظیمات افزونهٔ VS Code را برای جایگذاری چاپ میکند (سازگار با OpenAI، نشانی پایه **بدون** `/v1`)                                                        |
-| Kilo Code   | `pusula setup-kilo`     | `~/.local/share/kilo/auth.json` (CLI) + تنظیمات `kilocode.*` در VS Code — سازگار با OpenAI، نشانی پایه **همراه با** `/v1`                                                                                       |
-| Continue    | `pusula setup-continue` | `~/.continue/config.yaml` (VS Code/JetBrains + رابط خط فرمان `cn`) — `provider: openai`، مقدار `apiBase` **همراه با** `/v1`، کلید از طریق `${{ secrets.PUSULA_API_KEY }}`                                    |
-| Cursor      | `pusula setup-cursor`   | مراحل درونبرنامهای را چاپ میکند (Settings → Models → بازنویسی نشانی پایهٔ OpenAI **همراه با** `/v1` + کلید + مدل). پیکربندی Cursor یک SQLite مبهم است — فقط پنل گفتوگو                                          |
-| Roo Code    | `pusula setup-roo`      | یک JSON قابلدرونریزی برای Roo (`~/.pusula/roo-settings.json`) مینویسد + `roo-cline.autoImportSettingsPath` را تنظیم میکند + مراحل رابط کاربری را چاپ میکند (سازگار با OpenAI، نشانی پایه **همراه با** `/v1`) |
-| Crush       | `pusula setup-crush`    | `~/.config/crush/crush.json` — ارائهدهندهٔ `openai-compat`، مقدار `base_url` **همراه با** `/v1`، کلید از طریق `$PUSULA_API_KEY`                                                                              |
-| Goose       | `pusula setup-goose`    | `~/.config/goose/config.yaml` (`GOOSE_PROVIDER=openai` + `OPENAI_HOST` **بدون** `/v1` + `GOOSE_MODEL`) + دستورالعمل متغیرهای محیطی                                                                              |
-| Aider       | `pusula setup-aider`    | `~/.aider.conf.yml` (مقدار `openai-api-base` **بدون** `/v1` + `model: openai/<id>`) + دستورالعمل متغیرهای محیطی (`aider --message --yes`)                                                                       |
-| Qwen Code   | `pusula setup-qwen`     | ورودی V4 با نام `modelProviders.openai` در `~/.qwen/settings.json` + متغیر `PUSULA_API_KEY` در `~/.qwen/.env`                                                                                                |
+| CLI         | دستور                   | آنچه می‌نویسد                                                                                                                                                                          |
+| ----------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Codex       | `pusula setup-codex`    | پروفایل‌های `~/.codex/<name>.config.toml` (برای هر مدل)                                                                                                                                |
+| Claude Code | `pusula setup-claude`   | `~/.claude/profiles/<name>/settings.json` (برای هر مدل)                                                                                                                                |
+| OpenCode    | `pusula setup-opencode` | `~/.config/opencode/opencode.json` — ارائه‌دهنده‌ی سازگار با OpenAI به نام `pusula` با هر مدل کاتالوگ (اجرا با `opencode -m pusula/<model>`)                                           |
+| Cline       | `pusula setup-cline`    | `~/.cline/data/{globalState,secrets}.json` (حالت CLI) + چاپ تنظیمات افزونه‌ی VS Code برای چسباندن (سازگار با OpenAI، Base URL **بدون** `/v1`)                                          |
+| Kilo Code   | `pusula setup-kilo`     | `~/.local/share/kilo/auth.json` (CLI) + تنظیمات VS Code با `kilocode.*` — سازگار با OpenAI، Base URL **با** `/v1`                                                                      |
+| Continue    | `pusula setup-continue` | `~/.continue/config.yaml` (VS Code/JetBrains + CLI با `cn`) — `provider: openai`، `apiBase` **با** `/v1`، کلید از طریق `${{ secrets.PUSULA_API_KEY }}`                                 |
+| Cursor      | `pusula setup-cursor`   | مراحل درون‌برنامه‌ای را چاپ می‌کند (Settings → Models → Override OpenAI Base URL **با** `/v1` + کلید + مدل). پیکربندی Cursor یک SQLite مبهم است — فقط پنل چت                           |
+| Roo Code    | `pusula setup-roo`      | یک JSON وارد‌سازی Roo (`~/.pusula/roo-settings.json`) می‌نویسد + `roo-cline.autoImportSettingsPath` را تنظیم می‌کند + مراحل UI را چاپ می‌کند (سازگار با OpenAI، Base URL **با** `/v1`) |
+| Crush       | `pusula setup-crush`    | `~/.config/crush/crush.json` — ارائه‌دهنده‌ی `openai-compat`، `base_url` **با** `/v1`، کلید از طریق `$PUSULA_API_KEY`                                                                  |
+| Zed         | `pusula setup-zed`      | `~/.config/zed/settings.json` — `language_models.openai_compatible.pusula`، `api_url` **با** `/v1`، کلید توسط Zed از `$PUSULA_API_KEY` خوانده می‌شود (هرگز نوشته نمی‌شود)              |
+| Goose       | `pusula setup-goose`    | `~/.config/goose/config.yaml` (`GOOSE_PROVIDER=openai` + `OPENAI_HOST` **بدون** `/v1` + `GOOSE_MODEL`) + دستورالعمل env                                                                |
+| Aider       | `pusula setup-aider`    | `~/.aider.conf.yml` (`openai-api-base` **بدون** `/v1` + `model: openai/<id>`) + دستورالعمل env (`aider --message --yes`)                                                               |
+| Qwen Code   | `pusula setup-qwen`     | ورودی V4 `modelProviders.openai` در `~/.qwen/settings.json` + `PUSULA_API_KEY` در `~/.qwen/.env`                                                                                       |
 
 ```bash
-# OpenCode (ارائهدهندهٔ سازگار با openai، همهٔ مدلهای کاتالوگ، VPS راهدور)
+# OpenCode (ارائه‌دهنده‌ی سازگار با OpenAI، همه‌ی مدل‌های کاتالوگ، VPS راه‌دور)
 pusula setup-opencode --remote http://192.168.0.15:20128 --api-key oma_live_xxx
-pusula setup-opencode --only glm,kimi        # فقط مدلهای منطبق را نگه دارید
+pusula setup-opencode --only glm,kimi        # فقط مدل‌های مطابق را نگه می‌دارد
 opencode -m pusula/glm/glm-5.2 "..."          # ابتدا PUSULA_API_KEY را export کنید
 ```
 
-> OpenCode همچنین یک یکپارچهسازی غنیتر از طریق **افزونه** دارد: `pusula setup opencode`
-> (که اکنون از طریق `--remote` از حالت راهدور آگاه است) بستهٔ `@pusula/opencode-plugin` را نصب میکند.
-> `setup-opencode` جایگزین سبکوزن و سازگار با openai است. کلید API
-> از طریق `{env:PUSULA_API_KEY}` ارجاع داده میشود — و هرگز روی دیسک نوشته نمیشود.
+> OpenCode همچنین یک یکپارچگی **افزونه** غنی‌تر دارد: `pusula setup opencode`
+> (اکنون با `--remote` نسبت به راه‌دور آگاه است) افزونه‌ی `@pusula/opencode-plugin` را نصب می‌کند.
+> `setup-opencode` جایگزین سبک و سازگار با OpenAI است. کلید API
+> با `{env:PUSULA_API_KEY}` ارجاع داده می‌شود — هرگز روی دیسک نوشته نمی‌شود.
 >
-> در OpenCode v2، بهجای آن از `@pusula/opencode-plugin-v2` استفاده کنید: همان کاتالوگ،
-> با قرارداد بارگذاری متفاوت. هنگامی که یکپارچهسازی متصل باشد، کلید را از مخزن اعتبارنامهٔ
-> خود OpenCode میخواند؛ بنابراین یک درگاه راهدور اصلاً به کلید در
-> `opencode.json` نیاز ندارد.
+> در OpenCode v2 به‌جای آن از `@pusula/opencode-plugin-v2` استفاده کنید: همان کاتالوگ،
+> با قرارداد بارگذاری متفاوت. وقتی یکپارچگی متصل باشد، کلید را از فروشگاه اعتبارنامه‌ی خود OpenCode می‌خواند، بنابراین یک gateway راه‌دور به کلیدی در `opencode.json` نیاز ندارد.
 
 ---
 

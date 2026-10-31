@@ -15,7 +15,7 @@ lastUpdated: 2026-08-02
 
 ## What It Is
 
-Pusula registers 329 providers, including 155 catalog entries marked **free/no-auth**
+Pusula registers 375 providers, including 155 catalog entries marked **free/no-auth**
 (no-auth,
 free-tier OAuth, or free-tier API key — see the
 [Free Tiers Guide](../getting-started/FREE-TIERS-GUIDE.md) and the full
@@ -133,7 +133,7 @@ carries a model name, vendor, ELO `score`, confidence interval, and vote count.
 
 Leaderboard categories map to Pusula task categories:
 
-| Arena leaderboard | Pusula task categories                         |
+| Arena leaderboard | Pusula task categories                            |
 | ----------------- | ------------------------------------------------- |
 | `text`            | `default`, `review`, `documentation`, `debugging` |
 | `code`            | `coding`                                          |

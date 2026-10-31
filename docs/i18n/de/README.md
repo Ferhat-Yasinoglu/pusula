@@ -718,10 +718,10 @@ docker run -d --name pusula --restart unless-stopped --stop-timeout 40 \
 `:latest` folgt der höchsten **veröffentlichten** stabilen SemVer-Version. Es folgt nicht dem Git-Branch `main`. Verwenden Sie für GitOps eine feste Version mit `:X.Y.Z`. Siehe [Docker-Veröffentlichungskanäle](docs/guides/DOCKER_GUIDE.md#release-channels). Das Image setzt **`PUSULA_MEMORY_MB=1024`** fest. Das reicht für das Dashboard und einen einfachen Chat. **Coding-Agenten** (`POST /v1/responses` von Claude Code, Codex, Grok, …) benötigen einen wesentlich größeren V8-Heap, andernfalls kommt es bei zwei sich überschneidenden langen Kontexten bei etwa 12 GiB zu einem `FATAL ERROR`. Dimensionieren Sie den Container größer als den Heap (native Puffer befinden sich außerhalb von V8):
 
 | Arbeitslast                              | Heap (`-e PUSULA_MEMORY_MB`) | Container (`--memory`) |
-| ---------------------------------------- | ------------------------------- | ---------------------- |
-| Dashboard / einfacher Chat               | `1024` (Image-Standardwert)     | ≥2 g                   |
-| Ein Coding-Agent                         | `8192`                          | ≥10 g                  |
-| Zwei gleichzeitige lange `/v1/responses` | `10240`–`12288`                 | ≥12–16 g               |
+| ---------------------------------------- | ---------------------------- | ---------------------- |
+| Dashboard / einfacher Chat               | `1024` (Image-Standardwert)  | ≥2 g                   |
+| Ein Coding-Agent                         | `8192`                       | ≥10 g                  |
+| Zwei gleichzeitige lange `/v1/responses` | `10240`–`12288`              | ≥12–16 g               |
 
 ```bash
 docker run -d --name pusula --restart unless-stopped --stop-timeout 40 \
@@ -831,10 +831,10 @@ gleichen Prozess über einen einzigen Port bereitgestellt, daher gibt es derzeit
 
 | Kanal                    | Wo / wie                                                                                                                             |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
-| 🐛 **Fehler melden**     | [GitHub Issues](https://github.com/Ferhat-Yasinoglu/pusula/issues) — Ausgabe von `npm run system-info` anhängen                       |
-| 💬 **Fragen & Ideen**    | [GitHub Discussions](https://github.com/Ferhat-Yasinoglu/pusula/discussions)                                                          |
+| 🐛 **Fehler melden**     | [GitHub Issues](https://github.com/Ferhat-Yasinoglu/pusula/issues) — Ausgabe von `npm run system-info` anhängen                      |
+| 💬 **Fragen & Ideen**    | [GitHub Discussions](https://github.com/Ferhat-Yasinoglu/pusula/discussions)                                                         |
 | 🔒 **Sicherheitslücken** | [Security Advisory erstellen](https://github.com/Ferhat-Yasinoglu/pusula/security/advisories/new) — siehe [SECURITY.md](SECURITY.md) |
-| 📦 **Quellcode**         | [github.com/Ferhat-Yasinoglu/pusula](https://github.com/Ferhat-Yasinoglu/pusula)                                                      |
+| 📦 **Quellcode**         | [github.com/Ferhat-Yasinoglu/pusula](https://github.com/Ferhat-Yasinoglu/pusula)                                                     |
 | 🤝 **Mitwirken**         | [CONTRIBUTING.md](CONTRIBUTING.md) · [Branching- & Release-Modell](docs/ops/BRANCHING_MODEL.md) · ein `good first issue` auswählen   |
 
 </div>
@@ -853,7 +853,7 @@ gleichen Prozess über einen einzigen Port bereitgestellt, daher gibt es derzeit
   <tr><td nowrap><b>Laufzeit</b></td><td>Node.js 22.x / 24.x LTS — <code>&gt;=22.22.2 &lt;23 || &gt;=24.0.0 &lt;27</code></td></tr>
   <tr><td nowrap><b>Sprache</b></td><td>TypeScript 6.0 — <b>100% TypeScript</b> in <code>src/</code> und <code>open-sse/</code> (kein <code>any</code> im Kern seit v2.0)</td></tr>
   <tr><td nowrap><b>Framework</b></td><td>Next.js 16 + React 19 + Tailwind CSS 4</td></tr>
-  <tr><td nowrap><b>Datenbank</b></td><td>better-sqlite3 (SQLite, WAL Journaling) + LowDB (JSON Legacy) — 122 Domänenmodule, 183 Migrationen</td></tr>
+  <tr><td nowrap><b>Datenbank</b></td><td>better-sqlite3 (SQLite, WAL Journaling) + LowDB (JSON Legacy) — 122 Domänenmodule, 209 Migrationen</td></tr>
   <tr><td nowrap><b>Speicher</b></td><td>SQLite FTS5 Volltext + int8-quantisierte Vektor-Embeddings, typisierter Zerfall</td></tr>
   <tr><td nowrap><b>Schemata</b></td><td>Zod 4 — MCP Tool I/O-Validierung + API-Verträge</td></tr>
   <tr><td nowrap><b>Protokolle</b></td><td>MCP (stdio / HTTP / SSE) + A2A v0.3 (JSON-RPC 2.0 + SSE)</td></tr>

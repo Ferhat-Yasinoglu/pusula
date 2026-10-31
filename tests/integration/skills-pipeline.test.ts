@@ -1,11 +1,18 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { PUSULA_WEB_SEARCH_FALLBACK_TOOL_NAME } from "../../open-sse/services/webSearchFallback.ts";
-import { decodeSkillToolName, encodeSkillToolName } from "../../src/lib/skills/injection.ts";
-
 import { createChatPipelineHarness } from "./_chatPipelineHarness.ts";
 
 const harness = await createChatPipelineHarness("skills-pipeline");
+// Imported AFTER the harness on purpose: skills/injection.ts reaches src/lib/db/core.ts
+// (via skills/registry.ts), which pins DATA_DIR at module evaluation. A static import
+// ran before the harness redirected DATA_DIR, so under CI (job-wide DATA_DIR shared by
+// every file of the shard) this file used the shard's shared DB, resetStorage() never
+// reset it, and a shard-mate's persisted setupComplete/password turned the management
+// PUT /api/skills/:id into a 401.
+const { PUSULA_WEB_SEARCH_FALLBACK_TOOL_NAME } =
+  await import("../../open-sse/services/webSearchFallback.ts");
+const { decodeSkillToolName, encodeSkillToolName } =
+  await import("../../src/lib/skills/injection.ts");
 const {
   BaseExecutor,
   buildOpenAIResponse,
@@ -835,9 +842,7 @@ test("web_search fallback converts built-in tools for unsupported providers and 
       body: {
         model: "openai/gpt-4o-mini",
         stream: false,
-        messages: [
-          { role: "user", content: "Search the web for the latest Pusula release notes" },
-        ],
+        messages: [{ role: "user", content: "Search the web for the latest Pusula release notes" }],
         tools: [{ type: "web_search", search_context_size: "medium" }],
       },
     })
@@ -902,9 +907,7 @@ test("web_search fallback preserves Responses API output by appending function_c
           {
             type: "message",
             role: "user",
-            content: [
-              { type: "input_text", text: "Search the web for the latest Pusula roadmap" },
-            ],
+            content: [{ type: "input_text", text: "Search the web for the latest Pusula roadmap" }],
           },
         ],
         tools: [{ type: "web_search_preview", search_context_size: "low" }],
@@ -972,9 +975,7 @@ test("web_search fallback emits a native web_search_call output item with source
           {
             type: "message",
             role: "user",
-            content: [
-              { type: "input_text", text: "Search the web for the latest Pusula release" },
-            ],
+            content: [{ type: "input_text", text: "Search the web for the latest Pusula release" }],
           },
         ],
         tools: [{ type: "web_search_preview", search_context_size: "low" }],
@@ -1057,9 +1058,16 @@ test("web_search fallback executes stream:true responses requests non-streaming 
       },
     })
   );
-  const json = (await response.json()) as {
-    output: Array<Record<string, unknown>>;
-  };
+  // The client asked for a stream (#13033): the executed response comes back as
+  // Responses SSE, and its items are carried by the terminal response.completed.
+  assert.match(response.headers.get("content-type") ?? "", /text\/event-stream/);
+  const completed = (await response.text())
+    .split("\n\n")
+    .map((block) => block.trim())
+    .filter((block) => block.startsWith("event: response.completed"))
+    .map((block) => JSON.parse(block.split("\n")[1].slice("data: ".length)));
+  assert.equal(completed.length, 1, "exactly one response.completed");
+  const json = completed[0].response as { output: Array<Record<string, unknown>> };
   const webSearchCall = json.output.find((item) => item.type === "web_search_call");
   const functionCall = json.output.find((item) => item.type === "function_call");
   const functionCallOutput = json.output.find((item) => item.type === "function_call_output");
@@ -1129,9 +1137,7 @@ test("web_search fallback auto-selects a configured paid provider over duckduckg
           {
             type: "message",
             role: "user",
-            content: [
-              { type: "input_text", text: "Search the web for the latest Pusula roadmap" },
-            ],
+            content: [{ type: "input_text", text: "Search the web for the latest Pusula roadmap" }],
           },
         ],
         tools: [{ type: "web_search_preview", search_context_size: "low" }],

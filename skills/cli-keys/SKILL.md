@@ -128,6 +128,8 @@ pusula keys show <id>
 - `--rate-limit <n>`
 - `--max-cost <n>`
 - `--allowed-models <list>`
+- `--model-access-mode <mode>`
+- `--unrestricted`
 
 **Example:**
 
@@ -189,6 +191,7 @@ pusula oauth providers
 
 **Flags:**
 
+- `--provider <id>`
 - `--no-browser`
 - `--import-from-system`
 - `--social <s>`
@@ -216,6 +219,7 @@ pusula oauth status
 
 **Flags:**
 
+- `--provider <id>`
 - `--connection-id <id>`
 - `--yes`
 

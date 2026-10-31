@@ -108,8 +108,8 @@ describe("catalog nested combo refs", () => {
           },
         ],
       });
-      assert.deepEqual(res, { models: 2, combos: 2, autoCombos: 0 });
-      const parent = c.models.get("pusula/parent");
+      assert.deepEqual(res, { models: 2, combos: 2 });
+      const parent = c.models.get("pusula/Parent");
       assert.ok(parent);
       assert.equal(parent?.limit.context, 50000);
       assert.equal(parent?.limit.output, 2000);
@@ -132,8 +132,8 @@ describe("catalog nested combo refs", () => {
           },
         ],
       });
-      assert.deepEqual(res, { models: 1, combos: 0, autoCombos: 0 });
-      assert.ok(!c.models.has("pusula/orphan"));
+      assert.deepEqual(res, { models: 1, combos: 0 });
+      assert.ok(!c.models.has("pusula/Orphan"));
       assert.ok(c.warns.some((w) => w.includes("could not resolve")));
     } finally {
       c.restore();
@@ -170,7 +170,7 @@ describe("catalog nested combo refs", () => {
           },
         ],
       });
-      const top = c.models.get("pusula/top");
+      const top = c.models.get("pusula/Top");
       assert.ok(top);
       assert.equal(top?.limit.context, 80000);
     } finally {
@@ -193,7 +193,12 @@ describe("catalog collision dedupe", () => {
       await publishCatalog(c.draft, { ...baseOpts, collisionWarned }, args);
       await publishCatalog(c.draft, { ...baseOpts, collisionWarned }, args);
       const hits = c.warns.filter((w) => w.includes("collides with a model id"));
-      assert.equal(hits.length, 1);
+      // Name-based keying: the combo publishes as `pusula/Dupe Combo` and
+      // the raw model stays at `pusula/dupe` — no collision, so no warn.
+      assert.equal(hits.length, 0);
+      // Both keys exist independently.
+      assert.ok(c.models.has("pusula/dupe"), "raw model keeps its key");
+      assert.ok(c.models.has("pusula/Dupe Combo"), "combo under its name");
     } finally {
       c.restore();
     }
@@ -215,7 +220,7 @@ describe("catalog collision dedupe", () => {
           },
         ],
       });
-      assert.deepEqual(res, { models: 1, combos: 1, autoCombos: 0 });
+      assert.deepEqual(res, { models: 1, combos: 1 });
       assert.ok(!c.warns.some((w) => w.includes("collides")));
       assert.equal(c.models.get("pusula/Mirror Combo")?.name, "Mirror Combo");
     } finally {
@@ -240,7 +245,12 @@ describe("catalog collision dedupe", () => {
       await publishCatalog(c.draft, { ...baseOpts, collisionWarned }, args);
       await publishCatalog(c.draft, { ...baseOpts, collisionWarned }, args);
       const hits = c.warns.filter((w) => w.includes("collides with a model id"));
-      assert.equal(hits.length, 1);
+      // Same shape as the test above: name-based keys mean the combo
+      // (`pusula/Other Combo`) never collides with the raw model
+      // (`pusula/other`), so no warn fires and the draft holds both.
+      assert.equal(hits.length, 0);
+      assert.ok(c.models.has("pusula/other"), "raw model keeps its key");
+      assert.ok(c.models.has("pusula/Other Combo"), "combo under its name");
     } finally {
       c.restore();
     }
