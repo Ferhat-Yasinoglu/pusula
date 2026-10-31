@@ -1,0 +1,18 @@
+[Unit]
+Description=Pusula auto-update (ghcr.io/ferhat-yasinoglu/pusula:main)
+Documentation=file:///usr/local/sbin/pusula-auto-update
+# Ordered after Docker but never starts it: with Docker stopped the run exits 0.
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/pusula-auto-update
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+Environment=HOME=/root
+SyslogIdentifier=pusula-auto-update
+# Pull + backup + up to 15 min health wait + a possible rollback.
+TimeoutStartSec=2h
+# On SIGTERM (systemctl stop, shutdown) the run brings the old version back
+# first; if that takes longer it is killed and the next start finishes it.
+TimeoutStopSec=10min

@@ -1,0 +1,17 @@
+[Unit]
+Description=Run pusula-auto-update every 15 minutes and soon after boot
+After=docker.service
+
+[Timer]
+# Soon after boot: finishes an update that a reboot or power loss interrupted.
+# (When the timer is first enabled on a running server this is already in
+# the past, so systemd starts a run at once; a manual run then follows it.)
+OnBootSec=3min
+OnCalendar=*:0/15
+RandomizedDelaySec=3min
+AccuracySec=1min
+Persistent=true
+Unit=pusula-auto-update.service
+
+[Install]
+WantedBy=timers.target
