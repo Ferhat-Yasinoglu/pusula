@@ -284,7 +284,14 @@ export const FULL_CI_GATE_JOBS = [
 //   • check:codeql-ratchet — queries GitHub's code-scanning alerts for the REMOTE main
 //     branch (CodeQL Default Setup only analyzes main/PRs→main; a local run reflects
 //     post-merge server state the pre-flight can't change). Checked on the release PR.
-export const FULL_CI_SKIP = new Set(["check:pr-evidence", "check:codeql-ratchet"]);
+//   • check:ai-attribution — PR-only step (`if: github.event_name == 'pull_request'`) whose
+//     `--range "$PR_BASE_SHA..$PR_HEAD_SHA"` comes from the PR event payload; scraped here it
+//     reaches `git log` unexpanded and fails on every run outside a PR.
+export const FULL_CI_SKIP = new Set([
+  "check:pr-evidence",
+  "check:codeql-ratchet",
+  "check:ai-attribution",
+]);
 
 // Gates that need a specific env to behave like CI (else they compare against the wrong base).
 export const FULL_CI_ENV = { "check:test-masking": { GITHUB_BASE_REF: "main" } };
