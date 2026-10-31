@@ -9,7 +9,6 @@ All notable changes to Pusula are documented in this file. The format follows
 ### 🔧 CI / Build
 
 - **ci(fly):** removed the `Deploy to Fly.io` workflow. It never deployed without a `FLY_API_TOKEN` and the public instance runs on our own server, so it was a no-op on every push to `main`.
-- **chore(deps):** removed the unused `mermaid` dependency (nothing in the app, CLI, desktop app or scripts imported it; `docs:render-diagrams` uses a separately installed `@mermaid-js/mermaid-cli`). This removes 78 package entries from the lockfile and stops mermaid 12 from pulling in `elkjs` (EPL-2.0), which failed the `check:licenses` gate on the dependabot production-group update.
 
 ## [1.0.0] - 2026-10-20
 
