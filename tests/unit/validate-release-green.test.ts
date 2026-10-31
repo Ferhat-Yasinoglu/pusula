@@ -314,6 +314,14 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run check:route-validation:t06
+      - name: AI attribution (PR only)
+        if: github.event_name == 'pull_request'
+        env:
+          PR_BASE_SHA: \${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: \${{ github.event.pull_request.head.sha }}
+        run: |
+          printf '%s' "$PR_BODY" > "$RUNNER_TEMP/pr-body.md"
+          npm run check:ai-attribution -- --range "$PR_BASE_SHA..$PR_HEAD_SHA" --pr-body-file "$RUNNER_TEMP/pr-body.md"
   quality-extended:
     steps:
       - name: Bundle size
@@ -371,6 +379,19 @@ test("extractCiGates: skips the non-local gates (pr-evidence, codeql-ratchet)", 
     "codeql-ratchet is a remote-main check — skipped"
   );
   assert.ok(FULL_CI_SKIP.has("check:pr-evidence") && FULL_CI_SKIP.has("check:codeql-ratchet"));
+});
+
+test("extractCiGates: skips the PR-only check:ai-attribution gate", async () => {
+  // ci.yml runs it only on `pull_request` with PR_BASE_SHA/PR_HEAD_SHA from the event payload.
+  // Scraped into a scheduled sweep, the literal "$PR_BASE_SHA..$PR_HEAD_SHA" reached `git log`
+  // unexpanded (no shell, no PR env) and was reported as a HARD failure on every nightly.
+  assert.ok(FULL_CI_SKIP.has("check:ai-attribution"), "ai-attribution is in FULL_CI_SKIP");
+  const ids = extract(CI_FIXTURE).map((g) => g.id);
+  assert.ok(!ids.includes("check:ai-attribution"), "fixture: ai-attribution is skipped");
+  const fs = await import("node:fs");
+  const yaml = fs.readFileSync(new URL("../../.github/workflows/ci.yml", import.meta.url), "utf8");
+  const realIds = extract(yaml).map((g) => g.id);
+  assert.ok(!realIds.includes("check:ai-attribution"), "real ci.yml: ai-attribution is skipped");
 });
 
 test("extractCiGates: attaches GITHUB_BASE_REF=main env to test-masking + de-dups", () => {
