@@ -15289,5 +15289,29 @@
     "importButton": "İçe aktar",
     "importFailed": "İçe aktarma başarısız oldu.",
     "importSuccess": "{connections} hesap ve {nodes} sağlayıcı düğümü içe aktarıldı; {skipped} atlandı."
+  },
+  "visitor": {
+    "navFeatures": "Özellikler",
+    "navSteps": "Nasıl çalışır",
+    "navDocs": "Dokümanlar",
+    "badge": "Açık kaynak AI ağ geçidi",
+    "titleLead": "Tek uç nokta.",
+    "titleProviders": "{count} sağlayıcı.",
+    "lead": "Claude Code, Codex, Cursor ve diğer araçlarınızı olduğu gibi bırakın. Temel adreslerini Pusula'ya çevirin; her istek sağlayıcılar arasında yönlendirilir ve biri düşerse otomatik yedek devreye girer.",
+    "ctaPanel": "Paneli aç",
+    "ctaDocs": "Dokümantasyon",
+    "statProviders": "sağlayıcı",
+    "statEndpoint": "tek uç nokta",
+    "statLicense": "açık kaynak lisansı",
+    "statSteps": "adımda kurulum",
+    "stepsTitle": "Üç adımda ayakta",
+    "step1Title": "Anahtarlarınızı ekleyin",
+    "step1Desc": "Sağlayıcı hesaplarınızı OAuth, API anahtarı ya da ücretsiz katman olarak bağlayın.",
+    "step2Title": "Adresi değiştirin",
+    "step2Desc": "Araçlarınızın temel adresini Pusula'nın adresiyle değiştirin. Kod değişikliği gerekmez.",
+    "step3Title": "İzleyin",
+    "step3Desc": "Her isteğin maliyetini, jetonunu ve hatasını panelde görün.",
+    "footer": "Kendi makinenizde çalışır, hesap gerektirmez.",
+    "languageLabel": "Dil"
   }
 }

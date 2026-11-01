@@ -15289,5 +15289,29 @@
     "importButton": "Import",
     "importFailed": "Import failed.",
     "importSuccess": "Imported {connections} accounts and {nodes} provider nodes; {skipped} skipped."
+  },
+  "visitor": {
+    "navFeatures": "Features",
+    "navSteps": "How it works",
+    "navDocs": "Docs",
+    "badge": "Open-source AI gateway",
+    "titleLead": "One endpoint.",
+    "titleProviders": "{count} providers.",
+    "lead": "Keep Claude Code, Codex, Cursor and your other tools as they are. Point their base URL at Pusula; every request is routed across providers and an automatic fallback takes over when one fails.",
+    "ctaPanel": "Open the panel",
+    "ctaDocs": "Documentation",
+    "statProviders": "providers",
+    "statEndpoint": "single endpoint",
+    "statLicense": "open-source license",
+    "statSteps": "steps to start",
+    "stepsTitle": "Up and running in three steps",
+    "step1Title": "Add your keys",
+    "step1Desc": "Connect provider accounts via OAuth, API key or free tiers.",
+    "step2Title": "Point your tools",
+    "step2Desc": "Change the base URL of your tools to Pusula. No code changes needed.",
+    "step3Title": "Monitor",
+    "step3Desc": "See cost, tokens and errors for every request in the panel.",
+    "footer": "Runs on your own machine, no account required.",
+    "languageLabel": "Language"
   }
 }

@@ -173,16 +173,13 @@ test("first paint: the page opens on the landing's black before any of its CSS l
     "the app's grid must not paint first"
   );
 
-  // page.tsx renders the style ahead of the gate script and the page body. (A
-  // full server render of the route needs the Next app router, so the order
-  // is pinned on the source.)
+  // page.tsx renders the style ahead of the page body. (A full server render
+  // of the route needs the Next app router, so the order is pinned on the
+  // source.)
   const page = readFileSync(join(process.cwd(), "src", "app", "landing", "page.tsx"), "utf8");
   const styleAt = page.indexOf("<style>{FIRST_PAINT_STYLE}</style>");
-  const gateAt = page.indexOf("__html: INTRO_GATE");
-  const bodyAt = page.indexOf("<LandingPage");
+  const bodyAt = page.indexOf("<VisitorLanding");
   assert.ok(styleAt >= 0, "page.tsx must render <style>{FIRST_PAINT_STYLE}</style>");
-  assert.ok(
-    styleAt < gateAt && gateAt < bodyAt,
-    `order: style ${styleAt}, gate ${gateAt}, body ${bodyAt}`
-  );
+  assert.ok(bodyAt >= 0, "page.tsx must render <VisitorLanding");
+  assert.ok(styleAt < bodyAt, `order: style ${styleAt}, body ${bodyAt}`);
 });

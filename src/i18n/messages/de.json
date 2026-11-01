@@ -15289,5 +15289,29 @@
     "importButton": "Importieren",
     "importFailed": "Import fehlgeschlagen.",
     "importSuccess": "{connections} Konten und {nodes} Anbieterknoten importiert; {skipped} übersprungen."
+  },
+  "visitor": {
+    "navFeatures": "Funktionen",
+    "navSteps": "So funktioniert's",
+    "navDocs": "Dokumentation",
+    "badge": "Open-Source-KI-Gateway",
+    "titleLead": "Ein Endpunkt.",
+    "titleProviders": "{count} Anbieter.",
+    "lead": "Behalte Claude Code, Codex, Cursor und deine anderen Tools bei. Richte ihre Basis-URL auf Pusula; jede Anfrage wird über Anbieter geroutet, und bei einem Ausfall greift automatisch ein Fallback.",
+    "ctaPanel": "Panel öffnen",
+    "ctaDocs": "Dokumentation",
+    "statProviders": "Anbieter",
+    "statEndpoint": "ein Endpunkt",
+    "statLicense": "Open-Source-Lizenz",
+    "statSteps": "Schritte zum Start",
+    "stepsTitle": "In drei Schritten startklar",
+    "step1Title": "Schlüssel hinzufügen",
+    "step1Desc": "Verbinde Anbieterkonten über OAuth, API-Schlüssel oder kostenlose Tarife.",
+    "step2Title": "Tools umstellen",
+    "step2Desc": "Ändere die Basis-URL deiner Tools auf Pusula. Keine Codeänderung nötig.",
+    "step3Title": "Überwachen",
+    "step3Desc": "Kosten, Tokens und Fehler jeder Anfrage im Panel sehen.",
+    "footer": "Läuft auf deinem eigenen Rechner, ohne Konto.",
+    "languageLabel": "Sprache"
   }
 }

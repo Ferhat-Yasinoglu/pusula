@@ -1,0 +1,306 @@
+/*
+ * Visitor page ("Pusula ziyaretçi sayfası"): dark ground, gold accent.
+ * Fonts come from the app (`--font-sans` in globals.css) plus a system serif
+ * stack; no web-font request, since fonts.googleapis.com is blocked in some
+ * networks. Layout is phone-first; the desktop grid starts at 860px.
+ */
+.vz {
+  --vz-bg: #0b0907;
+  --vz-ink: #f3efe6;
+  --vz-soft: #c9c1b1;
+  --vz-muted: #a39c8d;
+  --vz-faint: #8d857a;
+  --vz-gold: #e8b84a;
+  --vz-card: #14100b;
+  --vz-line: #2a2219;
+  --vz-edge: #3a3228;
+  --vz-serif:
+    ui-serif, "New York", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 28px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  background:
+    radial-gradient(900px 500px at 70% 10%, rgba(232, 184, 74, 0.1), transparent 60%), var(--vz-bg);
+  color: var(--vz-ink);
+  font-family: var(--font-sans);
+}
+.vz *,
+.vz *::before,
+.vz *::after {
+  box-sizing: border-box;
+}
+.vz a {
+  color: inherit;
+  text-decoration: none;
+}
+.vz button {
+  font: inherit;
+  cursor: pointer;
+}
+.vz a:focus-visible,
+.vz button:focus-visible {
+  outline: 2px solid var(--vz-gold);
+  outline-offset: 3px;
+}
+
+.vz-main {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.vz-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.vz-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--vz-serif);
+  font-size: 22px;
+}
+.vz-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: var(--vz-gold);
+  display: inline-block;
+}
+.vz-links {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 15px;
+  color: var(--vz-soft);
+  flex-wrap: wrap;
+}
+.vz-langs {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.vz-lang {
+  min-width: 44px;
+  min-height: 36px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--vz-edge);
+  background: transparent;
+  color: var(--vz-ink);
+}
+.vz-lang[aria-pressed="true"] {
+  background: var(--vz-gold);
+  border-color: var(--vz-gold);
+  color: var(--vz-bg);
+}
+
+.vz-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
+  align-items: center;
+}
+.vz-hero-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-width: 0;
+}
+.vz-kicker {
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--vz-gold);
+}
+.vz-h1 {
+  margin: 0;
+  font-family: var(--vz-serif);
+  font-weight: 400;
+  font-size: clamp(44px, 7vw, 76px);
+  line-height: 1.02;
+  overflow-wrap: anywhere;
+}
+.vz-h1 em {
+  color: var(--vz-gold);
+  font-style: normal;
+}
+.vz-lead {
+  margin: 0;
+  font-size: clamp(16px, 1.6vw, 19px);
+  line-height: 1.6;
+  color: var(--vz-soft);
+  max-width: 560px;
+}
+.vz-ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.vz-cta {
+  padding: 14px 22px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+.vz-cta--pri {
+  background: var(--vz-gold);
+  color: var(--vz-bg);
+}
+.vz-cta--sec {
+  border: 1px solid var(--vz-edge);
+  color: var(--vz-ink);
+}
+.vz-code {
+  display: inline-block;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #18130e;
+  border: 1px solid var(--vz-edge);
+  color: var(--vz-gold);
+  font-family: var(--font-mono);
+  font-size: 15px;
+}
+.vz-art {
+  height: 300px;
+  border-radius: 24px;
+  border: 1px solid var(--vz-edge);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(232, 184, 74, 0.18), transparent 55%), #120e0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vz-ring {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 1px dashed #6a5a40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vz-core {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--vz-gold);
+  color: var(--vz-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.vz-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.vz-card {
+  padding: 20px;
+  border-radius: 16px;
+  background: var(--vz-card);
+  border: 1px solid var(--vz-line);
+  min-width: 0;
+}
+.vz-num {
+  font-family: var(--vz-serif);
+  font-size: 36px;
+  color: var(--vz-gold);
+}
+.vz-muted {
+  color: var(--vz-muted);
+  font-size: 14px;
+}
+
+.vz-steps-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.vz-steps-title {
+  margin: 0;
+  font-family: var(--vz-serif);
+  font-weight: 400;
+  font-size: clamp(28px, 4vw, 40px);
+}
+.vz-steps {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+}
+.vz-step-n {
+  color: var(--vz-gold);
+  font-weight: 600;
+}
+.vz-step-t {
+  margin: 10px 0 8px;
+  font-weight: 600;
+  font-size: 19px;
+}
+.vz-step-d {
+  margin: 0;
+  color: var(--vz-muted);
+  line-height: 1.55;
+}
+
+.vz-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-top: 24px;
+  border-top: 1px solid var(--vz-line);
+  color: var(--vz-faint);
+  font-size: 14px;
+}
+
+/* Persian never sets in the Latin serif: it falls back to the app's sans face. */
+.vz:lang(fa) .vz-brand,
+.vz:lang(fa) .vz-h1,
+.vz:lang(fa) .vz-num,
+.vz:lang(fa) .vz-steps-title {
+  font-family: var(--font-sans);
+}
+
+@media (min-width: 860px) {
+  .vz {
+    padding: 28px 56px 48px;
+    gap: 56px;
+  }
+  .vz-main {
+    gap: 56px;
+  }
+  .vz-hero {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 56px;
+  }
+  .vz-art {
+    height: 420px;
+  }
+  .vz-ring {
+    width: 260px;
+    height: 260px;
+  }
+  .vz-stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .vz-num {
+    font-size: 40px;
+  }
+  .vz-steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
