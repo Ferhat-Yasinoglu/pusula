@@ -19,7 +19,7 @@ describe("queue wait bound - anti-orphan", () => {
     __setProviderDefaultRateLimitsForTests(null);
   });
 
-  it("queue wait bound - timeout before dispatch (<80ms not 200ms)", async () => {
+  it("queue wait bound - timeout before dispatch (<150ms not 200ms)", async () => {
     // Force a single concurrency slot so the second request queues behind the first.
     // Using a per-connection override isolates the fixture from other tests.
     const conn = "queue-bound-conn";
@@ -65,9 +65,12 @@ describe("queue wait bound - anti-orphan", () => {
       }
     );
     const elapsed = Date.now() - start;
+    // The first request holds the slot for 200ms. A bound of 150ms still proves the
+    // queued request did not wait for it, while leaving room for timer jitter on a
+    // loaded CI runner (an 80ms bound flaked at 86ms under parallel shards).
     assert.ok(
-      elapsed < 80,
-      `queue timeout should win quickly, elapsed=${elapsed}ms (expected <80ms)`
+      elapsed < 150,
+      `queue timeout should win quickly, elapsed=${elapsed}ms (expected <150ms)`
     );
     assert.ok(elapsed >= 15, `should have waited close to budget, elapsed=${elapsed}ms`);
     assert.equal(fnCalled, false, "queued function must not run after timeout");

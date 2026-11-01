@@ -1,13 +1,6 @@
 <div align="center">
 
-<a href="https://pusula.fyajan.com/landing"><img src="./docs/screenshots/landing-hero-desktop.jpg" width="640" alt="Pusula landing page on a desktop screen: the headline “One endpoint. 375 providers. One needle picks the route.” beside a glowing compass whose needle points at gemini 0.77 among other scored providers (glm, openai, cerebras, claude, ollama-local), an Open dashboard button, an npx pusula copy box, and a counter row along the bottom: 375 providers, 157 with a free tier or no key, 20 routing strategies, 16 auto scoring factors, 37 supported coding tools, 110 MCP server tools."/></a>
-<a href="https://pusula.fyajan.com/landing"><img src="./docs/screenshots/landing-hero-mobile.jpg" width="185" alt="The same Pusula landing page on a phone: the compass sits above the headline “One endpoint. 375 providers. One needle picks the route.”, followed by a simulation line that routes a whole-repository request to gemini, the Open dashboard and npx pusula buttons, and the short intro text."/></a>
-
-<br/>
-
-[![Live demo](https://img.shields.io/badge/Live%20demo-pusula.fyajan.com-0F766E?style=for-the-badge&logo=googlechrome&logoColor=white)](https://pusula.fyajan.com/landing)
-
-<sub>The redesigned landing page, live at <a href="https://pusula.fyajan.com/landing">pusula.fyajan.com/landing</a>. Its counters are computed from the source when the page loads; the routing you see is a simulation.</sub>
+<img src="./docs/screenshots/MainPusula.png" alt="Pusula Dashboard" width="820"/>
 
 <br/>
 <br/>
@@ -57,16 +50,9 @@
 [![npm version](https://img.shields.io/npm/v/pusula?color=cb3837&logo=npm)](https://www.npmjs.com/package/pusula)
 ![NPM Monthly](https://img.shields.io/npm/dm/pusula?label=npm/month&color=cb3837&logo=npm)
 [![GHCR](https://img.shields.io/badge/GHCR-ghcr.io%2Fferhat--yasinoglu%2Fpusula-2496ED?logo=docker&logoColor=white)](https://github.com/Ferhat-Yasinoglu/pusula/pkgs/container/pusula)
-[![Live demo](https://img.shields.io/badge/live-pusula.fyajan.com-0F766E?logo=googlechrome&logoColor=white)](https://pusula.fyajan.com/landing)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
 <table>
-  <tr>
-    <td align="right"><b>🆕 New</b></td>
-    <td align="center"><a href="#-whats-new">🆕 What's new</a></td>
-    <td align="center"><a href="https://pusula.fyajan.com/landing">🌍 Live demo</a></td>
-    <td align="center"><a href="#-screenshots">📸 Screenshots</a></td>
-  </tr>
   <tr>
     <td align="right"><b>🚀 Start</b></td>
     <td align="center"><a href="#-quick-start">🚀 Quick Start</a></td>
@@ -116,24 +102,6 @@
 </div>
 
 <br/>
-<br/>
-
-<div align="center">
-
-## 🆕 What's new
-
-</div>
-
-<sub>Landed on <code>main</code> after the 1.0.0 release (2026-10-20), newest first. Full notes → <a href="CHANGELOG.md">CHANGELOG.md</a></sub>
-
-- **🛰️ Self-hosting that updates itself** ([#45](https://github.com/Ferhat-Yasinoglu/pusula/pull/45)) — [`scripts/ops/vps-auto-update/`](scripts/ops/vps-auto-update/README.md) installs a systemd timer that pulls `ghcr.io/ferhat-yasinoglu/pusula:main` about every 15 minutes. Each update backs up the data directory first, has to pass a health gate, and is rolled back automatically if the new container fails. Nothing ever connects to your server.
-- **🌍 Live public instance** — [pusula.fyajan.com](https://pusula.fyajan.com/landing) runs the `:main` image and keeps itself current with that updater.
-- **⬆️ Synced with upstream OmniRoute v3.8.52** ([#39](https://github.com/Ferhat-Yasinoglu/pusula/pull/39)) — the provider catalog grows from **358 to 375** providers and **23 new database migrations** land (186 → 209 SQL files), with Pusula's design, brand and four locales unchanged.
-- **🪶 Headless mode** (from the sync) — `pusula serve --headless` or `PUSULA_HEADLESS=1` keeps the OpenAI-compatible API under `/v1/*` and switches the dashboard off. → [Headless Mode](docs/guides/HEADLESS.md)
-- **🚫 Keyless "OpenCode Free" removed** (from the sync) — the `opencode` provider (`oc/…`) is gone, honoring the OpenCode operator's removal request; `opencode-zen`, `opencode-go` and the OpenCode client integrations stay. `auto` now routes across the providers you connect. → [Removed providers](docs/reference/REMOVED_PROVIDERS.md)
-- **🐛 Fixes** — `POST /api/keys/groups` no longer fails with 405, so key groups can be created over the API ([#37](https://github.com/Ferhat-Yasinoglu/pusula/pull/37)); CLI detection no longer reports Continue as installed because of the project's own `node_modules/.bin` ([#35](https://github.com/Ferhat-Yasinoglu/pusula/pull/35)); the unused `mermaid` dependency is gone ([#38](https://github.com/Ferhat-Yasinoglu/pusula/pull/38)); plus CI fixes for the main-only repo ([#36](https://github.com/Ferhat-Yasinoglu/pusula/pull/36), [#43](https://github.com/Ferhat-Yasinoglu/pusula/pull/43)) and three flaky tests made deterministic ([#44](https://github.com/Ferhat-Yasinoglu/pusula/pull/44)).
-- **🧭 Redesigned landing page** ([#33](https://github.com/Ferhat-Yasinoglu/pusula/pull/33)) — a compass-and-needle hero and seven more stations (network map, provider catalog, routing, resilience, tools, engine room, launch), all driven by one simulated gateway. → [Live demo](https://pusula.fyajan.com/landing) · [Screenshots](#-screenshots)
-
 <br/>
 
 <div align="center">
@@ -345,24 +313,6 @@ All **20** strategies — mix & match per combo step:
 <img src="./docs/diagrams/comparison-table.svg" width="100%" alt="What sets Pusula apart — a dated feature snapshot vs 9router, OpenRouter, CLIProxyAPI and LiteLLM across 13 capabilities. Pusula: 375 providers, 150+ free tiers built in, 20 routing strategies, 12-engine token compression, built-in MCP server with 110 tools, A2A agent protocol, persistent memory, guardrails, cloud agents, TLS fingerprint stealth, Desktop/Termux/PWA and 4 UI locales (English, Turkish, German, Persian). Pusula is MIT-licensed and self-hostable. Competitor capabilities and counts may change; see the linked methodology."/>
 
 <sub>📊 Full methodology &amp; per-feature detail vs 9router, OpenRouter, CLIProxyAPI &amp; LiteLLM → [`docs/comparison/PUSULA_VS_ALTERNATIVES.md`](docs/comparison/PUSULA_VS_ALTERNATIVES.md)</sub>
-
-<br/>
-
-<div align="center">
-
-## 📸 Screenshots
-
-<img src="./docs/screenshots/MainPusula.png" width="820" alt="Pusula dashboard home on a fresh install: a sidebar with grouped sections, a zero-config notice explaining that encryption keys were generated in ~/.pusula/server.env, a four-step Quick Start (create an API key, connect providers, point your client at http://127.0.0.1:20128/v1, monitor and optimize), and empty Provider Topology and Recent Requests panels."/>
-
-<sub>The dashboard on <code>http://localhost:20128</code> — fresh install, before any provider is connected.</sub>
-
-</div>
-
-<details>
-<summary><b>Landing page stations</b> — Network, Catalog and Routing (desktop)</summary>
-<br/>
-<p align="center"><img src="./docs/screenshots/landing-stations-desktop.jpg" width="820" alt="Three stations of the Pusula landing page, stacked. Network: “Every request, a route of its own”, a dotted map where each city stands for one provider, with a simulation panel counting routed and rerouted requests. Catalog: “375 providers, one catalog”, a search box, filters for free tier or no key (157) and local CLI bridge (4), a bar by kind of service and a scrolling provider list. Routing: “Routing you can read”, a sixteen-point star chart showing how much each of the 16 auto scoring factors votes, next to a ranked list of candidate scores for one request."/></p>
-</details>
 
 <br/>
 
@@ -779,8 +729,8 @@ docker run -d --name pusula --restart unless-stopped --stop-timeout 40 \
 Full table: [Docker Guide — runtime RAM](docs/guides/DOCKER_GUIDE.md#runtime-ram-for-coding-agents).
 
 > **Development channel:** `ghcr.io/ferhat-yasinoglu/pusula:main` (plus `:main-web` with
-> Chromium and `:main-bun`) is rebuilt on every push to `main`. It is what
-> https://pusula.fyajan.com runs, kept current by the pull-based updater in
+> Chromium and `:main-bun`) is rebuilt on every push to `main`. A self-hosted server can follow
+> it with the pull-based updater in
 > [`scripts/ops/vps-auto-update/`](scripts/ops/vps-auto-update/README.md). These tags are
 > mutable and are not a pinned production channel.
 
@@ -907,7 +857,7 @@ same process on one port, so there is no separate CLI-only package today.
   <tr><td nowrap><b>Testing</b></td><td>Node.js test runner + Vitest — <b>56,000+ static test declarations</b> across 7,900+ tracked test files (unit, integration, E2E, security, ecosystem)</td></tr>
   <tr><td nowrap><b>Platforms</b></td><td>Desktop (Electron) · Android (Termux) · PWA (any browser)</td></tr>
   <tr><td nowrap><b>CI/CD</b></td><td>GitHub Actions — GHCR images on every push to <code>main</code> (<code>:main</code>, <code>:main-web</code>, <code>:main-bun</code>); npm publish + versioned GHCR tags on each GitHub release</td></tr>
-  <tr><td nowrap><b>Links</b></td><td><a href="https://github.com/Ferhat-Yasinoglu/pusula">GitHub</a> · <a href="https://www.npmjs.com/package/pusula">npm</a> · <a href="https://github.com/Ferhat-Yasinoglu/pusula/pkgs/container/pusula">GHCR</a> · <a href="https://pusula.fyajan.com/landing">Live instance</a></td></tr>
+  <tr><td nowrap><b>Links</b></td><td><a href="https://github.com/Ferhat-Yasinoglu/pusula">GitHub</a> · <a href="https://www.npmjs.com/package/pusula">npm</a> · <a href="https://github.com/Ferhat-Yasinoglu/pusula/pkgs/container/pusula">GHCR</a></td></tr>
 </table>
 
 <div align="center">

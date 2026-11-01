@@ -6,14 +6,7 @@
 
 <div align="center">
 
-<a href="https://pusula.fyajan.com/landing"><img src="../../screenshots/landing-hero-desktop.jpg" width="640" alt="Masaüstü ekranda Pusula tanıtım sayfası: solda “One endpoint. 375 providers. One needle picks the route.” başlığı, sağda iğnesi puanlanan sağlayıcılar (glm, openai, cerebras, claude, ollama-local) arasından gemini 0.77'yi gösteren parlayan bir pusula; Open dashboard düğmesi, npx pusula kopyalama kutusu ve altta bir sayaç şeridi: 375 sağlayıcı, ücretsiz katmanı olan ya da anahtar istemeyen 157 sağlayıcı, 20 yönlendirme stratejisi, 16 auto puanlama faktörü, desteklenen 37 kodlama aracı, 110 MCP sunucu aracı."/></a>
-<a href="https://pusula.fyajan.com/landing"><img src="../../screenshots/landing-hero-mobile.jpg" width="185" alt="Aynı Pusula tanıtım sayfası telefonda: pusula, “One endpoint. 375 providers. One needle picks the route.” başlığının üstünde; altında tüm depoyu bağlamda taşıyan bir isteği gemini'ye yönlendiren simülasyon satırı, Open dashboard ve npx pusula düğmeleri ve kısa tanıtım metni."/></a>
-
-<br/>
-
-[![Canlı demo](https://img.shields.io/badge/Canl%C4%B1%20demo-pusula.fyajan.com-0F766E?style=for-the-badge&logo=googlechrome&logoColor=white)](https://pusula.fyajan.com/landing)
-
-<sub>Yenilenen tanıtım sayfası <a href="https://pusula.fyajan.com/landing">pusula.fyajan.com/landing</a> adresinde yayında. Sayaçlar sayfa açılırken kaynak koddaki verilerden hesaplanır; gördüğünüz yönlendirme bir simülasyondur.</sub>
+<img src="../../screenshots/MainPusula.png" alt="Pusula Kontrol Paneli" width="820"/>
 
 <br/>
 <br/>
@@ -63,16 +56,9 @@
 [![npm sürümü](https://img.shields.io/npm/v/pusula?color=cb3837&logo=npm)](https://www.npmjs.com/package/pusula)
 ![Aylık NPM](https://img.shields.io/npm/dm/pusula?label=npm/month&color=cb3837&logo=npm)
 [![GHCR](https://img.shields.io/badge/GHCR-ghcr.io%2Fferhat--yasinoglu%2Fpusula-2496ED?logo=docker&logoColor=white)](https://github.com/Ferhat-Yasinoglu/pusula/pkgs/container/pusula)
-[![Canlı demo](https://img.shields.io/badge/canl%C4%B1-pusula.fyajan.com-0F766E?logo=googlechrome&logoColor=white)](https://pusula.fyajan.com/landing)
 [![Lisans: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](../../../LICENSE)
 
 <table>
-  <tr>
-    <td align="right"><b>🆕 Yeni</b></td>
-    <td align="center"><a href="#-yenilikler">🆕 Yenilikler</a></td>
-    <td align="center"><a href="https://pusula.fyajan.com/landing">🌍 Canlı demo</a></td>
-    <td align="center"><a href="#-ekran-görüntüleri">📸 Ekran görüntüleri</a></td>
-  </tr>
   <tr>
     <td align="right"><b>🚀 Başlangıç</b></td>
     <td align="center"><a href="#-hızlı-başlangıç">🚀 Hızlı Başlangıç</a></td>
@@ -123,24 +109,6 @@
 </div>
 
 <br/>
-<br/>
-
-<div align="center">
-
-## 🆕 Yenilikler
-
-</div>
-
-<sub>1.0.0 sürümünden (2026-10-20) sonra <code>main</code> dalına girenler, en yeniden eskiye. Ayrıntılı notlar → <a href="../../../CHANGELOG.md">CHANGELOG.md</a></sub>
-
-- **🛰️ Kendini güncelleyen sunucu kurulumu** ([#45](https://github.com/Ferhat-Yasinoglu/pusula/pull/45)) — [`scripts/ops/vps-auto-update/`](../../../scripts/ops/vps-auto-update/README.md), `ghcr.io/ferhat-yasinoglu/pusula:main` imajını yaklaşık 15 dakikada bir çeken bir systemd zamanlayıcısı kurar. Her güncellemeden önce veri dizini yedeklenir, yeni konteyner bir sağlık kontrolünden geçmek zorundadır ve başarısız olursa otomatik olarak önceki sürüme dönülür. Güncelleme çekme (pull) yöntemiyle yapılır; sunucunuza dışarıdan hiçbir bağlantı kurulmaz.
-- **🌍 Herkese açık canlı örnek** — [pusula.fyajan.com](https://pusula.fyajan.com/landing) `:main` imajıyla çalışıyor ve bu güncelleyici sayesinde kendini güncel tutuyor.
-- **⬆️ Üst kaynak OmniRoute v3.8.52 ile eşitlendi** ([#39](https://github.com/Ferhat-Yasinoglu/pusula/pull/39)) — sağlayıcı kataloğu **358'den 375'e** çıktı ve **23 yeni veritabanı migrasyonu** geldi (186 → 209 SQL dosyası); Pusula'nın tasarımı, markası ve dört dili olduğu gibi korundu.
-- **🪶 Headless mod** (eşitlemeyle geldi) — `pusula serve --headless` ya da `PUSULA_HEADLESS=1`, OpenAI uyumlu API'yi `/v1/*` altında açık tutar ve panoyu kapatır. → [Headless Mode](../../guides/HEADLESS.md)
-- **🚫 Anahtarsız "OpenCode Free" kaldırıldı** (eşitlemeyle geldi) — OpenCode operatörünün kaldırma talebine uyularak `opencode` sağlayıcısı (`oc/…`) çıkarıldı; `opencode-zen`, `opencode-go` ve OpenCode istemci entegrasyonları yerinde duruyor. `auto` artık sizin bağladığınız sağlayıcılar arasında yönlendirme yapıyor. → [Kaldırılan sağlayıcılar](docs/reference/REMOVED_PROVIDERS.md)
-- **🐛 Düzeltmeler** — `POST /api/keys/groups` artık 405 hatası vermiyor, yani anahtar grupları API üzerinden oluşturulabiliyor ([#37](https://github.com/Ferhat-Yasinoglu/pusula/pull/37)); CLI algılaması, projenin kendi `node_modules/.bin` dizini yüzünden Continue'yu artık kurulu sanmıyor ([#35](https://github.com/Ferhat-Yasinoglu/pusula/pull/35)); kullanılmayan `mermaid` bağımlılığı kaldırıldı ([#38](https://github.com/Ferhat-Yasinoglu/pusula/pull/38)); ayrıca yalnızca `main` dalıyla çalışan depo için CI düzeltmeleri ([#36](https://github.com/Ferhat-Yasinoglu/pusula/pull/36), [#43](https://github.com/Ferhat-Yasinoglu/pusula/pull/43)) ve ara sıra başarısız olan üç testin kararlı hale getirilmesi ([#44](https://github.com/Ferhat-Yasinoglu/pusula/pull/44)).
-- **🧭 Yeniden tasarlanan tanıtım sayfası** ([#33](https://github.com/Ferhat-Yasinoglu/pusula/pull/33)) — pusula ve iğne temalı bir giriş bölümü ile yedi istasyon daha (ağ haritası, sağlayıcı kataloğu, yönlendirme, dayanıklılık, araçlar, makine dairesi, fırlatma); hepsini tek bir simüle edilmiş ağ geçidi yönetiyor. → [Canlı demo](https://pusula.fyajan.com/landing) · [Ekran görüntüleri](#-ekran-görüntüleri)
-
 <br/>
 
 <div align="center">
@@ -352,24 +320,6 @@ Tüm **20** strateji — kombo adımı başına karıştırın ve eşleştirin:
 <img src="../../diagrams/comparison-table.svg" width="100%" alt="Pusula'yı farklı kılan nedir — 9router, OpenRouter, CLIProxyAPI ve LiteLLM ile 13 yetenek üzerinden karşılaştırılan, tarihli bir özellik anlık görüntüsü. Pusula: 375 sağlayıcı, 150'den fazla yerleşik ücretsiz katman, 20 yönlendirme stratejisi, 12 motorlu token sıkıştırma, 110 araçlı yerleşik MCP sunucusu, A2A ajan protokolü, kalıcı bellek, koruma kalkanları, bulut ajanları, TLS parmak izi gizliliği, Masaüstü/Termux/PWA ve 4 arayüz dili (İngilizce, Türkçe, Almanca, Farsça). Pusula MIT lisanslıdır ve kendi sunucunuzda barındırılabilir. Rakiplerin yetenekleri ve sayıları değişebilir; bağlantılı metodolojiye bakın."/>
 
 <sub>📊 Tam metodoloji ve özellik bazında detay vs 9router, OpenRouter, CLIProxyAPI &amp; LiteLLM → [`docs/comparison/PUSULA_VS_ALTERNATIVES.md`](docs/comparison/PUSULA_VS_ALTERNATIVES.md)</sub>
-
-<br/>
-
-<div align="center">
-
-## 📸 Ekran Görüntüleri
-
-<img src="../../screenshots/MainPusula.png" width="820" alt="Yeni kurulumda Pusula pano ana sayfası: gruplanmış bölümleri olan bir kenar çubuğu, şifreleme anahtarlarının ~/.pusula/server.env içinde oluşturulduğunu açıklayan sıfır yapılandırma bildirimi, dört adımlı bir Quick Start (API anahtarı oluşturun, sağlayıcıları bağlayın, istemcinizi http://127.0.0.1:20128/v1 adresine yönlendirin, izleyin ve optimize edin) ile boş Provider Topology ve Recent Requests panelleri."/>
-
-<sub><code>http://localhost:20128</code> adresindeki pano — yeni kurulum, henüz hiçbir sağlayıcı bağlanmamış.</sub>
-
-</div>
-
-<details>
-<summary><b>Tanıtım sayfası istasyonları</b> — Ağ, Katalog ve Yönlendirme (masaüstü)</summary>
-<br/>
-<p align="center"><img src="../../screenshots/landing-stations-desktop.jpg" width="820" alt="Pusula tanıtım sayfasının üç istasyonu alt alta. Ağ: “Every request, a route of its own” başlığı, her şehrin bir sağlayıcıyı temsil ettiği noktalı bir harita ve yönlendirilen ile yeniden yönlendirilen istekleri sayan bir simülasyon paneli. Katalog: “375 providers, one catalog” başlığı, bir arama kutusu, ücretsiz katmanı olan ya da anahtar istemeyen (157) ve yerel CLI köprüsü (4) filtreleri, hizmet türüne göre bir çubuk ve kayan bir sağlayıcı listesi. Yönlendirme: “Routing you can read” başlığı, 16 auto puanlama faktörünün her birinin ne kadar oy taşıdığını gösteren on altı köşeli bir yıldız grafiği ve yanında tek bir istek için aday puanlarının sıralı listesi."/></p>
-</details>
 
 <br/>
 
@@ -785,9 +735,9 @@ docker run -d --name pusula --restart unless-stopped --stop-timeout 40 \
 Tam tablo: [Docker Kılavuzu — çalışma zamanı RAM](docs/guides/DOCKER_GUIDE.md#kodlama-ajanları-için-çalışma-zamanı-rami).
 
 > **Geliştirme kanalı:** `ghcr.io/ferhat-yasinoglu/pusula:main` (ayrıca Chromium içeren `:main-web` ve
-> `:main-bun`) `main` dalına yapılan her push'ta yeniden derlenir. https://pusula.fyajan.com bu imajla
-> çalışır ve [`scripts/ops/vps-auto-update/`](../../../scripts/ops/vps-auto-update/README.md) içindeki
-> çekme tabanlı güncelleyiciyle güncel tutulur. Bu etiketler değişkendir; sabitlenmiş bir üretim kanalı değildir.
+> `:main-bun`) `main` dalına yapılan her push'ta yeniden derlenir. Kendi sunucunuzu
+> [`scripts/ops/vps-auto-update/`](../../../scripts/ops/vps-auto-update/README.md) içindeki
+> çekme tabanlı güncelleyiciyle bu imaja göre güncel tutabilirsiniz. Bu etiketler değişkendir; sabitlenmiş bir üretim kanalı değildir.
 
 **🥟 Bun**
 
@@ -912,7 +862,7 @@ aynı süreç tarafından sunulur, bu nedenle bugün için ayrı bir yalnızca C
   <tr><td nowrap><b>Test</b></td><td>Node.js test çalıştırıcısı + Vitest — 7.900'den fazla izlenen test dosyasında (birim, entegrasyon, E2E, güvenlik, ekosistem) <b>56.000'den fazla statik test bildirimi</b></td></tr>
   <tr><td nowrap><b>Platformlar</b></td><td>Masaüstü (Electron) · Android (Termux) · PWA (herhangi bir tarayıcı)</td></tr>
   <tr><td nowrap><b>CI/CD</b></td><td>GitHub Actions — <code>main</code> dalına yapılan her push'ta GHCR imajları (<code>:main</code>, <code>:main-web</code>, <code>:main-bun</code>); her GitHub sürümünde npm yayını + sürüm numaralı GHCR etiketleri</td></tr>
-  <tr><td nowrap><b>Bağlantılar</b></td><td><a href="https://github.com/Ferhat-Yasinoglu/pusula">GitHub</a> · <a href="https://www.npmjs.com/package/pusula">npm</a> · <a href="https://github.com/Ferhat-Yasinoglu/pusula/pkgs/container/pusula">GHCR</a> · <a href="https://pusula.fyajan.com/landing">Canlı örnek</a></td></tr>
+  <tr><td nowrap><b>Bağlantılar</b></td><td><a href="https://github.com/Ferhat-Yasinoglu/pusula">GitHub</a> · <a href="https://www.npmjs.com/package/pusula">npm</a> · <a href="https://github.com/Ferhat-Yasinoglu/pusula/pkgs/container/pusula">GHCR</a></td></tr>
 </table>
 
 <div align="center">
