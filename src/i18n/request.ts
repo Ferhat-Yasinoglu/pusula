@@ -150,7 +150,7 @@ export default getRequestConfig(async () => {
   //    Merging is shallow at the top-level namespace key — if a namespace is already
   //    present in the locale file it is kept as-is; missing namespaces fall back to EN.
   //    This ensures new namespaces (e.g. cliCode, cliAgents, acpAgents, cliCommon added
-  //    in plan 14 F9) are displayed in English for the 39 non-EN/non-pt-BR locales until
+  //    in plan 14 F9) are displayed in English for the non-EN locales until
   //    translations are shipped.
   let mergedMessages: Record<string, unknown> = messages as Record<string, unknown>;
   if (locale !== DEFAULT_LOCALE) {
