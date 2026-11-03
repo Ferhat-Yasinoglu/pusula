@@ -88,7 +88,7 @@ jobs:
       # no local install to shadow the npx cache tree.
       - name: promptfoo guard-validation
         working-directory: ${{ runner.temp }}
-        run: npx --yes promptfoo@0.125.0 eval -c "$GITHUB_WORKSPACE/promptfooconfig.yaml" --no-cache
+        run: npx --yes promptfoo@0.125.1 eval -c "$GITHUB_WORKSPACE/promptfooconfig.yaml" --no-cache
         env:
           PUSULA_URL: http://localhost:21778
           PUSULA_API_KEY: not-needed-blocked-before-upstream
