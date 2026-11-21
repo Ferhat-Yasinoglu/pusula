@@ -523,6 +523,7 @@
     "onnxruntime-node@1.24.3": true
   },
   "overrides": {
+    "mongoose": "^9.11.4",
     "browserslist": "^4.28.8",
     "joi": "^18.2.9",
     "onnxruntime-node": "1.30.0",
