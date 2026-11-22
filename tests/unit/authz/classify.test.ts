@@ -220,6 +220,24 @@ const cases: Case[] = [
   },
 
   {
+    name: "/api/access-request is PUBLIC (the landing page's request-access form)",
+    path: "/api/access-request",
+    method: "POST",
+    expectedClass: "PUBLIC",
+  },
+  {
+    name: "/api/access-requests (the operator's list) MUST stay MANAGEMENT",
+    path: "/api/access-requests",
+    expectedClass: "MANAGEMENT",
+  },
+  {
+    name: "/api/access-requests/[id] (approve/reject) MUST stay MANAGEMENT",
+    path: "/api/access-requests/abc",
+    method: "POST",
+    expectedClass: "MANAGEMENT",
+  },
+
+  {
     name: "Unknown top-level path defaults MANAGEMENT (fail-closed)",
     path: "/totally-unknown",
     expectedClass: "MANAGEMENT",
