@@ -1711,6 +1711,7 @@
     "routing": "مسیریابی",
     "resilience": "تاب‌آوری",
     "advanced": "پیشرفته",
+    "accessRequests": "درخواست‌های دسترسی",
     "accessTokens": "توکن‌های دسترسی",
     "featureFlags": "پرچم‌های ویژگی",
     "logs": "لاگ‌ها",

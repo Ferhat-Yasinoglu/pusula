@@ -1711,6 +1711,7 @@
     "routing": "Yönlendirme",
     "resilience": "Dayanıklılık",
     "advanced": "Gelişmiş",
+    "accessRequests": "Erişim talepleri",
     "accessTokens": "Erişim Belirteçleri",
     "featureFlags": "Özellik Bayrakları",
     "logs": "Günlükler",

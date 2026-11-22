@@ -26,6 +26,7 @@ const PATH_LABELS = {
   routing: "routing",
   resilience: "resilience",
   advanced: "advanced",
+  "access-requests": "accessRequests",
   "access-tokens": "accessTokens",
   "feature-flags": "featureFlags",
   logs: "logs",

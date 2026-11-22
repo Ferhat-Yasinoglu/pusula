@@ -1711,6 +1711,7 @@
     "routing": "Routing",
     "resilience": "Resilienz",
     "advanced": "Erweitert",
+    "accessRequests": "Zugangsanfragen",
     "accessTokens": "Zugriffstoken",
     "featureFlags": "Feature-Flags",
     "logs": "Protokolle",
