@@ -23,6 +23,7 @@ import { buildApiKeyCreateScopes } from "./apiManagerScopes";
 import { extractApiErrorMessage } from "@/shared/http/apiErrorMessage";
 import { hasProviderQuotaBypassScope } from "@/shared/constants/apiKeyPolicyScopes";
 import RoutingEntryLink from "@/shared/components/routing/RoutingEntryLink";
+import AccessRequestsEntryLink from "./components/AccessRequestsEntryLink";
 import { ALL_COMBOS_ACCESS_RULE } from "@/shared/constants/comboAccess";
 
 // Constants for validation
@@ -639,6 +640,7 @@ export default function ApiManagerPageClient() {
       </div>
 
       <RoutingEntryLink />
+      <AccessRequestsEntryLink />
 
       {/* Filter Bar — shown when there are keys */}
       {keys.length > 0 && (

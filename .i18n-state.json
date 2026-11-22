@@ -85,21 +85,21 @@
       }
     },
     "README.md": {
-      "source_hash": "494cab57b1d2905f4ef63ef3304fecec1cf00d6c6aa6d36dd8145418949bfd86",
+      "source_hash": "672ca9ad925da1899f6f842670aa5ac27bf904964fcfd4ca5c2db817675f20f0",
       "locales": {
         "de": {
           "source_hash": "f4665cb7287a129cc2bfdf0e1d20809d1b0efe81d0a288802f3c655621fb900e",
-          "target_hash": "1d2b59f43944d4d35402802234f78144f5bcf90f7942da6d78a2aa7f3de0cf0e",
+          "target_hash": "7c41e551117c597c68b0522f8f70d4033dea9e3c93e6e305daafb843fecc6c25",
           "updated_at": "2026-10-31T10:30:04.843Z"
         },
         "fa": {
           "source_hash": "f4665cb7287a129cc2bfdf0e1d20809d1b0efe81d0a288802f3c655621fb900e",
-          "target_hash": "898575451a6ed5b3a480a1ccb48ce309f305198b532819705ec3de0252da99bd",
+          "target_hash": "03e5cc6f90702ec5d53543f6729dc2044c240cbca0c824ae6c7a6775d351d79c",
           "updated_at": "2026-10-31T10:30:04.843Z"
         },
         "tr": {
-          "source_hash": "494cab57b1d2905f4ef63ef3304fecec1cf00d6c6aa6d36dd8145418949bfd86",
-          "target_hash": "fdd69dad9d06fa4cea6b7f12d38f0d58f5ed9cdb4d4668b10eb6f455ccd2bc93",
+          "source_hash": "672ca9ad925da1899f6f842670aa5ac27bf904964fcfd4ca5c2db817675f20f0",
+          "target_hash": "0fda4e52bd58f4695a53dbc8b8b9e63c791aa96d941d66ff559cba50c1067c18",
           "updated_at": "2026-11-01T09:12:06.000Z"
         }
       }
