@@ -20,6 +20,3 @@ export const accessRequestDecisionSchema = z.discriminatedUnion("action", [
   }),
   z.object({ action: z.literal("reject") }),
 ]);
-
-export type AccessRequestSubmitInput = z.infer<typeof accessRequestSubmitSchema>;
-export type AccessRequestDecisionInput = z.infer<typeof accessRequestDecisionSchema>;
