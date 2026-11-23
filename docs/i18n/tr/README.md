@@ -849,7 +849,7 @@ aynı süreç tarafından sunulur, bu nedenle bugün için ayrı bir yalnızca C
   <tr><td nowrap><b>Çalışma Zamanı</b></td><td>Node.js 22.x (≥22.22.2) veya 24.x–26.x — <code>&gt;=22.22.2 &lt;23 || &gt;=24.0.0 &lt;27</code></td></tr>
   <tr><td nowrap><b>Dil</b></td><td>TypeScript 6.0 — <code>src/</code> ve <code>open-sse/</code>, 16 JS/CJS worker ve MITM ara katman (shim) dosyası dışında TypeScript'tir; <code>no-explicit-any</code> kuralı <code>open-sse/</code> ve <code>tests/</code> içinde hatadır, eski örnekler bir ratchet ile dondurulmuştur</td></tr>
   <tr><td nowrap><b>Çerçeve</b></td><td>Next.js 16 + React 19 + Tailwind CSS 4</td></tr>
-  <tr><td nowrap><b>Veritabanı</b></td><td>better-sqlite3 (SQLite, WAL journaling) — <code>src/lib/db/</code> içinde 147 modül, 209 migrasyon</td></tr>
+  <tr><td nowrap><b>Veritabanı</b></td><td>better-sqlite3 (SQLite, WAL journaling) — <code>src/lib/db/</code> içinde 147 modül, 210 migrasyon</td></tr>
   <tr><td nowrap><b>Bellek</b></td><td>SQLite FTS5 tam metin + int8-nicelenmiş vektör gömüleri, tipik bozunma</td></tr>
   <tr><td nowrap><b>Şemalar</b></td><td>Zod 4 — MCP araç G/Ç doğrulama + API sözleşmeleri</td></tr>
   <tr><td nowrap><b>Protokoller</b></td><td>MCP (stdio / HTTP / SSE) + A2A v0.3 (JSON-RPC 2.0 + SSE)</td></tr>

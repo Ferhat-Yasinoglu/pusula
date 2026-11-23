@@ -53,6 +53,9 @@ test("sibling paths shadowed by an exact route are NOT public", () => {
     "/api/health/pings",
     "/api/monitoring/health-detail",
     "/api/settings/require-login-policy",
+    // The operator's list and decisions sit one letter away from the public form endpoint.
+    "/api/access-requests",
+    "/api/access-requests/some-id",
   ];
   for (const path of shadowed) {
     assert.equal(isPublicApiRoute(path, "GET"), false, `${path} (GET)`);

@@ -2742,6 +2742,101 @@ paths:
         "500":
           description: Sanitized internal validation failure
 
+  /api/access-request:
+    post:
+      tags: [API Keys]
+      summary: Ask for access from the public landing page
+      description: >-
+        Public endpoint behind the landing page's "Ask for access" form. Stores a
+        pending request for the operator to approve or reject. Rate-limited to 3
+        submissions per client address per hour; new requests are refused while 200
+        are pending. A filled `website` field (honeypot) is acknowledged but not stored.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email]
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 80
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+                reason:
+                  type: string
+                  maxLength: 500
+                website:
+                  type: string
+                  description: Honeypot; leave empty.
+      responses:
+        "200":
+          description: 'Request received; the body is `{"ok": true}`'
+        "400":
+          description: Invalid name or email
+        "429":
+          description: Too many submissions from this address
+        "503":
+          description: The pending queue is full
+
+  /api/access-requests:
+    get:
+      tags: [API Keys]
+      summary: List access requests
+      description: Every request, newest first, with the number still pending.
+      responses:
+        "200":
+          description: "`{ requests: AccessRequest[], pendingCount: number }`"
+        "401":
+          description: Management authentication required
+
+  /api/access-requests/{id}:
+    post:
+      tags: [API Keys]
+      summary: Approve or reject an access request
+      description: >-
+        Approving issues an API key named after the requester, with daily and weekly
+        USD spending limits, and returns its secret in this response only.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [action]
+              properties:
+                action:
+                  type: string
+                  enum: [approve, reject]
+                dailyUsageLimitUsd:
+                  type: number
+                  default: 1
+                weeklyUsageLimitUsd:
+                  type: number
+                  default: 5
+      responses:
+        "200":
+          description: "Decision saved; on approve also `apiKeyId` and the one-time `key`"
+        "400":
+          description: Invalid decision body
+        "401":
+          description: Management authentication required
+        "404":
+          description: Access request not found
+        "409":
+          description: The request was already decided
+
   /api/keys:
     get:
       tags: [API Keys]

@@ -12,6 +12,14 @@ Pusula'daki tüm önemli değişiklikler bu dosyada tutulur. Biçim
 
 ## [Unreleased]
 
+### ✨ Yeni Özellikler
+
+- **feat(access):** ziyaretçiler tanıtım sayfasındaki yeni "Erişim iste" formuyla (ad, e-posta, isteğe bağlı açıklama) erişim isteyebilir. Operatör talepleri API Yöneticisi → Erişim talepleri altında inceler; bir talebi onaylamak günlük ve haftalık USD limitli (varsayılan $1 / $5) bir API anahtarı oluşturur ve iletilmek üzere bir kez gösterir. Herkese açık adres her adres için hız sınırlıdır, robot tuzağına düşen gönderimleri yok sayar ve 200 bekleyen talepten sonra yeni talep almaz.
+
+### 🔧 CI / Derleme
+
+- **ci(fly):** `Deploy to Fly.io` iş akışı kaldırıldı. `FLY_API_TOKEN` olmadan hiç dağıtım yapmıyordu ve herkese açık örnek kendi sunucumuzda çalışıyor; yani `main`'e yapılan her gönderimde boşuna çalışıyordu.
+
 ## [1.0.0] - 2026-10-20
 
 ### ✨ Yeni Özellikler

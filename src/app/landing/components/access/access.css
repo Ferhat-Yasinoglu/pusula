@@ -1,0 +1,104 @@
+/*
+ * "Ask for access": the request form between the last station and the logbook.
+ *
+ * Scoped under `.pusula-landing`, classes prefixed `ar-`. Nothing animates; the
+ * fields take the page's hull, rule and foam, and focus uses the gold-hi ring.
+ */
+
+.pusula-landing .ar-section {
+  padding-block: clamp(48px, 7vw, 112px);
+  padding-inline: 16px;
+  border-block-start: 1px solid var(--rule);
+}
+
+.pusula-landing .ar-inner {
+  max-width: 760px;
+  margin-inline: auto;
+  display: grid;
+  gap: clamp(24px, 3vw, 40px);
+}
+
+.pusula-landing .ar-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.pusula-landing .ar-field {
+  display: grid;
+  gap: 6px;
+  color: var(--mist);
+  font-size: var(--fs-small);
+}
+
+.pusula-landing .ar-field-wide,
+.pusula-landing .ar-actions,
+.pusula-landing .ar-error {
+  grid-column: 1 / -1;
+}
+
+.pusula-landing .ar-field input,
+.pusula-landing .ar-field textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--hull);
+  color: var(--foam);
+  font: inherit;
+  font-size: var(--fs-body);
+}
+
+.pusula-landing .ar-field textarea {
+  resize: vertical;
+}
+
+.pusula-landing .ar-field input:focus-visible,
+.pusula-landing .ar-field textarea:focus-visible {
+  outline: 2px solid var(--gold-hi);
+  outline-offset: 2px;
+}
+
+/* The honeypot: off-screen, still in the DOM for bots that fill every input. */
+.pusula-landing .ar-trap {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.pusula-landing .ar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+}
+
+.pusula-landing .ar-privacy {
+  margin: 0;
+  color: var(--mist-dim);
+  font-size: var(--fs-micro);
+}
+
+.pusula-landing .ar-error {
+  margin: 0;
+  color: var(--gold-hi);
+  font-size: var(--fs-small);
+}
+
+.pusula-landing .ar-sent {
+  margin: 0;
+  padding: 16px;
+  border: 1px solid var(--gold-lo);
+  border-radius: 8px;
+  color: var(--foam);
+}
+
+@media (max-width: 560px) {
+  .pusula-landing .ar-form {
+    grid-template-columns: 1fr;
+  }
+}

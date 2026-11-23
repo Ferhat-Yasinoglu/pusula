@@ -267,6 +267,7 @@
       "trafficInspector"
     ],
     "api-manager": [
+      "accessRequests",
       "agentSkills",
       "analytics",
       "apiManager",

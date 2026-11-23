@@ -844,7 +844,7 @@ same process on one port, so there is no separate CLI-only package today.
   <tr><td nowrap><b>Runtime</b></td><td>Node.js 22.x (≥22.22.2) or 24.x–26.x — <code>&gt;=22.22.2 &lt;23 || &gt;=24.0.0 &lt;27</code></td></tr>
   <tr><td nowrap><b>Language</b></td><td>TypeScript 6.0 — <code>src/</code> and <code>open-sse/</code> are TypeScript except 16 JS/CJS worker and MITM shims; <code>no-explicit-any</code> is an error in <code>open-sse/</code> and <code>tests/</code>, with older cases frozen in a ratchet</td></tr>
   <tr><td nowrap><b>Framework</b></td><td>Next.js 16 + React 19 + Tailwind CSS 4</td></tr>
-  <tr><td nowrap><b>Database</b></td><td>better-sqlite3 (SQLite, WAL journaling) — 147 modules in <code>src/lib/db/</code>, 209 migrations</td></tr>
+  <tr><td nowrap><b>Database</b></td><td>better-sqlite3 (SQLite, WAL journaling) — 147 modules in <code>src/lib/db/</code>, 210 migrations</td></tr>
   <tr><td nowrap><b>Memory</b></td><td>SQLite FTS5 full-text + int8-quantized vector embeddings, typed decay</td></tr>
   <tr><td nowrap><b>Schemas</b></td><td>Zod 4 — MCP tool I/O validation + API contracts</td></tr>
   <tr><td nowrap><b>Protocols</b></td><td>MCP (stdio / HTTP / SSE) + A2A v0.3 (JSON-RPC 2.0 + SSE)</td></tr>

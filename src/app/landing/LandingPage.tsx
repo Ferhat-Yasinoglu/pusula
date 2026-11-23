@@ -15,6 +15,7 @@ import ResilienceStation from "./components/resilience/ResilienceStation";
 import ToolsUplink from "./components/tools/ToolsUplink";
 import EngineRoom from "./components/engine/EngineRoom";
 import MonitorLaunch from "./components/launch/MonitorLaunch";
+import AccessRequest from "./components/access/AccessRequest";
 import Logbook from "./components/footer/Logbook";
 
 /**
@@ -50,6 +51,7 @@ export default function LandingPage({
         <ToolsUplink stats={stats} />
         <EngineRoom stats={stats} />
         <MonitorLaunch stats={stats} />
+        <AccessRequest />
       </main>
       <Logbook stats={stats} />
       <SimDock />

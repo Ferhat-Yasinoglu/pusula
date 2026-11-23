@@ -6,6 +6,10 @@ All notable changes to Pusula are documented in this file. The format follows
 
 ## [Unreleased]
 
+### ✨ New Features
+
+- **feat(access):** visitors can ask for access from the landing page's new "Ask for access" form (name, email, optional reason). The operator reviews requests under API Manager → Access requests; approving one issues an API key with daily and weekly USD limits (default $1 / $5) and shows it once to pass on. The public endpoint is rate-limited per address, ignores honeypot submissions and stops accepting new requests past 200 pending ones.
+
 ### 🔧 CI / Build
 
 - **ci(fly):** removed the `Deploy to Fly.io` workflow. It never deployed without a `FLY_API_TOKEN` and the public instance runs on our own server, so it was a no-op on every push to `main`.

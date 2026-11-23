@@ -58,6 +58,11 @@ const PUBLIC_API_ROUTES_EXACT = new Set([
   // collect/chaos/route.ts. Do not widen it to other /api/skills/collect/*
   // routes without the same per-handler auth.
   "/api/skills/collect/chaos",
+  // The landing page's "request access" form (POST /api/access-request). Anonymous by design;
+  // the handler validates the body, rate-limits per client address and caps the pending queue.
+  // EXACT: the operator's list and decisions live at /api/access-requests[/<id>] and stay
+  // MANAGEMENT.
+  "/api/access-request",
 ]);
 
 // Read-only single routes that ALSO take the CORS origin relaxation: they
